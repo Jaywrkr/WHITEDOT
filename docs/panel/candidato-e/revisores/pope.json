@@ -1,0 +1,48 @@
+{
+  "lens": "Pope (simulated: accounting, durability, errors, rules and minimal UI; not the creator's opinion)",
+  "scope": "Final source verification of Kubono 2.3.0-alpha.207 at observed HEAD e8368253. Reviewed scoped collection, favorites, places and accessibility source, house edit transaction and relevant tests as text. No tests, browser, listening, delegation or repository edits by this reviewer. Screenshots now exist but were not inspected in this source-scoped final verification. Working-tree changes were observed in HANDOFF.md, README.md, docs/README.md and scripts/verify-e-preservation.mjs; their contents were not read and they are outside this runtime review.",
+  "scores": {
+    "visual": null,
+    "audio": null,
+    "creativity": 7.5,
+    "sensation": null,
+    "cohesion": 8,
+    "polish": 7.5
+  },
+  "scoreBasis": {
+    "visual": "Unobserved by this reviewer. Current screenshots were not inspected; no visual score is inferred from source.",
+    "audio": "Unobserved: no listening; musical source logic is not perceptual audio evidence.",
+    "creativity": "Code-level design only: discoveries become reusable garden voices without consuming ownership (collection-garden.js:8,15-20), while captured personal notes survive a place round (places.js:120-122). These give collection and performance a productive relationship; the resulting experience was not played.",
+    "sensation": "Unobserved: no play session, transitions or tactile/audio experience.",
+    "cohesion": "Rules and state contracts only: clear completion/rhythm/Maestro thresholds, honest percentage flooring, conserved legacy access, read-only future formats and commit-before-celebration rewards. Favorite pending work deliberately follows a different, appropriate retention contract. Results now label cumulative collection and this round separately (places.js:129-131); keyboard dismissal shares the actual exit lifecycle (accessibility.js:49, places.js:135).",
+    "polish": "Source error handling and keyboard lifecycle only. A modest revision is supported by the concrete shared close path and atomic real-pointer arrangement edits, rather than code volume or reported test count. The Escape omission is absent, and house rollback includes objects, decor and garden positions. No claim about rendered finish, human usability or broad runtime verification."
+  },
+  "strengths": [
+    {
+      "status": "VERIFIED_IN_SOURCE",
+      "evidence": "src/collection-garden.js:15-20; src/house.js:17-20,111; tests/collection_commit_smoke.py:19-47",
+      "detail": "Garden add/remove/set operations and house placement/drag-out use failed-save rollback without consuming discovered cards. House edits snapshot objects, decor and garden state, and only play successful-placement feedback after commit. The real-pointer fixture asserts failed drag and drag-out rollback, successful placement, reload durability and retained discovery count. Root reports this fixture passed; this reviewer read it without execution."
+    },
+    {
+      "evidence": "src/favorites.js:24-27,43-49; tests/favorite_save_failure_smoke.py:38-63 (read only)",
+      "detail": "A failed favorite addition intentionally retains unsaved work, labels it pending, exposes repair, and withholds the saved-place lesson/reward. Destructive edits instead restore prior values. These different contracts suit the cost of each action and are explicit in code."
+    },
+    {
+      "evidence": "src/places.js:23-30,31-49,106-122; tests/places-durability.mjs:6-16 (read only)",
+      "detail": "Rewards, personal notes and chapter restoration form one save operation before celebration. Rollback preserves relevant object identities, prevents duplicate payment on retry, and future saves receive a locked view. Displayed rhythm percentages floor rather than implying an unmet threshold has been earned."
+    },
+    {
+      "status": "RESOLVED_VERIFIED_IN_SOURCE",
+      "evidence": "src/accessibility.js:49; src/places.js:135; tests/result_clarity_smoke.py:30-35",
+      "detail": "Escape on mPlace now clicks placeClose, using the same portal return and songFinaleCheck as Salir. The prior keyboard lifecycle defect is resolved in current source. The fixture finishes the last place and asserts Escape opens the actual running final song stage. Root reports that real browser check passed; this reviewer independently verified source and assertion text only."
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "No unresolved defect was verified within this scoped source recheck. This is not an exhaustive audit of the game or every failure path.",
+    "No tests, browser, audio renders or listening were performed by this reviewer. Root-reported passes are attributed and do not become independently observed execution evidence.",
+    "The final-place Escape fixture explicitly covers the ordinary finale. The master finale uses the same corrected close/check path in source, but this reviewer did not observe a dedicated 33-star Escape execution.",
+    "Objects and decor participate in the shared house snapshot transaction in source; the reviewed real-pointer failure assertions specifically exercise a garden voice. No separate failed-pointer object/decor runtime result was observed here.",
+    "Visual, audio and sensation remain unscored. No human or ears evidence is available. Sequential ring unlocking, slow transitions, current generation/music, black space, Geist Mono and the small cube remain approved constraints rather than defects."
+  ]
+}

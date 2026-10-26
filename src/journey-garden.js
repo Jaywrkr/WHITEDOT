@@ -30,6 +30,11 @@ export function gardenPulse(state,pos,now,{reach=GARDEN_REACH,goal=GARDEN_GOAL,m
 // Plants nobody tended for too long go back one step, and the clock starts again.
 export function gardenWilt(state,now,barSeconds,bars=GARDEN_WILT_BARS){const limit=bars*barSeconds*1000,out=[];state.beds.forEach((b,i)=>{if(b.stage>0&&now-b.care>limit){b.stage--;b.care=now;out.push(i);}});return out;}
 export const gardenProgress=(points,goal=GARDEN_GOAL)=>Math.max(0,Math.min(1,points/goal));
+// Guidance reads the same distances and stages as the real gesture, without changing a bed.
+export function gardenTarget(state,pos){if(!state?.center||!state?.beds?.length||!Number.isFinite(pos?.x)||!Number.isFinite(pos?.y))return null;
+ const near=bedSpots(state.center).map((p,i)=>({...p,i,d:Math.hypot(p.x-pos.x,p.y-pos.y),stage:state.beds[i]?.stage||0})).sort((a,b)=>a.d-b.d);
+ const at=near.find(p=>p.d<=GARDEN_BED_R+18)||near.find(p=>p.stage>0&&p.stage<4&&p.d<=GARDEN_REACH)||near[0],water=at.stage>0&&at.stage<4,move=at.d>(water?GARDEN_REACH:GARDEN_BED_R+18);
+ return {...at,water,move,phase:move?'approach':at.stage===4?'harvest':water?'water':'sow'};}
 export function initialize(runtime){
  const goal=()=>GARDEN_GOAL*(runtime.placeGoalScale?.()||1),wiltBars=()=>runtime.placeRun?.()?.maestro?GARDEN_MAESTRO_WILT:GARDEN_WILT_BARS;
  let owner=null,state=null,misses=0,shiver=0,treePulse=0;const glows=[],toBar=[];let lessonOwner=null,lessonAt=0,lastCare=0,lessonDone=false,replay=false,lessonMiss=0;
@@ -74,7 +79,7 @@ export function initialize(runtime){
   c.restore();}
  // A ghost demonstrates one bed without changing it, playing sound or consuming RNG.
  function lesson(c,W,H,now){const s=own();if(lessonOwner!==s){lessonOwner=s;lessonAt=lastCare=now;lessonDone=s.blooms>0;replay=false;lessonMiss=0;}if(s.opened||full()||lessonDone&&!replay||now-lastCare<3500&&lessonMiss<2&&!replay)return;if(replay&&now-lessonAt>7000){replay=false;lastCare=now;return;}if(!replay&&Math.max(0,now-lastCare-3500)%18000>5000)return;
-  const spots=bedSpots(s.center),pos=runtime.S,near=spots.map((p,i)=>({...p,i,d:Math.hypot(p.x-pos.wx,p.y-pos.wy)})).sort((a,b)=>a.d-b.d),at=near.find(p=>s.beds[p.i].stage>0)||near[0],stage=s.beds[at.i].stage,move=at.d>(stage>0&&stage<4?GARDEN_REACH:GARDEN_BED_R+18),cam=worldCamera(runtime),x=W/2+at.x-cam.x,y=H/2+at.y-cam.y,step=runtime.journeyRhythmState?.()?.step,water=stage>0&&stage<4,silent=!runtime.S.sound,activeStep=silent||step!=null&&(water?onAnd(Math.round(step)):onBeat(Math.round(step))),text=move?'Entra en este círculo.':stage===4?'En el golpe: cosecha.':water?(silent?'Pulsa para regar.':'Entre golpes: riega.'):(silent?'Pulsa para sembrar.':'En el golpe: siembra.');
+  const at=gardenTarget(s,{x:runtime.S.wx,y:runtime.S.wy}),{stage,move,water}=at,cam=worldCamera(runtime),x=W/2+at.x-cam.x,y=H/2+at.y-cam.y,step=runtime.journeyRhythmState?.()?.step,silent=!runtime.S.sound,activeStep=silent||step!=null&&(water?onAnd(Math.round(step)):onBeat(Math.round(step))),text=move?'Entra en este círculo.':stage===4?'En el golpe: cosecha.':water?(silent?'Pulsa para regar.':'Entre golpes: riega.'):(silent?'Pulsa para sembrar.':'En el golpe: siembra.');
   const px=Math.max(40,Math.min(W-40,x)),py=Math.max(110,Math.min(H-170,y));c.save();c.strokeStyle=c.fillStyle='#ffffff';c.globalAlpha=.65;c.lineWidth=1;c.setLineDash?.([2,5]);c.beginPath();c.arc(px,py,32,0,Math.PI*2);c.stroke();c.setLineDash?.([]);
   // Empty bed: a hollow seed; growing bed: three drops. They anticipate the relevant half of the beat.
   c.globalAlpha=activeStep?.9:.35;if(!move){if(water){for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(px+i*8,py-18);c.lineTo(px+i*8,py-12);c.stroke();}}else c.strokeRect(px-3,py-15,6,6);}

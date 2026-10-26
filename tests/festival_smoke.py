@@ -43,7 +43,7 @@ try:
    # From the Vacío the last portal opens the Refugio's finale, the festival's.
    page.evaluate("()=>{const j=__r.S.journey;j.chapter=5;j.done={llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};__r.save();__r.journeyTravel();}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
    st=page.evaluate('__r.journeyFinaleState()');assert st['notes']>=7,st
-   page.wait_for_timeout(2500);page.locator('#journeyFinale').click()
+   page.locator('#journeySkip').click()
    page.wait_for_selector('#journeyAgain',timeout=5000);assert 'Tu frase' in page.inner_text('#journeyFinale');assert page.evaluate('__r.journeyMode()')=='viaje'
    page.locator('#journeyAgain').click();page.wait_for_load_state();page.wait_for_function('!!window.__r?.festival')
    assert page.evaluate("__r.S.journey.chapter||0")<=1 and not page.evaluate("__r.S.journey.done?.llanura"),'the next player starts fresh'

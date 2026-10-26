@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. **Candidato vigente: [fases N, alpha.200](panel/candidato-n/informe.md).** Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Nueve por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
+Guía para repetir la auditoría. **Candidato vigente: [E, alpha.207](panel/candidato-e/informe.md), con revisión final y aceptación humana pendiente.** La [sesión9, alpha.200 integrada](panel/sesion-9/informe.md) conserva su7,6 provisional como referencia histórica. [Candidato técnico N](panel/candidato-n/informe.md). Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Diez por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
 
 La revisión ciega del usuario prevalece sobre las comparaciones históricas del procedimiento de abajo: primero puntuar sin notas anteriores; después cruzar hallazgos con el registro para conservar IDs. El coordinador conserva contexto operativo, los revisores no lo heredan. No se borra el historial del proyecto ni progreso de jugadores.
 
@@ -40,7 +40,7 @@ Seis ejes, del 0 al 10, con medios puntos:
 | Cohesión | Si todo sirve a una sola idea (tocar a tiempo) y a un solo arco |
 | Pulido | Errores, textos, menús, rendimiento y pruebas |
 
-La **media** de cada perfil es la media de sus seis notas. La fila del panel es la media de los diez. **Meta vigente de Jay: nueve en cada categoría.** Escucha y uso reales deben acreditar las categorías sensoriales; no se promedian áreas no observadas para certificarla.
+Cada eje informa la media de sus notas observadas y su cobertura. Una abstención queda sin nota; no se calcula media general si faltan categorías sensoriales. Las medias históricas conservan el método declarado en su sesión. **Meta vigente de Jay: diez en cada categoría, sin certificación automática.** Escucha y uso reales deben acreditar las categorías sensoriales; no se promedian áreas no observadas para certificarla.
 
 ## 4. Historial
 
@@ -63,7 +63,7 @@ Un documento corto para el panel: versión y fecha; qué decidió Jay desde la �
 
 ### Paso 2 · Material
 
-- **Capturas de teléfono:** `OUT=carpeta python3 scripts/panel-capture.py` (Chromium y Playwright de Python). Saca 16 capturas a 390×844: entrada, cinco capítulos del Viaje, seis lugares, anillo, hoja Lugares, Tu canción y chispa salvaje. Simula un navegador normal; sin eso el juego abre el modo «Todo a la vista» de los navegadores automatizados y la captura engaña (error de la sesión 2).
+- **Capturas de teléfono:** `OUT=carpeta python3 scripts/panel-capture.py` (Chromium y Playwright de Python). Saca 21 capturas a 390×844: entrada, cinco capítulos del Viaje, seis lugares, anillo, hoja Lugares, Tu canción, chispa salvaje, menú, guía de Jardín, libro, resultado y favoritos. El manifiesto identifica revisión y digest; tarjetas/resultados son fixtures forzadas, no evidencia de rareza natural. Simula un navegador normal; sin eso el juego abre el modo «Todo a la vista» de los navegadores automatizados y la captura engaña (error de la sesión 2).
 - **Atajos de URL:** `?capitulo=`, `?lugar=` (`&maestro=1`), `?anillo=1`, `?festival=1`, `?prueba=1`, `?medir=1`. Lista en [El mundo · Herramientas de prueba](MUNDO.md#herramientas-de-prueba).
 - **Acceso al estado:** las pruebas sirven `src/main.js` añadiendo `window.__r=runtime;`. Con eso se lee y se fuerza el juego (`__r.S`, `__r.openLugares()`, `__r.openSong()`, `__r.wildSpawn()`). `runtime` no existe en producción.
 - **Modelo de dos horas:** `node scripts/play-curve.mjs` (y `--json`). Juega cuatro perfiles simulados (60 %, 75 %, 90 % a tiempo y sin sonido) y mide la victoria, las ★ y el mayor hueco sin que crezca la canción. Es un modelo, no personas.
@@ -74,7 +74,7 @@ Un documento corto para el panel: versión y fecha; qué decidió Jay desde la �
 Un archivo por perfil (`01-mizuguchi.md` … `10-wintory.md`), con esta forma:
 
 1. Cabecera: «Simulación de su mirada… No es su opinión real.», versión, qué revisó.
-2. **Notas:** tabla de los seis ejes con una frase de «por qué» cada uno, y la media (con la anterior entre paréntesis).
+2. **Notas:** tabla de los seis ejes con evidencia y alcance; sin puntuar lo no observado ni mostrar notas anteriores durante la revisión ciega.
 3. **Qué mejoró de verdad**, comprobado en el código con `archivo:línea` o en una captura.
 4. **Qué sigue faltando o salió mal**, también con `archivo:línea` o medida.
 5. **Qué haría ahora:** pocas propuestas, concretas, con dónde se tocaría.
@@ -137,11 +137,11 @@ Registro histórico. El estado vigente está en la quinta sesión y el cierre J1
 
 ## 9. Próxima comprobación
 
-Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El relato de Jay reabre U03/U04, añade A04/U05–U08 y aporta evidencia negativa a V01. K1–K6 están implementadas técnicamente; su verificación y pendientes humanos están en CIERRE_K.md. Incorporar las capturas adicionales y la aceptación de cada fase; conservar lo aún no comprobado. Repetir el panel cuando haya cambios o nueva evidencia, sin abrir otra expansión automáticamente.
+Leer AGENTS, HANDOFF y el informe E. Los hallazgos funcionales corregidos no se reabren por planes antiguos. Quedan CI del nuevo candidato, sesiones humanas, escucha y dispositivos; conservar los IDs y límites del informe. Una nota simulada no autoriza otra expansión ni cambios de música/arte.
 
 ## 10. Ciclo de cierre
 
-Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta vigente es nueve en cada categoría, acompañada de candidato verde y aceptación humana; no se certifica mediante una nota simulada.
+Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta vigente es diez en cada categoría, acompañada de candidato verde y aceptación humana; no se certifica mediante una nota simulada.
 
 ## 11. Archivo
 
@@ -179,3 +179,12 @@ Jay autorizó L1–L4 después de K7. [Entrega](ENTREGA_L.md) y [evidencia](pane
 Durante una evaluación ciega, el coordinador retiene el contexto operativo. A los revisores se entrega AGENTS, las fuentes seleccionadas y artefactos sin puntuaciones/metas. README, HANDOFF, esta guía y las entregas contienen notas históricas: excluirlos del recorte ciego por la petición vigente del usuario. Conservar historial del proyecto y progreso; no borrar memoria del juego.
 
 [Informe N](panel/candidato-n/informe.md): correcciones autorizadas,253 suites, evidencias de UI/transporte/mezcla y pendientes humanos. El dictamen ciego registra la revisión del momento y sus límites; no es aceptación de producción ni acreditación de nueve.
+
+
+## Novena sesión · después de integrar alpha.200
+
+[Informe y anteriores](panel/sesion-9/informe.md) · [expediente](panel/sesion-9/expediente.md) · [notas y cobertura](panel/sesion-9/evidencia/notas.json). Diez revisores nuevos;16 capturas actuales; CI ya aprobado reutilizado.7,6 provisional, sin escucha ni aceptación humana. Se documentan dos errores de presentación reproducidos y sincronía visual residual; no se cambia el runtime ni se abren fases automáticamente.
+
+## Candidato E · siete fases
+
+[Informe final](panel/candidato-e/informe.md) · [entrega](ENTREGA_E.md) · [aceptación](aceptacion-e.json). Diez lentes nuevas, recorte ciego y revisión posterior de los fallos detectados. Las primeras seis lecturas fueron estáticas antes de completar capturas; las cuatro visuales sí reciben el manifiesto completo. No se mezclan sus coberturas ni se convierten correcciones en puntuaciones automáticas. Música/mapas conservados; CI completo nuevo y aceptación física pendientes.

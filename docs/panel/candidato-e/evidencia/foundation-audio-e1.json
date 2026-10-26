@@ -1,0 +1,1414 @@
+{
+  "renders": 7,
+  "maxPeak": 0.8804004192352295,
+  "rows": [
+    {
+      "genre": "deep",
+      "focused": false,
+      "peak": 0.8725593090057373,
+      "rmsDb": -12.306281683657275,
+      "hotFraction": 0,
+      "count": 10,
+      "instruments": {
+        "kick": 15,
+        "velvetbass": 20,
+        "p_softhorn": 15,
+        "shaker": 20,
+        "p_cellobody": 12,
+        "wood": 10,
+        "p_gutguitar": 15,
+        "rim": 10,
+        "clav": 2,
+        "p_tinepiano": 4
+      }
+    },
+    {
+      "genre": "deep",
+      "focused": true,
+      "peak": 0.8723660707473755,
+      "rmsDb": -14.711845103543691,
+      "hotFraction": 0,
+      "count": 10,
+      "instruments": {
+        "kick": 15,
+        "velvetbass": 20,
+        "p_softhorn": 15,
+        "shaker": 20,
+        "p_cellobody": 12,
+        "wood": 10,
+        "p_gutguitar": 15,
+        "rim": 10,
+        "clav": 2,
+        "p_tinepiano": 4
+      }
+    },
+    {
+      "genre": "dnb",
+      "focused": false,
+      "peak": 0.8804004192352295,
+      "rmsDb": -14.33532133934776,
+      "hotFraction": 0,
+      "count": 10,
+      "instruments": {
+        "kick": 15,
+        "hat": 119,
+        "reese": 68,
+        "organ": 24,
+        "resonantpluck": 24,
+        "snare": 36,
+        "wood": 15,
+        "p_gutguitar": 21,
+        "p_feltmallet": 2,
+        "p_bassclarinet": 8
+      }
+    },
+    {
+      "genre": "dnb",
+      "focused": true,
+      "peak": 0.8724722266197205,
+      "rmsDb": -15.91590666740303,
+      "hotFraction": 0,
+      "count": 10,
+      "instruments": {
+        "kick": 15,
+        "hat": 119,
+        "reese": 68,
+        "organ": 24,
+        "resonantpluck": 24,
+        "snare": 36,
+        "wood": 15,
+        "p_gutguitar": 21,
+        "p_feltmallet": 2,
+        "p_bassclarinet": 8
+      }
+    },
+    {
+      "genre": "ambient",
+      "focused": false,
+      "peak": 0.8660318851470947,
+      "rmsDb": -15.710222027860368,
+      "hotFraction": 0,
+      "count": 1,
+      "instruments": {
+        "silkstrings": 3
+      }
+    },
+    {
+      "genre": "ambient",
+      "focused": true,
+      "peak": 0.5867922306060791,
+      "rmsDb": -19.422895141921266,
+      "hotFraction": 0,
+      "count": 1,
+      "instruments": {
+        "silkstrings": 3
+      }
+    },
+    {
+      "genre": "deep",
+      "dense": true,
+      "focused": false,
+      "peak": 0.8759733438491821,
+      "rmsDb": -11.852058111245167,
+      "hotFraction": 0,
+      "count": 10,
+      "instruments": {
+        "kick": 15,
+        "velvetbass": 20,
+        "p_softhorn": 15,
+        "p_brushkit": 240,
+        "silkstrings": 480,
+        "p_tinepiano": 84,
+        "rim": 90,
+        "p_tapepiano": 80,
+        "shaker": 20,
+        "p_cellobody": 12,
+        "wood": 10,
+        "p_gutguitar": 15,
+        "clav": 2
+      },
+      "onsets": [
+        {
+          "time": 0.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 0.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 1.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 2.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.35,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.35,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.6,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.1,
+          "role": "perc",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.6,
+          "role": "acorde",
+          "errorSeconds": 0
+        },
+        {
+          "time": 3.85,
+          "role": "lead",
+          "errorSeconds": 0
+        },
+        {
+          "time": 4.6,
+          "role": "lead",
+          "errorSeconds": 0
+        }
+      ]
+    }
+  ]
+}

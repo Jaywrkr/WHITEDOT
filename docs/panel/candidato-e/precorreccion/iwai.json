@@ -1,0 +1,50 @@
+{
+  "lens": "Iwai — simulated musical-toy, discovery and collection-garden lens; not the named creator's opinion",
+  "scope": "Independent blind source review of candidate 2.3.0-alpha.207, revision c594c021. Read AGENTS.md under the supplied blind-review exception, src/rare-cards.js, src/collection-garden.js, src/journal.js, src/house.js, and supporting garden-model.js/house-audio.js source; read tests/collection_commit_smoke.py and tests/experience_garden_smoke.py as text only. No execution, listening, screenshots, repository edits or delegation.",
+  "scores": {
+    "visual": null,
+    "audio": null,
+    "creativity": 8,
+    "sensation": null,
+    "cohesion": 7.5,
+    "polish": 7
+  },
+  "scoreBasis": {
+    "visual": "Unobserved: /tmp/e7-final-capturas was absent when checked. Source cannot establish the rendered result.",
+    "audio": "Perceptual audio unobserved. Technical inspection confirms instrument/technique mapping and gesture/sequence scheduling, but is not listening.",
+    "creativity": "Source-defined interaction concept only: a located discovery becomes a retained card, a playable house object and one of four combinable garden voices; three distinct roles plus a saved set can produce a following musical sprout (collection-garden.js:8-10; garden-model.js:13). This is a meaningful reuse of a discovery across play contexts. Surprise, legibility and delight in actual play remain unobserved.",
+    "sensation": "Unobserved: no hands-on session or perceptual sound evaluation.",
+    "cohesion": "Source-defined discovery-to-book-to-refuge loop: card provenance, musical roles, a direct refuge link, and reusable voices share a common vocabulary and retained ownership (rare-cards.js:81-89,97; journal.js:109-110; collection-garden.js:15-20). Cross-modal timing and perceived unity were not observed.",
+    "polish": "Static interaction and persistence scope only: selection, limits, future-version protection and rollback are explicit in the card/set UI, while direct manipulation has a verified rollback gap. Does not grade visual fit, listening quality, browser behavior or test pass status."
+  },
+  "strengths": [
+    {
+      "evidence": "src/rare-cards.js:54-60,81-89; src/collection-garden.js:15-18",
+      "assessment": "Discoveries retain their place, provenance and ownership while gaining another use as musical voices. Collection does not itself start audio or open a modal; the book offers an explicit add action and selected/full states. This supports exploration without turning every find into an interruption or expenditure."
+    },
+    {
+      "evidence": "src/collection-garden.js:8-10; src/garden-model.js:7-13; src/house.js:43-44,115-118; src/house-audio.js:17,21",
+      "assessment": "The garden has a concrete toy mechanism: cards determine instruments and roles, objects can be moved and triggered, walking brushes nearby voices, and a pulse answers with up to four nearby objects. A multi-role saved combination can create a moving musical sprout. These are source-verified mechanisms, not claims about how enjoyable they feel or sound."
+    },
+    {
+      "evidence": "src/collection-garden.js:16-20; tests/collection_commit_smoke.py:19-34",
+      "assessment": "The add/remove/save/load UI explicitly rolls back failed writes and preserves future-version gardens. The supplied smoke script targets failed writes, reload preservation and nonconsumed cards; this review did not execute it."
+    }
+  ],
+  "findings": [
+    {
+      "type": "VERIFIED source defect; runtime failure path untested",
+      "priority": "P2",
+      "location": "src/house.js:16,108; src/collection-garden.js:14,16",
+      "issue": "Direct manipulation bypasses the garden commit rollback. Dragging a garden voice outside the house removes its card ID before an unchecked save; dropping a moved voice likewise changes positions before an unchecked save. These paths do not restore the previous garden when save() returns false, unlike the explicit garden controls.",
+      "consequence": "After a storage failure the visible composition can change despite not being persisted, and reloading can restore a different composition. The drag-out path can also say 'Objeto guardado.' before learning whether storage succeeded. Discovery ownership itself is retained.",
+      "remedy": "Route garden movement and drag-out removal through the same snapshot/commit/rollback operation as the explicit garden controls, and report success only after persistence succeeds. Add those two failure paths to collection_commit_smoke.py; its current failure checks cover the controls, not canvas dragging."
+    }
+  ],
+  "limits": [
+    "Screenshots were unavailable at both checks, so visual is null. No browser, Node tests, audio renders or git mutations were run.",
+    "The experience smoke text intercepts houseAudioCue (tests/experience_garden_smoke.py:20-21). That can demonstrate a scheduled technical event when run; it cannot establish audible quality, perceived causality, pleasure or sensation. This reviewer did not run it.",
+    "No natural rarity, unforced discovery, human usability, device listening or longitudinal collection behavior was observed. Scripted forced cards in the supplied tests are fixtures.",
+    "The approved black space, Geist Mono, small cube, sequential ring unlocking and slow transitions are constraints, not defects. Their rendered execution was not assessed."
+  ]
+}

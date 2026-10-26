@@ -1,6 +1,42 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.207**. Las entradas describen su revisión, no certifican producción.
+
+## Traspaso y limpieza · misma versiónalpha.207
+
+README, HANDOFF canónico y entrada para Claude; guías técnicas consolidadas, historial separado y estados corregidos. Retirados163 informes generados sin referencias, con manifiesto recuperable en Git. Código, música, mundos y partidas intactos. [Detalle](docs/LIMPIEZA_REPOSITORIO.md).
+
+## E7 · 2.3.0-alpha.207
+
+Candidato de validación, verificador de preservación y registro de aceptación sin puntuaciones inventadas. Libro compacto, filtros plegables, favoritos directos sin listado duplicado, destinos cerrados legibles; concordancia en Favoritos; cierre con Escape, porcentajes, final del Jardín y arrastres transaccionales. Luces de patrones, Refugio y canción siguen su instante audible y respetan los silencios. [Entrega](docs/ENTREGA_E.md).
+
+## E6 · 2.3.0-alpha.206
+
+La canción identifica tu aporte en el tramo real y distingue la vista de capas del final personal. Cierre coherente hacia el Mundo libre. Música y notas guardadas intactas. [Entrega](docs/ENTREGA_E.md).
+
+## E5 · 2.3.0-alpha.205
+
+Selección de voces clara y acceso al Refugio desde el libro. Ediciones del jardín con rollback al fallar escritura; tarjetas conservadas. Favoritos identifica trabajo pendiente sin eliminarlo. [Entrega](docs/ENTREGA_E.md).
+
+## E4 · 2.3.0-alpha.204
+
+Lugares enfoca el siguiente destino y explica el desplazamiento; cierres de cabecera consistentes. Final5 con salida explícita, sin omisión al tocar el fondo. Etiquetas pendientes y controles de tarjeta legibles. [Entrega](docs/ENTREGA_E.md).
+
+## E3 · 2.3.0-alpha.203
+
+Ayuda directa desde el menú; una acción actual resaltada, sin objetivo duplicado. Jardín comparte su objetivo real con la demostración y distingue sembrar, regar y cosechar. [Entrega](docs/ENTREGA_E.md).
+
+## E2 · 2.3.0-alpha.202
+
+Entradas canceladas al perder foco/abrir controles, sin pulsos al cancelar. Primer tiempo legible y espera visual distinta de avance. Música y tamaño del cubo intactos. [Entrega](docs/ENTREGA_E.md).
+
+## E1 · 2.3.0-alpha.201
+
+Resultados precisos: porcentaje no redondea a una estrella sin ganar; cronómetro coherente y umbrales visibles. Avisos visuales residuales siguen salida audible y descartan callbacks obsoletos, sin cambiar sonido. [Plan y entrega](docs/ENTREGA_E.md).
+
+## Panel9 · evaluación de alpha.200 integrada
+
+Diez revisores nuevos y16 capturas actuales. Nota provisional7,6; audio técnico y sensación sin aceptación física. Se conservan todas las notas anteriores y su distinto alcance. Se reproducen redondeo de porcentaje/cronómetro en resultados y se verifica sincronía visual residual. Solo documentación y evidencia; no cambia música, mundos, progreso ni versión. [Informe](docs/panel/sesion-9/informe.md).
 
 ## Integración de alpha.200
 

@@ -1,29 +1,34 @@
 # Kubono
 
-Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
+Un cubo, un universo que suena. Explora, toca a tiempo y construye tu canción con lo que descubres.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.200**, fases K/L/N integradas en main ([estado](HANDOFF.md)). No está publicado en tiendas.
+Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.207**. Cuenta opcional y guardado local. Sin publicación en tiendas.
 
-## Empezar aquí
+## Estado de la entrega
 
-| Si quieres… | Lee |
-|---|---|
-| Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
-| Ver las fases N | [Entrega](docs/ENTREGA_N.md) |
-| Revisar el candidato actual | [Cierre N](docs/panel/candidato-n/informe.md) y [dictamen ciego](docs/panel/candidato-n/revision-ciega.md) |
-| Ver el cierre conservando música y mundos | [Entrega K1–K6](docs/CIERRE_K.md) y [auditoría](docs/panel/sesion-6/informe.md) |
-| Repetir la auditoría del panel creativo | [docs/PANEL.md](docs/PANEL.md) |
-| Trabajar en el código | [AGENTS.md](AGENTS.md) y [Arquitectura](docs/ARQUITECTURA.md) |
-| Encontrar cualquier otro documento | [Índice](docs/README.md) |
+Las siete fases E están implementadas en ramas encadenadas. La rama de traspaso **`chore/claude-handoff-cleanup`** contiene toda la entrega y esta limpieza. `main` sigue en alpha.200 (`fd5dfc19`), comprobado el26 de octubre. Jay crea los PR y hace merge.
+
+Runtime E: `3c9d5dbc`; cierre y evidencias: `7f6374b3`. La limpieza documental conserva exactamente el juego. [Entrega E1–E7](docs/ENTREGA_E.md) · [auditoría y pendientes](docs/panel/candidato-e/informe.md).
+
+[Probar la vista previa E7](https://whitedot-epn5qszxv-jaywrkr-1498s-projects.vercel.app). Vercel confirmó ese despliegue; el CI completo del candidato y la aceptación con personas siguen pendientes.
+
+## Leer antes de continuar
+
+1. [AGENTS.md](AGENTS.md): reglas y límites.
+2. [HANDOFF.md](HANDOFF.md): estado exacto, rama y siguientes pasos.
+3. [Arquitectura](docs/ARQUITECTURA.md) y [verificación](docs/VERIFICACION.md).
+4. [Índice de documentación](docs/README.md): guías vigentes y registros históricos separados.
+
+[Entrada para Claude](HANDOFF_CLAUDE.md) apunta al mismo traspaso; no mantiene un plan paralelo.
 
 ## El juego
 
-- **El Viaje:** el Camino y cinco capítulos (Llanura, Lago, Bosque, Tormenta, Vacío). Su cierre recuerda tu canción y te deja en el Mundo libre. El Refugio queda disponible.
-- **El Mundo libre:** un anillo de 11 lugares que se abren en orden. Cada uno da ★, ★★ (75 % a tiempo) y ★★★ (Maestro). Las estrellas amplían las capas de tu canción.
-- **Tu cubo:** piezas que se compran con chispas: recoger da valor base y tocar a tiempo da más.
-- Cuenta opcional: se juega al instante con guardado local.
+- **El Viaje:** Camino y cinco capítulos. Aprendes a pegar, encadenar, rodear, bailar y soltar; el cierre abre el Mundo libre.
+- **Once lugares:** retos que se abren en orden. ★ por completar, ★★ con75% a tiempo y ★★★ con70% en Maestro. Las estrellas amplían Tu canción.
+- **El universo:** exploración procedural, criaturas, hallazgos, tarjetas, favoritos y música electrónica generativa.
+- **El Refugio:** espacio voluntario para tus trofeos, objetos y jardín de voces.
 
-Diseño completo: [El mundo](docs/MUNDO.md) y [El Viaje](docs/VIAJE.md).
+[Reglas del mundo](docs/MUNDO.md) · [El Viaje](docs/VIAJE.md) · [Universo y sonido](docs/UNIVERSO.md).
 
 ## Ejecutar
 
@@ -31,10 +36,15 @@ Diseño completo: [El mundo](docs/MUNDO.md) y [El Viaje](docs/VIAJE.md).
 python3 -m http.server 8000
 ```
 
-Abre `http://localhost:8000`. No hay compilación ni dependencias npm: módulos ES, Canvas 2D y Web Audio. Pruebas: `npm test` (Node) y los recorridos de `tests/` ([Verificación](docs/VERIFICACION.md)).
+Abre `http://localhost:8000`. Cliente estático con módulos ES, Canvas2D y Web Audio; sin compilación ni dependencias npm de ejecución. El nombre WHITEDOT permanece en paquetes y claves para conservar partidas.
 
-Para empezar una partida nueva: menú → Ajustes → **Empezar de cero** (dos toques; se guarda una copia).
+```sh
+npm run audit:release
+npm test
+```
+
+Pruebas de navegador/audio y configuración de Playwright en [Verificación](docs/VERIFICACION.md). Vercel sirve la raíz (`outputDirectory: "."`); no crear una carpeta `public` para resolver el despliegue.
 
 ## Más
 
-[Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Android](android/README.md) · [Licencia](LICENSE): todos los derechos reservados; las tipografías conservan sus licencias.
+[Cambios](CAMBIOS.md) · [Limpieza del repositorio](docs/LIMPIEZA_REPOSITORIO.md) · [Créditos](CREDITOS.md) · [Android](android/README.md) · [Licencia](LICENSE).

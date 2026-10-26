@@ -1,0 +1,111 @@
+{
+  "lens": "Simulated Toshio Iwai lens: musical toy and discoveries usable as instruments. This is an analytical lens, not a claim about his actual opinions.",
+  "scores": {
+    "visual": 7.5,
+    "audio": 8.0,
+    "creativity": 8.0,
+    "sensation": null,
+    "cohesion": 7.5,
+    "polish": 7.5
+  },
+  "strengths": [
+    {
+      "finding": "A discovery becomes a reusable voice without spending the keepsake. The four-voice limit gives the collection a small, playable ensemble rather than merely a trophy wall.",
+      "sources": [
+        "src/rare-cards.js:81",
+        "src/rare-cards.js:96",
+        "src/garden-model.js:6",
+        "src/collection-garden.js:8",
+        "tests/experience_garden_smoke.py:16"
+      ]
+    },
+    {
+      "finding": "Spatial placement has real compositional consequences: horizontal position selects a beat; vertical position selects degree and register. Release after dragging plays the moved voice immediately. This is a convincing toy-to-instrument connection in the implementation.",
+      "sources": [
+        "src/house-model.js:26",
+        "src/house-model.js:27",
+        "src/house-model.js:28",
+        "src/house.js:108",
+        "src/house-audio.js:17"
+      ]
+    },
+    {
+      "finding": "Revisiting a voice in different weather, light or gestures adds interpretations, and technique selection is durable with rollback after failed storage. These variants alter envelopes, brightness, noise and pitch motion rather than being cosmetic names.",
+      "sources": [
+        "src/rare-card-model.js:80",
+        "src/rare-card-model.js:82",
+        "src/rare-card-model.js:89",
+        "src/instrument-techniques.js:23",
+        "src/instrument-techniques.js:26",
+        "tests/card-technique-durability.mjs:4"
+      ]
+    },
+    {
+      "finding": "A saved, diverse ensemble can generate a fifth small musical organism which follows the player. That is a meaningful emergence reward attached to combining roles. Foreground note priority and bounded polyphony support reliable play technically.",
+      "sources": [
+        "src/garden-model.js:13",
+        "src/collection-garden.js:10",
+        "src/instrument-techniques.js:42",
+        "src/instrument-techniques.js:44",
+        "tests/instrument-techniques.mjs:27"
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "severity": "medium",
+      "finding": "The card cannot be auditioned where its musical use is chosen. Its primary actions add it to the garden or start an atlas search; changing interpretation only updates the saved choice and button text. A player must travel to the house to compare the sound of a newly selected interpretation. This is a verified UI limitation, not a claim that playback is broken.",
+      "sources": [
+        "src/rare-cards.js:81",
+        "src/rare-cards.js:88",
+        "src/rare-cards.js:111",
+        "src/collection-garden.js:15"
+      ],
+      "remedy": "Add a small user-triggered audition beside the ability/interpretation, playing the same garden voice and selected technique at a fixed musical reference. Keep collection itself silent."
+    },
+    {
+      "severity": "medium",
+      "finding": "The garden reduces six advertised roles to four. Detail and Transformation both become lead; their special character is replaced by melody in the garden. The UI acknowledges this, so it is an expressive ceiling rather than an undisclosed bug.",
+      "sources": [
+        "src/rare-card-model.js:72",
+        "src/garden-model.js:8",
+        "src/rare-cards.js:81",
+        "src/collection-garden.js:8"
+      ],
+      "remedy": "Give Detail a sparse high-register accent rule and Transformation a bounded modulation of another garden voice, with visible feedback, while keeping the four-card limit."
+    }
+  ],
+  "evidence": {
+    "reviewed": [
+      "AGENTS.md",
+      "src/rare-cards.js",
+      "src/rare-card-model.js",
+      "src/collection-garden.js",
+      "src/garden-model.js",
+      "src/instrument-techniques.js",
+      "focused house interaction/audio integration and listed tests"
+    ],
+    "executed": [
+      {
+        "command": "node tests/garden.mjs",
+        "result": "PASS"
+      },
+      {
+        "command": "node tests/card-technique-durability.mjs",
+        "result": "PASS"
+      },
+      {
+        "command": "node tests/instrument-techniques.mjs",
+        "result": "PASS"
+      }
+    ],
+    "visual_observation": "Viewed /tmp/panel9/capturas/03-capitulo-bosque.png: restrained black field, small white cube, subdued circular presences and sparse rhythmic marks. Visual score applies only to this world screenshot; card/garden surfaces were evaluated as source, not seen.",
+    "audio_basis": "Technical architecture and focused unit tests only. Read tests/experience_garden_mix.py and tests/experience_garden_smoke.py as coverage definitions; did not run them or claim their assertions as personal listening evidence."
+  },
+  "limits": [
+    "No listening, hands-on play, human session, mobile audio or latency measurement. Sensation is null because it was not observed.",
+    "Audio score is technical only; visual score is narrow and provisional. Creativity, cohesion and polish are source-based judgments within the requested slice.",
+    "Read-only repository; no full suites; no README, HANDOFF, PANEL, historical notes or prior scores read. Full CI passing was supplied context and did not raise sensory scores.",
+    "No claim of a runtime defect from static evidence; the two issues are verified interaction/design limitations."
+  ]
+}

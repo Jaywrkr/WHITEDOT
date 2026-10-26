@@ -1,0 +1,866 @@
+{
+  "baseCommit": "7f6374b3509e9edf951266762cd27188830b2034",
+  "scope": "Documentation and unreferenced generated script reports; no runtime, tests, player storage, assets or configuration of external services changed.",
+  "referenceMethod": "Before removal, each basename was checked across tracked source, tests, workflows and documents, excluding itself. No references found; dynamic JSON directory readers were also searched.",
+  "removedReports": [
+    {
+      "path": "scripts/auditoria-cierre-rc9-validation.json",
+      "bytes": 9937,
+      "sha256": "4f2937aeaed45398195ae7657e737374ba113643f898baa4306c44b6dd709be2"
+    },
+    {
+      "path": "scripts/cierre-f10-validation.json",
+      "bytes": 22755,
+      "sha256": "59ca570e061c44abcc70dd11c77f5b6cf12d65b132be6efe25799de1240c7925"
+    },
+    {
+      "path": "scripts/cierre-f2-validation.json",
+      "bytes": 5570,
+      "sha256": "1d2d037b80dd2ba1ea10588755b289cb9c16e90f283b4748ab737f021a6c33b4"
+    },
+    {
+      "path": "scripts/cierre-f3-validation.json",
+      "bytes": 8411,
+      "sha256": "4b6f535273fbcae29d9c4bb14f6483be5d5ac40bbfc51fc25f538b2c644b70b5"
+    },
+    {
+      "path": "scripts/cierre-f4-validation.json",
+      "bytes": 7277,
+      "sha256": "4d891a9d81beabb2b3d2f43bdb86db6be6a3bda3b10083fa4e11fb37602eedb8"
+    },
+    {
+      "path": "scripts/cierre-f5-validation.json",
+      "bytes": 7009,
+      "sha256": "162a31c8ca5bf038fcc86972ccd6f5720a47ee827d07b2e9dfcac03f243ec283"
+    },
+    {
+      "path": "scripts/cierre-f6-validation.json",
+      "bytes": 7416,
+      "sha256": "ee5cee97c8d8267d231402df6f10fc9ccf8c005bbc3134f17078077cf17ef108"
+    },
+    {
+      "path": "scripts/cierre-f7-validation.json",
+      "bytes": 7376,
+      "sha256": "9e780d5dfd9467d1c4663b47b4476a8bc0d4aac1b12a86ba734b4ef599edde3f"
+    },
+    {
+      "path": "scripts/cierre-f8-validation.json",
+      "bytes": 6471,
+      "sha256": "3a6ea27357b1c9eeb83c98e8c6aa59fd2ae8cf2649c08fc97ed12e6247175aa3"
+    },
+    {
+      "path": "scripts/cierre-f9-validation.json",
+      "bytes": 8106,
+      "sha256": "595f14667aa7f0e5209866c5c550d75ae13ce0371dd70916cb2c980eb967a787"
+    },
+    {
+      "path": "scripts/crystal-play-validation.json",
+      "bytes": 4410,
+      "sha256": "8fd05cbbe93f2af5349e8d0eead748a1dc912932562fa644f0b21fd4e3485d76"
+    },
+    {
+      "path": "scripts/cube-crystal-feedback-validation.json",
+      "bytes": 2165,
+      "sha256": "633b77c3e49d98189b69f0042a5a9d187f0a917a48d36acf8ba1bd047dc2d4f4"
+    },
+    {
+      "path": "scripts/entry-jump-validation.json",
+      "bytes": 2393,
+      "sha256": "e358bf27a8d83e1670c6103779b9591a1e883867847fc3412384be6c6394d918"
+    },
+    {
+      "path": "scripts/expansion-integrity-validation.json",
+      "bytes": 404,
+      "sha256": "8615a3dbc9de24e675286e7c1d1560801db9b01569e56f5c9ba7b77ba380a803"
+    },
+    {
+      "path": "scripts/expansion-universe-validation.json",
+      "bytes": 5222,
+      "sha256": "d6e0a9099c8029764b6590ba903df972f4cb9dcab4bf91135dd6f5a5ea451c93"
+    },
+    {
+      "path": "scripts/experience-02-validation.json",
+      "bytes": 252,
+      "sha256": "8c8c3e7232eef777871cf3e1220892978fbc581ea21b92e9666ebadc64333e67"
+    },
+    {
+      "path": "scripts/experience-03-validation.json",
+      "bytes": 236,
+      "sha256": "58e69b2e9a4a89f0ee13b6b7e2e6cfead48cc4ff7523de74c13bbc24a92b5a82"
+    },
+    {
+      "path": "scripts/experience-04-validation.json",
+      "bytes": 4127,
+      "sha256": "815a28e86583d1be05087d1e4f426364dfbfcba18817ef6c9c93e83deb88e31e"
+    },
+    {
+      "path": "scripts/experience-05-validation.json",
+      "bytes": 5643,
+      "sha256": "3ef590af17c831ca5f1eb10b2351619e8cca256c44a7043f8983d542c72063d1"
+    },
+    {
+      "path": "scripts/experience-06-validation.json",
+      "bytes": 3819,
+      "sha256": "f228a7183a8ddefd3a95febc93e3bdf47fd827d8888a26665ee7a66d03a3a1ad"
+    },
+    {
+      "path": "scripts/experience-07-validation.json",
+      "bytes": 3672,
+      "sha256": "d0cae1738d828cc1288adae4092abf2c27f86cb9a7a646e0f0ac32b17e70147c"
+    },
+    {
+      "path": "scripts/experience-08-validation.json",
+      "bytes": 3623,
+      "sha256": "f1d0d7cf65d4756730a89bc80bd9171adb89c2ed0b891469fe5121b8eb5778fa"
+    },
+    {
+      "path": "scripts/experience-09-validation.json",
+      "bytes": 457431,
+      "sha256": "659066ca02bf7df500bd1ec4e5e9b6b792103f8a1f965fd318fc17d9efb7b112"
+    },
+    {
+      "path": "scripts/experience-10-validation.json",
+      "bytes": 5940,
+      "sha256": "63ee2d7e241f35d96ef98d7cf0c957deeffba8d6290dd802bca9dd5a42a763c1"
+    },
+    {
+      "path": "scripts/experience-11-validation.json",
+      "bytes": 1117980,
+      "sha256": "13f45995bae60dd5be482e65bf4f091c3627bd0eb12e55dea3f1228b4511488d"
+    },
+    {
+      "path": "scripts/experience-12-validation.json",
+      "bytes": 2996371,
+      "sha256": "c7b97ab81c73d4665de182126d980db63135c3caf6be60c23ea98094474ffb42"
+    },
+    {
+      "path": "scripts/experience-13-validation.json",
+      "bytes": 196890,
+      "sha256": "1ab070956d85b4f7e21aff25a1c6bc97b02cf092ec860bdb47ddd86b202a0c90"
+    },
+    {
+      "path": "scripts/experience-14-validation.json",
+      "bytes": 218628,
+      "sha256": "adb979751d5818bd3b9cecefb8cc475fbc562c6d679aa5cf26c3c8aadcb0c83e"
+    },
+    {
+      "path": "scripts/f1-validation.json",
+      "bytes": 8164,
+      "sha256": "f380ad41ada815f6699d3ce2e2b544a4a88f6f83e9baced033d7d73224374d9b"
+    },
+    {
+      "path": "scripts/geist-interaction-validation.json",
+      "bytes": 15380,
+      "sha256": "3b1eb1ce9613bb8022c858a2185d9a790d9195c849a2512a88f7466dce9f0f23"
+    },
+    {
+      "path": "scripts/interface-integrity-validation.json",
+      "bytes": 404,
+      "sha256": "b29d5bcfead50830cf6106243d3971fa6c6338a788be8f798053f67c5459307d"
+    },
+    {
+      "path": "scripts/interface-validation.json",
+      "bytes": 2587,
+      "sha256": "1113894896e8730a5aad48b2b5b5e1cace57ab9e1e5f48197c7e5d7d82939f6b"
+    },
+    {
+      "path": "scripts/juego-01-validation.json",
+      "bytes": 2135,
+      "sha256": "d98ab307bc943327ab75fa19a6e9e373b29b7d30ae66449f876a75dd7c159a73"
+    },
+    {
+      "path": "scripts/juego-02-validation.json",
+      "bytes": 6589,
+      "sha256": "d1bb6883d826f2465703402095ea2f4086569a49949abb1f270cc37068dddb56"
+    },
+    {
+      "path": "scripts/juego-03-validation.json",
+      "bytes": 6458,
+      "sha256": "fb0adde3b46c5af801eea6510c93fcbc40f1136334026f5527cfacc08d17a708"
+    },
+    {
+      "path": "scripts/juego-04-validation.json",
+      "bytes": 14781,
+      "sha256": "38fad6a738aaeea49bd1b615490b52f37bee35dd3f4609457776c44aa564c053"
+    },
+    {
+      "path": "scripts/lab-l1-validation.json",
+      "bytes": 6813,
+      "sha256": "98c2a69c3dfa60a6e05a91b1019d3acfbf7f703efc4db7bb94e799e972871de3"
+    },
+    {
+      "path": "scripts/lab-l2-validation.json",
+      "bytes": 6339,
+      "sha256": "14148c60c5ebd65d0b9276217f8a98cd2f2af8f423dcd2562990320a4f3db164"
+    },
+    {
+      "path": "scripts/lab-l3-validation.json",
+      "bytes": 5549,
+      "sha256": "242e41909803a1af8529b56949084fdf0f5fbd55da5166b791ba68d59f7cb3a0"
+    },
+    {
+      "path": "scripts/lab-l4-validation.json",
+      "bytes": 6871,
+      "sha256": "b67813066cf96e0ac549bb943bfeaa62b5e8cf4227a0524ca1d7471dd8b97edb"
+    },
+    {
+      "path": "scripts/lab-l5-validation.json",
+      "bytes": 4359,
+      "sha256": "729f81131fcdf7ed284b95d454294d0c1eee75801a28b1175bbd32d0cda8c217"
+    },
+    {
+      "path": "scripts/lab-l6-validation.json",
+      "bytes": 5250,
+      "sha256": "1d7f0925d225c97e09ce192ac88f16d0fb1e875494122371b7128de8ee65a880"
+    },
+    {
+      "path": "scripts/lab-l7-validation.json",
+      "bytes": 12318,
+      "sha256": "c27ed8b97fbc02831c4623fbfc47455bbb86c1354933b0edbfa3ea34b2d77f9d"
+    },
+    {
+      "path": "scripts/living-universe-validation.json",
+      "bytes": 600,
+      "sha256": "c57bf677f54cc6e84461052cca0722fb3b3cbb8e8ebc8b5e1b76a10434ab5392"
+    },
+    {
+      "path": "scripts/m1-validation.json",
+      "bytes": 6244,
+      "sha256": "2377cdd12294bda3ba1aa4ae4724d977e504fcf61dda6eb620ddf57ee70b3bed"
+    },
+    {
+      "path": "scripts/main-integration-validation.json",
+      "bytes": 770,
+      "sha256": "22f536af9719e7b1d86424712a2ba8fcfcfe6c7507817986e1fb00ca053f319f"
+    },
+    {
+      "path": "scripts/mejora-01-audio-validation.json",
+      "bytes": 2471,
+      "sha256": "8b3221fc702cad73ad1e4110cb7f6e5662b0d4aa44a75afba8602c93606f8708"
+    },
+    {
+      "path": "scripts/mejora-01-validation.json",
+      "bytes": 5153,
+      "sha256": "9d24e488dbc429f9eb32894527cfd4e41798b3691565e81e6f1892b4eaa76771"
+    },
+    {
+      "path": "scripts/mejora-02-audio-validation.json",
+      "bytes": 3270,
+      "sha256": "ab5807802dc142734cdc0f43a477f104736fe6988e19b2fd0f990729e59c2bd1"
+    },
+    {
+      "path": "scripts/mejora-02-validation.json",
+      "bytes": 10790,
+      "sha256": "10f7f62c67e6dca5499c6c72f9966ebf3f257b35dcd3bb2846039948934b7636"
+    },
+    {
+      "path": "scripts/mejora-03-audio-validation.json",
+      "bytes": 22549,
+      "sha256": "9aa7594e668ef3f4cc1f43932b681d91ec437769155673f7c70cae5a19ddb357"
+    },
+    {
+      "path": "scripts/mejora-03-validation.json",
+      "bytes": 33237,
+      "sha256": "16f807dd7ca6b12f2ac81b9f74df1adbb02c98da14ec05e33868628ecf71caa0"
+    },
+    {
+      "path": "scripts/mejora-04-validation.json",
+      "bytes": 2393,
+      "sha256": "c9181d9af354acbc88ca2e061f49774ab2047967e8af05157d4084c336c53c7e"
+    },
+    {
+      "path": "scripts/mejora-05-validation.json",
+      "bytes": 3099,
+      "sha256": "b12f025652327800848272808fdcb2170f7174d770860e0f8c3f729fe7dbb07f"
+    },
+    {
+      "path": "scripts/mejora-06-validation.json",
+      "bytes": 2539,
+      "sha256": "d8fd5f2f69ae2c9eab5faa7753623410361b073e3e78302e37d32bb8242aed06"
+    },
+    {
+      "path": "scripts/mejora-07-validation.json",
+      "bytes": 2166,
+      "sha256": "ef3918b6d8d490336ca228a416b0e2f5f69f02033d48f9be038e383da0c2cbb9"
+    },
+    {
+      "path": "scripts/mejora-08-validation.json",
+      "bytes": 3212,
+      "sha256": "ee0ab5eca7864b417b9f5beee7081e1f674353d6dde6697a93c21af75cb3837c"
+    },
+    {
+      "path": "scripts/mejora-09-validation.json",
+      "bytes": 11091,
+      "sha256": "b9e3cc66fc86defe8da3693df58b4754cff9ae0c5bd1306f48e4088e1074457e"
+    },
+    {
+      "path": "scripts/mejora-10-audio-validation.json",
+      "bytes": 3358,
+      "sha256": "5541f208a57a3d0e81dcf0095e2b6c8d113207ab2376b91250c55f4c610232bb"
+    },
+    {
+      "path": "scripts/mejora-10-validation.json",
+      "bytes": 10892,
+      "sha256": "56c28e3cbd3f2868a67f6bb80efc6f1f8111324ecdb8d929f7cea81176cd0421"
+    },
+    {
+      "path": "scripts/music-menu-validation.json",
+      "bytes": 7192,
+      "sha256": "f97284c1d358b538a28438d72e36938467b02afd66b21f68caf1af283e1888c8"
+    },
+    {
+      "path": "scripts/musica-01-ensemble-distribution.json",
+      "bytes": 1394,
+      "sha256": "9c0aa5b27700957cd3b2b6d1f1d8425a05631d95b497365d9f8386b1b308f9b5"
+    },
+    {
+      "path": "scripts/musica-01-universe.json",
+      "bytes": 4923,
+      "sha256": "4dad23331eda11733a2e5db262867a743649144aaf61cfcea7cfd30ec70dc83d"
+    },
+    {
+      "path": "scripts/musica-01-validation.json",
+      "bytes": 1165,
+      "sha256": "56b5b5fa33a3ccc89636308c1650e62f5ca5306366c9c39b1902db332f59ce31"
+    },
+    {
+      "path": "scripts/musica-02-audio.json",
+      "bytes": 10634,
+      "sha256": "0d36b87e47b5f8cf3483801ef9537c8751e3a28f3f3ed0521ddd74c50802c56d"
+    },
+    {
+      "path": "scripts/musica-02-validation.json",
+      "bytes": 793,
+      "sha256": "a250c6904324e0512c93de57b86a49acb80d38b1643416b5c7c644ae9fa20729"
+    },
+    {
+      "path": "scripts/musica-03-audio.json",
+      "bytes": 11820,
+      "sha256": "40c5aada25fffb26775f0939b637a5190f48af85cfb4300586df4fed27162a48"
+    },
+    {
+      "path": "scripts/musica-03-validation.json",
+      "bytes": 828,
+      "sha256": "61f7b8e5a87e06858212803098894eb5c8e7b6007745a8192f3a9e6e3cb9e1bb"
+    },
+    {
+      "path": "scripts/musica-04-audio.json",
+      "bytes": 12559,
+      "sha256": "1660a14a3f71aa7a09a9d16b0fe64df66f2b4cb3bf3c739696a0987f9f33c2c7"
+    },
+    {
+      "path": "scripts/musica-04-validation.json",
+      "bytes": 766,
+      "sha256": "93e15a2a3128af2f3086795e758c581497938db0e3b05f987b5c85bdf13fa419"
+    },
+    {
+      "path": "scripts/musica-05-audio.json",
+      "bytes": 59925,
+      "sha256": "57befe0dc1ce1f5562a1bc8b6f7e1afa19598290c33ca812e5fc3ea9cc7d5772"
+    },
+    {
+      "path": "scripts/musica-05-validation.json",
+      "bytes": 812,
+      "sha256": "e2b916d3b7bdb49f1f490d763a9356570db0cb09d2962c4bfa2d9bfe97454c23"
+    },
+    {
+      "path": "scripts/musica-06-foundation-audio.json",
+      "bytes": 2840,
+      "sha256": "b5c935e8e95403294944318b5343d2a91607ab0cbff9a01d5fe2903610a5fdf3"
+    },
+    {
+      "path": "scripts/musica-06-validation.json",
+      "bytes": 1122,
+      "sha256": "b2326ea9b32837fc664535cb4a5e8d0d8de1a7789f6e0cac84fb73cdcbe80f50"
+    },
+    {
+      "path": "scripts/musica-06-world.json",
+      "bytes": 2223,
+      "sha256": "1b2b1b66c81f2a69f78ef3c1ca8e92bbb8c92b7dcc8b0e061cfc50a64884ade2"
+    },
+    {
+      "path": "scripts/musica-07-audio.json",
+      "bytes": 12294,
+      "sha256": "82791f9d6f3a1352e649b68400efc0c57b03e33f54843347a95179b270850c55"
+    },
+    {
+      "path": "scripts/musica-07-intro-regression.json",
+      "bytes": 236,
+      "sha256": "97f76069be1f4322c78851de7f8d96e2d087e0699bd9b280f672353d318330fe"
+    },
+    {
+      "path": "scripts/musica-07-pattern-audit.json",
+      "bytes": 104920,
+      "sha256": "283ca9c62313885bd11e489c94adc2611b3b7fb4590ea910ca1b34a7774c8647"
+    },
+    {
+      "path": "scripts/musica-07-pet-regression.json",
+      "bytes": 5810,
+      "sha256": "7ed7e16381aa5da4035a6a06b70b5585872cd758ac861923281f2722e4eb9466"
+    },
+    {
+      "path": "scripts/musica-07-universe.json",
+      "bytes": 4923,
+      "sha256": "4dad23331eda11733a2e5db262867a743649144aaf61cfcea7cfd30ec70dc83d"
+    },
+    {
+      "path": "scripts/musica-07-validation.json",
+      "bytes": 2715,
+      "sha256": "cb542703663f3cad859fef7a8329ab23bbfec700154e375fc946c696e1968f5c"
+    },
+    {
+      "path": "scripts/musica-07-world.json",
+      "bytes": 2223,
+      "sha256": "1b2b1b66c81f2a69f78ef3c1ca8e92bbb8c92b7dcc8b0e061cfc50a64884ade2"
+    },
+    {
+      "path": "scripts/percussion-world-validation.json",
+      "bytes": 844,
+      "sha256": "57f075ac08043a019184b2e410fddefaa0f603c469cee471c879bbdef4eaf2a7"
+    },
+    {
+      "path": "scripts/pet-validation.json",
+      "bytes": 1563,
+      "sha256": "738b08ec1003bbf7e9f7bd3c9f7f82e7551bde2bd16e9e6e1ca3591289578049"
+    },
+    {
+      "path": "scripts/phase-01-universe-sample.json",
+      "bytes": 5130,
+      "sha256": "6351266aef4178dc0f9d55243b83f3c66fd67cabab6497180f4eb4d864d40904"
+    },
+    {
+      "path": "scripts/phase-01-validation.json",
+      "bytes": 754,
+      "sha256": "57457c08f1bcc170c76227a3dd53cec3af6022ec9633d4a9a6db25bb18730229"
+    },
+    {
+      "path": "scripts/phase-02-million-sample.json",
+      "bytes": 6155,
+      "sha256": "24101010824e1e76d79866ecbb31a378b9a56b7794aa40f9367dd601b0fd5a7e"
+    },
+    {
+      "path": "scripts/phase-02-original-sample.json",
+      "bytes": 5266,
+      "sha256": "ccb30b9cacaf855c3e5f5abb1f7100965e4fda9ebca0d7d24b60a54619481e40"
+    },
+    {
+      "path": "scripts/phase-02-universe-sample.json",
+      "bytes": 5941,
+      "sha256": "9346fd9ec9b5cf277f90ae42d017e2ce5514c6970acc2ed8b8c63a684ad851be"
+    },
+    {
+      "path": "scripts/phase-02-validation.json",
+      "bytes": 852,
+      "sha256": "d66e698ab58ca251cc40a379ab4499b8215ab151d0652b6eca8c0bf6018e2765"
+    },
+    {
+      "path": "scripts/phase-06-validation.json",
+      "bytes": 102723,
+      "sha256": "7b5ed62ea6184cb3e11f7edabcac2112281bc5ce0fa156dd59bcbe2de60922e5"
+    },
+    {
+      "path": "scripts/posmusica-01-validation.json",
+      "bytes": 12805,
+      "sha256": "fe195e9fe04530509e8bad5d3678bb8be8d46246a0a9079f33f38d7700a46bd3"
+    },
+    {
+      "path": "scripts/posmusica-03-validation.json",
+      "bytes": 1421,
+      "sha256": "873d2f323ee37d3e30951756b369ab60ff141092a0ca47348bd4c080654b9c5b"
+    },
+    {
+      "path": "scripts/posmusica-04-validation.json",
+      "bytes": 1201,
+      "sha256": "0132170be5300c12ddce8a7b537aa21c21a0feeffe5ead24b970d7a520048966"
+    },
+    {
+      "path": "scripts/posmusica-05-validation.json",
+      "bytes": 1667,
+      "sha256": "cadc96846e7f21479dfca278e5a36ebaa5160222b59fd70e83c1fb83bd8abfa1"
+    },
+    {
+      "path": "scripts/posmusica-06-validation.json",
+      "bytes": 1560,
+      "sha256": "e66264ba89545997ff2dd21329daf84ae80a7e1dd03043d69829ab8aa4eeaf47"
+    },
+    {
+      "path": "scripts/posmusica-07-validation.json",
+      "bytes": 1968,
+      "sha256": "b643880ffe6b50dc5fe66bf6e99cdb2103a641ce99d0eb727cada9376f48e126"
+    },
+    {
+      "path": "scripts/posmusica-08-validation.json",
+      "bytes": 5419,
+      "sha256": "d76abce8461e15bdb18b563b1f42ef05e6ed3eae2b0b8395c9b9a495733fe2c6"
+    },
+    {
+      "path": "scripts/pulido-01-validation.json",
+      "bytes": 2181,
+      "sha256": "2efb1d49c0c4878b71f0735ae87921592bad8e699e8f6020ae62b2c85f2f39c1"
+    },
+    {
+      "path": "scripts/pulido-02-validation.json",
+      "bytes": 2203,
+      "sha256": "01e35b2992b3f3920f0f96df0691c1ad9e9141ce6e0110a98d4aca1c13a917a2"
+    },
+    {
+      "path": "scripts/pulido-03-validation.json",
+      "bytes": 1818,
+      "sha256": "5aece08aa26fd59455aa7e42a3bd9b8e7638c7abf75b54ccecfce4f4a22b0ba0"
+    },
+    {
+      "path": "scripts/pulido-04-foreground-audio.json",
+      "bytes": 373152,
+      "sha256": "01d67974bd925386bef344046a21890bca10b5c415afda5f815ce3e7685f14ff"
+    },
+    {
+      "path": "scripts/pulido-04-gestures-audio.json",
+      "bytes": 192983,
+      "sha256": "958c489dc657fe830cf22c55926b5762953d0e152319e738d88ff68f86dfdb41"
+    },
+    {
+      "path": "scripts/pulido-04-validation.json",
+      "bytes": 1290,
+      "sha256": "b3ff73e5828374869ed133c23a9b0230d245d869d01b4bcdb2b7bc4a39eb9643"
+    },
+    {
+      "path": "scripts/pulido-05-validation.json",
+      "bytes": 2127,
+      "sha256": "81344563587d06631f95fed51f66932a149d3bf853420df22be5d2df4c8a7937"
+    },
+    {
+      "path": "scripts/pulido-06-validation.json",
+      "bytes": 1193,
+      "sha256": "c420e85942c39120320f932a19f7eff292106a5541764197ee923fd5105025d6"
+    },
+    {
+      "path": "scripts/pulido-07-validation.json",
+      "bytes": 1077,
+      "sha256": "e6ba5e3ecf17aa902cf5fd19e14bc040eba886ed79236d1e058987c03b6c7ad6"
+    },
+    {
+      "path": "scripts/pulido-08-validation.json",
+      "bytes": 1018,
+      "sha256": "3d2bb36c51523a6f52bedca2dd4c30c316e4ab6bd9c859ee8d9de593f612c4e3"
+    },
+    {
+      "path": "scripts/pulido-f2-validation.json",
+      "bytes": 6349,
+      "sha256": "8f5f005f221fdb8ee054f70c96301b406543848e2566f4dd82f2a7d74f89f727"
+    },
+    {
+      "path": "scripts/pulido-f3-validation.json",
+      "bytes": 6077,
+      "sha256": "617585fb2cbdec41f7baaf0eb56640dfd957e0a2003893bb94d9ee3f96de1b22"
+    },
+    {
+      "path": "scripts/pulido-f4-validation.json",
+      "bytes": 9669,
+      "sha256": "1c0715f3495a2572a0a7db6b7a2eacc412cbed53a58008bb8c9c4c6247d7c0d4"
+    },
+    {
+      "path": "scripts/pulido-f5-validation.json",
+      "bytes": 8658,
+      "sha256": "f42f78535dbf24bec43c22bea87e22bf9f8f19de60a007ff096be77ba92fd47f"
+    },
+    {
+      "path": "scripts/pulido-f6-validation.json",
+      "bytes": 6199,
+      "sha256": "dc0a2f060c0325efee4897768b623e993375c1f09cb51a5c099389d072d31320"
+    },
+    {
+      "path": "scripts/pulido-f7-validation.json",
+      "bytes": 10042,
+      "sha256": "96301a44a8120f705781c8d3a7bb03f3a8ba4581955b4c7872b92577fff79289"
+    },
+    {
+      "path": "scripts/pulido-f8-validation.json",
+      "bytes": 21825,
+      "sha256": "2a475f37c10248a2818dbd1260d792186833fd995398b548bc042207206ce3c8"
+    },
+    {
+      "path": "scripts/rare-cards-integrity-validation.json",
+      "bytes": 404,
+      "sha256": "9a1502d4a4ed3145d5cb178e4f3c41089400acb9a4ea3c611f10449ebebcb35a"
+    },
+    {
+      "path": "scripts/rare-cards-validation.json",
+      "bytes": 1859,
+      "sha256": "b1bf7a7e11c87f73a0069805e7a49961f3a191b0043f43e33d063f8ebd5e4bac"
+    },
+    {
+      "path": "scripts/rare-universe-validation.json",
+      "bytes": 3472,
+      "sha256": "41ebf59dba2cfdcaa68a4c28606a5d130e80061a2094109f21dfdcd74dd3ec29"
+    },
+    {
+      "path": "scripts/reencuentro-01-validation.json",
+      "bytes": 7077,
+      "sha256": "4303e82bb9b382ba31e141b9be623a816bd79d9336b6daf496d1cfa30b06ca71"
+    },
+    {
+      "path": "scripts/reencuentro-02-validation.json",
+      "bytes": 50744,
+      "sha256": "5fd3f96f773d627ae06848902fbce803e7c5d707b36927a11bfa727c4eb8f9cb"
+    },
+    {
+      "path": "scripts/reencuentro-03-validation.json",
+      "bytes": 2420,
+      "sha256": "91fe81ecd158eea7c946b7d521e7eca6be73a766685cfe3eca3d5827896f4ce6"
+    },
+    {
+      "path": "scripts/reencuentro-04-validation.json",
+      "bytes": 4445,
+      "sha256": "458657a9182b752493298fc21e364801b7688d208d4c366007380328b6d731a3"
+    },
+    {
+      "path": "scripts/reencuentro-05-validation.json",
+      "bytes": 2916,
+      "sha256": "c8d4ca7a26f9c923f055c473771c4d5858a913e14f7f541463fdb7a7d951f0ef"
+    },
+    {
+      "path": "scripts/reencuentro-06-validation.json",
+      "bytes": 99628,
+      "sha256": "47414647ce73b6043a3abfb96006ed6f097baa1a5264e40202c67fb2165e6256"
+    },
+    {
+      "path": "scripts/reencuentro-07-validation.json",
+      "bytes": 56036,
+      "sha256": "8dc69b3e6baa6e34b0dbbdc660b5f480c940df8fa004174f39e9625afc34ff89"
+    },
+    {
+      "path": "scripts/reencuentro-08-validation.json",
+      "bytes": 1758,
+      "sha256": "3461dee6868640b00c825eb73f926cfe408dcde7239498e00f520afe4eaaeab4"
+    },
+    {
+      "path": "scripts/register-review-validation.json",
+      "bytes": 67526,
+      "sha256": "c3f6ef2ccfbd86d13d9b1db1380962feecaab81a35e6d818bd754ac3341742e1"
+    },
+    {
+      "path": "scripts/release-closure-validation.json",
+      "bytes": 14674,
+      "sha256": "5c89bcb72105b4c242ab06ebd2c53c1895dbb3a5be5b7273108fa51bfda12715"
+    },
+    {
+      "path": "scripts/rewards-validation.json",
+      "bytes": 1500,
+      "sha256": "e6eb6df0ed32c4f75696c99f3f44faf7472f6834cebefcc5fac7055416af625d"
+    },
+    {
+      "path": "scripts/sculpture-totems-validation.json",
+      "bytes": 6071,
+      "sha256": "dae1646ad5258549d6bf7841c540a2e6643e93db9663fc6f562a8a99ac8ae566"
+    },
+    {
+      "path": "scripts/spark-economy-validation.json",
+      "bytes": 732,
+      "sha256": "dfbc69e2a1ed5b9e03f7d49a3af1731a329db33a33bc16d053ef3539edffb9b5"
+    },
+    {
+      "path": "scripts/unified-game-validation.json",
+      "bytes": 2839,
+      "sha256": "d0afe64d66c327c6a87afd7b10a29ef36c6996edf05a9cc8faf39baaeef951ac"
+    },
+    {
+      "path": "scripts/universe-mischief-validation.json",
+      "bytes": 13396,
+      "sha256": "63f10cd847f980296a75cc0777511793ef3bec5c551b676adc92caa14b7dad8a"
+    },
+    {
+      "path": "scripts/universe-phase-validation.json",
+      "bytes": 882,
+      "sha256": "ecf912d291a233ed3d3727885b16d530c849cec83a56bddf4a560d5a7634a1ac"
+    },
+    {
+      "path": "scripts/v1-closure-validation.json",
+      "bytes": 3581,
+      "sha256": "da20303048dea2aa13de4a250dd9038d91049352c19eee133a874951223efefd"
+    },
+    {
+      "path": "scripts/v1-living-audit.json",
+      "bytes": 5224,
+      "sha256": "6f18a4661bd225c3bb119f09a65200bb082dee925d1c0ed9b0ca2b3f3cd1f70e"
+    },
+    {
+      "path": "scripts/v1-original-audit.json",
+      "bytes": 4561,
+      "sha256": "432a88eb12368dd3cbd2c6167e7cb48188dd13a9e9b252c2a9f52f6d2af99db0"
+    },
+    {
+      "path": "scripts/v1-variation-sample.json",
+      "bytes": 3392,
+      "sha256": "2c776c9c375b76791bcad648018655ab2a6fb7b0972c307e998d2c2fe769ca4c"
+    },
+    {
+      "path": "scripts/v1-vast-audit.json",
+      "bytes": 5222,
+      "sha256": "d6e0a9099c8029764b6590ba903df972f4cb9dcab4bf91135dd6f5a5ea451c93"
+    },
+    {
+      "path": "scripts/v2-f1-validation.json",
+      "bytes": 1681,
+      "sha256": "3e120e8616e4a5614019bf9682a0b545db977d134753cf2b40f6180d4801477f"
+    },
+    {
+      "path": "scripts/v2-f2-validation.json",
+      "bytes": 633,
+      "sha256": "110573aa936f8a5bb274c3eb058936de6af2e8cbf263c1254177a97564a9ee31"
+    },
+    {
+      "path": "scripts/viaje-01-validation.json",
+      "bytes": 12464,
+      "sha256": "eb8a2c2da9f8de8651805ff29e0d735bafc558b937209a9f098f3d241edf1dbe"
+    },
+    {
+      "path": "scripts/viaje-02-validation.json",
+      "bytes": 3207,
+      "sha256": "1759ae863f3f4ed10ee242062dea2b7afe118596709de4738ba234bd60a2831e"
+    },
+    {
+      "path": "scripts/wow-01-validation.json",
+      "bytes": 463,
+      "sha256": "f56566c31be732c48419cdf48eb05b1e65cf74e7e776df4394b6b52a08874678"
+    },
+    {
+      "path": "scripts/wow-02-validation.json",
+      "bytes": 342,
+      "sha256": "f9e3e37974cbe47320b362505a1f445ac9fa71835d437588c7138981afb43c52"
+    },
+    {
+      "path": "scripts/wow-03-validation.json",
+      "bytes": 1244,
+      "sha256": "b5b40b3665745cfe65803fc7e81c3d216f76c5be5b93f26226cf730a49677ff1"
+    },
+    {
+      "path": "scripts/wow-04-validation.json",
+      "bytes": 1244,
+      "sha256": "ec746b3950c614edab4d7be44a7fbbdf87f06b2f79e43833a8ad77b2365c5224"
+    },
+    {
+      "path": "scripts/wow-05-validation.json",
+      "bytes": 616,
+      "sha256": "30b3d28bc8227ce8b11829b542578280b0c694836dda217ed9b380ad943dcea1"
+    },
+    {
+      "path": "scripts/wow-06-validation.json",
+      "bytes": 616,
+      "sha256": "1a83d1354b462a63004f1ce51e87b6a00c3970f3fec890fe8c6d8112de77b00a"
+    },
+    {
+      "path": "scripts/wow-07-validation.json",
+      "bytes": 172,
+      "sha256": "f0da3798bfc947cba55275833000fcb9ce4ad6eb390f199576939ca711c9ab9e"
+    },
+    {
+      "path": "scripts/wow-08-validation.json",
+      "bytes": 616,
+      "sha256": "9c3b7c01b466937c3ff621ebc5abc900ab783febb80e6ef2709328911cf251fb"
+    },
+    {
+      "path": "scripts/wow-09-validation.json",
+      "bytes": 636,
+      "sha256": "5de82de4177b69672f06c7620b176ffe8766b6d984e8b1e480e7c1f1e41b60a0"
+    },
+    {
+      "path": "scripts/wow-10-validation.json",
+      "bytes": 637,
+      "sha256": "07197a758baef14d1d37191d6cf4f625d94d5e4190c5b8b9d842258cdb974955"
+    },
+    {
+      "path": "scripts/wow-11-validation.json",
+      "bytes": 637,
+      "sha256": "f6ca7d763d8659f2de3ae0bd06dfe9c9aff2cf97c7b42561ccb14ac59a8a5fe6"
+    },
+    {
+      "path": "scripts/wow-12-validation.json",
+      "bytes": 637,
+      "sha256": "8cb1d11e5891ff1766d2deb76843d19ee91939ee8976e16b98b07e49294d2a05"
+    },
+    {
+      "path": "scripts/wow-13-validation.json",
+      "bytes": 637,
+      "sha256": "d0b504ebbfc8cdaf3bbe2577249285a93b765baa17903ba0b20f5f707ef24705"
+    },
+    {
+      "path": "scripts/wow-14-validation.json",
+      "bytes": 637,
+      "sha256": "00d0519fffedbaabc8ae94b51c2c01775ba45a06a42bf5d041b5ff5a0a7526b8"
+    },
+    {
+      "path": "scripts/wow-15-validation.json",
+      "bytes": 637,
+      "sha256": "99f0a244b1377749c62901e1dec5cfcb2a52e1c434a6c3223dc86954a2a90b35"
+    },
+    {
+      "path": "scripts/wow-16-validation.json",
+      "bytes": 637,
+      "sha256": "5a6db3538545c1aee883b6e671158f314c20793a58d1971e5f9a0a9ab2fd3cb4"
+    },
+    {
+      "path": "scripts/wow-17-validation.json",
+      "bytes": 637,
+      "sha256": "ea58c9b386717d0427926cd9a3b8d3edf7e62ba4a28d2c3092772e3ae398da04"
+    },
+    {
+      "path": "scripts/wow-18-validation.json",
+      "bytes": 637,
+      "sha256": "bdd6e441d4767fea73f7a2cfd2270f13297e975278d2f7a270c36d635ebae194"
+    },
+    {
+      "path": "scripts/wow-19-validation.json",
+      "bytes": 637,
+      "sha256": "569b22c9beed926cd10f7884ae44818ff323c1c44a4a5df0f85d7e56d1f0b4d0"
+    },
+    {
+      "path": "scripts/wow-20-validation.json",
+      "bytes": 637,
+      "sha256": "d5d2f810c53ded9bebd40b58618b77cf77f5fb8d90a156f7a6231da732e6cb97"
+    }
+  ],
+  "count": 163,
+  "bytes": 6793912,
+  "preservedRuntimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+  "currentEvidence": "../panel/candidato-e/evidencia/",
+  "tests": {
+    "recordedAt": "2026-10-26T11:48:38.475603+00:00",
+    "releaseAudit": {
+      "version": "2.3.0-alpha.207",
+      "sourceModules": 312,
+      "htmlIDs": 514,
+      "staticImports": 955,
+      "shellAssets": 333,
+      "errors": [],
+      "warnings": [],
+      "notes": [
+        "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+        "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+      ]
+    },
+    "node": {
+      "command": "npm test",
+      "exitCode": 0,
+      "suites": 254,
+      "logSha256": "f3bfa58b3b910c94e78af55faadf0f53febabd781ca9499c0ec20ab05488f399",
+      "lastLine": "PASS: 254 Node suites with assertions (Web Audio helper excluded)"
+    },
+    "impact": {
+      "command": "npm run test:impact -- --base 7f6374b3 --list",
+      "selectedNodeSuites": 9,
+      "coveredBy": "full 254-suite run"
+    },
+    "markdown": {
+      "files": 149,
+      "brokenLinks": [],
+      "anchorReview": []
+    },
+    "runtime": {
+      "matchesBase": true,
+      "digest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+      "protectedFiles": 311,
+      "contracts": 13
+    },
+    "browserAndAudio": "Not rerun: runtime, tests and build scripts are byte-identical to E7. Prior E evidence retained with its scope."
+  }
+}

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {PLACES,PLACE_IDS,TOTAL_STARS,roundStars,normalizePlaces,starCount,placeOpen,previousPlace,nextOnPath,allComplete,initialize} from '../src/places.js';
+import {PLACES,PLACE_IDS,TOTAL_STARS,roundStars,roundPercent,roundTime,normalizePlaces,starCount,placeOpen,previousPlace,nextOnPath,allComplete,initialize} from '../src/places.js';
 // Eleven places, 33 stars; the five of the Journey open after it, the six new ones in order, each after the one before
 // it (plan H3).
 assert.equal(PLACES.length,11);assert.equal(TOTAL_STARS,33);assert.deepEqual(PLACE_IDS.map(previousPlace),[null,null,null,null,null,'vacio','jardin','dunas','cristales','faros','ruinas']);
@@ -43,3 +43,8 @@ Date.now=realNow;
 // Plan I4: the steps of your notes are kept beside them, only when there is one for each note.
 {const n=normalizePlaces({version:2,notes:{lago:[60,62],cueva:[67]},noteSteps:{lago:[0,6],cueva:[1,2],jardin:[3]}});assert.deepEqual(n.noteSteps,{lago:[0,6]});assert.deepEqual(normalizePlaces({}).noteSteps,{});}
 console.log('PASS places: eleven places and 33 stars, the Journey gives ★ (★★ if played on time), a round gives stars, sparks and a record and gives back the chapter, Maestro opens with ★★ (tempo, window, ×1.5), half from the fourth round, only ★ without sound, an open round dropped on reload');
+
+// Display precision must never announce a rhythm threshold that was not earned.
+for(const ratio of [.6999,.7,.746,.74999,.75,1]){const display=Number(roundPercent(ratio).replace(',','.'));assert(display<=ratio*100+1e-9);if(display>=75)assert(roundStars({onTime:ratio})[1]);}
+assert.equal(roundPercent(.746),'74,6');
+for(const [ms,text] of [[59999,'0:59'],[60000,'1:00'],[119999,'1:59'],[120000,'2:00'],[-1,'0:00'],[NaN,'0:00'],[Infinity,'0:00']])assert.equal(roundTime(ms),text);

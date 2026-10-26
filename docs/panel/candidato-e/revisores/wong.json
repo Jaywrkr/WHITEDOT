@@ -1,0 +1,62 @@
+{
+  "lens": "Simulated Wong lens: mobile UX, clear actions, precision, legibility and hierarchy; not the named creator's real opinion",
+  "scope": "Blind simulated Wong closure review. Fresh source/capture snapshot: Kubono 2.3.0-alpha.207, revision 3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58, runtimeDirty false, digest 14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062. Inspected all three fresh 390×844 scripted captures in /tmp/e7-capturas-cierre: 21-lugares, 32-libro and 34-favoritos, plus their manifest and selected current favorites/journal/rare-cards/styling source. Initial chapter, song, menu, guide and result judgments retain explicitly earlier screenshot coverage from e8368253 in /tmp/e7-final-capturas; those surfaces were not freshly recaptured for this closure. No tests, browser interaction or listening performed by this reviewer.",
+  "scores": {
+    "visual": 8.0,
+    "audio": null,
+    "creativity": 7.5,
+    "sensation": null,
+    "cohesion": 8.0,
+    "polish": 8.0
+  },
+  "scoreBasis": {
+    "visual": "Fresh mobile collection now presents the named object, portrait, ability and garden state in the opening viewport; saved places now present a named destination and visit button. Locked destination names are readable. These observed improvements justify 8.0; retained world/menu/song composition assessments use earlier captures, not fresh full-runtime coverage.",
+    "audio": "Unobserved. The manifest audio-running state is not listening evidence.",
+    "creativity": "7.5 retained for the previously observed small traveler, sparse musical landscape and earned-layer song ring. The fresh changes improve access and presentation rather than adding a newly observed creative concept. No musical invention assessment.",
+    "sensation": "Unobserved. Static fixtures do not establish touch response, motion pacing, rhythm feel or emotional experience during play.",
+    "cohesion": "8.0 retained: fresh journal changes preserve the existing black, monospaced, square-control language and integrate disclosure and destination actions consistently. Earlier menu/guide/result/song visual coverage remains contextual evidence.",
+    "polish": "8.0 for the observed 390×844 states: all three previously evidenced defects are resolved in fresh images and source. The core card and favorite actions are now reachable in the opening viewport, with secondary filters deferred. This is a visual/source judgment, not an independent interaction-suite result."
+  },
+  "strengths": [
+    {
+      "evidence": [
+        "/tmp/e7-capturas-cierre/34-favoritos.png",
+        "src/favorites.js:71",
+        "src/journal.js:120"
+      ],
+      "observation": "Prior favorites-entry defect resolved. The fresh entry shows Mi primer lugar, its surface/style/tempo and one Ir a este lugar action directly. Current openFavorites scrolls to the existing first saved-place card, with the save form as the empty-list fallback."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-capturas-cierre/32-libro.png",
+        "src/rare-cards.js:82",
+        "src/rare-cards.js:97",
+        "src/journal.js:110",
+        "src/journal.js:114"
+      ],
+      "observation": "Prior collection-entry defect resolved. Search and type share a row; optional filters sit behind Filtrar hallazgos; the first card displays Fósil de ritmo, its portrait, ability and En tu jardín state within the initial viewport. Its name precedes the portrait, Lo próximo is hidden for cards and Refugio follows the cards."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-capturas-cierre/21-lugares.png",
+        "styles/estilo-j.css:596"
+      ],
+      "observation": "Prior locked-name legibility defect resolved. Dunas, Cristales, Faros, Ruinas and Cueva are now readable in the same dim-text family as Cerrado. The approved lock state remains clear without rendering destination names nearly invisible."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-final-capturas/30-menu.png",
+        "/tmp/e7-final-capturas/31-guia-jardin.png",
+        "/tmp/e7-final-capturas/33-resultado.png"
+      ],
+      "observation": "Retained earlier-snapshot strength: explicit continuation names Jardín, the contextual guide highlights one current step, and results separate earned stars from this-round criteria. These surfaces were observed on e8368253 and were not freshly recaptured in this closure."
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "No remaining defect established in the three fresh captures. This is a scoped resolution judgment, not a claim of complete product verification.",
+    "Fresh rendered coverage is limited to 390×844 places, collection and favorites. The coordinator reported passing entry/filter/focus/persistence checks across other viewports; this reviewer neither ran nor independently verified those suites.",
+    "Scripted fixtures, including forced laboratory cards, establish displayed states only. No natural rarity, human use, physical device, screen-reader operation, timing, persistence interaction or perceptual audio evidence was gathered. Audio and sensation remain null.",
+    "The small cube, black space, preserved world/music, sequential eleven-place unlocking and slow transitions remain approved design constraints."
+  ]
+}

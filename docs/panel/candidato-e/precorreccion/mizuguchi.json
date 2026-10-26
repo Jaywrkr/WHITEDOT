@@ -1,0 +1,58 @@
+{
+  "lens": "Mizuguchi — simulated lens: synchrony, input, response and latency; not the named creator's real opinion",
+  "scope": "Independent blind static review of candidate 2.3.0-alpha.207, supplied revision c594c021. Read AGENTS.md, src/journey-pulse.js, src/journey-rhythm.js, src/canvas.js, relevant src/audio.js scheduling and visual callback paths, src/interactions.js pulse call sites, and tests/pulse-output-timing.mjs and tests/radio.mjs as text. No browser, tests, audio renders, listening or repo mutations. /tmp/e7-final-capturas was absent at review time.",
+  "scores": {
+    "visual": null,
+    "audio": null,
+    "creativity": 7.5,
+    "sensation": null,
+    "cohesion": 7.5,
+    "polish": 7
+  },
+  "scoreBasis": {
+    "visual": "Unobserved: no captures available; drawing code does not establish the rendered visual quality.",
+    "audio": "Unobserved perceptually: scheduling and synthesis code were inspected, but technical audio analysis is not listening.",
+    "creativity": "Code-level design only: player hits advance a recurring melodic theme in the current place's scale; distinct place rhythms, a two-bar musical demonstration and earned cube forms connect musical participation with progression. No claim about novelty or felt enjoyment from play.",
+    "sensation": "Unobserved: no direct play, haptic experience or listening; timing equations cannot establish sensation.",
+    "cohesion": "Technical interaction design only: shared heard-time judgement, output-aware pulse landing and world callbacks establish a consistent temporal language. The demonstration's single future event slot weakens that consistency.",
+    "polish": "Static implementation scope only: direct cube press, input cancellation, stale callback guards and reduced-motion handling are concrete refinements. Guide timing remains vulnerable to lookahead, and actual device synchrony was not observed. Test quantity does not determine this score."
+  },
+  "strengths": [
+    {
+      "evidence": "src/journey-pulse.js:24, src/journey-pulse.js:30, src/journey-pulse.js:40, src/journey-pulse.js:67, src/audio.js:302, src/audio.js:308",
+      "detail": "Pulse judgement refers to the estimated time heard, while light and haptics land at the estimated emitted note output. Studio and flower callbacks use the same output-aware scheduling helper. This is a coherent technical basis for audiovisual synchrony, without proving perceptual alignment."
+    },
+    {
+      "evidence": "src/canvas.js:39, src/canvas.js:42, src/canvas.js:66, src/canvas.js:73, src/journey-pulse.js:68, src/journey-pulse.js:69",
+      "detail": "The small cube has a direct press-down instrumental response with a 24-pixel hit radius; ordinary taps preserve their original touch timestamp for judgement. Blur, hidden-page and modal handling cancel input or suppress stale feedback, and reduced motion removes the cube kick."
+    },
+    {
+      "evidence": "src/journey-rhythm.js:7, src/journey-rhythm.js:19, src/journey-rhythm.js:51, src/journey-pulse.js:96, src/journey-pulse.js:123",
+      "detail": "Place-specific counted steps, a musical demonstration and one anticipatory Line guide share the same rhythm vocabulary. Successful timing advances a themed melodic phrase rather than adding an unrelated reward sound. This is an evidenced design relationship, not a listening judgment."
+    }
+  ],
+  "findings": [
+    {
+      "type": "VERIFIED_DEFECT",
+      "priority": "P2",
+      "evidence": "src/journey-rhythm.js:55, src/journey-rhythm.js:56, src/journey-rhythm.js:58; src/audio.js:164",
+      "detail": "The demonstration stores only the latest scheduled note in singing.last, then singingNow rejects it while its timestamp is ahead of audibleTime. Scheduling runs up to 120 ms ahead. For example, with SIX=.15 and outputLatency=.4, an eighth-spaced next demonstration note is scheduled before the previous note is audible; it overwrites that previous note, so the Line cannot identify the note currently heard. The scheduler also clears singing at the scheduled end before the final delayed audio has reached output. This is established from code, not reproduced in a browser.",
+      "consequence": "The two-bar teaching pattern can sound without its matching Line highlight, particularly on high-latency output, weakening the guide intended to teach the player's timing.",
+      "remedy": "Retain a short queue of scheduled demonstration events and derive the active event from audibleTime; retire the demonstration after its final event's audible lifetime. Cover overlapping lookahead events and final-tail visibility at 180–400 ms output latency."
+    },
+    {
+      "type": "LIMITATION",
+      "priority": "P2",
+      "evidence": "tests/pulse-output-timing.mjs:3, tests/pulse-output-timing.mjs:8, tests/radio.mjs:65, tests/radio.mjs:123",
+      "detail": "The inspected timing checks use substituted clocks, timers and AudioContext nodes. They specify expected scheduling behavior, but do not measure browser input delivery, timer jitter, display refresh, physical speaker/Bluetooth delay or haptic onset. These tests were read, not executed during this review.",
+      "consequence": "Actual simultaneous touch, light and sound remains unverified even where the arithmetic is internally consistent.",
+      "remedy": "Observe direct cube presses on a representative phone with its speaker and a Bluetooth output, recording touch-to-feedback and audio-to-light alignment; retain perceptual audio and sensation scores as unobserved until that evidence exists."
+    }
+  ],
+  "limits": [
+    "No screenshots were available; visual, perceptual audio and sensation scores are null.",
+    "No tests or browser/audio runs were performed. Findings distinguish static code consequences from observed runtime behavior.",
+    "Empty-space taps intentionally defer activation until release to distinguish dragging and holding (src/canvas.js:40, src/canvas.js:66); the direct cube press path is immediate. This interaction choice is not classified as a defect without play evidence.",
+    "Black space, Geist Mono, the small cube, preserved generation/music, eleven sequentially unlocked ring places and slow transitions are accepted constraints, not defects."
+  ]
+}

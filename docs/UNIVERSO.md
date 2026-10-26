@@ -1,6 +1,6 @@
 # El universo
 
-Guía de diseño aprobada por Jay el 22 de octubre de 2026. El Mundo de Kubono es un universo infinito: no tiene árboles, montañas ni lagos. Esta guía fija sus regiones, la regla de cámara, el sonido y el plan de superbiomas. Cada fase la construye en su rama.
+Guía vigente del universo procedural en alpha.207. Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
 
 ## Reglas
 
@@ -43,7 +43,7 @@ Viven en el Abismo de silencio, el espacio entre continentes (`universe-regions.
 
 ## Superbiomas
 
-Un superbioma es una región más una **familia musical**. Las 10 familias que se distinguen al oído:
+Un superbioma es una región más una **familia musical**. El catálogo organiza52 géneros en10 familias:
 
 1. Ambient
 2. Downtempo y hip-hop
@@ -71,110 +71,24 @@ Los 52 géneros quedan como variaciones dentro de cada familia (`superbiomes.js`
 | Tribal | Afro house, Tribal, Electrónica andina, Amapiano |
 | Disco | Nu-disco, Cosmic disco, Boogie, Electro-funk, Jazztronica, Soulful house |
 
-**Combinaciones que valen:** las diez regiones de los continentes con cualquiera de las diez familias, y el Abismo (Vacío, Aurora, Cometas, Constelaciones y Nebulosa oscura) solo con Ambient, porque el mar entre continentes siempre tiene música tranquila. Son 105 superbiomas. Cada lugar ya tiene región y género, así que su superbioma sale de datos que ya existen y el mapa no se mueve. Se nombran con la región y la familia: «Marea · Dub», «Púlsares · Techno». Antes, la música separa a los géneros gemelos: medido, 25 de 52 van entre 115 y 130 BPM y hay 26 parejas casi iguales.
+**Combinaciones que valen:** las diez regiones de los continentes con cualquiera de las diez familias, y el Abismo (Vacío, Aurora, Cometas, Constelaciones y Nebulosa oscura) solo con Ambient, porque el mar entre continentes siempre tiene música tranquila. Son 105 superbiomas. Cada lugar ya tiene región y género, así que su superbioma sale de datos que ya existen y el mapa no se mueve. Se nombran con la región y la familia: «Marea · Dub», «Púlsares · Techno». Esta cifra cuenta tipos de superbioma; no es el número total de mundos ni una medición de variedad percibida.
 
-## Fases
+## Generación y direcciones
 
-| # | Rama | Qué |
-|---|---|---|
-| 1 | `claude/universo-nombres` | Nombres, colores separados y textos (alpha.106) |
-| 2 | `claude/universo-capas` | Sistema de tres capas, bordes y sonido bajo; Vacío y Polvo |
-| 3 | `claude/universo-viaje` | Marea, Cúmulo, Tormenta solar y los momentos del Viaje |
-| 4 | `claude/universo-resto` | Restos, Esporas, Anillos, Prisma, Púlsares y Pozo |
-| 5 | `claude/universo-nuevas` | Aurora, Cometas, Constelaciones y Nebulosa oscura |
-| 6 | `claude/universo-raros` | El momento raro de cada región |
-| 7 | `claude/musica-medida` | Medidor de diferencias entre géneros y escuchas de antes |
-| 8 | `claude/musica-house` | Separar las cuatro house |
-| 9 | `claude/musica-robotica` | Electro, Detroit, EBM y Robotic |
-| 10 | `claude/musica-groove` | Melodic, Nu-disco, Soulful, Broken beat, Cosmic, Jazztronica y Boogie |
-| 11 | `claude/musica-resto` | Los demás gemelos y el abanico de tempos |
-| 12 | — | Sustituida: las 10 familias y la fusión dan la identidad; la medida final quedó en la fase 11 |
-| 13 | `claude/super-modelo` | Qué es un superbioma y qué combinaciones valen |
-| 14 | `claude/super-mapa` | Reparto en el universo sin mover lo explorado |
-| 15 | `claude/super-fusion` | Lo visual sigue a la música y la música al lugar |
-| 16 | `claude/super-bordes` | Transición entre superbiomas en el compás |
-| 17 | `claude/super-coleccion` | La Bitácora como mapa de superbiomas |
-| 18 | `claude/super-viaje` | Un superbioma fijo por capítulo del Viaje |
+Una dirección conserva semilla, perfil de generación/catálogo/layout, coordenadas y capa. `world-identity.js` admite generaciones1 y2 y tamaños classic, wide, vasto, grand e immense. No cambiar versiones ni consumir el RNG antiguo para añadir contenido.
 
-Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbiomas (13–18) empiezan cuando estén las fases 4 y 11.
+Favoritos conserva esa identidad y puede volver a una dirección compatible. El lugar es reproducible; el tiempo, ambiente y composición continúan evolucionando. No equivale a guardar una grabación exacta. Las coordenadas están acotadas por validación numérica; el producto no promete infinito matemático ni un conteo de mundos únicos comprobados.
 
-## Estado
+## Música y vida
 
-- **Pendientes revisados** (alpha.127):
-  - **Sin restos terrestres:** las criaturas, plantas y construcciones del mundo tienen nombres del universo; se conservan sus ids para no tocar los guardados. Cometa resonante, Asteroide lento y Sombra del vacío sustituyen al ciervo, la tortuga y la ballena, y el satélite, el prisma y la chispa tienen dibujo propio.
-  - **Hitos vistos desde arriba:** Estrella guía, Nebulosa madre, Cúmulo de formas, Monolito y Baliza; ninguno sube de una línea de suelo. El escáner nombra fuentes de ondas, órbitas rotas, chispas, estrellas de luz, destellos y púlsares.
-  - **Onda del pulso:** de los objetos que responden a una misma onda, solo uno grave suena; así muchos graves juntos ya no retumban.
-  - **Fase 12:** sustituida. Las 10 familias, la fusión y los bordes ya dan identidad a cada lugar, y la medida de la fase 11 (0 parejas de géneros bajo la línea) sigue valiendo porque ningún género cambió desde entonces.
-  - **Viaje:** los capítulos buscan su superbioma hasta unos 60 000 px, porque el portal lleva el cubo. En seis mundos Marea encuentra su familia en cinco y Tormenta solar en todos.
-- **Plan de la auditoría · Fase 5 · El tema como llave** (alpha.133, aprobado por Jay): después del Viaje, el universo reconoce el tema. Tocado entero a tiempo junto a un hito, el hito toca su motivo y luego el tema contigo; en un superbioma raro, el lugar lo contesta una quinta arriba. Cada llave queda en la Bitácora.
-- **Plan de la auditoría · Fase 3 · Coherencia** (alpha.131): quedaban nombres terrestres en la vida del Mundo y sus voces. Ahora son Meteoros de eco, Planetas graves, Estrellas de pulso, el Quásar imitador, enjambres y corrientes (ids intactos); `universe-cleanup.mjs` revisa todas las cadenas de voces, logros, especies, vida y mascota. Los momentos raros suenan y se listan en la Bitácora; el contador de superbiomas se puede completar (104, más el ausente si alguien lo oye). Queda «Tierra de Origen»: el nombre forma parte de la huella fija del mapa.
-- **Fase 18 · Viaje** (alpha.126): cada capítulo del Viaje busca su superbioma sin cambiar el mapa. Prueba las familias en orden y, si ninguna está cerca, va al lugar más cercano de su región (`CHAPTER_FAMILIES`, `findChapter`):
-  - **Polvo:** House, luego Downtempo.
-  - **Marea:** Downtempo, Dub o Ambient.
-  - **Cúmulo:** Disco, luego House.
-  - **Tormenta solar:** Techno, Electro, Breaks o Dub.
-  - **Vacío:** siempre Ambient.
-  - **Medido en seis mundos:** Polvo, Cúmulo y Vacío casi siempre llegan a su superbioma. Marea y Tormenta solar solo cuando el mapa lo tiene cerca, porque las Mareas tranquilas son raras.
-- **Fase 17 · Colección** (alpha.125): en la Bitácora, la pestaña de lugares tiene el mapa de superbiomas, una fila por región y una columna por familia, con el Abismo solo en Ambient. Lo oído sale en dorado con su día; lo que falta, en contorno y marcado si es raro (◇), muy raro (◆) o si no aparece (×). Debajo, las constelaciones unidas, cada una con su figura (hasta 12).
-- **Fase 16 · Bordes** (alpha.124): el movimiento sigue a la familia que suena de verdad (`MU.dnaA`), no a la que hay bajo el cubo, así que cambia cuando cambia la música. El cambio espera al siguiente primer tiempo del compás y se mezcla durante un compás entero (`createBorder`, `blend`). Si la música vuelve antes del primer tiempo, no hay cambio.
-- **Fase 15 · Fusión** (alpha.123): `superbiome-fusion.js` da a cada familia su forma de mover las capas de la región en la que suena; la forma y el color de la región no cambian.
-  - **Ambient:** casi quieto, a 0,45 de velocidad, y el pulso apenas se nota.
-  - **Downtempo:** lento, a 0,75.
-  - **Dub:** lento, a 0,6, y la capa media deja un eco más tenue 0,4 s detrás.
-  - **House:** late con el bombo.
-  - **Techno:** rápido, a 1,35, con golpe seco y movimiento en líneas rectas.
-  - **Breaks:** a 1,2, con saltos en los golpes fuertes.
-  - **Drum & bass:** muy rápido, a 1,7, con saltos más grandes.
-  - **Electro:** a 1,2, se enciende o se apaga en el pulso, en líneas rectas.
-  - **Tribal:** la capa media se balancea con el compás.
-  - **Disco:** las capas lejana y media giran un poco alrededor del centro.
-  - Con movimiento reducido no hay giro, eco ni saltos. El reloj de la región nunca salta al cambiar de familia.
-- **Fase 14 · Reparto** (alpha.122): Jay eligió no tocar el mapa. `scripts/superbiome-census.mjs` cuenta las regiones de cada superbioma en seis mundos (1846 de continente y 800 del Abismo) y escribe `src/superbiome-rarity.js`: 70 comunes (al menos 0,5 % de las regiones), 31 raros, 3 muy raros (Drum & bass en Polvo, Cúmulo y Anillos) y 1 ausente (Restos · Drum & bass). El aviso de región marca los raros: «Marea · Dub (raro)». La prueba repite el censo y exige la misma tabla.
-- **Fase 13 · Modelo de superbiomas** (alpha.121): diez familias para los 52 géneros y 105 combinaciones válidas. En el mundo principal (61 × 61 regiones) aparecen 62. Al entrar a una región, su aviso empieza por el superbioma (`Polvo · House — Deep house · 120 BPM`), y el primer día que se oye cada uno queda en `S.universe.super`. El reparto (fase 14) decidirá cómo llegan los que faltan, como Drum & bass en Polvo o Restos.
-- **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
-- **Fase 2 · Capas** (alpha.107): `universe-layers.js` dibuja las tres capas de cada región sobre el suelo del Mundo, en celdas de 150, 120 y 110 px que se mueven al 35, 70 y 100 % de la cámara. Cerca del borde de una región las celdas de las dos se mezclan (150 px a cada lado). Polvo tiene su bruma, granos con estela de viento y motas que se apartan del cubo y vuelven en 1,5 s; el Vacío no dibuja nada. El aire de cada región es un ruido filtrado con ganancia máxima 0,012 (unos −38 dB), muy bajo la música. Polvo ya no dibuja hierba en el suelo. Coste: en el navegador de pruebas no se distingue del ruido de medida.
-- **Sin restos terrestres** (alpha.116): hierba, árboles de luz, pilares, plantas, flora de la vida del mundo, plantas que se riegan, bandadas y lluvia se dibujan desde arriba; los textos de vida y logros usan palabras del universo. Completado en alpha.127.
-- **Fase 6 · Momentos raros** (alpha.115): `universe-rare.js` da un momento raro a cada región salvo el Vacío, con probabilidad 1/48 por compás según el hash del lugar y el compás; dura 4,5 s y se cuenta en `S.universe.rare`.
-- **Fase 5 · Regiones nuevas** (alpha.114): Aurora, Cometas, Constelaciones (se unen al completar el tema, guardado en `S.universe.constellations`) y Nebulosa oscura, en el Abismo. Las figuras de constelación ya están en la Bitácora (fase 17).
-- **Fase 4 · El resto de regiones** (alpha.113): Restos, Esporas, Anillos, Prisma, Púlsares y Pozo con sus tres capas y su aire. Las diez regiones con detalle ya están dibujadas. El pulso del jugador llega a las capas (`universePulse`) para la onda del Prisma. Pendiente: los objetos que aún vienen de antes (pilares de Restos, plantas, flores, lluvia inclinada) y las regiones nuevas.
-- **Fase 11 · Los últimos gemelos** (alpha.112): Boom bap y G-funk, Drum & bass y Liquid quedan separados por ritmo y tempo. **Medida final de los 52 géneros: 0 parejas bajo la línea (antes 16)**; la más cercana, Deep house ~ Tribal, a 0,13.
-- **Fase 10 · Groove** (alpha.111): Boogie baja a 98–104 con bombo sincopado; Cosmic disco queda en 110–116, sin palmada y con timbales. De 0,084 a 0,478 entre ellos.
-- **Fase 9 · Las robóticas** (alpha.110): Electro robótico baja a 108–114 y se vuelve exacto; Electro es la 808 con semicorcheas; Breaks sube a 132–138 con cajas fantasma. Ninguno queda bajo la línea.
-- **Fase 3 · Regiones del Viaje** (alpha.109):
-  - **Marea:** anillos enormes y lentos a lo lejos, fuentes que sueltan un anillo por compás y una estela de ondas detrás del cubo.
-  - **Cúmulo:** galaxias pequeñas a lo lejos, racimos de 5–12 estrellas que se encienden en secuencia cuando el cubo se acerca y estrellas que parpadean en el beat.
-  - **Tormenta solar:** superficie que hierve, arcos de plasma que tiemblan y llamaradas en el beat que dejan un anillo, algunas en rojo. Las descargas existentes se ven desde arriba (se ramifican desde donde caen, no caen del cielo).
-  - Cada una tiene su aire propio, muy bajo: un zumbido grave (Marea), un brillo agudo (Cúmulo) y un chisporroteo (Tormenta solar).
-  - **Momentos del Viaje vistos desde arriba:** el faro de Polvo es un púlsar (núcleo, halo y un haz que barre el suelo); los lotos de la Marea son fuentes de ondas; la criatura del Cúmulo es un racimo de tres estrellas; el faro de regreso es una luz dorada en el borde con una flecha, sin columna vertical.
-  - El Cúmulo ya no dibuja hierba en el suelo.
-  - Pendiente: la flora y los objetos que aún vienen de antes (plantas, flores, lluvia inclinada del clima) cambian en las fases 4 y 6.
-- **Fase 8 · Las house** (alpha.108): Deep, Progressive y Melodic house dejan de compartir batería; Chicago, Acid, Soulful y Garage house separan tempo y firma. Medida completa: de 16 parejas bajo la línea quedan 5 y ninguna es house; quedan Electro, Electro robótico y Breaks, Drum & bass y Liquid, Cosmic disco y Boogie, Boom bap y G-funk.
-- **Fase 7 · Medida de la música:** `scripts/genre-distance.py` renderiza los 52 géneros con el programador real y compara tempo, ritmo (16 pasos por compás), timbre (8 bandas) y densidad. La línea es la mayor distancia de un mismo género consigo mismo en otras variaciones (10 géneros), más un cuarto.
+`audio.js` sintetiza con Web Audio nativo; géneros, familias, técnicas, instrumentos y territorio definen la base electrónica. Cada lugar puede tener distinto tempo/densidad. Las transiciones mantienen frases y armonía; ninguna tarea de UI autoriza sustituir esta música aprobada.
 
-## Medida de los géneros (Fase 7)
+`universe-layers.js` dibuja capas, `superbiome-fusion.js` relaciona familias y movimiento, `world-light-model.js` y `world-weather.js` gestionan luz/clima. Criaturas, flora y fenómenos tienen sistemas propios; [mapa técnico](ARQUITECTURA.md) y [catálogo de hallazgos](HALLAZGOS_Y_ACTIVIDADES.md).
 
-Revisión `claude/musica-medida`, renders de 12 s a 44,1 kHz, pico máximo 0,89. Línea: 0,125. **16 parejas quedan por debajo**, entre 16 géneros:
+El modelo de rareza y el censo no garantizan una probabilidad individual de encuentro en una hora. Depende de recorrido, mundo, región y condiciones. Las muestras forzadas de laboratorio no acreditan encuentros naturales.
 
-| Distancia | Pareja |
-|---|---|
-| 0,061 | Electro ~ Electro robótico |
-| 0,068 | Melodic house ~ Soulful y gospel house |
-| 0,069 | Melodic house ~ Garage house (Nueva York) |
-| 0,077 | Breaks ~ Electro |
-| 0,082 | Drum & bass ~ Liquid drum & bass |
-| 0,084 | Cosmic disco ~ Boogie |
-| 0,093 | Progressive house ~ Melodic house |
-| 0,097 | Progressive house ~ Soulful y gospel house |
-| 0,102 | Soulful y gospel house ~ Garage house (Nueva York) |
-| 0,105 | Progressive house ~ Chicago house |
-| 0,106 | Progressive house ~ Garage house (Nueva York) |
-| 0,112 | Deep house ~ Melodic house |
-| 0,116 | Melodic house ~ Acid house |
-| 0,116 | Acid house ~ Soulful y gospel house |
-| 0,118 | Deep house ~ Progressive house |
-| 0,124 | Boom bap ~ G-funk |
+## Estado y validación
 
-- **El grupo house es el problema mayor:** Melodic, Soulful, Garage house, Progressive, Chicago, Deep y Acid house se confunden entre sí (11 de las 16 parejas).
-- **Otros gemelos:** Electro, Electro robótico y Breaks; Drum & bass y Liquid; Cosmic disco y Boogie; Boom bap y G-funk.
-- **Distintos ya:** los otros 36 géneros superan la línea con todos.
-- **Límite:** es una medida para guiar la escucha, no un juicio artístico. Las parejas se escuchan antes de cambiar nada.
+El candidato E conserva generación, mapas, especies y música; mejora presentación, guía, entrada y guardados. [Entrega E](ENTREGA_E.md) · [auditoría](panel/candidato-e/informe.md). Las tablas de implementación y mediciones antiguas viven en Git; no son fases nuevas por ejecutar.
+
+Las medidas automatizadas de familias/semillas no sustituyen escucha ni observación de exploración real. El panel deja la prominencia inicial de Jardín/Ruinas como riesgo visual acotado; comprobar ayuda y comprensión antes de modificar el arte.

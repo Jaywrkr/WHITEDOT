@@ -1,6 +1,6 @@
-# Cuenta y progreso automático · alpha.59
+# Cuenta y progreso automático
 
-Revisión: 20 de octubre de 2026. La configuración de Supabase está **detenida por petición de Jay**. Alpha.59 solo cambia el destino configurable de recuperación y el borrado local al eliminar la cuenta; no ejecutar otros pendientes por leer esta guía.
+Revisión documental:26 de octubre de 2026. La evidencia de dispositivos de esta guía pertenece a sus pruebas históricas, no al candidato E. La configuración de Supabase está **detenida por petición de Jay**. Alpha.59 solo cambia el destino configurable de recuperación y el borrado local al eliminar la cuenta; no ejecutar otros pendientes por leer esta guía.
 
 ## Funcionamiento vigente
 

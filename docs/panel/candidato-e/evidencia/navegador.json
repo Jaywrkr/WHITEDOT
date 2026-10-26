@@ -1,0 +1,186 @@
+{
+  "kind": "focused browser regressions, not full catalogue or CI",
+  "flows": [
+    {
+      "name": "offline",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/offline_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/offline.log",
+      "sha256": "e3e99e7dcbadc2f9fdc98888f068adb3758e8e668f5b39bfce8b161699a60214",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "accessibility",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/accessibility_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/accessibility.log",
+      "sha256": "de48b52786a664a32621e74f16dd2e5f6388a53b4eb6d7de42b722db2748f80d",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "favorites",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/favorites_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/favorites.log",
+      "sha256": "0fa7e4c962c701dfcc45bc62eb51e6577f37d60338c77f8286ec6720fe9ce9d0",
+      "snapshot": "final source bytes 3c9d5dbc"
+    },
+    {
+      "name": "result_clarity",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/result_clarity_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/result_clarity.log",
+      "sha256": "0f99310bf4398b575bc5b94ab2ff0aa240fe713c4dc647cf34c3ed91f324bad9",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "touch_precision",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/touch_precision_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/touch_precision.log",
+      "sha256": "3eed755ef8514d82ea89f18f604b7bd2da3e098877cf79d1c1d642fb81921018",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "place_lesson",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/place_lesson_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/place_lesson.log",
+      "sha256": "07afd401281407cc006b4374bef40ffa4486f6fd117ab4ef4a3816b70bccd4ac",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "polish_navigation",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/polish_navigation_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/polish_navigation.log",
+      "sha256": "6c5e5d236a8287b5a9e72a94d3aee65a5181b1aa5a337e31c2d2c8f25ace3acf",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "collection_commit",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/collection_commit_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/collection_commit.log",
+      "sha256": "6fe0190cd86dd6bd424b7e84479661b6ff352d83666956322c740b722d217cad",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "song_authorship",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/song_authorship_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/song_authorship.log",
+      "sha256": "f624d4ab2d75abef44611b09258441a870fb5ca6b2a12b8b292f0d4ae29b6fd9",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "guide_context",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/guide_context_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/guide_context.log",
+      "sha256": "721f2d6151fea8d187daa17cb5f9998570cf7431b620e7e80342c5250edb29f7",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "house_v2",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/house_v2_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/house_v2.log",
+      "sha256": "464af2525aef48faeea9c8d194ea889064eed688a6e5b641191667924893a90d",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "house_sound",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/house_sound_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/house_sound.log",
+      "sha256": "02ff686405f7372e274417b101f41788fe24d33a8a5efa8e217d146588ba2a65",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "wild",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/wild_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/wild.log",
+      "sha256": "b4a3b280f20d0fc77056a87547e8a389c1df8e3e01a94a586b527e816d78c32d",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "interface",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/interface_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/interface.log",
+      "sha256": "ba8d9df67ee146d1619674e3068464fb13dabdd7ecf9d76f2c7658e23d0ad416",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "journal_entry",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/journal_entry_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/journal_entry.log",
+      "sha256": "8caafd9876ccfd437b94ae2215ea85eff8ae1b5c7d62790e3c97afa60034e242",
+      "snapshot": "final source bytes 3c9d5dbc"
+    },
+    {
+      "name": "collection_focus",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/collection_focus_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/collection_focus.log",
+      "sha256": "d72dd6f662e46d7701cb00a1b4f183567fad2332b666cf03bea4e93b746ee85e",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "collection_presentation",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/collection_presentation_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/collection_presentation.log",
+      "sha256": "7c945ca6356df7b79489d8a3975182536d1df4d70c304be857d681936e0c99b3",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "living-cards",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/living-cards_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/living-cards.log",
+      "sha256": "15825bae5e602d3ed2e312c44a3f8211adcedca8dd01a14ffba44aa7f6f855ae",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "favorite_save_failure",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/favorite_save_failure_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/favorite_save_failure.log",
+      "sha256": "8cfe0d9f2d01fd6ec1d78cb493cff29b158ab6f056eb81585110d7d3f0fc67fa",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    },
+    {
+      "name": "journal_v2",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/journal_v2_smoke.py",
+      "status": "pass",
+      "exitCode": 0,
+      "evidence": "logs/journal_v2.log",
+      "sha256": "e17ad67b4c6f34e15403936343a9274caf66f86559acc8b5b751ca7320e6552a",
+      "snapshot": "E7 component regression before the last journal-only layout cleanup; reused with scope stated in report"
+    }
+  ],
+  "uniqueFlows": 20
+}

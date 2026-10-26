@@ -68,3 +68,25 @@ Con `?prueba=1`, las rondas de los once lugares se distinguen de la campaña. La
 Segunda tanda independiente:8–12 personas tras corregir lo observado. Valorar comprensión, reconocimiento de la frase, deseo de continuar, orientación sin salto y las seis categorías. Escucha con altavoz/auriculares y al menos una ruta Bluetooth. El candidato también requiere teléfono físico de gama media, Safari móvil y lector real. La evaluación ciega posterior no recibe la nota objetivo; se informa tal como resulte.
 
 La duración de Bosque y la relación entre campaña, colección y casa quedan pendientes de estas observaciones. No se reducen metas ni se fuerza visitar el Refugio para aparentar una mejora.
+
+
+## Candidato E · objetivo diez
+
+Registro listo en [aceptacion-e.json](aceptacion-e.json). **No contiene participantes ni respuestas reales.** La versión/digest deben corresponder al candidato probado; [preservación](../scripts/verify-e-preservation.mjs) calcula el identificador reproducible. No introducir nombres, correos, coordenadas ni grabaciones. Las observaciones se quedan locales hasta que Jay decida compartirlas.
+
+1. Cinco personas nuevas: P1–P5, al menos dos no jugadores. Registrar éxito, atasco o abandono tal como ocurra. La primera tanda sirve para encontrar problemas; puede pertenecer a un candidato anterior identificado.
+2. Tras corregir lo observado, ocho a doce personas distintas: P6–P13 como mínimo. Esta confirmación sí debe corresponder al digest actual. No contar recargas, bots ni varias sesiones de una persona como personas nuevas.
+3. Observar objetivo, primera acción, primera flor en Jardín, siguiente lugar y reconocimiento de su frase. Anotar uso de guía interna y ayuda externa por separado. Criterio propuesto:80% de confirmación completa cada tarea sin ayuda externa y quiere continuar. Los abandonos/no observados no se sustituyen por éxitos.
+4. Pedir las seis valoraciones sin mostrar las notas del panel. Para la meta diez, el registro exige ocho respuestas válidas por eje y mediana declarada10; incluso eso **no certifica diez**, autenticidad ni representatividad estadística. Registrar también qué rechazaron y por qué.
+5. Android de gama media, Safari iOS, altavoz, auriculares, Bluetooth y lector: cada comprobación necesita evidencia y digest. Probar ocultar/volver, bloquear, llamada, rotación y pérdida de conexión conservando la partida.
+
+Usar una instalación/perfil temporal para nuevos jugadores, nunca borrar la partida personal. Festival aísla el inicio; `?lugar=jardin&prueba=1` y `?anillo=1&prueba=1` aíslan tareas concretas. Las aperturas generan registros distintos de la herramienta: reunirlas bajo la misma persona Pn en la observación manual. Un recorrido por atajo no demuestra haber completado el viaje continuo.
+
+Copiar `sessionTemplate` a la tanda correspondiente **solo después de observar**: marcar `observed:true`, conservar el digest y referenciar las notas reales. `externalHelp` y cada resultado deben reflejar lo ocurrido; `null` queda sin observar. El script no convierte esas declaraciones en una comprobación independiente.
+
+```sh
+node scripts/acceptance-gate.mjs docs/aceptacion-e.json
+node scripts/acceptance-gate.mjs docs/aceptacion-e.json --require-ready
+```
+
+El primer comando informa. El segundo termina con código2 si quedan criterios pendientes. No cambia la partida, no manda datos y no publica nada. CI completo del candidato también debe aprobarse antes de integrar; un catálogo anterior o las regresiones enfocadas no rellenan `browserFull`, `audioFull` o `ci` por sí solos.

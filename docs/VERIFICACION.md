@@ -1,109 +1,76 @@
-# Verificación
+# Verificación vigente
 
-Guía de comprobación. [Traspaso y evidencia actual](../HANDOFF.md). Las evidencias de cada revisión se distinguen al final; un resultado antiguo no certifica el candidato actual.
+[Traspaso](../HANDOFF.md) · [evidencia E](panel/candidato-e/informe.md). Registrar qué revisión se probó y distinguir lógica, navegador, renders, CI, despliegue y personas.
 
-Desde la raíz, con Node 18 o superior:
+## Entorno
+
+Cliente sin compilación ni dependencias npm de ejecución. Node18+; CI usa Node22. Python y Playwright son herramientas de prueba:
+
+```sh
+python3 -m pip install -r requirements-dev.txt
+python3 -m playwright install chromium
+```
+
+`CHROMIUM_PATH` puede apuntar al Chromium del sistema. Para jugar basta `python3 -m http.server 8000`. No iniciar el servidor Python/SQLite histórico como backend del producto.
+
+## Durante la iteración
 
 ```sh
 npm run audit:release
 npm run test:impact -- --base SHA_BASE
 ```
 
-Sustituir `SHA_BASE` por la revisión previa al cambio. La selección usa dependencias transitivas y contratos de archivos; una ejecución enfocada no equivale a la suite completa. Documentación sola requiere revisar enlaces y diff, auditoría y contratos afectados, sin navegador/audio.
+Usar la revisión anterior al cambio. La selección sigue dependencias transitivas y recursos leídos; `--list` solo enumera. Cachea éxitos de la misma instantánea durante una hora; cambios de archivos/entorno invalidan la caché. Opciones:`--no-cache`, `--jobs 1`, `--report RUTA.json`.
 
-El ejecutor local corre como máximo dos suites Node simultáneas y reutiliza solo resultados correctos de la misma instantánea durante una hora. Cualquier cambio en archivos versionados o no ignorados invalida la caché, incluidos recursos leídos dinámicamente. También compara Node, plataforma, argumentos, entorno y día local. La caché vive en el directorio temporal del sistema; no contiene variables de entorno, solo huellas. El resumen distingue pruebas ejecutadas, reutilizadas y omitidas tras un fallo.
+Como máximo dos procesos Node. Navegador/audio pesados, uno después del otro. Corregir causas de intermitencias; no eliminar aserciones. Estabilizar los cambios antes del pase completo final y no repetir catálogo pesado por documentos.
 
-Usar `--no-cache` para forzar ejecución, `--jobs 1` para ejecución serial y `--report RUTA.json` para guardar duraciones y estados. `--list` solo enumera. CI y `npm test` no reutilizan esta caché. Evitar repetir suites pesadas ya aprobadas si no cambió su código; reservar el conjunto completo para el cierre.
+## Antes del push
 
-Para cambios funcionales, ejecutar además un recorrido representativo. Las pruebas Python de navegador requieren Playwright y Chromium en el entorno de pruebas, sin añadir dependencias al juego. Si cambia sonido, ejecutar los renders afectados. Registrar comandos y resultados en la entrega.
+- Cambios funcionales:`npm run audit:release`, `npm test` y recorridos del sistema cambiado, por ejemplo `CHROMIUM_PATH=/ruta/chromium python3 tests/journal_entry_smoke.py`.
+- Sonido modificado:renders afectados. Si se conserva exactamente, documentar la comprobación y qué render se reutiliza.
+- Solo documentación/evidencia:enlaces, coherencia de fuentes, `git diff --check`, auditoría y selección de impacto. Sin navegador/audio innecesarios.
+- Limpieza de archivos:comprobar referencias y consumidores; no borrar por nombre antiguo un formato, módulo o fixture de compatibilidad.
 
-Antes de integrar/publicar `main`, comprobar una vez el conjunto final con lógica, auditoría, navegador y audio completos:
+`npm test` no reutiliza la caché de impacto. No atribuir las pruebas de otra instantánea a una nueva sin explicar preservación/alcance.
+
+## Antes de integrar main
+
+Comprobar una vez el candidato final completo:
 
 ```sh
+npm run audit:release
 npm test
 npm run test:browser
 npm run test:audio
 ```
 
-CI está definido en [checks.yml](../.github/workflows/checks.yml), con seis grupos de navegador y tres de audio, en Node 22. **No integrar con comprobaciones pendientes o fallidas**: desde el 22 de octubre `main` recibió integraciones con el navegador en rojo. Cada grupo de navegador (`WHITEDOT_BROWSER_SHARD=i/6`) corre un sexto del catálogo con un trabajador y un límite de 30 minutos; con un solo runner y dos trabajadores el catálogo tardaba unos 38 de sus 40 minutos y perdía carreras distintas en cada ejecución. Cada recorrido conserva su límite de 145 segundos y `offline_smoke.py` corre en el primer grupo. `player_touch_smoke.py` juega como una persona (sin marca de automatización, toques reales, sin atajos de runtime): las demás pruebas de navegador usan el Mundo libre y el «modo dedo» que activa `navigator.webdriver`. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
+[checks.yml](../.github/workflows/checks.yml) reparte navegador y audio en seis grupos por catálogo, con agregador obligatorio. `WHITEDOT_BROWSER_SHARD=i/6` y `WHITEDOT_AUDIO_SHARD=i/6` seleccionan grupos; no omiten pruebas. El grupo de navegador tiene30min; cada recorrido conserva su límite. No integrar con checks pendientes o en rojo.
 
-## Medir en un teléfono real
+CI del PR354/alpha.200 aprobado:[registro](INTEGRACION_ALPHA_200.md). E/alpha.207 tiene254 suites Node y veinte recorridos enfocados locales; su catálogo completo/CI y aceptación física siguen pendientes. Vercel Preview aprobado no equivale a esos checks.
 
-Abrir el juego (o la vista previa de Vercel) con `?medir=1`: una esquina muestra `p50`, `p95` (ms por fotograma, últimos 300), la calidad (alta o ligera) y la densidad de píxeles. Anotar dispositivo, navegador, lugar (por ejemplo Polvo del Mundo y un capítulo del Viaje), calidad, y cómo se comporta el audio al recibir una llamada, al bloquear y al volver. El navegador de pruebas no tiene GPU: sus tiempos no representan un teléfono.
+## Fixturas y accesibilidad
 
-## Entorno Windows
+Las pruebas instrumentan una copia de `src/main.js`; el runtime no se expone en producción. La mayoría aísla Mundo/componentes y puede sustituir `requireAccount()`; eso no certifica Auth. `cloud_account_smoke.py` cubre el acceso real con Auth/REST simulado. La cuenta del producto es opcional.
 
-La conversión automática CRLF de licencias puede alterar sus hashes: comparar con los bytes originales de Git sin modificar licencias ni registrar ajustes locales. Algunas suites antiguas importan rutas absolutas Windows como módulos; un adaptador ESM externo puede ser necesario. Registrar esas adaptaciones, sin presentar una limitación ambiental como fallo del juego.
+`player_touch_smoke.py` usa gestos reales y navegador sin marca de automatización. `offline_smoke.py` comprueba el shell offline. Las imágenes de `panel-capture.py` son fixtures identificadas con SHA/digest; no prueban rareza, rendimiento físico o comprensión humana.
 
-## Pruebas recientes de referencia
+Los paneles plegados deben abrirse antes de usar sus controles. Mantener ID, foco, pausa, cierres equivalentes y silencio de UI. El libro tiene filtros secundarios plegables; Favoritos abre su destino dentro de la Bitácora.
 
-`tests/sparks-economy.mjs`, `tests/crystal-path.mjs` y `tests/crystal-sparks.mjs` cubren lógica. `tests/sparks_economy_smoke.py`, `tests/sparks_notice_smoke.py` y `tests/crystal_path_smoke.py` cubren recorridos reales. [El informe de chispas](../scripts/sparks-progression-validation.json) registra la ejecución anterior; no sustituye verificar cambios posteriores.
+## Preservación y aceptación
 
-## Fixtures de cuenta obligatoria
+```sh
+node scripts/verify-e-preservation.mjs
+node scripts/acceptance-gate.mjs docs/aceptacion-e.json
+```
 
-Desde alpha.57, los recorridos de gameplay/audio que ya instrumentaban main sustituyen explícitamente `await requireAccount()` por `null` en su copia de prueba. Aíslan componentes y conservan sus aserciones; no certifican acceso ni añaden una bandera al producto. `cloud_account_smoke.py` usa la admisión real con Auth/REST simulado y comprueba bloqueo antes del mundo, registro, cuenta persistente/offline, separación entre usuarios y logout. `offline_smoke.py` comprueba el shell offline y que un usuario sin sesión siga bloqueado.
+El primero protege311 archivos y trece contratos desde main alpha.200. El segundo informa del registro declarado; `--require-ready` devuelve2 mientras haya criterios pendientes. Ese resultado esperado no es una suite rota ni un permiso para inventar participantes. Ver [protocolo](PRUEBAS_CON_PERSONAS.md).
 
-## Estado de CI y correcciones de fixtures (alpha.59)
+Los verificadores históricos `n-preservation.mjs` y `pulido-preservation.mjs` pertenecen a sus revisiones. No usarlos como gate actual ni alterar sus referencias para forzar verde. [Herramientas](../scripts/README.md).
 
-`Universe foundation checks` quedó en rojo en `main` al integrar la cuenta obligatoria (runs de los PR #230–#232 y de sus merges): `logic` y los tres `audio` verdes, `browser` 122/130 en `997b232`. Antes de las cuentas fallaban solo `foundation_smoke.py` y `pwa_updates_smoke.py`. Causas y correcciones en esta rama, todas en pruebas o CI, sin cambiar el producto:
+## Teléfonos y evidencia anterior
 
-- `release_smoke.py` no instrumentaba `main.js` y esperaba el mundo ante la puerta de cuenta: ahora sustituye `requireAccount()` como el resto.
-- `interface_smoke.py`, `music_menu_smoke.py`, `panel_polish_smoke.py` y `foundation_smoke.py` abrían el menú y llamaban a `openSaveTools()`; sin el botón `bSaveTools`, el menú quedaba abierto bajo el panel y el lienzo seguía `inert`. Las fixtures cierran el menú antes de abrir el panel.
-- `panel_polish_smoke.py` esperaba «Guardar copia» en el glosario; comprueba el texto vigente «Entra en tu cuenta».
-- `smoke.py` esperaba la radio vecina con una pausa fija; usa `wait_for_function`.
-- `cloud_account_smoke.py` fallaba al abrir el menú cuando la segunda pestaña de la misma cuenta ya había abierto el panel de divergencia; la fixture lo tolera. El comportamiento del producto no cambió.
-- `pwa_updates_smoke.py` archiva `8924f16` con `git archive`; el job `browser` de `checks.yml` usa `fetch-depth: 0`.
-- CI de `main` tras alpha.60 (`e8f5298`): `logic` y los tres `audio` verdes; `browser` 131/132 por `blobs_smoke.py`, que aún esperaba un lugar nuevo al volver de una semilla de prueba el mismo día. Se adaptó a la regla de una llegada por día.
-- Fase 1 (alpha.60): `cloud_account_smoke.py` añade el caso «copia online del Camino elegida en el Mundo» y lo verifica contra la corrección (falla 2/2 sin ella, pasa 5/5 con ella). Su paso de Cuenta reintenta porque el aviso de divergencia puede abrir el panel entre la comprobación y el clic; esa carrera explicaba fallos intermitentes en la línea del cierre de sesión entre pestañas.
-- Evidencia local de fase 1 (20 de octubre, Chromium local, uno por uno): auditoría sin errores; selección de impacto 92 suites Node en PASS; 25 recorridos en PASS (`sparks_economy`, `sparks_notice`, `practice_travel`, `journal_v2`, `journal_scale`, `interface`, `panel_polish`, `music_menu`, `music_travel`, `content_gallery`, `accessibility`, `favorites`, `favorite_save_failure`, `rare_cards`, `seeds`, `achievements_v2`, `menu_v2`, `first_level`, `cloud_account`, `cloud_delete`, `cloud_recovery`, `offline`, `pwa_updates`, `game_loop`, `smoke`). `favorite_save_failure` exigía la palabra «copia» del aviso antiguo y ahora exige «No se pudo guardar». Catálogo completo y audio no ejecutados.
-- Tras integrar alpha.59 (`9953eed`), `browser` quedó 130/131: `first_level_smoke.py` esperaba el panel del visitante nuevo dentro de la ventana de 2,4 s en que el saludo oculta la guía; la fixture descarta saludo y guía antes de esperar, como ya hacía en su primera página.
-- `tests/version-bump.mjs` fallaba desde `3175b41` porque el README pasó a decir «Versión del código» y `bump-version.mjs` solo reconocía «Versión en desarrollo»; la selección de impacto documental no lo ejecutó. El script acepta ambas etiquetas.
+`?medir=1` muestra mediana/p95 de fotogramas, calidad y densidad. Registrar dispositivo, navegador, escena, altavoz/auriculares/Bluetooth, rotación, bloqueo, llamada y regreso. Chromium sin GPU no representa un teléfono.
 
-Evidencia local del 20 de octubre sobre alpha.59: `cloud-account.mjs`, `cloud-handoff.mjs`, `cloud-recovery.mjs` y los recorridos `release_smoke`, `panel_polish_smoke`, `music_menu_smoke`, `interface_smoke`, `foundation_smoke`, `smoke`, `cloud_account_smoke`, `cloud_delete_smoke` y `pwa_updates_smoke` en PASS con Chromium local, uno por uno. El catálogo completo de navegador y audio no se ejecutó en local; CI no ha corrido sobre esta rama porque no existe PR. No declarar CI verde hasta leer el run.
+Safari/PC y Android emulado tienen evidencia histórica de cuenta en [Cuenta y progreso](CUENTA_Y_RESPALDO.md); no acredita aceptación física del candidato E, iOS nativo, ports desktop o publicación. Las versiones futuras y fallos de escritura deben conservar progreso.
 
-## Evidencia de cuentas y Android que se puede reutilizar
-
-- PC y Safari normal iPhone: aceptación humana de sesión persistente y saldo automático. Android emulado: cuenta real, migración autorizada con 280 archivos idénticos, actualización/reapertura conservando 52 chispas y sesión. Es evidencia de esos recorridos, no de paquetes iOS/desktop o dispositivos Android físicos.
-- UI de eliminación (`tests/cloud_delete_smoke.py`) usa Auth/REST simulado; RLS/CAS y RPC se verificaron con datos desechables en transacciones revertidas. No decir que la UI eliminó una cuenta alojada ni repetirlo sobre la cuenta personal.
-- `tests/cloud-account.mjs` incluye identidad, persistencia, carreras de sesión y reautenticación de eliminación. La prueba Android `requiresAccountBeforeWorld` comprueba admisión en instalación limpia; no volver a ejecutarla sobre la cuenta conectada esperando que esté bloqueada.
-- [CI 39337750907](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39337750907), `165a356`, y [CI 39455805125](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39455805125), `32e2102`, aprobados. El workflow de cuentas compila los paquetes/pruebas; las ejecuciones instrumentadas de actualización/admisión citadas ocurrieron en el emulador local, no se atribuyen al CI.
-- Evidencia local `outputs/` fuera del repositorio no viaja al clonar. Los artefactos de CI tienen caducidad; un enlace al run no garantiza que el APK siga descargable.
-
-## Revisar solo documentación
-
-Comprobar enlaces locales de todos los Markdown, separación vigente/histórico, coherencia con los símbolos/contratos citados y `git diff --check`. Ejecutar auditoría estática y consultar `test:impact -- --base SHA --list` antes de decidir qué pruebas corresponden. Si los únicos cambios son Markdown, no volver a probar login, recuperación, dispositivos o audio. Los pushes/PR pueden disparar automáticamente workflows según sus filtros: no atribuirles resultados sin leerlos.
-
-El cierre completo previo a integrar/publicar sigue vigente cuando corresponda; una limpieza documental no lo sustituye ni lo dispara por sí sola. No afirmar «todo probado» con una selección enfocada.
-
-## Auditoría 4 · instantánea comprobada
-
-El main base 676ac511, run 40139955994, tiene logic y los tres grupos de audio aprobados, pero browser 1/3/4 fallidos y el agregador en rojo. La descarga de logs se bloqueó por el proxy; la causa individual no se diagnosticó. Datos en [CI base](panel/sesion-4/evidencia/ci-base.json). Los recorridos enfocados y los 11 renders locales de esta sesión no sustituyen el catálogo completo. La rama del cubo pasó 240 suites Node y caras; la auditoría añade mediciones y propuestas, no las corrige por documentarlas.
-
-## Cierre J1–J7 · 25 de octubre
-
-Resultados y límites del candidato en la [quinta sesión](panel/sesion-5/informe.md). Incluye preservación de generadores/arte, catálogo inicial completo y regresiones enfocadas posteriores. No confundir las pruebas locales con CI remoto, teléfono físico o despliegue. Los renders ya aprobados se reutilizan si no cambió su síntesis/arreglo, sin ejecutar audio pesado y navegador pesado a la vez.
-
-## Integración de alpha.181 en main
-
-[CI completo de integración](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278) aprobado antes del merge: lógica, seis grupos de navegador, tres de audio y agregador. Runtime `6be023df`, idéntico al cierre `e6c0a3a6`; el registro posterior solo actualiza documentos y evidencia. [Detalle](panel/sesion-5/evidencia/ci-integracion.json). Las limitaciones físicas y de publicación siguen en [HANDOFF](../HANDOFF.md).
-
-
-## Preparación de la integración alpha.200
-
-El catálogo completo del PR354 detectó ocho recorridos con contratos anteriores al cierre K/L/N. Se corrigieron las pruebas, sin modificar runtime, sonido, mapas ni progreso:
-
-- `spark_rhythm_smoke.py`: valor base fuera de tempo (K2); se mantienen ×2, ×3, guardado y modo silencioso.
-- `alive_smoke.py`: fixture libre explícita; estación en el motor y género/tempo en tarjeta compacta; cierre del menú antes del Refugio. Lluvia, trueno y confluencia se conservan.
-- `journey_lasso_smoke.py` y `journey_dance_smoke.py`: un aviso suprimido no se marca leído; la guía explícita sí enseña la acción. Se mantienen gesto real, progreso, pulso a tiempo, portal y recarga.
-- `refugio_lugares_smoke.py`: «Ir» solo para lugares vistos o ganados; «Seguir» guía a los abiertos sin completar. El fixture ya completa cinco lugares y no tiene un único botón. Se mantienen viaje a Lago y salida caminando.
-- `expansion_smoke.py`: Cometa multiplica por2,2 la velocidad vigente; puede coexistir con Paso de miel. Se mantiene apertura de caja, campo, historial de405 ubicaciones, quietud y zona experimental.
-- `house_visit_smoke.py`: acceso compacto «Refugio» y modelo de novedades/estado visto, sin exigir el subtítulo retirado; se conservan visitas de solo lectura, teclado, gasto y enlace de Bitácora.
-- `sparks_economy_smoke.py`: etiqueta vigente «Otro paisaje ·20✦»; conserva coste, retorno gratuito, reintegro al fallar, compras y persistencia.
-
-Los ocho recorridos corregidos pasaron localmente con Chromium, uno por uno. El resultado remoto y el merge se registran al completar CI; este apartado no los da por aprobados.
-
-
-El primer CI de integración agotó los40 minutos de `audio (2)` (run40254494290), sin completar su catálogo. Se reparten las mismas59 pruebas de audio en seis grupos aislados en lugar de tres; se conserva cada render, su límite individual y el agregador obligatorio. Se comprobó que cada prueba queda asignada exactamente una vez. No se cambian generación musical, aserciones ni umbrales.
-
-
-CI completo del PR354 aprobado sobre `3277711cb85cce21b1308d35931f161210d406c6`. [Resultado y merge](INTEGRACION_ALPHA_200.md). Las limitaciones humanas del cierre N se mantienen.
+En Windows, respetar bytes/licencias y rutas ESM; no guardar conversiones locales CRLF como cambios del juego. Los registros de CI y cuentas anteriores permanecen en sus entregas y Git; un artefacto remoto puede caducar.

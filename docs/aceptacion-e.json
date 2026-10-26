@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "candidate": {
+    "version": "2.3.0-alpha.207",
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062"
+  },
+  "checks": {
+    "releaseAudit": {
+      "status": "pass",
+      "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+      "evidence": "panel/candidato-e/evidencia/release-audit.json"
+    },
+    "nodeFull": {
+      "status": "pass",
+      "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+      "evidence": "panel/candidato-e/evidencia/node.json"
+    },
+    "browserFull": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "audioFull": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "ci": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    }
+  },
+  "devices": {
+    "androidMidRange": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "iosSafari": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "speaker": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "headphones": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "bluetooth": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "screenReader": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    }
+  },
+  "rounds": {
+    "formative": [],
+    "confirmation": []
+  },
+  "sessionTemplate": {
+    "id": "",
+    "kind": "human",
+    "observed": false,
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+    "evidence": "",
+    "externalHelp": null,
+    "tasks": {
+      "goal": null,
+      "firstAction": null,
+      "gardenFlower": null,
+      "nextPlace": null,
+      "ownPhrase": null
+    },
+    "ratings": {
+      "visual": null,
+      "audio": null,
+      "creativity": null,
+      "sensation": null,
+      "cohesion": null,
+      "polish": null
+    },
+    "wantsContinue": null
+  }
+}

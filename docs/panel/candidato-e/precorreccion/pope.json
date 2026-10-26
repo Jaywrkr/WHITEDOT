@@ -1,0 +1,49 @@
+{
+  "lens": "Pope (simulated: accounting, durability, errors, rules and minimal UI; not the creator's opinion)",
+  "scope": "Blind static review of candidate 2.3.0-alpha.207, supplied revision c594c021. Read AGENTS.md, src/collection-garden.js, src/favorites.js, src/places.js, src/accessibility.js, supporting garden-model.js and the finale dismissal path in song-stage.js; read failure/accessibility tests as text. No execution, listening, repository edits or delegation. Screenshots were absent at review time.",
+  "scores": {
+    "visual": null,
+    "audio": null,
+    "creativity": 7.5,
+    "sensation": null,
+    "cohesion": 8,
+    "polish": 7
+  },
+  "scoreBasis": {
+    "visual": "Unobserved: /tmp/e7-final-capturas did not exist during this review.",
+    "audio": "Unobserved: no listening; musical source logic is not perceptual audio evidence.",
+    "creativity": "Code-level design only: discoveries become reusable garden voices without consuming ownership (collection-garden.js:8,15-20), while captured personal notes survive a place round (places.js:120-122). These give collection and performance a productive relationship; the resulting experience was not played.",
+    "sensation": "Unobserved: no play session, transitions or tactile/audio experience.",
+    "cohesion": "Rules and state contracts only: clear completion/rhythm/Maestro thresholds, honest percentage flooring, conserved legacy access, read-only future formats, and commit-before-celebration rewards. Favorite pending work deliberately follows a different, clearly stated retention contract. Escape dismissal breaks the otherwise shared round-exit lifecycle.",
+    "polish": "Static error handling and keyboard behavior only: garden edits and round rewards explicitly roll back failed saves; favorite additions stay available for retry/export and do not award storage success prematurely. A verified Escape lifecycle omission remains. No claim about browser execution or rendered finish."
+  },
+  "strengths": [
+    {
+      "evidence": "src/collection-garden.js:15-20; tests/collection_commit_smoke.py:19-34 (read only)",
+      "detail": "Garden add, remove, set save and set load share a failed-write rollback, while discovered cards remain owned. This respects the value of a collection and avoids charging a player for a failed persistence operation. The fixture specifies nonconsumption, retry and future-format preservation; it was not run here."
+    },
+    {
+      "evidence": "src/favorites.js:24-27,43-49; tests/favorite_save_failure_smoke.py:38-63 (read only)",
+      "detail": "A failed favorite addition intentionally retains unsaved work, labels it pending, exposes repair, and withholds the saved-place lesson/reward. Destructive edits instead restore prior values. These different contracts suit the cost of each action and are explicit in code."
+    },
+    {
+      "evidence": "src/places.js:23-30,31-49,106-122; tests/places-durability.mjs:6-16 (read only)",
+      "detail": "Rewards, personal notes and chapter restoration form one save operation before celebration. Rollback preserves relevant object identities, prevents duplicate payment on retry, and future saves receive a locked view. Displayed rhythm percentages floor rather than implying an unmet threshold has been earned."
+    }
+  ],
+  "findings": [
+    {
+      "status": "VERIFIED",
+      "priority": "P1",
+      "location": "src/accessibility.js:49; src/places.js:135; src/song-stage.js:119-124",
+      "detail": "Escape dismisses mPlace by setting hidden directly and saving. The visible Salir control additionally returns the player to the entry portal and calls songFinaleCheck. Therefore keyboard dismissal after completing the eleventh place or the 33rd star skips the automatic finale/master check, and ordinary round dismissal skips the portal return.",
+      "consequence": "The same close action has different game outcomes by input method. A keyboard player can finish the game and see no automatic finale until another qualifying result card is closed through its button.",
+      "remedy": "Route Escape for mapped dialogs through their existing close control, including placeClose, keeping bespoke stage dismissal where needed. Verify final-place and master-result Escape dismissal invokes the same return/finale lifecycle as Salir. This is verified from control flow, not reproduced in a browser."
+    }
+  ],
+  "limits": [
+    "No screenshots were available; visual quality, black-space composition, Geist Mono rendering and the small cube were not observed or scored.",
+    "No browser, Node tests, audio renders or listening were performed. Read test assertions describe intended coverage, not verified passes.",
+    "Sequential ring unlocking, slow transitions, current generation/music and the small cube are approved constraints, not defects. This review does not propose changing them."
+  ]
+}

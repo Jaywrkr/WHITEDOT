@@ -16,9 +16,9 @@ try:
    p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
    p.goto(f'http://127.0.0.1:{srv.server_port}/?capitulo=bosque');p.wait_for_function('!!window.__r?.journeyChapter&&__r.journeyChapter().id==="bosque"')
    p.evaluate("()=>{__r.S.sound=false;document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);__r.$('bGuide').click();}")
-   assert p.locator('#guidePlaceLesson').is_visible();assert p.inner_text('#guidePlaceName')=='Bosque';assert 'Rodea' in p.inner_text('#guidePlaceSteps')
+   assert p.locator('#guideJourneyGoal').is_hidden();assert p.locator('#guidePlaceSteps [aria-current=step]').count()==1;assert p.locator('#guidePlaceLesson').is_visible();assert p.inner_text('#guidePlaceName')=='Bosque';assert 'Rodea' in p.inner_text('#guidePlaceSteps')
    assert 'Rodea' in p.inner_text('#guideNext');assert p.locator('#guidePlaceDemo').is_hidden()
-   p.locator('#guideClose').click()
+   p.locator('#guideClose').click();p.locator('#bMenu').click();assert p.locator('#bGuide').is_visible();p.locator('#mnClose').click()
    p.evaluate("()=>{const r=__r;r.S.journey.finished=true;r.setJourneyMode('libre');r.jam.loop.ecos.push({x:r.S.wx,y:r.S.wy,events:[],layer:r.S.layer});r.jamUI();}")
    assert p.locator('#bLoop').get_attribute('aria-label')=='Borrar eco cercano'
    p.evaluate('__r.loopButton()');assert p.locator('#bLoop').get_attribute('aria-label')=='Grabar un eco'

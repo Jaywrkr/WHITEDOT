@@ -1,0 +1,17 @@
+{
+  "version": "2.3.0-alpha.207",
+  "sourceModules": 312,
+  "htmlIDs": 514,
+  "staticImports": 955,
+  "shellAssets": 333,
+  "errors": [],
+  "warnings": [
+    "Markdown reference: HANDOFF.md → docs/panel/candidato-e/informe.md",
+    "Markdown reference: HANDOFF.md → docs/panel/candidato-e/informe.md",
+    "Markdown reference: README.md → docs/panel/candidato-e/informe.md"
+  ],
+  "notes": [
+    "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+    "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+  ]
+}

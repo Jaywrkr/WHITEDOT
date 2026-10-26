@@ -1,0 +1,156 @@
+{
+  "version": "2.3.0-alpha.200",
+  "revision": "fd5dfc1939a4774714420d2098cfa3a2d38971bd",
+  "method": "Ten fresh-context reviewers, one simulated lens each; previous scores withheld. Null excluded within each axis. Overall is equal-weight mean of six available axis means, not a sensory or release certification. Scope differs from historical panels.",
+  "rows": [
+    {
+      "lens": "Tetsuya Mizuguchi",
+      "scores": {
+        "visual": 6.5,
+        "audio": 7.5,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 7,
+        "polish": 7
+      },
+      "source": "evidencia/mizuguchi.json",
+      "file": "01-mizuguchi.md"
+    },
+    {
+      "lens": "Toshio Iwai",
+      "scores": {
+        "visual": 7.5,
+        "audio": 8.0,
+        "creativity": 8.0,
+        "sensation": null,
+        "cohesion": 7.5,
+        "polish": 7.5
+      },
+      "source": "evidencia/iwai.json",
+      "file": "02-iwai.md"
+    },
+    {
+      "lens": "Masaya Matsuura",
+      "scores": {
+        "visual": 7.5,
+        "audio": 8.0,
+        "creativity": 8.0,
+        "sensation": null,
+        "cohesion": 8.0,
+        "polish": 7.5
+      },
+      "source": "evidencia/matsuura.json",
+      "file": "03-matsuura.md"
+    },
+    {
+      "lens": "Simogo",
+      "scores": {
+        "visual": 7.5,
+        "audio": null,
+        "creativity": 8,
+        "sensation": null,
+        "cohesion": 8,
+        "polish": 7
+      },
+      "source": "evidencia/simogo.json",
+      "file": "04-simogo.md"
+    },
+    {
+      "lens": "Ed Key y David Kanaga",
+      "scores": {
+        "visual": 7.0,
+        "audio": 8.0,
+        "creativity": 8.0,
+        "sensation": 6.5,
+        "cohesion": 7.5,
+        "polish": 7.0
+      },
+      "source": "evidencia/proteus.json",
+      "file": "05-proteus.md"
+    },
+    {
+      "lens": "Jenova Chen",
+      "scores": {
+        "visual": 8.0,
+        "audio": null,
+        "creativity": 8.5,
+        "sensation": null,
+        "cohesion": 8.0,
+        "polish": 7.5
+      },
+      "source": "evidencia/chen.json",
+      "file": "06-chen.md"
+    },
+    {
+      "lens": "Conrad Roset",
+      "scores": {
+        "visual": 8.5,
+        "audio": null,
+        "creativity": 8.5,
+        "sensation": 8.0,
+        "cohesion": 8.5,
+        "polish": 8.0
+      },
+      "source": "evidencia/roset.json",
+      "file": "07-roset.md"
+    },
+    {
+      "lens": "Ken Wong",
+      "scores": {
+        "visual": 8.0,
+        "audio": null,
+        "creativity": 8.5,
+        "sensation": 7.5,
+        "cohesion": 8.0,
+        "polish": 7.5
+      },
+      "source": "evidencia/wong.json",
+      "file": "08-wong.md"
+    },
+    {
+      "lens": "Lucas Pope",
+      "scores": {
+        "visual": 7.0,
+        "audio": null,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 7.0,
+        "polish": 6.5
+      },
+      "source": "evidencia/pope.json",
+      "file": "09-pope.md"
+    },
+    {
+      "lens": "Austin Wintory",
+      "scores": {
+        "visual": null,
+        "audio": 8,
+        "creativity": 8.5,
+        "sensation": null,
+        "cohesion": 8,
+        "polish": 7.5
+      },
+      "source": "evidencia/wintory.json",
+      "file": "10-wintory.md"
+    }
+  ],
+  "categoryMeans": {
+    "visual": 7.5,
+    "audio": 7.9,
+    "creativity": 8.1,
+    "sensation": 7.333333333333333,
+    "cohesion": 7.75,
+    "polish": 7.3
+  },
+  "categoryReviewCounts": {
+    "visual": 9,
+    "audio": 5,
+    "creativity": 10,
+    "sensation": 3,
+    "cohesion": 10,
+    "polish": 10
+  },
+  "meanOfAxisMeans": 7.647222222222222,
+  "reported": 7.6,
+  "limits": "Audio is technical only (5 reviewers). Sensation is inferred from sources/static captures by only 3 reviewers, without listening or human gameplay; other 7 abstain. Do not claim exceptional quality or direct statistical comparability."
+}

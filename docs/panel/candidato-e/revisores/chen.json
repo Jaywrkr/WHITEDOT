@@ -1,0 +1,122 @@
+{
+  "lens": "Chen — lente simulada de comprensión, atención dirigida, guía y progresión; no representa la opinión real del creador.",
+  "scope": {
+    "candidate": "2.3.0-alpha.207",
+    "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+    "review": "Revisión final de solo lectura: comprobados de nuevo guía contextual, final del Jardín, porcentajes de Lugares/trofeo, resultado y gardenTarget en 3c9d5dbc. Vista la captura nueva de Lugares y su manifest. Se reutilizan las observaciones anteriores de código y tres capturas atribuidas a e8368253. Sin ejecutar pruebas, navegador ni audio.",
+    "visualEvidence": [
+      {
+        "path": "/tmp/e7-capturas-cierre/21-lugares.png",
+        "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+        "inspection": "Vista en esta comprobación final"
+      },
+      {
+        "path": "/tmp/e7-final-capturas/31-guia-jardin.png",
+        "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+        "inspection": "Observación visual reutilizada de la comprobación anterior"
+      },
+      {
+        "path": "/tmp/e7-final-capturas/33-resultado.png",
+        "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+        "inspection": "Observación visual reutilizada de la comprobación anterior"
+      },
+      {
+        "path": "/tmp/e7-final-capturas/10-lugar-jardin.png",
+        "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+        "inspection": "Observación visual reutilizada de la comprobación anterior"
+      }
+    ],
+    "fixtureQualification": "Capturas locales guionizadas, con paneles de guía, resultado y Lugares forzados según manifest. No son evidencia de hallazgo espontáneo, frecuencia de aparición o comprensión humana.",
+    "intentionalDecisions": "Espacio negro, Geist Mono, cubo pequeño, progresión del anillo y transiciones lentas aceptados como decisiones. No se consideran defectos.",
+    "sourceAttribution": "Las correcciones de guía y porcentaje y la lógica de resultado/target se volvieron a leer en 3c9d5dbc. El resto de las observaciones de guía/progresión conserva el alcance de la lectura e8368253. Los cambios posteriores de Libro/Favoritos quedan fuera de esta lente y no se puntúan."
+  },
+  "scores": {
+    "visual": 7.5,
+    "audio": null,
+    "creativity": 8.0,
+    "sensation": null,
+    "cohesion": 8.0,
+    "polish": 7.5
+  },
+  "scoreBasis": {
+    "visual": "Solo cuatro vistas a 390 × 844, con atribución de revisión en scope.visualEvidence: Lugares actual conserva destino destacado y continuidad clara; las vistas e8368253 de guía, resultado y Jardín se reutilizan. Buen foco del paso activo; espacio y escala contenidos. La guía ocupa casi toda la altura y acumula acciones secundarias. No se puntúan animaciones, otros tamaños ni las nuevas pantallas de Libro/Favoritos.",
+    "audio": "Sin escucha; leer llamadas de audio y ver el estado audio=running no permite valorar su percepción.",
+    "creativity": "Solo diseño expresado en las reglas: sembrar/cosechar en el golpe y regar entre golpes convierte una interacción rítmica en cuidado; los trofeos conservan el verbo del lugar y recuperan su capa musical. No puntúa originalidad sonora ni experiencia humana.",
+    "sensation": "Sin sesión jugada ni observación humana, no se puntúa la sensación de atención, descubrimiento o ritmo.",
+    "cohesion": "Solo arquitectura de información y coherencia de instrucciones inspeccionadas: objetivo compartido, once lugares separados de las 33 estrellas, siguiente destino consistente y estado final del Jardín explícito. El resultado diferencia la colección acumulada de esta ronda y conserva su lugar de origen. Las correcciones se verifican por su comportamiento expresado en código; no implican mejora automática de la experiencia global.",
+    "polish": "Solo precisión del texto, estados y cuatro pantallas: ayuda contextual con paso activo, umbrales sin redondeo al alza, resultado con lugar y colección/ronda separados. La guía sigue ofreciendo varias rutas de práctica en una pantalla muy llena. No certifica interacción táctil, navegación completa, accesibilidad ejecutada ni estabilidad."
+  },
+  "strengths": [
+    {
+      "evidence": [
+        "src/places.js:60",
+        "src/places.js:70",
+        "src/voice-guide.js:46",
+        "src/refugio-lugares.js:55",
+        "src/places.js:137",
+        "/tmp/e7-capturas-cierre/21-lugares.png",
+        "/tmp/e7-final-capturas/33-resultado.png"
+      ],
+      "observation": "La guía, Lugares y el cierre de ronda conducen al mismo siguiente lugar incompleto. Las pantallas distinguen completar once lugares de reunir 33 estrellas y destacan Seguir hacia Jardín."
+    },
+    {
+      "evidence": [
+        "src/journey-garden.js:23",
+        "src/journey-garden.js:34",
+        "src/voice-guide.js:35",
+        "src/journey-garden.js:81",
+        "/tmp/e7-final-capturas/31-guia-jardin.png"
+      ],
+      "observation": "La ayuda del Jardín calcula la acción con las mismas distancias y etapas que el gesto real: acercarse, sembrar, regar o cosechar. El paso actual y la indicación recuperable se ven claramente; Ver el gesto ofrece una demostración adicional."
+    },
+    {
+      "evidence": [
+        "src/places.js:129",
+        "src/places.js:130",
+        "src/places.js:131",
+        "/tmp/e7-final-capturas/33-resultado.png"
+      ],
+      "observation": "El resultado nombra Lago, separa Tu colección de Esta ronda y muestra 74,6 % frente a 75 %. Permite comprender el logro obtenido y lo que falta sin confundir un récord con una estrella nueva."
+    }
+  ],
+  "findings": [
+    {
+      "status": "RESOLVED",
+      "priority": "P2",
+      "evidence": [
+        "src/voice-guide.js:26",
+        "src/voice-guide.js:27",
+        "src/voice-guide.js:28",
+        "tests/guide-context.mjs:19"
+      ],
+      "issue": "La ayuda del Jardín con la barra llena debe recuperar la instrucción del árbol dorado.",
+      "verification": "El código clona los pasos y sustituye el tercero por «Tu árbol dorado está listo. Pulsa en el golpe.» cuando progress>=1; el hint reutiliza ese texto y mantiene el paso 2 activo. La prueba textual cubre tanto hint como steps[2].",
+      "consequence": "La contradicción anterior entre cosechar y cerrar la ronda ya no está presente en la lógica leída.",
+      "remedy": "Aplicado. La captura observada es del acercamiento, no del estado final; verificación de esta corrección limitada al código."
+    },
+    {
+      "status": "RESOLVED",
+      "priority": "P2",
+      "evidence": [
+        "src/refugio-lugares.js:1",
+        "src/refugio-lugares.js:53",
+        "src/refugio-lugares.js:59",
+        "src/places.js:24",
+        "src/places.js:128"
+      ],
+      "issue": "El porcentaje de Lugares y del trofeo debe conservar el mismo criterio de precisión que la tarjeta de resultado.",
+      "verification": "Ambas lecturas usan roundPercent(best.onTime), compartido con results(). Un valor 0,746 se expresa como 74,6 %, sin aparentar haber alcanzado el umbral del 75 %.",
+      "consequence": "La contradicción de porcentaje suficiente con estrella pendiente ya no está presente en estos lectores.",
+      "remedy": "Aplicado. La captura de resultado corrobora el formato 74,6 %; la corrección específica de Lugares/trofeo se verifica por lectura de código."
+    }
+  ],
+  "limits": [
+    "No se identifican nuevos defectos verificados dentro del alcance inspeccionado; esto no equivale a ausencia global de defectos.",
+    "La evidencia visual combina Lugares de 3c9d5dbc con guía, resultado y Jardín observados en e8368253. Son fixtures locales de un único tamaño; no muestran ayuda con Jardín lleno, lectura del trofeo ni todos los estados. No se inspeccionaron las nuevas capturas de Libro/Favoritos.",
+    "Sin escucha ni juego humano: no se infieren musicalidad, sensación, comprensión real del gesto, descubrimiento espontáneo o ritmo percibido.",
+    "No se ejecutaron pruebas ni se delegó. Los resultados de pruebas comunicados por el coordinador no se convierten aquí en verificación independiente.",
+    "No se consultaron documentos históricos de producto, puntuaciones de otros revisores ni objetivos del panel.",
+    "Las puntuaciones se mantienen tras esta comprobación acotada; actualizar la revisión y cerrar correcciones no produce un incremento automático."
+  ]
+}

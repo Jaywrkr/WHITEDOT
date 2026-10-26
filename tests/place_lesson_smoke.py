@@ -24,7 +24,10 @@ try:
    # Move to a bed with actual input; no direct garden state or points writes.
    target=p.evaluate('__r.journeyGarden().spots[0]');p.locator('#w').focus();p.keyboard.down('ArrowUp')
    p.wait_for_function('y=>Math.abs(__r.S.wy-y)<35',arg=target['y']);p.keyboard.up('ArrowUp')
-   for i in range(5):p.locator('#w').click(position={'x':W*.6,'y':H*.5});p.wait_for_timeout(300)
+   p.evaluate('__r.$("bGuide").click()');assert 'sembrar' in p.inner_text('#guidePlaceHint');p.locator('#guideClose').click()
+   p.locator('#w').click(position={'x':W*.6,'y':H*.5});p.wait_for_timeout(300)
+   p.evaluate('__r.$("bGuide").click()');assert 'regar' in p.inner_text('#guidePlaceHint');p.locator('#guideClose').click()
+   for i in range(4):p.locator('#w').click(position={'x':W*.6,'y':H*.5});p.wait_for_timeout(300)
    assert p.evaluate('__r.journeyGarden().blooms')>=1,'the taught gesture grows a real flower'
    p.wait_for_timeout(100);assert p.evaluate('__r.gardenLessonState().done'),'picking retires the visual instruction'
    try:p.wait_for_function('__r.S.journey.garden.hinted',timeout=12000)

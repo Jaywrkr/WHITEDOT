@@ -1,0 +1,63 @@
+{
+  "lens": "Mizuguchi — simulated lens: synchrony, input, response and latency; not the named creator's real opinion",
+  "scope": "Independent blind static review and final source verification of candidate 2.3.0-alpha.207, supplied final runtime revision e8368253. Initial scoped review covered AGENTS.md, src/journey-pulse.js, src/journey-rhythm.js, src/canvas.js, relevant src/audio.js scheduling/visual callback paths, src/interactions.js pulse call sites, and tests/pulse-output-timing.mjs and tests/radio.mjs as text. Final verification read current src/journey-rhythm.js, tests/journey-rhythm.mjs, relevant src/house.js and src/song-stage.js timing paths, and rechecked the shared timing helpers. No tests, browser, audio renders, listening or repo mutations. Captures were present during final verification but were not inspected; this verification remains code-only.",
+  "scores": {
+    "visual": null,
+    "audio": null,
+    "creativity": 7.5,
+    "sensation": null,
+    "cohesion": 7.5,
+    "polish": 7
+  },
+  "scoreBasis": {
+    "visual": "Unobserved: no screenshots were inspected; source code does not establish rendered visual quality.",
+    "audio": "Unobserved perceptually: scheduling and synthesis code were inspected, but technical audio analysis is not listening.",
+    "creativity": "Code-level design only: player hits advance a recurring melodic theme in the current place's scale; distinct place rhythms, a two-bar musical demonstration and earned cube forms connect musical participation with progression. No claim about novelty or felt enjoyment from play.",
+    "sensation": "Unobserved: no direct play, haptic experience or listening; timing equations cannot establish sensation.",
+    "cohesion": "Technical interaction design only: shared heard-time judgement, output-aware pulse landing and world callbacks establish a consistent temporal language. The guide now selects the currently heard event from retained scheduled events. Refugio and song-stage paths also derive feedback from estimated audible time. Score retained after the source correction; no new perceptual evidence.",
+    "polish": "Static implementation scope only: direct cube press, input cancellation, stale callback guards and reduced-motion handling are concrete refinements. The reported guide lookahead defect is fixed in source; actual device synchrony remains unobserved. Score retained; correcting that defect and adding assertions do not alone establish a higher experiential rating."
+  },
+  "strengths": [
+    {
+      "evidence": "src/journey-pulse.js:24, src/journey-pulse.js:30, src/journey-pulse.js:40, src/journey-pulse.js:67, src/audio.js:302, src/audio.js:308",
+      "detail": "Pulse judgement refers to the estimated time heard, while light and haptics land at the estimated emitted note output. Studio and flower callbacks use the same output-aware scheduling helper. This is a coherent technical basis for audiovisual synchrony, without proving perceptual alignment."
+    },
+    {
+      "evidence": "src/canvas.js:39, src/canvas.js:42, src/canvas.js:66, src/canvas.js:73, src/journey-pulse.js:68, src/journey-pulse.js:69",
+      "detail": "The small cube has a direct press-down instrumental response with a 24-pixel hit radius; ordinary taps preserve their original touch timestamp for judgement. Blur, hidden-page and modal handling cancel input or suppress stale feedback, and reduced motion removes the cube kick."
+    },
+    {
+      "evidence": "src/journey-rhythm.js:7, src/journey-rhythm.js:19, src/journey-rhythm.js:51, src/journey-pulse.js:96, src/journey-pulse.js:123",
+      "detail": "Place-specific counted steps, a musical demonstration and one anticipatory Line guide share the same rhythm vocabulary. Successful timing advances a themed melodic phrase rather than adding an unrelated reward sound. This is an evidenced design relationship, not a listening judgment."
+    },
+    {
+      "evidence": "src/journey-rhythm.js:52, src/journey-rhythm.js:56, src/journey-rhythm.js:58; src/house.js:79, src/house.js:118; src/song-stage.js:45, src/song-stage.js:104, src/song-stage.js:108, src/song-stage.js:116",
+      "detail": "Final source uses retained scheduled events to select the currently audible guide and song-layer hits. Refugio bar position uses audibleTime, and object flashes use scheduleAudibleCue. The audible song-stage path derives ring pulses from recorded layer hits; its decorative clock fallback is confined to the silent path. These are technical source findings, not observations of audiovisual sensation."
+    }
+  ],
+  "findings": [
+    {
+      "type": "RESOLVED_DEFECT",
+      "status": "fixed_in_source_at_e8368253",
+      "priority": "P2",
+      "evidence": "src/journey-rhythm.js:52, src/journey-rhythm.js:54, src/journey-rhythm.js:55, src/journey-rhythm.js:56, src/journey-rhythm.js:58; tests/journey-rhythm.mjs:32",
+      "detail": "The previously reported single-slot guide overwrite and premature visual-tail loss are resolved in the inspected source. Each sung onset enters a bounded 32-event array; singingNow selects the latest event at or before audibleTime. Clearing the scheduling state at the two-bar end no longer discards those events, so the final cue retains its normal audible lifetime. A changed guide key clears old events. The added test text asserts current cue selection with 400 ms output latency, future lookahead, the final tail and stale-round clearing. Tests were read, not run by this reviewer.",
+      "consequence": "The identified static cause of missing or truncated demonstration highlights is removed. Physical audiovisual alignment remains unverified.",
+      "remedy": "No further source remedy for this finding. Validate the implementation on actual output devices as covered by the remaining limitation."
+    },
+    {
+      "type": "LIMITATION",
+      "priority": "P2",
+      "evidence": "tests/pulse-output-timing.mjs:3, tests/pulse-output-timing.mjs:8, tests/radio.mjs:65, tests/radio.mjs:123",
+      "detail": "The inspected timing checks use substituted clocks, timers and AudioContext nodes. They specify expected scheduling behavior, but do not measure browser input delivery, timer jitter, display refresh, physical speaker/Bluetooth delay or haptic onset. These tests were read, not executed during this review.",
+      "consequence": "Actual simultaneous touch, light and sound remains unverified even where the arithmetic is internally consistent.",
+      "remedy": "Observe direct cube presses on a representative phone with its speaker and a Bluetooth output, recording touch-to-feedback and audio-to-light alignment; retain perceptual audio and sensation scores as unobserved until that evidence exists."
+    }
+  ],
+  "limits": [
+    "No screenshots were inspected; visual, perceptual audio and sensation scores remain null. Presence of scripted fixtures does not provide listening or human-play evidence.",
+    "No tests or browser/audio runs were performed by this reviewer. The coordinator reported full254 Node and focused browser passes; those reports are not treated as independent observations or listening evidence here.",
+    "Empty-space taps intentionally defer activation until release to distinguish dragging and holding (src/canvas.js:40, src/canvas.js:66); the direct cube press path is immediate. This interaction choice is not classified as a defect without play evidence.",
+    "Black space, Geist Mono, the small cube, preserved generation/music, eleven sequentially unlocked ring places and slow transitions are accepted constraints, not defects."
+  ]
+}

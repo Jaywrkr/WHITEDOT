@@ -1,0 +1,16 @@
+{
+  "rounding": {
+    "ratio": 0.746,
+    "display": 75,
+    "stars": [
+      true,
+      false,
+      false
+    ]
+  },
+  "timer": {
+    "ms": 59999,
+    "shown": "0:00"
+  },
+  "scope": "Pure expressions from current production source; no player save or runtime mutated"
+}
