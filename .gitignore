@@ -2,3 +2,12 @@ server/data/
 __pycache__/
 *.pyc
 outputs/
+
+# Local environments and generated measurements; reviewed evidence belongs in docs/panel.
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
+/.env*
+!/.env.example
+/scripts/*.json

@@ -1,288 +1,78 @@
-# Arquitectura actual
+# Arquitectura vigente · alpha.207
 
-## Ejecución y publicación
+Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
-`src/main.js` conecta módulos ES; `src/render.js` dirige los frames de Canvas 2D. Web Audio sintetiza la música localmente. `index.html`, `styles/` y `assets/` forman el cliente estático. El service worker `sw.js` conserva el shell offline.
+## Cliente y publicación
 
-Vercel sirve la raíz. `scripts/vercel-build.mjs` sella el artefacto con revisión y fecha mediante el mecanismo existente; un commit no prueba un despliegue. La versión base está en `package.json` y `src/release-info.js`.
+`src/main.js` inicializa módulos ES nativos; `src/render.js` dirige Canvas2D. `index.html`, `styles/`, `assets/`, `icons/` y `sw.js` forman el cliente estático. `runtime` conecta módulos internamente y no se publica en `window`; las pruebas instrumentan su copia de main.
 
-## Contenedor Android de prueba
+`package.json` y `src/release-info.js` comparten versión; `scripts/bump-version.mjs` actualiza también README, HTML y clave de caché. Documentación sola no sube versión.
 
-`android/` empaqueta el mismo cliente como assets HTTPS locales de WebView, sin cambios de lógica o dependencias npm. `scripts/android-assets.mjs` prepara una copia y reutiliza el sellado existente; el APK gestiona offline y actualización, sin el service worker web. El adaptador exclusivo de Android pausa contextos de audio existentes y conserva importación/exportación mediante selectores de documentos. Origen local y applicationId de vista previa estables; sin permisos generales de archivos ni puente nativo para páginas externas. [Compilación, pruebas y límites](../android/README.md).
+`vercel.json` usa `framework:null`, `outputDirectory:"."` y `node scripts/vercel-build.mjs`. Este script sella revisión y fecha en el artefacto mediante `scripts/stamp-deploy.mjs`; fuera de Vercel, sin SHA, no modifica el checkout. No hay bundler ni directorio public requerido.
 
-## Progreso y chispas
+Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pruebas y documentación no son módulos del producto.
 
-- `progress.js`, `save-store.js` y `save-tools.js`: estado, normalización y respaldos locales. «Empezar de cero» (Ajustes) restaura una partida nueva con `saveStore.restore`, que deja la actual en `:before-restore` para «Volver a la partida anterior»; no se ofrece con cuenta abierta.
-- `crystal-sparks.js`: distribución determinista independiente, dibujo, impactos manuales y recogida. Camino: diez roturas únicas para entrar automáticamente. En el Mundo añade corredores, fragmentos fugitivos y cadenas; no crea pulsos musicales.
-- `crystal-play-model.js`: variantes con hash independiente, reparto de fragmentos y escape acotado. Un fragmento raro añade 3 chispas; su máscara de recogida persiste en `sparkEconomy.sites`. Los registros antiguos agotados no recuperan premios. Cadenas de hasta ocho impactos adicionales por rotura inicial, radio 240; corredores y fragmentos se detienen tras dos segundos, a un máximo de 90/100 unidades. Movimiento reducido conserva las recompensas sin persecución.
-- `sparks-model.js`: catálogo, normalización y reglas puras. `sparks.js`: operaciones, compras, colecciones, logros, títulos y metas; pinta la Tienda y el Viaje dentro de Tu cubo (`cube.js`).
-- `practice-travel.js`: viaje pagado y regreso gratuito. El coste y destino se guardan juntos; los fallos revierten la operación. El botón principal se muestra al acumular 20 chispas ganadas y se desactiva si falta saldo; el menú conserva una acción independiente.
-- `return-entrance.js`: saludo silencioso al abrir, incluso con guía pendiente. Muestra frase y `.simple` durante 2,4 segundos; tocar o Escape permite continuar. La primera guía se restaura al cerrar el saludo.
-- `rare-cards.js`, `celebration.js` y `notice-lane.js`: hallazgos y avisos breves en una cola, con detalles explícitos y efectos temporales reversibles. En pantallas de hasta 520 px los avisos empiezan bajo los contadores de arriba a la derecha.
-- **Días, no racha** (decisión 5A): el radio de luz y sonido del Mundo y la lámpara siguen `S.totalDays` (los días que volviste, nunca baja). Los paneles muestran «Días» con los mismos ids; `S.streak` y `S.best` se siguen guardando y dan sus logros, pero faltar un día ya no quita nada. Sin frases de disciplina.
-- **Texto:** ningún texto visible por debajo de 11 px (CSS y lienzo).
+## Mapa de sistemas
 
-La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por partida. El saldo es local; no es una economía competitiva ni un registro remoto. Los formatos futuros se conservan. Destellos y constelación personal siguen fuera de esta implementación.
+| Sistema | Fuentes principales |
+|---|---|
+| Inicialización y estado | `main.js`, `data.js`, `progress.js` |
+| Render, cámara y calidad | `render.js`, `frame-state.js`, `frame-quality.js`, `world-sheet.js` |
+| Entrada del cubo | `canvas.js`, `interactions.js`, `wow-feel.js` |
+| Música y voces | `audio.js`, `voices.js`, `instruments.js`, `music-families.js`, `musical-conductor.js` |
+| Territorios y transiciones | `world.js`, `continents.js`, `neighborhoods.js`, `territory-journey.js`, `territory-transition.js` |
+| Capítulos y juegos | `journey-chapters.js`, `journey-games.js`, módulos `journey-*` |
+| Reloj, ritmo y frases | `journey-pulse.js`, `journey-rhythm.js` |
+| Rondas, premios y destinos | `places.js`, `places-ring.js`, `refugio-lugares.js` |
+| Finales | `journey-finale.js` (cinco capítulos), `song-stage.js` (once lugares), `song.js` |
+| Chispas y compras | `spark-rules.js`, `sparks-model.js`, `sparks.js`, `crystal-sparks.js` |
+| Personalización | `cube.js`, `cube-shop-model.js`, módulos `cube-shop-*` |
+| Hallazgos y tarjetas | `rare-card-model.js`, `rare-cards.js`, `musical-wonders.js` |
+| Colección musical | `garden-model.js`, `collection-garden.js`, `journal.js` |
+| Refugio | `house-model.js`, `house.js`, `house-view.js`, `house-audio.js`, `house-collection.js` |
+| Actividades y encuentros | `universe-activities.js`, `universe-mischief.js` y sus modelos/arte |
+| Guía y avisos | `voice-guide.js`, `onboarding.js`, `notice-lane.js`, `celebration.js` |
+| UI y accesibilidad | `styles/estilo-j.css`, `accessibility.js`, `journal.js`, `favorites.js` |
+| Guardado y cuenta | `save-store.js`, `save-tools.js`, `account-entry.js`, módulos `cloud-*` |
 
-## Bitácora
+Las fuentes de la tabla están en `src/`. Catálogos y detalles en [Universo](UNIVERSO.md), [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md), [Tienda](TIENDA_DEL_CUBO.md) y [Casa](CASA_VIVA.md).
 
-`journal.js` reúne Hoy, Colección, Lugares, Música, Logros y Tú. Las secciones de `map.js`, `favorites.js` y `player-profile.js` viven en `#journalParts` (oculto) y `render()` las mueve a `#journalBody` en Lugares (mapa y favoritos) y Tú (perfil). Sus módulos abren la Bitácora con `openJournal('places'|'you')` y exponen `renderMap`, `renderFavorites` y `renderProfile`.
+## Música, reloj y presentación
 
-## Luz del mundo
+Web Audio sintetiza localmente; no se usan Tone ni instrumentos de Arturia. El secuenciador conserva la rejilla y la armonía del territorio, con tempos distintos entre lugares. Los modelos musicales gobiernan evolución y relevos; una limpieza de UI no autoriza modificar síntesis, patrones o mezcla.
 
-`world-light-model.js` traduce `worldVisibility.day` (ciclo de diez minutos de `world-visibility-model.js`) y la hora local a noche, amanecer, atardecer, estrellas y luciérnagas. `world-light.js` lo dibuja tras la niebla, solo en superficie: un degradado con la linterna del cubo libre y luciérnagas en pantalla. `render.js` multiplica el brillo de las estrellas por `worldLight().stars`.
+`MU.sq` conserva paso módulo16 y tick absoluto. `journey.notes/steps/ticks` y `lugares.notes/noteSteps/noteTicks` conservan la aportación personal; formatos antiguos sin ticks siguen interpretándose sin reescribirlos.
 
-`error-log.js` se carga primero y guarda en `localStorage` (`kubono:errores`) los últimos 20 errores sin datos personales; Ajustes los copia como diagnóstico. Un error dentro de un fotograma no detiene el bucle (`render.js` `frame`): se pide el siguiente fotograma igualmente y el error sigue llegando al registro; solo tras `FRAME_FAILURE_LIMIT` (120) fotogramas fallidos seguidos se detiene y pide recargar. El movimiento reducido se decide siempre con `calmMotion(S)` de `frame-state.js` (ajuste del jugador o preferencia del sistema); `S.reducedMotion` solo no basta, porque nada lo asigna fuera de las vistas previas. `frame-quality.js` mide el intervalo entre fotogramas: con dos muestras lentas seguidas (mediana >25 ms) pasa a calidad ligera (lienzo a 1×, menos partículas y salpicaduras) durante la sesión; `S.quality` fija Automática, Alta o Ligera. En navegadores automatizados el cambio automático queda apagado y las pruebas lo alimentan con `qualityProbe`. `frame-state.js` contesta una vez por fotograma si hay un panel abierto (`openSurface`) y el movimiento reducido del sistema (`prefersReducedMotion`); fuera del fotograma consulta directamente.
+`journey-pulse.js` comparte juicio, reloj audible y `scheduleAudibleCue`. Luz y sonido se programan por separado: flores/Estudio reciben una marca presente cuando llega su callback, no una marca futura que el dibujante interpretaría como activa. Se cancelan callbacks antiguos por partida, contexto, modo/capa, pausa o pantalla oculta.
 
-## Tienda del cubo
+`journey-rhythm.js` conserva una cola acotada de notas demostradas y elige la actualmente audible. `song-stage.js` cuenta pasos del transporte, conserva golpes visuales y respeta la pausa sin pulsos inventados. `audio.js` tiene una compuerta para el silencio deliberado del final11; salir restaura la mezcla. No se cambia el control de volumen del jugador.
 
-`cube-shop-model.js` define las 14 ranuras y las piezas construidas; `sparkEconomy.wear` guarda una pieza por ranura simple y `sparkEconomy.on` las de ranuras múltiples, y `equipped` se conserva para dispositivos sin actualizar. `cube-shop-art.js` dibuja Movimiento, Cuerpo, Ojos, Hábitos y Accesorios desde `render.js` con cuatro ganchos (debajo del cubo, transformación, cuerpo y encima del cuerpo, dentro de su transformación; el de encima no se usa con cuerpos sorpresa ni ritual). `cubeShopMinSize` sube a 10 px el tamaño dibujado del cubo mientras se lleva cara; no cambia alcance ni colisiones. `cube-shop-world.js` dibuja Rastros (antes del cubo, en coordenadas del mundo) y Compañeros (después del cubo). `S.cubeRoute` (`normalizeRoute`/`rollRoute` en el modelo) guarda los pasos de hoy y el último día jugado, acotados, solo en superficie. `cube-shop-moves.js` añade gestos (transformación y dibujo tras el compañero) y expone `cubeShopPulseLook`; `interactions.js` guarda esa forma en cada onda del jugador (`look`, `charge`) y le pone la forma de impacto `ring-0`, así que el alcance no cambia; `cube-shop-pulse.js` la dibuja, solo en el Mundo y sin tocar colisiones, alcance, guardado ni música; cada pieza tiene variante estática con movimiento reducido. Catálogo y tandas en [Tienda del cubo](TIENDA_DEL_CUBO.md).
+El final5 usa voces suaves existentes, contexto actual y frases guardadas; todas sus salidas normales dejan en Mundo libre. El identificador interno `refugio` también nombra el cierre; no obliga a visitar la casa. Festival tiene guardado separado y termina en sus créditos.
 
-## Viaje · capítulos
+## Progreso y transacciones
 
-`journey-chapters.js` ordena el Viaje como un disco de siete capítulos: Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio. Se guarda en `S.journey` (`chapter`, `done`, `notes`, `steps`, `progress`) y se normaliza sin tocar versiones futuras.
+`save-store.js` conserva copias antes de restaurar; normalizadores mantienen campos desconocidos y formatos futuros. No borrar claves de jugadores ni cambiar identidades de mundo como limpieza.
 
-- **Estados:** cada capítulo del Mundo pasa por Llegada, Pertenencia y Plenitud. El estado pone un tope a la energía de la música (`MU.journeyCap` en `audio.js`): .38, .66 y 1. Sin tocar durante 8 compases baja a .16 y espera.
-- **Suelos:** la Plenitud también sostiene la energía desde abajo (`MU.journeyFloor`, .8); en la Tormenta, al tocar, .6 y .92, para que sea el momento más denso. El Vacío no tiene suelo. Se miden con `scripts/journey-curve.py`, que juega el Viaje entero y cuenta voces por segundo.
-- **Notas:** cada pulso a tiempo en el bioma del capítulo guarda su nota (hasta 16 por capítulo) y, al lado, la semicorchea de la música en que sonó (`steps`), para que el final toque tu ritmo.
-- **Cumplir un capítulo** (Fase 2 del plan): `momentLived` (faro alcanzado, 3 lotos, 600 px con la criatura, 4 rayos propios, un eco) y `barsLived` (`CHAPTER_BARS`, compases contados en `progress` solo mientras se toca). Sin los dos, el tema completo no da Plenitud. Al llegar a cada capítulo el tema vuelve a su primera nota (`journeyPulseReset`).
-- **Rayos propios:** en la Tormenta, `MU.boltMine` dibuja tu rayo dorado junto al cubo y `MU.journeyOwnBolts` calla los rayos automáticos de `audio.js` sin cambiar sus sorteos.
-- **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y, cuando termina (`PORTAL_WAIT`, al menos 4 s), abre un portal dorado. Un capítulo cumplido antes de recargar vuelve a abrir su portal. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
-- **Faro:** lejos del bioma del capítulo, una columna dorada en el borde de la pantalla señala hacia él. Dentro, `journey-moments.js` señala con una luz tenue de su color el faro o el loto cerrado más cercano a los 3 s de llegar mientras no se viva y esté fuera de la pantalla (`MOMENT_GUIDE_AFTER`, `edgePoint`). La barra superior (`#barfill`) muestra `chapterProgress`: mitad momento, mitad compases; dorada al cumplir el capítulo.
-- **Línea:** cinco marcas al final de la Línea: dorado para los capítulos cumplidos, blanco para el actual.
-- **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
-- Nada consume el azar antiguo: los lugares salen del mapa del Mundo.
+`places.js` guarda premio, frase y restauración de capítulo juntos, con rollback ante error. Un resultado muestra porcentajes truncados con precisión consistente y minutos/segundos derivados del mismo total. Escape y Salir comparten cierre y comprobación del final.
 
-## Viaje · momentos de los primeros capítulos
+`collection-garden.js` revierte selección/conjuntos fallidos. `house.js` extiende ese contrato a posición de objetos y arrastres fuera del Refugio. La propiedad de tarjetas no se consume. Favoritos conserva deliberadamente una nueva entrada pendiente si falla escribir; ediciones destructivas restauran lo anterior y la UI ofrece recuperación.
 
-`journey-moments.js` guarda sus lugares en `S.journey.moments`, a partir del mapa y la posición del jugador:
+## Interfaz y guía
 
-- **Llanura:** un faro a 520 de donde llegas, en la Llanura y fuera del mar. Su voz es un tono sostenido en la quinta del lugar que crece al acercarte (se oye hasta 900) y calla fuera del capítulo. Al alcanzarlo, late con el compás.
-- **Lago:** cinco lotos en anillo. Una nota a tiempo junto a uno lo abre, y el loto canta esa nota una quinta arriba una corchea después.
-- **Bosque:** la primera nota a tiempo trae una criatura que camina detrás de ti y repite cada nota una octava abajo, medio compás después. No entra en el Vacío.
-- `journey-chapters.js` pasa cada nota a tiempo (`journeyMomentNote`) y dibuja los momentos con el capítulo actual.
-- **Sin palabras:** en el Viaje el lienzo del Mundo no dibuja texto (`journey-mode.js` envuelve `fillText` y `strokeText`) y se ocultan los avisos `#voice` y `#zone`. Los avisos de guardado siguen.
-- **Final más lleno:** bajo el tema suenan un latido suave en cada negra y, si te siguió, la criatura respondiendo cada nota.
-
-## Viaje · festival y accesibilidad
-
-- **Festival** (`festival.js`): `?festival=1` abre los primeros 15 minutos (Camino, Llanura y Lago).
-  - Sin cuenta (`main.js` no llama a `requireAccount`) y siempre en el Viaje; el menú oculta Cuenta y el cambio de modo (`body.festival`).
-  - Guarda en su propia clave local, `kubono:festival` (`progress.js`), así nunca toca la partida del jugador ni la nube.
-  - Tras la Plenitud del Lago, el portal lleva al final de festival: solo Llanura y Lago, la frase se queda en pantalla y «Otra persona» borra solo esa clave y recarga.
-- **Daltonismo** (`color-safe.js`): «Colores para daltonismo» en Ajustes guarda `S.colorSafe`. `runtime.placeColor(id,base)` da tonos Okabe–Ito a lugares y capítulos; lo usan la lámina del Mundo y el final. El blanco sigue marcando estados y el dorado lo ganado.
-
-## Viaje · momentos firma y final
-
-- **Tormenta** (`journey-chapters.js`): cada nota a tiempo en su capítulo pone un rayo en el beat (usa `MU.boltAt`, el rayo existente de `render.js`); su Plenitud es un compás de cuatro rayos.
-- **Vacío:** el tope de la música baja a .1 (el cubo solo). Tras ocho notas, las criaturas repiten cada nota un compás después, una octava arriba, y se encienden alrededor del cubo. El tema solo se completa con ellas (12 notas). El Vacío es el mar entre continentes: es el único capítulo que se busca en el mar.
-- **Final** (`journey-finale.js`): al cruzar el último portal el cubo aterriza en el Refugio y una capa propia (`#journeyFinale`, con su lienzo y su `requestAnimationFrame`) toca tu viaje:
-  - hasta seis notas tuyas por capítulo, en orden y con tu ritmo (`noteLengths`, de una a tres negras según la distancia entre aciertos; en negras si la partida no guardó `steps`), con el color de cada capítulo, sobre un pedal de La; luego el tema en La mayor dos veces, la segunda a la quinta, sobre el acorde de La mayor (`finaleScore`);
-  - el cielo se vuelve dorado y la imagen se aleja; tres segundos de silencio; créditos;
-  - al terminar (o al tocar la pantalla tras 2 s) guarda `S.journey.finished` y pasa a Mundo libre. Si el guardado falla, el Viaje sigue abierto.
-  - El sonido pasa por su propia ganancia, que se apaga al saltar. Mientras suena, `audio.js` no programa pasos de la música y `house-audio.js` (`houseQuiet`) calla objetos y ambiente del Refugio: los tres segundos antes de los créditos son silencio real.
-- Las notas a tiempo llegan al capítulo antes de comprobar la frase, así la nota que completa el tema cuenta.
-- Una partida guardada en el Refugio sin final lo vuelve a tocar al entrar al Mundo.
-
-## Viaje · el Mundo como lámina
-
-**Universo:** las 11 regiones conservan sus ids y cambian de nombre y color (`data.js`, `house-view.js` `LANDSCAPES`, `ecology-model.js`, `ecoregions.js`); ver [El universo](UNIVERSO.md). El final del Viaje toma sus colores de `LANDSCAPES`.
-
-**Tempo de los géneros:** el mapa elige el género de cada lugar por su campo de tempo (`neighborhoods.js`, `continents.js`). Cuando un género cambia su rango para sonar distinto, `genre-tempo.js` conserva el rango original (`PICK_BPM`) para elegir y para el tempo guardado de cada lugar, así el mapa queda idéntico. Al sonar, `audio.js` y el aviso de lugar usan `soundingBpm`, que lleva ese tempo al mismo punto del rango nuevo. `genre-map.mjs` lo fija con una huella de `main`.
-
-**Momentos raros:** `universe-rare.js` decide por hash de región y compás si llega el momento raro de la región; `universe-layers.js` lo llama cada fotograma (`universeRareTick`). Lo visto se cuenta en `S.universe.rare`. Cada momento suena con dos notas suaves del acorde que suena, a un tiempo de distancia (`rareChime`, volumen .03, solo con sonido), y la Bitácora los lista en Lugares (`rareSection`): los vistos por nombre y en dorado, los demás solo por su lugar.
-
-**Regiones nuevas:** `universe-regions.js` da a las regiones del Abismo (mar entre continentes, bioma `vacio`) una de cuatro regiones nuevas por hash de la clave (`newRegionAt`), salvo en el Viaje. `universe-layers.js` las dibuja como cualquier región; `discovery.js` muestra su nombre. Las constelaciones completadas se guardan por clave de región en `S.universe.constellations`.
-
-**Ambiente bajo la música:** `ambience.js` da un solo `GainNode` compartido (`ambienceBus`, a `AMBIENCE_LEVEL` = 0,5 sobre el bus) por el que pasan el aire de cada región (`universe-layers.js`), la lluvia y los insectos (`world-weather.js`); el viento (`render.js`) se escala por el mismo nivel. `ambienceTick`, llamado cada fotograma desde `render.js`, baja esa ganancia en cada pulso del compás (`breath`) y la recupera antes del siguiente. Las bandas estrechas (Q ≥ 3) y los insectos se afinan a la nota más cercana de la escala que suena (`ambienceInKey`).
-
-**El tema como llave** (Fase 5 del plan): `theme-key.js` escucha cada tema completo a tiempo (`journey-pulse.js` llama a `themeKeyPhrase`). Solo en el Mundo libre: junto a un hito (a menos de 320 px, `nearbyLandmarks`) el hito toca su motivo y después el tema en tutti; en un superbioma raro, muy raro o ausente el lugar contesta el tema una quinta arriba. Cada llave se guarda una vez en `S.universe.keys` (`{d: día, n: nombre}`, normalizado) y la Bitácora la lista en Lugares (`keySection`); contesta cada vez que se toca. No consume azar: hitos y superbiomas salen del mapa.
-
-**Calidad ligera y medida** (Fase 4 del plan): en ligera, `universe-layers.js` dibuja cada capa con la mitad de sus puntos (`thinRects`: salta siempre los mismos, sin parpadeo) y sin el segundo pase del dub, y `pixel-life.js` dibuja solo las 12 criaturas más cercanas. Medido en el navegador de pruebas (390, Mundo): 4185 → 2256 `fillRect` por fotograma (54 %). `?medir=1` muestra en una esquina la mediana y el percentil 95 de los últimos 300 fotogramas (`frameStats`, `runtime.frameTimes`); no envía nada.
-
-**Superbiomas:** `superbiomes.js` reparte los 52 géneros en diez familias (`FAMILIES`, `familyOf`) y define las combinaciones válidas (`valid`): región de continente con cualquier familia, Abismo solo con Ambient. `superbiomeOf(lugar, x, y)` da el superbioma de un lugar de `regionOfPos` (en el Abismo, el de su región nueva) sin consumir azar; `discovery.js` lo muestra en el aviso de región y `recordSuperbiome` guarda el primer día en `S.universe.super`, con vuelta atrás si falla el guardado. `superbiome-rarity.js`, generado por `scripts/superbiome-census.mjs` sobre seis mundos, da la rareza de cada uno (`comun`, `raro`, `muy-raro`, `ausente`); el mapa no se cambia para llenar los raros. El contador de la Bitácora (`superbiomeProgress`) deja fuera los ausentes, salvo el que se haya oído: así se puede completar. `superbiome-fusion.js` (`FUSION`) da a `universe-layers.js` la velocidad, la forma del pulso y el gesto (líneas rectas, eco, salto, balanceo o giro) de la familia que suena donde está el cubo; las capas usan un reloj propio (`createClock`) que nunca salta. La familia es la de la música que suena (`MU.dnaA`); `createBorder` espera al primer tiempo del compás para cambiarla y mezcla las dos durante un compás (`blend`). `superbiome-journal.js` dibuja en la Bitácora (pestaña de lugares) la cuadrícula región × familia a partir de `S.universe.super`, ignorando ids desconocidos, y las figuras de `S.universe.constellations`. En el Viaje, `journey-chapters.js` (`findChapter`) lleva cada capítulo al lugar de su región cuya música es de la familia preferida (`CHAPTER_FAMILIES`), y si no hay ninguno, al más cercano de la región. `interactions.js` marca la onda que está respondiendo (`currentWave`) y `voices.js` deja sonar una sola voz grave por onda.
-
-**Capas del universo:** `universe-layers.js` dibuja, después del suelo (`render.js`, `worldStep`), tres capas por región (lejos, medio y cerca) con su propio parallax, mezcla en los bordes y un aire de región muy bajo (`REGION_SOUND_MAX`). Cada región se añade en `STYLES` (las diez con detalle); el Vacío es `null`. `f.ux`/`f.uy` dan la posición de la celda en su plano, para formas que continúan entre celdas (bandas, malla); `f.rest` mide cuánto lleva quieto el cubo y `f.pulseAge` el último pulso (`universePulse`, desde `interactions.js`). `wake` dibuja la estela del cubo; `f.bar` y `f.beatIndex` siguen el compás del programador. Los puntos salen de un hash con avalancha (`rand`), no del azar antiguo.
-
-**Regla de cámara:** el Mundo se ve siempre desde arriba, infinito en todas las direcciones y sin horizonte; solo el Refugio se ve de lado.
-
-`world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la luz del bioma:
-
-- **Luz:** un degradado radial centrado en el cubo, con el color del bioma (`LANDSCAPES` de `house-view.js`), que respira con el pulso del compás (`beat()`); fijo con movimiento reducido.
-- Las siluetas laterales con horizonte (alpha.99–104) se quitaron: rompían la vista cenital.
-- **Color que se gana:** solo en el Viaje y en la superficie, un bioma sin recuperar se ve pálido. Desde H1 el gris no es un filtro CSS de toda la pantalla: `drawWorldSheetGrey` pinta una mezcla `saturation` (88 %) y un velo negro del 8 % sobre el suelo, justo antes de los juegos, el cubo y los portales, así el oro sigue dorado; aparece y se va en ~1,6 s. Un bioma recuperado se tiñe de su color (luz del 18–30 %). Cerrar la ronda de un lugar (`places.js`) recupera el color de su bioma. El cubo del Mundo se dibuja a 1,6× su tamaño, entre 16 y 30 px (`cubeView` en `render.js`).
-  - Completar el tema del cubo a tiempo en ese bioma (`journey-pulse.js`) lo recupera para siempre en `S.journey.colors`.
-  - Al cargar por primera vez, los colores se siembran con los biomas ya explorados (`journey-mode.js`); un jugador nuevo empieza sin ninguno.
-  - El Mundo libre siempre tiene color.
-- **Camino:** cada cristal roto sube la energía de la música (`audio.js`), así que la canción suma voces hasta abrir el Mundo. En el Viaje la etiqueta del cristal dice solo «Pulso».
-- **Silencio del Viaje:** los avisos de logros esperan al Mundo libre y la caja de texto del continente se oculta.
-
-## Viaje · entrada y modo
-
-- **Cuenta opcional** (`account-entry.js`):
-  - sin sesión, el juego empieza al instante con guardado local (la clave sin usuario de siempre);
-  - con sesión, empieza al instante y se comprueba en segundo plano, como antes, y se recuerda su correo;
-  - la hoja de cuenta solo vuelve a quien ya tuvo cuenta en el dispositivo (correo recordado) y no eligió «Jugar sin cuenta» (`kubono:local-play`);
-  - entrar o crear cuenta desde el menú recarga dentro de la cuenta, y `progress.js` adopta la partida local si es la primera cuenta del dispositivo;
-  - las comparaciones de usuario tratan «sin usuario» como `null`, para no recargar en bucle;
-  - una vez en el Mundo libre, se ofrece la nube con un aviso, una sola vez (`S.cloudOffered`); nunca durante el Viaje.
-- **Modo** (`journey-mode.js`, `S.journey`):
-  - **Viaje** (`viaje`): `body.journey-quiet` oculta Día, Era, Caminado, chispas, Saltar, Estilos, la meta y las pistas de texto; del menú oculta Tu cubo, Mapa, Bitácora, Crear, semillas, Compartir y Guía (`.free-only`);
-  - **Mundo libre** (`libre`): todo como antes;
-  - quien ya llegó al Mundo empieza en Mundo libre y los jugadores nuevos en el Viaje; el botón «Mundo libre / Viaje» del menú cambia y se guarda;
-  - el Mundo libre se abre al terminar el Viaje (`S.journey.free`, `freeOpen`): antes el botón está oculto y `setJourneyMode('libre')` no hace nada; quien ya estaba en Mundo libre lo conserva;
-  - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
-  - el Viaje abre sin saludo (`return-entrance.js`), el menú no muestra chispas y se ocultan `#quickSave`, `#bAuto` y en Ajustes el paseo automático, los textos del paisaje y «Modo: explorar» (`.free-only`);
-  - al terminar el final, `journey-finale.js` (`unveil`) hace aparecer el HUD del Mundo libre al salir del Refugio y marca el menú con un punto dorado hasta abrirlo; marca también «Tu cubo» y avisa una vez para qué son las chispas (`S.journey.sparksHint`);
-  - `chapter-test.js` (F0): `?capitulo=` abre el Viaje en ese capítulo con los anteriores cumplidos, sin cuenta (`main.js`) y con su propio guardado (`kubono:capitulo`, en `progress.js`); cada carga borra el estado del juego de ese capítulo. Los juegos vuelven a leer su estado si el objeto guardado cambia;
-  - `bar-beat-hint.js` (F12): sin ningún pulso (`journeyPulseState`) y cinco segundos sin cuadros abiertos, en el Camino o un capítulo, la clase `beat-hint` y `--beat` en `#bar` (desde `render.js`, cada fotograma).
-  - `journey-resonance.js` (F11): el juego de los Cristales (`cristales`, estado en `S.journey.resonance`). `crystalSpots` (nueve, tres por nota), `resonancePulse` (sonar al alcance; acorde con las tres notas), `ringing`.
-  - `journey-guide.js` (F15): el juego de los Faros (`guide`, estado en `S.journey.guide`). Seis barcos en sitios fijos por hash (`boatSpot`) a 220–430 px del puerto (donde empezó la ronda). `guidePulse` enciende los que están al alcance durante dos compases; `guideStep` hace que los encendidos sigan al cubo en fila y que, encendidos dentro del puerto, atraquen (`dockValue`: 4 y 2 más por cada otro barco encendido, hasta 10); uno nuevo sustituye al que atraca. Ritmo `faro` («1 · 3 · y»). Flechas en el borde: al puerto con barcos encendidos, al barco más cercano sin ellos. Pruebas: `tests/journey-guide.mjs` (simulación 2:28) y `tests/guide_smoke.py`.
-  - `journey-rebuild.js` (F16): el juego de las Ruinas (`rebuild`, estado en `S.journey.rebuild`). Ocho columnas fijas en anillo (`pillarSpots`), algunas con piedras de inicio (`RUINS_START`). `rebuildPulse` cuenta los pasos del patrón («1 · 2y · 3 · 4», ritmo `ruina`) que caen en un mismo compás junto a una columna: con 3 (4 en Maestro) pone una piedra; dos columnas enteras vecinas levantan un arco. El compás de cada pulso sale de `performance.now()` menos su paso. La meta del Maestro se limita a `RUINS_MAX`, toda la ruina. Pruebas: `tests/journey-rebuild.mjs` (simulación 2:13) y `tests/rebuild_smoke.py`.
-  - `journey-echo.js` (F17): el juego de la Cueva (`echo`, estado en `S.journey.echo`). El secuenciador llama a `echoMusicStep(s,t)` en cada semicorchea: en cada «1» empieza un compás de llamada (la cueva canta `echoPattern(n,len)`, de 2 a 5 corcheas desde el «1», fijas por hash) o uno de respuesta. Los pulsos a tiempo dentro de la respuesta se apuntan; al acabar, `echoClose` decide: eco (todos los pasos y ninguno más) vale 6 + 2 por paso y alarga el siguiente; si no, 2 por paso acertado y lo acorta. Ritmo `eco`: cualquier corchea está a tiempo; la guía la dibuja el juego (ocho casillas bajo el cubo). Sin sonido, cada pulso suma 2. Pruebas: `tests/journey-echo.mjs` (media de 30 jugadores simulados) y `tests/echo_smoke.py`.
-  - `wild.js` (F18): el Mundo salvaje, en `S.wild` (`caught`, `today`, `remix` con el mejor del día). Fuera de rondas y en la superficie, tras 1 200 px andados y un momento entre uno y dos minutos (`wildDue`), aparece una chispa salvaje 150 px por delante; `journey-pulse.js` le pasa cada pulso (`wildPulse`): cinco a tiempo a su lado la atrapan (15 ✦); a los 30 s se va. `dailyRemix(día)` elige un lugar abierto de `REMIX_PLACES` y un ritmo de `REMIX_RHYTHMS` distinto del suyo; `startPlace(id,{remix})` solo acepta el de hoy, `journey-rhythm.js` usa ese ritmo y al cerrarla `remixDone` paga 30 ✦ y 20 más sobre el mejor del día. La hoja Lugares muestra la remezcla y su botón. Pruebas: `tests/wild.mjs` y `tests/wild_smoke.py`.
-  - `journey-surf.js` (F10): el juego de las Dunas (`dunas`, estado en `S.journey.surf`). Olas cada `SURF_EVERY` tiempos sobre la rejilla de `MU.bq` (se reajustan si cambia el tempo); `waveSpot` (círculo por hash), `rides` (su tiempo y dentro del círculo), `surfValue` (racha 2–4). `chapter-test.js` da a `?lugar=` las estrellas que pide el lugar.
-  - `journey-garden.js` (F9): el juego del Jardín, registrado como `jardin` en `journey-games.js` (estado en `S.journey.garden`, guardado aparte durante la ronda como los demás). Lógica pura: `bedSpots`, `gardenPulse` (sembrar, crecer, florecer, recoger), `gardenWilt`. Las rondas de cualquier lugar actualizan la barra desde `journey-chapters.js` (`roundBar`, clase `place-round` en `body`).
-  - `narrator.js` (F8): `NARRATOR_LINES` (voz de logros viejos y nuevos, que sustituye su `VOZ`), `NARRATOR_ACHIEVEMENTS` (23 nuevos, añadidos después de `achievements.js` para no cambiar los generados) y `roundAchievements`. Eventos: `narrateRound` (desde `placeFinish`) y `narrate(kind)` (portal cerrado o visitado, dejar la ronda, viaje rápido, trofeo, canción, final). `S.narrator` guarda sus contadores. El aviso de un logro y la Bitácora muestran `narratorLine`.
-  - `song.js` y `song-stage.js` (F7): la canción de once capas (`SONG_LAYERS`, `layerEvents` por semicorchea, `playSong(ids,{at,bars,from,six})` con su propia ganancia, `songNote`, `songPulse`, `songPlaying`; `audio.js` calla su paso mientras suena). `song-stage.js` dibuja los once anillos (`drawSongRings`) en `#songStage`: «Tu canción» desde Lugares y el final verdadero (`songFinaleCheck`, una vez, `S.lugares.won`) al cerrar la tarjeta de la ronda con 33 ★. `journey-finale.js` usa ambos: dos compases por capítulo (`chapterStarts`), notas encima, anillos y «Explorar».
-  - H4: `song-stage.js` ya no usa `playSong` (que sigue para el final del Viaje). `songStageStep(s,t)`, llamado por `audio.js` en cada semicorchea, toca `stageEvents(plan,k,chordTones,…)`: las capas con `tierStep(id,s,chord,tier)` de `song.js` (★ fragmento, ★★ entera, ★★★ variación), la melodía de los Faros (`THEME` en la escala del lugar), y en el final tus notas (`S.lugares.notes`) y el tema. `songPlan` da compases y entradas; `songLayerPreview(id)` toca un trofeo dos compases. El Mundo no se calla.
-  - H5: `rhythmMultiplier(false)` vale 0 (el cristal se rompe y no da chispas; `crystal-sparks.js` y `interactions.js` usan `??` para no convertir 0 en 1). `chapterToast` (journey-games.js) no habla en el Viaje y dice cada frase una vez por guardado (`S.journey.lines`). `achievements.js` no anuncia logros durante una ronda; `takePendingLine` los lleva a la tarjeta (`#placeNarrator`).
-  - H6: `spatial.js` añade `directionPan` y `runtime.withPan` (un `StereoPanner` delante del bus mientras se emite la voz). `wild.js` registra `wildMusicStep` y `places-ring.js` toca el portal cercano en el «1» y el siguiente del camino en el «3» (`beaconGain`, `ringSounds`), ambos desde su lado.
-  - H7: `scripts/play-curve.mjs` modela las dos primeras horas con los módulos reales (`places.js`, `spark-rules.js`, `cube-shop-model.js`, `spark-economy.mjs`); no forma parte del juego ni del `SHELL`.
-  - `refugio-lugares.js` (F6): el Refugio como centro. `drawHouseLugares` (desde `house.js`) dibuja en la Sala «LUGARES · ★ N / 33» y los once trofeos (`TROPHY_SHELF`); `houseLugaresLook` responde al toque (aviso de nivel 2 y la nota del lugar). `#houseStars` y el muro abren `#mLugares` (`openLugares`): estrellas, % o lo que pide cada lugar, `nextLine` e «Ir» (`ringTravel` tras `exitHouse`). No se muestra en visitas.
-  - `places-ring.js` (F5): los portales en anillo (`portalSpots`, radio 6000 px alrededor de `S.studio` o, sin Refugio, de `S.lugares.center`; fuera del mar). Entrar a uno llama a `startPlace(id,{maestro,from})`; con ★★ abre `#mPortal`. `from` (junto al portal, hacia el Refugio) es adonde vuelven «Salir», `abandonPlace` («Dejar la ronda», `#bLeavePlace`) y una recarga. Dibuja con formas (la pantalla tranquila no escribe en el Mundo), la flecha a `nextPortal`, la nota del portal en `ringMusicStep` (desde `audio.js`), los portales en el mapa (`ringPortals`) y el viaje rápido a `S.lugares.seen` (`#ringTravel`). `?anillo=1` lo prueba.
-  - `places.js` (F4): los 11 lugares (`PLACES`, los once con su juego) y sus estrellas en `S.lugares` (no `S.places`, que guarda las regiones visitadas del mapa; `stars`, `best`, `rounds` del día, `journeyShare` por capítulo y `run`). `startPlace(id,{maestro})` abre una ronda tras el Viaje: guarda aparte el estado del juego del capítulo, lo vacía y lleva al cubo a su bioma. `journey-games.js` juega ese juego durante la ronda y avisa de cada pulso (`placeHear`). El cierre dorado pasa por `journeyComplete` → `placeFinish`: estrellas (`roundStars`: 85 % para ★★; en Maestro, 80 % para ★★★; sin sonido solo ★), chispas (`roundSparks`), récord, el drop y la tarjeta `#mPlace`; después devuelve el estado del capítulo. Maestro: `MU.tempoScale` 1,1 (en `audio.js`), `MU.onTimeWindow` 0,06 (en `journey-pulse.js`) y `placeGoalScale` 1,5 en las barras. Al cumplir un capítulo del Viaje se da su ★, y su ★★ si se jugó con el 85 % a tiempo; los capítulos cumplidos antes también dan su ★. Una ronda abierta en una recarga se descarta. En la ronda no hay cristales del Mundo;
-  - H3: `S.lugares` versión 2. `placeOpen` ya no cuenta estrellas: un lugar tras el Viaje se abre si `previousPlace(id)` está completo, si él mismo lo está, si ya se visitó o si un guardado v1 lo tenía abierto (`kept`). `nextOnPath` da el siguiente del camino (flecha y columna de luz en `places-ring.js`, «Siguiente» en la tarjeta vía `ringGo`). `allComplete` gana (`song-stage.js`: `won`), `starCount ≥ 33` da la versión maestra (`master`). `start(id,{free:true})`: ronda Libre sin barra (`body.place-round` apagado), estrellas, chispas ni tarjeta.
-  - `spark-rules.js` (F3): reglas puras de chispas. `rhythmMultiplier` (×2 a tiempo, ×3 desde el octavo seguido), `nextStreak` (se rompe fuera de tiempo o tras 4 s) y `roundSparks` (60 + 6 por décima a tiempo; Maestro ×2; desde la cuarta ronda del día en un lugar, la mitad). `journey-pulse.js` avisa a `sparks.js` (`sparkRhythmPulse`) de cada pulso juzgado; fuera del Viaje, en el Mundo y con sonido, la onda (`interactions.js`) lleva el multiplicador y `crystalTransaction` lo guarda en el cristal roto (`sparkEconomy.sites[id].mult`) y lo aplica al recoger sus fragmentos; las cadenas lo heredan. `scripts/spark-economy.mjs` mide la minería real a ×1, ×2 y ×3 y modela las horas de la tienda;
-  - `journey-victory.js` (F13, antes F2): el cierre de un lugar o capítulo sale de la música que suena. Desde el siguiente «1», un compás en que el filtro de la música (`fx.lp`) se cierra bajo un ruido que sube; su último medio tiempo, silencio (`outputStage.headroom` baja a cero); en el «1» vuelve todo con la capa del lugar en Tu canción (`layerStep`/`songChord` de `song.js`) y el tema del cubo con el timbre de `VICTORY_LEADS`. La capa no se programa por adelantado: `audio.js` llama a `victoryMusicStep(s,t)` en cada semicorchea y la capa toma el acorde del mundo (`chordTones`) al empezar cada compás. Devuelve su duración, que retrasa el portal. Pruebas: `tests/journey-victory.mjs`, `tests/victory_mix.py` (once cierres sin conexión) y `tests/victory_live_smoke.py`.
-  - `journey-rhythm.js` (F14): el ritmo de cada lugar y capítulo (`RHYTHMS`, `PLACE_RHYTHMS`, `JOURNEY_RHYTHMS`). `journey-pulse.js` pregunta `journeyRhythmTarget(heard)`: con un ritmo propio, el pulso está a tiempo si cae cerca de un paso que cuenta (`rhythmTarget` arma la rejilla con los tiempos `MU.bq` y el paso de cada uno según `MU.sq`), y el juego recibe ese paso. `drawRhythmGuide` dibuja los ocho puntos bajo el cubo desde `drawJourneyGames`; `journeyRhythmGap` baja el descarte de toques de `interactions.js` con ritmos de corcheas. Sin ritmo propio (A tiempo, el Mundo libre) todo sigue igual.
-  - H2: `rhythm-calibration.js` mide el retraso del jugador con sus 12 primeros pulsos cerca de un objetivo (`calibrationSample`, que `journey-pulse.js` llama con la diferencia firmada); si la mitad central cabe en 60 ms, guarda `S.latencyNudge` (−80…300 ms) y `S.latencyCal`, y `heardTime` lo resta en todo juicio (también `onBeatNow` de `audio.js`). Ajustes: `#latencyLess`, `#latencyMore`, `#latencyAgain`. La Línea dibuja los pasos del ritmo activo; `rhythmMusicStep` (llamado por `audio.js`) canta el patrón dos compases al empezar; `formStep` y `drawCubeForm` dan al cubo hasta tres formas por racha.
-  - `journey-games.js`: registro de los juegos de capítulo (`registerJourneyGame`). Reparte el pulso (`journeyGamePulse(on,{step,silent})`, desde `journey-pulse.js`, con el paso del compás que respondió), el dibujo bajo y sobre el cubo (`render.js` y `journey-chapters.js`), la barra (`journeyGameProgress`) y el tamaño del cubo (`cubeGrowth`). Un capítulo con juego no se cumple con el tema sino con el cierre dorado del juego (`journeyComplete`); `journey-moments.js` omite su faro o sus lotos. `?clasico=1` o `?faro=1` apagan todos los juegos;
-  - `journey-chain.js` (Lago, alpha.138): racimos de 3 a 7 flores por `hashKey` en celdas de 320 px, cada una a 45–60 px de la anterior. Un pulso a tiempo lanza una onda de 110 px; cada flor alcanzada se enciende (vale su paso en la cadena, hasta 5), suena y lanza otra de 80 px, hasta 8 pasos. Meta 340 (F1); con la barra llena, la flor dorada junto al cubo se abre con un pulso a tiempo. Guarda `S.journey.chain` (`points`, `lit` acotado a 800, `flower`, `opened`, `best`, `hinted`);
-  - `journey-lasso.js` (Bosque, alpha.139): grupos de 3 a 6 luciérnagas por `hashKey` en celdas de 220 px. La estela guarda 8 s de posiciones (desde F0; con 5 s una vuelta lenta no llegaba a cerrarse); `closedLoop` busca el punto más antiguo a menos de 45 px del cubo (con al menos 0,5 s) y exige 2500 px² de área; el cierre se mantiene 1,5 s. Un pulso a tiempo atrapa lo que queda dentro (`insideLoop`) y cada una vale el número atrapado (hasta 3). Meta 240 (F1); con la barra llena, la criatura junto al cubo se une con un pulso a tiempo y fija `S.journey.moments.companion`. Guarda `S.journey.lasso` (`points`, `caught` acotado a 800, `friend`, `joined`, `best`, `hinted`);
-  - `journey-dance.js` (Tormenta, alpha.140): un círculo de 42 px a 100–170 px del cubo (`danceSpot`, por `hashKey` de su número) cuyo rayo cae en 1,5 compases; el primero del capítulo aparece junto al cubo (F1). Dentro y a tiempo se devuelve (10, 15, 20 seguidos); si cae, la racha vuelve a cero. Fija `MU.journeyOwnBolts` para que la tormenta no lance rayos sueltos y desactiva el rayo por nota de `journey-chapters.js`. Meta 250 (F1); con la barra llena, el ojo junto al cubo se cierra con un pulso a tiempo. Guarda `S.journey.dance` (`points`, `count`, `returned`, `best`, `eye`, `closed`, `hinted`);
-  - `journey-release.js` (Vacío, alpha.141): el cubo carga `releaseTotal` cosas (lo pegado en la Llanura, `S.journey.stick.gone`, entre 12 y 24) y se dibuja hasta 2,2 veces mayor (`growth`). Solo en el «1» del compás (`downbeat`, con el paso que pasa `journey-pulse.js`; sin sonido vale cualquiera) y con cielo libre (`freeSky`, 100 px de las demás), un pulso a tiempo suelta una que sube a `starSpot` (por `hashKey`) y canta la nota del pulso una octava arriba un compás después; desactiva los ecos de `journey-chapters.js`. Al soltarlo todo, la luz dorada junto al cubo cierra el capítulo con un pulso a tiempo. Guarda `S.journey.release` (`total`, `released`, `stars` acotadas a 24, `light`, `lit`, `hinted`). Las pistas usan `chapterToast`, que se descarta fuera de su capítulo;
-  - `journey-stick.js` (prototipo «Pégate», alpha.137): en la Llanura del Viaje cada pulso de `journey-pulse.js` llama a `journeyStickPulse`; solo a tiempo pega lo cercano (lugares por `hashKey` de celdas de 150 px) y suma su valor a la barra (`STICK_GOAL` 60, desde F1; más de 8 celdas de 10 con algo); fuera de tiempo nada se mueve. `render.js` llama a `drawJourneyStickUnder` antes del cubo (atenúa el lugar y dibuja lo que se pega latiendo con el beat y la nube) y escala el cubo con `cubeGrowth`; `drawJourneyStick`, tras el cubo, dibuja lo pegado y las gotas hacia la barra. Con la barra llena la nube se coloca junto al cubo y lo sigue; un pulso a tiempo la traga y llama a `journeyComplete('llanura')`. Guarda `S.journey.stick` (`points`, `cloud`, `gone` acotado a 800, `swallowed`, `hinted`; el `size` del primer prototipo se convierte en puntos). Con `?faro=1` queda apagado y vuelve el faro. En el Viaje `crystal-sparks.js` no activa los cristales del Mundo y los del Camino no acreditan chispas (`sparks.js`);
-  - `playtest.js` (Fase 7): con `?prueba=1` (recordado en `kubono:prueba:on`) anota por sesión y capítulo el tiempo, los pulsos a tiempo (diferencias de `journeyPulseState`), la quietud más larga, el dedo fantasma (`journeyHint`) y los capítulos cumplidos, en `kubono:prueba` (30 sesiones como máximo, fuera del guardado). `?prueba=ver` abre `#mPlaytest` para copiarlas; `?prueba=0` lo apaga;
-  - `journey-hint.js`: tras 4 s sin entrada en el Viaje (20 s después de 3 aciertos), un dedo fantasma arrastra y toca en el beat; se va al primer toque y nunca sale con un dedo apoyado o moviéndose;
-  - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
-  - el Viaje no abre la bienvenida del Camino.
-
-## Viaje · pulso a tiempo
-
-`journey-pulse.js` juzga cada pulso del jugador en el Camino y el Mundo ([El Viaje](VIAJE.md)).
-
-- **Siempre suena:** fuera de tiempo el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms; un pulso demasiado seguido deja una marca gris tenue en la Línea (`journeyPulseDropped`) en vez de desaparecer.
-- **Cuándo se juzga:** en el momento en que el dedo toca (`canvas.js` pasa `tapStart.t` a `sonar`), no al soltarlo, y descontando la latencia de salida (`outputLatency`, hasta 0,4 s): el jugador contesta a lo que oye, no a lo que el reloj programó. Un toque cuenta hasta 450 ms; el escáner se abre a los 500 ms y, si el dedo luego se mueve, se cierra y el cubo camina.
-- **A tiempo** (±80 ms, `ON_TIME`; el mismo margen y la misma latencia para rituales de portal, retos «pulsos» y el groove vía `onTime`/`onBeatNow`):
-  - toca **al instante** la siguiente nota del **tema del cubo** (`THEME`), exacta, sin moverla por el acorde ni por el grado de la región: `voices.js` `playTheme` usa la voz del pulso si es melódica y, si es de percusión o bajo, un instrumento principal del género elegido por hash de la región; después la tercera y la quinta en la rejilla. En el Camino toca la nota del tema con el `pluck`;
-  - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite; sin vibración (iPhone) el cubo brilla en dorado un tiempo (`cubeGlow`);
-  - deja un destello dorado;
-  - seis aciertos completan la frase, con una vibración distinta.
-- **Sin sonido** (sonido apagado o sin beats todavía): cada pulso cuenta como a tiempo, para que el Viaje se pueda jugar sin oírlo; los capítulos siguen pidiendo sus momentos y compases.
-- **Fuera de tiempo:** solo suena el pulso de siempre. En el Camino del Viaje la onda fuera de tiempo no rompe cristales y la onda a tiempo rompe uno (`pathWaveCounts` en `crystal-sparks.js`); la fuera de tiempo hace temblar el cristal (`miss`) y los cristales brillan en cada beat; el Camino libre sigue igual.
-- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso, en el paso que oíste al tocar (a tiempo, sobre el beat acertado): dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
-- **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
-
-## Refugio (antes Casa)
-
-`house.js` mueve el cubo, lleva la cámara y recibe los gestos; `house-view.js` dibuja las cámaras; `house-model.js` guarda los datos; `house-audio.js` la hace sonar; `house-collection.js` muestra la colección; `house-capsules.js` el Prisma, el disco del Taller y el Núcleo; `house-guide.js` la cuenta en palabras; `collection-garden.js` añade el Jardín de voces. Los ids internos (`house`, `sala`, `jardin`, `azotea`, `sotano`, `decor:*`) no cambian para no tocar partidas.
-
-- **Historia:** el Refugio viaja con el cubo. Se abre donde estás (menú, botón del Mundo u «Abrir el Refugio aquí») y se despliega desde el cubo: todo crece desde él y aparece (`unfold`). Fuera solo hay negro, polvo y la luz del bioma (`LANDSCAPES`). El lugar anterior queda como campamento.
-- **Cámaras:** Cielo (`azotea`), Eco (`sala`), Jardín de voces (`jardin`) y Raíz (`sotano`), en unidades propias de 1000 de ancho y tres niveles. Cada cámara es una partitura: esquinas, suelo, cinco líneas tenues y dieciséis marcas del compás; la luz y la marca dorada siguen el paso que suena. Entre niveles hay hilos de luz donde estaban las escaleras.
-- **Dibujo:** las cámaras y los hilos se dibujan una vez por escala y cámaras abiertas en un lienzo aparte; el fondo, cada fotograma.
-- **Cubo:** se dibuja con `drawStage`, como en la tienda, y lleva todo lo comprado.
-- **Colección:** solo lee la partida. Paneles de luz con las tarjetas más raras, una constelación con una estrella por categoría de logros, columnas de cristal con las últimas piezas compradas, voces del jardín como tallos de luz, y las criaturas vistas y la mascota de visita. El pulso las hace saltar; tocar algo lo nombra.
-- **Sonido:** los objetos suenan en su paso del compás, al pasar junto a ellos (una vez cada 2,5 s) y con el pulso (arpegio de los cuatro más cercanos); las criaturas responden. Cada cámara tiene su aire, que se apaga al salir, con sonido apagado o con un panel abierto.
-- **Crecer:** una cámara se abre por días o por logros, lo que llegue antes (`roomOpens`): Jardín de voces 3 u 8, Cielo 7 o 20, Raíz 14 o 40.
-- **Prisma:** cada giro cuesta 60 ✦ y da un ornamento (12), una pieza que suena (6) o un color para un objeto colocado. Nada se repite; el premio sale de un hash del número de giro. Las chispas solo se descuentan si la partida se guarda. Se toca con el cubo al lado: el primer toque avisa y el segundo gira.
-- **Taller:** su disco radial flota en Eco y abre el panel de siempre; «Volver al Refugio» regresa. No hay otra entrada al Taller.
-- **Panel:** Coloca (alterna con caminar), Ver refugio, Código y Volver. Un objeto se guarda arrastrándolo fuera. Las herramientas del Jardín de voces aparecen con el cubo en esa cámara.
-- **Datos:** `S.house` versión 2: objetos `{kind,room,x,y}` (x es el paso del compás, y la nota), `decor`, `tints`, `capsules`, `visitedHouses` y `knownVisitors` (criaturas que te visitan). La versión 1 se migra en el momento; una mayor se abre solo para leer.
-- **Visitas:** un código WH1 o WH2 abre otro Refugio solo para mirar y escuchar; no lleva nombre.
-- **Guía:** `#houseSummary` dice en una frase qué hay en la cámara y qué está cerca; Enter usa el Prisma o el disco. La tarjeta Refugio del menú anuncia paneles nuevos, logros nuevos o el Prisma listo.
-
-## Esculturas del universo
-
-`sculpture-totems-model.js` define seis formas, sus siluetas y un hash independiente. Celdas de 1400 unidades: 3% con encuentro (alpha.61; antes 1,5%), aproximadamente dos tercios solitarios y el resto grupos de dos o tres. Presencia determinista en superficie, bajo y cielo, sin consumir RNG anterior ni cambiar mapas. `sculpture-totems-art.js` comparte formas/degradados entre Canvas y tarjetas SVG.
-
-`sculpture-totems.js` conecta pulsos manuales y tres gestos: torre con tres pulsos, remate que se desprende y vuelve al acompañarlo, o guía hacia un cristal/escultura real. La esfera regresa sin premio si se abandona; no se pierde el tótem. Pausa, inspección y movimiento reducido se respetan. Caché de 48 celdas, ninguna interacción automática por proximidad.
-
-El libro existente incorpora seis tarjetas `totem:*`, una por forma y mundo, con la dirección del primer encuentro. `sparkEconomy.totems` conserva pagos diarios: 2 chispas por lugar, hasta 64 lugares al día; rollback si falla guardar. No hay otro menú o moneda. Las respuestas reutilizan voces nativas, armonía, reloj y límites existentes: como máximo tres notas espaciadas por un pulso de grupo, con volúmenes 0,28/0,14; sin música automática de fondo nueva.
-
-## Mundo y audio
-
-La generación existente depende de semillas: no insertar consumos en su RNG. Los cristales usan su propio hash. `wow-feel.js` separa los ojos locales de los efectos del mundo: los offsets de cámara pertenecen al dibujo del mundo. La regresión está en `tests/wow-runtime.mjs`.
-
-Los poderes originales de cajas duran 20 segundos; las sorpresas, entre 10 y 20, sin acumular duraciones. No añadir sonidos a botones ni modificar síntesis/composición incidentalmente. `world-visibility.js` lee `beat()` para modular suavemente el brillo cercano; no programa audio ni altera la niebla. Se desactiva con silencio, pausa y movimiento reducido.
-
-## Interfaz y aprendizaje
-
-`styles/estilo-j.css` unifica paneles, cabeceras, campos y controles adaptables. El menú conserva IDs y funciones; agrupa juego y espacio personal. `onboarding-model.js` mantiene hechos aprendidos en el guardado, incluido el pulso del Camino. `onboarding.js` muestra el progreso real de cristales; `voice-guide.js` conserva la guía opcional de consulta. El HUD de chispas se limita al Mundo y distingue metas cumplidas; el panel usa las mismas restricciones de viaje que el control principal.
-
-La respuesta del cubo en `wow-feel.js` usa una pose local de presentación para Camino/Mundo; `render.js` aplica la misma matriz al cuerpo y superficie. `crystal-sparks.js` mantiene una cola efímera de hasta 48 impactos de 0,48 s, separada del guardado y de los fragmentos recogibles. No interviene en colisiones, golpes, cadenas ni pagos.
-
-## Hallazgos musicales y actividades
-
-`musical-wonders-model.js` contiene veinte hallazgos/regalos y frases originales. Celdas de 2200 unidades con 3,5% de ocupación, semilla independiente y presencia en las tres capas. `musical-wonders.js` concede por contacto del cubo o pulso, fuera de demostraciones y paseo automático. Regalo y tarjeta se escriben juntos, con rollback y reintento espaciado. `musicalWonders` es un subdocumento versionado; las versiones futuras se conservan. `cube.wonder` equipa un regalo visual desde el editor existente, con vista previa y aplicación atómica.
-
-`musical-wonders-art.js` comparte siluetas de mundo/tarjetas y veinte adornos cosméticos. Seis espectáculos geométricos duran 4,8 s la primera vez y 1,2 s al repetir cada forma. `musical-wonders-audio.js` usa síntesis nativa, armonía y reloj actuales: seis notas por primera celebración, dos en repeticiones; sin muestras ni cambios de volumen maestro. Pausa, silencio, inspección, cambios de mundo/capa y movimiento reducido se respetan. No se programa una capa musical autónoma nueva.
-
-`universe-activities-model.js` define treinta tipos con mecanismos compartidos, soluciones por semilla y movimiento con colisiones barridas. El laberinto tiene 51 × 51 casillas, pasajes alternativos y cámaras. `universe-activities.js` distribuye portales en celdas de 6000 unidades (15% ocupadas desde alpha.61; los portales del 6% anterior conservan celda, tipo y posición): entrar requiere quedarse con el cubo, sin pulsos ni otro dedo. La escena local conserva la posición del mundo; el bucle no ejecuta interacción/autopaseo del mundo mientras se juega. Salida y reinicio se resuelven caminando. `universe-activities-art.js` dibuja solo las casillas cercanas y conserva señales gráficas cuando se ocultan textos.
-
-`activities` guarda hasta 32 recorridos recientes en progreso y 8192 lugares completados. Completar concede 5 chispas una sola vez por lugar, con economía/registro guardados atómicamente; repetir no vuelve a pagar. No hay muerte, cuenta atrás obligatoria ni gasto de entrada. Los subdocumentos futuros se conservan. Catálogo e instrucciones en [Hallazgos y actividades](HALLAZGOS_Y_ACTIVIDADES.md).
-
-`universe-texts.js` filtra texto del canvas del Mundo y sincroniza el ajuste persistente; menús, vista previa y avisos de guardado conservan su función. En actividades se despeja el HUD exterior y permanece el menú. El Camino permite roturas posteriores al décimo sin chispas, luces, objetivo extra ni reentrada automática. La campana aleatoria de quietud se sustituye por una intervención de piano cálida y espaciada; se mantienen respuestas manuales e instrumentos regionales.
-
-## Prototipo histórico Python
-
-`server/` conserva un backend Python/SQLite fuera del lanzamiento y de la inicialización actual. El 404 histórico de `/api/session` no explica el fallo del render; no sustituir el flujo Supabase vigente por esa API. Solo lo usa `tests/server_api.py`.
+Negro, Geist Mono, esquinas rectas, blanco para estados y dorado ganado. Cubo pequeño conservado. Controles silenciosos y sin menús demo públicos.
+
+`journal.js` reúne Hoy, Colección, Mapa, Música, Logros y Tú. Mueve paneles existentes desde `#journalParts` al contenido de la pestaña. El libro pliega filtros secundarios y muestra primero el hallazgo; Favoritos desplaza al destino guardado y no duplica listados. IDs existentes conservados.
+
+`voice-guide.js` comparte la acción de Jardín con `gardenTarget`; distingue acercarse, sembrar, regar, cosechar y árbol final. `accessibility.js` gestiona aislamiento, foco y cierres. `canvas.js` cancela entradas al perder foco/ocultarse/enfocar UI. `notice-lane.js` coordina avisos para evitar solapamientos.
+
+## Cuenta, Android y código heredado
+
+Cuenta opcional y progreso local por defecto. Auth/REST, CAS, RLS y recuperación en [Cuenta y progreso](CUENTA_Y_RESPALDO.md). Configuración de Supabase pausada; no reaplicar SQL ni modificar servicios por leer esta guía. Cuenta compartida no implica multijugador ni cross-buy.
+
+`android/` empaqueta el mismo cliente con WebView; `scripts/android-assets.mjs` prepara assets y sellado. [Estado y límites](../android/README.md). No equivale a publicación en Play ni a pruebas físicas recientes.
+
+`server/` conserva el prototipo Python/SQLite usado por `tests/server_api.py`; no es el backend del producto ni la solución al antiguo404 de `/api/session`. Las salas/duetos antiguos no están activos; ganchos opcionales y datos heredados se conservan por compatibilidad.
 
 ## Evidencia
 
-La entrega de chispas registra comandos, huellas y límites en [su informe](../scripts/sparks-progression-validation.json). Los documentos históricos se borraron del árbol el 24 de octubre; siguen en Git (`git show 5914ca9:docs/historial/NOMBRE.md`) y no certifican la revisión actual.
-
-## Familias musicales y repetición ambiental
-
-`music-families.js` amplía la radio de producción con seis familias originales: funk/disco, dub/reggae, jazz/bossa, afro/latino, folk/cuerdas y ambient/cámara. Cada una tiene bajo, dos motivos, percusión, progresión, swing y un compás de descanso por frase de ocho. Se aplican al frame de reproducción después de la referencia; no cambian el catálogo GEN, BPM, escala regional, generación ni guardados. Los otros géneros y duetos mantienen su ruta anterior. Viaje musical indica la familia junto al género y permite buscarla.
-
-La referencia histórica sigue verificándose por separado; los géneros ampliados ya no prometen igualdad musical con ella. La producción conserva los acompañantes y presupuestos existentes. Los descansos de familia no se rellenan con la nota automática de fundación.
-
-En `audio.js`, float/heart/ambient dejan de añadir las llamadas fijas de campana/cristal. `createAmbientPunctuation` admite una voz metálica automática por región cada ocho compases, con caché de 64 regiones, reiniciada al cambiar partida o retroceder el reloj. Las voces de pistas, gestos y celebraciones conservan su origen y no consumen ese límite. El hook opcional `audioNoteCue` registra instrumento, origen y tiempo sin exponer runtime en producción. No modifica síntesis ni volumen maestro.
-
-Tu cubo es el único lugar para cambiar el cubo (alpha.65): pestañas Llevar (lo ganado y lo comprado, se aplica y guarda al tocar), Tienda (solo lo que falta) y Viaje (saltar, volver, meta, colecciones, título e historial, antes «Viajar y chispas»). Las imágenes de la tienda y el cubo de arriba salen de `cube-shop-preview.js`, que monta un escenario con su propio reloj y posición e inicializa `cube-shop-art.js` y `cube-shop-world.js` sobre él: la imagen es el dibujo real de la pieza, no un icono. Los regalos incluyen retrato, nombre corto y encontrados. Ajustes distingue textos del paisaje, estilo de La Voz y datos del mundo.
-
-## Encuentros traviesos y logros ampliados
-
-`universe-mischief-model.js` define diez escenas locales y sus transiciones. El hash propio usa celdas de 1800 unidades con un 12% ocupado; excluye mar y vincula la danza a esculturas reales. `universe-mischief.js` mantiene una escena, caché de 48 celdas, pausa/inspección/preview/autopilot protegidos y cola musical acotada. Alejarse 650 unidades cancela (1400 para copia y despedida, que acompañan al viajero); tras terminar hay 45 segundos de separación. La ayuda del cristal usa el campo mineral existente y observa su rotura, sin alterar daño ni coordenadas.
-
-`universe-mischief-art.js` dibuja actores procedurales, pistas, fragmentos, sombras y la escultura prestada. El paisaje contenido congela temporalmente posiciones y poses de presencias cercanas, dejando libre al cubo y sus controles. La procesión puede alcanzar una escultura y reutilizar su celebración. Los sonidos se colocan en la cuadrícula musical con voces de la familia regional y volúmenes 0,012/0,014; no modifican síntesis ni mezcla.
-
-`S.mischief` versión 1 conserva hasta 4096 lugares completados, contadores por tipo, trucos y esculturas. Cada premio de tres chispas guarda reclamación y saldo juntos; un fallo revierte ambos y espera dos segundos para reintentar. Repetir no paga ni aumenta contadores. Escenas incompletas son efímeras. Versiones futuras se preservan sin conceder premios.
-
-`adventure-achievements.js` añade 120 reglas al catálogo anterior: total registrado 370, incluido el logro retirado existente. `house-capsules.js` añade seis logros de la Casa (376); se ganan en la Casa, no solo en el Mundo. Los premios de logros nuevos se guardan en lote y revierten fechas/recompensas ante error. No añaden chispas. Los avisos de logros se agrupan en la cola silenciosa existente; `journal.achievementSeen` conserva IDs consultados como registro compatible con respaldos. Partidas anteriores parten de sus logros actuales sin avisos retroactivos; la marca se borra al consultar Logros, con reversión si falla guardar. `activities.types` conserva tipos completados y se reconstruye para partidas anteriores a partir de sitios deterministas, sin repetir pagos. Las metas de logros usan datos propios conocidos de cada versión.
-
-La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de minerales y fragmentos sin cambiar minería, posiciones ni pagos. Una única pista dorada anticipa la travesura no completada más cercana entre 95 y 320 unidades, dentro de pantalla, sin sonidos, textos, interacción o sitios nuevos. Respeta pausa, capas, paseo automático, movimiento reducido y separación entre escenas.
-
-## Cuenta opcional y sincronización Supabase
-
-`main.js` espera `account-entry.js:requireAccount()` antes del runtime, pero sin sesión el juego arranca al instante con guardado local: la hoja de cuenta solo vuelve a quien ya tuvo cuenta en ese dispositivo y no eligió jugar sin ella (desde alpha.98). Con una sesión guardada el juego arranca sin esperar a la red y la identidad se comprueba en segundo plano; si Auth la rechaza, el cliente la olvida y `cloud-account.js` recarga a la entrada. `cloud-account.js` sustituye la inicialización histórica de `connection.js`, retirado en la Fase 0 junto con `duet-model.js`; no hay salas ni duetos. Algunos módulos aún consultan ganchos opcionales del dueto (`runtime.duet*?.()`), que no existen y no hacen nada.
-
-`cloud-client.js` usa Auth/Data REST HTTPS con clave publicable y tokens persistentes por origen, renovación compartida y validación de identidad. `progress.js` separa claves locales por usuario y mantiene ámbito remoto compatible. `cloud-sync.js` usa baseline canónica, CAS y copias previas para reconciliar sin decidir por saldo/fecha. `cloud-account.js` comprueba/sube cada cinco segundos cuando corresponde, al reanudar y con intento de salida. Si ambas copias avanzaron pide elegir; no hay controles de respaldo normales. Al restaurar una copia que está en el otro modo, `cloud-account.js:settleMode` pasa por `exitWorld`/`enterWorld` para que región, sesión y música sigan al modo, conservando el lugar restaurado.
-
-`cloud-config.js` apunta a Kubono Dev Free y define `recoveryUrl`; vacío bloquea el acceso. `supabase/setup.sql` describe el esquema aplicado, no se reaplica sobre Dev. Borrado privilegiado en `kubono_private` con envoltorio invoker, comprobación de autenticación reciente y RLS/cuotas/revisiones por cuenta. Tras el RPC, `cloud-sync.js:purgeUserStorage` elimina en ese dispositivo solo las claves locales de la cuenta borrada; otros dispositivos conservan su copia.
-
-`recovery.html`/`cloud-recovery.js` validan el enlace, permiten cambiar clave y limpian esa sesión sin sincronizar partida. `cloud-client.js` valida `recoveryUrl` (local HTTP o HTTPS limpio) y lo envía como `redirect_to`; el aviso del puerto 3000 solo aparece con destino local. `scripts/serve-recovery.py` sirve el mínimo local. Correo de desarrollo, no SMTP público contratado. Detalles/evidencia en [Cuenta y progreso](CUENTA_Y_RESPALDO.md).
-
-## Retención operativa de desarrollo
-
-GitHub Actions conserva artefactos/logs nuevos durante siete días. Windows ejecuta `prune-local-retention.ps1` cada hora desde una copia instalada fuera del checkout; solo elimina respaldos de migración y logs inactivos permitidos, nunca la clave de firma ni los datos activos del juego. `supabase/retention.sql` prepara limpieza de auditoría sin cuentas/partidas, todavía no aplicada por error de solicitud del conector. Alcance y pendientes en [configuración de producción](CONFIGURACION_PRODUCCION.md).
-
-
-## Integración N · alpha.200
-
-`journey-pulse.js` comparte instante juzgado, referencia audible y reconstrucción compatible de frases. `MU.sq` conserva `s` módulo16 y `tick` absoluto. Los nuevos `journey.ticks` y `lugares.noteTicks` son campos aditivos; datos históricos sin compás se interpretan sin reescribirlos. Al reanudar, un transporte nuevo continúa en un compás compatible: no se recupera el tiempo ausente.
-
-`song-stage.js` cuenta pasos del transporte y guarda una cola acotada de instantes para su dibujo; no divide toda la duración por el último tempo. `audio.js` añade una compuerta posterior a efectos/headroom y anterior al volumen: valor1 salvo la pausa deliberada del final11. El tema, fin del plan y salida restauran esa compuerta. Generación, voces y control de volumen permanecen.
-
-`rare-card-model.js` ofrece vista segura de aprendizaje y asignación durable de la última tarjeta elegida a una fuente compartida. `playtest.js` guarda observaciones opcionales y locales separadas de la partida; no registra coordenadas ni audio. [Evidencia y pendientes](panel/candidato-n/informe.md).
+[Entrega E](ENTREGA_E.md), [auditoría E](panel/candidato-e/informe.md) y [verificación](VERIFICACION.md). El verificador de E protege311 archivos y trece contratos; las notas del panel son simulaciones con alcance declarado. CI, despliegue, escucha física y personas se registran por separado.

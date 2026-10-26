@@ -1,12 +1,12 @@
 # Kubono · plan hasta las primeras ventas
 
-**Estado: 20 de octubre de 2026.** Guía única de decisiones y entregables D01–D22. Preparar no autoriza ejecutar el catálogo completo, pagar o publicar. Jay pidió detener la configuración de Supabase y preparar documentación para revisión con un agente. [Traspaso actual](../HANDOFF.md).
+**Revisión documental:26 de octubre de 2026.** Guía única de decisiones y entregables D01–D22. Preparar no autoriza ejecutar el catálogo completo, pagar o publicar. Jay pidió detener la configuración de Supabase y preparar documentación para revisión con un agente. [Traspaso actual](../HANDOFF.md).
 
 ## Decisiones aprobadas y límites
 
 | Tema | Estado vigente |
 |---|---|
-| Marca | Kubono; dominio previsto `playkubono.com`, no comprado/reservado. Repositorio, paquetes y parte del producto conservan WHITEDOT; implementación completa de marca pendiente |
+| Marca | Kubono; dominio previsto `playkubono.com`, no comprado/reservado. Marca visible Kubono; repositorio, paquetes y claves conservan WHITEDOT por compatibilidad. Dominio/revisión legal pendientes |
 | Identidad | Propuesta local aprobada: negro/blanco y violeta eléctrico en identidad/web, sin cambiar los colores del juego. Maqueta/plan funcional local fuera de Git en `outputs/kubono-visual/`; no publicado |
 | Promesa | Un cubo y un universo que suena. La música electrónica y su mezcla con otras familias son parte central de la comunicación |
 | Modelo | Pago único US$2,99 móvil / US$4,99 escritorio, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
@@ -58,11 +58,11 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 | D19 | Evaluar viabilidad de consolas | Sin viabilidad confirmada; no ejecutar port |
 | D20 | Cuenta/correo/recuperación/eliminación | Núcleo y enlaces locales comprobados; destino de recuperación configurable y borrado local del dispositivo solicitante en código (alpha.59); correo, página pública y valor final de `recoveryUrl` pendientes |
 | D21 | Continuidad automática y conflictos | Aprobado funcional PC/Safari iPhone/APK emulado; no reabrir salvo cambio o fallo concreto. Plataformas finales en D05/D15/D16 |
-| D22 | RLS, operación, retención, respaldo y cierre final | RLS/CAS y evidencia de cuentas aprobados; CI de navegador en rojo en `main` con fixtures corregidas en rama pendiente de PR; retención Supabase, respaldo completo/restore, soporte y producción pendientes. Trabajo Supabase detenido |
+| D22 | RLS, operación, retención, respaldo y cierre final | RLS/CAS y evidencia de cuentas aprobados; CI de alpha.200 aprobado; candidato E/alpha.207 con regresiones locales y CI completo del nuevo PR pendiente; retención Supabase, respaldo completo/restore, soporte y producción pendientes. Trabajo Supabase detenido |
 
 ## Secuencia y calendario
 
-1. **Ahora:** revisar con Claude un detalle concreto, usando la documentación vigente y el código. No continuar autenticación ni SQL pendientes durante esta revisión.
+1. **Ahora:** revisar con Claude el candidato E y su aceptación pendiente desde `chore/claude-handoff-cleanup`, siguiendo [HANDOFF](../HANDOFF.md). No continuar autenticación ni SQL pendientes durante esta revisión.
 2. **Al autorizar reanudación:** completar datos del responsable/país/mercados/correo; resolver escritura Supabase y operación de datos; definir correo/callbacks finales. No contratar automáticamente.
 3. Preparar paquetes y materiales compartidos, conservando prioridad paralela por plataforma. Validar solo lo nuevo/afectado y registrar evidencia específica de cada canal.
 4. Candidato por canal: formularios, precio, firma, pruebas exigidas y experiencia humana real. Publicar solo tras aprobación/autorización explícitas; no esperar a que todas las plataformas estén aprobadas el mismo día.

@@ -1,10 +1,12 @@
-# Traspaso · candidato E
+# Traspaso vigente · alpha.207
 
-Código **2.3.0-alpha.207**, siete fases autorizadas por Jay, encadenadas desde main alpha.200 `fd5dfc19` y la auditoría9 `0457fd06`. Jay mantiene PR y merge; **este trabajo no integra ni publica main**. [Entrega y pruebas por fase](docs/ENTREGA_E.md) · [revisión final](docs/panel/candidato-e/informe.md).
+**Continuar desde `chore/claude-handoff-cleanup`.** Contiene las siete fases E y la limpieza del repositorio. `main` sigue en alpha.200 (`fd5dfc19`), contrastado con GitHub el26 de octubre de2026. Jay crea PR y hace merge; no integrar automáticamente.
 
-## Ramas, de la anterior a la siguiente
+Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) es solo una entrada a este documento.
 
-| Fase | Rama | Commit de cierre funcional |
+## Qué hay entregado
+
+| Fase | Rama | Commit funcional |
 |---|---|---|
 | E1 | `excepcional/e1-fiabilidad` | `955cd6ae` |
 | E2 | `excepcional/e2-interaccion` | `f93d4b54` |
@@ -12,28 +14,39 @@ Código **2.3.0-alpha.207**, siete fases autorizadas por Jay, encadenadas desde 
 | E4 | `excepcional/e4-interfaz` | `ce2aca02` |
 | E5 | `excepcional/e5-descubrimientos` | `0e0277f5` |
 | E6 | `excepcional/e6-recorrido` | `a824224a` |
-| E7 | `excepcional/e7-validacion` | `3c9d5dbc` (runtime); registro posterior |
+| E7 | `excepcional/e7-validacion` | `3c9d5dbc` (runtime), `7f6374b3` (registro) |
 
-La última rama contiene todas las anteriores. Revisar en orden; no rebasar ni hacer squash entre dependencias sin ajustar después sus bases. También puede revisarse el conjunto mediante un PR de la última a main: conserva todas las fases y ejecuta CI completo una sola vez. No se ha creado ningún PR de E.
+Cada rama contiene la anterior; la de limpieza parte de E7. Un PR de la última a main contiene el conjunto. Si se revisan por separado, preservar el orden; squash/rebase de una base requiere reajustar sus dependencias.
 
-## Qué cambió
+Cambios: resultados/porcentajes coherentes, luces a tiempo, entradas canceladas con foco/pausa, ayuda contextual, destinos claros, salida explícita del final5, Escape equivalente a Salir, jardín transaccional, libro compacto y favoritos directos sin duplicados. Tu canción identifica la frase personal y respeta el silencio visual. [Detalle E](docs/ENTREGA_E.md).
 
-Resultados y porcentajes coherentes; luces a tiempo; entrada cancelada al perder foco; ayuda contextual accesible; lectura, scroll y salidas consistentes; tarjetas y jardín con transacciones; Favoritos conserva y explica trabajo pendiente; cierre identifica tu frase y siguiente destino. La revisión final cierra Escape, redondeos residuales, árbol dorado, arrastres con cuota y pulsos visuales inventados durante silencios.
+La limpieza actualiza guías, separa historial, añade este acceso para Claude y retira163 informes generados sin referencias (6.793.912bytes). [Registro de limpieza](docs/LIMPIEZA_REPOSITORIO.md). No cambia código del juego ni versión. Verificación de limpieza:254 suites Node, auditoría y enlaces aprobados; sin repetir navegador/audio.
 
-La música actual, el RNG, las semillas, los mapas, las especies, las voces y el cubo pequeño se conservan. [Verificador](scripts/verify-e-preservation.mjs):311 archivos idénticos a main y trece contratos de música/reglas. El audio cambia solo cuándo recibe luz la interfaz. No se han cambiado síntesis, armonía, notas, arreglos ni mezcla.
+## Qué está comprobado
 
-## Qué está comprobado y qué falta
+- Runtime `3c9d5dbc`, versión `2.3.0-alpha.207`; huella `14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062`.
+- E:254 suites Node, auditoría limpia y veinte recorridos enfocados acumulados; siete renders E1 reutilizados por preservación del sonido.
+- 24 capturas de distintas instantáneas y sus evidencias, con manifiesto/alcance; consultar el [informe](docs/panel/candidato-e/informe.md) para no atribuir imágenes antiguas al último commit.
+- Vercel confirmó Preview de `7f6374b3`: [abrir E7](https://whitedot-epn5qszxv-jaywrkr-1498s-projects.vercel.app). No equivale a CI completo ni a publicación en tiendas.
+- Main alpha.200 tiene CI completo aprobado:[integración](docs/INTEGRACION_ALPHA_200.md). Ese resultado no certifica alpha.207.
 
-Las evidencias exactas y su revisión están en el [informe](docs/panel/candidato-e/informe.md). El candidato tiene254 suites Node; las comprobaciones enfocadas de interfaz, persistencia, sincronía, accesibilidad y offline se registran por separado del catálogo completo. Los siete renders de E1 son reutilizables porque las funciones de sonido se conservaron. No confundir renders, medidas y panel simulado con escucha física.
+## Siguiente paso
 
-**CI completo de este candidato, personas y dispositivos físicos siguen pendientes.** El CI de alpha.200 sí aprobó antes de integrar: [registro](docs/INTEGRACION_ALPHA_200.md). No lo atribuir a alpha.207. Antes de integrar E, esperar lógica, seis grupos de navegador, seis de audio y agregador del nuevo PR.
+1. Revisar este candidato y crear el PR del conjunto; esperar auditoría/lógica, seis grupos de navegador, seis de audio y agregador del nuevo candidato. No integrar en rojo o pendiente.
+2. Completar [aceptación](docs/PRUEBAS_CON_PERSONAS.md):cinco sesiones formativas y confirmación independiente de8–12. El [registro](docs/aceptacion-e.json) sigue sin participantes; no rellenarlo con bots ni respuestas supuestas.
+3. Comprobar Android físico de gama media, Safari, altavoz/auriculares/Bluetooth, lector, interrupciones y retorno. El gusto musical, reconocimiento de la frase y prominencia de Jardín/Ruinas requieren observación real.
+4. Si aparece un fallo, corregir ese criterio con una regresión enfocada. No reabrir planes antiguos ni ampliar el catálogo por una nota simulada.
 
-La meta de Jay es diez; no hay un diez acreditado. [Registro vacío de aceptación](docs/aceptacion-e.json) y [protocolo](docs/PRUEBAS_CON_PERSONAS.md):cinco sesiones formativas, confirmación independiente y escucha/dispositivos. El validador informa pendientes y no inventa personas ni certifica una nota.
+La meta es diez; aún no está acreditada. El panel son diez lentes simuladas, no opiniones reales ni escucha humana.
 
-## Probar sin herramientas de desarrollador
+## Límites que se mantienen
 
-Abrir la vista previa de la última rama, sin `?dev=1`. Durante una ronda, menú → Cómo jugar muestra la acción actual. En Jardín: acercarse, sembrar en el golpe, regar entre golpes, cosechar y cerrar con el árbol dorado. El resultado identifica lugar, colección y ronda; el siguiente destino usa Seguir hacia. Menú → Lugares coloca el objetivo dentro de la lista. Libro → elegir una voz → Ir a mi Refugio. Tu canción distingue capas y frases guardadas para el final.
+Conservar música actual, síntesis, notas, armonías, mezcla, RNG, mundos, especies y cubo pequeño. Guardados antiguos/futuros y propiedad de premios se migran sin borrar. El [verificador E](scripts/verify-e-preservation.mjs) protege311 archivos y trece contratos.
 
-Para aislar casos sin borrar tu partida: otra sesión/perfil temporal y `?lugar=jardin`, `?anillo=1` o `?festival=1`. Son atajos de comprobación, no prueba de un recorrido continuo. Bluetooth, Safari, lectores y gusto musical requieren personas reales.
+UI negra, Geist Mono, esquinas rectas, color ganado y menús silenciosos. Supabase/tiendas en pausa; no reaplicar SQL, borrar cuentas, publicar ni contratar. `server/` es prototipo histórico probado, no backend activo. Mantener formatos/fixtures heredados aunque no aparezcan en la UI.
 
-Supabase y tiendas siguen en pausa. No abrir otra expansión ni rehacer la música por una nota simulada. Reabrir solo el criterio respaldado por nueva evidencia. [Reglas](AGENTS.md) y [verificación](docs/VERIFICACION.md).
+## Probar en el teléfono
+
+Abrir la vista previa sin `?dev=1`. Menú → Cómo jugar explica el gesto actual; Lugares → Seguir señala el destino; Libro → tarjeta permite elegir voz; el nombre del lugar abre Favoritos para volver. En Jardín: acercarse, sembrar en el golpe, regar entre golpes, cosechar y cerrar con el árbol dorado.
+
+Atajos `?lugar=jardin`, `?anillo=1`, `?festival=1` en un perfil temporal; [lista](docs/MUNDO.md#herramientas-de-prueba). No borrar la partida personal ni contar un atajo como recorrido completo.

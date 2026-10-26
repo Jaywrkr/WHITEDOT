@@ -40,7 +40,7 @@ Seis ejes, del 0 al 10, con medios puntos:
 | Cohesión | Si todo sirve a una sola idea (tocar a tiempo) y a un solo arco |
 | Pulido | Errores, textos, menús, rendimiento y pruebas |
 
-La **media** de cada perfil es la media de sus seis notas. La fila del panel es la media de los diez. **Meta vigente de Jay: diez en cada categoría, sin certificación automática.** Escucha y uso reales deben acreditar las categorías sensoriales; no se promedian áreas no observadas para certificarla.
+Cada eje informa la media de sus notas observadas y su cobertura. Una abstención queda sin nota; no se calcula media general si faltan categorías sensoriales. Las medias históricas conservan el método declarado en su sesión. **Meta vigente de Jay: diez en cada categoría, sin certificación automática.** Escucha y uso reales deben acreditar las categorías sensoriales; no se promedian áreas no observadas para certificarla.
 
 ## 4. Historial
 
@@ -74,7 +74,7 @@ Un documento corto para el panel: versión y fecha; qué decidió Jay desde la �
 Un archivo por perfil (`01-mizuguchi.md` … `10-wintory.md`), con esta forma:
 
 1. Cabecera: «Simulación de su mirada… No es su opinión real.», versión, qué revisó.
-2. **Notas:** tabla de los seis ejes con una frase de «por qué» cada uno, y la media (con la anterior entre paréntesis).
+2. **Notas:** tabla de los seis ejes con evidencia y alcance; sin puntuar lo no observado ni mostrar notas anteriores durante la revisión ciega.
 3. **Qué mejoró de verdad**, comprobado en el código con `archivo:línea` o en una captura.
 4. **Qué sigue faltando o salió mal**, también con `archivo:línea` o medida.
 5. **Qué haría ahora:** pocas propuestas, concretas, con dónde se tocaría.
@@ -137,7 +137,7 @@ Registro histórico. El estado vigente está en la quinta sesión y el cierre J1
 
 ## 9. Próxima comprobación
 
-Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El relato de Jay reabre U03/U04, añade A04/U05–U08 y aporta evidencia negativa a V01. K1–K6 están implementadas técnicamente; su verificación y pendientes humanos están en CIERRE_K.md. Incorporar las capturas adicionales y la aceptación de cada fase; conservar lo aún no comprobado. Repetir el panel cuando haya cambios o nueva evidencia, sin abrir otra expansión automáticamente.
+Leer AGENTS, HANDOFF y el informe E. Los hallazgos funcionales corregidos no se reabren por planes antiguos. Quedan CI del nuevo candidato, sesiones humanas, escucha y dispositivos; conservar los IDs y límites del informe. Una nota simulada no autoriza otra expansión ni cambios de música/arte.
 
 ## 10. Ciclo de cierre
 

@@ -1,54 +1,48 @@
 # Documentación de Kubono
 
-Actualizada el 26 de octubre de 2026. Cada tema tiene una sola guía; si dos documentos se contradicen, manda el código y se corrige la guía.
+Vigente para **alpha.207**,26 de octubre de2026. La rama de continuación es `chore/claude-handoff-cleanup`; main todavía contiene alpha.200.
 
-## Orden de lectura
+## Empezar
 
-1. [Traspaso](../HANDOFF.md): estado y lo que pide Jay ahora.
-2. [Reglas de trabajo](../AGENTS.md).
-3. La guía del tema, según la tabla.
+[AGENTS](../AGENTS.md) → [README](../README.md) → **[HANDOFF](../HANDOFF.md)** → guía del sistema. [Entrada para Claude](../HANDOFF_CLAUDE.md) usa el mismo traspaso.
 
-## Guías
+## Entrega actual y pendientes
 
-| Documento | Para qué |
+| Documento | Contenido |
 |---|---|
-| [Entrega E1–E7](ENTREGA_E.md) | Siete fases autorizadas hacia diez, pruebas y límites humanos |
-| [Candidato E](panel/candidato-e/informe.md) | Revisión del cierre E, preservación y aceptación pendiente |
-| [Panel9](panel/sesion-9/informe.md) | Nota exigente posterior a main, historial y correcciones propuestas |
-| [Candidato N](panel/candidato-n/informe.md) | Cierre técnico alpha.200, revisión ciega y evidencia que falta para nueve |
-| [Integración alpha.200](INTEGRACION_ALPHA_200.md) | Merge y CI completo de la pila autorizada |
-| [Entrega N1–N8](ENTREGA_N.md) | Mejoras autorizadas hacia nueve por categoría; cierre técnico separado de aceptación humana |
-| [Auditoría 7](panel/sesion-7/informe.md) y [plan L1–L4](panel/sesion-7/plan.md) | K7 y fases L; nota con feedback real y límites de aceptación |
-| [Panel 8 ciego](panel/sesion-8/informe.md) | Diez lentes sin notas previas, evaluación exigente por categoría y defectos reproducidos |
-| [Entrega L1–L4](ENTREGA_L.md) | Ayuda de lugares, frase propia, persistencia, accesibilidad y cierre técnico; aceptación humana pendiente |
-| [Entrega K1–K6](CIERRE_K.md) | Ramas, correcciones verificadas y prueba en teléfono |
-| [Auditoría 6](panel/sesion-6/informe.md) y [plan K1–K5](panel/sesion-6/plan.md) | Feedback real, acceso al anillo, final5 y UI; propuesta sin implementar |
-| [Auditoría 4](panel/sesion-4/informe.md) | Diez análisis, evidencia, 14 hallazgos y J1–J7 propuestas; registro para cerrar el ciclo |
-| [Panel creativo](PANEL.md) | Cómo funciona el panel simulado, sus notas, decisiones de Jay y cómo hacer la próxima sesión. Informes en [panel/](panel/) |
-| [El mundo](MUNDO.md) | Diseño vigente: cuatro capas, 11 lugares, estrellas, chispas, Refugio, Tu canción, planes H e I y herramientas de prueba |
-| [El Viaje](VIAJE.md) | Capítulos, curva, tema del cubo, color y primeros minutos |
-| [Arquitectura](ARQUITECTURA.md) | Módulos, render, audio, guardado y límites técnicos |
-| [Verificación](VERIFICACION.md) | Qué pruebas ejecutar y cuándo |
-| [Pruebas con personas](PRUEBAS_CON_PERSONAS.md) | Cómo hacer sesiones con jugadores (`?prueba=1`); aún no hay ninguna |
-| [El universo](UNIVERSO.md) | Regiones, cámara, sonido y superbiomas del Mundo libre |
-| [Hallazgos y actividades](HALLAZGOS_Y_ACTIVIDADES.md) | Contenido ya construido: esculturas, hallazgos, actividades y premios |
-| [Tienda del cubo](TIENDA_DEL_CUBO.md) | Catálogo de piezas compradas con chispas |
-| [Casa viva](CASA_VIVA.md) | La casa recorrible del Refugio y su secuenciador |
-| [Cuenta y progreso](CUENTA_Y_RESPALDO.md) | Cuenta opcional, sincronización, recuperación y borrado |
-| [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Backlog D01–D22 y decisiones comerciales |
-| [Material de tienda](TIENDAS.md) | Borradores de fichas, capturas y tráiler |
-| [Configuración de producción](CONFIGURACION_PRODUCCION.md) | Lo aplicado y lo pendiente en los servicios |
-| [Privacidad](PRIVACIDAD.md) · [Eliminación de datos](ELIMINACION_DATOS.md) | Borradores no publicados |
-| [Referencias VJ](REFERENCIAS_VJ.md) | Procedencia de los cuatro motivos VJ (para [Créditos](../CREDITOS.md)) |
-| [Android](../android/README.md) | APK de prueba |
-| [Cambios](../CAMBIOS.md) | Lo integrado desde alpha.142 |
+| [E1–E7](ENTREGA_E.md) | Lo implementado, ramas y prueba de cada fase |
+| [Auditoría E](panel/candidato-e/informe.md) | Hallazgos, correcciones, notas simuladas y límites |
+| [Verificación](VERIFICACION.md) | Pruebas enfocadas, cierre completo y evidencia reutilizable |
+| [Pruebas con personas](PRUEBAS_CON_PERSONAS.md) | Protocolo pendiente; [registro vacío](aceptacion-e.json) |
+| [Limpieza](LIMPIEZA_REPOSITORIO.md) | Archivos retirados, preservación y recuperación |
 
-## Reglas
+## Guías vigentes del sistema
 
-- Una decisión nueva reemplaza a la antigua en su guía; no se añaden párrafos que la contradigan.
-- Separar **aprobado**, **construido**, **probado** y **publicado**. Un bot o una captura no prueban lo que siente una persona.
-- Los documentos antiguos (planes, cierres, traspasos anteriores) se borraron del árbol el 24 de octubre. Siguen en Git: `git show 5914ca9:docs/historial/NOMBRE.md`. Ninguno autoriza trabajo nuevo.
+| Área | Guía |
+|---|---|
+| Recorrido, reglas, orientación y URL de prueba | [El mundo](MUNDO.md) |
+| Capítulos, frase y final5 | [El Viaje](VIAJE.md) |
+| Regiones, familias y direcciones guardadas | [Universo](UNIVERSO.md) |
+| Inicialización, módulos, audio, UI y guardado | [Arquitectura](ARQUITECTURA.md) |
+| Objetos, encuentros y actividades | [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md) |
+| Personalización y catálogo construido | [Tienda del cubo](TIENDA_DEL_CUBO.md) |
+| Habitaciones, objetos y jardín musical | [Casa viva](CASA_VIVA.md) |
+| Guardado local, cuenta y recuperación | [Cuenta y progreso](CUENTA_Y_RESPALDO.md) |
+| Auditoría creativa y método | [Panel](PANEL.md) |
+| Herramientas y resultados generados | [Scripts](../scripts/README.md) |
+| Procedencia de motivos visuales | [Referencias VJ](REFERENCIAS_VJ.md) y [Créditos](../CREDITOS.md) |
 
-[Cierre de la auditoría 4 · fases J1–J7](PULIDO_CIERRE.md): correcciones autorizadas, evidencia y límites.
+## Lanzamiento y plataformas
 
-[Quinta sesión del panel](panel/sesion-5/informe.md): reevaluación de las correcciones sin rehacer música ni mundos.
+[Backlog D01–D22](PLAN_LANZAMIENTO.md) conserva decisiones y pendientes comerciales. [Producción](CONFIGURACION_PRODUCCION.md) distingue preparado/aplicado; Supabase está pausado. [Material de tienda](TIENDAS.md), [Privacidad](PRIVACIDAD.md) y [Eliminación](ELIMINACION_DATOS.md) son borradores sin publicar. [Android](../android/README.md) describe el contenedor de prueba, no una salida en tiendas.
+
+## Historial y evidencia de entregas anteriores
+
+Estos documentos conservan hechos de su revisión; **no son fases nuevas por ejecutar**. No reescribir capturas, mediciones o notas para aparentar una validación actual.
+
+- [Integración alpha.200](INTEGRACION_ALPHA_200.md):main y CI aprobado.
+- [Entrega N](ENTREGA_N.md), [candidato N](panel/candidato-n/informe.md), [entrega L](ENTREGA_L.md), [cierre K](CIERRE_K.md) y [cierre J](PULIDO_CIERRE.md).
+- Informes del panel:[1](panel/sesion-1/informe.md), [2](panel/sesion-2/informe.md), [3](panel/sesion-3/informe.md), [4](panel/sesion-4/informe.md), [5](panel/sesion-5/informe.md), [6](panel/sesion-6/informe.md), [7](panel/sesion-7/informe.md), [8](panel/sesion-8/informe.md), [9](panel/sesion-9/informe.md).
+- [CAMBIOS](../CAMBIOS.md):cronología; la guía actual de cada sistema prevalece sobre una propuesta anterior.
+
+Los traspasos/planes retirados siguen en Git. Para la limpieza actual, revisión anterior `7f6374b3`; para el archivo eliminado el24 de octubre, `git show 5914ca9:docs/historial/NOMBRE.md`. No hace falta restaurarlos para continuar.

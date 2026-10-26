@@ -1,6 +1,6 @@
 # Material de tienda
 
-Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 (textos de landing) y D11 (press kit). Nada está publicado ni enviado. Precio, países, editor y correo siguen pendientes en el [plan de lanzamiento](PLAN_LANZAMIENTO.md).
+Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 (textos de landing) y D11 (press kit). Nada está publicado ni enviado. Precios aprobados; países, editor y correo siguen pendientes en el [plan de lanzamiento](PLAN_LANZAMIENTO.md).
 
 ## Cómo se genera
 
