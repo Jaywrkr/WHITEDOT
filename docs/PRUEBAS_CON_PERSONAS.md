@@ -57,3 +57,14 @@ Además del Camino, observar el Jardín sin dar instrucciones externas. Registra
 Escuchar final5 y final11 en altavoz y auriculares, sin confundir claridad técnica con gusto musical. Registrar rechazo o aceptación, con el momento concreto. Para el anillo: observar rumbo, distancia, primera llegada y siguiente puerta, sin saltos pagados. No contar un bot o una fixture como una de las cinco personas.
 
 La plantilla de [ENTREGA_L.md](ENTREGA_L.md) separa aprobación humana, pruebas locales, CI y preview. No publicar una puntuación humana ni declarar cierre de producción antes de estas comprobaciones.
+
+
+## Candidato N · objetivo excepcional
+
+Primera tanda: cinco personas nuevas, al menos dos que no suelen jugar. Observar la primera acción sin ayuda externa, después permitir la guía interna y registrar su uso. Metas propuestas para el piloto: cuatro de cinco reconocen el gesto inicial en60s, la siguiente regla en90s y su aportación en el cierre. No son resultados ni estimaciones de toda la población.
+
+Con `?prueba=1`, las rondas de los once lugares se distinguen de la campaña. Las notas locales incluyen primer avance, tiempo activo, mayor periodo sin avance y ayudas abiertas. Menús y tarjetas en inspección no suman tiempo activo. El tiempo sin progreso no demuestra aburrimiento; contrastarlo con lo que dice la persona. No recoge nombres, coordenadas, audio ni respuestas. Repetir un lugar agrega su tiempo dentro de esa sesión; para comparar intentos individuales, abrir una sesión nueva.
+
+Segunda tanda independiente:8–12 personas tras corregir lo observado. Valorar comprensión, reconocimiento de la frase, deseo de continuar, orientación sin salto y las seis categorías. Escucha con altavoz/auriculares y al menos una ruta Bluetooth. El candidato también requiere teléfono físico de gama media, Safari móvil y lector real. La evaluación ciega posterior no recibe la nota objetivo; se informa tal como resulte.
+
+La duración de Bosque y la relación entre campaña, colección y casa quedan pendientes de estas observaciones. No se reducen metas ni se fuerza visitar el Refugio para aparentar una mejora.

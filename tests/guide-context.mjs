@@ -9,3 +9,5 @@ r.placeRun=()=>null;r.journeyChapter=()=>({id:'camino'});assert.equal(guideLesso
 r.S.journey.finished=true;assert.equal(guideLesson(r),null);
 r.journeyQuiet=()=>false;r.S.journey.finished=false;assert.equal(guideLesson(r),null);
 console.log('PASS contextual help: active campaign, close, portal, round, Camino and free exploration');
+const c={S:{journey:{}},journeyQuiet:()=>true,journeyChapter:()=>({id:'bosque',done:{}}),journeyGameProgress:()=>.2,journeyLasso:()=>({closed:true,inside:3})};assert.match(guideLesson(c).hint,/Pulsa/);c.journeyLasso=()=>({closed:true,inside:0});assert.match(guideLesson(c).hint,/dentro/);
+c.journeyChapter=()=>({id:'vacio'});c.journeyPulseState=()=>({action:'crowded'});assert.match(guideLesson(c).hint,/espacio vacío/);

@@ -8,7 +8,7 @@ Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada ca
 | N2 | `pulido/n2-precision` | Implementación técnica; aceptación pendiente |
 | N3 | `pulido/n3-frase-fiel` | Implementación técnica; aceptación pendiente |
 | N4 | `pulido/n4-interfaz` | Implementación técnica; aceptación pendiente |
-| N5 | `pulido/n5-recorrido` | Pendiente |
+| N5 | `pulido/n5-recorrido` | Implementación técnica; aceptación pendiente |
 | N6 | `pulido/n6-descubrimientos` | Pendiente |
 | N7 | `pulido/n7-integracion-musical` | Pendiente |
 | N8 | `pulido/n8-candidato` | Pendiente |
@@ -38,3 +38,9 @@ Verificación: 250 suites Node, round_phrase_smoke.py y render song_stage_mix.py
 Finales actualizan ancho y altura de su canvas. Guía contextual reduce texto repetido y explica pulso/movimiento. Jerarquía y salidas adaptadas a pantalla baja, áreas seguras y contenido largo, sin redibujar mundo ni cubo.
 
 Verificación: 250 suites Node; finale_resize_smoke.py, interface_smoke.py (cinco tamaños, ocho paneles) y guide_context_smoke.py aprobados. Auditoría limpia. Lector y pantalla física pendientes.
+
+## N5 · 2.3.0-alpha.197
+
+Ayuda explícita distingue vuelta abierta/cerrada, luces dentro, flor próxima, círculo del rayo y falta de espacio en Vacío. Observación opcional amplía métricas por lugar: primer avance, tiempo activo/sin progreso y ayuda. No fuerza Refugio ni recorta metas sin personas; calibración de esfuerzo pendiente.
+
+Verificación: 251 suites Node; playtest_smoke.py ampliado y after_journey_smoke.py aprobados. Marcha real27,8s hacia Jardín,6465 unidades, gasto0. Auditoría limpia. Duración, emoción y deseo de continuar requieren sesiones nuevas.
