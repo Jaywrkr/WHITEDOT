@@ -2,7 +2,7 @@
 
 **Continuar desde `main`.** Las siete fases E y la limpieza del repositorio entraron en `main` el 26 de octubre de 2026 con el CI completo en verde (PR #355, `d2f93f2e`). Jay crea PR y hace merge; no integrar automáticamente.
 
-**Lo siguiente:** la [sesión 10 del panel](docs/panel/sesion-10/informe.md) revisó alpha.207 desde cero (doce perfiles, media 6,7) y propone el plan P1–P8, una rama `panel10/…` por fase. P6–P8 esperan las decisiones D1–D6 de Jay. No empezar ninguna fase sin su aprobación.
+**Lo siguiente:** P1–P8 de la sesión 10 están en `main` (PR #357 y #358, alpha.215, CI completo en verde). La [sesión 11 del panel](docs/panel/sesion-11/informe.md) revisó alpha.215: media 6,7, plan Q1–Q7 (ramas `panel11/…`) y decisiones D7–D11 de Jay. No empezar ninguna fase sin su aprobación.
 
 Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) es solo una entrada a este documento.
 

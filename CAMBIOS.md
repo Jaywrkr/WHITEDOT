@@ -2,6 +2,14 @@
 
 Estado: 26 de octubre de 2026. Código **2.3.0-alpha.215**. Las entradas describen su revisión, no certifican producción.
 
+## Sesión 11 del panel · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`. Petición de Jay: revisar de nuevo con puntuación.
+
+- Doce perfiles sobre alpha.215: puntuación ciega y después contraste con la sesión 10. [Informe](docs/panel/sesion-11/informe.md), [expediente](docs/panel/sesion-11/expediente.md) y doce análisis en `docs/panel/sesion-11/`.
+- Media 6,7, Menús 7, Detalle visual 5,5. Plan Q1–Q7 y decisiones D7–D11. No cambia el juego.
+- Capturas de menús adaptadas al menú de P2 (`docs/panel/sesion-11/evidencia/capturas-menus.py`).
+
 ## Verificador de preservación tras P3–P8 · sin cambio de versión
 
 Rama `claude/charming-darwin-dvbfc7`, sobre `main` (`5464612`). Petición de Jay.
