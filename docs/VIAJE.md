@@ -223,3 +223,7 @@ Esperar al final, omitirlo y pulsar Explorar abren Mundo libre y rumbo a Jardín
 ## Precisión N2
 
 Tocar el área del cubo (48px de alcance táctil, dibujo pequeño intacto) emite al apoyar. Arrastrar o mantener en el vacío conserva movimiento/escáner; un toque breve allí se confirma al soltar. El modo dedo conserva su edición directa. En Vacío un golpe musical válido puede esperar al primer tiempo o necesitar espacio: marca blanca, sin anunciar progreso dorado. No se amplía la ventana de acierto.
+
+## Memoria N3
+
+Las notas nuevas conservan paso y posición absoluta (`journey.ticks` / `lugares.noteTicks`), como campos aditivos compatibles. Tu canción reserva los compases que requiera cada frase, incluidas repeticiones. Las memorias antiguas conservan sus notas: un paso igual o anterior se interpreta en el siguiente compás; no se conoce el tiempo original perdido. Pausas superiores a64 pasos se abrevian por compases completos, manteniendo su fase. Los datos guardados no se reescriben para esa interpretación.

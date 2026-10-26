@@ -1,6 +1,6 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {SONG_LAYERS,SONG_IDS,tierStep,songChord} from './song.js';
-import {THEME,themePitch} from './journey-pulse.js';
+import {THEME,themePitch,phraseTimeline} from './journey-pulse.js';
 import {PLACES,TOTAL_STARS,starCount,allComplete} from './places.js';
 // The song seen (plan F7): eleven rings, one per place. A layer you have won lights its ring in its colour and the ring
 // beats with it; one you have not is a dim dashed ring, so what is missing is plain without words. The Refugio's
@@ -31,12 +31,14 @@ export function drawSongRings(c,W,H,{ids=SONG_IDS,lit=()=>false,beat=()=>0,shown
   if(names){const place=PLACES.find(q=>q.id===id);c.globalAlpha=on?.9:.4;c.fillStyle=on?'#ffffff':'#8a8a8f';c.font='11px "Geist Mono", monospace';c.fillText(place?.name||id,p.x,p.y+p.r+6);}});
  c.restore();return spots;}
 // The plan of a playing: how many bars, when each layer enters, when your notes and the theme come. Pure.
-export function songPlan({final=false,ids=SONG_IDS,notes={},six=0}={}){const entry={};if(final)ids.forEach((id,i)=>{entry[id]=i*FINAL_ENTRY_BARS;});else ids.forEach(id=>{entry[id]=0;});
+export function songPlan({final=false,ids=SONG_IDS,notes={},steps={},ticks={},six=0}={}){const entry={};if(final)ids.forEach((id,i)=>{entry[id]=i*FINAL_ENTRY_BARS;});else ids.forEach(id=>{entry[id]=0;});
  if(!final)return {final:false,entry,bars:SONG_BARS_OPEN,notesAt:null,themeAt:null};
- const notesAt=ids.length*FINAL_ENTRY_BARS,withNotes=ids.filter(id=>notes[id]?.length),silenceAt=notesAt+withNotes.length,themeAt=silenceAt+SILENCE_BARS,endAt=themeAt+THEME_BARS;
+ const notesAt=ids.length*FINAL_ENTRY_BARS,withNotes=ids.filter(id=>notes[id]?.length),noteTimings={},noteStarts={};let silenceAt=notesAt;
+ for(const id of withNotes){const timing=phraseTimeline(notes[id],steps[id],ticks[id]);noteTimings[id]=timing;noteStarts[id]=silenceAt;silenceAt+=Math.max(1,Math.ceil(((timing.at(-1)||0)+2)/16));}
+ const themeAt=silenceAt+SILENCE_BARS,endAt=themeAt+THEME_BARS;
  // At least a minute: the layers keep playing after the theme until then.
  const minBars=six>0?Math.ceil(FINAL_MIN_SECONDS/(16*six)):0;
- return {final:true,entry,bars:Math.max(endAt+FINAL_TAIL_BARS,minBars),notesAt,silenceAt,themeAt,endAt,noteOrder:withNotes};}
+ return {final:true,entry,bars:Math.max(endAt+FINAL_TAIL_BARS,minBars),notesAt,silenceAt,themeAt,endAt,noteOrder:withNotes,noteTimings,noteStarts};}
 // What sounds at sixteenth k of a playing: the layers already in at their tier, your notes in their bar, the theme. Pure.
 export function stageEvents(plan,k,chord,{tiers={},notes={},steps={},scale,tr=0}={}){if(k<0||k>=plan.bars*16)return [];const bar=Math.floor(k/16),b=k%16,out=[],c=songChord(chord);
  // The bar of silence before the theme: nothing at all.
@@ -45,10 +47,8 @@ export function stageEvents(plan,k,chord,{tiers={},notes={},steps={},scale,tr=0}
  // The Faros' layer is the melody: the cube's theme in the World's key, two bars long (★ its first three notes, ★★ all of
  // it, ★★★ also an octave up).
  if(plan.entry.faros!==undefined&&bar>=plan.entry.faros&&(tiers.faros||0)>0&&(!plan.final||bar>=plan.endAt)){const local=(k-plan.entry.faros*16)%32;let at=0;THEME.forEach(([d,l],i)=>{if(at===local&&(tiers.faros>1||i<3)){const m=themePitch(d,scale,tr)+12;out.push({what:'lead',midi:m,len:l*2,layer:'faros'});if(tiers.faros>2)out.push({what:'lead',midi:m+12,len:l*2,layer:'faros',soft:true});}at+=l*2;});}
- if(plan.final&&bar>=plan.notesAt&&bar<plan.silenceAt){const id=plan.noteOrder[bar-plan.notesAt],ns=notes[id]||[],st=steps[id];
-  // On the steps you played them when they were kept (two at most on one step), else one every eighth.
-  const idx=Array.isArray(st)&&st.length===ns.length?st.map((s,i)=>s===b?i:-1).filter(i=>i>=0).slice(0,2):b%2===0?[b/2]:[];
-  for(const i of idx){const m=ns[i];if(Number.isFinite(m))out.push({what:'lead',midi:snapToScale(m,scale,tr)+12,len:2,layer:id,mine:true});}}
+ if(plan.final&&bar>=plan.notesAt&&bar<plan.silenceAt){const id=[...plan.noteOrder].reverse().find(id=>bar>=plan.noteStarts[id]),ns=notes[id]||[],timing=plan.noteTimings[id],local=k-plan.noteStarts[id]*16;
+  for(let i=0;i<ns.length;i++)if(timing[i]===local&&Number.isFinite(ns[i]))out.push({what:'lead',midi:snapToScale(ns[i],scale,tr)+12,len:2,layer:id,mine:true});}
  if(plan.final&&bar>=plan.themeAt&&bar<plan.endAt){const local=k-plan.themeAt*16,pass=local>=32?1:0;let at=0;for(const [d,l] of THEME){if(at===local-pass*32)out.push({what:'cello',midi:snapToScale(themePitch(d,scale,tr)+12+(pass?7:0),scale,tr),len:l*2,theme:true,second:!!pass});at+=l*2;}}
  return out;}
 export function initialize(runtime){
@@ -62,12 +62,12 @@ export function initialize(runtime){
   el.innerHTML='<canvas></canvas><div class="song-stage-text" aria-live="polite"></div><div class="song-stage-row"><button id="songAgain">Otra vez</button><button id="songClose">Cerrar</button></div>';document.body.appendChild(el);}el.hidden=false;return el;}
  // A playing: over the World's music, from its next «1». Without the stage (a trophy), just its layer for two bars.
  function begin({ids,final=false,master=false,preview=false}){const ac=runtime.ac;let out=null,soft=null;if(runtime.S.sound&&ac&&runtime.bus){out=ac.createGain();out.gain.value=.55;out.connect(runtime.bus);soft=ac.createGain();soft.gain.value=.25;soft.connect(runtime.bus);}
-  const {notes,steps}=yourNotes(),plan=preview?{final:false,entry:Object.fromEntries(ids.map(id=>[id,0])),bars:2,notesAt:null,themeAt:null}:songPlan({final,ids,notes,six:runtime.SIX||.125});
-  return {ids:[...ids],final,master,preview,plan,tiers:tiersOf(ids,master),notes,steps,out,soft,start:null,k:-1,last:{},at:performance.now()};}
+  const {notes,steps,ticks}=yourNotes(),plan=preview?{final:false,entry:Object.fromEntries(ids.map(id=>[id,0])),bars:2,notesAt:null,themeAt:null}:songPlan({final,ids,notes,steps,ticks,six:runtime.SIX||.125});
+  return {ids:[...ids],final,master,preview,plan,tiers:tiersOf(ids,master),notes,steps,ticks,out,soft,start:null,k:-1,last:{},at:performance.now()};}
  // Your notes for the finale (plan I4): each place's last round, and for the Journey's five, its chapter if not replayed.
- function yourNotes(){const d=data()||{},j=runtime.S.journey||{},notes={},steps={};for(const id of SONG_IDS){const own=d.notes?.[id];if(own?.length){notes[id]=own;if(d.noteSteps?.[id])steps[id]=d.noteSteps[id];continue;}
-   const ch=Array.isArray(j.notes?.[id])?j.notes[id].filter(Number.isFinite).slice(-8):[];if(ch.length){notes[id]=ch;const st=Array.isArray(j.steps?.[id])?j.steps[id].slice(-8):null;if(st&&st.length===ch.length)steps[id]=st.map(s=>Math.round(s)%16);}}
-  return {notes,steps};}
+ function yourNotes(){const d=data()||{},j=runtime.S.journey||{},notes={},steps={},ticks={};for(const id of SONG_IDS){const own=d.notes?.[id];if(own?.length){notes[id]=own;if(d.noteSteps?.[id])steps[id]=d.noteSteps[id];if(d.noteTicks?.[id])ticks[id]=d.noteTicks[id];continue;}
+   const ch=Array.isArray(j.notes?.[id])?j.notes[id].filter(Number.isFinite).slice(-8):[];if(ch.length){notes[id]=ch;const st=Array.isArray(j.steps?.[id])?j.steps[id].slice(-8):null;if(st&&st.length===ch.length)steps[id]=st.map(s=>Math.round(s)%16);const ts=j.ticks?.[id]?.slice(-8);if(ts?.length===ch.length)ticks[id]=ts;}}
+  return {notes,steps,ticks};}
  // Open the stage: your song as it is, or (final) the eleven layers coming in one after another.
  function open({final=false,master=false}={}){const ids=won();if(!ids.length&&!final){runtime.toast?.('Gana una ★ y empieza tu canción.',{level:2});return false;}if(run)close();
   document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});const el=overlay(),text=el.querySelector('.song-stage-text'),list=final?SONG_IDS:ids;runtime.audio?.();

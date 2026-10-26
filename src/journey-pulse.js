@@ -47,6 +47,14 @@ export function playCello(ac,out,t,midi,seconds,volume){
  f.type='lowpass';f.Q.setValueAtTime(.5,t);f.frequency.setValueAtTime(1600,t);f.frequency.linearRampToValueAtTime(2400,t+seconds*.4);
  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
  const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
+// Recall preserves order and bar phase. Very long rests shorten by whole bars only.
+// Legacy modulo-16 data cannot reveal original bars: equal/backward steps start a new bar.
+export function phraseTimeline(notes=[],steps=[],ticks=[]){
+ const count=notes.length,exact=Array.isArray(ticks)&&ticks.length===count&&ticks.every((v,i)=>Number.isSafeInteger(v)&&v>=0&&(!i||v>=ticks[i-1]));
+ if(exact){const out=[];for(let i=0;i<count;i++){const gap=i?ticks[i]-ticks[i-1]:0;out.push(i?out[i-1]+(gap>64?16+gap%16:gap):ticks[0]%16);}return out;}
+ if(Array.isArray(steps)&&steps.length===count&&steps.every(v=>Number.isInteger(v)&&v>=0&&v<16)){const out=[];for(const st of steps){let tick=st;if(out.length)while(tick<=out.at(-1))tick+=16;out.push(tick);}return out;}
+ return notes.map((_,i)=>i*2);
+}
 export function initialize(runtime){
  const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[],noteSteps:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];const pending=new Set();let lastLanding=null,epoch=0;
  const calm=()=>calmMotion(runtime.S);
@@ -61,6 +69,7 @@ export function initialize(runtime){
  function scaleNow(){const MU=runtime.MU||{};return {scale:MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr:MU.tr||0};}
  // The Line's cursor follows what is heard: the audio clock minus the output latency.
  // The step of the bar at a time on the audio clock, from the steps the music scheduled.
+ function absoluteStepAt(time){const sq=runtime.MU?.sq||[],six=runtime.SIX||.15;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last)return null;return Math.max(0,Math.round(last.s+(time-last.t)/six));}
  function stepAt(time){const sq=runtime.MU?.sq;if(!sq?.length)return 0;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last)return sq[0].s%16;return (last.s+Math.min(.99,Math.max(0,time-last.t)/(runtime.SIX||.15)))%16;}
  function stepNow(){const ac=runtime.ac;if(!ac)return 0;return stepAt(audibleTime(ac));}
  // Judge one player pulse touched at atMs (performance.now(); defaults to now). Returns whether it was on time; never
@@ -82,7 +91,7 @@ export function initialize(runtime){
   if(ac&&!silent&&!runtime.rhythmSinging?.()&&(!own?.hit||own.hit.step%4===0)){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
   const played=on?(()=>{const [degree]=THEME[state.next],{scale,tr}=scaleNow();return {degree,scale,tr,midi:themePitch(degree,scale,tr)};})():null;
-  const action=runtime.journeyGamePulse?.(on,{midi:played?.midi,step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
+  const action=runtime.journeyGamePulse?.(on,{midi:played?.midi,tick:absoluteStepAt(beatAt??heard),step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
   state.action=action||null;const waiting=action==='wait'||action==='crowded';marks[marks.length-1].waiting=waiting;
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);
@@ -90,7 +99,7 @@ export function initialize(runtime){
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const {degree,scale,tr,midi}=played;state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
-  state.notes.push(midi);state.noteSteps.push(Number.isFinite(step)?Math.round(step)%16:null);if(state.notes.length>12){state.notes.shift();state.noteSteps.shift();}runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
+  state.notes.push(midi);state.noteSteps.push(Number.isFinite(step)?Math.round(step)%16:null);if(state.notes.length>12){state.notes.shift();state.noteSteps.shift();}runtime.journeyChapterPulse?.(true,midi,Number.isFinite(step)?Math.round(step)%16:undefined,absoluteStepAt(beatAt??heard));
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
   // The cube glows gold for a beat on every hit, the phone vibrates where it can and the cube punches (plan H1). Plan
   // I3: all of it lands when the note is heard, not when the finger touched, so light, touch and sound are one instant.

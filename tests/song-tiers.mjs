@@ -21,7 +21,7 @@ assert(at(0).every(e=>e.layer==='llanura'),'bar 0: only the first layer');
 // Plan I4: your notes in the World's scale; on the steps you played them when kept.
 const mine=[];for(let k=11*16;k<13*16;k++)for(const e of at(k))if(e.mine)mine.push(e.midi-12);assert.deepEqual(mine,[60,62,64,65,67].map(m=>snapToScale(m,SC,0)),'your notes, one bar per place, in the scale');
 assert.equal(snapToScale(61,SC,0),61);assert.equal(snapToScale(60,SC,0),59);assert.equal(snapToScale(70,SC,2),70);assert.equal(snapToScale(60,SC,2),59);
-{const st=[];for(let k=11*16;k<12*16;k++)for(const e of at(k,{steps:{lago:[0,3,3,9]}}))if(e.mine)st.push(k%16);assert.deepEqual(st,[0,3,3,9],'on the steps you played them');}
+{const ticks={lago:[0,3,3,9]},exact=songPlan({final:true,notes,ticks}),st=[];for(let k=11*16;k<12*16;k++)for(const e of stageEvents(exact,k,[60,64,67],{tiers,notes,scale:SC}))if(e.mine)st.push(k%16);assert.deepEqual(st,[0,3,3,9],'explicit absolute timestamps preserve simultaneous notes and rhythm');}
 for(let k=13*16;k<14*16;k++)assert.deepEqual(at(k),[],'a bar of silence before the theme');
 const theme=[];for(let k=fin.themeAt*16;k<fin.endAt*16;k++)for(const e of at(k))if(e.theme)theme.push(e);assert.equal(theme.length,12,'the cube\'s theme twice');assert(theme.every(e=>e.what==='cello'));assert.equal(theme[6].midi-theme[0].midi,7,'the second time a fifth up');
 // The Faros' melody keeps silent in the finale until the theme has sounded.

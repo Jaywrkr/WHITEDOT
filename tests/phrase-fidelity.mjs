@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {phraseTimeline,initialize as pulse} from '../src/journey-pulse.js';
+import {songPlan,stageEvents} from '../src/song-stage.js';
+import {normalizePlaces} from '../src/places.js';
+import {normalizeChapters} from '../src/journey-chapters.js';
+const notes={lago:Array.from({length:8},(_,i)=>60+i)},steps={lago:Array(8).fill(0)};
+const plan=songPlan({final:true,ids:['lago'],notes,steps});let played=[];
+for(let k=0;k<plan.bars*16;k++)played.push(...stageEvents(plan,k,[60,64,67],{notes,tiers:{},scale:[0,2,4,5,7,9,11]}).filter(e=>e.mine));
+assert.equal(played.length,8);assert.equal(plan.silenceAt-plan.notesAt,8,'legacy equal steps recall in successive bars, no invented original timing');
+assert.deepEqual(phraseTimeline([60,62,64],[12,0,4]),[12,16,20]);
+assert.deepEqual(phraseTimeline([60,62,64],[0,0,4],[100,132,136]),[4,36,40]);
+assert.deepEqual(phraseTimeline([60,62],[0,0],[0,1000]),[0,24],'long rests shorten by whole bars, preserving phase');
+const source={version:2,notes,noteSteps:steps,noteTicks:{lago:[0,16,32,48,64,80,96,112]}};assert.deepEqual(normalizePlaces(source).noteTicks,source.noteTicks);
+const future={version:99,payload:{keep:true}};assert.equal(normalizePlaces(future),future);
+assert.deepEqual(normalizeChapters({notes:{lago:[60,62]},steps:{lago:[0,4]},ticks:{lago:[16,20]}}).ticks.lago,[16,20]);
+const r={S:{sound:true},ac:{currentTime:10},MU:{step:2,bq:[10],sq:[{s:16,t:10}]},SIX:.125,BIOMES:[],journeyChapterPulse:(...a)=>r.captured=a};pulse(r);assert(r.journeyPulse());assert.deepEqual(r.captured,[true,57,0,16],'campaign captures judged step and absolute position, not scheduler head');
+console.log('PASS phrase fidelity: eight notes survive, legacy wraps ordered, new bar positions retained, long rests bounded, future saves untouched, campaign judged time');

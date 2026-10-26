@@ -6,7 +6,7 @@ Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada ca
 |---|---|---|
 | N1 | `pulido/n1-entender-jugando` | Implementación técnica; aceptación pendiente |
 | N2 | `pulido/n2-precision` | Implementación técnica; aceptación pendiente |
-| N3 | `pulido/n3-frase-fiel` | Pendiente |
+| N3 | `pulido/n3-frase-fiel` | Implementación técnica; aceptación pendiente |
 | N4 | `pulido/n4-interfaz` | Pendiente |
 | N5 | `pulido/n5-recorrido` | Pendiente |
 | N6 | `pulido/n6-descubrimientos` | Pendiente |
@@ -26,3 +26,9 @@ Verificación: 249 suites Node aprobadas; guide_context_smoke.py en320/390/1280 
 Tocar el área del cubo emite al apoyar, una sola vez; fuera conserva arrastre, escáner y toque al soltar. Ecos, banda, cristales, Línea y reacciones comparten referencia audible. Vacío distingue pulso musical válido de avance: espera en blanco sin premio visual falso. Sin cambiar síntesis ni patrones.
 
 Verificación: 249 suites Node; touch_precision_smoke.py y journey_pulse_smoke.py aprobados. Despacho explícito menor de40ms en navegador, no latencia acústica física. Auditoría limpia. Bluetooth/teléfono pendientes.
+
+## N3 · 2.3.0-alpha.195
+
+La canción da a cada frase los compases necesarios; no descarta notas del mismo paso. Capturas nuevas guardan posición absoluta junto al paso juzgado; campaña deja de guardar el cabezal adelantado. Guardados antiguos conservados con orden compatible; pausas muy largas se abrevían por compases completos, sin afirmar reconstrucción histórica.
+
+Verificación: 250 suites Node, round_phrase_smoke.py y render song_stage_mix.py aprobados; pico0,389 sin saturación. Auditoría limpia. Reconocimiento/agrado físico pendientes.
