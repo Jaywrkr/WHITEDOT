@@ -12,6 +12,11 @@ class H(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 srv=ThreadingHTTPServer(('127.0.0.1',0),partial(H,directory=str(ROOT)));threading.Thread(target=srv.serve_forever,daemon=True).start()
 SIZES=[(390,844),(844,390),(1280,800)]
+# CI gives each flow 145 s: run alone this file checks the phone size; menus_*_smoke.py run the other parts. MENUS_PART=all runs everything.
+PART=os.environ.get('MENUS_PART','size390')
+want=lambda name:PART in ('all',name) or PART.startswith(name+'-half')
+# A «-halfN» part takes every other visible button (N = 1 or 2) so the longest checks also fit.
+half=lambda ids:ids[int(PART[-1])-1::2] if '-half' in PART else ids
 HIDE="document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true)"
 SHOWN="id=>{const e=document.getElementById(id);if(!e)return false;const r=e.getBoundingClientRect();return !e.hidden&&getComputedStyle(e).display!=='none'&&r.width>0&&r.height>0}"
 # Whatever a menu button may change: an open sheet or panel, the place you are in, the view, a recording, a route.
@@ -33,6 +38,7 @@ try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   for w,h in SIZES:
+   if not want(f'size{w}'):continue
    for view in ('libre','viaje'):
     p,errors=page(b,w,h,view)
     # «Más» opens closed every time, even when it was left open.
@@ -95,9 +101,10 @@ try:
   # Every visible menu button does something, in the World and on the Camino, in both views.
   for view in ('libre','viaje'):
    for where in ('world','camino'):
+    if not want(f'buttons-{view}-{where}'):continue
     p,errors=page(b,390,844,view,where);menu(p,True);ids=p.evaluate(VISIBLE_MENU);p.close()
     assert 'bWorld' in ids if where=='camino' else 'bPrimary' in ids,(view,where,ids)
-    for id in ids:
+    for id in half(ids):
      p,errors=page(b,390,844,view,where);menu(p,True);before=p.evaluate(STATE)
      label=p.locator('#'+id).inner_text();p.locator('#'+id).click();p.wait_for_timeout(900);after=p.evaluate(STATE)
      # «Seguir hacia X» sets the ring's route to X (often the route it already showed), so it is judged by its route.
@@ -105,17 +112,18 @@ try:
       assert p.evaluate("__r.ringRoute()?.name")==label.removeprefix('Seguir hacia ') and p.locator('#mMenu').is_hidden(),(view,where,label)
      else:assert after!=before,(view,where,id,'does nothing',before)
      assert not errors,(id,errors);p.close()
-   print(f'PASS every visible menu button acts in the {view} view, in the World and on the Camino',flush=True)
+    print(f'PASS every visible menu button acts in the {view} view, {"in the World" if where=="world" else "on the Camino"}',flush=True)
   # Every bottom exit says «Cerrar»; the account says it is optional and, with the cloud paused, offers no sign-up or deletion.
-  p,errors=page(b,390,844)
-  closers=p.evaluate("['placeClose','lugaresClose','portalClose','profileClose','guideClose','houseCodeClose','settingsClose','connectionClose','seedClose','saveToolsClose','kClose','mapClose','journalClose','muClose','sessionClose','sClose','atlasClose','favoritesClose','musicTravelClose','contentGalleryClose','setClose','oClose','playtestClose'].map(id=>[id,document.getElementById(id)?.textContent.trim()])")
-  assert all(t=='Cerrar' for _,t in closers),closers
-  menu(p,True);p.locator('#bConnection').click();p.wait_for_timeout(400);text=p.inner_text('#mConnection')
-  assert 'para jugar' not in text and 'Opcional. Se juega sin cuenta.' in text,text
-  assert p.locator('#accountRegister').is_hidden() and p.locator('#accountDelete').is_hidden(),'no sign-up or deletion while the cloud is paused'
-  assert p.locator('#connectionClose').is_visible() and p.locator('#connectionClose').inner_text()=='Cerrar'
-  assert 'Tu avance se guarda automáticamente' not in text,'no promise of cloud saving without an account'
-  assert p.evaluate("__r.cloudPaused()") and not errors,errors;p.close()
-  print('PASS every bottom exit says «Cerrar»; the account is optional and offers no sign-up or deletion while the cloud is paused',flush=True)
+  if want('exits'):
+   p,errors=page(b,390,844)
+   closers=p.evaluate("['placeClose','lugaresClose','portalClose','profileClose','guideClose','houseCodeClose','settingsClose','connectionClose','seedClose','saveToolsClose','kClose','mapClose','journalClose','muClose','sessionClose','sClose','atlasClose','favoritesClose','musicTravelClose','contentGalleryClose','setClose','oClose','playtestClose'].map(id=>[id,document.getElementById(id)?.textContent.trim()])")
+   assert all(t=='Cerrar' for _,t in closers),closers
+   menu(p,True);p.locator('#bConnection').click();p.wait_for_timeout(400);text=p.inner_text('#mConnection')
+   assert 'para jugar' not in text and 'Opcional. Se juega sin cuenta.' in text,text
+   assert p.locator('#accountRegister').is_hidden() and p.locator('#accountDelete').is_hidden(),'no sign-up or deletion while the cloud is paused'
+   assert p.locator('#connectionClose').is_visible() and p.locator('#connectionClose').inner_text()=='Cerrar'
+   assert 'Tu avance se guarda automáticamente' not in text,'no promise of cloud saving without an account'
+   assert p.evaluate("__r.cloudPaused()") and not errors,errors;p.close()
+   print('PASS every bottom exit says «Cerrar»; the account is optional and offers no sign-up or deletion while the cloud is paused',flush=True)
   b.close()
 finally:srv.shutdown()
