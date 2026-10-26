@@ -4,7 +4,7 @@ Sistema construido, incluido en main alpha.200 y refinado en el candidato alpha.
 
 ## Vista y habitaciones
 
-Casa de muñecas recorrible con cámara, escaleras y vista general. El cubo conserva sus controles y tamaño aprobados. Las habitaciones se abren por días o descubrimientos, lo que ocurra primero:
+Casa de muñecas recorrible con cámara, escaleras y vista general. En horizontal, la casa encaja a la izquierda del panel lateral y la Voz habla sobre el panel; en vertical, bajo y = 120. Los rótulos de habitación se miden y nunca cruzan el borde. El cubo conserva sus controles y tamaño aprobados. Las habitaciones se abren por días o descubrimientos, lo que ocurra primero:
 
 | ID conservado | Nombre | Días / descubrimientos |
 |---|---|---|

@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 // Tres familias nuevas de materia (fase 4): cuerdas tensables, prisma de luz y membrana resonante.
 // Gestos directos sobre el objeto, sin paneles: tensar y soltar, rasguear, girar, apretar y redoblar.
@@ -31,7 +32,7 @@ export function initialize(runtime){
   if(first){if(!S().help[site.kind]){S().help[site.kind]=true;runtime.say(runtime.VOZ[`materia_${site.kind}`],MATERIA_NAMES[site.kind]);}
    const kinds=new Set(Object.keys(saved).map(id=>id.split(':')[0]));if(kinds.size>=3)runtime.unlock('materia3');}
  }
- const lightUp=(site,time,extra)=>setTimeout(()=>{site.lit=1;extra?.();},Math.max(0,(time-(runtime.ac?.currentTime||0))*1000));
+ const lightUp=(site,time,extra)=>setTimeout(()=>{site.lit=1;extra?.();},cueDelay(runtime.ac,time));
  const played=[];   // últimas voces de materia (diagnóstico y pruebas)
  function voice(site,index,degree,time,volume,origin='player'){played.push(`installation:${site.kind}:${index}`);if(played.length>64)played.shift();runtime.playVoice(`installation:${site.kind}:${index}`,degree,time,site.region,false,volume,site,origin);}
  // ---------- cuerdas ----------

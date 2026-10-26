@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 // Secuenciador, muestras, colores y checkpoint.
 // Las muestras únicas de rarezas solo aparecen en la bolsa cuando ya las tienes.
 const SPECIAL=new Set(['reverso','canon','frenesi','detenido','espejo','luna']);
@@ -37,7 +38,7 @@ export function initialize(runtime) {
       case "espejo":runtime.cx.fillRect(x-s,y-s*.5,s*.8,s);runtime.cx.strokeRect(x+s*.2,y-s*.5,s*.8,s);break;
       case "luna":runtime.cx.arc(x,y,s*.85,0,6.283);runtime.cx.fill();break;}}
   const geo=()=>{const m=Math.min(runtime.W,runtime.H-260);return{X:runtime.W/2,Y:runtime.H/2,base:m*.13,gap:m*.095};};
-  function visStep(){if(!runtime.ac)return -1;const n=runtime.ac.currentTime;let s=-1;for(const q of runtime.MU.sq)if(q.t<=n)s=q.s;return s;}
+  function visStep(){if(!runtime.ac)return -1;const n=audibleTime(runtime.ac);let s=-1;for(const q of runtime.MU.sq)if(q.t<=n)s=q.s;return s;}
   function studioStep(t,dt,b,dx=0,dy=0){
     if(runtime.houseActive?.())return runtime.houseStep(t,dt,b,dx,dy);
     runtime.camX=0;runtime.camY=0;

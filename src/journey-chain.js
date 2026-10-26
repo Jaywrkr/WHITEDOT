@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Encadena» (the Lago, chapter 2 of the Journey's games, Jay's decision of 23 October): flowers float on the water and
 // breathe with the beat. A pulse on time sends a ripple from the cube; every flower it reaches lights up, sounds a note
 // a step higher, and sends its own ripple to the flowers beside it. Longer chains fill the bar faster. Off time nothing
@@ -75,9 +75,9 @@ export function initialize(runtime){
  // Over the cube: a shiver when off time, and gold drops flying to the bar.
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*chainProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+d.value;
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('lago',{pulse,under,over,progress:()=>chainProgress(own().points,goal())});
  Object.defineProperties(runtime,{journeyChain:{get:()=>()=>{const s=own();return {active:active(),points:s.points,progress:chainProgress(s.points,goal()),lit:s.lit.length,best:s.best,chains,misses,waves:waves.length,flower:s.flower?{...s.flower}:null,opened:s.opened,

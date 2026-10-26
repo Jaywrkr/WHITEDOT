@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {prefersReducedMotion} from './frame-state.js';
 import {LANDSCAPES} from './house-view.js';
 import {hash} from './world-sheet.js';
@@ -188,8 +189,8 @@ export function initialize(runtime){
   const band=(st.q||.8)>=3?runtime.ambienceInKey?.(st.band)??st.band:st.band;if(Math.abs(band-air.band)>.5){air.band=band;air.f.frequency.setValueAtTime(band,ac.currentTime);}
   const v=Math.min(REGION_SOUND_MAX,st.gain+st.bySpeed*Math.min(1,speed));air.g.gain.setTargetAtTime(Math.max(.0001,v),ac.currentTime,.4);return v;}
  // Where we are in the bar (0..1) and which beat, from the scheduler's beat times.
- function barPhase(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return (performance.now()/2000)%1;const bar=(runtime.SIX||.15)*16,last=bq[bq.length-1];return (((ac.currentTime-last)/bar)%1+1)%1;}
- function beatCount(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return Math.floor(performance.now()/500);return Math.floor((ac.currentTime-bq[0])/((runtime.SIX||.15)*4));}
+ function barPhase(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return (performance.now()/2000)%1;const bar=(runtime.SIX||.15)*16,last=bq[bq.length-1];return (((audibleTime(ac)-last)/bar)%1+1)%1;}
+ function beatCount(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return Math.floor(performance.now()/500);return Math.floor((audibleTime(ac)-bq[0])/((runtime.SIX||.15)*4));}
  function stopAir(){if(!air)return;const ac=runtime.ac;try{air.g.gain.setTargetAtTime(.0001,ac.currentTime,.3);air.src.stop(ac.currentTime+1.2);}catch(_){}air=null;airFor='';}
  function draw(t,b){
   const surface=runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie';if(!surface){stopAir();return;}

@@ -1,5 +1,5 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
-import {PLACES,placeOpen,starCount,nextOnPath,previousPlace} from './places.js';
+import {PLACES,placeOpen,starCount,nextGoal,previousPlace} from './places.js';
 import {freeOpen} from './journey-mode.js';
 import {directionPan} from './spatial.js';
 import {formatDistance} from './player-profile-model.js';
@@ -23,9 +23,13 @@ export function routeEdge(dx,dy,W,H){const cx=W/2,cy=H/2,top=Math.min(144,H*.28)
 // A quiet compass around the small cube, outside its body and ordinary pulse frames.
 // It is only a drawing: no hit region, movement input or customization is changed.
 export function routeCompass(dx,dy,W,H,offset={x:0,y:0}){const angle=Math.atan2(dy,dx),r=Math.min(48,W*.16,H*.16);return {x:W/2+offset.x+Math.cos(angle)*r,y:H/2+offset.y+Math.sin(angle)*r,angle};}
-export function edgeColumn(x,y,W,H,m=12){return {x:Math.max(m,Math.min(W-m,x))};}
-// The portal the arrow shows: the nearest open place never entered, or still without its ★; none once all are done.
-export function nextPortal(spots,places,journey,from){const path=nextOnPath(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
+// Off screen, the light stands on the edge where the heading crosses it: x on that edge, y at the height of the heading
+// (kept a band away from the corners), so it reads as a light on your side, not a stripe painted down the screen.
+export function edgeColumn(x,y,W,H,m=12,band=70){const dx=x-W/2,dy=y-H/2,t=Math.min(dx?(W/2-m)/Math.abs(dx):Infinity,dy?(H/2-m)/Math.abs(dy):Infinity),k=Number.isFinite(t)?Math.min(1,t):0;
+ return {x:Math.max(m,Math.min(W-m,x)),y:Math.max(band,Math.min(H-band,H/2+dy*k))};}
+// The portal the column shows: the next place on the path; once the eleven are complete (panel 10, P4, D1), the place
+// without ★★ with the best share on time (then ★★★); none with the 33 ★.
+export function nextPortal(spots,places,journey,from){const path=nextGoal(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
 // Where you stand when you come back from a round: a step from the portal, toward the Refugio, outside its reach.
 export function besidePortal(spot,center){const d=Math.hypot(center.x-spot.x,center.y-spot.y)||1;return {x:Math.round(spot.x+(center.x-spot.x)/d*PORTAL_REACH*3),y:Math.round(spot.y+(center.y-spot.y)/d*PORTAL_REACH*3)};}
 export function initialize(runtime){
@@ -70,8 +74,10 @@ export function initialize(runtime){
    // The next place on the path: a column of gold light over its portal. Plan I2: seen from anywhere; off screen the
    // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
    const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(240,210,122,.38)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
+   // At the edge: a soft upright light of 140 px, fading to every side (panel 10, Nesbitt #4).
+   const glow=(gx,gy,a)=>{c.save();c.translate(gx,gy);c.scale(1,7);const g=c.createRadialGradient(0,0,0,0,0,10);g.addColorStop(0,'rgba(240,210,122,.42)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(-10,-10,20,20);c.restore();};
    if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
-   else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);col(e.x,H,0,Math.max(.45,1-far/(RING_RADIUS*2)));}}
+   else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);glow(e.x,e.y,Math.max(.45,1-far/(RING_RADIUS*2)));}}
   if(aim&&!runtime.firstJourneyState?.next){const e=routeCompass(aim.dx,aim.dy,W,H,offset);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.8;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
   c.restore();}
  // On each bar's «1», the nearest portal sounds its note, louder the closer you are; a closed one, softer.

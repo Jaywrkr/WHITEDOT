@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Rodea» (the Bosque, chapter 3 of the Journey's games, Jay's decision of 23 October): the cube leaves a trail of light
 // for a few seconds. Walk around a group of fireflies until the trail closes (the closing line turns gold) and pulse
 // on time: every firefly inside is caught. Each one is worth as many as were caught together, up to three, so wide
@@ -86,9 +86,9 @@ export function initialize(runtime){
    c.globalAlpha=1;c.fillStyle=gold;c.fillRect(Math.round(sx(f.x+(runtime.S.wx-f.x)*k))-2,Math.round(sy(f.y+(runtime.S.wy-f.y)*k))-2,4,4);}
   for(const o of orbit){const a=o.a+(still?0:t/1500);c.globalAlpha=.8;c.fillStyle='#fff6c8';c.fillRect(Math.round(cx+Math.cos(a)*o.d)-1,Math.round(cy+Math.sin(a)*o.d)-1,3,3);}
   if(shiver>0&&!still){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*lassoProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=Math.min(10,3+d.value/3);
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('bosque',{pulse,under,over,progress:()=>lassoProgress(own().points,goal())});
  Object.defineProperties(runtime,{journeyLasso:{get:()=>()=>{const s=own(),now=performance.now(),loop=loopNow(now);return {active:active(),points:s.points,progress:lassoProgress(s.points,goal()),caught:s.caught.length,best:s.best,loops,misses,trail:trail.length,closed:!!loop,

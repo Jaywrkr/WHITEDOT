@@ -43,7 +43,7 @@ La meta es diez; aún no está acreditada. El panel son diez lentes simuladas, n
 
 ## Límites que se mantienen
 
-Conservar música actual, síntesis, notas, armonías, mezcla, RNG, mundos, especies y cubo pequeño. Guardados antiguos/futuros y propiedad de premios se migran sin borrar. El [verificador E](scripts/verify-e-preservation.mjs) protege311 archivos y trece contratos.
+Conservar música actual, síntesis, notas, armonías, mezcla, RNG, mundos, especies y cubo pequeño. Guardados antiguos/futuros y propiedad de premios se migran sin borrar. El [verificador E](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos (P1 abrió `map.js` y `places-ring.js`, solo dibujo; P2, ocho módulos de menú y cuenta).
 
 UI negra, Geist Mono, esquinas rectas, color ganado y menús silenciosos. Supabase/tiendas en pausa; no reaplicar SQL, borrar cuentas, publicar ni contratar. `server/` es prototipo histórico probado, no backend activo. Mantener formatos/fixtures heredados aunque no aparezcan en la UI.
 

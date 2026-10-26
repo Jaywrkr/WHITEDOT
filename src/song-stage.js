@@ -72,7 +72,8 @@ export function initialize(runtime){
  // Each layer's tier is its stars (1–3); the master version plays all of them in their variation.
  const tiersOf=(ids,master=false)=>Object.fromEntries(ids.map(id=>[id,master?3:Math.max(1,(data()?.stars?.[id]||[]).filter(Boolean).length)]));
  function overlay(){let el=document.getElementById('songStage');if(!el){el=document.createElement('div');el.id='songStage';el.setAttribute('role','dialog');el.setAttribute('aria-label','Tu canción');
-  el.innerHTML='<canvas></canvas><div class="song-stage-text" aria-live="polite"></div><div class="song-stage-row"><button id="songAgain">Otra vez</button><button id="songClose">Cerrar</button></div>';document.body.appendChild(el);}el.hidden=false;return el;}
+  // The hidden title takes the opening focus, so «Otra vez» does not look chosen (panel 10, Nesbitt #15).
+  el.innerHTML='<h2 class="sr-only" tabindex="-1">Tu canción</h2><canvas></canvas><div class="song-stage-text" aria-live="polite"></div><div class="song-stage-row"><button id="songAgain">Otra vez</button><button id="songClose">Cerrar</button></div>';document.body.appendChild(el);}el.hidden=false;return el;}
  // A playing: over the World's music, from its next «1». Without the stage (a trophy), just its layer for two bars.
  function begin({ids,final=false,master=false,preview=false}){const ac=runtime.ac;let out=null,soft=null;if(runtime.S.sound&&ac&&runtime.bus){out=ac.createGain();out.gain.value=.55;out.connect(runtime.bus);soft=ac.createGain();soft.gain.value=.25;soft.connect(runtime.bus);}
   const {notes,steps,ticks}=yourNotes(),plan=preview?{final:false,entry:Object.fromEntries(ids.map(id=>[id,0])),bars:2,notesAt:null,themeAt:null}:songPlan({final,ids,notes,steps,ticks,six:runtime.SIX||.125});

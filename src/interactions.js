@@ -1,4 +1,6 @@
-import {pulseNoteTime} from './journey-pulse.js';
+import {pulseNoteTime,scheduleAudibleCue} from './journey-pulse.js';
+// A pulse too soon after the last one sounds at this share of a normal pulse's volume (P5); at most this many wait.
+export const SOFT_PULSE=.45,SOFT_PENDING=8;
 import {calmMotion} from './frame-state.js';
 import {decorativeField} from './territory-presentation.js';
 import {PULSE_FORMS,selectedPulse,pulseCrossed,drawPulse} from './pulse-forms.js';
@@ -30,7 +32,7 @@ export function initialize(runtime) {
     if(runtime.activityActive)return;
     origin=origin==='ambient'?'ambient':'player';
     if(origin==='player'){runtime.cubeShopTap?.();runtime.cubeShopWildTap?.();}
-    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<(runtime.journeyRhythmGap?.()??240)){if(origin==='player')runtime.journeyPulseDropped?.();return;}lastSonar=ms;
+    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<(runtime.journeyRhythmGap?.()??240)){if(origin==='player'){runtime.journeyPulseDropped?.();softPulse();}return;}lastSonar=ms;
     // Playing on time (journey-pulse.js): the pulse plays the next theme note at once, in a melodic voice of the place,
     // with its third and fifth on the grid. Off the beat, the grid places the pulse as always.
     const hit=origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino')&&runtime.journeyPulse?.(atMs)===true?runtime.journeyPulseState():null;
@@ -47,11 +49,26 @@ export function initialize(runtime) {
     const look=origin==='player'&&runtime.inWorld()?runtime.cubeShopPulseLook?.()||'':'',charge=look==='pulse:charged'?Math.min(1,(ms-lastLook)/4000):0;if(look)lastLook=ms;
     waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,mult:origin==='player'?runtime.sparkLastMultiplier?.()??1:1,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
-    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);
+    // Panel 10 (P5, Mizuguchi): one hit, one image. A pulse on time punches the cube once, when its note is heard
+    // (journey-pulse.js, cubeKick); any other pulse swells the cube when its quantized note is heard, not at the touch.
+    // Without sound there is no note to wait for: the cube swells at once.
+    runtime.MU.act+=.25;const silent=!runtime.ac||runtime.S.sound===false;if(silent)swell();
     if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=pulseNoteTime(now,hit.beat);runtime.journeyPulseScheduled?.(t);
      if(runtime.inWorld()){const region=runtime.regionOfPos(x,y);runtime.hearVoice?.('pulso',0,t,region,true,1,{x,y},origin);runtime.playTheme(hit.midi,hit.degree,t,region,hit.scale,hit.tr);}else runtime.pluck(hit.midi+12,t,runtime.vel(.1),2);return;}
-    runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
+    runtime.soon(t=>{pulseVoice(t,x,y,1,origin);if(!silent)scheduleAudibleCue(runtime,t,swell);},origin);
   }
+  function swell(){runtime.pulse=Math.max(runtime.pulse||0,.6);}
+  // The pulse's own voice: in the World the place's «pulso», elsewhere the chord's three notes. soft scales its volume.
+  function pulseVoice(t,x,y,soft,origin){if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,soft,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08*soft),2));}}
+  // Panel 10 (P5, Iwai): no touch is mute. A pulse too soon after the last one (journeyRhythmGap, 240 ms or two thirds
+  // of an eighth in eighth-note rhythms) is not judged, but it sounds: the same voice, softer, on the next sixteenth.
+  // The music's queue plays at most four per step (audio.js), so a flurry spreads over the next steps; softPending
+  // only keeps a runaway finger from piling up more than two steps of them.
+  let softPending=0;
+  function softPulse(){if(!runtime.ac||softPending>=SOFT_PENDING||runtime.activityActive)return;if(runtime.inWorld()&&(runtime.S.layer||'superficie')!=='superficie')return;
+    const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;softPending++;soft.scheduled++;
+    runtime.soon(t=>{softPending=Math.max(0,softPending-1);soft.played++;pulseVoice(t,x,y,SOFT_PULSE,'player');},'player');}
+  const soft={scheduled:0,played:0};
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}
   function drawProp(p,x,y,base){const s=6+p.lit*3,c=p.lit>.1?runtime.musicInk?.(p)||'#fff':(base||"#fff");runtime.cx.strokeStyle=c;runtime.cx.fillStyle=c;runtime.cx.lineWidth=1.3;runtime.cx.beginPath();
@@ -117,6 +134,7 @@ export function initialize(runtime) {
     currentWave: { get: () => currentWave },
     updWaves: { get: () => updWaves },
     sonar: { get: () => sonar },
+    softPulseState: { get: () => () => ({ ...soft, pending: softPending }) },
     boing: { get: () => boing },
     propSound: { get: () => propSound },
     drawProp: { get: () => drawProp },

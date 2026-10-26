@@ -1,3 +1,4 @@
+import {cueDelay,landDelay} from './journey-pulse.js';
 import {SONG_IDS,layerStep,songChord} from './song.js';
 import {stageEvents,songPlan} from './song-stage.js';
 // A kept place briefly answers with the same layer heard later in Tu canción. The radio, player's filter and output
@@ -7,14 +8,14 @@ export const victorySeconds=six=>DROP_BARS*16*six;
 export function dropEvents(id,chordAt){const out=[];for(let s=0;s<DROP_BARS*16;s++)out.push(...layerStep(id,s,songChord(chordAt(Math.floor(s/16)))));return out;}
 export function initialize(runtime){
  let run=null;
- function release(r,at=runtime.ac?.currentTime||0){if(!r)return;const now=at;try{r.out.gain.cancelScheduledValues(now);r.out.gain.setTargetAtTime(.0001,now,.02);setTimeout(()=>r.out.disconnect(),Math.max(0,(at-(runtime.ac?.currentTime||0))*1000)+150);}catch(_){r.out.disconnect?.();}}
+ function release(r,at=runtime.ac?.currentTime||0){if(!r)return;const now=at;try{r.out.gain.cancelScheduledValues(now);r.out.gain.setTargetAtTime(.0001,now,.02);setTimeout(()=>r.out.disconnect(),landDelay(at,runtime.ac?.currentTime||0)+150);}catch(_){r.out.disconnect?.();}}
  function cancel(at){const previous=run;run=null;release(previous,at);}
  function play(id){cancel();const ac=runtime.ac;if(!SONG_IDS.includes(id)||!runtime.S.sound||!ac||!runtime.bus||!runtime.songHit)return 0;
   const out=ac.createGain();out.gain.value=.3;out.connect(runtime.bus);const six=runtime.SIX||.15;
   // The next scheduled downbeat; otherwise wait for step zero instead of guessing a beat from wall time.
   const next=(runtime.MU?.sq||[]).filter(e=>e.s%16===0&&e.t>ac.currentTime+.01).sort((a,b)=>a.t-b.t)[0]?.t;
   run={id,out,six,drop:next??null,end:next==null?null:next+victorySeconds(six),owner:runtime.S,mode:runtime.S.mode,layer:runtime.S.layer,played:new Set(),bars:{},k:-1,lastStep:null,lastTime:-Infinity,plan:songPlan({ids:[id]})};
-  return ((next??ac.currentTime+16*six)+victorySeconds(six)-ac.currentTime)*1000;}
+  return cueDelay(ac,(next??ac.currentTime+16*six)+victorySeconds(six));}
  function step(s,t){if(!run)return;if(!runtime.S.sound||run.owner!==runtime.S||run.mode!==runtime.S.mode||run.layer!==runtime.S.layer){cancel();return;}
   if(run.drop===null){if(s%16)return;run.drop=t;run.end=t+victorySeconds(run.six);}
   if(t<run.drop-.001||t<=run.lastTime)return;const beat=((s%16)+16)%16;if(run.lastStep===null&&beat!==0)return;

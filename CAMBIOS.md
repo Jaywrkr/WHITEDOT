@@ -1,6 +1,74 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.207**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.212**. Las entradas describen su revisión, no certifican producción.
+
+## P5 · Un solo reloj · 2.3.0-alpha.212
+
+Rama `panel10/p5-un-solo-reloj`, sobre `panel10/p4-cierre-de-ronda`. Mizuguchi e Iwai (panel 10).
+
+- Un reloj para la luz: `cueDelay` y `audibleTime` incluyen la latencia de salida y la calibración (`latencyNudge`). Pasan a él los temporizadores con `ac.currentTime` crudo: vidrio, espejos, materia, vida, iniciativa, hitos, quietud, cajas, especies (`render.js`), señales (`feedback.js`), parches, eco, victoria, tienda del cubo y `jam.js`. También los dibujos que comparaban con el reloj crudo: Momentos, capas del universo, encuentros, estudio, culturas, percusión, microinstrumentos, fenómenos y la espera de la tarjeta.
+- La calibración mueve la luz: con `latencyNudge` 0,15 el cursor de la Línea cruza el paso 0 cuando se oye su bombo, y el aterrizaje del acierto espera lo mismo. El juicio no cambia.
+- Un golpe, una imagen: el acierto ya no engorda el cubo al tocar; solo golpea al oírse. Fuera de tiempo, el cubo engorda cuando suena su nota cuantizada. La onda sigue saliendo al tocar.
+- Ningún toque mudo: el pulso demasiado seguido suena con su misma voz al 45 % en la siguiente semicorchea (como mucho 4 por paso, 8 pendientes). Sigue sin juzgarse y deja su marca gris.
+- No cambian la generación musical, las voces, la mezcla, la ventana de ±80 ms ni el límite entre toques (240 ms, o dos tercios de corchea en ritmos de corcheas). El ambiente sigue con el reloj de audio: es sonido, no luz. El rayo de Tormenta tampoco cambia: su destello dispara el trueno en el mismo instante, y retrasarlo movería el sonido.
+- Pruebas: `tests/one-clock.mjs` (Node): sin temporizadores crudos, brillo ≤ 20 ms tras su nota con 250 ms de latencia, cursor y aterrizaje con `latencyNudge` 0,15, un pico por acierto, diez toques a 8 Hz con diez sonidos y ≤ 4 por semicorchea. `echo_smoke.py` espera la tarjeta 15 s, como los recorridos que P4 ya ajustó (la espera de la caída rozaba los 5 s). Renders aprobados: `shop_sound_mix`, `wardrobe_mix`, `music_direction_mix`, `glass_mix`, `percussion_mix`, `micro_mix`, `journey_mix`, `journey_finale_mix`, `victory_mix` y `audio_mix`. Picos frente a la base: tienda 0,88252 / 0,88252, vestuario 0,88169 / 0,88168, percusión 0,87975 / 0,87975. Sin teléfono físico, auriculares Bluetooth ni personas.
+
+## P4 · El cierre de la ronda · 2.3.0-alpha.211
+
+Rama `panel10/p4-cierre-de-ronda`, sobre `panel10/p3-golpe-en-el-cubo`. Simogo, Chen, Matsuura y Pope (panel 10); D1 y D3 de Jay.
+
+- La tarjeta de resultado espera el fin de la caída de la victoria, tal como se oye (`journeyVictoryState().end` más la latencia de salida). Sin sonido sigue a 1,2 s.
+- La tarjeta ya no muestra logros. Los de la ronda van a la Bitácora, con su marca de no leídos y sin aviso; mientras la tarjeta espera tampoco sale ninguno.
+- Entre 70 y 74,9 % sin ★★: «A 0,4 de ★★» (décimas que faltan, sin redondear hacia arriba) y «Otra vez» junto a «Seguir hacia».
+- Cuenta en vivo sin texto: un tic al final de la Línea se enciende en dorado mientras los pulsos a tiempo alcanzan el 75 % (70 % en Maestro). Usa el mismo cálculo que la tarjeta. No sale en Libre ni sin sonido.
+- Tras la victoria (D1): objetivo, menú, columna dorada, brújula, nota guía del portal y «Seguir hacia» de la tarjeta apuntan al lugar sin ★★ con mejor porcentaje; con todas las ★★, al que no tiene ★★★. Con 33 ★ vuelve «Explora a tu ritmo».
+- Sin cambios en umbrales, redondeo, música ni guardados. El final de los once sigue llegando al cerrar la tarjeta (P6).
+- Pruebas: `tests/round-close.mjs` (Node) y `tests/round_close_smoke.py` (navegador; diez rondas del Jardín). Se actualizan `game-objective.mjs`, `places-ring.mjs` y `clean_screens_smoke.py`, que afirmaban lo anterior. En seis recorridos de lugar la espera de la tarjeta pasa de 5 a 15 s, porque ahora espera la caída. `scripts/panel-capture.py` espera a la tarjeta en `33-resultado`. Sin teléfono físico ni personas.
+
+## P3 · El golpe junto al cubo · 2.3.0-alpha.210
+
+Rama `panel10/p3-golpe-en-el-cubo`, sobre `panel10/p2-menus`. Matsuura, Wong y Mizuguchi (panel 10).
+
+- Dedo fantasma: anillo de 1 px con punto de 3 px que nace junto al cubo. En reposo cabe en 14×14 y su centro queda a 27 px del cubo. Arrastra desde el cubo y vuelve a su lado para tocar.
+- El dedo late en los pasos del lugar (`journeyRhythmState().steps`), en tiempo audible: Dunas y Lago en 2·6·10·14, Faros en 1·3·y. Antes latía con el pulso crudo y antes de oírse.
+- Un anillo fino se cierra sobre el cubo en los cuatro pasos previos a cada paso que cuenta; llega al radio mínimo con la marca de la Línea y es dorado en el «1». El cubo no cambia de tamaño. Con movimiento reducido no se mueve.
+- Línea: base a alfa .38 sobre una franja negra (medida en captura: 97, antes 41–48). El «1» se pinta en dorado cuando cuenta.
+- Marcas de capítulo de 4 px, solo dentro de un capítulo; ya no aparecen en las rondas de lugar.
+- Las chispas doradas de los diez juegos vuelan a la posición real de `#bar`, leída una vez por tamaño, no a `barY=42`.
+- Sin cambios en música, ventana de ±80 ms, umbrales, guardados ni tamaño del cubo (6×6 px en `00-inicio`, igual que antes).
+- Pruebas: `tests/beat-by-cube.mjs` (Node) y `tests/beat_by_cube_smoke.py` (navegador). El vuelo de la chispa se prueba con su función de dibujo y la barra real, no con una ronda jugada. Sin teléfono físico ni personas.
+
+## P2 · Menús · 2.3.0-alpha.209
+
+Rama `panel10/p2-menus`, sobre `panel10/p1-pantallas-limpias`. Estructura de Hodent y retícula de Nesbitt (panel 10). Se reordena; no se añaden destinos.
+
+- Jugar: «Seguir hacia …» y debajo Lugares, Tu cubo, Refugio y Bitácora. Ajustes y Cómo jugar, siempre a la vista. La fila reparte el ancho entre los botones visibles: sin huecos.
+- Cabecera: ★ n/33 primero y en dorado. La vista tranquila no muestra cifras, pero conserva Lugares (★ a dos toques) y Bitácora. Tu cubo y la tienda siguen solo en la completa (regla del Viaje).
+- «Más» se abre cerrado. Ir: «Volver al Camino» en el Mundo o «Explorar» fuera de él, Mapa y favoritos, «Volver al punto anterior», «Viajar a otra tierra». Crear: Efectos y eco, «Grabar 60 s», Compartir. Tú: Vista, Cuenta («Opcional»), Guardar copia, Actualizar. Un rótulo sin filas se oculta.
+- Un botón para cada viaje: `#bPrimary` ya no cae en «Ayuda y cuenta» y `#bWorld` se oculta cuando no haría nada.
+- Una palabra por concepto: favoritos en `#era`, Mapa, la búsqueda y el perfil; «Modo crear: sí/no»; «Otras formas de jugar».
+- Ajustes empieza con el volumen y va en tres bloques: Sonido y tiempo, Ver y sentir, Partida («Empezar de cero» al final, con borde). «Más sonido» vuelve a Ajustes al cerrarse o con Escape.
+- Todos los cierres inferiores dicen «Cerrar». Pestañas de la Bitácora con `role="tab"` y `aria-selected`; un solo estado activo. Casillas cuadradas. Texto de menú desde 12 px; `.spark-goal` y `.spark-power button` a 44 px. Avatar de 12 px en su marco; foco de «Más» con el contorno común.
+- Cuenta (D6 = A): «Opcional. Se juega sin cuenta.». Con la nube en pausa (`CLOUD_CONFIG.paused`) no hay «Crear cuenta» ni «Eliminar cuenta», ni aviso de nube en el Mundo. «Salir de cuenta» solo con sesión.
+- En horizontal la fila principal va en una línea por botón; el menú cabe con «Más» cerrado en 390×844, 844×390 y 1280×800.
+- Sin cambios en música, cubo, mapas ni guardados. IDs conservados; nuevos `rMenuVolume` y `menuVolumeNow` (el código ya los esperaba).
+- Pruebas: `tests/menus_smoke.py` (tres tamaños, ambas vistas, cada botón visible actúa) y `tests/menu_v2_smoke.py` actualizada. Sin teléfono físico ni personas.
+
+## P1 · Pantallas limpias · 2.3.0-alpha.208
+
+Rama `panel10/p1-pantallas-limpias`, sobre `claude/charming-darwin-dvbfc7`. Detalle visual de Nesbitt (panel 10), prioridad alta y media.
+
+- Palabras enteras o con guion: «Copiar diagnóstico» y la versión ya no se parten; el diagnóstico va en dos columnas.
+- Lugares abre en filas enteras en teléfono, horizontal y escritorio; la cita de la remezcla no se parte.
+- Fuera de pantalla, la columna dorada del portal es una luz de 140 px a la altura del rumbo, con degradado.
+- Refugio: en horizontal la casa encaja a la izquierda del panel; la Voz baja bajo y = 120 (en horizontal, sobre el panel); los rótulos se miden y no cruzan el borde.
+- Menú: la cabecera tapa el margen superior en horizontal; el pie se funde cuando hay más debajo.
+- Filas de botones con la misma altura; «Seguir» va primero y a todo el ancho en resultado, Lugares, portal y guía.
+- Tu canción abre con el foco en su título oculto, no en «Otra vez».
+- Las muestras forzadas no muestran «Laboratorio» ni su código fuera del laboratorio.
+- Mapa: la leyenda va por elementos, sin separador colgante, y deja aire antes de los botones. «Se guarda una copia» en gris.
+- Sin cambios en música, cubo, guardados ni estructura del menú (P2).
+- Pruebas: `tests/clean_screens_smoke.py` (tres tamaños) y `tests/places-ring.mjs` ampliada. Sin teléfono físico.
 
 ## Panel, sesión 10 · sin versión
 

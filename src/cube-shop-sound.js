@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {wearing} from './cube-shop-model.js';
 // Cube shop batch 5: pulse voices, cube sounds and step notes. Synthesized here on the music bus, in the region's
@@ -73,7 +74,7 @@ export function initialize(runtime){
   const id=instrument.slice(5);if(!SHOP_VOICES.includes(id)||!runtime.ac||!runtime.bus)return false;
   const tones=frame?.chords?.length?frame.chords:runtime.chordTones?.()||[];
   const notes=playShopVoice(runtime.ac,runtime.bus,id,t,n,v,{tones,noise:runtime.noiseBuffer});if(!notes.length)return false;
-  counts.voice++;glyph=id;glyphAt=performance.now()+Math.max(0,(t-runtime.ac.currentTime)*1000);runtime.shopSoundCue?.({id,notes,time:t});return true;
+  counts.voice++;glyph=id;glyphAt=performance.now()+cueDelay(runtime.ac,t);runtime.shopSoundCue?.({id,notes,time:t});return true;
  }
  function region(){return runtime.MU?.dnaT||runtime.regionOfPos?.(runtime.S.wx,runtime.S.wy);}
  function noteOf(rg,degree,lo,hi){if(!rg?.scale)return null;const tr=(runtime.BIOMES?.[rg.z]?.tr||0)+(rg.trOff||0),d=((degree%7)+7)%7;const n=57+tr+rg.scale[d]+12*Math.floor(degree/7);return Number.isFinite(n)?fit(n,lo,hi):null;}
@@ -94,9 +95,9 @@ export function initialize(runtime){
  }
  function sounds(t,moved){
   if(!live())return;const ac=runtime.ac,now=ac.currentTime;
-  if(has('sound:hat')&&speed>40&&now-hatPending>.5){hatPending=now;queue(time=>{hatPending=-1e9;if(speed<=40)return;eighth++;runtime.hatHit?.(time,level(eighth%2?.03:.045));counts.hat++;hatAt=performance.now()+Math.max(0,(time-runtime.ac.currentTime)*1000);});}
-  if(has('sound:hum')&&stopped>2&&now-humPending>2){humPending=now;queue(time=>{const rg=region(),k=counts.hum,pattern=[0,2,4,2,5,4,2,1];const m=noteOf(rg,pattern[k%8]+(runtime.MU?.deg||0),55,67);if(m==null||stopped<=2)return;playHum(runtime.ac,runtime.bus,time,m,level(.03));counts.hum++;humAt=performance.now()+Math.max(0,(time-runtime.ac.currentTime)*1000);});}
-  if(has('sound:antenna')&&surface()&&now-radioPending>2.2){const n=findNeighbour(t);if(n){radioPending=now;queue(time=>{const k=counts.radio,v=level(n.distance<600?.03:.018),six=runtime.SIX||.125;for(const [i,d]of [[0,k%5],[1,(k*3+2)%7]].entries()){const m=noteOf(n.region,d,60,76);if(m!=null)playRadio(runtime.ac,runtime.bus,time+i*six*2,m,v);}counts.radio++;radioAt=performance.now()+Math.max(0,(time-runtime.ac.currentTime)*1000);});}}
+  if(has('sound:hat')&&speed>40&&now-hatPending>.5){hatPending=now;queue(time=>{hatPending=-1e9;if(speed<=40)return;eighth++;runtime.hatHit?.(time,level(eighth%2?.03:.045));counts.hat++;hatAt=performance.now()+cueDelay(runtime.ac,time);});}
+  if(has('sound:hum')&&stopped>2&&now-humPending>2){humPending=now;queue(time=>{const rg=region(),k=counts.hum,pattern=[0,2,4,2,5,4,2,1];const m=noteOf(rg,pattern[k%8]+(runtime.MU?.deg||0),55,67);if(m==null||stopped<=2)return;playHum(runtime.ac,runtime.bus,time,m,level(.03));counts.hum++;humAt=performance.now()+cueDelay(runtime.ac,time);});}
+  if(has('sound:antenna')&&surface()&&now-radioPending>2.2){const n=findNeighbour(t);if(n){radioPending=now;queue(time=>{const k=counts.radio,v=level(n.distance<600?.03:.018),six=runtime.SIX||.125;for(const [i,d]of [[0,k%5],[1,(k*3+2)%7]].entries()){const m=noteOf(n.region,d,60,76);if(m!=null)playRadio(runtime.ac,runtime.bus,time+i*six*2,m,v);}counts.radio++;radioAt=performance.now()+cueDelay(runtime.ac,time);});}}
  }
  // Step notes are drawn even when silent; stepping on one again plays it when the sound is on.
  function stepNotes(t,moved){

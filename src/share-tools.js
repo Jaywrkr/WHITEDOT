@@ -62,7 +62,7 @@ export function initialize(runtime){
   };
   draw();return {canvas:c,timer:setInterval(draw,1000/30)};
  }
- function setUI(){const on=!!rec.recorder;$('bRecord').classList.toggle('rec',on);$('bRecord').querySelector('span').textContent=on?'Detener grabación':'Grabar set';$('recBadge').hidden=!on;}
+ function setUI(){const on=!!rec.recorder;$('bRecord').classList.toggle('rec',on);$('bRecord').querySelector('span').textContent=on?'Detener grabación':'Grabar 60 s';$('recBadge').hidden=!on;}
  function start(){
   if(rec.recorder)return stop();
   const type=recordingType(),cv=$('w');

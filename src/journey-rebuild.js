@@ -1,5 +1,5 @@
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Reconstruye» (the Ruinas, plan F15–F16, docs/MUNDO.md): eight broken pillars in a ring around where the round began.
 // Beside a pillar, play the Ruinas' pattern («1 · 2y · 3 · 4», journey-rhythm.js) on time: three of its four steps in
 // one bar lay a stone (all four in the Maestro). A pillar takes seven stones; two whole pillars side by side are joined by
@@ -76,9 +76,9 @@ export function initialize(runtime){
   c.restore();}
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*ruinsProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/2);
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('ruinas',{pulse,under,over,progress:()=>ruinsProgress(own().points,goal())});
  Object.defineProperties(runtime,{journeyRebuild:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:ruinsProgress(s.points,goal()),spots:pillarSpots(s.center),stones:[...s.stones],arches:[...s.arches],laid:s.laid,pending:s.pending?{...s.pending,steps:[...s.pending.steps]}:null,need:need(),misses,gold:s.gold?{...s.gold}:null,opened:s.opened};}}});

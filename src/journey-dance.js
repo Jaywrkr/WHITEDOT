@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Baila» (the Tormenta, chapter 4 of the Journey's games, Jay's decision of 23 October): the storm marks a circle on
 // the ground near the cube, and a bolt will fall there in a bar and a half. Step into the circle and pulse on time: you
 // send the bolt back to the sky. Each one returned in a row is worth more. A bolt you miss falls white and the row
@@ -67,9 +67,9 @@ export function initialize(runtime){
   c.restore();}
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*danceProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=4+d.value/4;
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('tormenta',{pulse,under,over,progress:()=>danceProgress(own().points,goal())});
  Object.defineProperties(runtime,{journeyDance:{get:()=>()=>{const s=own();return {active:active(),points:s.points,progress:danceProgress(s.points,goal()),returned:s.returned,row,best:s.best,fallen,misses,target:target?{x:target.x,y:target.y,n:target.n}:null,inside:inside(),eye:s.eye?{...s.eye}:null,closed:s.closed};}}});

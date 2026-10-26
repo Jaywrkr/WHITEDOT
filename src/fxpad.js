@@ -58,7 +58,7 @@ export function initialize(runtime){
  $('fxStop').onclick=()=>{const fx=runtime.fx,ac=runtime.ac;if(!fx||!ac)return;const t=ac.currentTime,beat=runtime.SIX*4;
   fx.lp.frequency.cancelScheduledValues(t);fx.lp.frequency.setValueAtTime(fx.lp.frequency.value,t);fx.lp.frequency.exponentialRampToValueAtTime(120,t+beat);
   fx.dry.gain.cancelScheduledValues(t);fx.dry.gain.setValueAtTime(fx.dry.gain.value,t);fx.dry.gain.linearRampToValueAtTime(.05,t+beat);
-  setTimeout(()=>{fx.dry.gain.cancelScheduledValues(ac.currentTime);fx.lp.frequency.cancelScheduledValues(ac.currentTime);apply(.03);},beat*2*1000);runtime.unlock('cinta');};
+  setTimeout(()=>{fx.dry.gain.cancelScheduledValues(ac.currentTime);fx.lp.frequency.cancelScheduledValues(ac.currentTime);apply(.03);},beat*2000);runtime.unlock('cinta');};
  // Contador de uso (logro "Productor") y el panel solo existe en el Mundo.
  function tick(dt){if(!runtime.inWorld()&&state.open)toggle();$('bFx').hidden=!runtime.inWorld();if(!neutral()){state.used+=dt;if(state.used>30)runtime.unlock('productor');}}
  function reset(){state.x=.5;state.y=0;state.eco=state.robot=state.hold=state.chorus=state.phaser=state.freeze=false;if(state.open)toggle();apply(.1);}

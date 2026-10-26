@@ -7,6 +7,7 @@ import {familyOf} from './superbiomes.js';
 // the theme plays whole, the chapter is kept and a gold portal opens to the next. If the player stops playing, the
 // music falls back to a pedal and waits. Places come from the World's own map; nothing consumes the old random sequence.
 export const CHAPTERS=Object.freeze(['camino','llanura','lago','bosque','tormenta','vacio','refugio']);
+export const CHAPTER_MARK=4;
 export const WORLD_CHAPTERS=Object.freeze(['llanura','lago','bosque','tormenta','vacio']);
 // How loud the music may get in each state, as a cap on its energy.
 export const STATE_CAP=Object.freeze({llegada:.38,pertenencia:.66,plenitud:1,silencio:.16});
@@ -162,8 +163,9 @@ export function initialize(runtime){
    // Seen from above: a gold light at the edge with a halo and a chevron pointing the way.
    c.globalAlpha=.25*glow;c.strokeStyle='#f0d27a';c.lineWidth=1;c.beginPath();c.arc(bx,by,10,0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle='#f0d27a';c.fillRect(Math.round(bx)-2,Math.round(by)-2,4,4);
    c.beginPath();c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a+2.5)*9,by+Math.sin(a+2.5)*9);c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a-2.5)*9,by+Math.sin(a-2.5)*9);c.stroke();c.globalAlpha=1;}
-  const y=Math.round(H*.8)+.5,x1=W-Math.max(24,W*.12),gap=9;c.globalAlpha=1;
-  WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?'#f0d27a':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-1,y+9,3,3);});
+  // The Journey's map beside the Line (panel 10, P3): marks of 4 px, and only inside a chapter, never over a round.
+  if(inChapter()){const y=Math.round(H*.8),x1=W-Math.max(24,W*.12),gap=10;c.globalAlpha=1;
+   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?'#f0d27a':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-2,y+9,CHAPTER_MARK,CHAPTER_MARK);});}
   c.restore();}
  Object.defineProperties(runtime,{journeyChapterPulse:{get:()=>pulse},journeyPhrase:{get:()=>phrase},journeyComplete:{get:()=>complete},journeyTravel:{get:()=>travel},drawJourneyChapters:{get:()=>draw},
   journeyChapter:{get:()=>()=>({moments:{...moments,storm:storm.length},progress:{...progress(current())},lived:momentLived(current(),progress(current()),journey().moments||{}),bars:barsLived(current(),progress(current())),portalOpen:portalOpen(),beacon:!!(active()&&beacon()),chapter:own().chapter,id:current(),state:stateNow(),hits,portal:portal?{x:portal.x,y:portal.y}:null,done:{...own().done},notes:Object.fromEntries(Object.entries(own().notes).map(([k,v])=>[k,[...v]]))})}});

@@ -1,5 +1,6 @@
 import {CLOUD_CONFIG} from './cloud-config.js';
 import {createCloudClient} from './cloud-client.js';
+import {cloudPaused} from './cloud-account.js';
 // The account is optional (docs/VIAJE.md): without a session the game starts at once with a local save, and the
 // account is offered later as «Guardar en la nube». A saved session starts the game at once and is checked in the
 // background. The sheet only comes back to someone who already had an account here and has not chosen local play.
@@ -15,7 +16,7 @@ export async function requireAccount(){
  document.body.dataset.accountLocked='true';$('mConnection').hidden=false;
  const title=$('mConnection').querySelector('h2'),submitButton=$('accountForm').querySelector('[type=submit]');title.textContent='Kubono';submitButton.classList.add('gold');
  $('accountState').textContent='Entra una vez. Después, Kubono te recuerda en este dispositivo.';
- for(const id of ['connectionClose','accountLogout','accountDelete','cloudPush','cloudPull'])$(id).hidden=true;
+ for(const id of ['connectionClose','accountLogout','accountDelete','cloudPush','cloudPull'])$(id).hidden=true;$('accountRegister').hidden=cloudPaused();
  const guest=$('accountGuest'),guestLabel=guest.textContent;guest.hidden=false;guest.textContent='Jugar sin cuenta';
  // Only the sign-up code belongs to this sheet; recovery keeps its own steps in Cuenta.
  const codeOnly=['accountVerifyRecovery','accountNewPassword','accountUpdatePassword'],labels=[...$('accountCodeBox').querySelectorAll('label[for="accountNewPassword"]')];

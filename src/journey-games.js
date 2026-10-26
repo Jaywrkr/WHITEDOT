@@ -7,6 +7,20 @@ import {calmMotion} from './frame-state.js';
 export const classicJourney=(search=globalThis.location?.search)=>/[?&](faro|clasico)=1\b/.test(search||'');
 // How much the beat is sounding now, 1 on the beat fading to 0 over two sixteenths: what things breathe with.
 export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=audibleTime(runtime.ac);let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
+// Where the bar at the top really is, in canvas pixels (panel 10, P3, Wong): the gold drops the games send to it land
+// on it, not at a fixed y=42 above it. Read once per size of the screen; while the bar is hidden, its place in the CSS.
+export const BAR_FALLBACK=Object.freeze({margin:16,top:66,height:2});
+let barBox=null,barKey='';
+export function barTarget(W,doc=globalThis.document){const key=`${W}x${globalThis.innerHeight||0}`;if(barBox&&barKey===key)return barBox;
+ const el=doc?.getElementById?.('bar'),r=el?.getBoundingClientRect?.();
+ if(r&&r.width>0){barKey=key;barBox={left:r.left,right:r.right,y:r.top+r.height/2};return barBox;}
+ return {left:BAR_FALLBACK.margin,right:W-BAR_FALLBACK.margin,y:BAR_FALLBACK.top+BAR_FALLBACK.height/2};}
+// One gold drop on its way to the bar: e is the eased share of the flight (1 on the bar). The last one drawn is kept for
+// the tests (journeyBarDrop): it must land within 4 px of the bar in every screen size.
+let lastDrop=null;
+export function drawBarDrop(c,x,y,tx,ty,e,z,alpha,color){const px=x+(tx-x)*e,py=y+(ty-y)*e;c.globalAlpha=alpha;c.fillStyle=color;c.fillRect(Math.round(px-z/2),Math.round(py-z/2),Math.round(z),Math.round(z));lastDrop={x:px,y:py,e,tx,ty,at:globalThis.performance?.now?.()??0};}
+export const barDropState=()=>lastDrop?{...lastDrop}:null;
+export const forgetBarTarget=()=>{barBox=null;barKey='';};
 export const worldCamera=runtime=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
 // A lesson is learned only after its notice was actually presented, never while merely queued.
 const lessonTickets=new WeakMap();
@@ -45,5 +59,6 @@ export function initialize(runtime){
  Object.defineProperties(runtime,{registerJourneyGame:{get:()=>(id,g)=>{games[id]=g;}},journeyGame:{get:()=>game},journeyGamePlaying:{get:()=>playing},
   journeyGamePulse:{get:()=>(on,beat)=>{const g=now();if(!g)return null;runtime.placeHear?.(current(),on,beat||{});return g.pulse(on,beat||{});}},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
   drawJourneyGamesUnder:{get:()=>(c,W,H,t)=>now()?.under?.(c,W,H,t)},drawJourneyGames:{get:()=>(c,W,H,t)=>{const g=now();if(!g)return;g.over?.(c,W,H,t);runtime.drawRhythmGuide?.(c,W,H,t);}},
-  cubeGrowth:{get:()=>()=>now()?.growth?.()||1}});
+  cubeGrowth:{get:()=>()=>now()?.growth?.()||1},journeyBarDrop:{get:()=>()=>({drop:barDropState(),bar:barTarget(runtime.W||globalThis.innerWidth||0)})}});
+ globalThis.addEventListener?.('resize',forgetBarTarget);
 }

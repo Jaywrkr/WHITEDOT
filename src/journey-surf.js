@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Surfea» (the Dunas, plan F10, docs/MUNDO.md): waves of sand cross the dunes in time. A ring of sand shows where the
 // crest of the next wave will pass, and an arc around it closes until its beat. Be in the ring and pulse on time as
 // the crest passes: you ride it, it pushes you along, and the bar fills. Waves ridden in a row are worth more; letting
@@ -66,9 +66,9 @@ export function initialize(runtime){
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
   // The streak: small gold marks under the cube, one per wave in a row (up to three, where it stops adding).
   for(let i=0;i<Math.min(3,s.streak);i++){c.globalAlpha=.9;c.fillStyle=gold;c.fillRect(Math.round(cx-15+i*6),Math.round(cy+18),3,3);}
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*surfProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+d.value/2;
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('dunas',{pulse,under,over,progress:()=>surfProgress(own().points,goal())});
  Object.defineProperties(runtime,{journeySurf:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:surfProgress(s.points,goal()),streak:s.streak,best:s.best,rides:s.rides,misses,gold:s.gold,opened:s.opened,band:band(),waves:waves.map(w=>({x:w.x,y:w.y,at:w.at,dir:w.dir,ridden:!!w.ridden,gold:!!w.gold}))};}}});

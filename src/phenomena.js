@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 import {contactEntry} from './contact.js';
 import {claimInstallationBar} from './installations.js';
@@ -54,7 +55,7 @@ export function initialize(runtime){
  }
  function phenomenonSources(){return nearbyPhenomena(250).map(o=>({object:o,kind:`phenomenon:${o.kind}`,name:PHENOMENON_NAMES[o.kind],voice:phenomenonVoice(o),distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)}));}
  function drawPhenomena(t,dt,ox,oy,radius){
-  const ctx=runtime.cx,now=performance.now(),audioTime=runtime.ac?.currentTime||0;
+  const ctx=runtime.cx,now=performance.now(),audioTime=audibleTime(runtime.ac);
   for(const o of nearbyPhenomena(radius)){
    o.cues=o.cues.filter(q=>audioTime-q<.7);
    const pulse=audible()?cueIntensity(o.cues,audioTime):0;

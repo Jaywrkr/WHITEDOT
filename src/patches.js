@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {SYNTH_PROGRAMS,synthProgram,filterMovement,opticalFilter} from './synth-colors.js';
 import {voiceLifetime} from './modular-synth.js';
 import {routeThreadGraph} from './modular-routing.js';
@@ -37,7 +38,7 @@ export function initialize(runtime){
   const lifetime=voice.sustained?24.3:voiceLifetime(voice.instrument),modularNodes=[];
   if(graph){modularNodes.push(...routeThreadGraph(ac,filters.at(-1),original[0],graph,time,time+lifetime));runtime.modularGraphCue?.(graph.signature,time);if(source)source.modularSignal={signature:graph.signature,routes:graph.routes.length};}else filters.at(-1).connect(original[0]);
   verb.gain.value=patch.sendScale;verb.connect(original[1]);delay.gain.value=patch.sendScale;delay.connect(original[2]);
-  if(source){source.filterMotion={...movement,onset:performance.now()+Math.max(0,time-ac.currentTime)*1000};}
+  if(source){source.filterMotion={...movement,onset:performance.now()+cueDelay(ac,time)};}
   runtime.filterCue?.(source,voice.role,movement,time);
   active.push({nodes:[...filters,verb,delay,...modularNodes],end:time+lifetime});[runtime.bus,runtime.verbIn,runtime.dsend]=[filters[0],verb,delay];
   try{return emit();}finally{[runtime.bus,runtime.verbIn,runtime.dsend]=original;current=previous;}

@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {prefersReducedMotion,calmMotion,beginFrame,endFrame} from './frame-state.js';
 import {windLevel} from './territory-journey.js';
 import {AMBIENCE_LEVEL} from './ambience.js';
@@ -357,7 +358,7 @@ export function initialize(runtime) {
         if(contactEntry(o,d<ds/2+12,!paused&&!runtime.scanning)&&ms>o.cd){o.cd=ms+(o.personality?.cooldown||1100);runtime.MU.act+=.3;runtime.touched();runtime.burst(o.x,o.y,8,true);runtime.discover(sp);if(runtime.S.autoPins)runtime.bandJoin?.(o,sp);
           if(sp.mob){o.follow=runtime.S.autoPins?(o.personality?.stamina||20):0;runtime.beatSoon(q=>runtime.speciesSound(sp,q,true,o.personality,o),()=>{o.lit=1;});}
           else{runtime.pushO(o,runtime.S.wx,runtime.S.wy,120);let mate=null,md=320;for(const x of c.sp){if(x!==o&&x.s===sp){const dd=Math.hypot(x.x-o.x,x.y-o.y);if(dd<md){md=dd;mate=x;}}}
-            runtime.beatSoon(q=>{runtime.speciesSound(sp,q,true,o.personality,o);if(mate){runtime.speciesSound(sp,q+runtime.SIX*16,true,mate.personality,mate);setTimeout(()=>{mate.lit=1;runtime.beams.push({x1:o.x,y1:o.y,x2:mate.x,y2:mate.y,l:1});},Math.max(0,(q+runtime.SIX*16-runtime.ac.currentTime)*1000));}},()=>{o.lit=1;});}if(runtime.RP&&runtime.RP.type==="cantar"&&sp.id.startsWith(runtime.RP.key+":")){runtime.RP.set.add(sp.id);runtime.retoSet("cantar",runtime.RP.set.size);}}
+            runtime.beatSoon(q=>{runtime.speciesSound(sp,q,true,o.personality,o);if(mate){runtime.speciesSound(sp,q+runtime.SIX*16,true,mate.personality,mate);setTimeout(()=>{mate.lit=1;runtime.beams.push({x1:o.x,y1:o.y,x2:mate.x,y2:mate.y,l:1});},cueDelay(runtime.ac,q+runtime.SIX*16));}},()=>{o.lit=1;});}if(runtime.RP&&runtime.RP.type==="cantar"&&sp.id.startsWith(runtime.RP.key+":")){runtime.RP.set.add(sp.id);runtime.retoSet("cantar",runtime.RP.set.size);}}
         if(d<soundR)nearO.push(o);o.lit=Math.max(0,o.lit-dt*.8);const vis=sp.mob?R*1.6:R*1.2;if(d>vis&&o.lit<=0)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.max(Math.max(0,1-d/vis)*.9,o.lit))*(runtime.worldOpacity?.(d,vis)??1);
         const faunaY=o.y+oy-(runtime.faunaBob?.(o,frozen?0:b,d)||0);if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,faunaY,runtime.mischiefTime?.(o,t)??t,frozen?0:b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,faunaY,t,b);else runtime.drawSprite(sp.bits,o.x+ox,faunaY,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);runtime.faunaAfter?.(o,o.x+ox,faunaY,d,t);

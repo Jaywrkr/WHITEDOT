@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Quietud viva y atmósfera de color.
@@ -47,7 +48,7 @@ export function initialize(runtime){
   if(s===0&&bar%2===0)emit(ct[(bar/2)%ct.length],runtime.vel?.(.045)||.045);
   if(s===8&&bar%4===1&&state.stage>=4)emit(ct[(bar+1)%ct.length],runtime.vel?.(.03)||.03);
   const composed=runtime.unifiedMusic===true&&!runtime.labMode;
-  if(state.visitors.length&&(composed?s===10&&bar%4===2:s%4===2&&Math.random()<.25)&&(!composed||!runtime.MU.radio?.melodyRest)){const key=runtime.seedOf('quiet:visitor:v1:'+d.key+':'+Math.floor(bar/8)),v=state.visitors[composed?key%state.visitors.length:Math.floor(Math.random()*state.visitors.length)];v.x=S().wx+Math.cos(v.a)*v.r;v.y=S().wy+Math.sin(v.a)*v.r*.7;emit(ct[composed?1+Math.floor(bar/8)%(ct.length-1):Math.floor(Math.random()*ct.length)],.015,v);setTimeout(()=>{v.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(state.visitors.length&&(composed?s===10&&bar%4===2:s%4===2&&Math.random()<.25)&&(!composed||!runtime.MU.radio?.melodyRest)){const key=runtime.seedOf('quiet:visitor:v1:'+d.key+':'+Math.floor(bar/8)),v=state.visitors[composed?key%state.visitors.length:Math.floor(Math.random()*state.visitors.length)];v.x=S().wx+Math.cos(v.a)*v.r;v.y=S().wy+Math.sin(v.a)*v.r*.7;emit(ct[composed?1+Math.floor(bar/8)%(ct.length-1):Math.floor(Math.random()*ct.length)],.015,v);setTimeout(()=>{v.lit=1;},cueDelay(runtime.ac,time));}
  }
  // Giro: el filtro baja y vuelve a abrir en dos compases (se oye que algo cambió).
  function sweep(){const fx=runtime.fx,ac=runtime.ac;if(!fx||!ac)return;const t=ac.currentTime,f=fx.lp.frequency,original=Math.max(200,f.value),closed=Math.min(420,original);f.cancelScheduledValues(t);f.setValueAtTime(original,t);f.exponentialRampToValueAtTime(closed,t+runtime.SIX*16);f.exponentialRampToValueAtTime(original,t+runtime.SIX*32);runtime.filterCue?.({id:'quiet:filter',x:S().wx,y:S().wy},'acorde',{start:original,end:closed,stages:1,slope:12},t);}

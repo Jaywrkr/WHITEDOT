@@ -69,6 +69,7 @@ try:
      page.screenshot(path=f'/tmp/whitedot-interface-{modal}-mobile.png')
     page.locator('#'+modal+' .sheet-close').click()
     assert page.locator('#'+modal).is_hidden()
+    if modal=='mMusic':assert page.locator('#mSettings').is_visible(),'Sound returns to Ajustes (panel 10, P2)';page.locator('#settingsClose').click()
     page.wait_for_function('!document.getElementById("w").inert')
    page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click()
    page.wait_for_function('document.activeElement.id==="bFx"')

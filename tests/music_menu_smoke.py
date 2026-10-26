@@ -42,7 +42,9 @@ try:
     sheet=page.locator('#'+modal+' .sheet');assert sheet.is_visible();assert sheet.evaluate('e=>e.scrollWidth<=e.clientWidth+2'),modal
     assert sheet.evaluate('e=>{const b=e.getBoundingClientRect();return b.x>=0&&b.right<=innerWidth+1&&b.y>=0&&b.bottom<=innerHeight+1}'),modal
     if width==390:page.screenshot(path=str(ROOT.parent/f'menu-review-{modal}.png'))
-    page.locator('#'+modal+' .sheet-close').click();page.wait_for_function('!document.getElementById("w").inert')
+    page.locator('#'+modal+' .sheet-close').click()
+    if modal=='mMusic':assert page.locator('#mSettings').is_visible(),'Sound returns to Ajustes (panel 10, P2)';page.locator('#settingsClose').click()
+    page.wait_for_function('!document.getElementById("w").inert')
    assert not errors,errors;page.close();print('PASS menu empty/full gifts, preview/equip, all tabs, quota rollback, text preference and reload '+str(width),flush=True)
   browser.close()
 finally:server.shutdown();server.server_close()

@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 import {consonantPitch} from './musical-conductor.js';
 import {culturalResidents,culturalResonators} from './heritage.js';
@@ -108,7 +109,7 @@ export function initialize(runtime){
    for(const r of culturalResonators(site,chapter)){mark(r,6,runtime.GOLD,2);label(r,['Toca tu voz recuperada','Toca tu ritmo recuperado','Toca tu armonía recuperada'][r.index]);}
    mark(site,18,col); // Original compact guardian; glyph details distinguish the eight studies.
    if(dist(site)<450){ctx.save();ctx.strokeStyle=col;ctx.globalAlpha=.5;ctx.beginPath();for(let i=0;i<3+c.glyph%4;i++){const a=i/(3+c.glyph%4)*TAU;ctx.moveTo(site.x+ox+Math.cos(a)*24,site.y+oy+Math.sin(a)*24);ctx.lineTo(site.x+ox+Math.cos(a)*29,site.y+oy+Math.sin(a)*29);}ctx.stroke();ctx.restore();}
-   if(lesson?.site===site&&lesson.onsets){ctx.save();ctx.fillStyle=col;for(let i=0;i<4;i++){const on=lesson.onsets.find(n=>n.stone===i),lit=on&&Math.abs(runtime.ac.currentTime-on.time)<.22;ctx.globalAlpha=lit?1:.25;ctx.beginPath();ctx.arc(site.x+ox+(i-1.5)*10,site.y+oy+19,lit?3:1.5,0,TAU);ctx.fill();}ctx.restore();}
+   if(lesson?.site===site&&lesson.onsets){ctx.save();ctx.fillStyle=col;for(let i=0;i<4;i++){const on=lesson.onsets.find(n=>n.stone===i),lit=on&&Math.abs(audibleTime(runtime.ac)-on.time)<.22;ctx.globalAlpha=lit?1:.25;ctx.beginPath();ctx.arc(site.x+ox+(i-1.5)*10,site.y+oy+19,lit?3:1.5,0,TAU);ctx.fill();}ctx.restore();}
    label(site,chapter===3?`${c.name} · Tres recuerdos recuperados`:e?.heard?'Sigue la huella · vuelve para escuchar':`Quédate y escucha · ${c.name}`);
    if(!e?.heard||chapter===3||e.chapter!==chapter)continue;const r=site.routes[chapter];
    if(e.clues===1){const a=r.clues[0],b=r.clues[1],length=Math.hypot(b.x-a.x,b.y-a.y);ctx.save();ctx.fillStyle=col;ctx.globalAlpha=.3;const dx=(b.x-a.x)/length,dy=(b.y-a.y)/length,along=(S().wx-a.x)*dx+(S().wy-a.y)*dy;for(let n=Math.max(0,Math.floor((along-200)/300));n*300<Math.min(length,along+200);n++){const p={x:a.x+dx*n*300,y:a.y+dy*n*300};if(dist(p)>220)continue;for(let j=0;j<3;j++)ctx.fillRect(p.x+ox+dx*j*5,p.y+oy+dy*j*5,1.5,1.5);}ctx.restore();}
