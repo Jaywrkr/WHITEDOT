@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "candidate": {
+    "version": "2.3.0-alpha.207",
+    "runtimeDigest": "e4c1e9d8f2e938af9d84c4c1faa8cf751a62d4eeae79f6b9e408ee1f3e2118e4"
+  },
+  "checks": {
+    "releaseAudit": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "nodeFull": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "browserFull": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "audioFull": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "ci": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    }
+  },
+  "devices": {
+    "androidMidRange": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "iosSafari": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "speaker": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "headphones": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "bluetooth": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    },
+    "screenReader": {
+      "status": "pending",
+      "runtimeDigest": null,
+      "evidence": ""
+    }
+  },
+  "rounds": {
+    "formative": [],
+    "confirmation": []
+  },
+  "sessionTemplate": {
+    "id": "",
+    "kind": "human",
+    "observed": false,
+    "runtimeDigest": "e4c1e9d8f2e938af9d84c4c1faa8cf751a62d4eeae79f6b9e408ee1f3e2118e4",
+    "evidence": "",
+    "externalHelp": null,
+    "tasks": {
+      "goal": null,
+      "firstAction": null,
+      "gardenFlower": null,
+      "nextPlace": null,
+      "ownPhrase": null
+    },
+    "ratings": {
+      "visual": null,
+      "audio": null,
+      "creativity": null,
+      "sensation": null,
+      "cohesion": null,
+      "polish": null
+    },
+    "wantsContinue": null
+  }
+}

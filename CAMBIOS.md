@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
 
+## E7 · 2.3.0-alpha.207
+
+Candidato de validación, verificador de preservación y registro de aceptación sin puntuaciones inventadas. Ajuste de concordancia en Favoritos. [Entrega](docs/ENTREGA_E.md).
+
 ## E6 · 2.3.0-alpha.206
 
 La canción identifica tu aporte en el tramo real y distingue la vista de capas del final personal. Cierre coherente hacia el Mundo libre. Música y notas guardadas intactas. [Entrega](docs/ENTREGA_E.md).

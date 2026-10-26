@@ -1,4 +1,4 @@
-import {onTime,audibleTime,landDelay,outputLatency,scheduleAudibleCue} from './journey-pulse.js';
+import {onTime,audibleTime,scheduleAudibleCue} from './journey-pulse.js';
 import {createTerritoryJourney,approachJourneyTempo} from './territory-journey.js';
 import {approachTempo,transitionGain,sparseFoundationGain} from './territory-transition.js';
 import {createMusicalConductor} from './musical-conductor.js';
@@ -299,13 +299,13 @@ export function initialize(runtime) {
       };const emit=()=>runtime.withVoiceOrigin?runtime.withVoiceOrigin('track',accompany):accompany();if(runtime.withAccompaniment)runtime.withAccompaniment(emit);else emit();
     }
     // tu Estudio: cada pieza suena en su paso
-    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.wildMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);runtime.songStageStep?.(s,t,MU.step);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+landDelay(t,ac.currentTime,outputLatency(ac));}}}
+    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.wildMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);runtime.songStageStep?.(s,t,MU.step);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);scheduleAudibleCue(runtime,t,()=>{runtime.studioHit[key]=performance.now();});}}}
     // faros: instrumentos que encendiste
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")==="superficie"){
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);
       if(MU.layers.has(1)&&(s===0||s===8))runtime.playVoice('faro',1,t,MU.dnaA,false,.7);
       if(MU.layers.has(2)&&s%4===0&&rnd()<.6)runtime.playVoice('faro',2,t,MU.dnaA,false,.4);
-      for(const f of MU.flowers){if(f.st===s){runtime.playVoice('planta:flor',f.n%7,t,runtime.regionOfPos(f.x,f.y),false,.7,f);f.hit=performance.now()+landDelay(t,ac.currentTime,outputLatency(ac));}}
+      for(const f of MU.flowers){if(f.st===s){runtime.playVoice('planta:flor',f.n%7,t,runtime.regionOfPos(f.x,f.y),false,.7,f);scheduleAudibleCue(runtime,t,()=>{f.hit=performance.now();});}}
     }
     // Quiet idle punctuation: one warm phrase opportunity every eight bars, no recurring high bell.
     if(!live&&MU.still>2.5&&s===0&&(MU.step>>4)%8===0&&rnd()<.3){const n=ct[Math.floor(rnd()*ct.length)];hookInst('feltpiano',n,t+jit(),vel(.022));}

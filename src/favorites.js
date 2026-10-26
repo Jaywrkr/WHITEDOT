@@ -48,7 +48,7 @@ export function initialize(runtime){
   const needsSave=!!runtime.storageStatus?.kind&&runtime.storageStatus.kind!=='ok';if($('favRepair'))$('favRepair').hidden=!needsSave;
   $('favNote').textContent=readOnly()?'Lugares conservados. Actualiza para editarlos.':needsSave?'Guardado pendiente. Tus lugares siguen aquí.':runtime.inWorld()?'Guarda el lugar. Su música sigue viviendo.':'Entra al Mundo. Tus lugares siguen guardados.';
   if(!list().length){const p=document.createElement('p');p.textContent='Todavía no hay lugares guardados.';body.append(p);}
-  const matching=list().slice().reverse().filter(p=>matchesFavorite(p,query,runtime.GEN));$('favCount').textContent=matching.length+' lugares';
+  const matching=list().slice().reverse().filter(p=>matchesFavorite(p,query,runtime.GEN));$('favCount').textContent=matching.length+(matching.length===1?' lugar':' lugares');
   if(list().length&&!matching.length){const p=document.createElement('p');p.textContent='Prueba otro nombre o estilo.';body.append(p);}
   for(const point of matching.slice(0,shown)){
    const card=document.createElement('article');card.className='journal-card favorite-card';card.dataset.favorite=point.id;

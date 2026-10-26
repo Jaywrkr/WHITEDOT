@@ -10,7 +10,7 @@ Jay autorizó ejecutar las siete fases, sin confirmación entre ellas. La meta d
 | E4 | `excepcional/e4-interfaz` | Implementada; pruebas locales aprobadas | Lectura, desplazamiento y salida consistentes |
 | E5 | `excepcional/e5-descubrimientos` | Implementada; pruebas locales aprobadas | Hallazgo, uso y regreso comprensibles |
 | E6 | `excepcional/e6-recorrido` | Implementada; pruebas locales aprobadas | Aportación personal y próximos pasos claros |
-| E7 | `excepcional/e7-validacion` | Pendiente | Revisión independiente, regresiones y protocolo humano listo |
+| E7 | `excepcional/e7-validacion` | Validación técnica en curso; personas pendientes | Revisión independiente, regresiones y protocolo humano listo |
 
 ## Límites protegidos
 
@@ -52,3 +52,8 @@ El libro muestra cuántas voces eliges, cuáles ya están en el jardín y cuánd
 ## E6 · alpha.206
 
 Tu canción distingue capas ganadas de frases guardadas para el final. En el final11, una línea sigue las secciones reales del transporte audible: lugares, frase propia, espacio y tema; indica vista silenciosa al estar silenciado. El final5 identifica tu interpretación en su subtítulo y nombre accesible. No cambia notas ni armonización. El objetivo de cierre explica la apertura del Mundo, y el resultado usa Seguir hacia como Lugares/Guía. Sin nuevas ventanas o instrumentos. Verificación local:253 suites Node; song_authorship_smoke.py (reloj real y MIDI/ticks intactos), song_stage_smoke.py (final11 y Maestro completos en móvil/PC), places_smoke.py y finale_resize_smoke.py aprobados. Auditoría limpia. La etiqueta sigue el cursor audible, no el cabezal programado; no es una escucha humana de reconocimiento.
+
+
+## E7 · alpha.207
+
+Revisión del candidato completo; corregida concordancia de un lugar guardado. Detectado y cerrado el consumo anticipado de marcas futuras: flores/Estudio reciben ahora la marca solo cuando llega su callback audible, conservando los dibujantes. Una regresión usa el secuenciador real con latencia180ms y verifica ausencia de luz antes y presencia al llegar. Verificador reproducible de313 archivos protegidos y ocho contratos musicales: mapas, catálogos, voces, reglas, MIDI y partituras conservados; audio.js solo contiene las seis sustituciones visuales autorizadas. Registro de aceptación con identidad del runtime, dos tandas independientes, dispositivos y puntuaciones declaradas. El validador no cuenta bots, duplicados, formularios vacíos o una confirmación de otra versión. No concede diez ni autentica personas. Comprobaciones y revisión independiente en curso; no acredita CI nuevo, escucha física ni sesiones humanas.

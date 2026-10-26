@@ -16,7 +16,7 @@ class H(SimpleHTTPRequestHandler):
 srv=ThreadingHTTPServer(('127.0.0.1',0),partial(H,directory=str(ROOT)));threading.Thread(target=srv.serve_forever,daemon=True).start()
 shots=[('00-inicio','',None)]+[(f'0{i+1}-capitulo-{c}',f'?capitulo={c}',None) for i,c in enumerate(['llanura','lago','bosque','tormenta','vacio'])]
 shots+=[(f'1{i}-lugar-{p}',f'?lugar={p}',None) for i,p in enumerate(['jardin','dunas','cristales','faros','ruinas','cueva'])]
-shots+=[('20-anillo','?anillo=1',None),('21-lugares','?anillo=1','lugares'),('22-cancion','?anillo=1','song'),('23-salvaje','?anillo=1','wild')]
+shots+=[('20-anillo','?anillo=1',None),('21-lugares','?anillo=1','lugares'),('22-cancion','?anillo=1','song'),('23-salvaje','?anillo=1','wild'),('30-menu','?anillo=1','menu'),('31-guia-jardin','?lugar=jardin','guide'),('32-libro','?anillo=1','cards'),('33-resultado','?lugar=lago','result'),('34-favoritos','?anillo=1','favorites')]
 try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
@@ -27,7 +27,12 @@ try:
    p.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
    p.goto(f'http://kubono.localhost:{srv.server_port}/{q}');p.wait_for_function('!!window.__r',timeout=20000);p.wait_for_timeout(2500)
    p.evaluate("()=>{__r.S.sound=true;__r.audio();}");p.wait_for_timeout(2500)
-   if extra:p.evaluate("k=>{document.querySelectorAll('.modal').forEach(m=>m.hidden=true);({lugares:()=>__r.openLugares(),song:()=>__r.openSong(),wild:()=>__r.wildSpawn()})[k]()}",extra)
+   if extra:p.evaluate('''k=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);({
+    lugares:()=>r.openLugares(),song:()=>r.openSong(),wild:()=>r.wildSpawn(),menu:()=>r.$('bMenu').click(),guide:()=>r.$('bGuide').click(),
+    cards:()=>{for(let i=0;i<3;i++)r.collectRareCard('fossil',{id:'capture:fixture:'+i,x:r.S.wx+i,y:r.S.wy},{forced:true});r.openJournal('rares');document.querySelector('[data-garden-add]')?.click();},
+    favorites:()=>{r.addFavorite('Mi primer lugar');r.openFavorites();},
+    result:()=>{for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}
+   })[k]();}''',extra)
    p.wait_for_timeout(1500);p.evaluate('document.fonts.ready');assert not p.evaluate("document.body.classList.contains('dev')"),'Production capture unexpectedly shows developer controls'
    state=p.evaluate("()=>({mode:__r.S.mode,chapter:__r.S.journey?.chapter,dev:document.body.classList.contains('dev'),audio:__r.ac?.state||'none',width:innerWidth,height:innerHeight})")
    assert not errors,errors

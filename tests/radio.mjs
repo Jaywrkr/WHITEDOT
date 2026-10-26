@@ -119,5 +119,18 @@ try {
   runtime.S.mode = 'studio';
   runtime.S.studio.slots = {}; runtime.ac.currentTime += runtime.SIX+.2; schedule();
   assert.equal(runtime.MU.radio, null, 'radio leaked into sequencer');
+  // The actual scheduler must not give timestamp-based renderers a future hit.
+  const timer=setTimeout,realNow=performance.now.bind(performance);let ms=1000,pending=[];
+  try{performance.now=()=>ms;globalThis.setTimeout=(fn,delay)=>{pending.push({fn,at:ms+delay});return pending.length;};
+   const flush=at=>{ms=at;for(const item of pending.filter(p=>p.at<=ms))item.fn();pending=pending.filter(p=>p.at>ms);};
+   for(const kind of ['flower','studio']){ms=1000;pending=[];runtime.ac.outputLatency=.18;runtime.MU.step=Math.ceil(runtime.MU.step/16)*16;runtime.MU.next=runtime.ac.currentTime+.1;
+    let get;if(kind==='flower'){const f={n:0,st:0,x:900,y:900};runtime.S.mode='world';runtime.MU.flowers=[f];get=()=>f.hit;}
+    else{runtime.S.mode='studio';runtime.S.studio.slots={'0,0':'luz'};runtime.studioHit={};runtime.playSample=()=>{};get=()=>runtime.studioHit['0,0'];}
+    schedule();assert.equal(get(),undefined,kind+' does not glow when merely scheduled');
+    flush(1279);assert.equal(get(),undefined,kind+' does not glow before audible time');
+    flush(1280);assert.equal(get(),1280,kind+' lights at the estimated audible output');
+    assert.equal(Math.max(0,1-(ms-get())/400),1,'renderer receives a present timestamp');
+   }
+  }finally{globalThis.setTimeout=timer;performance.now=realNow;runtime.ac.outputLatency=0;}
 } finally { globalThis.setInterval = interval; }
 console.log('PASS: '+Object.keys(runtime.GEN).length+' genres evolve at rest, environment affects composition, real scheduler plays without movement, path/studio remain separate');
