@@ -16,7 +16,7 @@ try:
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?lugar=jardin');page.wait_for_function("!!window.__r?.places&&__r.places().run?.id==='jardin'",timeout=20000)
   page.evaluate("()=>{__r.S.sound=true;__r.audio();}");page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=20000)
-  base=page.evaluate('({gain:__r.outputStage.headroom.gain.value,filter:__r.fx.lp.frequency.value})');ms=page.evaluate("__r.journeyVictory('jardin')");six=page.evaluate('__r.SIX');assert 0<=ms/1000-32*six<=16*six+.001,(ms,six)
+  base=page.evaluate('({gain:__r.outputStage.headroom.gain.value,filter:__r.fx.lp.frequency.value})');ms=page.evaluate("__r.journeyVictory('jardin')");six=page.evaluate('__r.SIX');lat=page.evaluate("import('/src/journey-pulse.js').then(m=>m.lightLatency(__r.ac))");assert 0<=ms/1000-lat-32*six<=16*six+.001,(ms,six,lat)  # P5: the end is the heard end, after the output latency
   steps=page.evaluate("__r.MU.step");seen=page.evaluate(WATCH)
   last=seen[-1];assert last['played']==32,('the sequencer drove all 32 sixteenths of the drop',last)
   # Each bar's layer took the chord the world was playing as that bar began.
