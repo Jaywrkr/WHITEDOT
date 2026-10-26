@@ -101,3 +101,6 @@ El catálogo completo del PR354 detectó ocho recorridos con contratos anteriore
 - `sparks_economy_smoke.py`: etiqueta vigente «Otro paisaje ·20✦»; conserva coste, retorno gratuito, reintegro al fallar, compras y persistencia.
 
 Los ocho recorridos corregidos pasaron localmente con Chromium, uno por uno. El resultado remoto y el merge se registran al completar CI; este apartado no los da por aprobados.
+
+
+El primer CI de integración agotó los40 minutos de `audio (2)` (run40254494290), sin completar su catálogo. Se reparten las mismas59 pruebas de audio en seis grupos aislados en lugar de tres; se conserva cada render, su límite individual y el agregador obligatorio. Se comprobó que cada prueba queda asignada exactamente una vez. No se cambian generación musical, aserciones ni umbrales.
