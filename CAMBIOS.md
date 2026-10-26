@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
 
+## Panel9 · evaluación de alpha.200 integrada
+
+Diez revisores nuevos y16 capturas actuales. Nota provisional7,6; audio técnico y sensación sin aceptación física. Se conservan todas las notas anteriores y su distinto alcance. Se reproducen redondeo de porcentaje/cronómetro en resultados y se verifica sincronía visual residual. Solo documentación y evidencia; no cambia música, mundos, progreso ni versión. [Informe](docs/panel/sesion-9/informe.md).
+
 ## Integración de alpha.200
 
 Jay autoriza incorporar a main la pila completa de23 commits hasta `2048e245`, mediante una sola integración. El catálogo de audio pasa de tres a seis grupos aislados tras agotar40 minutos: conserva todas sus59 pruebas. Se conserva el runtime ya entregado; se actualizan estado y traspaso. El catálogo completo detectó ocho pruebas antiguas: se ajustan a recompensas K2, ayudas explícitas, menú compacto, guía/teletransporte por lugar, poderes combinados y la etiqueta «Otro paisaje», conservando sus comprobaciones funcionales. CI completo del PR354 aprobado y merge realizado. [Registro](docs/INTEGRACION_ALPHA_200.md). La aceptación con personas sigue pendiente.

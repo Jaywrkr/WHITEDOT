@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. **Candidato vigente: [fases N, alpha.200](panel/candidato-n/informe.md).** Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Nueve por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
+Guía para repetir la auditoría. **Evaluación vigente: [sesión9, alpha.200 integrada](panel/sesion-9/informe.md),7,6 provisional.** [Candidato técnico N](panel/candidato-n/informe.md). Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Nueve por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
 
 La revisión ciega del usuario prevalece sobre las comparaciones históricas del procedimiento de abajo: primero puntuar sin notas anteriores; después cruzar hallazgos con el registro para conservar IDs. El coordinador conserva contexto operativo, los revisores no lo heredan. No se borra el historial del proyecto ni progreso de jugadores.
 
@@ -179,3 +179,8 @@ Jay autorizó L1–L4 después de K7. [Entrega](ENTREGA_L.md) y [evidencia](pane
 Durante una evaluación ciega, el coordinador retiene el contexto operativo. A los revisores se entrega AGENTS, las fuentes seleccionadas y artefactos sin puntuaciones/metas. README, HANDOFF, esta guía y las entregas contienen notas históricas: excluirlos del recorte ciego por la petición vigente del usuario. Conservar historial del proyecto y progreso; no borrar memoria del juego.
 
 [Informe N](panel/candidato-n/informe.md): correcciones autorizadas,253 suites, evidencias de UI/transporte/mezcla y pendientes humanos. El dictamen ciego registra la revisión del momento y sus límites; no es aceptación de producción ni acreditación de nueve.
+
+
+## Novena sesión · después de integrar alpha.200
+
+[Informe y anteriores](panel/sesion-9/informe.md) · [expediente](panel/sesion-9/expediente.md) · [notas y cobertura](panel/sesion-9/evidencia/notas.json). Diez revisores nuevos;16 capturas actuales; CI ya aprobado reutilizado.7,6 provisional, sin escucha ni aceptación humana. Se documentan dos errores de presentación reproducidos y sincronía visual residual; no se cambia el runtime ni se abren fases automáticamente.
