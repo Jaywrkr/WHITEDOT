@@ -772,7 +772,7 @@
       "id": "S02",
       "area": "Respuesta táctil",
       "priority": "P1",
-      "status": "verificado-propuesto-sin-implementar",
+      "status": "integrado-validacion-fisica-pendiente",
       "phase": "M3",
       "title": "Juicio en apoyo y despacho al soltar el dedo",
       "evidence": [
@@ -780,7 +780,17 @@
         "../sesion-8/informe.md"
       ],
       "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
-      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N2",
+        "version": "alpha.194",
+        "tests": [
+          "tests/touch_precision_smoke.py",
+          "tests/pulse-output-timing.mjs",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Pulso explícito sobre cubo inmediato. Vacío conserva acierto musical sin anunciar avance. Toque fuera espera confirmación; latencia acústica/Bluetooth y comprensión pendientes."
+      }
     },
     {
       "id": "A06",
@@ -874,7 +884,7 @@
       "id": "S03",
       "area": "Regla de Vacío",
       "priority": "P2",
-      "status": "verificado-propuesto-sin-implementar",
+      "status": "integrado-validacion-fisica-pendiente",
       "phase": "M2",
       "title": "Acierto premiado en tiempos donde el juego espera",
       "evidence": [
@@ -882,13 +892,23 @@
         "../sesion-8/informe.md"
       ],
       "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
-      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N2",
+        "version": "alpha.194",
+        "tests": [
+          "tests/touch_precision_smoke.py",
+          "tests/pulse-output-timing.mjs",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Pulso explícito sobre cubo inmediato. Vacío conserva acierto musical sin anunciar avance. Toque fuera espera confirmación; latencia acústica/Bluetooth y comprensión pendientes."
+      }
     },
     {
       "id": "S04",
       "area": "Reloj audiovisual",
       "priority": "P2",
-      "status": "verificado-propuesto-sin-implementar",
+      "status": "integrado-validacion-fisica-pendiente",
       "phase": "M3",
       "title": "Luces de ecos y objetos no aplican la misma referencia audible",
       "evidence": [
@@ -896,7 +916,17 @@
         "../sesion-8/informe.md"
       ],
       "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
-      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N2",
+        "version": "alpha.194",
+        "tests": [
+          "tests/touch_precision_smoke.py",
+          "tests/pulse-output-timing.mjs",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Pulso explícito sobre cubo inmediato. Vacío conserva acierto musical sin anunciar avance. Toque fuera espera confirmación; latencia acústica/Bluetooth y comprensión pendientes."
+      }
     },
     {
       "id": "U17",

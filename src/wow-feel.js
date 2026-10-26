@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
@@ -38,7 +39,7 @@ export function initialize(runtime){
    seenBeams.add(be);memory.push({x1:be.x1,y1:be.y1,x2:be.x2,y2:be.y2,at:seconds,ink:runtime.musicInk?.({x:be.x1,y:be.y1},'acorde')||'#bddbe0'});
   }memory=memory.slice(-8);
   ripples=ripples.filter(p=>seconds-p.at<.55);flashes=flashes.filter(p=>seconds-p.at<.45);
-  const audioNow=runtime.ac?.currentTime;
+  const audioNow=runtime.ac?audibleTime(runtime.ac):undefined;
   const ready=pending.filter(p=>p.at<=audioNow);pending=pending.filter(p=>p.at>audioNow);
   for(const note of ready){
    if(audioNow-note.at>.3||note.owner!==runtime.S||note.layer!==runtime.S.layer)continue;

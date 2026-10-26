@@ -21,7 +21,7 @@ export function rememberVoice(state,text,title,context={}){
 export function guideLesson(runtime){
  const round=runtime.placeRun?.(),chapter=round?null:runtime.journeyChapter?.();
  const id=round?.id||(!runtime.S.journey?.finished&&runtime.journeyQuiet?.()?chapter?.id:null);
- if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Acércate al siguiente cristal y toca a tiempo.'};
+ if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Toca el cubo. Arrastra el vacío para moverte.'};
  const steps=PLACE_LESSONS[id];if(!steps)return null;
  const progress=runtime.journeyGameProgress?.(id)||0,done=!round&&chapter?.done?.[id];
  const hint=done?'Cruza el portal dorado para continuar.':progress>=1?steps[2]:id==='vacio'&&runtime.journeyRelease?.().stars?'Deja espacio entre estrellas. Espera el primer golpe.':steps[0];

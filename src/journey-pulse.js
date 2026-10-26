@@ -24,6 +24,7 @@ export const approach=(step,now)=>{const ahead=((step-now)%16+16)%16;return ahea
 export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isFinite)?Math.max(0,Math.round((beat+latency-now)*1000)):0;
 // Same scheduling rule the pulse already uses; visuals follow the emitted note, not a past judged beat.
 export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
+export const audibleTime=ac=>(ac?.currentTime||0)-outputLatency(ac);
 export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatency||0);return Number.isFinite(v)?Math.max(0,Math.min(.4,v)):0;};
 // The moment the player heard, on the audio clock: when the finger touched (atMs, from performance.now(); a tap is
 // judged when the finger goes down, not when it lifts) minus the output latency, because the player answers what
@@ -54,14 +55,14 @@ export function initialize(runtime){
  function scheduleLanding(time){const f=lastLanding;if(!f)return;if(f.timer!==undefined){clearTimeout(f.timer);pending.delete(f.timer);}
   const ac=runtime.ac,wait=runtime.S.sound&&ac?landDelay(time,ac.currentTime,outputLatency(ac)):0;state.landIn=wait;f.due=performance.now()+wait;
   const land=()=>{pending.delete(f.timer);if(f.epoch!==epoch||f.owner!==runtime.S||f.mode!==runtime.S.mode||f.layer!==runtime.S.layer||globalThis.document?.hidden||openSurface('.modal:not([hidden])')||performance.now()-f.due>150||runtime.S.sound&&runtime.ac?.state&&runtime.ac.state!=='running')return;
-   vibrate(f.phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
+   if(f.waiting)return;vibrate(f.phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
   if(wait>0){f.timer=setTimeout(land,wait);pending.add(f.timer);if(pending.size>12){const first=pending.values().next().value;clearTimeout(first);pending.delete(first);}}else land();
  }
  function scaleNow(){const MU=runtime.MU||{};return {scale:MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr:MU.tr||0};}
  // The Line's cursor follows what is heard: the audio clock minus the output latency.
  // The step of the bar at a time on the audio clock, from the steps the music scheduled.
  function stepAt(time){const sq=runtime.MU?.sq;if(!sq?.length)return 0;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last)return sq[0].s%16;return (last.s+Math.min(.99,Math.max(0,time-last.t)/(runtime.SIX||.15)))%16;}
- function stepNow(){const ac=runtime.ac;if(!ac)return 0;return stepAt(ac.currentTime-outputLatency(ac));}
+ function stepNow(){const ac=runtime.ac;if(!ac)return 0;return stepAt(audibleTime(ac));}
  // Judge one player pulse touched at atMs (performance.now(); defaults to now). Returns whether it was on time; never
  // blocks the pulse itself. On time, state.midi is the theme note to play and state.beat the beat it answers.
  function judge(atMs){
@@ -81,10 +82,11 @@ export function initialize(runtime){
   if(ac&&!silent&&!runtime.rhythmSinging?.()&&(!own?.hit||own.hit.step%4===0)){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
   const played=on?(()=>{const [degree]=THEME[state.next],{scale,tr}=scaleNow();return {degree,scale,tr,midi:themePitch(degree,scale,tr)};})():null;
-  runtime.journeyGamePulse?.(on,{midi:played?.midi,step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
+  const action=runtime.journeyGamePulse?.(on,{midi:played?.midi,step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
+  state.action=action||null;const waiting=action==='wait'||action==='crowded';marks[marks.length-1].waiting=waiting;
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);
-  if(!silent){form=formStep(form,on);formAt=performance.now();}
+  if(!silent&&!waiting){form=formStep(form,on);formAt=performance.now();}
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const {degree,scale,tr,midi}=played;state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
@@ -92,7 +94,7 @@ export function initialize(runtime){
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
   // The cube glows gold for a beat on every hit, the phone vibrates where it can and the cube punches (plan H1). Plan
   // I3: all of it lands when the note is heard, not when the finger touched, so light, touch and sound are one instant.
-  lastLanding={owner:runtime.S,mode:runtime.S.mode,layer:runtime.S.layer,phrase:state.next===0,epoch};
+  lastLanding={owner:runtime.S,mode:runtime.S.mode,layer:runtime.S.layer,phrase:state.next===0,waiting,epoch};
   scheduleLanding(ac?pulseNoteTime(ac.currentTime,state.beat):0);
   return true;}
  // A pulse the finger sent too soon after the last one: a faint grey mark, so a touch never vanishes unseen.
@@ -108,7 +110,7 @@ export function initialize(runtime){
   const now16=stepNow();
   for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.45+.45*lit+.45*come:(i%4?.14:.25));c.fillStyle=one?(runtime.GOLD||'#f0d27a'):'#fff';const hgt=on?5+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,on?2:1,hgt);}
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.8;c.fillStyle=runtime.GOLD||'#f0d27a';c.fillRect(Math.round(cx)-1,y-3,2,6);
-  for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);c.stroke();}
+  for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on&&!m.waiting?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);c.stroke();}
   c.restore();}
  // The cube's form around it: corners, then a diamond, then a gold double frame that turns. Drawn over the cube.
  function drawForm(c,x,y,s,t){if(!form.level||!(runtime.inWorld?.()||runtime.S.mode==='camino'))return;const gold=runtime.GOLD||'#f0d27a',still=calm(),fresh=Math.max(0,1-(performance.now()-formAt)/400),r=s/2+6;c.save();c.lineWidth=1.5;

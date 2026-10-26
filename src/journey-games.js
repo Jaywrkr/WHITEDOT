@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {calmMotion} from './frame-state.js';
 // The Journey's chapter games (Jay's decision of 23 October): every chapter keeps one rule, only a pulse on time does
 // something, and adds one verb of its own: stick in the Llanura, chain in the Lago, and so on (docs/VIAJE.md). Each
@@ -5,7 +6,7 @@ import {calmMotion} from './frame-state.js';
 // prototypes, «?clasico=1» (or the older «?faro=1») keeps the previous chapters to compare.
 export const classicJourney=(search=globalThis.location?.search)=>/[?&](faro|clasico)=1\b/.test(search||'');
 // How much the beat is sounding now, 1 on the beat fading to 0 over two sixteenths: what things breathe with.
-export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=runtime.ac.currentTime;let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
+export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=audibleTime(runtime.ac);let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
 export const worldCamera=runtime=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
 // A lesson is learned only after its notice was actually presented, never while merely queued.
 const lessonTickets=new WeakMap();

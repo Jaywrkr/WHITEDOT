@@ -219,3 +219,7 @@ El final explica cinco lugares completos y seis nuevos. Explorar a pie sale del 
 El final interpreta las notas sobre el acorde, en registro52–76, sin duplicación aguda. Se sustituyen solo aquí bajo cuadrado, ácido y pad de sierra por voces suaves existentes y percusión contenida. Se conserva el ritmo de la frase y sus datos guardados; hay huecos entre notas y envolvente de salida. Radio, síntesis, final11 y mundos intactos. Escucha agradable pendiente de Jay: los renders no la certifican.
 
 Esperar al final, omitirlo y pulsar Explorar abren Mundo libre y rumbo a Jardín. No se salta al portal ni se cobra. Festival espera a Otra persona. Un fallo al guardar mantiene el cierre visible para reintentar.
+
+## Precisión N2
+
+Tocar el área del cubo (48px de alcance táctil, dibujo pequeño intacto) emite al apoyar. Arrastrar o mantener en el vacío conserva movimiento/escáner; un toque breve allí se confirma al soltar. El modo dedo conserva su edición directa. En Vacío un golpe musical válido puede esperar al primer tiempo o necesitar espacio: marca blanca, sin anunciar progreso dorado. No se amplía la ventana de acierto.

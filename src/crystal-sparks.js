@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
@@ -35,7 +36,7 @@ export function initialize(runtime){
  // sees it was touched and learns it wants the beat. Crystals there also brighten on every beat.
  const missed=new Map();let misses=0;
  function miss(o,wave){let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))return;hits.add(o.id);if(wave.spent||sites.get(o.id)?.broken)return;missed.set(o.id,seconds+.3);misses++;}
- function beatGlow(){if(!journeyPath()||!timed()||reduced()||!runtime.ac||!runtime.MU?.bq?.length)return 0;const ac=runtime.ac,bq=runtime.MU.bq;let last=-Infinity;for(const b of bq)if(b<=ac.currentTime)last=Math.max(last,b);return Math.max(0,1-(ac.currentTime-last)/((runtime.SIX||.15)*2));}
+ function beatGlow(){if(!journeyPath()||!timed()||reduced()||!runtime.ac||!runtime.MU?.bq?.length)return 0;const ac=runtime.ac,bq=runtime.MU.bq;let last=-Infinity;for(const b of bq)if(b<=audibleTime(ac))last=Math.max(last,b);return Math.max(0,1-(audibleTime(ac)-last)/((runtime.SIX||.15)*2));}
  function ensure(){
   const key=JSON.stringify(runtime.worldIdentity||{})+':'+S().todayKey;
   if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;chains=[];feedback=[];owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}

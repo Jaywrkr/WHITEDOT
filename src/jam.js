@@ -1,3 +1,4 @@
+import {landDelay,outputLatency} from './journey-pulse.js';
 import {WORLD_VISUAL,jamHudTop} from './visual.js';
 // Hacer música en un lugar: looper de ecos y banda de criaturas (estilo Incredibox).
 // - Looper: el botón ⟳ graba 2 compases de lo que TÚ haces sonar (pulsos, toques, luces) y lo deja
@@ -92,7 +93,7 @@ export function initialize(runtime){
   for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;const d=Math.hypot(e.x-st.wx,e.y-st.wy);if(d>900)continue;const idx=((step-e.start)%LOOP_STEPS+LOOP_STEPS)%LOOP_STEPS;
    for(const ev of e.events){if(ev.step!==idx)continue;const region=ev.region;if(!region)continue;
     loop.replaying=true;try{runtime.playVoice(ev.kind,ev.index,t,region,ev.full,ev.volume,{...ev.source,x:e.x,y:e.y},"echo");}finally{loop.replaying=false;}
-    setTimeout(()=>{e.lit=1;},Math.max(0,(t-runtime.ac.currentTime)*1000));}}
+    setTimeout(()=>{e.lit=1;},landDelay(t,runtime.ac.currentTime,outputLatency(runtime.ac)));}}
  }
 
  // ---------- banda ----------
@@ -120,7 +121,7 @@ export function initialize(runtime){
   if(list.length===4)MU().E=Math.max(MU().E,.7);
   for(const x of list){const h=bandHits(x.slot,s,bar,x.sp.motif||[0,2,4]);if(!h)continue;
    runtime.playVoice('forma:'+x.sp.id,(x.sp.deg||0)+h[0],t,x.region,!!h[2],h[1]*(x.personality?.volume||1),x,"band");
-   setTimeout(()=>{x.lit=1;},Math.max(0,(t-runtime.ac.currentTime)*1000));}
+   setTimeout(()=>{x.lit=1;},landDelay(t,runtime.ac.currentTime,outputLatency(runtime.ac)));}
  }
 
  // ---------- dibujo ----------

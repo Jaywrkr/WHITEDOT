@@ -65,7 +65,7 @@ export function initialize(runtime){
   for(let i=0;i<left;i++){const a=hashKey('release:'+i)*6.283+(still?0:t/2400),d=ring*(.7+.3*hashKey('release:d'+i));c.globalAlpha=.9;c.fillStyle=i%3?'#ffffff':gold;c.fillRect(Math.round(cx+Math.cos(a)*d)-1.5,Math.round(cy+Math.sin(a)*d)-1.5,3,3);}
   for(let i=rising.length-1;i>=0;i--){const r=rising[i],k=(now-r.at)/900;if(k>=1){rising.splice(i,1);continue;}const e=1-(1-k)*(1-k),x=sx(r.from.x+(r.to.x-r.from.x)*e),y=sy(r.from.y+(r.to.y-r.from.y)*e);c.globalAlpha=1;c.fillStyle=gold;c.fillRect(Math.round(x)-2,Math.round(y)-2,4,4);}
   // A pulse on another beat makes a gold ring wait around the cube: the «1» is on the Line (plan H2, one guide).
-  if(!done()&&now-early<450){c.globalAlpha=1-(now-early)/450;c.strokeStyle=gold;c.lineWidth=1.5;c.beginPath();c.arc(cx,cy,14+14*(now-early)/450,0,6.283);c.stroke();}
+  if(!done()&&now-early<450){c.globalAlpha=1-(now-early)/450;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(cx,cy,14+14*(now-early)/450,0,6.283);c.stroke();}
   if(crowded&&now-crowded.at<700){const k=(now-crowded.at)/700;c.globalAlpha=1-k;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sx(crowded.star.x),sy(crowded.star.y),8+k*30,0,6.283);c.stroke();}
   if(shiver>0&&!still){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
   c.restore();}

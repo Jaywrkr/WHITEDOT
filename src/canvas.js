@@ -17,7 +17,7 @@ export function initialize(runtime) {
     if(e.code==='Space'&&!e.repeat){e.preventDefault();runtime.sonar();}
   });
   addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=0;});
-  let holdTimer=null,activePointer=null,dragging=false,held=false;
+  let holdTimer=null,activePointer=null,dragging=false,held=false,directPulse=false;
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
   // El juego escucha toda la pantalla: un arrastre que empieza sobre textos del HUD o la Voz también mueve al pixel.
   // Solo se excluyen botones, paneles abiertos y el Estudio.
@@ -34,9 +34,12 @@ export function initialize(runtime) {
     if(!fromOverlay&&runtime.housePointerDown?.(e))return;
     if(!fromOverlay&&runtime.fingerTouch&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.materiaPointerDown?.(e)||runtime.vidaPointerDown?.(e)||runtime.mirrorPointerDown?.(e)||runtime.depthDown?.(e)||runtime.encounterDown?.(e)||runtime.ecologyDown?.(e)||runtime.creativePointerDown?.(e)))return;
     if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
-    activePointer=e.pointerId;dragging=held=false;
+    activePointer=e.pointerId;dragging=held=directPulse=false;
     runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
-    if(runtime.inWorld()&&!fromOverlay)holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
+    // The cube is an explicit instrument. Empty space keeps drag/hold ambiguity until release.
+    const x=W/2+(runtime.inWorld()?runtime.S.wx-(runtime.camX??runtime.S.wx):0),y=H/2+(runtime.inWorld()?runtime.S.wy-(runtime.camY??runtime.S.wy):0);
+    if(!fromOverlay&&!runtime.fingerTouch&&(runtime.inWorld()||runtime.S.mode==='camino')&&Math.hypot(e.clientX-x,e.clientY-y)<=24&&!openSurface('.modal:not([hidden])')){directPulse=true;runtime.sonar('player',runtime.tapStart.t);}
+    if(runtime.inWorld()&&!fromOverlay&&!directPulse)holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{
@@ -58,8 +61,8 @@ export function initialize(runtime) {
     if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<450&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar('player',runtime.tapStart.t);}   // sin modo dedo, un toque siempre es el pulso del cubo
-    runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
+    if(e.type==="pointerup"&&!held&&!dragging&&!directPulse&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<450&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar('player',runtime.tapStart.t);}   // sin modo dedo, un toque siempre es el pulso del cubo
+    runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=directPulse=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
   cv.addEventListener("contextmenu",e=>e.preventDefault());
