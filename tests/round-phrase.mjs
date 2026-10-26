@@ -16,5 +16,6 @@ try{
  failed=false;assert(r.placeFinish('lago'));assert.equal(r.S.lugares.notes.lago.length,1);assert.deepEqual(r.S.lugares.notes.lago,r.journeyPulseState().notes.slice(-1));
  const kept=[...r.S.lugares.notes.lago];assert(r.startPlace('lago'));r.placeHear('lago',false,{midi:80,step:0});r.placeFinish('lago');assert.deepEqual(r.S.lugares.notes.lago,kept,'no valid new notes retains the old phrase');
  assert(r.startPlace('lago'));for(let i=0;i<20;i++)r.placeHear('lago',true,{midi:60+i,step:i%16});assert.equal(r.S.lugares.run.notes.length,8);r.placeFinish('lago');assert.deepEqual(r.S.lugares.notes.lago,[72,73,74,75,76,77,78,79]);
+ assert(r.startPlace('lago',{from:{x:-50,y:20}}));const active=r.S.lugares.run,playing=r.S.journey.chain;r.S.wx=123;r.S.wy=456;failed=true;assert.equal(r.abandonPlace(),false);assert.equal(r.S.lugares.run,active);assert.equal(r.S.journey.chain,playing);assert.deepEqual([r.S.wx,r.S.wy],[123,456]);failed=false;assert(r.abandonPlace());assert.equal(r.placeRun(),null);assert.deepEqual([r.S.wx,r.S.wy],[-50,20]);
  console.log('PASS round phrases: global history excluded, actual closing note included, second round isolated, failed save retry and eight-note bound');
 }finally{globalThis.setTimeout=old;performance.now=realNow;}

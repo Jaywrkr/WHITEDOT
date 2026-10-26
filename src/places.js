@@ -118,7 +118,9 @@ export function initialize(runtime){
   const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id],s.noteTicks?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id],before.lugares.noteTicks?.[id]])?'changed':'kept':null;
   const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(()=>{if(shown===result&&!run())results();},1200);return true;}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
- function abandon(){const s=own();if(!s.run)return false;const from=s.run.from;restore(s.run);s.run=null;back(from);runtime.narrate?.('abandon');runtime.save?.();runtime.hud?.();return true;}
+ function abandon(){const s=own(),r=s.run;if(!r||s.readOnly)return false;const key=gameKey(r.id),playing=runtime.S.journey?.[key],position={wx:runtime.S.wx,wy:runtime.S.wy},tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;restore(r);s.run=null;back(r.from);
+  if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
+  runtime.narrate?.('abandon');runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
  function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=Math.round(r.onTime*100),mm=Math.floor(r.ms/60000),ss=String(Math.round(r.ms/1000)%60).padStart(2,'0');
   runtime.$('placeTitle').textContent=r.maestro?'Maestro':r.remix?'Remezcla':'Completo';

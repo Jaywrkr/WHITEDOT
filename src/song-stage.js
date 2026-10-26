@@ -84,7 +84,7 @@ export function initialize(runtime){
   const first=run.start===null;if(first){if(s!==0)return;run.start=t;}
   const six=runtime.SIX||.15,delta=first?0:Number.isSafeInteger(tick)&&Number.isSafeInteger(run.lastTick)&&tick>run.lastTick?tick-run.lastTick:(s-run.lastStep+16)%16||16,k=first?0:run.k+delta;
   run.lastTime=t;run.lastStep=s;run.lastTick=tick;run.k=k;(run.clock||=[]).push({k,t,six});if(run.clock.length>128)run.clock.shift();
-  if(k>=run.plan.bars*16){if(run.preview){release(run);run=null;}else run.done=true;return;}
+  if(k>=run.plan.bars*16){if(run.pauseScheduled&&!run.resumeScheduled){run.resumeScheduled=true;runtime.restoreSongMix?.(t);}if(run.preview){release(run);run=null;}else run.done=true;return;}
   if(run.final&&!run.pauseScheduled&&k>=run.plan.silenceAt*16&&k<run.plan.themeAt*16){run.pauseScheduled=true;runtime.silenceSongMix?.(t);}
   if(run.pauseScheduled&&!run.resumeScheduled&&k>=run.plan.themeAt*16){run.resumeScheduled=true;runtime.restoreSongMix?.(t);}
   if(!run.out)return;const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,chord=runtime.chordTones?.()||[57,60,64];

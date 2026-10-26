@@ -2,7 +2,7 @@ import {openSurface,calmMotion} from './frame-state.js';
 import {installNoticeLane} from './notice-lane.js';
 import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
-import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility,learnCardEncounter,commitCardTechnique,CARD_TECHNIQUES} from './rare-card-model.js';
+import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility,learnCardEncounter,chooseCardTechnique,sourceCardTechnique,cardLearning,CARD_TECHNIQUES} from './rare-card-model.js';
 import {rarePortrait} from './rare-card-art.js';
 import {relicAt} from './relics.js';
 import {encodePlace} from './share-tools.js';
@@ -74,18 +74,18 @@ export function initialize(runtime){
   else if(queue.length){lane.request('rare',{level:2});if(lane.claim('rare'))reveal(queue.shift());}else lane.cancel('rare');
  }
  function cardHTML(card,index){
-  const ability=cardAbility(card),context=[{contacto:'Contacto',quietud:'Quietud',orbita:'Órbita',presion:'Permanencia'}[card.context?.gesture],card.context?.phase,card.context?.weather].filter(v=>typeof v==='string'&&v);const power=card.type.startsWith('box:')?POWERS[card.type.slice(4)]:null;const powerInfo=power?'<p>'+escape(power.text)+'</p><p>'+power.seconds+' s por caja · sin acumulación</p>':'';
+  const ability=cardAbility(card),learning=cardLearning(card),context=[{contacto:'Contacto',quietud:'Quietud',orbita:'Órbita',presion:'Permanencia'}[card.context?.gesture],card.context?.phase,card.context?.weather].filter(v=>typeof v==='string'&&v);const power=card.type.startsWith('box:')?POWERS[card.type.slice(4)]:null;const powerInfo=power?'<p>'+escape(power.text)+'</p><p>'+power.seconds+' s por caja · sin acumulación</p>':'';
   const def=rareDefinition(card.type),tier=CARD_TIERS[card.odds.tier],address=card.address,canReturn=address&&sameWorld(address,runtime.worldIdentity),serial=cardSerial(card.id);
   const date=card.firstSeen?new Intl.DateTimeFormat('es-EC',{day:'numeric',month:'short',year:'numeric'}).format(new Date(card.firstSeen)):card.day||'Fecha original no registrada';
   return `<article class="rare-card" tabindex="-1" data-card-id="${escape(card.id)}" style="--rare-ink:${tier.ink}"><header><span>${escape(card.forced?'Laboratorio':tier.name)}</span><small>#${serial}</small></header>
-   <div class="rare-portrait">${rarePortrait(card)}</div><h3>${escape(card.name)}</h3><div class="card-ability"><b>${escape(ability.name)}</b><span>${escape(ability.text)}</span></div><div class="rare-primary-actions"><button data-garden-add="${index}">Añadir al jardín</button><button data-atlas-start="${index}">Buscar una voz complementaria</button></div><details class="rare-card-details"><summary>Lugar, historia y uso</summary><p class="rare-flavour">${escape(def.text)}</p>
+   <div class="rare-portrait">${rarePortrait(card)}</div><h3>${escape(card.name)}</h3><div class="card-ability"><b>${escape(ability.name)}</b><span>${escape(ability.text)}</span></div><div class="rare-primary-actions"><button data-garden-add="${index}">Añadir al jardín</button>${['transformacion','agudo'].includes(ability.role)?'<small>En el jardín aporta melodía.</small>':''}<button data-atlas-start="${index}">Buscar una voz complementaria</button></div><details class="rare-card-details"><summary>Lugar, historia y uso</summary><p class="rare-flavour">${escape(def.text)}</p>
    <div class="rare-odds"><b>${escape(rarityLabel(card.type,card.odds))}</b><small>Aparición teórica · ${card.type.startsWith('petbox:')?'de compañía, no de esta especie':'de este tipo'}</small></div>
    <p class="rare-location">${escape(location(card))}</p><p class="rare-biome">${escape([card.biome,runtime.GEN[card.genre]?.name||card.genre,date].filter(Boolean).join(' · '))}</p>
    <p class="rare-biome">Semilla ${escape(card.world.seed||'original')} · ${escape(card.world.layout)} · ${escape(card.address?.layer||'capa no registrada')}</p>
    ${context.length?'<p class="rare-biome">'+escape(context.join(' · '))+'</p>':''}${card.observations?.length?'<p class="rare-biome">'+card.observations.length+' observaciones posteriores</p>':''}
    ${card.forced?'<p class="rare-provenance">Muestra forzada; no demuestra un encuentro natural.</p>':''}${card.legacy?'<p class="rare-provenance">Recuperada del progreso anterior; sin hora original.</p>':''}
    <details><summary>Cómo de raro es</summary><p>${escape(card.odds.condition)}</p></details>
-   ${card.learning?.version===1?`<p class="rare-biome">${card.learning.contexts.length} encuentros distintos · ${card.learning.techniques.length} interpretaciones</p>${card.learning.techniques.length<2?'<small>Vuelve bajo otra luz o prueba otro gesto.</small>':''}<button data-rare-technique="${index}" ${card.learning.techniques.length<2?'disabled':''}>Interpretación · ${escape(CARD_TECHNIQUES[card.learning.selected]||'Natural')}</button>`:''}${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Encontrada en otra semilla.</p>'}`:''}
+   ${learning?`<p class="rare-biome">${learning.contexts.length} encuentros distintos · ${learning.techniques.length} interpretaciones</p>${learning.techniques.length<2?'<small>Vuelve bajo otra luz o prueba otro gesto.</small>':''}<button data-rare-technique="${index}" ${learning.techniques.length<2?'disabled':''}>Interpretación · ${escape(CARD_TECHNIQUES[learning.selected]||'Natural')}</button>`:''}${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Encontrada en otra semilla.</p>'}`:''}
   </details></article>`;
  }
  function cards(search=''){
@@ -108,7 +108,7 @@ export function initialize(runtime){
   const button=event.target.closest('button[data-rare-copy],button[data-rare-return],button[data-rare-page],button[data-rare-png],button[data-rare-technique]');if(!button||button.disabled)return;
   if(button.dataset.rarePage){const delta=Number(button.dataset.rarePage);if(![-1,1].includes(delta))return;page+=delta;runtime.refreshJournal?.();(document.querySelector('[data-rare-page="'+button.dataset.rarePage+'"]:not(:disabled)')||document.querySelector('[data-rare-page]:not(:disabled)'))?.focus();return;}
   const index=Number(button.dataset.rareCopy??button.dataset.rareReturn??button.dataset.rarePng??button.dataset.rareTechnique),book=ensure(),card=Number.isInteger(index)&&book.items[index];if(!card||book.readOnly)return;
-  if(button.dataset.rareTechnique!==undefined){const technique=commitCardTechnique(card,()=>runtime.save());if(technique)button.textContent='Interpretación · '+CARD_TECHNIQUES[technique];else runtime.toast?.('No se pudo guardar la interpretación.',{level:2});return;}
+  if(button.dataset.rareTechnique!==undefined){const technique=chooseCardTechnique(book,card,()=>runtime.save());if(technique)button.textContent='Interpretación · '+CARD_TECHNIQUES[technique];else runtime.toast?.('No se pudo guardar la interpretación.',{level:2});return;}
   if(button.dataset.rarePng!==undefined){await exportPNG(card);return;}if(!card.address)return;
   if(button.dataset.rareCopy!==undefined){
    const code=encodePlace(card.address,card.name);try{await navigator.clipboard.writeText(code);button.textContent='Copiado';}
@@ -127,5 +127,5 @@ export function initialize(runtime){
  runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta guarda el lugar.';
  runtime.ACH.push(['tarjeta1','Un hallazgo tiene memoria','Guardaste una tarjeta de un encuentro poco común.']);
  ensure();
- Object.defineProperties(runtime,{cardTechnique:{get:()=>source=>{if(!source?.id)return null;const b=ensure();if(b.readOnly)return null;const c=b.items.find(c=>c.sourceId===source.id&&sameWorld(c.world,runtime.worldIdentity));return c?.learning?.version===1&&Object.hasOwn(CARD_TECHNIQUES,c.learning.selected)?c.learning.selected:null;}},drawRareFinding:{get:()=>drawFinding},collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().readOnly?[]:ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});
+ Object.defineProperties(runtime,{cardTechnique:{get:()=>source=>{if(!source?.id)return null;const b=ensure();if(b.readOnly)return null;return sourceCardTechnique(b,source.id,runtime.worldIdentity);}},drawRareFinding:{get:()=>drawFinding},collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().readOnly?[]:ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});
 }

@@ -2,7 +2,7 @@
 
 Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.199**, fases N en ramas encadenadas ([estado](HANDOFF.md)). No está publicado en tiendas.
+Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.200**, fases N en ramas encadenadas ([estado](HANDOFF.md)). No está publicado en tiendas.
 
 ## Empezar aquí
 
@@ -10,7 +10,7 @@ Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, e
 |---|---|
 | Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
 | Ver las fases N | [Entrega](docs/ENTREGA_N.md) |
-| Revisar la auditoría actual | [Panel 8 ciego](docs/panel/sesion-8/informe.md) y [propuestas](docs/panel/sesion-8/plan.md) |
+| Revisar el candidato actual | [Cierre N](docs/panel/candidato-n/informe.md) y [dictamen ciego](docs/panel/candidato-n/revision-ciega.md) |
 | Ver el cierre conservando música y mundos | [Entrega K1–K6](docs/CIERRE_K.md) y [auditoría](docs/panel/sesion-6/informe.md) |
 | Repetir la auditoría del panel creativo | [docs/PANEL.md](docs/PANEL.md) |
 | Trabajar en el código | [AGENTS.md](AGENTS.md) y [Arquitectura](docs/ARQUITECTURA.md) |

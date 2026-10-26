@@ -1,0 +1,238 @@
+{
+  "revision": "c8b9194b7cc56f0a93e78b08cfa19b9c62c7a3a2",
+  "version": "2.3.0-alpha.200",
+  "runtimeDirty": true,
+  "runtimeDigest": "43d6e980286f48cc5fe226553ca2a3cf2d9188c36421e3e3dc1bcd72cd4e5f70",
+  "capturedAt": "2026-10-26T01:01:51.832917+00:00",
+  "viewport": [
+    390,
+    844
+  ],
+  "scope": "Local scripted fixtures; normal hostname gate and webdriver=false; no human or physical listening claims",
+  "captures": [
+    {
+      "file": "00-inicio.png",
+      "query": "",
+      "forcedPanel": null,
+      "state": {
+        "mode": "camino",
+        "chapter": 0,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "01-capitulo-llanura.png",
+      "query": "?capitulo=llanura",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 1,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "02-capitulo-lago.png",
+      "query": "?capitulo=lago",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 2,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "03-capitulo-bosque.png",
+      "query": "?capitulo=bosque",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 3,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "04-capitulo-tormenta.png",
+      "query": "?capitulo=tormenta",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 4,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "05-capitulo-vacio.png",
+      "query": "?capitulo=vacio",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 5,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "10-lugar-jardin.png",
+      "query": "?lugar=jardin",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "11-lugar-dunas.png",
+      "query": "?lugar=dunas",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "12-lugar-cristales.png",
+      "query": "?lugar=cristales",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "13-lugar-faros.png",
+      "query": "?lugar=faros",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "14-lugar-ruinas.png",
+      "query": "?lugar=ruinas",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "15-lugar-cueva.png",
+      "query": "?lugar=cueva",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "20-anillo.png",
+      "query": "?anillo=1",
+      "forcedPanel": null,
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "21-lugares.png",
+      "query": "?anillo=1",
+      "forcedPanel": "lugares",
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "22-cancion.png",
+      "query": "?anillo=1",
+      "forcedPanel": "song",
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "23-salvaje.png",
+      "query": "?anillo=1",
+      "forcedPanel": "wild",
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    }
+  ]
+}

@@ -26,11 +26,12 @@ export function initialize(runtime) {
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;
     if(!e.isPrimary||activePointer!==null||runtime.S.mode==="studio")return;
-    fromOverlay=true;start(e);
+    start(e,true);
   },true);
-  cv.addEventListener("pointerdown",e=>{fromOverlay=false;start(e);});
-  function start(e){
+  cv.addEventListener("pointerdown",e=>start(e));
+  function start(e,overlay=false){
     if(!e.isPrimary||activePointer!==null||runtime.depthEngaged||runtime.encounterEngaged||runtime.ecologyEngaged)return;
+    fromOverlay=overlay;
     if(!fromOverlay&&runtime.housePointerDown?.(e))return;
     if(!fromOverlay&&runtime.fingerTouch&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.materiaPointerDown?.(e)||runtime.vidaPointerDown?.(e)||runtime.mirrorPointerDown?.(e)||runtime.depthDown?.(e)||runtime.encounterDown?.(e)||runtime.ecologyDown?.(e)||runtime.creativePointerDown?.(e)))return;
     if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}

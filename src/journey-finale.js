@@ -50,6 +50,8 @@ export function finaleArrangement(score,context={scale:MAJOR,tr:0,six:.125}){con
  }
  // Bring each recalled note to the current chord, in a shared middle register. No automatic octave-up doubling.
  const voiced=(m,c)=>{let target=snapToScale(m,scale,tr);while(target<52)target+=12;while(target>76)target-=12;let best=target,far=Infinity;for(const tone of c.tones)for(let o=-2;o<=2;o++){const n=tone+12*o,d=Math.abs(n-target);if(n>=52&&n<=76&&(d<far||d===far&&n<best)){best=n;far=d;}}return best;};
+ // Both theme passes deliberately use the same middle-register interpretation (K7); the abstract score
+ // retains its historical fifth, not a promise to transpose the audible closing arrangement.
  let ti=0;for(let i=0;i<score.length;i++){const n=score[i],thematic=n.chapter==='refugio',raw=thematic?themePitch(THEME[ti++%THEME.length][0],scale,tr):n.midi,c=chord(Math.round(n.at/six)),next=score[i+1]?.at??length,seconds=Math.min(n.seconds??n.eighths*EIGHTH,next-n.at,length-n.at);
   if(seconds<=0)continue;events.push({what:thematic?'cello':'arp',midi:voiced(raw,c),len:Math.max(.1,seconds/six*.8),soft:true,at:n.at,layer:n.chapter,group:'phrase',level:thematic?.8:.9});}
  return events.sort((a,b)=>a.at-b.at);}

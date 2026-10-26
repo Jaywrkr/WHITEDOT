@@ -5,6 +5,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 const base=process.argv[2]||'04ae8bdd',git=(...args)=>execFileSync('git',args),old=p=>git('show',`${base}:${p}`).toString();
 const reviewed=new Set(['accessibility','favorites','notice-lane','places-ring','sparks','spark-rules','discovery','onboarding','onboarding-model','journey-finale','controls','interactions','journal','journey-chain','journey-chapters','journey-dance','journey-echo','journey-games','journey-garden','journey-guide','journey-lasso','journey-mode','journey-pulse','journey-rebuild','journey-release','journey-resonance','journey-stick','journey-surf','journey-victory','places','refugio-lugares','release-info','song-stage','song','ui','voice-guide'].map(p=>'src/'+p+'.js'));
+for(const name of ['journey-rhythm','audio','canvas','jam','wow-feel','crystal-sparks','house','rare-cards','rare-card-model','playtest'])reviewed.add('src/'+name+'.js'); // N integration; n-preservation additionally checks the exact audio changes.
 reviewed.add('styles/estilo-j.css'); // K4 changes UI layout only; world render/assets remain protected.
 const changed=git('diff','--name-only',base,'--','src','styles','assets').toString().trim().split('\n').filter(Boolean);for(const p of changed)assert(reviewed.has(p),`Unreviewed runtime/art change: ${p}`);
 const paths=git('ls-tree','-r','--name-only',base,'src','styles','assets').toString().trim().split('\n');let checked=0;const hash=createHash('sha256');

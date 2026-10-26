@@ -1,6 +1,12 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.192**. Las entradas describen su revisión, no certifican producción.
+Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
+
+## N8 · 2.3.0-alpha.200
+
+Candidato alpha.200 con revisión independiente, cierres de fallos reproducidos y preservación verificada. Corregidos multitáctil, pausa retenida tras salto, abandono fallido, interpretación de fuente compartida, lectura de aprendizaje incompleto y métricas de Camino/once rondas. No se certifica nueve ni producción sin evidencia humana y CI.
+
+Verificación: 253 suites Node; regresiones de táctil, tarjetas, métricas, foco, cuota y offline aprobadas. UI24 sin desbordamientos/objetivos<24px;16 capturas nuevas;186 renders de técnicas.311 archivos protegidos idénticos a la auditoría; voces/generadores conservados. Catálogo completo/CI, teléfono y personas pendientes.
 
 ## N7 · 2.3.0-alpha.199
 

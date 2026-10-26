@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. **Sesión vigente: [octava, ciega](panel/sesion-8/informe.md), alpha.192.** Cinco revisores nuevos con dos lentes cada uno, sin historial ni puntuaciones anteriores. Media provisional6,83; Audio técnico sin escucha. Hallazgos y propuestas documentados; runtime intacto. [Método](panel/sesion-8/expediente.md).
+Guía para repetir la auditoría. **Candidato vigente: [fases N, alpha.200](panel/candidato-n/informe.md).** Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Nueve por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
 
 La revisión ciega del usuario prevalece sobre las comparaciones históricas del procedimiento de abajo: primero puntuar sin notas anteriores; después cruzar hallazgos con el registro para conservar IDs. El coordinador conserva contexto operativo, los revisores no lo heredan. No se borra el historial del proyecto ni progreso de jugadores.
 
@@ -40,7 +40,7 @@ Seis ejes, del 0 al 10, con medios puntos:
 | Cohesión | Si todo sirve a una sola idea (tocar a tiempo) y a un solo arco |
 | Pulido | Errores, textos, menús, rendimiento y pruebas |
 
-La **media** de cada perfil es la media de sus seis notas. La fila del panel es la media de los diez. **Meta: 8,5 · 9 · 9 · 8,5 · 8,5 · 8,5 (media 8,7).**
+La **media** de cada perfil es la media de sus seis notas. La fila del panel es la media de los diez. **Meta vigente de Jay: nueve en cada categoría.** Escucha y uso reales deben acreditar las categorías sensoriales; no se promedian áreas no observadas para certificarla.
 
 ## 4. Historial
 
@@ -141,7 +141,7 @@ Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El 
 
 ## 10. Ciclo de cierre
 
-Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta orientativa sigue en 8,7, acompañada de candidato verde y aceptación humana; no hay garantía de un 10 simulado.
+Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta vigente es nueve en cada categoría, acompañada de candidato verde y aceptación humana; no se certifica mediante una nota simulada.
 
 ## 11. Archivo
 
@@ -172,3 +172,10 @@ Jay autorizó L1–L4 después de K7. [Entrega](ENTREGA_L.md) y [evidencia](pane
 ## Octava sesión · revisión ciega
 
 [Informe](panel/sesion-8/informe.md) · [expediente](panel/sesion-8/expediente.md) · [propuesta M1–M4](panel/sesion-8/plan.md). Diez lentes, rúbrica exigente y alcance por revisor. Categorías y promedio calculados desde notas independientes, sin comparación ni subida por versiones. No son opiniones reales ni escucha humana.
+
+
+## Revisión ciega y candidato N
+
+Durante una evaluación ciega, el coordinador retiene el contexto operativo. A los revisores se entrega AGENTS, las fuentes seleccionadas y artefactos sin puntuaciones/metas. README, HANDOFF, esta guía y las entregas contienen notas históricas: excluirlos del recorte ciego por la petición vigente del usuario. Conservar historial del proyecto y progreso; no borrar memoria del juego.
+
+[Informe N](panel/candidato-n/informe.md): correcciones autorizadas,253 suites, evidencias de UI/transporte/mezcla y pendientes humanos. El dictamen ciego registra la revisión del momento y sus límites; no es aceptación de producción ni acreditación de nueve.

@@ -994,6 +994,189 @@
         ],
         "limits": "Navegador en cinco tamaños; no teléfono físico."
       }
+    },
+    {
+      "id": "N01",
+      "area": "Fiabilidad",
+      "priority": "P1",
+      "title": "Final5 sin importación de reloj",
+      "phase": "N7",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.199",
+        "tests": [
+          "tests/journey_finale_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N02",
+      "area": "Frase propia",
+      "priority": "P1",
+      "title": "Tick real y época al reanudar",
+      "phase": "N7",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.199",
+        "tests": [
+          "tests/phrase-fidelity.mjs",
+          "tests/round_timing_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N03",
+      "area": "Transporte",
+      "priority": "P1",
+      "title": "Tempo variable no descarta pasos",
+      "phase": "N7",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.199",
+        "tests": [
+          "tests/song-transport.mjs"
+        ]
+      }
+    },
+    {
+      "id": "N04",
+      "area": "Observación",
+      "priority": "P2",
+      "title": "Baseline, Camino y once rondas",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/recorrido-observations.mjs",
+          "tests/playtest_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N05",
+      "area": "Colección",
+      "priority": "P2",
+      "title": "Aprendizaje incompleto abre el libro",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/card_inspect_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N06",
+      "area": "Colección",
+      "priority": "P2",
+      "title": "Última tarjeta elegida controla fuente compartida",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/card-technique-durability.mjs",
+          "tests/card_inspect_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N07",
+      "area": "Entrada",
+      "priority": "P2",
+      "title": "Segundo dedo no cambia intención del primero",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/touch_precision_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N08",
+      "area": "Audio",
+      "priority": "P2",
+      "title": "Salto del transporte libera pausa",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/song-transport.mjs"
+        ]
+      }
+    },
+    {
+      "id": "N09",
+      "area": "Interfaz",
+      "priority": "P2",
+      "title": "Función de tarjeta plena no se trunca",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/card_inspect_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N10",
+      "area": "Persistencia",
+      "priority": "P2",
+      "title": "Abandono fallido conserva intento",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/round-phrase.mjs"
+        ]
+      }
     }
   ]
 }

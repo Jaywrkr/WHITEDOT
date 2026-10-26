@@ -1,6 +1,6 @@
 # El Viaje
 
-**Vigente alpha.188:** el final5 es un arreglo local suave en su contexto; esperar, omitir y Explorar dejan al jugador en el Mundo libre con rumbo a Jardín. La casa queda voluntaria. K3/K5 y el diseño original de abajo describen revisiones anteriores; [cambios K7](panel/sesion-7/informe.md).
+**Vigente alpha.200:** el final5 es un arreglo local suave en su contexto; esperar, omitir y Explorar dejan al jugador en el Mundo libre con rumbo a Jardín. La casa queda voluntaria. K3/K5 y el diseño original de abajo describen revisiones anteriores; [cambios K7](panel/sesion-7/informe.md) y [correcciones N](panel/candidato-n/informe.md).
 
 Guía de diseño de la Fase 0 del panel creativo (22 de octubre de 2026). Jay aprobó seguir lo que el panel acordó: el juego principal es **el Viaje**, actualmente 15–20 minutos en 7 capítulos con un final, y después se abre **el Mundo libre** con todo lo que existe hoy. Esta guía fija la forma; cada fase siguiente la construye en su rama.
 

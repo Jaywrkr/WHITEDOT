@@ -7,3 +7,10 @@ assert.equal(commitCardTechnique(card,()=>true),'muted');assert.equal(card.learn
 const future={learning:{version:9,payload:'keep'}};assert.equal(commitCardTechnique(future,()=>{throw Error('must not write');}),null);assert.deepEqual(future,{learning:{version:9,payload:'keep'}});
 const old={learning:{version:1,techniques:['normal','muted']}};commitCardTechnique(old,()=>false);assert(!Object.hasOwn(old.learning,'selected'));
 console.log('PASS card technique: successful choice retained, failed/throwing writes restore exact selection, future format untouched');
+const {worldIdentity}=await import('../src/world-identity.js');
+const {makeRareCard,normalizeRareBook,cardLearning,chooseCardTechnique,sourceCardTechnique}=await import('../src/rare-card-model.js');
+const world=worldIdentity('choose','wide',2),first=makeRareCard({type:'living:bridge',sourceId:'shared',world,learning:{version:1,contexts:[],techniques:['normal','muted'],selected:'normal'}}),second=makeRareCard({...first,type:'living:study',learning:structuredClone(first.learning)}),book=normalizeRareBook({version:1,items:[first,second]});
+assert.equal(sourceCardTechnique(book,'shared',world),'normal');assert.equal(chooseCardTechnique(book,book.items[1],()=>true),'muted');assert.equal(sourceCardTechnique(book,'shared',world),'muted','last chosen encounter card controls the shared source');
+const snapshot=structuredClone(book);assert.equal(chooseCardTechnique(book,book.items[0],()=>false),null);assert.deepEqual(book,snapshot,'source ownership and technique roll back together');
+const malformed=makeRareCard({...first,learning:{version:1}}),keep=structuredClone(malformed);assert.deepEqual(cardLearning(malformed),{contexts:[],techniques:[],selected:'normal'});assert.deepEqual(malformed,keep,'safe view never erases malformed imported data');
+const futureLearning={learning:{version:7,payload:'keep'}};assert.equal(cardLearning(futureLearning),null);assert.deepEqual(futureLearning,{learning:{version:7,payload:'keep'}});

@@ -31,13 +31,14 @@ export function initialize(runtime){
  // Where the person is now: the Journey's chapter, the free World, or the first screen.
  function place(){const round=runtime.placeRun?.();if(round?.id&&CHAPTER_NAMES['ronda:'+round.id])return 'ronda:'+round.id;if(runtime.journeyQuiet?.()===false)return 'libre';const id=runtime.journeyChapter?.()?.id;return CHAPTER_NAMES[id]?id:'menu';}
  function write(){if(!session)return;try{db?.setItem(PLAYTEST_KEY,JSON.stringify(sessions));}catch(_){}}
- function chapter(id){if(!session.chapters[id])session.chapters[id]={ms:0,hits:0,misses:0,still:0,stills:0,hints:0,done:false,activeMs:0,firstActionMs:null,noProgressMs:0,helps:0,_progress:0,_flat:0};if(session.order[session.order.length-1]!==id&&session.order.length<20)session.order.push(id);return session.chapters[id];}
- function input(){const now=performance.now();if(session&&current){const gap=now-lastInput;const c=chapter(current);if(gap>c.still)c.still=gap;}lastInput=now;still=0;}
+ const observedProgress=id=>id==='camino'?Math.min(1,(runtime.S.pathCrystals?.length||0)/10):runtime.journeyGameProgress?.(id.startsWith('ronda:')?id.slice(6):id);
+ function chapter(id){if(!session.chapters[id])session.chapters[id]={ms:0,hits:0,misses:0,still:0,stills:0,hints:0,done:false,activeMs:0,firstActionMs:null,noProgressMs:0,helps:0,_progress:observedProgress(id)??0,_flat:0};if(session.order[session.order.length-1]!==id&&session.order.length<60)session.order.push(id);return session.chapters[id];}
+ function input(){const id=place();if(session&&id!=='menu')chapter(id);const now=performance.now();if(session&&current){const gap=now-lastInput;const c=chapter(current);if(gap>c.still)c.still=gap;}lastInput=now;still=0;}
  function tick(){if(!session||document.hidden)return;const now=performance.now(),dt=Math.min(2000,now-last);last=now;const id=place();
   if(id==='menu'&&!session.order.length){lastInput=now;return;}
   if(id!==current){if(current?.startsWith('ronda:')&&runtime.places?.().last?.id===current.slice(6))chapter(current).done=true;current=id;lastInput=now;still=0;}const c=chapter(id);c.ms+=dt;session.ms+=dt;
   const active=!document.querySelector?.('.modal:not([hidden])')&&!runtime.noticeLane?.inspecting;
-  const game=id.startsWith('ronda:')?id.slice(6):id,progress=runtime.journeyGameProgress?.(game);
+  const game=id.startsWith('ronda:')?id.slice(6):id,progress=observedProgress(id);
   if(active)c.activeMs+=dt;if(active&&Number.isFinite(progress)){if(progress>(c._progress||0)){if(c.firstActionMs===null)c.firstActionMs=c.activeMs;c._flat=0;}else if(progress<1)c._flat=(c._flat||0)+dt;else c._flat=0;c.noProgressMs=Math.max(c.noProgressMs,c._flat);if(Number.isFinite(progress))c._progress=progress;}
   if(current?.startsWith('ronda:')&&runtime.places?.().last?.id===game)c.done=true;
   const p=runtime.journeyPulseState?.();if(p){if(hits!==null){c.hits+=Math.max(0,p.hits-hits);c.misses+=Math.max(0,p.misses-misses);}hits=p.hits;misses=p.misses;}

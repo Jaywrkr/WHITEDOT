@@ -41,12 +41,6 @@ export const onTime=(ac,beats,bar,atMs,nowMs)=>!!ac&&beatDistance(heardTime(ac,a
 export function themePitch(degree,scale,transpose=0){const sc=Array.isArray(scale)&&scale.length===7?scale:[0,2,3,5,7,8,10];let n=57+transpose+sc[((degree%7)+7)%7]+12*Math.floor(degree/7);while(n<48)n+=12;while(n>64)n-=12;return n;}
 // The theme's voice in the chapters' Plenitude, the finale and the companion: a soft bowed tone. Triangle and sine, no
 // sawtooth: a low sawtooth with vibrato sounded like a honk over the music.
-export function playCello(ac,out,t,midi,seconds,volume){
- const hz=440*2**((midi-69)/12),o=ac.createOscillator(),o2=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain(),lfo=ac.createOscillator(),depth=ac.createGain(),end=t+seconds;
- o.type='triangle';o2.type='sine';o.frequency.setValueAtTime(hz,t);o2.frequency.setValueAtTime(hz*2,t);lfo.frequency.setValueAtTime(5,t);depth.gain.setValueAtTime(hz*.004,t);lfo.connect(depth);depth.connect(o.frequency);depth.connect(o2.frequency);
- f.type='lowpass';f.Q.setValueAtTime(.5,t);f.frequency.setValueAtTime(1600,t);f.frequency.linearRampToValueAtTime(2400,t+seconds*.4);
- g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
- const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
 // Recall preserves order and bar phase. Very long rests shorten by whole bars only.
 // Legacy modulo-16 data cannot reveal original bars: equal/backward steps start a new bar.
 export function phraseTimeline(notes=[],steps=[],ticks=[]){
@@ -55,6 +49,12 @@ export function phraseTimeline(notes=[],steps=[],ticks=[]){
  if(Array.isArray(steps)&&steps.length===count&&steps.every(v=>Number.isInteger(v)&&v>=0&&v<16)){const out=[];for(const st of steps){let tick=st;if(out.length)while(tick<=out.at(-1))tick+=16;out.push(tick);}return out;}
  return notes.map((_,i)=>i*2);
 }
+export function playCello(ac,out,t,midi,seconds,volume){
+ const hz=440*2**((midi-69)/12),o=ac.createOscillator(),o2=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain(),lfo=ac.createOscillator(),depth=ac.createGain(),end=t+seconds;
+ o.type='triangle';o2.type='sine';o.frequency.setValueAtTime(hz,t);o2.frequency.setValueAtTime(hz*2,t);lfo.frequency.setValueAtTime(5,t);depth.gain.setValueAtTime(hz*.004,t);lfo.connect(depth);depth.connect(o.frequency);depth.connect(o2.frequency);
+ f.type='lowpass';f.Q.setValueAtTime(.5,t);f.frequency.setValueAtTime(1600,t);f.frequency.linearRampToValueAtTime(2400,t+seconds*.4);
+ g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
+ const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
 export function initialize(runtime){
  const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[],noteSteps:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];const pending=new Set();let lastLanding=null,epoch=0;
  const calm=()=>calmMotion(runtime.S);

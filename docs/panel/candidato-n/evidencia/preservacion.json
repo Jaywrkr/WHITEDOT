@@ -1,0 +1,30 @@
+{
+  "base": "3a8148b5",
+  "status": "PASS",
+  "protectedFiles": 311,
+  "protectedDigest": "9cb751f706f8189aa5f0482e8533b33a6784123d318973f6dc44bc3515ec20d9",
+  "reviewed": [
+    "src/audio.js",
+    "src/canvas.js",
+    "src/crystal-sparks.js",
+    "src/house.js",
+    "src/jam.js",
+    "src/journey-chapters.js",
+    "src/journey-finale.js",
+    "src/journey-games.js",
+    "src/journey-pulse.js",
+    "src/journey-release.js",
+    "src/journey-rhythm.js",
+    "src/places.js",
+    "src/playtest.js",
+    "src/rare-card-model.js",
+    "src/rare-cards.js",
+    "src/release-info.js",
+    "src/song-stage.js",
+    "src/voice-guide.js",
+    "src/wow-feel.js",
+    "styles/estilo-j.css"
+  ],
+  "audio": "Only output scene gate, absolute transport metadata, stage step dispatch and audible visual clock differ. Voice/generation code is identical.",
+  "limits": "Byte preservation and integration scope, not human listening or device acceptance."
+}

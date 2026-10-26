@@ -33,6 +33,8 @@ try:
    p.wait_for_timeout(300);p.mouse.move(size['width']*.75,size['height']*.55);p.mouse.down();p.wait_for_timeout(600)
    assert p.evaluate('__r.scanning'),'hold outside cube opens scanner';p.mouse.up()
    assert p.evaluate('__inputs.length')==1
+   p.evaluate("""()=>{const el=document.createElement('span');document.body.append(el);const o={bubbles:true,pointerId:77,isPrimary:true,clientX:100,clientY:200};el.dispatchEvent(new PointerEvent('pointerdown',o));document.getElementById('w').dispatchEvent(new PointerEvent('pointerdown',{...o,pointerId:78,isPrimary:false}));window.dispatchEvent(new PointerEvent('pointerup',o));el.remove();}""")
+   assert p.evaluate('__inputs.length')==1,'secondary canvas finger never changes overlay gesture intent'
    assert not errors,errors;p.close()
   b.close()
  print('PASS explicit cube emits on down under40ms, no duplicate release, blank drag/hold preserve movement/scanner',flush=True)

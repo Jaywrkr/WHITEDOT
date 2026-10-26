@@ -1,6 +1,6 @@
 # El mundo de Kubono: Viaje, 11 lugares y Refugio
 
-Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus reglas. El cierre vigente es [J1–J7](PULIDO_CIERRE.md); las tablas anteriores conservan su contexto histórico. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
+Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus reglas. El candidato vigente es [N, alpha.200](panel/candidato-n/informe.md); J/K/L y sus tablas conservan el contexto de su entrega. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
 
 ## Las cuatro capas
 

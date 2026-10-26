@@ -648,3 +648,5 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 #rareNotice[data-layout="full"] .rare-reveal-card{border-color:var(--rare-ink);box-shadow:0 0 60px #ffffff08}
 #rareNotice[data-layout="full"] #rareNoticeAbility{border-top:1px solid #ffffff26;padding-top:12px;line-height:1.65}
 #rareNotice[data-layout="full"] #rareNoticeOdds{font-variant-numeric:tabular-nums}
+
+#rareNotice[data-layout="full"] #rareNoticeAbility{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
