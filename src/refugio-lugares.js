@@ -54,14 +54,16 @@ export function initialize(runtime){
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
  function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d),goal=gameObjective(runtime.S,d);$('lugaresCount').textContent=d.readOnly?'':`${goal.completed||0} / 11`;if($('lugaresDoor'))$('lugaresDoor').textContent=goal.id?`Seguir hacia ${nameOf(goal.id)}`:'Explorar';$('lugaresNext').textContent=d.readOnly?goal.line:`${nextLine(d,runtime.S.journey)} · ★ ${have}/${TOTAL_STARS}`;
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
-   const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
+   li.dataset.placeId=p.id;if(p.id===goal.id)li.setAttribute('aria-current','step');const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
    const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
    li.append(name,st,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);li.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0])){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
    if(place){line.textContent=`Remezcla de hoy: ${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;btn.onclick=()=>remixGo(mix);}}
-  box.hidden=false;}
+  box.hidden=false;(globalThis.requestAnimationFrame||((fn)=>fn()))(()=>{if(box.hidden)return;const next=list.querySelector('[aria-current=step]');if(next)list.scrollTop+=next.getBoundingClientRect().top-list.getBoundingClientRect().top-list.clientHeight*.25;scrollCue();});}
+ function scrollCue(){const list=$('lugaresList'),hint=$('lugaresScrollHint');if(list&&hint)hint.hidden=list.scrollHeight<=list.clientHeight+2||list.scrollTop+list.clientHeight>=list.scrollHeight-2;}
+ $('lugaresList')?.addEventListener?.('scroll',scrollCue,{passive:true});globalThis.addEventListener?.('resize',()=>{if(!$('mLugares')?.hidden)scrollCue();});
  function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}

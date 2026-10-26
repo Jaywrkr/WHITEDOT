@@ -28,7 +28,7 @@ export function drawSongRings(c,W,H,{ids=SONG_IDS,lit=()=>false,beat=()=>0,shown
  ids.forEach((id,i)=>{if(i>=shown)return;const p=spots[i],on=lit(id),k=on?beat(id):0,ink=color(id,SONG_LAYERS[id]?.color||'#ffffff');
   if(on){c.globalAlpha=.16+.3*k;c.fillStyle=ink;c.beginPath();c.arc(p.x,p.y,p.r*(1+(still?0:.18*k)),0,6.283);c.fill();c.globalAlpha=.95;c.strokeStyle=ink;c.lineWidth=2;c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();}
   else{c.globalAlpha=.35;c.strokeStyle='#ffffff';c.lineWidth=1;c.setLineDash?.([3,4]);c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();c.setLineDash?.([]);}
-  if(names){const place=PLACES.find(q=>q.id===id);c.globalAlpha=on?.9:.4;c.fillStyle=on?'#ffffff':'#8a8a8f';c.font='11px "Geist Mono", monospace';c.fillText(place?.name||id,p.x,p.y+p.r+6);}});
+  if(names){const place=PLACES.find(q=>q.id===id);c.globalAlpha=1;c.fillStyle=on?'#ffffff':'#a0a0a0';c.font='11px "Geist Mono", monospace';c.fillText(place?.name||id,p.x,p.y+p.r+6);}});
  c.restore();return spots;}
 // The plan of a playing: how many bars, when each layer enters, when your notes and the theme come. Pure.
 export function songPlan({final=false,ids=SONG_IDS,notes={},steps={},ticks={},six=0}={}){const entry={};if(final)ids.forEach((id,i)=>{entry[id]=i*FINAL_ENTRY_BARS;});else ids.forEach(id=>{entry[id]=0;});

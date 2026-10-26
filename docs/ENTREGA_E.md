@@ -7,7 +7,7 @@ Jay autorizó ejecutar las siete fases, sin confirmación entre ellas. La meta d
 | E1 | `excepcional/e1-fiabilidad` | Implementada; pruebas locales aprobadas | Resultados coherentes y avisos visuales a tiempo |
 | E2 | `excepcional/e2-interaccion` | Implementada; pruebas locales aprobadas | Gestos legibles, cancelación segura y respuestas distintas |
 | E3 | `excepcional/e3-aprender` | Implementada; pruebas locales aprobadas | Ayuda concreta en el momento necesario |
-| E4 | `excepcional/e4-interfaz` | Pendiente | Lectura, desplazamiento y salida consistentes |
+| E4 | `excepcional/e4-interfaz` | Implementada; pruebas locales aprobadas | Lectura, desplazamiento y salida consistentes |
 | E5 | `excepcional/e5-descubrimientos` | Pendiente | Hallazgo, uso y regreso comprensibles |
 | E6 | `excepcional/e6-recorrido` | Pendiente | Aportación personal y próximos pasos claros |
 | E7 | `excepcional/e7-validacion` | Pendiente | Revisión independiente, regresiones y protocolo humano listo |
@@ -37,3 +37,8 @@ La Línea distingue acierto dorado, espera con corchete blanco y error; el prime
 ## E3 · alpha.203
 
 Cómo jugar queda visible al abrir el menú, sin desplegar Más. La guía resalta una acción según el estado actual y evita repetir el objetivo en otra tarjeta. Jardín comparte distancias/etapas entre su demostración y la ayuda: acercarse, sembrar, regar o cosechar. Prioriza la planta bajo el cubo y las que realmente puede regar; una planta lejana no secuestra la explicación. Bosque, Llanura, Lago, Tormenta, Faros, Ruinas y Vacío conservan ayudas contextuales sin nuevos avisos automáticos. Reglas, semillas y sonidos intactos. Verificación local:253 suites Node; guide_context_smoke.py (320/390/1280), place_lesson_smoke.py ampliado con sembrar/regar y primera flor reales, after_journey_smoke.py aprobados. Marcha real27,6s/6436unidades hacia Jardín, gasto0. Auditoría limpia. No equivale a comprensión humana.
+
+
+## E4 · alpha.204
+
+Etiquetas pendientes de Tu canción legibles sin convertirlas en premios. Lugares señala y coloca el próximo objetivo dentro de la lista; scroll con teclado y señal discreta cuando queda contenido debajo. Cabecera con cierre consistente en Lugares, resultado y portal. El final5 solo sale mediante Seguir explorando, créditos, Escape o salida programada; el fondo no lo omite. Botones de tarjetas con área táctil44px. Sin cambiar partituras ni estética del mundo. Verificación local:253 suites Node; polish_navigation_smoke.py en cuatro tamaños, interface_smoke.py en cinco (ocho paneles), finale_resize_smoke.py, festival_smoke.py y refugio_lugares_smoke.py aprobados. Auditoría limpia. Cierres, foco, scroll y salida al Mundo comprobados; pantalla física/lector pendientes.

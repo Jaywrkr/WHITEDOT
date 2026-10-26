@@ -4,7 +4,7 @@ export function initialize(runtime){
  const stage=d=>d.id==='journeyFinale'||d.id==='songStage';
  const visible=d=>!d.hidden&&(d.matches('.modal')||d.dataset.inspect==='true'||stage(d));
  const dialogs=[...document.querySelectorAll('.modal,#rareNotice,#celebration')],returnFocus=new WeakMap(),opened=[],managedInert=new Set(),hiddenState=new Map(dialogs.map(d=>[d,!visible(d)]));
- const closers={mProfile:'profileClose',mGuide:'guideClose',mHouseCode:'houseCodeClose',mSettings:'settingsClose',mConnection:'connectionClose',mCube:'cubeClose',mSeeds:'seedClose',mSaveTools:'saveToolsClose',mSky:'kClose',mMap:'mapClose',mJournal:'journalClose',mMusic:'muClose',mSession:'sessionClose',mShare:'sClose',mAtlas:'atlasClose',mFavorites:'favoritesClose',mMusicTravel:'musicTravelClose',contentGallery:'contentGalleryClose',mLab:'labClose',mSet:'setClose',mOut:'oClose'};
+ const closers={mPlace:'placeClose',mLugares:'lugaresClose',mPortal:'portalClose',mProfile:'profileClose',mGuide:'guideClose',mHouseCode:'houseCodeClose',mSettings:'settingsClose',mConnection:'connectionClose',mCube:'cubeClose',mSeeds:'seedClose',mSaveTools:'saveToolsClose',mSky:'kClose',mMap:'mapClose',mJournal:'journalClose',mMusic:'muClose',mSession:'sessionClose',mShare:'sClose',mAtlas:'atlasClose',mFavorites:'favoritesClose',mMusicTravel:'musicTravelClose',contentGallery:'contentGalleryClose',mLab:'labClose',mSet:'setClose',mOut:'oClose'};
  for(const dialog of dialogs.filter(d=>d.matches('.modal'))){
   dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');
   const heading=dialog.querySelector('h2');if(heading){heading.id||=dialog.id+'Title';dialog.setAttribute('aria-labelledby',heading.id);heading.tabIndex=-1;
