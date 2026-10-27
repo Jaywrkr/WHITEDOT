@@ -23,7 +23,9 @@ export const currentLang=()=>lang;
 function compile(dict){
  exact=new Map();numeric=new Map();patterns=[];cache=new Map();
  for(const [es,en]of Object.entries(dict)){
-  if(es.includes('{}'))patterns.push({es,en,re:new RegExp('^'+es.split('{}').map(part=>part.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\\\{n\\\}/g,'(\\d+(?:[.,]\\d+)*)')).join('([\\s\\S]+?)')+'$')});
+  // An open part never spans a separator or a sentence break the key itself does not have.
+  if(es.includes('{}')){const stops=[' · ','. ',': ','\n',' — '].filter(x=>!es.includes(x)).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),part=stops?`((?:(?!${stops})[\\s\\S])+?)`:'([\\s\\S]+?)';
+   patterns.push({es,en,re:new RegExp('^'+es.split('{}').map(p=>p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\\\{n\\\}/g,'(\\d+(?:[.,]\\d+)*)')).join(part)+'$')});}
   else if(es.includes('{n}'))numeric.set(es,en);
   else exact.set(es,en);
  }
@@ -36,19 +38,21 @@ function fill(template,values){
  let i=0;return template.replace(/\{(n?)(\d?)\}/g,(_,isNumber,index)=>{const v=index?values[index-1]:values[i++];return v===undefined?'':number(v);});
 }
 const hit=key=>{if(hits)hits.add(key);};
-function lookup(s,depth){
+function lookup(s,depth,open=true){
  let v=exact.get(s);if(v!==undefined){hit(s);return v;}
  if(/\d/.test(s)){const numbers=[],key=s.replace(/\d+(?:[.,]\d+)*/g,x=>{numbers.push(x);return '{n}';});v=numeric.get(key);if(v!==undefined){hit(key);return fill(v,numbers);}}
- if(depth<4)for(const p of patterns){const m=p.re.exec(s);if(m){hit(p.es);return fill(p.en,m.slice(1).map(x=>/^\d+(?:[.,]\d+)*$/.test(x)?x:tr(x,depth+1)));}}
+ if(open&&depth<4)for(const p of patterns){const m=p.re.exec(s);if(m){hit(p.es);return fill(p.en,m.slice(1).map(x=>/^\d+(?:[.,]\d+)*$/.test(x)?x:tr(x,depth+1)));}}
  return undefined;
 }
 function tr(s,depth=0){
  if(depth>8||!/\p{L}/u.test(s))return s;
- const found=lookup(s,depth);if(found!==undefined)return found;
  const space=/^(\s*)([\s\S]*?)(\s*)$/.exec(s);if(space[1]||space[3]){const core=tr(space[2],depth+1);return space[1]+core+space[3];}
- // Decorations around a known key (· ★ ✦ «» ¿? ¡! a final stop): the key alone.
+ // A whole key first, also with decorations around it (· ★ ✦ «» ¿? ¡! a final stop); keys with open parts after.
  const deco=/^([^\p{L}\d]*)([\s\S]*?)([^\p{L}\d]*)$/u.exec(s);
- if(deco[1]||deco[3])for(let p=0;p<=deco[1].length;p++)for(let q=deco[3].length;q>=0;q--){const pre=deco[1].slice(0,p),core=deco[1].slice(p)+deco[2]+deco[3].slice(0,q),post=deco[3].slice(q);if(core===s||!/\p{L}/u.test(core))continue;const v=lookup(core,depth);if(v!==undefined)return pre.replace(/[¿¡]/g,'')+v+post;}
+ for(const open of [false,true]){
+  const found=lookup(s,depth,open);if(found!==undefined)return found;
+  if(deco[1]||deco[3])for(let p=0;p<=deco[1].length;p++)for(let q=deco[3].length;q>=0;q--){const pre=deco[1].slice(0,p),core=deco[1].slice(p)+deco[2]+deco[3].slice(0,q),post=deco[3].slice(q);if(core===s||!/\p{L}/u.test(core))continue;const v=lookup(core,depth,open);if(v!==undefined)return pre.replace(/[¿¡]/g,'')+v+post;}
+ }
  // Upper-case text (DÍA 1, LUGARES): the key in its usual case, then upper case again.
  if(/\p{Lu}/u.test(s)&&s===s.toLocaleUpperCase('es')&&s!==s.toLocaleLowerCase('es')){
   const lower=s.toLocaleLowerCase('es'),cap=lower.charAt(0).toLocaleUpperCase('es')+lower.slice(1),words=lower.replace(/(^|\s)(\p{L})/gu,(m,a,b)=>a+b.toLocaleUpperCase('es'));
@@ -57,9 +61,12 @@ function tr(s,depth=0){
  // A lower-case first letter (a name inside a sentence): the capitalised key, lower-cased again.
  if(/^\p{Ll}/u.test(s)){const cap=s.charAt(0).toLocaleUpperCase('es')+s.slice(1),v=lookup(cap,depth);if(v!==undefined)return /^[A-Z][a-z]/.test(v)&&!/^(I|I'm|I've|I'll)\b/.test(v)?v.charAt(0).toLowerCase()+v.slice(1):v;}
  if(/\s\s|[\n\t]/.test(s)){const flat=s.replace(/\s+/g,' '),v=lookup(flat,depth);if(v!==undefined)return v;}
- // Sentences one by one.
- const sentences=s.split(/(?<=[.!?…])\s+(?=[\p{Lu}¿¡«"(])/u);if(sentences.length>1){const out=sentences.map(p=>tr(p,depth+1));if(out.some((p,i)=>p!==sentences[i]))return out.join(' ');}
- for(const sep of SEPARATORS)if(s.includes(sep)){const parts=s.split(sep),out=parts.map(p=>tr(p,depth+1));if(out.some((p,i)=>p!==parts[i]))return out.join(sep);}
+ // Pieces: sentences one by one, or the parts between a separator. The split that leaves the fewest Spanish parts wins.
+ let best=null;
+ const pieces=(parts,join)=>{if(parts.length<2)return;const out=parts.map(p=>tr(p,depth+1)),left=out.filter((p,i)=>p===parts[i]&&/\p{L}/u.test(p)).length;if(out.some((p,i)=>p!==parts[i])&&(!best||left<best.left))best={left,text:out.join(join)};};
+ pieces(s.split(/(?<=[.!?…])\s+(?=[\p{Lu}¿¡«"(])/u),' ');
+ for(const sep of SEPARATORS)if(s.includes(sep))pieces(s.split(sep),sep);
+ if(best)return best.text;
  // Dates written by Intl in Spanish inside a text: «12 oct», «12 oct 2026», «12 de oct. de 2026».
  const dated=s.replace(/\b(\d{1,2})(?: de)? (ene|feb|mar|abr|may|jun|jul|ago|sept?|oct|nov|dic)\b\.?(?:(?: de)? (\d{4}))?/gi,(m,d,mo,y)=>MONTHS[mo.toLowerCase()]+' '+d+(y?', '+y:''));
  if(dated!==s)return tr(dated,depth+1);
