@@ -31,7 +31,9 @@ jobs:
   # 30 minutes.
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # The first shard runs about 20 minutes of flows and the offline check; a slow browser install (10 minutes on
+    # 27 Oct 2026) cancelled it at 30 after every flow had passed. Forty, like the audio shards.
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
