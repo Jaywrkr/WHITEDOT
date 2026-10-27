@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-**Vigente: [sesión 11](panel/sesion-11/informe.md), 26 de octubre, alpha.215.** Doce perfiles; media 6,7 (no comparable directa: nueve abstenciones en Audio y seis en Sensación). Q1–Q6 están en `main` (alpha.221); Q7 espera la escucha de Jay. La siguiente revisión es externa: [Auditoría externa](AUDITORIA_EXTERNA.md). Lo de abajo es el método y el historial.
+**Vigente: [sesión 11](panel/sesion-11/informe.md), 26 de octubre, alpha.215.** Doce perfiles; media 6,7 (no comparable directa: nueve abstenciones en Audio y seis en Sensación). Q1–Q7 están en `main` (alpha.222); Jay aprobó los finales en dub techno. La siguiente revisión es externa: [Auditoría externa](AUDITORIA_EXTERNA.md). Lo de abajo es el método y el historial.
 
 Guía para repetir la auditoría. **Candidato vigente: [E, alpha.207](panel/candidato-e/informe.md), con revisión final y aceptación humana pendiente.** La [sesión9, alpha.200 integrada](panel/sesion-9/informe.md) conserva su7,6 provisional como referencia histórica. [Candidato técnico N](panel/candidato-n/informe.md). Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Diez por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
 

@@ -67,9 +67,13 @@ El primero protege 301 archivos y trece contratos desde main alpha.200 (P1 abri�
 
 Los verificadores históricos `n-preservation.mjs` y `pulido-preservation.mjs` pertenecen a sus revisiones. No usarlos como gate actual ni alterar sus referencias para forzar verde. [Herramientas](../scripts/README.md).
 
-## Escucha pendiente
+## Escucha de Jay
 
-Q7 (alpha.222, panel 11) cambia los finales con D8-B y D9-B + C, en dub techno tras la primera escucha de Jay. Los renders están en [escucha](panel/sesion-11/escucha/): Viaje antes y después; once a ★ antes y después; once a ★★ después. Son renders offline en Chromium, sin oído humano. Corte seco y subida medidos en `journey_finale_mix.py` y `song_stage_mix.py`. **Pendiente: escucha de Jay**, en teléfono con auriculares (mejor Bluetooth), con fecha y dispositivo anotados aquí. No integrar Q7 sin ella.
+Q7 (alpha.222, panel 11) cambia los finales con D8-B y D9-B + C. Los renders están en [escucha](panel/sesion-11/escucha/): Viaje antes y después; once a ★ antes y después; once a ★★ después. Son renders offline en Chromium. Corte seco y subida medidos en `journey_finale_mix.py` y `song_stage_mix.py`.
+
+- **27 de octubre de 2026, primera escucha:** Jay rechazó el arreglo de chelo («parece música de videojuego de niños»). Pidió electrónica underground: dub techno / minimal, con subida, golpe y corte seco.
+- **27 de octubre de 2026, segunda escucha:** Jay oyó los renders en dub techno y los aprobó («me gusta»). Los escuchó como archivos enviados en la conversación; no indicó dispositivo ni salida.
+- **Pendiente:** oír los dos finales dentro del juego en un teléfono, con altavoz y con auriculares. El sub-bajo casi no se oye en altavoz de teléfono.
 
 ## Teléfonos y evidencia anterior
 
