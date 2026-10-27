@@ -1,18 +1,20 @@
 # Kubono · plan hasta las primeras ventas
 
-**Revisión documental:26 de octubre de 2026.** Guía única de decisiones y entregables D01–D22. Preparar no autoriza ejecutar el catálogo completo, pagar o publicar. Jay pidió detener la configuración de Supabase y preparar documentación para revisión con un agente. [Traspaso actual](../HANDOFF.md).
+**Revisión:27 de octubre de 2026.** Guía única de decisiones y entregables D01–D22. El 27 de octubre Jay decidió salir primero en **web y Android**, con cobro, en **español e inglés** y **a su nombre personal**; el plan está en [Salida web y Android](#salida-web-y-android). Preparar no autoriza pagar ni publicar: cada alta, pago y publicación los hace o autoriza Jay. [Traspaso actual](../HANDOFF.md).
 
 ## Decisiones aprobadas y límites
 
 | Tema | Estado vigente |
 |---|---|
+| Editor | **A nombre personal de Jay (27 de octubre).** Nombre legal y correo público de contacto pendientes |
 | Marca | Kubono; dominio previsto `playkubono.com`, no comprado/reservado. Marca visible Kubono; repositorio, paquetes y claves conservan WHITEDOT por compatibilidad. Dominio/revisión legal pendientes |
 | Identidad | Propuesta local aprobada: negro/blanco y violeta eléctrico en identidad/web, sin cambiar los colores del juego. Maqueta/plan funcional local fuera de Git en `outputs/kubono-visual/`; no publicado |
 | Promesa | Un cubo y un universo que suena. La música electrónica y su mezcla con otras familias son parte central de la comunicación |
 | Modelo | Pago único US$2,99 móvil / US$4,99 escritorio, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
 | Presupuesto | US$350 iniciales aprobados; no autoriza compras ni altas de pago. Tasas anotadas previamente: Play 25, Apple 99/año, Steam 100 por juego, antes de impuestos/conversión; revalidarlas al tramitar |
-| Acceso | **Cambio aprobado por Jay el 22 de octubre ([El Viaje](VIAJE.md)):** cuenta opcional. Se juega con guardado local desde el primer toque; la cuenta se ofrece después para guardar en la nube y migra el progreso local. Construida en la Fase 2 (alpha.98). Sin demo comercial; el build de festival es un recorte privado para jurados |
-| Plataformas | Preparación conjunta Android, iOS/iPadOS, web/PWA y Windows/macOS/Linux; cada una sale al estar lista/aprobada. Consolas solo evaluación, sin port/fecha prometidos |
+| Acceso | **Primera versión de venta sin nube (recomendación aceptada el 27 de octubre):** guardado local; cobra la tienda. La nube llega en una actualización. Antes: **cambio aprobado por Jay el 22 de octubre ([El Viaje](VIAJE.md)):** cuenta opcional. Se juega con guardado local desde el primer toque; la cuenta se ofrece después para guardar en la nube y migra el progreso local. Construida en la Fase 2 (alpha.98). Sin demo comercial; el build de festival es un recorte privado para jurados |
+| Plataformas | **Primero web y Android (27 de octubre).** iOS/iPadOS, escritorio, Steam y consolas quedan para después; cada una sale al estar lista y aprobada |
+| Idiomas | **Español e inglés (27 de octubre).** El juego hoy solo está en español: hay que traducirlo entero (fase L2) |
 | Público | Objetivo de 16 años o más; clasificación de contenido por tienda aparte. Mercados, país/editor y correo público aún pendientes |
 | Datos | Plazos aprobados en [Producción](CONFIGURACION_PRODUCCION.md); algunos controles aplicados, otros pendientes. No equivale a privacidad/configuración final publicadas |
 
@@ -60,14 +62,32 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 | D21 | Continuidad automática y conflictos | Aprobado funcional PC/Safari iPhone/APK emulado; no reabrir salvo cambio o fallo concreto. Plataformas finales en D05/D15/D16 |
 | D22 | RLS, operación, retención, respaldo y cierre final | RLS/CAS y evidencia de cuentas aprobados; CI de alpha.200 aprobado; candidato E/alpha.207 con regresiones locales y CI completo del nuevo PR pendiente; retención Supabase, respaldo completo/restore, soporte y producción pendientes. Trabajo Supabase detenido |
 
-## Secuencia y calendario
+## Salida web y Android
 
-1. **Ahora:** el candidato E está en `main`; decidir y ejecutar las fases P1–P8 del [panel 10](panel/sesion-10/informe.md) y completar su aceptación pendiente, siguiendo [HANDOFF](../HANDOFF.md). No continuar autenticación ni SQL pendientes durante esta revisión.
-2. **Al autorizar reanudación:** completar datos del responsable/país/mercados/correo; resolver escritura Supabase y operación de datos; definir correo/callbacks finales. No contratar automáticamente.
-3. Preparar paquetes y materiales compartidos, conservando prioridad paralela por plataforma. Validar solo lo nuevo/afectado y registrar evidencia específica de cada canal.
-4. Candidato por canal: formularios, precio, firma, pruebas exigidas y experiencia humana real. Publicar solo tras aprobación/autorización explícitas; no esperar a que todas las plataformas estén aprobadas el mismo día.
+Decidido por Jay el 27 de octubre de 2026: web y Android primero, con cobro, español e inglés, a su nombre personal. Para cobrar sin depender de la nube, **la primera versión sale sin cuenta**: se guarda en el dispositivo y cobra la tienda (Google Play en Android; itch.io en web, que gestiona el pago y el acceso). Supabase sigue en pausa; la nube y la venta en `playkubono.com` llegan después.
 
-La ventana original de ocho semanas (19 oct–13 dic 2026) es una **estimación histórica no revalidada**, no un compromiso de salida. Reestimar al confirmar recursos, cuentas y bloqueos; no añadir funciones para justificar retrasos. Plan anterior (en Git: `docs/historial/PLAN_LANZAMIENTO_ANTES_REVISION.md`, revisión 5914ca9).
+Precios aprobados: US$2,99 móvil y US$4,99 escritorio. **Falta decidir el precio web** (recomendación: US$2,99, igual que móvil, porque la web se juega también en el teléfono).
+
+| Fase | Rama | Qué cambia | Bien cuando |
+|---|---|---|---|
+| L1 · Versión de venta sin nube | `lanzamiento/l1-sin-nube` | La edición de venta oculta toda la cuenta (entrar, crear, eliminar) y no llama a Supabase; el guardado local, la copia de seguridad y «Empezar de cero» siguen. Una sola bandera de edición | Un recorrido de navegador en la edición de venta no hace ninguna petición fuera de sus propios archivos; ningún botón de cuenta visible; las partidas existentes cargan igual |
+| L2 · Inglés | `lanzamiento/l2-ingles` | Módulo de textos ES/EN para menús, hojas, avisos, narrador, Bitácora, Lugares, tarjetas y texto dibujado; idioma según el sistema y elegible en Ajustes; `<html lang>` correcto | En inglés, ninguna captura estándar ni de menús muestra texto en español; los textos no se cortan a 390×844; español sin cambios |
+| L3 · Android de tienda | `lanzamiento/l3-android` | Edición release sin la vista previa de cuentas: identificador final, `versionCode` desde la versión, AAB firmado con la clave de subida de Jay (fuera de Git, por variable de entorno) y Play App Signing; workflow que genera el AAB | CI genera un AAB release; se instala en un Android físico, conserva la partida al actualizar y suena |
+| L4 · Web de pago en itch.io | `lanzamiento/l4-itch` | Script que empaqueta el juego estático en un zip para itch.io; rutas relativas y service worker que funcionan dentro del marco de itch.io; sin enlaces a la vista previa | El zip subido como borrador privado se juega, guarda y vuelve a abrir en teléfono y escritorio |
+| L5 · Ficha, privacidad y soporte | `lanzamiento/l5-fichas` | Política de privacidad de la edición sin nube (no se recogen datos personales); página de soporte; fichas ES/EN de Play e itch.io; respuestas del formulario de seguridad de datos y del cuestionario de clasificación; capturas e icono con `scripts/store-media.py` | Política y soporte publicados en una URL; fichas completas en las dos tiendas como borrador; capturas de la versión real en ES y EN |
+| L6 · Prueba cerrada y salida | — | Prueba cerrada en Play (revalidar cuántos testers y días pide Google a cuentas personales nuevas) y página privada en itch.io; Jay y Luca juegan la versión de tienda; corregir lo que salga | Jay autoriza publicar cada canal |
+
+**Orden:** L1 y L2 primero (son del juego); L3, L4 y L5 en paralelo después; L6 al final. Cada fase con su rama, pruebas y CI en verde, como Q1–Q7.
+
+**Lo que tiene que hacer Jay** (nadie más puede):
+1. Crear la cuenta de desarrollador de Google Play a su nombre (US$25, verificación de identidad).
+2. Crear la cuenta de itch.io y configurar el cobro y los datos fiscales.
+3. Dar un correo público de contacto y su nombre legal para la ficha y la política.
+4. Guardar la clave de subida de Android fuera del repositorio, con copia segura. Nunca pegarla en el chat ni en Git.
+5. Decidir el identificador final de la app Android (no se puede cambiar después de publicar) y el precio web.
+6. Probar la versión de tienda en su teléfono y con Luca, y autorizar cada publicación.
+
+La ventana original de ocho semanas (19 oct–13 dic 2026) queda como **estimación histórica no revalidada**. Plan anterior en Git: `docs/historial/PLAN_LANZAMIENTO_ANTES_REVISION.md`, revisión 5914ca9.
 
 ## Comunicación y venta
 

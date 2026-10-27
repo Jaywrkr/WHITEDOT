@@ -8,7 +8,7 @@ Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión de
 
 `main` lleva E1–E7, P1–P8 (sesión 10 del panel) y Q1–Q7 (sesión 11), todo con CI completo en verde. Q7 rehízo los dos finales en dub techno; Jay oyó y aprobó los renders.
 
-**Siguiente:** una [auditoría externa](docs/AUDITORIA_EXTERNA.md). El equipo externo puntúa y propone un plan; Jay decide aquí qué se hace, qué no y qué nota se espera mover.
+**Ciclo de diseño cerrado (27 de octubre).** Siguiente: publicar en web y Android, en español e inglés, sin nube en la primera versión. [Plan de salida](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
 
 Última revisión del panel: [sesión 11](docs/panel/sesion-11/informe.md), media 6,7 sobre alpha.215. Nadie ha puntuado alpha.222. Vercel publica una vista previa por rama; no hay pruebas con personas ni escucha en teléfono.
 
@@ -18,7 +18,7 @@ Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión de
 2. [HANDOFF.md](HANDOFF.md): estado exacto, rama y siguientes pasos.
 3. [Arquitectura](docs/ARQUITECTURA.md) y [verificación](docs/VERIFICACION.md).
 4. [Índice de documentación](docs/README.md): guías vigentes y registros históricos separados.
-5. [Auditoría externa](docs/AUDITORIA_EXTERNA.md): cómo auditar, puntuar y proponer un plan.
+5. [Plan de salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android): fases L1–L6 y lo que hace Jay.
 
 [Entrada para Claude](HANDOFF_CLAUDE.md) apunta al mismo traspaso; no mantiene un plan paralelo.
 

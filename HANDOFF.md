@@ -2,7 +2,9 @@
 
 **Continuar desde `main`** (27 de octubre de 2026, tras el PR de Q7). Jay crea PR y hace merge salvo que pida otra cosa.
 
-**Lo siguiente:** una auditoría externa (Codex) según [Auditoría externa](docs/AUDITORIA_EXTERNA.md). Ellos entregan notas, hallazgos y un plan; Jay decide aquí qué se hace y qué no, con la nota que se espera mover.
+**Cierre del ciclo de diseño (27 de octubre de 2026).** El juego queda completo para esta etapa: E1–E7, P1–P8 y Q1–Q7 están en `main`, todos con CI completo en verde. No hay fases de diseño abiertas. La auditoría externa con Codex quedó descartada por Jay; su [guía](docs/AUDITORIA_EXTERNA.md) se conserva como método.
+
+**Lo siguiente: publicar en web y Android**, en español e inglés, a nombre de Jay, sin nube en la primera versión. Plan L1–L6 y tareas de Jay en [Salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
 
 Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) solo apunta aquí.
 
@@ -19,9 +21,15 @@ CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio.
 
 ## Qué falta
 
-1. **Auditoría externa:** [guía](docs/AUDITORIA_EXTERNA.md). Nadie ha puntuado alpha.222.
-2. **Teléfono y personas:** los dos finales dentro del juego (con altavoz y auriculares), el toque, la luz con el retraso real del audio, el final del Viaje, el Refugio y volver al día siguiente. Android de gama media, Safari, altavoz, auriculares y Bluetooth. [Protocolo](docs/PRUEBAS_CON_PERSONAS.md); el [registro](docs/aceptacion-e.json) sigue sin participantes.
-3. **Ramas viejas** en GitHub: borrarlas a mano (la sesión no tiene permiso).
+1. **Lanzamiento L1–L6** ([plan](docs/PLAN_LANZAMIENTO.md#salida-web-y-android)): versión de venta sin nube, inglés, Android de tienda, web en itch.io, fichas y privacidad, prueba cerrada. Cada alta, pago y publicación los hace o autoriza Jay.
+2. **Teléfono y personas:** Jay y Luca prueban el juego (27 de octubre en curso). Mirar los dos finales dentro del juego con altavoz y auriculares, el toque, la luz con el retraso real del audio, el Refugio y volver al día siguiente. [Protocolo](docs/PRUEBAS_CON_PERSONAS.md); el [registro](docs/aceptacion-e.json) sigue sin participantes.
+3. **Ramas viejas** en GitHub: borrarlas a mano (la sesión no tiene permiso). Todas están integradas en `main`.
+
+## Cómo retomar
+
+- Desde `main`, leer este traspaso y el [plan de lanzamiento](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
+- Para un cambio de juego: una rama desde `main`, `npm test`, `node scripts/release-audit.mjs`, los recorridos del sistema tocado y, si cambia el sonido, sus renders ([Verificación](docs/VERIFICACION.md)).
+- Para otra revisión creativa: [Panel](docs/PANEL.md) (doce perfiles simulados) o [Auditoría externa](docs/AUDITORIA_EXTERNA.md).
 
 ## Notas del panel
 
@@ -38,12 +46,13 @@ La 11 no se compara directa con la 10: nueve perfiles no puntuaron Audio y seis 
 - Guardados antiguos y futuros se migran sin borrar progreso ni premios.
 - El [verificador de preservación](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos. Lo que cambiaron P3–P8 se compara con `main` tras P8 (`5464612`). Lo que cambiaron Q1–Q6 se compara con el final de Q6 y sus arreglos de CI (`4183856`). Los finales y el silencio del Mundo bajo el final de los once, con Q7 (`fce8496`). Lo demás, con la base E.
 - UI negra, Geist Mono, esquinas rectas, menús silenciosos; dorado solo para ★ y ✦.
-- Supabase y tiendas en pausa: no reaplicar SQL, no borrar cuentas, no publicar. `server/` es un prototipo histórico, no un backend activo.
+- Supabase en pausa: la primera versión de venta sale sin nube. No reaplicar SQL ni borrar cuentas. `server/` es un prototipo histórico, no un backend activo.
+- Tiendas: preparación autorizada (web y Android); publicar requiere la autorización explícita de Jay en cada canal.
 
 ## Probar en el teléfono
 
-Abrir una vista previa de Vercel sin `?dev=1`. La de Q1–Q6 es [esta](https://whitedot-git-panel11-q6-mundo-libre-jaywrkr-1498s-projects.vercel.app) (mismo contenido que `main`).
+Abrir una vista previa de Vercel sin `?dev=1`. La de Q7 es [esta](https://whitedot-git-panel11-q7-finales-jaywrkr-1498s-projects.vercel.app) (mismo contenido que `main` tras Q7).
 
-Qué mirar: tocar donde sea y que suene al apoyar el dedo; que la onda y el cubo coincidan con la nota; la Cueva; Lugares y el Refugio; dejar el juego y volver al día siguiente.
+Qué mirar: los dos finales (el del Viaje y el de los once lugares); tocar donde sea y que suene al apoyar el dedo; que la onda y el cubo coincidan con la nota; la Cueva; Lugares y el Refugio; dejar el juego y volver al día siguiente.
 
 Atajos `?lugar=jardin`, `?anillo=1`, `?festival=1` en un perfil temporal; [lista](docs/MUNDO.md#herramientas-de-prueba). No borrar la partida personal ni contar un atajo como recorrido completo.

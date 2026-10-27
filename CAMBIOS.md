@@ -2,6 +2,15 @@
 
 Estado: 27 de octubre de 2026. Código **2.3.0-alpha.222**. Las entradas describen su revisión, no certifican producción.
 
+
+## Cierre del ciclo de diseño y plan de salida · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`, sobre Q7. Petición de Jay del 27 de octubre.
+
+- Nota de cierre en [HANDOFF](HANDOFF.md): E1–E7, P1–P8 y Q1–Q7 en `main`; sin fases de diseño abiertas; cómo retomar.
+- La auditoría con Codex queda descartada; su guía se conserva como método.
+- [Plan de salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android): decisiones de Jay (web y Android, cobro, español e inglés, a su nombre) y la recomendación aceptada de salir sin nube. Fases L1–L6 y tareas que solo puede hacer Jay.
+- No cambia el juego.
 ## Q7 · Los finales suenan a final · 2.3.0-alpha.222
 
 Rama `panel11/q7-finales`, con `main` integrado (alpha.221). **Jay oyó los renders en dub techno y los aprobó el 27 de octubre.** Wintory; Simogo para la forma. Decisiones de Jay: D8-B y D9-B + C. Es la única fase que cambia música. Tras oír los primeros renders («parece música de videojuego de niños»), Jay pidió algo más radical: **dub techno / minimal**, y que cada final acabe con **subida, golpe y corte seco**. Esta entrada describe ya ese arreglo; el de chelo queda en Git.
