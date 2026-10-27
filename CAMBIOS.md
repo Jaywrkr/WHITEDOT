@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.220**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.221**. Las entradas describen su revisión, no certifican producción.
+
+## Q6 · Volver y tocar en el Mundo libre · 2.3.0-alpha.221
+
+Rama `panel11/q6-mundo-libre`, sobre `panel11/q5-golpe-al-oirse` (informe de la sesión 11). Chen e Iwai. Decisiones de Jay: D7-C y D11-B.
+
+- D7-C: quien abrió el Mundo alguna vez no vuelve a pagar diez cristales. Un día nuevo ya no saca del Mundo, tampoco a mitad del Viaje: cargas donde estabas, sin salto diario. Quien estaba en el Camino sigue en el Camino, con «Entrar al Mundo» en el dock.
+- El dato es `lastWorldDay` o el logro «mundo»; los dos los guarda `enterWorld` y nada los borra. No hace falta marcador nuevo ni migración. El Estudio abierto desde el Mundo vuelve al Mundo.
+- El Camino del día vuelve como paseo: sus diez primeros cristales dan ✦ (en el Viaje siguen callados, como antes). El décimo solo abre la puerta la primera vez; después no te mete en el Mundo.
+- D11-B: en el Universo abierto el pulso suena al apoyar el dedo, como en el Camino, los capítulos y las rondas. Mantener 500 ms abre el escáner y arrastrar camina; al soltar no suena otro pulso. Se integra el cambio de Q5: el modo dedo de las pruebas (`?dedo`) conserva sus gestos sobre objetos al soltar, y ahí un toque quieto que no abre el escáner sigue siendo pulso.
+- Jugador nuevo: igual que antes, empieza en el Camino y necesita diez cristales, también en un día nuevo.
+- No cambia: notas, voces, mezcla, el cubo (pequeño), mapas, semillas ni guardados.
+- Pruebas: `tests/crystal-path.mjs` afirma que el jugador nuevo sigue necesitando los diez cristales en un día nuevo (línea 26) y añade el que vuelve: guardado en el Mundo a mitad del Viaje con `todayKey` de ayer, guardado antiguo con solo el logro, Estudio, ✦ del paseo y sin entrada forzada. `tests/free_world_return_smoke.py` (navegador): jugador nuevo en el Camino; un guardado en el Bosque con `todayKey` de ayer carga en el Bosque; en el Universo abierto, 40 toques a tiempo con mediana ≤ 15 ms y p95 ≤ 30 ms del `pointerdown` a la nota (sin latencia de salida), un pulso por toque, escáner a los 500 ms y arrastre que camina. `tests/touch_precision_smoke.py` afirma ahora que en el Mundo libre el vacío pulsa al apoyar, una sola vez, y que arrastrar camina y mantener abre el escáner. `tests/strike_heard_smoke.py`: los toques quietos de 100, 300, 470 y 600 ms pulsan una vez al apoyar; el de 600 ms abre además el escáner.
+- Límite: sin prueba en teléfono ni con personas. Quien se queda en el Mundo ya no recibe el salto diario al cargar; lo recibe al entrar desde el Camino.
 
 ## Q5 · El golpe al oírse · 2.3.0-alpha.220
 

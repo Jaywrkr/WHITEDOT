@@ -6,7 +6,7 @@ Candidato **alpha.216**. El Viaje enseña a participar en la música y abre el M
 
 | Etapa | Qué se aprende |
 |---|---|
-| Camino | Acercarse, mover el cubo, pulsar y recoger diez luces |
+| Camino | Acercarse, mover el cubo, pulsar y recoger diez luces. Solo abre el Mundo la primera vez (D7-C) |
 | Llanura | Pegar elementos cercanos |
 | Lago | Encadenar flores |
 | Bosque | Rodear y cerrar una vuelta |
@@ -20,7 +20,7 @@ La duración objetivo es15–20min, pendiente de sesiones reales. Las antiguas t
 
 ## Ritmo y frase propia
 
-El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos y las rondas de lugar, tocar en cualquier punto del lienzo es el pulso y suena al apoyar el dedo (D2-A, panel 10, P6); si el dedo se arrastra, el cubo camina, y si descansa, se abre el escáner. En el Mundo libre el cubo suena al apoyar y el vacío al soltar. Un toque quieto que no llega a abrir el escáner (500 ms) es pulso, dure lo que dure (panel 11, Q5): antes, de 450 a 500 ms no pasaba nada. La guía dice «Toca al ritmo. Arrastra para moverte.». Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
+El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos y las rondas de lugar, tocar en cualquier punto del lienzo es el pulso y suena al apoyar el dedo (D2-A, panel 10, P6); si el dedo se arrastra, el cubo camina, y si descansa, se abre el escáner. En el Universo abierto también suena al apoyar (panel 11, Q6, D11-B): un solo gesto en todo el juego; mantener 500 ms abre el escáner y arrastrar camina. Solo el modo dedo de las pruebas (`?dedo`) juzga el vacío al soltar, para sus gestos sobre objetos; ahí un toque quieto que no abre el escáner es pulso, dure lo que dure (Q5). La guía dice «Toca al ritmo. Arrastra para moverte.». Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
 
 `journey-pulse.js` define el tema en grados `[0,1,4,3,2,0]`, con duraciones `[3,1,4,2,2,4]` en corcheas. La voz depende del contexto musical; no hay un instrumento separado de premio. La ventana base es±80ms y Maestro la estrecha. No fijar un único tempo para todo el universo.
 

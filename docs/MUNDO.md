@@ -13,6 +13,8 @@ Explorar para descubrir sonidos, tocar a tiempo y construir Tu canción. El reco
 | Universo abierto | Música procedural, criaturas, hallazgos, actividades y favoritos |
 | Refugio | Trofeos, objetos, colección y jardín de voces |
 
+Volver no es empezar (panel 11, Q6, D7-C). Diez cristales del Camino abren el Mundo la primera vez. Después, un día nuevo te deja donde estabas: en el Mundo, también a mitad del Viaje, o en el Camino. No hay salto diario al cargar. El Camino del día vuelve como paseo: sus diez primeros cristales dan ✦ y el décimo no te mete en el Mundo; «Entrar al Mundo» espera en el dock. Lo prueba `lastWorldDay` o el logro «mundo», que guarda `enterWorld`; no hace falta migrar.
+
 El cubo permanece pequeño. Música, generación y partidas se conservan; color ganado y señales de estado orientan sin llenar el vacío de controles.
 
 ## Lugares y avance

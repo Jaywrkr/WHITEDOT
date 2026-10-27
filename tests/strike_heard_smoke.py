@@ -71,8 +71,8 @@ LAG='''async()=>{const r=__r,h=__h,out=[];
  return {out,per:Object.values(per),six:r.SIX};}'''
 HOLD='''async(ms)=>{const r=__r,h=__h,cv=document.getElementById('w'),o={bubbles:true,pointerId:900+ms,isPrimary:true,clientX:innerWidth*.2,clientY:innerHeight*.25,pointerType:'touch'};
  r.stopScanner();const inputs=__inputs.length;cv.dispatchEvent(new PointerEvent('pointerdown',o));const onDown=__inputs.length>inputs;await h.sleep(ms);
- const scanned=!!r.scanning;window.dispatchEvent(new PointerEvent('pointerup',o));await h.sleep(60);const pulsed=__inputs.length>inputs;r.stopScanner();await h.sleep(400);
- return {ms,onDown,scanned,pulsed};}'''
+ const scanned=!!r.scanning;window.dispatchEvent(new PointerEvent('pointerup',o));await h.sleep(60);const pulsed=__inputs.length>inputs,count=__inputs.length-inputs;r.stopScanner();await h.sleep(400);
+ return {ms,onDown,scanned,pulsed,count};}'''
 def median(v):v=sorted(v);return v[len(v)//2]
 def p95(v):v=sorted(v);return v[max(0,int(len(v)*.95+.999)-1)]
 try:
@@ -123,9 +123,10 @@ try:
   assert lag['per'] and max(lag['per'])<=4,('at most four player voices per step',lag['per'])
   holds=[p.evaluate(HOLD,ms) for ms in (100,300,470,600)]
   for h in holds:
-   assert not h['onDown'],('the free World waits for the release',holds)
-   assert h['pulsed']!=h['scanned'],('a pulse or the scanner, never nothing (and never both)',holds)
+   # Panel 11 (Q6, D11-B): the open Universe pulses when the finger goes down, once; a rest of 500 ms adds the scanner.
+   assert h['onDown'] and h['count']==1,('the free World pulses on down, once',holds)
+   assert h['pulsed'] or h['scanned'],('a pulse or the scanner, never nothing',holds)
   assert [h['scanned'] for h in holds]==[False,False,False,True],holds
   assert not errors,errors;b.close()
- print('PASS strike heard (Q5): with 0.25 s latency the wave is due with its heard note (%d hits, %d off the beat; pushed median %.0f ms after); after a hit only the cube frame is gold; off the beat touch to note at 96 BPM median %.0f ms, p95 %.0f ms (place at %.0f BPM), ≤ 4 voices per step; still touches of 100/300/470/600 ms give pulse, pulse, pulse, scanner'%(len(hits),len(offs),median(pushed),m,q,60/lag['six']/4),flush=True)
+ print('PASS strike heard (Q5): with 0.25 s latency the wave is due with its heard note (%d hits, %d off the beat; pushed median %.0f ms after); after a hit only the cube frame is gold; off the beat touch to note at 96 BPM median %.0f ms, p95 %.0f ms (place at %.0f BPM), ≤ 4 voices per step; still touches of 100/300/470/600 ms pulse once on down (Q6, D11-B), the 600 ms one also opens the scanner'%(len(hits),len(offs),median(pushed),m,q,60/lag['six']/4),flush=True)
 finally:srv.shutdown();srv.server_close()

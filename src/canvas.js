@@ -24,7 +24,10 @@ export function initialize(runtime) {
   const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#mirrorPanel,[data-inspect="true"],[role="button"]');
   let fromOverlay=false;
   // Where a touch is the pulse itself (D2-A): the Camino, a Journey chapter (the Journey not yet finished) and a round.
-  const tapAnywhere=()=>runtime.S.mode==='camino'||runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&(!!runtime.placeRun?.()||!!runtime.journeyQuiet?.()&&runtime.S.journey?.finished!==true);
+  // Panel 11 (Q6, D11-B): one gesture in the whole game. In the open Universe the pulse also sounds when the finger goes
+  // down; resting 500 ms still opens the scanner and dragging still walks. The explicit finger mode (?dedo, automated
+  // tests) keeps its object gestures, which are judged on release.
+  const tapAnywhere=()=>runtime.S.mode==='camino'||runtime.inWorld()&&(!runtime.fingerTouch||(runtime.S.layer||'superficie')==='superficie'&&(!!runtime.placeRun?.()||!!runtime.journeyQuiet?.()&&runtime.S.journey?.finished!==true));
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;
     if(!e.isPrimary||activePointer!==null||runtime.S.mode==="studio")return;
@@ -65,6 +68,7 @@ export function initialize(runtime) {
   });
   // Panel 11 (Q5, Iwai): in the World a still touch that did not open the scanner (500 ms) is a pulse, however long it
   // rested; the old 450 ms cut left 450–500 ms mute. Elsewhere, with no scanner, a long rest still plays nothing.
+  // Since Q6 (D11-B) this release pulse only remains for the finger mode's open World; every other touch pulsed on down.
   const up=e=>{
     if(runtime.housePointerUp?.(e))return;
     if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;

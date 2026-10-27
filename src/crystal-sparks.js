@@ -46,7 +46,9 @@ export function initialize(runtime){
   const step=Math.max(0,Math.min(.05,dt||0));seconds+=step;feedback=feedback.filter(p=>seconds-p.at<.48);
   const pos=position(),path=S().mode==='camino',key=path?'path:'+S().todayKey+':'+Math.floor(pos.x/160):'world:'+Math.floor(pos.x/CELL)+','+Math.floor(pos.y/CELL);
   if(key!==cell){cell=key;near=path?pathCrystalField(pos.x,runtime.pathY,S().todayKey):crystalField(pos.x,pos.y,runtime.seedOf);}
-  let completed=false;
+  // Panel 11 (Q6, D7-C): the tenth crystal is the door only the first time. For whoever already opened the World the
+  // Camino is a walk: its crystals pay ✦ and «Entrar al Mundo» waits in the dock, without pulling the player in.
+  let completed=false;const door=!runtime.worldOpened?.();
   for(const o of near){
    if(path&&S().pathCrystals.includes(o.id)&&!sites.has(o.id))continue;
    if(runtime.crystalTransaction){const before=S().pathCrystals.length;processSaved(o,path,step,pos);if(path&&before<10&&S().pathCrystals.length===10)completed=true;continue;}
@@ -70,7 +72,7 @@ export function initialize(runtime){
    }
   }
   if(!path&&runtime.crystalTransaction)tickChains();
-  if(completed){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';feedback=[];}
+  if(completed&&door){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';feedback=[];}
  }
  function impact(o,site,point=o){if(reduced())return;feedback.push({x:point.x,y:point.y,at:seconds,broken:site.broken,size:o.size});feedback=feedback.slice(-48);}
  function particles(o,site){return crystalFragments(o,site.rare===true).map(p=>({...p,x:(site.drop?.x??o.x)+Math.cos(p.index*2.399)*14,y:(site.drop?.y??o.y)+Math.sin(p.index*2.399)*14,home:site.drop||o,age:0,trail:[]}));}
