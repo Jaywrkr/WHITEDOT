@@ -10,7 +10,7 @@
 | Marca | Kubono; dominio previsto `playkubono.com`, no comprado/reservado. Marca visible Kubono; repositorio, paquetes y claves conservan WHITEDOT por compatibilidad. Dominio/revisión legal pendientes |
 | Identidad | Propuesta local aprobada: negro/blanco y violeta eléctrico en identidad/web, sin cambiar los colores del juego. Maqueta/plan funcional local fuera de Git en `outputs/kubono-visual/`; no publicado |
 | Promesa | Un cubo y un universo que suena. La música electrónica y su mezcla con otras familias son parte central de la comunicación |
-| Modelo | Pago único US$2,99 móvil / US$4,99 escritorio, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
+| Modelo | Pago único US$2,99 móvil / US$3,99 web (27 de octubre) / US$4,99 escritorio, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
 | Presupuesto | US$350 iniciales aprobados; no autoriza compras ni altas de pago. Tasas anotadas previamente: Play 25, Apple 99/año, Steam 100 por juego, antes de impuestos/conversión; revalidarlas al tramitar |
 | Acceso | **Primera versión de venta sin nube (recomendación aceptada el 27 de octubre):** guardado local; cobra la tienda. La nube llega en una actualización. Antes: **cambio aprobado por Jay el 22 de octubre ([El Viaje](VIAJE.md)):** cuenta opcional. Se juega con guardado local desde el primer toque; la cuenta se ofrece después para guardar en la nube y migra el progreso local. Construida en la Fase 2 (alpha.98). Sin demo comercial; el build de festival es un recorte privado para jurados |
 | Plataformas | **Primero web y Android (27 de octubre).** iOS/iPadOS, escritorio, Steam y consolas quedan para después; cada una sale al estar lista y aprobada |
@@ -66,7 +66,7 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 
 Decidido por Jay el 27 de octubre de 2026: web y Android primero, con cobro, español e inglés, a su nombre personal. Para cobrar sin depender de la nube, **la primera versión sale sin cuenta**: se guarda en el dispositivo y cobra la tienda (Google Play en Android; itch.io en web, que gestiona el pago y el acceso). Supabase sigue en pausa; la nube y la venta en `playkubono.com` llegan después.
 
-Precios aprobados: US$2,99 móvil y US$4,99 escritorio. **Falta decidir el precio web** (recomendación: US$2,99, igual que móvil, porque la web se juega también en el teléfono).
+Precios aprobados: US$2,99 Android, **US$3,99 web** (Jay, 27 de octubre) y US$4,99 escritorio.
 
 | Fase | Rama | Qué cambia | Bien cuando |
 |---|---|---|---|
@@ -84,7 +84,7 @@ Precios aprobados: US$2,99 móvil y US$4,99 escritorio. **Falta decidir el preci
 2. Crear la cuenta de itch.io y configurar el cobro y los datos fiscales.
 3. Dar un correo público de contacto y su nombre legal para la ficha y la política.
 4. Guardar la clave de subida de Android fuera del repositorio, con copia segura. Nunca pegarla en el chat ni en Git.
-5. Decidir el identificador final de la app Android (no se puede cambiar después de publicar) y el precio web.
+5. Decidir el identificador final de la app Android (no se puede cambiar después de publicar).
 6. Probar la versión de tienda en su teléfono y con Luca, y autorizar cada publicación.
 
 La ventana original de ocho semanas (19 oct–13 dic 2026) queda como **estimación histórica no revalidada**. Plan anterior en Git: `docs/historial/PLAN_LANZAMIENTO_ANTES_REVISION.md`, revisión 5914ca9.
