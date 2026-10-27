@@ -8,7 +8,7 @@ Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión de
 
 `main` lleva E1–E7, P1–P8 (sesión 10 del panel) y Q1–Q7 (sesión 11), todo con CI completo en verde. Q7 rehízo los dos finales en dub techno; Jay oyó y aprobó los renders.
 
-**Ciclo de diseño cerrado (27 de octubre).** Siguiente: publicar en web y Android, en español e inglés, sin nube en la primera versión. [Plan de salida](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
+**Ciclo de diseño cerrado (27 de octubre).** Siguiente: publicar en web y Android, en español e inglés, sin cuenta ni nube. [Plan de salida](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
 
 Última revisión del panel: [sesión 11](docs/panel/sesion-11/informe.md), media 6,7 sobre alpha.215. Nadie ha puntuado alpha.222. Vercel publica una vista previa por rama; no hay pruebas con personas ni escucha en teléfono.
 
