@@ -57,9 +57,9 @@ function tr(s,depth=0){
  // A lower-case first letter (a name inside a sentence): the capitalised key, lower-cased again.
  if(/^\p{Ll}/u.test(s)){const cap=s.charAt(0).toLocaleUpperCase('es')+s.slice(1),v=lookup(cap,depth);if(v!==undefined)return /^[A-Z][a-z]/.test(v)&&!/^(I|I'm|I've|I'll)\b/.test(v)?v.charAt(0).toLowerCase()+v.slice(1):v;}
  if(/\s\s|[\n\t]/.test(s)){const flat=s.replace(/\s+/g,' '),v=lookup(flat,depth);if(v!==undefined)return v;}
- for(const sep of SEPARATORS)if(s.includes(sep)){const parts=s.split(sep),out=parts.map(p=>tr(p,depth+1));if(out.some((p,i)=>p!==parts[i]))return out.join(sep);}
  // Sentences one by one.
  const sentences=s.split(/(?<=[.!?…])\s+(?=[\p{Lu}¿¡«"(])/u);if(sentences.length>1){const out=sentences.map(p=>tr(p,depth+1));if(out.some((p,i)=>p!==sentences[i]))return out.join(' ');}
+ for(const sep of SEPARATORS)if(s.includes(sep)){const parts=s.split(sep),out=parts.map(p=>tr(p,depth+1));if(out.some((p,i)=>p!==parts[i]))return out.join(sep);}
  // Dates written by Intl in Spanish inside a text: «12 oct», «12 oct 2026», «12 de oct. de 2026».
  const dated=s.replace(/\b(\d{1,2})(?: de)? (ene|feb|mar|abr|may|jun|jul|ago|sept?|oct|nov|dic)\b\.?(?:(?: de)? (\d{4}))?/gi,(m,d,mo,y)=>MONTHS[mo.toLowerCase()]+' '+d+(y?', '+y:''));
  if(dated!==s)return tr(dated,depth+1);
@@ -168,8 +168,8 @@ export function initialize(runtime){
   const {show,store}=langOfSave(S,{first,hadSave:!!runtime.scopeHadSave,asked:urlLang()});if(S.lang!==store)S.lang=store;
   if(show!==lang)setLang(show);if(box)box.value=show;};
  sync();setInterval(sync,1000);
- if(box){box.value=lang;box.onchange=async e=>{const before=runtime.S.lang,next=normalizeLang(e.target.value,lang);runtime.S.lang=next;
-  if(runtime.save()===false){runtime.S.lang=before;e.target.value=lang;return;}await setLang(next);};}
+ if(box)box.onchange=async e=>{const before=runtime.S.lang,next=normalizeLang(e.target.value,lang);runtime.S.lang=next;
+  if(runtime.save()===false){runtime.S.lang=before;e.target.value=lang;return;}await setLang(next);};
  Object.defineProperties(runtime,{lang:{get:()=>lang},t:{get:()=>t},translate:{get:()=>translate}});
 }
 // Module start in the page: decide the language before anything is drawn.

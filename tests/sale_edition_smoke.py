@@ -25,7 +25,7 @@ try:
   # Service workers off so every request of the page is seen (the worker only caches the game's own files).
   context=browser.new_context(viewport={'width':390,'height':844},service_workers='block',accept_downloads=True)
   # A real player's browser: a new save starts in the Viaje.
-  context.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});")
+  context.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});")
   sale={'on':False};outside=[];errors=[]
   context.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   context.route('**/src/edition.js',lambda r:r.fulfill(body=STORE,content_type='text/javascript') if sale['on'] else r.continue_())

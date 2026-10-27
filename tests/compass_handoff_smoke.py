@@ -16,7 +16,7 @@ try:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
   def opened(width,height):
    p=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
-   p.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   p.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    p.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
    p.goto(f'http://kubono.localhost:{srv.server_port}/?anillo=1');p.wait_for_function('!!window.__r?.ringRoute&&__r.inWorld()')
    p.evaluate("()=>{__r.setJourneyMode('libre');__r.stopAutopilot?.();"+HIDE+";}")

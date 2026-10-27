@@ -11,7 +11,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 port=server.server_port
 def instrument(page,production):
  # A non-local host without the automation flag is what a player sees in production.
- if production:page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+ if production:page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
  page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
 def hidden(page,selector):return page.evaluate(f"getComputedStyle(document.querySelector('{selector}')).display")=='none'
 try:

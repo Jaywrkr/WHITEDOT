@@ -15,7 +15,7 @@ try:
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    # A real player's browser, not an automated one: new saves start in the Journey.
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});")
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.journeyMode');page.wait_for_timeout(600)
    assert page.locator('#mConnection').is_hidden() and page.locator('#mHelpC').is_hidden(),'no sheet and no window before playing'

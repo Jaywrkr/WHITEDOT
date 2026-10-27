@@ -14,7 +14,7 @@ try:
   for species,size in [('golondrina',{'width':390,'height':844}),('grulla',{'width':844,'height':390}),('luciernaga',{'width':1280,'height':800})]:
    if os.environ.get('PET_ONLY') and species!=os.environ['PET_ONLY']:continue
    context=browser.new_context(viewport=size,has_touch=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=laboratorio&layout=wide&generation=2');page.wait_for_function('__testRuntime?.labMode')
    page.evaluate('(s)=>{__testRuntime.labGo("life:"+s);document.querySelectorAll(".modal").forEach(m=>m.hidden=true);}',species)
