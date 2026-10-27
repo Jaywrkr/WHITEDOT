@@ -8,6 +8,9 @@ const approved='5464612636520df3dfb69398bfe0b1edda0fb790';
 // Panel 11 · Q1–Q6 (approved by Jay, 27 Oct 2026, D7, D10, D11): the files and sections those phases changed are held
 // byte for byte to the end of Q6 and its CI fixes.
 const approvedQ='4183856c414a84e18b2120ded87ee422703668e5';
+// Panel 11 · Q7 (Jay heard the renders and approved them, 27 Oct 2026, D8, D9 and dub techno): both finales are held to
+// the Q7 commit.
+const approvedQ7='fce8496900f3ef3ac97928ba5449e8c30140cb0d';
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -26,8 +29,8 @@ for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedQ
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
-sameSection('src/song-stage.js','export function songPlan','export function initialize','complete final11 plan, notes, harmony and events as approved in P6 (D1, D5); Q3 named the Faros rule',approvedQ);
-sameSection('src/journey-finale.js','export const CHAPTER_COLORS','export function initialize','complete final5 score, arrangement and audio output as approved in P6 (D5-C)',approved);
+sameSection('src/song-stage.js','export function songPlan','export function initialize','complete final11 plan, notes, harmony and events as approved in P6 (D1, D5), Q3 and Q7 (dub techno)',approvedQ7);
+sameSection('src/journey-finale.js','export const CHAPTER_COLORS','export function initialize','complete final5 score, arrangement and audio output as approved in P6 (D5-C) and Q7 (dub techno)',approvedQ7);
 sameSection('src/journey-pulse.js',' function judge(',' function draw(','pulse judgement, note selection and recorded timing; Q2 passes the heard time to the games',approvedQ);
 sameSection('src/journey-garden.js','import {calmMotion','export const gardenProgress','garden positions, rules, growth and save normalization as approved in P3',approved);
 sameSection('src/places.js','const object=','export function gameObjective','star rules, migration and existing open places; Q3 keeps credited',approvedQ);
@@ -41,7 +44,7 @@ const oldSing=section(before('src/journey-rhythm.js').toString(),singFrom,singTo
 if(oldSing!==newSing)throw Error('Changed rhythm demonstration music');
 contracts.push({label:'rhythm demonstration audio identical beyond visual history queue and the Q2 end of the demonstration',file:'src/journey-rhythm.js',sha256:sha(newSing)});
 // The finale's scheduling: E added a visual history queue; P6 (D5-A) lets the finale start at the end of a round's drop.
-sameSection('src/song-stage.js',' function step(',' // How hard a layer','finale audio scheduling as approved in P6 (D5-A)',approved);
+sameSection('src/song-stage.js',' function step(',' // How hard a layer','finale audio scheduling as approved in P6 (D5-A) and Q7 (swing, no World radio)',approvedQ7);
 let audio=before('src/audio.js').toString();
 const replacements=[
  ["import {onTime,audibleTime} from './journey-pulse.js';","import {onTime,audibleTime,scheduleAudibleCue} from './journey-pulse.js';"],
@@ -54,8 +57,9 @@ const replacements=[
 for(const [a,b]of replacements){if(audio.split(a).length!==2)throw Error('Ambiguous visual-only change');audio=audio.replace(a,b);}
 if(audio!==before('src/audio.js',approved).toString())throw Error('Audio differs beyond the six authorized visual-only replacements');
 // Q5: a touch off the beat is scheduled on the next free sixteenth (touchSoon); no note, voice or mix changes.
-if(source('src/audio.js')!==before('src/audio.js',approvedQ).toString())throw Error('Audio differs from the engine approved in Q5');
-contracts.push({label:'audio engine unchanged beyond six visual-only replacements and the Q5 touch scheduling',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
+// Q7: the World's radio rests under the finale of eleven (songFinaleHush); no World note, voice or mix changes.
+if(source('src/audio.js')!==before('src/audio.js',approvedQ7).toString())throw Error('Audio differs from the engine approved in Q5 and Q7');
+contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling and the Q7 finale hush',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
 const shell=source('sw.js').replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'");
 if(shell!==before('sw.js',approved).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
 const runtimeFiles=[...readdirSync('src').filter(n=>n.endsWith('.js')).sort().map(n=>'src/'+n),...readdirSync('styles').filter(n=>n.endsWith('.css')).sort().map(n=>'styles/'+n),'index.html','package.json','sw.js'],hash=createHash('sha256');

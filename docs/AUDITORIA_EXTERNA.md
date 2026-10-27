@@ -1,6 +1,6 @@
 # Auditoría externa de Kubono
 
-Guía para un equipo externo (por ejemplo Codex) que audita el juego sin haber trabajado en él. Vigente para **2.3.0-alpha.221** en `main` (`1a898ce`, 27 de octubre de 2026).
+Guía para un equipo externo (por ejemplo Codex) que audita el juego sin haber trabajado en él. Vigente para **2.3.0-alpha.222** en `main` (27 de octubre de 2026).
 
 ## Cómo funciona el ciclo
 
@@ -32,11 +32,11 @@ Guías: [El mundo](MUNDO.md), [El Viaje](VIAJE.md), [Universo](UNIVERSO.md), [Ar
 Son decisiones de Jay. Pueden señalar un efecto medible, pero no proponer revertirlas.
 
 - **El cubo es pequeño.** La legibilidad se busca con contraste, brillo, color y señales, nunca con tamaño.
-- **La música no se rehace:** generación, notas, armonías, voces y mezcla. Se puede proponer cómo se presenta o responde.
+- **La música del Mundo no se rehace:** generación, notas, armonías, voces y mezcla. Se puede proponer cómo se presenta o responde. Los dos finales suenan en dub techno con subida, golpe y corte seco: lo eligió Jay tras escucharlos.
 - Tocar a tiempo es el verbo. ★★ al 75 %, ★★★ al 70 %. Lugares en orden.
 - Interfaz: negro puro, esquinas rectas, Geist Mono, blanco para estados; dorado solo para ★ y ✦ (D10).
 - Nada ganado se borra; los guardados se migran. La nube (Supabase) está en pausa.
-- Decisiones D1–D11 ([sesión 10](panel/sesion-10/informe.md) y [sesión 11](panel/sesion-11/informe.md)): capa por mejor porcentaje, tocar donde sea, tres cifras, color ganado, final de once, cuenta oculta, día nuevo sin volver al Camino, tema con sus notas, final sin radio, dorado, un gesto en todo el juego.
+- Decisiones D1–D11 ([sesión 10](panel/sesion-10/informe.md) y [sesión 11](panel/sesion-11/informe.md)): capa por mejor porcentaje, tocar donde sea, tres cifras, color ganado, final de once, cuenta oculta, día nuevo sin volver al Camino, tema con sus notas, final sin radio, dorado, un gesto en todo el juego. Los dos finales suenan en dub techno con subida, golpe y corte seco: lo eligió Jay tras escucharlos.
 
 ## Cómo se puntúa
 
@@ -68,7 +68,7 @@ Para comparar después de puntuar, no antes. Son revisiones simuladas del mismo 
 | 10 | alpha.207 | 6,9 | 7,0 | 7,5 | 6,2 | 6,4 | 6,5 | 6,7 | 5,5 | 5,5 |
 | 11 | alpha.215 | 7,0 | 6,3 (3 notas) | 7,5 | 6,3 (6 notas) | 6,6 | 6,5 | 6,7 | 7 | 5,5 |
 
-Desde la sesión 11 se construyó Q1–Q6 (alpha.216–221). **Nadie ha puntuado alpha.221.**
+Desde la sesión 11 se construyó Q1–Q7 (alpha.216–222). **Nadie ha puntuado alpha.222.**
 
 ## Material
 
@@ -78,7 +78,7 @@ Desde la sesión 11 se construyó Q1–Q6 (alpha.216–221). **Nadie ha puntuado
 - **Estado del juego en pruebas:** sirviendo `src/main.js` con `window.__r=runtime;` al final se lee y se fuerza todo (`__r.S`, `__r.openLugares()`, `__r.openSong()`). `runtime` no existe en producción.
 - **Modelo de dos horas:** `node scripts/play-curve.mjs` (jugadores simulados, no personas).
 - **Pruebas:** `npm test` (265 suites Node), `node scripts/release-audit.mjs`, recorridos `tests/*_smoke.py` y renders `tests/*_mix.py`. Detalle en [Verificación](VERIFICACION.md).
-- **Grabaciones del final:** `docs/panel/sesion-11/escucha/` en la rama `panel11/q7-finales` (Q7, pendiente de la escucha de Jay).
+- **Grabaciones de los finales:** `docs/panel/sesion-11/escucha/` (antes y después de Q7). Jay aprobó los finales en dub techno; no se han oído dentro del juego en un teléfono.
 
 ## Qué entregar
 

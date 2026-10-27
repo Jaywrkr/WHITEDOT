@@ -1,6 +1,6 @@
 # Documentación de Kubono
 
-Vigente para **alpha.221** en `main` (27 de octubre de 2026, PR #359). Última revisión del panel: [sesión 11](panel/sesion-11/informe.md); Q1–Q6 en `main`, Q7 espera la escucha de Jay. Siguiente: [auditoría externa](AUDITORIA_EXTERNA.md).
+Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión del panel: [sesión 11](panel/sesion-11/informe.md); Q1–Q7 en `main`. Siguiente: [auditoría externa](AUDITORIA_EXTERNA.md).
 
 ## Empezar
 

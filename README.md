@@ -2,15 +2,15 @@
 
 Un cubo, un universo que suena. Explora, toca a tiempo y construye tu canción con lo que descubres.
 
-Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.221**. Cuenta opcional y guardado local. Sin publicación en tiendas.
+Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.222**. Cuenta opcional y guardado local. Sin publicación en tiendas.
 
 ## Estado de la entrega
 
-`main` lleva E1–E7, P1–P8 (sesión 10 del panel) y Q1–Q6 (sesión 11), todo con CI completo en verde (PR #355, #357–#359). Q7, que cambia los finales musicales, espera la escucha de Jay en `panel11/q7-finales`.
+`main` lleva E1–E7, P1–P8 (sesión 10 del panel) y Q1–Q7 (sesión 11), todo con CI completo en verde. Q7 rehízo los dos finales en dub techno; Jay oyó y aprobó los renders.
 
 **Siguiente:** una [auditoría externa](docs/AUDITORIA_EXTERNA.md). El equipo externo puntúa y propone un plan; Jay decide aquí qué se hace, qué no y qué nota se espera mover.
 
-Última revisión del panel: [sesión 11](docs/panel/sesion-11/informe.md), media 6,7 sobre alpha.215. Nadie ha puntuado alpha.221. [Probar la vista previa de Q1–Q6](https://whitedot-git-panel11-q6-mundo-libre-jaywrkr-1498s-projects.vercel.app); no hay pruebas con personas ni escucha en teléfono.
+Última revisión del panel: [sesión 11](docs/panel/sesion-11/informe.md), media 6,7 sobre alpha.215. Nadie ha puntuado alpha.222. Vercel publica una vista previa por rama; no hay pruebas con personas ni escucha en teléfono.
 
 ## Leer antes de continuar
 

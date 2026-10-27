@@ -4,7 +4,7 @@ import {WORLD_CHAPTERS} from './journey-chapters.js';
 import {FESTIVAL_CHAPTERS} from './festival.js';
 import {LANDSCAPES} from './house-view.js';
 import {SONG_IDS,songChord} from './song.js';
-import {drawSongRings,snapToScale} from './song-stage.js';
+import {drawSongRings,snapToScale,createDub,dubChord,underTop,tonicChord,FINALE_LEVEL} from './song-stage.js';
 import {PLACES} from './places.js';
 // The Journey's local closing arrangement. Saved notes keep their rhythm; their interpretation shares each chord.
 // Five rings recall the chapters, six dim rings invite you onward. Every normal exit leads to the free World.
@@ -38,29 +38,47 @@ export const chapterStarts=score=>{const out={};for(const n of score)if(!(n.chap
 // K3: a local interpretation of the saved phrase, in the departing world's scale and tempo.
 // The original MIDI and its timing remain in the save. No radio/voice generator changes.
 export function finaleContext(runtime={}){const source=runtime.MU?.dnaA?.scale||runtime.BIOMES?.[runtime.curZone]?.scale,scale=Array.isArray(source)&&source.length===7&&source.every(Number.isFinite)?source:[...MAJOR];return {scale:[...scale],tr:Number.isFinite(runtime.MU?.tr)?runtime.MU.tr:0,six:Math.max(.1,Math.min(1/6,runtime.SIX||.125))};}
+// Q7 in dub techno (Jay, after the first renders: «más radical, electrónica underground»): a dark vamp, two bars a
+// chord (vi, IV, vi, V of a major scale), the tonic under the theme.
+export const DUB_PROGRESSION=Object.freeze([5,3,5,4]);
 export function finaleArrangement(score,context={scale:MAJOR,tr:0,six:.125}){const {scale,tr,six}=context,length=scoreLength(score),starts=chapterStarts(score),events=[],theme=starts.refugio??0;
- const chord=step=>{const d=step*six>=theme?0:[0,4,5,3][Math.floor(step/32)%4];return songChord([0,2,4].map(k=>57+tr+scale[(d+k)%7]+12*Math.floor((d+k)/7)));};
- // Scale membership alone was not enough: old square bass, resonant acid and saw pad still changed the character.
- // Only this finale substitutes those attacks with existing soft voices, leaving the radio and song.js untouched.
- for(let step=0;step*six<length-1e-6;step++){const c=chord(step),b=step%16,add=(id,e)=>{if(step*six>=(starts[id]??theme))events.push({...e,at:step*six,layer:id,group:'bed'});};
-  if(b%4===0)add('llanura',{what:'kick',level:.65});
-  if(b===0||b===10)add('lago',{what:'cello',midi:c.root,len:3,soft:true,level:.65});
-  if(b===2||b===10)add('bosque',{what:'hat',level:.28});
-  if(b===4||b===12)add('bosque',{what:'clap',level:.25});
-  if(b===3||b===11)add('tormenta',{what:'arp',midi:c.tones[(step>>4)%3],soft:true,level:.5});
-  if(b===0)add('vacio',{what:'cello',midi:c.tones[2],len:8,soft:true,level:.28});
+ const degree=step=>step*six>=theme?0:DUB_PROGRESSION[Math.floor(step/32)%4];
+ const chord=step=>{const d=degree(step);return songChord([0,2,4].map(k=>57+tr+scale[(d+k)%7]+12*Math.floor((d+k)/7)));};
+ // The stab of the chord: a minor seventh, or sus2 where the third would be major, low in the middle register.
+ const stab=step=>{let t=dubChord(degree(step),scale,tr);while(t[0]>57)t=t.map(m=>m-12);while(t[0]<50)t=t.map(m=>m+12);return t;};
+ // The theme's last note is the hit: nothing of the bed starts after it; its echo and room are cut on the last «1».
+ const themeNotes=score.filter(n=>n.chapter==='refugio'),hitAt=themeNotes.at(-1)?.at??length,second=themeNotes[THEME.length]?.at??theme;
+ // Panel 10 (P6) kept the old square bass, resonant acid and saw pad out of this finale; Q7 brings its own dub voices
+ // (song-stage.js createDub): the kick and the sub enter first, then the dub bass, the off-beat hats and the rim, the
+ // stabs and the room. The radio and song.js stay untouched.
+ for(let step=0;step*six<hitAt-1e-6;step++){const c=chord(step),b=step%16,add=(id,e)=>{if(step*six>=(starts[id]??theme))events.push({...e,at:step*six,layer:id,group:'bed'});};
+  if(b%4===0)add('llanura',{what:'kick',level:.9});
+  if(b===0)add('llanura',{what:'sub',midi:c.root,len:3,level:.8});
+  if(b===7||b===10)add('lago',{what:'sub',midi:c.root,len:b===7?2:3,level:.7});
+  if(b%4===2)add('bosque',{what:'hat',level:.8});
+  if(b===4||b===12)add('bosque',{what:'clap',level:.6});
+  if(b===6||b===14)add('tormenta',{what:'stab',tones:stab(step),len:2,level:.9});
+  if(b===0&&step%32===0)add('vacio',{what:'drone',tones:c.tones,len:32,level:.8});
  }
- // Bring each recalled note to the current chord, in a shared middle register. No automatic octave-up doubling.
+ // The rise into the hit: a noise riser over the theme's second pass.
+ if(themeNotes.length)events.push({what:'riser',at:second,len:(hitAt-second)/six,layer:'vacio',group:'bed',level:1});
+ // Bring each recalled note of yours to the current chord, in a shared middle register. No automatic octave-up doubling.
  const voiced=(m,c)=>{let target=snapToScale(m,scale,tr);while(target<52)target+=12;while(target>76)target-=12;let best=target,far=Infinity;for(const tone of c.tones)for(let o=-2;o<=2;o++){const n=tone+12*o,d=Math.abs(n-target);if(n>=52&&n<=76&&(d<far||d===far&&n<best)){best=n;far=d;}}return best;};
- // Both theme passes deliberately use the same middle-register interpretation (K7); the abstract score
- // retains its historical fifth, not a promise to transpose the audible closing arrangement.
- let ti=0;for(let i=0;i<score.length;i++){const n=score[i],thematic=n.chapter==='refugio',raw=thematic?themePitch(THEME[ti++%THEME.length][0],scale,tr):n.midi,c=chord(Math.round(n.at/six)),next=score[i+1]?.at??length,seconds=Math.min(n.seconds??n.eighths*EIGHTH,next-n.at,length-n.at);
-  if(seconds<=0)continue;events.push({what:thematic?'cello':'arp',midi:voiced(raw,c),len:Math.max(.1,seconds/six*.8),soft:true,at:n.at,layer:n.chapter,group:'phrase',level:thematic?.8:.9});}
+ // Panel 11 (Q7, D8-B, Wintory): the theme sounds with its own pitches, as the cube plays it (themePitch, in the
+ // World's scale), not brought to the chord: its B and D come back. One octave for the six notes keeps its contour in
+ // the shared register (52–76). Both passes stay the same, in the same voice and rhythm, on top of the dub stabs (Q7,
+ // dub); the abstract score keeps its historical fifth, not a promise to transpose the audible closing arrangement.
+ const themeRaw=THEME.map(([d])=>themePitch(d,scale,tr)),lift=Math.min(...themeRaw)<52?12:0,home=tonicChord(scale,tr).tones;
+ let ti=0;for(let i=0;i<score.length;i++){const n=score[i],thematic=n.chapter==='refugio',c=chord(Math.round(n.at/six)),next=score[i+1]?.at??length,seconds=Math.min(n.seconds??n.eighths*EIGHTH,next-n.at,length-n.at),midi=thematic?themeRaw[ti++%THEME.length]+lift:voiced(n.midi,c),hit=thematic&&n.at===hitAt;
+  if(seconds<=0)continue;events.push({what:thematic?'stab':'dub',midi,...(thematic?{tones:underTop(home,midi),theme:true}:{}),len:hit?(length-n.at)/six:Math.max(.1,seconds/six*.8),at:n.at,layer:n.chapter,group:'phrase',level:.9,...(hit?{golpe:true}:{})});}
+ // The hit, with the theme's tonic: the kick, the sub held to the cut and an impact.
+ if(themeNotes.length){const root=songChord(home).root;events.push({what:'kick',at:hitAt,layer:'llanura',group:'bed',level:1,golpe:true},{what:'sub',midi:root,len:(length-hitAt)/six,at:hitAt,layer:'lago',group:'bed',level:.9,golpe:true},{what:'impact',len:(length-hitAt)/six,at:hitAt,layer:'vacio',group:'bed',level:1,golpe:true});}
  return events.sort((a,b)=>a.at-b.at);}
-export function playFinale(runtime,score,context,at){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus||!runtime.songHit)return null;const out=ac.createGain(),bed=ac.createGain(),phrase=ac.createGain(),end=at+scoreLength(score);out.connect(runtime.bus);bed.gain.value=.36;phrase.gain.value=.42;bed.connect(out);phrase.connect(out);
- out.gain.setValueAtTime(1,at);out.gain.setValueAtTime(1,Math.max(at,end-.45));out.gain.linearRampToValueAtTime(0,end);
- const lanes=new Map();for(const e of finaleArrangement(score,context)){const key=e.group+':'+e.level;if(!lanes.has(key)){const lane=ac.createGain();lane.gain.value=e.level??1;lane.connect(e.group==='phrase'?phrase:bed);lanes.set(key,lane);}runtime.songHit(lanes.get(key),e,at+e.at,context.six);}
- return out;}
+// The Journey's finale in its own dub voices: the chords' filter opens from the start to the hit, and on the last «1»
+// (the end of the score) everything is cut dry, echo and room included.
+export function playFinale(runtime,score,context,at){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus)return null;const dub=createDub(ac,runtime.bus,{six:context.six,level:FINALE_LEVEL});if(!dub)return null;
+ const events=finaleArrangement(score,context),end=at+scoreLength(score),hit=events.find(e=>e.golpe)?.at??scoreLength(score);dub.open(at,0,at+Math.max(.1,hit),1);
+ for(const e of events)dub.hit(e,at+e.at,context.six);dub.cut(end);return dub.out;}
 export function initialize(runtime){
  let run=null;const state={played:0,skipped:false,finished:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());

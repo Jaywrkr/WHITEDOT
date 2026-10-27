@@ -36,7 +36,7 @@ const SC=[0,2,4,5,7,9,11];
 for(const tier of [2,3]){const notes=Object.fromEntries(SONG_IDS.map((id,i)=>[id,[60+i%5,62,64,65,67,69]])),plan=songPlan({final:true,notes,six:.125}),tiers=Object.fromEntries(SONG_IDS.map(id=>[id,tier]));
  const bar=b=>{const out=[];for(let k=b*16;k<(b+1)*16;k++)out.push(...stageEvents(plan,k,[57,61,64],{tiers,notes,scale:SC,tr:0}));return out;};
  for(let b=plan.notesAt;b<plan.silenceAt;b++){const ev=bar(b),mine=ev.filter(e=>e.mine);assert(mine.length/ev.length>=.4,`bar ${b} at tier ${tier}: ${mine.length} of ${ev.length}`);
-  assert(ev.every(e=>e.mine||UNDER_PHRASE.includes(e.layer)),'only the pad and the bass under your phrase');assert(mine.every(e=>e.what==='arp'),'the soft voice of the Journey\'s finale');}
+  assert(ev.every(e=>e.mine||UNDER_PHRASE.includes(e.layer)),'only the pad and the bass under your phrase');assert(mine.every(e=>e.what==='dub'),'the dub voice of the finales (Q7)');}
  for(let b=plan.themeAt;b<plan.themeAt+THEME_BARS/2;b++){const ev=bar(b),other=ev.filter(e=>!e.theme);assert(other.length<=8,`theme bar ${b}: ${other.length} others`);assert(ev.some(e=>e.theme));}
  const second=bar(plan.themeAt+THEME_BARS/2);assert(second.some(e=>e.theme)&&second.some(e=>e.layer==='llanura')&&second.some(e=>e.layer==='jardin'),'the second pass: everything back');
  assert(bar(plan.notesAt-1).some(e=>e.layer==='llanura'),'the layers play before your phrases');
