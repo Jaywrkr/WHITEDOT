@@ -69,7 +69,7 @@ Los verificadores históricos `n-preservation.mjs` y `pulido-preservation.mjs` p
 
 ## Escucha pendiente
 
-Q7 (alpha.222, panel 11) cambia los finales con D8-B y D9-B + C. Los renders están en [escucha](panel/sesion-11/escucha/): Viaje antes y después; once a ★ antes y después; once a ★★ después. Son renders offline en Chromium, sin oído humano. **Pendiente: escucha de Jay**, en teléfono con auriculares (mejor Bluetooth), con fecha y dispositivo anotados aquí. No integrar Q7 sin ella.
+Q7 (alpha.222, panel 11) cambia los finales con D8-B y D9-B + C, en dub techno tras la primera escucha de Jay. Los renders están en [escucha](panel/sesion-11/escucha/): Viaje antes y después; once a ★ antes y después; once a ★★ después. Son renders offline en Chromium, sin oído humano. Corte seco y subida medidos en `journey_finale_mix.py` y `song_stage_mix.py`. **Pendiente: escucha de Jay**, en teléfono con auriculares (mejor Bluetooth), con fecha y dispositivo anotados aquí. No integrar Q7 sin ella.
 
 ## Teléfonos y evidencia anterior
 

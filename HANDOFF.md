@@ -18,7 +18,7 @@ CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio.
 
 ## Qué falta
 
-1. **Q7 · Los finales** (D8, D9), rama `panel11/q7-finales` (`903d2e8`, alpha.222). El tema del final del Viaje suena con sus notas reales; el final de los once quita la música del Mundo de debajo y termina en la tónica. Cambia la música: **no entra sin la escucha de Jay**. Grabaciones antes/después en `docs/panel/sesion-11/escucha/` de esa rama. Antes del PR: traer `main` a la rama y actualizar el verificador de preservación con sus contratos musicales.
+1. **Q7 · Los finales** (D8, D9), rama `panel11/q7-finales` (`903d2e8`, alpha.222). Los dos finales suenan en dub techno, con subida, golpe y corte seco (petición de Jay tras oír los primeros renders). El tema suena con sus notas reales en los stabs; el final de los once quita la música del Mundo de debajo y termina en la tónica. Cambia la música: **no entra sin la escucha de Jay**. Grabaciones antes/después en `docs/panel/sesion-11/escucha/` de esa rama. Antes del PR: traer `main` a la rama y actualizar el verificador de preservación con sus contratos musicales.
 2. **Auditoría externa:** [guía](docs/AUDITORIA_EXTERNA.md). Nadie ha puntuado alpha.221.
 3. **Teléfono y personas:** el toque, la luz con el retraso real del audio, el final del Viaje, el Refugio y volver al día siguiente. Android de gama media, Safari, altavoz, auriculares y Bluetooth. [Protocolo](docs/PRUEBAS_CON_PERSONAS.md); el [registro](docs/aceptacion-e.json) sigue sin participantes.
 4. **Ramas viejas** en GitHub: borrarlas a mano (la sesión no tiene permiso).
