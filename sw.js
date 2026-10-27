@@ -165,6 +165,8 @@ const SHELL=[
  "./src/lab.js",
  "./src/landmarks.js",
  "./src/layers.js",
+ "./src/i18n.js",
+ "./src/i18n-en.js",
  "./src/main.js",
  "./src/rare-cards.js",
  "./src/rare-card-model.js",

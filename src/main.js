@@ -1,3 +1,4 @@
+import {initialize as i18n} from './i18n.js';
 import {initialize as errorLog} from './error-log.js';
 import {requireAccount,savedAccountOwner} from './account-entry.js';
 import {EDITION,cloudEnabled} from './edition.js';
@@ -186,6 +187,7 @@ Object.defineProperties(runtime,{accountClient:{value:accountClient},accountUser
 Object.defineProperty(runtime,'unifiedMusic',{value:true});
 data(runtime);
 progress(runtime);
+i18n(runtime);
 world(runtime);
 musicTerritories(runtime);
 audio(runtime);
