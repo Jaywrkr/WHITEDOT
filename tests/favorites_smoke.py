@@ -31,7 +31,10 @@ with sync_playwright() as p:
   page.locator('#journalClose').click();keep_place_on_reload(page);page.reload(wait_until='domcontentloaded')
   page.wait_for_function('window.__testRuntime && window.__testRuntime.favorites.length===1')
   assert page.evaluate('window.__testRuntime.favorites[0].name')=='Rincón de dub'
-  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();assert 'Rincón de dub' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
+  # Panel 11 (Q4): with achievements unread the Bitácora opens on Logros; the favourite lives in Mapa.
+  unread=page.evaluate('window.__testRuntime.achievementsUnread()');page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click()
+  assert (page.get_attribute('[data-journal-tab="achievements"]','aria-selected')=='true')==unread,'Logros first only with achievements unread'
+  page.locator('[data-journal-tab="places"]').click();assert 'Rincón de dub' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-tab="places"]').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
   page.locator('#journalClose').click()

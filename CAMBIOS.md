@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.218**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.219**. Las entradas describen su revisión, no certifican producción.
+
+## Q4 · Refugio y Lugares legibles · 2.3.0-alpha.219
+
+Rama `panel11/q4-refugio-y-lugares`, sobre `panel11/q3-tu-cancion` (informe de la sesión 11). Wong, Nesbitt y Hodent.
+
+- Refugio: los rótulos de sala se miden con `measureText` y van tras la esquina de su sala, sin cruzar otro texto ni el marco. Si no caben enteros en la franja de la casa, no se dibujan (antes «RAÍZ» salía cortado en horizontal). La barra de pasos y la luz de cada sala quedan sobre su suelo; antes cruzaban el rótulo de la sala de abajo.
+- En vertical, la Voz va bajo el último rótulo de sala, en la franja libre antes del panel. Ya no tapa «Cielo». En horizontal sigue sobre el panel lateral.
+- «PRISMA» va encima del prisma, no sobre la línea del suelo.
+- Salas cerradas, Taller, Prisma y Núcleo a 4,5:1 o más (`#ffffff8c`; eran `#ffffff4d` y `#ffffff73`). Las salas abiertas, `#ffffffcc`.
+- Cada sala cerrada muestra solo la condición más cercana, con un número: «Cielo · faltan 3 lugares» (`roomNeed`: la menor parte que falta; empate, lugares). Tocarla dice lo mismo. La regla D3 no cambia: lugares o ★, lo que ocurra primero.
+- Lugares: «↑ N más arriba» cuando hay filas arriba. ★ a 17 px (cada ★ mide 12 px o más). «Ir» y «Seguir» de 72 px, en la línea del nombre.
+- Con logros sin leer, ☰ → Bitácora abre en Logros (2 toques). Si no, donde se dejó.
+- El mapa llena su caja: mínimo de 4 regiones por lado (eran 12) y margen fijo de 24 px. El círculo del origen no pasa de 12 px.
+- Se conserva lo de Q1: lugares en blanco y `#houseStars` dice «Lugares», sin número. Nuevo ID `#lugaresScrollUp`; los demás se conservan.
+- No cambia: cubo (tampoco el del Refugio), música, mapas, semillas, guardados, salas ni objetos.
+- Pruebas: `tests/refugio-legible.mjs` (la condición más cercana en todos los estados cerrados, un solo número, D3 igual) y `tests/refugio_legible_smoke.py` (teléfono, horizontal y escritorio: ningún texto cruza otro, la Voz ni el marco; rótulos ≥ 4,5:1; Llanura o «↑»; ★ ≥ 10 px; «Ir» y «Seguir» del mismo ancho a ±2 px del nombre; Bitácora en Logros; mapa ≥ 40 % de su caja). `favorites_smoke.py` comprueba que la Bitácora abre en Logros solo con logros sin leer; ese recorrido, `creative_smoke.py`, `glass_smoke.py`, `mirrors_smoke.py`, `encounter_depth_smoke.py` y `smoke.py` pasan a la pestaña Mapa antes de buscar en ella.
 
 ## Q3 · Tu canción se ve crecer y se cierra · 2.3.0-alpha.218
 

@@ -1,6 +1,6 @@
 import {audibleTime,scheduleAudibleCue} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion,frameMemo} from './frame-state.js';
-import {HOUSE_ROOMS,HOUSE_OBJECTS,HOUSE_VERSION,normalizeHouse,houseOwns,placeHouseObject,encodeHouse,decodeHouse,roomAsks} from './house-model.js';
+import {HOUSE_ROOMS,HOUSE_OBJECTS,HOUSE_VERSION,normalizeHouse,houseOwns,placeHouseObject,encodeHouse,decodeHouse,roomNeedText} from './house-model.js';
 import {normalizePlaces,starCount,PLACE_IDS,complete} from './places.js';
 import {livingGlyph} from './living-art.js';
 import {cubeSurface,cubeHalo,cubeAura} from './cube-art.js';
@@ -21,11 +21,28 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  function putAway(kind){const h=own(),o=items(h).find(o=>o.kind===kind);if(!o||o.capsule||o.gardenSeed)return;const ok=edit(()=>{if(o.gardenCard){const b=runtime.gardenState;if(b.readOnly)return false;b.cards=b.cards.filter(id=>id!==o.cardId);}else h.objects=h.objects.filter(p=>p!==o);});if(ok){selectedObject=null;runtime.toast('Objeto guardado.');}palette();}
  function place(kind,point){if(kind.startsWith('garden:'))return runtime.moveGardenObject?.(kind,point);if(kind.startsWith('sound:')){const d=own().decor.find(d=>d.id===kind);if(!d)return false;Object.assign(d,{room:point.room,x:point.x,y:point.y});return true;}return placeHouseObject(own(),kind,point.room,point.x,point.y);}
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
- function roomLabel(c,full,short,x,min,max){for(const text of [full,short].map(t=>t.toLocaleUpperCase('es'))){const w=c.measureText(text).width;if(x+w<=max)return {text,x:Math.max(min,x)};if(max-w>=min)return {text,x:max-w};}return null;}
+ function roomLabel(c,full,short,x,min,max){for(const text of [full,short].map(t=>t.toLocaleUpperCase('es'))){const w=c.measureText(text).width;if(x+w<=max)return {text,x:Math.max(min,x),w};if(max-w>=min)return {text,x:max-w,w};}return null;}
+ // Panel 11 (Q4): every text the Refugio draws is measured and kept, with the frame's lines, so a test can check that no
+ // text crosses another or a line. The Voz takes the free band under the last room label (see voiceSlot).
+ let layout={texts:[],lines:[],voice:null};
+ function noteText(c,text,x,y,align='left'){const m=c.measureText(text),w=m.width,a=m.actualBoundingBoxAscent||8,d=m.actualBoundingBoxDescent||0,x0=align==='center'?x-w/2:x;layout.texts.push({text,x:x0,y:y-a,w,h:a+d,color:String(c.fillStyle),alpha:c.globalAlpha});return {x:x0,y:y-a,w,h:a+d};}
+ // The frame on screen: the corner brackets of every room and the floor of the open ones (house-view.js paintShell).
+ function frameLines(h,k){const out=[];for(const r of HOUSE_ROOMS){const b=roomBox(r.id),a=toScreen(b.x,b.y),z=toScreen(b.x+b.w,b.y+b.h),L=18*k;
+  for(const [x,y,dx,dy] of [[a.x,a.y,1,1],[z.x,a.y,-1,1],[a.x,z.y,1,-1],[z.x,z.y,-1,-1]]){out.push({x0:x,y0:y,x1:x+dx*L,y1:y},{x0:x,y0:y,x1:x,y1:y+dy*L});}
+  if(h.unlocked.includes(r.id))out.push({x0:a.x,y0:z.y,x1:z.x,y1:z.y});}
+  // Only what the house's band shows: draw() clips to it.
+  const v=view(),X0=0,X1=v.right,Y0=v.top,Y1=v.bottom+8;return out.map(l=>({x0:Math.max(X0,Math.min(l.x0,l.x1)),x1:Math.min(X1,Math.max(l.x0,l.x1)),y0:Math.max(Y0,Math.min(l.y0,l.y1)),y1:Math.min(Y1,Math.max(l.y0,l.y1))})).filter(l=>l.x0<=l.x1&&l.y0<=l.y1);}
+ // The Voz under the last room label, in the free band before the panel; null keeps its usual place (the side column in
+ // landscape, the top otherwise) when the band is too short.
+ function voiceSlot(h,labels){const v=view();if(!v.panel||v.side||!labels.length)return null;
+  const el=$('voice'),need=Math.max(64,el&&!el.hidden?el.getBoundingClientRect().height:0);let top=Math.max(...labels.map(l=>l.y+l.h))+10;
+  for(const r of HOUSE_ROOMS){if(!h.unlocked.includes(r.id))continue;const b=roomBox(r.id),a=toScreen(b.x,b.y).y,z=toScreen(b.x,b.y+b.h).y;if(a<top+need&&z+6>top)top=z+10;}
+  return top+need<=v.bottom?Math.round(top):null;}
+ let voiceTop=null;function placeVoice(y){if(y===voiceTop)return;voiceTop=y;const st=document.documentElement.style;if(y==null)st.removeProperty('--house-voice-top');else st.setProperty('--house-voice-top',y+'px');}
  // Free screen between the top counters and the house panel. In landscape the panel stands at the side:
  // the house then fits in the band to its left, from the counters to the bottom (panel 10, Nesbitt #1).
  const view=()=>frameMemo('house:view',()=>{const panel=$('housePanel').hidden?null:$('housePanel').getBoundingClientRect(),side=!!panel&&panel.width>0&&panel.left>runtime.W*.5,right=side?Math.max(240,panel.left-8):runtime.W,
-  bottom=!panel?runtime.H:side?runtime.H-8:panel.top-8,hud=Math.max(0,...[...document.querySelectorAll('.hud,#goal')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().bottom)),top=Math.min(Math.max(0,hud+8),bottom-160);return {top,bottom:Math.max(top+160,Math.min(runtime.H,bottom)),left:0,right};});
+  bottom=!panel?runtime.H:side?runtime.H-8:panel.top-8,hud=Math.max(0,...[...document.querySelectorAll('.hud,#goal')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().bottom)),top=Math.min(Math.max(0,hud+8),bottom-160);return {top,bottom:Math.max(top+160,Math.min(runtime.H,bottom)),left:0,right,side,panel:!!panel};});
  const viewH=()=>{const v=view();return v.bottom-v.top;},viewW=()=>{const v=view();return v.right-v.left;},midX=()=>{const v=view();return (v.left+v.right)/2;};
  const geometry=()=>{const k=viewScale(viewW(),viewH(),overview);return {k,overview,W:viewW(),H:viewH(),cam:cam||{x:HOUSE_W/2,y:HOUSE_H/2}};};
  // While it opens, the Refugio unfolds out of the cube: 0 folded, 1 open.
@@ -62,9 +79,9 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  function back(){$('studioPanel').hidden=true;active=true;cam=null;$('housePanel').hidden=false;palette();runtime.hud();}
  function enter(){visit=null;action='walk';overview=false;cam=null;runtime.enterStudio({house:true});active=true;standFromSave(own());if(!own().readOnly){own().visited=true;own().seen=runtime.houseSeenNow?.();}runtime.save();$('studioPanel').hidden=true;$('housePanel').hidden=false;palette();}
  // What arrived while you were inside (a trophy unlocked a moment later) counts as seen too.
- function exit(){if(active&&!visit&&!own().readOnly)own().seen=runtime.houseSeenNow?.();if(active)saveStand(current(),true);drag=null;active=false;visit=null;$('housePanel').hidden=true;runtime.exitStudio();}
+ function exit(){placeVoice(null);if(active&&!visit&&!own().readOnly)own().seen=runtime.houseSeenNow?.();if(active)saveStand(current(),true);drag=null;active=false;visit=null;$('housePanel').hidden=true;runtime.exitStudio();}
  function workshop(){drag=null;active=false;visit=null;$('housePanel').hidden=true;runtime.renderBag();$('studioPanel').hidden=false;}
- function tap(px,py){const h=current();if(h.readOnly)return;for(const r of HOUSE_ROOMS){const rect=roomRect(r.id),b=roomBox(r.id),top=toScreen(b.x,b.y),bottom=toScreen(b.x+b.w,b.y+b.h+12);if(px<top.x||py<top.y||px>bottom.x||py>bottom.y)continue;if(!h.unlocked.includes(r.id)){runtime.toast(r.name+': '+roomAsks(r)+'.');return;}const x=Math.max(0,Math.min(1,(px-rect.x)/rect.w)),y=Math.max(0,Math.min(1,(py-rect.y)/rect.h));const nearest=items(h).filter(o=>o.room===r.id&&(!o.gardenSeed||action==='walk')).sort((a,b)=>Math.hypot((a.x-x)*rect.w,(a.y-y)*rect.h)-Math.hypot((b.x-x)*rect.w,(b.y-y)*rect.h))[0],near=nearest&&Math.hypot((nearest.x-x)*rect.w,(nearest.y-y)*rect.h)<24;
+ function tap(px,py){const h=current();if(h.readOnly)return;for(const r of HOUSE_ROOMS){const rect=roomRect(r.id),b=roomBox(r.id),top=toScreen(b.x,b.y),bottom=toScreen(b.x+b.w,b.y+b.h+12);if(px<top.x||py<top.y||px>bottom.x||py>bottom.y)continue;if(!h.unlocked.includes(r.id)){runtime.toast(r.name+': '+roomNeedText(r,progress())+'.');return;}const x=Math.max(0,Math.min(1,(px-rect.x)/rect.w)),y=Math.max(0,Math.min(1,(py-rect.y)/rect.h));const nearest=items(h).filter(o=>o.room===r.id&&(!o.gardenSeed||action==='walk')).sort((a,b)=>Math.hypot((a.x-x)*rect.w,(a.y-y)*rect.h)-Math.hypot((b.x-x)*rect.w,(b.y-y)*rect.h))[0],near=nearest&&Math.hypot((nearest.x-x)*rect.w,(nearest.y-y)*rect.h)<24;
    if(!visit&&!h.readOnly&&action==='place'){const d=HOUSE_OBJECTS.find(p=>p.id===selected);if(!houseOwns(d,runtime.S))return;if(edit(()=>placeHouseObject(h,selected,r.id,x,y)))runtime.now(t=>runtime.playHouseObject(h.objects.find(p=>p.kind===selected),t,h));palette();return;}
    else if(!visit&&!h.readOnly&&action==='erase'){if(near)putAway(nearest.kind);return;}
    else if(near)runtime.now(t=>runtime.playHouseObject(nearest,t,h));
@@ -83,23 +100,32 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   for(const th of THREADS)if(th.rooms.every(r=>h.unlocked.includes(r))){const d=toScreen(th.x,th.y0+(calm()?.5:(t/3200)%1)*(th.y1-th.y0));c.fillStyle=ink;c.fillRect(Math.round(d.x-1.5),Math.round(d.y-1.5),3,3);}
   // The bar walks across each open room: a soft light on the current step.
   const now=runtime.ac?audibleTime(runtime.ac):0;while(cues.length>1&&cues[1].time<=now)cues.shift();const cue=cues[0]&&cues[0].time<=now&&now-cues[0].time<.6?cues[0]:null;
-  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),label=toScreen(b.x+26,b.y+22);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.fillStyle=ok?'#ffffff8c':'#ffffff4d';
-   // Room labels are measured: one that would cross the screen edge is right-aligned inside it; if even then it
-   // does not fit, only the name; a room off screen keeps no label (the tap still says what opens it). Panel 10, Nesbitt #21.
-   const lx=roomLabel(c,ok?r.name:r.name+' · '+roomAsks(r),r.name,label.x,Math.max(v.left+16,toScreen(b.x,b.y).x+8),v.right-16);if(lx)c.fillText(lx.text,lx.x,label.y);c.letterSpacing='0px';
+  layout={texts:[],lines:frameLines(h,k),voice:null};const roomTexts=[],progressNow=progress();
+  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),corner=toScreen(b.x,b.y),far=toScreen(b.x+b.w,b.y+b.h);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';
+   // Panel 11 (Q4): labels are measured and sit clear of the drawing: after the corner bracket, under the room's top,
+   // never on a tick, a light or the frame. Closed rooms read at 4.5:1 or more and show only the nearer condition
+   // («Cielo · faltan 3 lugares»); the rule (D3) is unchanged. Too long for the screen, only the name; a label that would
+   // not fit whole in the band is not drawn (the tap still says what opens the room). Panel 10, Nesbitt #21.
+   c.fillStyle=ok?'#ffffffcc':'#ffffff8c';const asc=c.measureText('M').actualBoundingBoxAscent||8,base=corner.y+Math.max(22*k,asc+6);
+   const lx=roomLabel(c,ok?r.name:r.name+' · '+roomNeedText(r,progressNow),r.name,corner.x+18*k+6,Math.max(v.left+16,corner.x+18*k+6),Math.min(v.right-16,far.x-18*k-6));
+   if(lx&&base-asc>=v.top&&base+3<=v.bottom){c.fillText(lx.text,lx.x,base);roomTexts.push(noteText(c,lx.text,lx.x,base));}c.letterSpacing='0px';
    if(!ok)continue;
-   if(cue&&runtime.S.sound&&!calm()){const x=rect.x+(cue.s+.5)/16*rect.w,grad=c.createLinearGradient(0,rect.y,0,rect.y+rect.h);grad.addColorStop(0,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(255,255,255,.10)');c.fillStyle=grad;c.fillRect(x-rect.w/40,rect.y-20,rect.w/20,rect.h+46);}
+   // The light and the bar stay inside their chamber, above its floor.
+   const floorY=far.y,tickY=Math.round(Math.min(rect.y+rect.h+30,floorY-7));
+   if(cue&&runtime.S.sound&&!calm()){const x=rect.x+(cue.s+.5)/16*rect.w,y0=Math.max(corner.y,rect.y-20),y1=Math.min(floorY-1,rect.y+rect.h+26),grad=c.createLinearGradient(0,rect.y,0,rect.y+rect.h);grad.addColorStop(0,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(255,255,255,.10)');c.fillStyle=grad;c.fillRect(x-rect.w/40,y0,rect.w/20,Math.max(0,y1-y0));}
    // The bar under each chamber: sixteen ticks, the current one in gold.
-   for(let i=0;i<16;i++){c.fillStyle=cue&&cue.s===i?ink:'#ffffff40';c.fillRect(Math.round(rect.x+(i+.5)/16*rect.w),Math.round(rect.y+rect.h+30),i%4?1:2,i%4?2:4);}
+   for(let i=0;i<16;i++){c.fillStyle=cue&&cue.s===i?ink:'#ffffff40';c.fillRect(Math.round(rect.x+(i+.5)/16*rect.w),tickY,i%4?1:2,i%4?2:4);}
+   layout.lines.push({x0:rect.x,y0:tickY,x1:rect.x+rect.w,y1:tickY+4,kind:'ticks'});
    for(const o of items(h).filter(o=>o.room===r.id)){const def=definition(o);if(!def)continue;const px=rect.x+o.x*rect.w,py=rect.y+o.y*rect.h,response=Math.max(0,1-(t-(signals.get(o.kind)??-Infinity))/650),col=h.tints?.[o.kind]||def.ink||(def.source==='cube:color:ffffff'?'#fff':'#f0d27a');
     c.save();c.translate(px,py);if(response){c.fillStyle=col;c.globalAlpha=response*.25;c.beginPath();c.arc(0,0,14+(1-response)*10,0,6.283);c.fill();c.globalAlpha=1;}
     c.strokeStyle=c.fillStyle=col;livingGlyph(c,{shape:def.shape,anatomy:def.appearance,size:Math.max(6,8*Math.min(1.3,k*1.4))+response*2,phase:o.x*6},t);if(o.kind===selectedObject){c.strokeStyle='#fff';c.strokeRect(-13,-13,26,26);}c.restore();}}
   c.globalAlpha=fade;if(drag?.point){const rr=roomRect(drag.point.room),def=HOUSE_OBJECTS.find(p=>p.id===drag.kind);c.save();c.globalAlpha=.55;c.translate(rr.x+drag.point.x*rr.w,rr.y+drag.point.y*rr.h);c.strokeStyle='#fff';livingGlyph(c,{shape:def?.shape||'seed',size:9,phase:0},t);c.strokeRect(-14,-14,28,28);c.restore();}
   runtime.cubeShopSoundTick?.(t);
   // Frames, trophies, showcases, garden plants and visiting creatures.
-  runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h});
+  runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h,note:noteText});
   // Capsule decorations, the capsule machine and the Taller label.
-  runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night});runtime.houseGuideTick?.();
+  runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night,note:noteText});runtime.houseGuideTick?.();
+  placeVoice(open<1?voiceTop:voiceSlot(h,roomTexts));layout.voice=voiceTop;
   c.restore();
   const here=roomAt(floor,fx)==='jardin'&&!visit&&!h.readOnly;if(here!==gardenRoom){gardenRoom=here;$('houseGardenTools').hidden=!here;}
   // The cube, dressed with everything it wears, standing on its floor.
@@ -127,5 +153,5 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  Object.defineProperties(runtime,{houseVisualCue:{get:()=>((o,time)=>{const h=current();scheduleAudibleCue(runtime,time,()=>{if(active&&current()===h)signals.set(o.kind,performance.now());});})},housePointerDown:{get:()=>down},housePointerMove:{get:()=>move},housePointerUp:{get:()=>up},houseActive:{get:()=>()=>active&&runtime.S.mode==='studio'},currentHouse:{get:()=>current},enterHouse:{get:()=>enter},houseTap:{get:()=>tap},houseStep:{get:()=>draw},houseStepCue:{get:()=>(s,time)=>{cues.push({s,time});if(cues.length>32)cues.splice(0,cues.length-32);}},houseSettled:{get:()=>()=>settled>=3&&!target&&!climb&&!landing},houseMotion:{get:()=>()=>({x:cubeAt().x,y:cubeAt().y})},exitHouse:{get:()=>exit},housePulse:{get:()=>()=>{if(!active)return;pulseAt=performance.now();counts.pulse++;const at=cubeAt(),h=current();runtime.houseCollectionPulse?.({floor,x:at.x});
    if(!runtime.S.sound||h.readOnly)return;runtime.audio();const region=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
    const near=items(h).filter(o=>definition(o)&&roomBox(o.room)?.floor===floor).map(o=>{const b=roomBox(o.room);return {o,d:Math.abs(b.x+18+o.x*(b.w-36)-at.x)};}).filter(e=>e.d<220).sort((a,b)=>a.d-b.d).slice(0,4);
-   runtime.now(t=>{runtime.playVoice('pulso',0,t,region,false,.5,null,'player');near.forEach((e,i)=>runtime.playHouseObject(e.o,t+(i+1)*(runtime.SIX||.125),h));});}},houseSounds:{get:()=>()=>({...counts,ambience:runtime.houseAmbience?.()||''})},houseCube:{get:()=>()=>lastCube},houseStand:{get:()=>()=>({floor,fx,room:roomAt(floor,fx),climbing:!!climb,overview,target:!!target})},houseWalkTo:{get:()=>(room,x)=>{const b=roomBox(room);if(b)target={floor:b.floor,fx:b.x+18+x*(b.w-36)};}},houseGeometry:{get:()=>geometry},houseRoomRect:{get:()=>roomRect},houseOpenWorkshop:{get:()=>workshop},landHouse:{get:()=>land},houseBack:{get:()=>back},houseLanding:{get:()=>()=>!!landing},houseVisiting:{get:()=>()=>!!visit},houseToScreen:{get:()=>toScreen},houseOwns:{get:()=>d=>houseOwns(d,runtime.S)},houseObjects:{get:()=>HOUSE_OBJECTS}});own();
+   runtime.now(t=>{runtime.playVoice('pulso',0,t,region,false,.5,null,'player');near.forEach((e,i)=>runtime.playHouseObject(e.o,t+(i+1)*(runtime.SIX||.125),h));});}},houseSounds:{get:()=>()=>({...counts,ambience:runtime.houseAmbience?.()||''})},houseCube:{get:()=>()=>lastCube},houseStand:{get:()=>()=>({floor,fx,room:roomAt(floor,fx),climbing:!!climb,overview,target:!!target})},houseWalkTo:{get:()=>(room,x)=>{const b=roomBox(room);if(b)target={floor:b.floor,fx:b.x+18+x*(b.w-36)};}},houseGeometry:{get:()=>geometry},houseRoomRect:{get:()=>roomRect},houseLayout:{get:()=>()=>structuredClone(layout)},houseOpenWorkshop:{get:()=>workshop},landHouse:{get:()=>land},houseBack:{get:()=>back},houseLanding:{get:()=>()=>!!landing},houseVisiting:{get:()=>()=>!!visit},houseToScreen:{get:()=>toScreen},houseOwns:{get:()=>d=>houseOwns(d,runtime.S)},houseObjects:{get:()=>HOUSE_OBJECTS}});own();
 }

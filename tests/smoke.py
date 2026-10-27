@@ -29,6 +29,8 @@ with sync_playwright() as p:
   page.screenshot(path='/tmp/whitedot-polish-'+label+'.png')
   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click()
   assert page.locator('#mJournal').is_visible()
+  # Panel 11 (Q4): with achievements unread the Bitácora opens on Logros; the regions live in Mapa.
+  page.locator('[data-journal-tab="places"]').click()
   page.locator('[data-journal-detail^="region:"] > summary').first.click();assert 'Gravedad' in page.locator('#journalBody').inner_text()
   page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('formas')
   page.evaluate('''()=>{const r=window.__testRuntime;r.discover(r.regionOfPos(900,900).species[0]);}''')

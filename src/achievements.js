@@ -25,5 +25,5 @@ export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH
   if(runtime.save()===false){for(const p of earned)delete runtime.S.ach[p.id];if(rewards)runtime.S.rewards=rewards;return;}
   earnedNotice(earned.map(p=>p.id));
 }
- Object.defineProperties(runtime,{achievementsCalm:{get:()=>calm},achievementEarned:{get:()=>earnedNotice},quietAchievements:{get:()=>quiet},acknowledgeAchievements:{get:()=>acknowledge},achievementRetired:{get:()=>id=>id==='dj'},achievementRules:{get:()=>rules},achievementMeta:{get:()=>a=>achievementMeta(a,rules)},achievementProgress:{get:()=>p=>p.adventure?adventureProgress(p,runtime.S):achievementProgress(p,runtime.S)},achievementsTick:{get:()=>check}});
+ Object.defineProperties(runtime,{achievementsCalm:{get:()=>calm},achievementEarned:{get:()=>earnedNotice},quietAchievements:{get:()=>quiet},acknowledgeAchievements:{get:()=>acknowledge},achievementRetired:{get:()=>id=>id==='dj'},achievementRules:{get:()=>rules},achievementMeta:{get:()=>a=>achievementMeta(a,rules)},achievementProgress:{get:()=>p=>p.adventure?adventureProgress(p,runtime.S):achievementProgress(p,runtime.S)},achievementsTick:{get:()=>check},achievementsUnread:{get:()=>()=>{sync();return runtime.ACH.some(a=>owner.ach[a[0]]&&!seen.includes(a[0]));}}});
 }
