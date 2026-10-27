@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {finaleScore,chapterStarts,SEGMENT,noteLengths,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
+import {finaleScore,chapterStarts,SEGMENT,noteLengths,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,QUICK,initialize} from '../src/journey-finale.js';
 import {THEME,themePitch} from '../src/journey-pulse.js';
 // The score: your notes per chapter in the Journey's order (up to six each), then the theme twice in A major, the second a fifth up.
 const score=finaleScore({lago:[60,62],llanura:[57,59,60,62,64,65,67,69],otro:[50],vacio:['x',64]});
@@ -30,11 +30,11 @@ initialize(r);assert.equal(r.journeyFinale(),true);assert.equal(landed,1);assert
 const st=r.journeyFinaleState();assert(st.running&&st.notes===2+12);
 const step=s=>{clock+=s*1000;const f=frames.splice(0);f.forEach(fn=>fn());};
 step(1);assert.equal(r.journeyFinaleState().credits,false);
-step(st.seconds-7+.1);assert.equal(r.journeyFinaleState().credits,true,'credits after the silence');assert.equal(credits.lines.length,CREDIT_LINES.length);
-step(7);assert.equal(r.journeyFinaleState().running,false);assert.equal(r.S.journey.finished,true);assert.equal(mode,'libre');assert.deepEqual(toasts,[],'panel 11 (Q1): one message, «Tu mundo se abrió»; no notice after it');assert.equal(quieted,1,'«Prólogo» goes to the Bitácora unannounced');
+step(st.seconds-QUICK.credits+.1);assert.equal(r.journeyFinaleState().credits,true,'credits after the silence');assert.equal(credits.lines.length,CREDIT_LINES.length);
+step(QUICK.credits);assert.equal(r.journeyFinaleState().running,false);assert.equal(r.S.journey.finished,true);assert.equal(mode,'libre');assert.deepEqual(toasts,[],'panel 11 (Q1): one message, «Tu mundo se abrió»; no notice after it');assert.equal(quieted,1,'«Prólogo» goes to the Bitácora unannounced');
 assert.equal(r.journeyFinale(),false,'only once');assert.equal(landed,1,'finished replay never sends you to the Refugio');assert.equal(exited,1);assert.equal(guided,1);assert.equal(cancelled,2,'no leftover victory or song at the start');
-// Skipping after two seconds ends it the same way.
-const r2={...r,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{}},sound:false}};mode='viaje';initialize(r2);created.hidden=true;r2.journeyFinale();clock+=1000;assert.equal(el.onclick,null,'background is never a skip target');skip.onclick();assert(r2.journeyFinaleState().running,'not in the first two seconds');clock+=1500;skip.onclick();assert.equal(r2.journeyFinaleState().skipped,true);assert.equal(r2.S.journey.finished,true);assert.equal(exited,2,'skipping exits to the free World too');
+// «Saltar» (Jay, alpha.226) answers after .6 s and ends it the same way.
+const r2={...r,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{}},sound:false}};mode='viaje';initialize(r2);created.hidden=true;r2.journeyFinale();clock+=400;assert.equal(el.onclick,null,'background is never a skip target');skip.onclick();assert(r2.journeyFinaleState().running,'not in the first .6 s');clock+=400;skip.onclick();assert.equal(r2.journeyFinaleState().skipped,true);assert.equal(r2.S.journey.finished,true);assert.equal(exited,2,'skipping exits to the free World too');
 // A failed save keeps the Journey open.
 const r3={...r,S:{journey:{version:1,mode:'libre',chapter:6,notes:{}},sound:false},save:()=>false};mode='libre';initialize(r3);r3.journeyFinale();r3.journeyFinaleSkip();assert.equal(r3.S.journey.finished,undefined);assert(r3.journeyFinaleState().running&&!el.hidden,'failed save retains an actionable finale');r3.save=()=>true;r3.journeyFinaleSkip();assert(r3.S.journey.finished&&!r3.journeyFinaleState().running,'retry closes safely');
 // The festival build: the whole Journey since plan I5, your phrase stays on screen and «Otra persona» starts again.
@@ -43,4 +43,6 @@ let restarts=0;const r4={...r,S:{journey:{version:1,mode:'viaje',chapter:2,notes
 assert.equal(r4.journeyFinale({festival:true}),true,'the festival plays even on a finished save');assert.equal(r4.journeyFinaleState().notes,2+12,'the Llanura and the Bosque, both in the festival');
 clock+=1e6;frames.splice(0).forEach(f=>f());assert.equal(r4.journeyFinaleState().running,false);assert.equal(credits.lines.length,FESTIVAL_LINES.length);assert.equal(mode,'viaje','the festival never opens the free World');
 const again=el.children.find(b=>b.id==='journeyAgain');assert(again&&again.textContent==='Otra persona');again.onclick();assert.equal(restarts,1);
+// Jay (alpha.226): shorter around the same score, never slower than 120 BPM; a slow world keeps the notes, not the tempo.
+{const slow={...r,SIX:1/6,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{llanura:[57,59]}},sound:false}};mode='viaje';initialize(slow);slow.journeyFinale();const s=slow.journeyFinaleState();assert.equal(s.notes,2+12);assert(Math.abs(s.seconds-(QUICK.gather+QUICK.silence+QUICK.credits+scoreLength(finaleScore({llanura:[57,59]}))))<1e-9,s.seconds);assert(s.seconds<1.6+2+7+scoreLength(finaleScore({llanura:[57,59]}))*(1/6)/.125-8,'at least eight seconds shorter than before in a slow world');slow.journeyFinaleSkip();}
 console.log('PASS journey finale: your notes per chapter then the theme twice in major, gold sky and credits, the end is kept and the free World opens, once, skippable, safe on a failed save; the festival ends on your phrase and starts again for the next player');

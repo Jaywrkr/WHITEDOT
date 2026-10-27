@@ -768,3 +768,15 @@ input[type="checkbox"]:checked{border-color:var(--ink)}
 @media(max-height:500px){#mMenu .menu-group.primary>h3{display:none}#mMenu .menu-group.primary .tiles>button:not(#bContinue){flex-direction:row;align-items:center;min-height:48px;padding:8px}#mMenu .menu-group.primary .tiles>#bContinue{min-height:48px}}
 /* L2 · English: a superbiome name stays whole (the table scrolls sideways). Spanish keeps its layout. */
 html[lang="en"] .super-grid th{max-width:none}
+/* Jay (27 Oct, alpha.226) · «Saltar» in the Journey's finale: small, quiet, in the top corner, black with a thin line. */
+#journeyFinale .journey-skip{top:calc(var(--safe-top,0px) + 12px);right:12px;bottom:auto;left:auto;transform:none;min-width:72px;min-height:44px;padding:0 14px;background:#000;color:#ffffffc0;border:1px solid #ffffff40;font:11px var(--mono);letter-spacing:.06em;cursor:pointer}
+#journeyFinale .journey-skip:not(:disabled):hover,#journeyFinale .journey-skip:focus-visible{color:#fff;border-color:#fff}
+/* Jay · the magic box notice: one short line, small, whole on a phone; the details stay one tap away. */
+#celebration[data-layout="compact"]{width:min(300px,calc(100vw - 32px));max-height:none;overflow:visible}
+#celebration[data-layout="compact"] .celebration-card{display:flex;align-items:center;gap:8px;padding:4px 44px 4px 12px;min-height:44px;box-sizing:border-box}
+#celebration[data-layout="compact"] .celebration-card>:not(#celebrationLine):not(#celebrationContinue):not(#celebrationDismiss){display:none!important}
+#celebrationLine{flex:1 1 auto;min-width:0;font:12px/1.45 var(--mono);color:#fff;white-space:normal;overflow-wrap:anywhere}
+#celebrationLine small{color:var(--rare-ink,#f0d27a);font-size:11px;white-space:nowrap}
+#celebration[data-layout="compact"] #celebrationContinue{flex:0 0 auto;min-height:44px;min-width:0;padding:0 8px;font-size:11px;border-color:#ffffff40!important}
+#celebration[data-layout="compact"] #celebrationDismiss{height:100%;min-height:44px}
+#celebration[data-layout="full"] #celebrationLine{display:none}

@@ -102,4 +102,6 @@ Los 120 logros nuevos incluyen 40 hitos de encuentros, uno por cada actividad, u
 El primer aviso importante permanece pequeño; «Ver tarjeta» abre el detalle voluntario. Allí se detienen movimiento y cuenta atrás, la música continúa y los demás avisos esperan. Incluye función musical, frecuencia condicional sin inventar probabilidades por hora, lugar e identidad. «Ver en mi libro» conserva el hallazgo seleccionado. Repeticiones no reabren continuamente la presentación. Elegir otra interpretación se revierte si no se guarda.
 
 
+**Caja misteriosa (Jay, alpha.226).** Al abrir una caja, el aviso es una sola línea con gracia y los segundos del poder (por ejemplo «¡Zum! Eres cometa: corre y suena. 20 s»), con **Ver** y ×. Mide 300 px de ancho y unos 60 de alto, sin recortes, en 390×844 y en escritorio; antes eran seis líneas en una caja de 180 px que cortaba el botón. Las líneas están en `BOX_LINES` (`celebration.js`) y en inglés en `i18n-en.js`. «Ver» abre la tarjeta completa de siempre.
+
 N8 conserva los datos de aprendizaje incompletos y los presenta mediante una vista segura. Si varias tarjetas pertenecen a la misma fuente, la última interpretación elegida controla esa fuente; elección y asignación se guardan juntas o se revierten. El jardín indica cuándo una tarjeta de transformación aporta melodía allí: no promete activar su poder fuera del encuentro.

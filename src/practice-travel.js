@@ -8,6 +8,7 @@ import {populationProfile,populatedChunk} from './living-populations.js';
 import {encodePlace} from './share-tools.js';
 import {placeAddress} from './world-identity.js';
 import {hybridIdentity} from './musical-hybrids.js';
+import {SPARK_JUMP_COST} from './sparks-model.js';
 const validPoint=p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)<1e12&&Math.abs(p.y)<1e12&&['superficie','bajo','cielo'].includes(p.layer);
 export function normalizePracticeTravel(raw){
  if(Number.isInteger(raw?.version)&&raw.version>1)return raw;
@@ -55,8 +56,15 @@ export function nextArrivalPlace(runtime,state){
 export function initialize(runtime){
  const $=runtime.$;let counter=0;runtime.S.practiceTravel=normalizePracticeTravel(runtime.S.practiceTravel);
  const blocked=()=>runtime.activityActive||runtime.S.practiceTravel?.version>1||!!runtime.duetRoom||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!runtime.scanning;
- function ui(){const world=runtime.inWorld();$('bJump').hidden=!world||runtime.sparkJumpEarned?.()!==true;$('bJumpBack').hidden=!world||!runtime.S.practiceTravel?.previous;
-  $('bJump').disabled=blocked()||runtime.canAffordSparkJump?.()===false;$('bJumpBack').disabled=blocked();}
+ // Jay (27 Oct 2026, alpha.226): no jump to another place inside a level, so nobody ends up far from it: a chapter of the
+ // Journey still being played, a round of a place or the Journey's finale. Once the Journey is over the jump is there
+ // from the first moment (its first one is free, sparks.js), and «Volver al punto anterior» is always free.
+ const inLevel=()=>{const j=runtime.S.journey;return !!(runtime.placeRun?.()||runtime.journeyFinaleState?.()?.running||j&&j.finished!==true&&j.mode==='viaje');};
+ function ui(){const world=runtime.inWorld(),level=inLevel(),after=runtime.S.journey?.finished===true;$('bJump').hidden=!world||level||!after&&runtime.sparkJumpEarned?.()!==true;$('bJumpBack').hidden=!world||level||!runtime.S.practiceTravel?.previous;
+  $('bJump').disabled=blocked()||runtime.canAffordSparkJump?.()===false;$('bJumpBack').disabled=blocked();
+  const label='Otro paisaje · '+(runtime.sparkJumpFree?.()?'gratis':SPARK_JUMP_COST+' ✦');if($('bJump').textContent!==label)$('bJump').textContent=label;
+  // «Viajar a otra tierra» leaves this world: not from inside a round either.
+  const worlds=$('bWorlds');if(worlds&&worlds.hidden!==level)worlds.hidden=level;}
  function move(point,state,prepare=null,updateAddress=true){
   const old={wx:runtime.S.wx,wy:runtime.S.wy,layer:runtime.S.layer,destination:runtime.S.destination,practiceTravel:runtime.S.practiceTravel};
   state.sights=[...(state.sights||[]),explorationContext(runtime.regionOfPos(point.x,point.y),point.x,point.y,runtime.seedOf).signature].slice(-8);
@@ -69,21 +77,21 @@ export function initialize(runtime){
   runtime.waves.length=0;runtime.clearSoundCues?.();runtime.clearMusicalFrames?.();runtime.curRegion=null;runtime.RP=null;
   if(updateAddress&&!runtime.labMode&&typeof location!=='undefined'&&typeof history!=='undefined'){const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(runtime.worldIdentity,point.x,point.y,point.layer)));history.replaceState(null,'',url.href);}
   runtime.hud();ui();return true;}
- function jump(){if(!runtime.inWorld()||blocked()||openSurface('.modal:not([hidden])'))return false;
+ function jump(){if(!runtime.inWorld()||inLevel()||blocked()||openSurface('.modal:not([hidden])'))return false;
   // Commit the current place/progress before replacing coordinates. UI itself emits no note.
   if(!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds,state.sights);
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
   state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
   const ticket=runtime.reserveSparkJump?.();if(ticket===false)return false;
-  if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null)){runtime.cancelSparkJump?.(ticket);return false;}const place=`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`;runtime.confirmSparkJump?.(place);if(!runtime.confirmSparkJump)runtime.toast(place);
+  if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null)){runtime.cancelSparkJump?.(ticket);return false;}const place=`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`;runtime.confirmSparkJump?.(place,ticket);if(!runtime.confirmSparkJump)runtime.toast(place);
   // The arrival is celebrated with two notes of the new place's music, on the beat.
   if(runtime.S.sound&&runtime.ac?.state==='running')runtime.beatSoon?.(time=>{const tones=runtime.chordTones?.()||[];for(let i=0;i<2&&tones.length;i++)runtime.hookInst?.('feltpiano',tones[i%tones.length]+12,time+i*(runtime.SIX||.125)*2,runtime.vel(.06),point.region);},null,'player');
   return true;
  }
- function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
+ function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||inLevel()||blocked()||!validPoint(p)||!runtime.save())return false;
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};const state={...normalizePracticeTravel(runtime.S.practiceTravel),previous:here};if(!move(p,state))return false;runtime.sparkReturn?.();$('mMenu').hidden=true;return true;}
- function travel(point){if(!runtime.inWorld()||blocked()||!validPoint(point)||runtime.duetRoom||!runtime.save())return false;
+ function travel(point){if(!runtime.inWorld()||inLevel()||blocked()||!validPoint(point)||runtime.duetRoom||!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),band=labScore(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng);state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.sounds=[...state.sounds,practiceSoundIdentity(band,musicIdentity(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng,runtime.GEN))].slice(-8);return move(point,state);}
  let arrived=false;
  function dailyArrival(){
@@ -102,5 +110,5 @@ export function initialize(runtime){
  // only a save left in the Mundo across midnight gets the new day's arrival on load. Explicit addresses and preview saves keep their coordinates.
  if(runtime.scopeHadSave&&runtime.S.mode==='world'&&runtime.S.lastWorldDay!==runtime.S.todayKey&&dailyArrival()){runtime.S.lastWorldDay=runtime.S.todayKey;runtime.save();}
  $('bJump').onclick=jump;$('bJumpBack').onclick=back;setInterval(ui,250);ui();
- Object.defineProperties(runtime,{canPracticeTravel:{get:()=>()=>!blocked()&&!runtime.duetRoom},travelPracticePoint:{get:()=>travel},dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
+ Object.defineProperties(runtime,{canPracticeTravel:{get:()=>()=>!blocked()&&!inLevel()&&!runtime.duetRoom},travelInLevel:{get:()=>inLevel},travelPracticePoint:{get:()=>travel},dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
 }

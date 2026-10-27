@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.225**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.226**. Las entradas describen su revisión, no certifican producción.
+
+
+## Notas de Jay · 2.3.0-alpha.226
+
+Rama `lanzamiento/m1-notas-jay`, desde `main` (`7106240`, alpha.225). Jay jugó `main` y pidió seis cambios.
+
+- **Lluvia ligera.** La cama de ruido de la lluvia (`RAIN_BED`, `world-weather.js`) baja 12 dB, en calma y en tormenta. Render aislado nuevo, `tests/rain_mix.py`: −52,3 → −64,3 dBFS en calma y −43,8 → −55,8 dBFS en tormenta, a 48 kHz, frente a −13,6 dBFS de la música. Notas, armonías y el resto de la mezcla, iguales. Guía: [Universo](docs/UNIVERSO.md).
+- **Final del Viaje más corto y «Saltar».** Mismo arreglo de Q7; el marco es más corto (reunión 0,8 s, silencio 1 s, «Tu mundo se abrió» 3,5 s) y nunca más lento que 120 BPM. Con el tempo por defecto y notas en los cinco capítulos: 44 s → 33 s; en el mundo más lento, 48 s → 33 s. «Saltar» (antes «Seguir explorando», abajo y a los 2 s) va arriba a la derecha, pequeño y negro, y responde a los 0,6 s; Escape igual. Deja el mismo estado que esperar al final. Guía: [Viaje](docs/VIAJE.md).
+- **Ir a otro lugar tras el Viaje.** «Otro paisaje» está a la vista desde el primer momento y el primer salto es gratis; volver al punto anterior sigue gratis. Lejos del anillo, Lugares ofrece «Ir» al siguiente lugar, gratis.
+- **Sin salto en los niveles.** En un capítulo del Viaje, en una ronda y bajo el final se ocultan «Otro paisaje», «Volver al punto anterior» y «Viajar a otra tierra»; el código también los rechaza. IDs conservados. Guía: [Mundo](docs/MUNDO.md#orientación-y-retorno).
+- **Caja mágica.** Una línea con gracia y los segundos («¡Zum! Eres cometa: corre y suena. 20 s»), con «Ver» y ×; 300 × 60 px y entera en 390×844 y en escritorio (antes 180 px recortados). Inglés incluido. Guía: [Hallazgos](docs/HALLAZGOS_Y_ACTIVIDADES.md).
+- **`?rapido=1`.** Metas de capítulos y rondas a un quinto, en un guardado propio (`kubono:rapido`) y sin cuenta. Sin el parámetro nada cambia. [Herramientas de prueba](docs/MUNDO.md#herramientas-de-prueba).
+- Pruebas: `tests/notas_jay_smoke.py` (nuevo) y `tests/rain_mix.py` (nuevo); `tests/journey-finale.mjs` ajustado a «Saltar» a los 0,6 s y al marco corto.
+- Preservación: capa `approvedM1` para los archivos protegidos que cambian a propósito (`world-weather.js`, `practice-travel.js`, `chapter-test.js`, `celebration.js`, `sparks.js`, `progress.js`, `main.js`). La partitura y el arreglo del final siguen protegidos tal como los aprobó Q7.
+- No probado en teléfono ni con personas; la lluvia, medida en render, no escuchada en altavoz.
 
 
 ## L4 · Escritorio en itch.io · 2.3.0-alpha.225
