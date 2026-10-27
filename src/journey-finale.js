@@ -50,12 +50,15 @@ export function finaleArrangement(score,context={scale:MAJOR,tr:0,six:.125}){con
   if(b===3||b===11)add('tormenta',{what:'arp',midi:c.tones[(step>>4)%3],soft:true,level:.5});
   if(b===0)add('vacio',{what:'cello',midi:c.tones[2],len:8,soft:true,level:.28});
  }
- // Bring each recalled note to the current chord, in a shared middle register. No automatic octave-up doubling.
+ // Bring each recalled note of yours to the current chord, in a shared middle register. No automatic octave-up doubling.
  const voiced=(m,c)=>{let target=snapToScale(m,scale,tr);while(target<52)target+=12;while(target>76)target-=12;let best=target,far=Infinity;for(const tone of c.tones)for(let o=-2;o<=2;o++){const n=tone+12*o,d=Math.abs(n-target);if(n>=52&&n<=76&&(d<far||d===far&&n<best)){best=n;far=d;}}return best;};
- // Both theme passes deliberately use the same middle-register interpretation (K7); the abstract score
- // retains its historical fifth, not a promise to transpose the audible closing arrangement.
- let ti=0;for(let i=0;i<score.length;i++){const n=score[i],thematic=n.chapter==='refugio',raw=thematic?themePitch(THEME[ti++%THEME.length][0],scale,tr):n.midi,c=chord(Math.round(n.at/six)),next=score[i+1]?.at??length,seconds=Math.min(n.seconds??n.eighths*EIGHTH,next-n.at,length-n.at);
-  if(seconds<=0)continue;events.push({what:thematic?'cello':'arp',midi:voiced(raw,c),len:Math.max(.1,seconds/six*.8),soft:true,at:n.at,layer:n.chapter,group:'phrase',level:thematic?.8:.9});}
+ // Panel 11 (Q7, D8-B, Wintory): the theme sounds with its own pitches, as the cube plays it (themePitch, in the
+ // World's scale), not brought to the chord: its B and D come back. One octave for the six notes keeps its contour in
+ // the shared register (52–76). Both passes stay the same, in the same voice and rhythm; the abstract score keeps its
+ // historical fifth, not a promise to transpose the audible closing arrangement.
+ const themeRaw=THEME.map(([d])=>themePitch(d,scale,tr)),lift=Math.min(...themeRaw)<52?12:0;
+ let ti=0;for(let i=0;i<score.length;i++){const n=score[i],thematic=n.chapter==='refugio',c=chord(Math.round(n.at/six)),next=score[i+1]?.at??length,seconds=Math.min(n.seconds??n.eighths*EIGHTH,next-n.at,length-n.at),midi=thematic?themeRaw[ti++%THEME.length]+lift:voiced(n.midi,c);
+  if(seconds<=0)continue;events.push({what:thematic?'cello':'arp',midi,len:Math.max(.1,seconds/six*.8),soft:true,at:n.at,layer:n.chapter,group:'phrase',level:thematic?.8:.9});}
  return events.sort((a,b)=>a.at-b.at);}
 export function playFinale(runtime,score,context,at){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus||!runtime.songHit)return null;const out=ac.createGain(),bed=ac.createGain(),phrase=ac.createGain(),end=at+scoreLength(score);out.connect(runtime.bus);bed.gain.value=.36;phrase.gain.value=.42;bed.connect(out);phrase.connect(out);
  out.gain.setValueAtTime(1,at);out.gain.setValueAtTime(1,Math.max(at,end-.45));out.gain.linearRampToValueAtTime(0,end);

@@ -67,6 +67,10 @@ El primero protege 301 archivos y trece contratos desde main alpha.200 (P1 abri�
 
 Los verificadores históricos `n-preservation.mjs` y `pulido-preservation.mjs` pertenecen a sus revisiones. No usarlos como gate actual ni alterar sus referencias para forzar verde. [Herramientas](../scripts/README.md).
 
+## Escucha pendiente
+
+Q7 (alpha.222, panel 11) cambia los finales con D8-B y D9-B + C. Los renders están en [escucha](panel/sesion-11/escucha/): Viaje antes y después; once a ★ antes y después; once a ★★ después. Son renders offline en Chromium, sin oído humano. **Pendiente: escucha de Jay**, en teléfono con auriculares (mejor Bluetooth), con fecha y dispositivo anotados aquí. No integrar Q7 sin ella.
+
 ## Teléfonos y evidencia anterior
 
 `?medir=1` muestra mediana/p95 de fotogramas, calidad y densidad. Registrar dispositivo, navegador, escena, altavoz/auriculares/Bluetooth, rotación, bloqueo, llamada y regreso. Chromium sin GPU no representa un teléfono.

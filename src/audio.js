@@ -224,6 +224,9 @@ export function initialize(runtime) {
     // The Journey's finale is the only music in the Refugio: its score, then real silence before the credits.
     if(runtime.journeyFinaleState?.().running||runtime.songPlaying?.())return;
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
+    // Panel 11 (Q7, D9-B): under the finale of the eleven the World keeps its course (tempo, radio, chords) but plays
+    // nothing; the finale alone sounds, on the World's swing (song-stage.js).
+    const hush=!!runtime.songFinaleHush?.(s,t);
     const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){
       let desired=MU.dnaT,biome=MU.biomeT;
@@ -249,13 +252,13 @@ export function initialize(runtime) {
       });
       if(s===0&&runtime.composeLivingArrangement)MU.radio=runtime.composeLivingArrangement(MU.dnaA,MU.radio);
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
-      if(s===0){runtime.labLearningBar?.(t,MU.step>>4);runtime.initiativeBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
-      if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
-      if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
-      if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
+      if(s===0&&!hush){runtime.labLearningBar?.(t,MU.step>>4);runtime.initiativeBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
+      if(s===0&&!hush&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
+      if(s===0&&!hush&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
+      if(s===0&&!hush&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
     }else{MU.radio=null;voiceCurator.clear();}
     if(conducted()&&runtime.inWorld()&&MU.dnaA)conductor.remember(t,MU.step,MU.dnaA,MU.deg,SIX,MU.radio?.identity?.swing,chordTones());
-    if(runtime.inWorld()){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
+    if(runtime.inWorld()&&!hush){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
     {const neighbor=runtime.inWorld()?musicNeighbor():null;if(neighbor){if(s===0||!MU.neighborRadio)MU.neighborRadio={...neighborRadio.advance(neighbor,MU.step>>4),key:neighbor.key};}else MU.neighborRadio=null;}
     if(s===0)applyComfort(t);
     if(s===0&&runtime.inWorld()&&MU.dnaA)MU.influenced=runtime.shapeInfluence?.(MU.dnaA,MU.radio)||MU.radio;
@@ -283,6 +286,7 @@ export function initialize(runtime) {
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     if(runtime.inWorld())E=arrangementEnergy(E,runtime.S.musicEnergy);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
+    if(hush){runtime.songStageStep?.(s,t,MU.step,tt);return;}
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // El aislamiento experimental se conserva solo en laboratorio.
     const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',parts=MU.radio?.labScore?.electronic?.count,foundationGain=(continuous?transitionGain((MU.step>>4)-enteredAt)*sparseFoundationGain(parts)*(journeyFrame ? .85+.15*journeyFrame.core : 1):1)*(continuous&&field?(parts<=3?.65:.32):1);
     if(live&&!runtime.labSolo&&(continuous||!field)&&(continuous||xp<.7)){   // Production keeps its electronic foundation; deliberate laboratory Solo stays isolated.
@@ -301,7 +305,7 @@ export function initialize(runtime) {
       };const emit=()=>runtime.withVoiceOrigin?runtime.withVoiceOrigin('track',accompany):accompany();if(runtime.withAccompaniment)runtime.withAccompaniment(emit);else emit();
     }
     // tu Estudio: cada pieza suena en su paso
-    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.wildMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);runtime.songStageStep?.(s,t,MU.step);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);scheduleAudibleCue(runtime,t,()=>{runtime.studioHit[key]=performance.now();});}}}
+    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.wildMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);runtime.songStageStep?.(s,t,MU.step,tt);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);scheduleAudibleCue(runtime,t,()=>{runtime.studioHit[key]=performance.now();});}}}
     // faros: instrumentos que encendiste
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")==="superficie"){
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);

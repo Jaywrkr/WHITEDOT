@@ -22,3 +22,21 @@ try {
  globalThis.document={getElementById:()=>element,querySelectorAll:()=>[]};globalThis.requestAnimationFrame=()=>1;globalThis.cancelAnimationFrame=()=>{};
  try {let paused=0,resumed=0;const r={S:{sound:true,journey:{}},ac:{createGain:()=>({gain:{setTargetAtTime(){}},connect(){}}),currentTime:0},bus:{},SIX:.125,placesData:()=>({stars:{lago:[true]}}),audio(){},silenceSongMix:()=>paused++,restoreSongMix:()=>resumed++};initialize(r);r.openSong({final:true});const p=songPlan({final:true,six:.125});r.songStageStep(0,1,0);r.songStageStep(0,1+p.silenceAt*2,p.silenceAt*16);assert.equal(paused,1);r.songStageStep(0,1+p.bars*2,p.bars*16);assert.equal(resumed,1,'end of plan always releases a skipped theme pause');}finally{Object.assign(globalThis,saved);}
 }
+// Panel 11 (Q7, D9-B, Wintory): the World's radio keeps silent under the finale of the eleven, from its first «1» until
+// the stage closes; the finale's odd sixteenths take the World's swing, so both would fall together (±2 ms). Tu canción
+// from Lugares keeps the radio and its straight time.
+{
+ const saved={document:globalThis.document,requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame,setTimeout:globalThis.setTimeout};
+ const elements=new Map(),element={hidden:false,querySelector:s=>{if(!elements.has(s))elements.set(s,{hidden:false,textContent:'',replaceChildren(){}});return elements.get(s);}};
+ globalThis.document={getElementById:()=>element,querySelectorAll:()=>[]};globalThis.requestAnimationFrame=()=>1;globalThis.cancelAnimationFrame=()=>{};globalThis.setTimeout=()=>0;
+ try {const hits=[],gain=()=>({gain:{value:1,setTargetAtTime(){}},connect(){},disconnect(){}}),ids=['llanura','lago','bosque','tormenta','vacio','jardin','dunas','cristales','faros','ruinas','cueva'];
+  const r={S:{sound:true,journey:{}},SIX:.125,ac:{currentTime:0,createGain:gain},bus:{},MU:{tr:0},placesData:()=>({stars:Object.fromEntries(ids.map(id=>[id,[true,true,false]]))}),audio(){},songHit:(out,e,t)=>hits.push({e,t}),silenceSongMix(){},restoreSongMix(){}};initialize(r);
+  assert.equal(r.songFinaleHush(0,1),false,'no stage, the radio plays');
+  r.openSong({final:true,at:2});assert.equal(r.songFinaleHush(0,1.5),false,'before its first «1» the radio still plays');assert.equal(r.songFinaleHush(3,2.2),false);assert.equal(r.songFinaleHush(0,2),true,'from the first «1» it keeps silent');
+  const swing=.031,six=.125;let t=2,worst=0,odd=0;for(let k=0;k<64;k++){const s=k%16,world=s%2?t+swing:t,before=hits.length;r.songStageStep(s,t,k,world);for(const h of hits.slice(before)){worst=Math.max(worst,Math.abs(h.t-world));if(s%2)odd++;}assert.equal(r.songFinaleHush(s,t),true);t+=six;}
+  assert(odd>0,'the finale has odd sixteenths to swing');assert(worst<=.002,`odd sixteenths on the World's swing (${worst})`);assert.equal(r.songStageState().k,63,'its clock stays on the straight time');
+  r.closeSong();assert.equal(r.songFinaleHush(0,t),false,'closed, the radio comes back');
+  hits.length=0;r.openSong();t=10;let straight=true;for(let k=0;k<32;k++){const s=k%16,before=hits.length;r.songStageStep(s,t,k,s%2?t+swing:t);if(hits.slice(before).some(h=>h.t!==t))straight=false;assert.equal(r.songFinaleHush(s,t),false,'Tu canción keeps the radio');t+=six;}assert(straight);r.closeSong();
+  console.log('PASS finale over a silent radio: hush from its first «1» to closing, odd sixteenths on the World\'s swing; Tu canción unchanged');
+ }finally{Object.assign(globalThis,saved);}
+}

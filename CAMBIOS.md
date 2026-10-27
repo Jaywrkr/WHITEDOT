@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.221**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.222**. Las entradas describen su revisión, no certifican producción.
+
+## Q7 · Los finales suenan a final · 2.3.0-alpha.222
+
+Rama `panel11/q7-finales`, sobre `panel11/q6-mundo-libre` (informe de la sesión 11). Wintory; Simogo para la forma. Decisiones de Jay: D8-B y D9-B + C. Es la única fase que cambia música.
+
+- D8-B: en el final del Viaje las seis notas del tema suenan con sus alturas, como las toca el cubo (`themePitch`), sin pasar por el acorde. En La mayor: La Si Mi Re Do♯ La (antes La La Mi Do♯ Do♯ La). Una sola octava para las seis, en el registro 52–76. Misma voz (chelo), mismo ritmo, las dos vueltas iguales. Tus frases siguen llevadas al acorde.
+- D9-B: bajo el final de los once la radio del Mundo calla desde su primer «1» hasta que se cierra la escena, como bajo el final del Viaje (`songFinaleHush`). El Mundo sigue su curso (tempo, radio, acordes, que guían las capas); solo deja de sonar. Las semicorcheas impares del final usan el swing del Mundo (`tt` de `audio.js`). «Tu canción» desde Lugares y la vista previa de un trofeo no cambian.
+- D9-C: coda escrita. En los tres últimos compases el chelo toca el tema entero a la altura de la primera vuelta, con anacrusa de medio compás, y cae en la tónica sobre el último «1». Ese compás: la tónica, el colchón y el bajo en el acorde de tónica, un compás; luego corte. Nada empieza después del último «1». No depende del nivel de Faros; la melodía de Faros solo suena entre la segunda vuelta y la coda cuando el minuto lo alarga. El final dura un compás más si el minuto no lo alarga (`CODA_BARS=3`, antes dos de cola).
+- No cambia: la generación del Mundo, sus voces, las capas y sus niveles, las notas guardadas del jugador, el arco por golpes, `credited`, el cierre a los 7 s ni la falta de tarjeta tras el final (Q3).
+- Pruebas: `tests/journey-finale-harmony.mjs` (las seis alturas de `THEME` en orden, con el Si y el Re, en 396 contextos; antes exigía cada nota del tema en el acorde), `tests/song-tiers.mjs` (coda con las seis notas y la tónica al final, con los once a ★ y a ★★, en tres escalas; nada tras el último «1»; Faros fuera de la coda), `tests/song-transport.mjs` (silencio de la radio desde el primer «1» hasta cerrar; impares del final sobre el swing del Mundo, ±2 ms; «Tu canción» igual). `tests/song_stage_mix.py`: el Mundo de prueba sigue la regla; compás de frase −28,4 dB frente al tutti −24,0 (4,4 dB; con la radio debajo, 3,9).
+- Renders para escuchar en `docs/panel/sesion-11/escucha/` (WAV mono, 22 050 Hz): final del Viaje antes y después; final de los once con los once a ★ antes y después, y a ★★ después. El de los once suena sobre el programador real del Mundo (`audio.js`, género minimal), sin oído humano.
+- Límites: el criterio «compás de frase ≥ 8 dB bajo el tutti» no se cumple: queda en 4,4 dB porque callar la radio no cambia la mezcla de las capas, y la mezcla no estaba aprobada. En el render real la radio aportaba poco bajo las frases (≈ 0,3 dB). Jay no ha oído aún los renders; no hay escucha en teléfono.
 
 ## Q6 · Volver y tocar en el Mundo libre · 2.3.0-alpha.221
 

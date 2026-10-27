@@ -15,7 +15,13 @@ import {PLACES,TOTAL_STARS,starCount,allComplete} from './places.js';
 // steps you played them and in the World's scale; the theme keeps silent until its moment (the Faros layer too), a bar
 // of silence comes before it, the cello plays it twice (the second time a fifth up) and the credits come at the end.
 // The finale lasts a minute at least.
-export const FINAL_ENTRY_BARS=1,FINAL_TAIL_BARS=2,SONG_BARS_OPEN=8,THEME_BARS=4,SILENCE_BARS=1,FINAL_MIN_SECONDS=60;
+// Panel 11 (Q7, D9-C, Wintory, Simogo): the finale ends on a written coda, not on the Faros layer at its tier. In its
+// last three bars the cello plays the whole theme once more at its first pitch, from a pickup half a bar early, so the
+// tonic falls on a «1»; that last bar holds the tonic over the pad and the bass on the tonic chord, and the song stops
+// at the next «1». Nothing starts after the last «1». The Faros melody keeps only the bars between theme and coda.
+export const FINAL_ENTRY_BARS=1,CODA_BARS=3,SONG_BARS_OPEN=8,THEME_BARS=4,SILENCE_BARS=1,FINAL_MIN_SECONDS=60;
+// Where the coda's theme starts, in sixteenths from its first bar: its first five notes fill a bar and a half.
+export const CODA_PICKUP=16*(CODA_BARS-1)-THEME.slice(0,-1).reduce((a,[,l])=>a+l*2,0);
 // A note brought into the World's scale: the nearest pitch of the scale (root A + transpose), the lower one on a tie.
 export function snapToScale(m,scale,tr=0){const sc=Array.isArray(scale)&&scale.length===7?scale:[0,2,3,5,7,8,10];let best=m,far=99;for(let o=-2;o<=8;o++)for(const s of sc){const n=57+tr+s+12*(o-1);const d=Math.abs(n-m);if(d<far||d===far&&n<best){far=d;best=n;}}return best;}
 // Panel 10 (P6, D5-C, Simogo): the credits of authorship come once, in the finale of the eleven; the Journey's finale
@@ -78,20 +84,30 @@ export function songPlan({final=false,ids=SONG_IDS,notes={},steps={},ticks={},si
  const notesAt=ids.length*FINAL_ENTRY_BARS,withNotes=ids.filter(id=>notes[id]?.length),noteTimings={},noteStarts={};let silenceAt=notesAt;
  for(const id of withNotes){const timing=phraseTimeline(notes[id],steps[id],ticks[id]);noteTimings[id]=timing;noteStarts[id]=silenceAt;silenceAt+=Math.max(1,Math.ceil(((timing.at(-1)||0)+2)/16));}
  const themeAt=silenceAt+SILENCE_BARS,endAt=themeAt+THEME_BARS;
- // At least a minute: the layers keep playing after the theme until then.
- const minBars=six>0?Math.ceil(FINAL_MIN_SECONDS/(16*six)):0;
- return {final:true,entry,bars:Math.max(endAt+FINAL_TAIL_BARS,minBars),notesAt,silenceAt,themeAt,endAt,noteOrder:withNotes,noteTimings,noteStarts};}
+ // At least a minute: the layers keep playing after the theme until then; the coda closes it.
+ const minBars=six>0?Math.ceil(FINAL_MIN_SECONDS/(16*six)):0,bars=Math.max(endAt+CODA_BARS,minBars);
+ return {final:true,entry,bars,notesAt,silenceAt,themeAt,endAt,codaAt:bars-CODA_BARS,noteOrder:withNotes,noteTimings,noteStarts};}
+// The tonic chord of the World's key, for the coda's last bar (the root A plus the transpose, as themePitch).
+export function tonicChord(scale,tr=0){const sc=Array.isArray(scale)&&scale.length===7?scale:[0,2,3,5,7,8,10];return songChord([0,2,4].map(i=>57+tr+sc[i]));}
 // What sounds at sixteenth k of a playing: the layers already in at their tier, your notes in their bar, the theme. Pure.
 export function stageEvents(plan,k,chord,{tiers={},notes={},steps={},scale,tr=0}={}){if(k<0||k>=plan.bars*16)return [];const bar=Math.floor(k/16),b=k%16,out=[],c=songChord(chord);
  // The bar of silence before the theme: nothing at all.
  if(plan.final&&bar>=plan.silenceAt&&bar<plan.themeAt)return out;
+ // The coda's last bar (Q7, D9-C): on its «1» the tonic on the cello, the pad and the bass on the tonic chord, a bar
+ // long; then the cut. Nothing else starts.
+ const coda=plan.final&&Number.isFinite(plan.codaAt)&&bar>=plan.codaAt;
+ if(coda&&bar===plan.bars-1){if(b!==0)return out;const home=tonicChord(scale,tr);
+  return [{what:'cello',midi:snapToScale(themePitch(THEME.at(-1)[0],scale,tr)+12,scale,tr),len:16,theme:true,coda:true,layer:'faros'},{what:'pad',tones:home.tones,len:16,layer:'vacio'},{what:'bass',midi:home.root,len:16,layer:'lago'}];}
  const hold=held(plan,bar);for(const [id,at] of Object.entries(plan.entry))if(bar>=at&&(!hold||UNDER_PHRASE.includes(id)))for(const e of tierStep(id,k-at*16,c,tiers[id]||0))out.push({...e,layer:id});
  // The Faros' layer is the melody: the cube's theme in the World's key, two bars long (★ its first three notes, a fourth
  // and a fifth as it grows by six and twelve beats, ★★ all of it, ★★★ also an octave up).
- if(plan.entry.faros!==undefined&&bar>=plan.entry.faros&&(tiers.faros||0)>0&&(!plan.final||bar>=plan.endAt)){const local=(k-plan.entry.faros*16)%32;let at=0;const notes=farosNotes(tiers.faros);THEME.forEach(([d,l],i)=>{if(at===local&&i<notes){const m=themePitch(d,scale,tr)+12;out.push({what:'lead',midi:m,len:l*2,layer:'faros'});if(tiers.faros>=3)out.push({what:'lead',midi:m+12,len:l*2,layer:'faros',soft:true});}at+=l*2;});}
+ if(plan.entry.faros!==undefined&&bar>=plan.entry.faros&&(tiers.faros||0)>0&&(!plan.final||bar>=plan.endAt&&!coda)){const local=(k-plan.entry.faros*16)%32;let at=0;const notes=farosNotes(tiers.faros);THEME.forEach(([d,l],i)=>{if(at===local&&i<notes){const m=themePitch(d,scale,tr)+12;out.push({what:'lead',midi:m,len:l*2,layer:'faros'});if(tiers.faros>=3)out.push({what:'lead',midi:m+12,len:l*2,layer:'faros',soft:true});}at+=l*2;});}
  if(plan.final&&bar>=plan.notesAt&&bar<plan.silenceAt){const id=[...plan.noteOrder].reverse().find(id=>bar>=plan.noteStarts[id]),ns=notes[id]||[],timing=plan.noteTimings[id],local=k-plan.noteStarts[id]*16;
   for(let i=0;i<ns.length;i++)if(timing[i]===local&&Number.isFinite(ns[i]))out.push({what:'arp',midi:snapToScale(ns[i],scale,tr)+12,len:2,layer:id,mine:true});}
  if(plan.final&&bar>=plan.themeAt&&bar<plan.endAt){const local=k-plan.themeAt*16,pass=local>=32?1:0;let at=0;for(const [d,l] of THEME){if(at===local-pass*32)out.push({what:'cello',midi:snapToScale(themePitch(d,scale,tr)+12+(pass?7:0),scale,tr),len:l*2,theme:true,second:!!pass});at+=l*2;}}
+ // The coda's theme (Q7, D9-C): all six notes at the first pass's pitch, whatever the Faros tier; the sixth is the
+ // tonic on the last bar's «1» (above).
+ if(coda){const local=k-plan.codaAt*16;let at=CODA_PICKUP;for(const [d,l] of THEME.slice(0,-1)){if(at===local)out.push({what:'cello',midi:snapToScale(themePitch(d,scale,tr)+12,scale,tr),len:l*2,theme:true,coda:true,layer:'faros'});at+=l*2;}}
  return out;}
 export function initialize(runtime){
  let run=null,raf=null,replacing=false;const state={opened:0,finals:0};
@@ -124,8 +140,10 @@ export function initialize(runtime){
  function preview(id){if(run&&!run.preview)return false;if(!runtime.S.sound||!runtime.ac||!runtime.bus)return false;run=begin({ids:[id],preview:true});return true;}
  function release(r){if(!r)return;const ac=runtime.ac;for(const g of [r.out,r.soft])if(g&&ac){try{g.gain.setTargetAtTime(.0001,ac.currentTime,.15);setTimeout(()=>g.disconnect(),1200);}catch(_){}}}
  function close(){if(!run)return;const final=run.final;runtime.restoreSongMix?.();if(raf!==null)cancelAnimationFrame(raf);raf=null;release(run);if(run.el)run.el.hidden=true;run=null;if(final&&!replacing)runtime.placeFinaleClosed?.();}
- // The sequencer's sixteenth: what the playing adds now, in the chord the World plays.
- function step(s,t,tick){if(!run||!run.out||Number.isFinite(run.lastTime)&&t<=run.lastTime)return;
+ // The sequencer's sixteenth: what the playing adds now, in the chord the World plays. `swung`: when the World's
+ // swing would play this sixteenth (audio.js); the finale's odd sixteenths take it (Q7, D9-B), so its groove is the
+ // World's own. Its clock stays on the straight time.
+ function step(s,t,tick,swung){if(!run||!run.out||Number.isFinite(run.lastTime)&&t<=run.lastTime)return;
   const first=run.start===null;if(first){if(s!==0||run.startAt!==null&&t<run.startAt-.001)return;run.start=t;}
   const six=runtime.SIX||.15,delta=first?0:Number.isSafeInteger(tick)&&Number.isSafeInteger(run.lastTick)&&tick>run.lastTick?tick-run.lastTick:(s-run.lastStep+16)%16||16,k=first?0:run.k+delta;
   run.lastTime=t;run.lastStep=s;run.lastTick=tick;run.k=k;(run.clock||=[]).push({k,t,six});if(run.clock.length>128)run.clock.shift();
@@ -133,7 +151,12 @@ export function initialize(runtime){
   if(run.final&&!run.pauseScheduled&&k>=run.plan.silenceAt*16&&k<run.plan.themeAt*16){run.pauseScheduled=true;runtime.silenceSongMix?.(t);}
   if(run.pauseScheduled&&!run.resumeScheduled&&k>=run.plan.themeAt*16){run.resumeScheduled=true;runtime.restoreSongMix?.(t);}
   if(!run.out)return;const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,chord=runtime.chordTones?.()||[57,60,64];
-  for(const e of stageEvents(run.plan,k,chord,{tiers:run.tiers,notes:run.notes,steps:run.steps,scale,tr:MU.tr||0})){runtime.songHit?.(e.soft?run.soft:run.out,e,t,six);if(e.layer){run.last[e.layer]=t;run.hits.push({layer:e.layer,t});if(run.hits.length>256)run.hits.shift();}}}
+  const at=run.final&&s%2===1&&Number.isFinite(swung)&&swung>=t?swung:t;
+  for(const e of stageEvents(run.plan,k,chord,{tiers:run.tiers,notes:run.notes,steps:run.steps,scale,tr:MU.tr||0})){runtime.songHit?.(e.soft?run.soft:run.out,e,at,six);if(e.layer){run.last[e.layer]=at;run.hits.push({layer:e.layer,t:at});if(run.hits.length>256)run.hits.shift();}}}
+ // Panel 11 (Q7, D9-B, Wintory): the World's radio keeps silent under the finale of the eleven, from its first «1»
+ // until the stage closes, as it does under the Journey's finale. The World still advances (its chords lead the
+ // layers); only what it plays is held. Tu canción from Lugares and a trophy's preview keep the radio.
+ function hushWorld(s,t){return !!run&&run.final&&!run.preview&&!!run.out&&(run.start!==null||s===0&&(run.startAt===null||t>=run.startAt-.001));}
  // How hard a layer is hitting now, for its ring.
  function pulse(id,time){if(!run)return 0;const bar=Math.floor(visualStep()/16);if(run.final&&bar>=run.plan.silenceAt&&bar<run.plan.themeAt)return 0;return layerPulse(run.hits,id,time,(runtime.SIX||.15)*4);}
  // Whether a layer sounds now: won, and already in (the final brings them in one bar after another).
@@ -163,6 +186,6 @@ export function initialize(runtime){
   if(!d.won&&allComplete(d)){d.won=true;if(runtime.save?.()===false){delete d.won;return false;}return open({final:true,at});}
   if(d.won&&!d.master&&starCount(d)>=TOTAL_STARS){d.master=true;if(runtime.save?.()===false){d.master=false;return false;}return open({final:true,master:true});}
   return false;}
- Object.defineProperties(runtime,{openSong:{get:()=>open},replaySong:{get:()=>()=>open({final:allComplete(data()),master:starCount(data())>=TOTAL_STARS})},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageStep:{get:()=>step},songLayerPreview:{get:()=>preview},
+ Object.defineProperties(runtime,{openSong:{get:()=>open},replaySong:{get:()=>()=>open({final:allComplete(data()),master:starCount(data())>=TOTAL_STARS})},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageStep:{get:()=>step},songFinaleHush:{get:()=>hushWorld},songLayerPreview:{get:()=>preview},
   songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,ended:run?.endedAt!=null,rings:run?.rings?run.rings.map((p,i)=>({id:SONG_IDS[i],x:p.x,y:p.y,r:p.r})):[],k:run?.k??-1,start:run?.start??null,six:runtime.SIX||null,caption:run?.caption??null,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{},pulses:run?Object.fromEntries(run.ids.map(id=>[id,pulse(id,runtime.ac?audibleTime(runtime.ac):0)])):{},personalNotes:run?Object.fromEntries(Object.entries(run.notes).map(([id,ns])=>[id,[...ns]])):{}})}});
 }
