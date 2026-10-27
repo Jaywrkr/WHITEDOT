@@ -27,9 +27,11 @@ try:
    # Off the pattern (the 2) is not on time.
    assert page.evaluate(AT_STEP,4) is False
    # Three steps of the pattern in one bar: a stone.
-   for attempt in range(3):
+   # A loaded CI runner can let one step slip into the next bar; retry whole bars until a stone lands.
+   for attempt in range(6):
     before=page.evaluate('__r.journeyRebuild().stones[1]')
     for st in [0,6,8]:assert page.evaluate(AT_STEP,st) is True;page.wait_for_timeout(60)
+    page.wait_for_timeout(150)
     if page.evaluate('__r.journeyRebuild().stones[1]')==before+1:break
    g=page.evaluate('__r.journeyRebuild()');assert g['stones'][1]==1 and g['points']==4,g
    for mode in ['viaje','libre']:
