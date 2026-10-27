@@ -2,7 +2,7 @@
 'use strict';
 const path=require('node:path');
 
-const APP_ID='com.playkubono.kubono'; // Provisional: Jay confirms it before the first store upload (docs/ITCH.md).
+const APP_ID='com.playkubono.kubono'; // Confirmed by Jay; changing it moves the save folder (docs/ITCH.md).
 const SCHEME='app',HOST='kubono',START_URL=`${SCHEME}://${HOST}/index.html`;
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8',
  '.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg',

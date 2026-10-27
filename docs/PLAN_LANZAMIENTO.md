@@ -10,7 +10,7 @@
 | Marca | Kubono; dominio previsto `playkubono.com`, no comprado/reservado. Marca visible Kubono; repositorio, paquetes y claves conservan WHITEDOT por compatibilidad. Dominio/revisión legal pendientes |
 | Identidad | Propuesta local aprobada: negro/blanco y violeta eléctrico en identidad/web, sin cambiar los colores del juego. Maqueta/plan funcional local fuera de Git en `outputs/kubono-visual/`; no publicado |
 | Promesa | Un cubo y un universo que suena. La música electrónica y su mezcla con otras familias son parte central de la comunicación |
-| Modelo | Pago único US$2,99 móvil / US$3,99 web (27 de octubre) / US$4,99 escritorio, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
+| Modelo | Pago único US$2,99 móvil / US$3,99 web (27 de octubre) / US$4,99 escritorio, también en itch.io, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
 | Presupuesto | US$350 iniciales aprobados; no autoriza compras ni altas de pago. Tasas anotadas previamente: Play 25, Apple 99/año, Steam 100 por juego, antes de impuestos/conversión; revalidarlas al tramitar |
 | Acceso | **Sin cuenta ni nube (Jay, 27 de octubre):** guardado local y copia de seguridad; cobra la tienda, como Monument Valley, Alto's o Florence. Antes: **cambio aprobado por Jay el 22 de octubre ([El Viaje](VIAJE.md)):** cuenta opcional. Se juega con guardado local desde el primer toque; la cuenta se ofrece después para guardar en la nube y migra el progreso local. Construida en la Fase 2 (alpha.98). Sin demo comercial; el build de festival es un recorte privado para jurados |
 | Plataformas | **Primero web y Android (27 de octubre).** iOS/iPadOS, escritorio, Steam y consolas quedan para después; cada una sale al estar lista y aprobada |
@@ -30,7 +30,7 @@ Cuenta compartida y guardado automático no conceden cross-buy. La sincronizaci�
 | iOS/iPadOS | Juego web probado en Safari de iPhone; Jay tiene Mac/iPhone | Recursos/modelos/compatibilidad, membresía si decide contratar, proyecto iOS, TestFlight/App Review; iPad si se anuncia |
 | Web/PWA | Cliente existente y recorrido de cuenta comprobado en pruebas locales | Papel comercial/entitlement web, dominio/landing, correo/callbacks/privacidad públicos. No implementar cobro propio sin decidirlo |
 | Windows/macOS/Linux | Envoltorio Electron en `desktop/` y builds de los tres sistemas (L4, [guía](ITCH.md)); Linux probado sin pantalla | Firma de macOS (cuenta de Apple) y de Windows; pruebas en Windows y macOS reales |
-| Steam/itch.io | itch.io vende la descarga de escritorio (Jay, 27 de octubre; L4, [guía](ITCH.md)); zip web como entrada del envoltorio | Cuenta y borrador en itch.io, precio (US$3,99 o US$4,99), ID de la app; cuenta/ficha de Steam con el mismo build |
+| Steam/itch.io | itch.io vende la descarga de escritorio (Jay, 27 de octubre; L4, [guía](ITCH.md)); zip web como entrada del envoltorio | Cuenta y borrador en itch.io (precio US$4,99 e ID `com.playkubono.kubono` confirmados por Jay el 27 de octubre); cuenta/ficha de Steam con el mismo build |
 | Consolas | Concepto compartido | Acceso a programas, viabilidad, controles y presupuesto antes de comprometer nada |
 
 ## Entregables vigentes

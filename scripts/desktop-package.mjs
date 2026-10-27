@@ -116,7 +116,7 @@ if(process.argv[1]&&pathToFileURL(resolve(process.argv[1])).href===import.meta.u
   }else{
    const result=await packageDesktop(options),mb=n=>(n/1024/1024).toFixed(1)+' MB';
    for(const b of result.builds)console.log(`${b.platform}-${b.arch}: ${b.folder} (${mb(b.bytes)})`+(b.archive?` → ${b.archive} (${mb(b.archiveBytes)})`:''));
-   console.log(`Kubono ${result.version}, Electron ${result.electronVersion}, app ID ${result.appId} (provisional), game ${result.gameFiles} files.`);
+   console.log(`Kubono ${result.version}, Electron ${result.electronVersion}, app ID ${result.appId}, game ${result.gameFiles} files.`);
   }
  }catch(error){console.error(error.stack||error.message);process.exitCode=1;}
 }

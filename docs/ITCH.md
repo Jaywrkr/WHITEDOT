@@ -18,7 +18,7 @@ Un envoltorio **Electron** (carpeta `desktop/`) que abre la edición de venta en
   - Windows: `%APPDATA%\com.playkubono.kubono`
   - macOS: `~/Library/Application Support/com.playkubono.kubono`
   - Linux: `~/.config/com.playkubono.kubono`
-- **ID de la app:** `com.playkubono.kubono`. **Provisional: lo confirma Jay** antes de la primera subida. Cambiarlo después cambia la carpeta del guardado.
+- **ID de la app:** `com.playkubono.kubono`, confirmado por Jay el 27 de octubre. Cambiarlo después cambia la carpeta del guardado.
 - La partida web no aparece sola en la de escritorio: «Guardar copia» (exportar) y abrirla en la otra (importar).
 - Sonido: empieza con el primer clic, como en la web.
 
@@ -73,7 +73,7 @@ El zip web y su prueba (`tests/itch_package_smoke.py`) siguen: son la entrada de
 |---|---|
 | Kind of project | **Downloadable** |
 | Uploads | Un archivo por sistema, cada uno con su etiqueta: Windows → **Windows**; `linux-x64.tar.gz` → **Linux**; `macos-…zip` → **macOS** |
-| Pricing | **Paid**. Precio **pendiente de Jay: US$3,99 o US$4,99** |
+| Pricing | **Paid**. Precio **US$4,99** (Jay, 27 de octubre) |
 | Classification | Games · Genre: Music (o Exploration) |
 | Visibility | **Draft** (borrador), nunca «Public» sin autorización de Jay |
 
@@ -121,7 +121,7 @@ Nombre legal, correo de contacto, capturas y política de privacidad: pendientes
 
 ## Pasos de Jay (borrador privado, sin publicar)
 
-1. Confirmar el ID de la app (`com.playkubono.kubono`) y el precio (US$3,99 o US$4,99).
+1. ID de la app (`com.playkubono.kubono`) y precio (US$4,99): confirmados por Jay el 27 de octubre.
 2. En GitHub → Actions → «Desktop builds (itch.io / Steam)» → «Run workflow» sobre `main`. Descargar los dos artefactos.
 3. En itch.io: «Upload new project». Título «Kubono»; «Kind of project»: **Downloadable**.
 4. «Uploads»: subir los tres archivos y marcar en cada uno su sistema (Windows, macOS, Linux).
