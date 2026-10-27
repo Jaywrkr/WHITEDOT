@@ -1,0 +1,60 @@
+name: Desktop builds (itch.io / Steam)
+# Run by hand. Builds the Electron desktop app from the sale edition and keeps the archives as workflow artifacts.
+# Nothing is uploaded to itch.io or Steam, and nothing is signed with Jay's accounts (docs/ITCH.md).
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-windows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - name: Xvfb, and user namespaces for Chromium's sandbox (Ubuntu 24.04 restricts them)
+        run: |
+          sudo apt-get update && sudo apt-get install -y xvfb
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - run: npm ci --no-audit --no-fund
+        working-directory: desktop
+      - run: node tests/desktop-package.mjs
+      - name: Build Linux and Windows
+        run: |
+          node scripts/desktop-package.mjs --platform linux --revision "$GITHUB_SHA"
+          node scripts/desktop-package.mjs --platform win32 --revision "$GITHUB_SHA"
+      - name: Open the Linux build without a screen (start, sound, save, quit, reopen, no network)
+        run: KUBONO_DESKTOP_BUILD="$PWD/dist/desktop/Kubono-linux-x64" python3 tests/desktop_smoke.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kubono-desktop-linux-windows
+          path: |
+            dist/desktop/*.tar.gz
+            dist/desktop/*.zip
+            dist/desktop/SHA256SUMS.txt
+          if-no-files-found: error
+  macos:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --no-audit --no-fund
+        working-directory: desktop
+      - name: Build macOS (universal, ad-hoc signature, not notarized)
+        run: node scripts/desktop-package.mjs --platform darwin --revision "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kubono-desktop-macos
+          path: |
+            dist/desktop/*.zip
+            dist/desktop/SHA256SUMS.txt
+          if-no-files-found: error

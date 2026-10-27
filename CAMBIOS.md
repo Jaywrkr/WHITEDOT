@@ -3,13 +3,22 @@
 Estado: 27 de octubre de 2026. Código **2.3.0-alpha.225**. Las entradas describen su revisión, no certifican producción.
 
 
-## L4 · Web de pago en itch.io · 2.3.0-alpha.225
+## L4 · Escritorio en itch.io · 2.3.0-alpha.225
 
 Rama `lanzamiento/l4-itch`, sobre `main` (con L1 y L2). Fila L4 de la [salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android). Guía: [itch.io](docs/ITCH.md).
 
+**Decisión de Jay (27 de octubre): itch.io vende la versión de escritorio como descarga** (Windows, macOS, Linux). itch.io no cobra por jugar un HTML en el navegador, y el zip web no arranca desde `file://`. La web no se publica abierta.
+
+- Envoltorio Electron 44.7.1 en `desktop/` (`main.cjs`, `serve.cjs`; su `package.json` y `package-lock.json`; `node_modules` fuera de Git). Es la única excepción a «sin npm»: empaqueta aparte, el juego no cambia. Carga la carpeta sellada de `itch-package.mjs` por `app://kubono/`; ventana 1280×800 redimensionable, F11 o Alt+Intro para pantalla completa; sin menús (macOS: el mínimo), sin DevTools empaquetado, sin red (cancela toda petición ajena y la descarga de diccionarios), una sola instancia, guardado en el perfil bajo `com.playkubono.kubono` (ID provisional, lo confirma Jay).
+- `node scripts/desktop-package.mjs --platform linux|win32|darwin|all` escribe `dist/desktop/`: Windows x64 zip portable (151 MB), Linux x64 tar.gz (119 MB), macOS zip `.app` sin firmar (arm64: 125 MB; universal desde el workflow). Workflow manual `desktop-builds.yml`: artefactos, nada se sube a itch.io.
+- `docs/ITCH.md` reescrita para la descarga: archivos y etiquetas por sistema, precio pendiente (US$3,99 o US$4,99), borrador privado, `butler` opcional, firma de macOS y SmartScreen pendientes, sandbox de Linux.
+- Pruebas nuevas: `tests/desktop-package.mjs` y `tests/desktop_smoke.py` (build de Linux en Xvfb: arranca en edición de venta, F11 real para el envoltorio, sonido tras el clic, guarda, cierra con código 0, reabre con la partida, ninguna conexión vista por un proxy que lo anota todo). No probado en Windows ni macOS reales.
+
+Primera parte de la fase (zip web, sigue y es la entrada del envoltorio):
+
 - `node scripts/itch-package.mjs` escribe `dist/kubono-itch-<versión>.zip` (`dist/` fuera de Git), sin dependencias: copia solo el juego, sella la edición de venta con `set-edition.mjs` y la versión con el commit, y deja `index.html` en la raíz. alpha.225: 340 archivos, 1,44 MB.
 - En itch.io no hay service worker: el zip no lleva `sw.js` y su `index.html` lleva una marca que `src/pwa.js` respeta. Sin enlaces a la vista previa de Vercel. Las rutas ya eran relativas. Vercel y Android no cambian.
-- `docs/ITCH.md`: textos ES/EN, etiquetas, marco 390×844 con pantalla completa, pasos del borrador privado. **Duda abierta:** según el foro de itch.io, un juego HTML se juega gratis en el navegador; hay que comprobarlo en el borrador. El zip no sirve como descarga: con `file://` los módulos no cargan.
+- `docs/ITCH.md`: textos ES/EN, etiquetas, marco 390×844 con pantalla completa, pasos del borrador privado. Resultó que un juego HTML se juega gratis en itch.io y que el zip no sirve como descarga (`file://`): de ahí la decisión de arriba.
 - Música, mapas, guardado y textos del juego sin cambios.
 - Pruebas: `tests/itch-package.mjs` y `tests/itch_package_smoke.py` (zip en `/html/123456/`, en un marco de otro sitio: arranca, suena tras tocar, guarda y recarga, exporta la copia, español e inglés, nada fuera de su carpeta). No probado en itch.io real ni en teléfono.
 

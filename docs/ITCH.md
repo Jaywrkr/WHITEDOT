@@ -1,63 +1,83 @@
-# itch.io (web)
+# itch.io (escritorio)
 
-Fase L4 de la [salida web y Android](PLAN_LANZAMIENTO.md#salida-web-y-android). Precio web **US$3,99** (Jay, 27 de octubre). Nada está subido ni publicado: no hay cuenta de itch.io comprobada en este trabajo. Ficha completa, capturas y privacidad son de L5.
+Fase L4 de la [salida web y Android](PLAN_LANZAMIENTO.md#salida-web-y-android). **Jay decidió (27 de octubre): itch.io vende la versión de escritorio como descarga** para Windows, macOS y Linux. La web jugable no se publica abierta. El mismo envoltorio servirá luego para Steam. Nada está subido ni publicado: no hay cuenta de itch.io comprobada en este trabajo. Ficha completa, capturas y privacidad son de L5.
 
-## Duda abierta que bloquea el cobro
+**Por qué escritorio.** itch.io no cobra por jugar un HTML en el navegador: el precio solo bloquea las descargas (foro de itch.io; comprobarlo en el borrador). Y el zip web no sirve como descarga: abierto con doble clic (`file://`) el navegador bloquea los módulos ES y el juego no arranca (comprobado en Chromium).
 
-**Hay que confirmarlo en itch.io antes de fijar el precio.** Según su foro (respuestas de la comunidad y de un moderador, no la documentación oficial), un juego HTML de itch.io **se juega gratis en el navegador**: el precio solo cubre los archivos descargables. No se pudo leer la documentación oficial desde esta sesión.
+## Qué es la versión de escritorio
 
-Cómo comprobarlo en el borrador:
-1. Subir el zip como HTML y fijar el precio (US$3,99, «Paid»).
-2. Abrir la página del borrador en una ventana privada, sin sesión (con el enlace secreto de borrador).
-3. Mirar si el juego arranca sin comprar. Si arranca, el navegador es gratis.
+Un envoltorio **Electron** (carpeta `desktop/`) que abre la edición de venta en su propia ventana. Se eligió Electron porque es lo más probado para itch.io y Steam (un ejecutable por sistema, sin instalar nada) y porque el juego corre sobre el mismo Chromium que ya prueban los recorridos.
 
-Si el navegador es gratis, hay tres caminos. Decide Jay:
-- **A. Web gratis, cobro en Android.** El juego entero gratis en itch.io (con donación opcional) y US$2,99 en Google Play. Cambia el modelo aprobado.
-- **B. Venta como descarga.** El comprador baja un archivo. **El zip actual no sirve así:** abierto con doble clic (`file://`) el navegador bloquea los módulos ES y el juego no arranca (comprobado en Chromium). Haría falta un envoltorio de escritorio (el canal de US$4,99, aún sin hacer) o un lanzador local. Es trabajo nuevo.
-- **C. Web de pago en otro sitio.** Cobro y control de acceso propios (por ejemplo en `playkubono.com`). Contradice «sin cuenta ni nube» y «no implementar cobro propio sin decidirlo».
+- **Contenido:** la carpeta que genera `scripts/itch-package.mjs` (edición de venta sellada, sin service worker, sin cuenta ni nube), copiada como `resources/app/game/`. El árbol fuente no se usa.
+- **Carga:** protocolo propio `app://kubono/`, para que funcionen los módulos ES y `localStorage`. Solo sirve archivos de la carpeta del juego.
+- **Ventana:** 1280 × 800, redimensionable (mínimo 360 × 560), fondo negro. **F11** (o Alt+Intro) cambia a pantalla completa; Escape sigue siendo del juego. Cerrar la ventana cierra el juego.
+- **Sin menús** de Electron en Windows y Linux. En macOS queda el menú mínimo del sistema (Salir, Ocultar, Copiar/Pegar, Ventana). **Sin DevTools** en la versión empaquetada.
+- **Sin red:** el envoltorio cancela toda petición que no sea del juego y desactiva la descarga de diccionarios de Chromium. Permisos: solo copiar al portapapeles.
+- **Una sola instancia:** abrir otra vez enfoca la ventana abierta.
+- **Guardado:** en el perfil del usuario, en una carpeta fija por el ID de la app. Se conserva al actualizar.
+  - Windows: `%APPDATA%\com.playkubono.kubono`
+  - macOS: `~/Library/Application Support/com.playkubono.kubono`
+  - Linux: `~/.config/com.playkubono.kubono`
+- **ID de la app:** `com.playkubono.kubono`. **Provisional: lo confirma Jay** antes de la primera subida. Cambiarlo después cambia la carpeta del guardado.
+- La partida web no aparece sola en la de escritorio: «Guardar copia» (exportar) y abrirla en la otra (importar).
+- Sonido: empieza con el primer clic, como en la web.
 
-No hay demo: el plan dice «sin demo comercial», así que no se propone un recorte gratis.
+## Generar los builds
 
-## Generar el zip
+En este repositorio, una vez:
 
 ```
-node scripts/itch-package.mjs
+cd desktop && npm ci
 ```
 
-Escribe `dist/kubono-itch-<versión>.zip` (`dist/` no entra en Git). Copia solo el juego (`index.html`, `manifest.webmanifest`, `src/`, `styles/`, `assets/`, `icons/`), sella la **edición de venta** con `set-edition.mjs` en esa copia y sella versión, commit y hora de empaquetado. Quedan fuera pruebas, documentación, Android, servidor, scripts, Supabase, `recovery.html` (página de cuenta), `sw.js`, `package.json` y la imagen para compartir. `index.html` va en la raíz, como exige itch.io.
+`desktop/` es la única carpeta con dependencias npm (Electron y `@electron/packager`, versiones fijas). `node_modules` queda fuera de Git y el juego sigue sin dependencias ni compilación.
 
-Para alpha.225: **340 archivos, 3,41 MB sin comprimir y 1,44 MB el zip.** El límite de itch.io para HTML es de unos 1000 archivos y 500 MB: el script falla si se pasa. Empaquetar desde un commit limpio, para que el commit sellado sea el real.
+```
+node scripts/desktop-package.mjs --platform linux      # o win32, darwin, all
+node scripts/desktop-package.mjs --run                 # abre la app con el Electron local (desarrollo)
+```
 
-## Cómo funciona dentro de itch.io
+Escribe en `dist/desktop/` (fuera de Git) la carpeta de cada sistema, su archivo y `SHA256SUMS.txt`. Electron 44.7.1.
 
-itch.io sirve el zip desde su CDN, en una carpeta (`/html/NÚMERO/index.html`), dentro de un `<iframe>` de la página del juego.
+**Workflow manual** «Desktop builds (itch.io / Steam)» (`.github/workflows/desktop-builds.yml`, solo `workflow_dispatch`): Linux y Windows en Ubuntu (con la prueba de abajo), macOS universal en un Mac. Deja los archivos como artefactos del workflow. No sube nada a itch.io.
 
-- **Rutas.** Todas son relativas (`./src/…`, `./styles/…`, manifiesto e iconos). Funcionan en cualquier carpeta.
-- **Service worker: apagado en itch.io.** El zip no lleva `sw.js` e `index.html` lleva `<meta name="kubono-service-worker" content="off">`; `src/pwa.js` no registra nada si lo ve. Motivos: dentro de un marco de otro sitio el worker es poco fiable (Firefox y Safari lo limitan); cada subida nueva cambia la carpeta y dejaría workers y cachés viejos en el teléfono del jugador; y sin conexión la página de itch.io tampoco abre. Vercel sigue igual (registra `./sw.js` en https). Android ya iba sin worker.
-- **Guardado.** `localStorage` es del dominio del CDN de itch.io, no de Vercel: una partida de Vercel no aparece en itch.io. Para pasarla: «Guardar copia» (exportar e importar). Las subidas nuevas conservan la partida (el dominio no cambia). El navegador separa ese almacenamiento por sitio: la partida del marco en itch.io no es la misma que la del enlace directo al CDN. El CDN de itch.io podría compartir su cuota con otros juegos; una partida pesa unos 5 KB y, si guardar falla, el juego avisa y ofrece exportar. En Safari con «Bloquear todas las cookies» puede no haber almacenamiento.
-- **Sonido.** Empieza con el primer toque dentro del marco, como en la web.
-- **Pantalla completa.** El juego no usa la API de pantalla completa: se adapta al tamaño del marco. La pantalla completa la da el botón de itch.io.
-- **Orientación.** El juego funciona vertical y horizontal (manifiesto `any`; probado a 390×844 y 1280×800).
-- **Sin peticiones externas.** La edición de venta no llama a Supabase ni a otro servidor; el zip no enlaza a la vista previa de Vercel (se quitan `og:url` y `og:image`).
+Tamaños de alpha.225 (medidos en Linux):
 
-Prueba: `tests/itch_package_smoke.py` genera el zip, lo sirve en `/html/123456/` dentro de un marco de otro sitio y comprueba arranque, sonido tras tocar, guardado tras recargar, copia exportada, español e inglés (`?lang=en`), cero peticiones fuera de la carpeta y cero errores. `tests/itch-package.mjs` revisa el contenido del zip. **No probado en itch.io real, ni en teléfono, ni con personas.**
+| Sistema | Archivo | Comprimido | Descomprimido |
+|---|---|---|---|
+| Windows x64 | `kubono-<versión>-windows-x64.zip` (carpeta con `Kubono.exe`, portable) | 151 MB | 370 MB |
+| Linux x64 | `kubono-<versión>-linux-x64.tar.gz` (carpeta con `kubono`) | 119 MB | 286 MB |
+| macOS arm64 | `kubono-<versión>-macos-arm64.zip` (`Kubono.app`) | 125 MB | 310 MB |
+| macOS universal | `kubono-<versión>-macos-universal.zip` (del workflow) | sin medir (unos 250 MB) | — |
+
+El juego son 3,4 MB: el resto es Electron (Chromium).
+
+## Qué falta y riesgos
+
+- **macOS sin firma.** Firmar y notarizar requiere la cuenta de Apple Developer de Jay (US$99 al año). Sin firma, macOS avisa al abrir: hay que ir a Ajustes del Sistema → Privacidad y seguridad → «Abrir igualmente». El build del workflow lleva firma ad hoc (evita el aviso de «dañado» en Apple Silicon); un build de macOS hecho en Linux, no.
+- **Windows sin firma.** SmartScreen muestra «Windows protegió su PC» la primera vez: «Más información» → «Ejecutar de todas formas». Se quita con un certificado de firma de código (de pago) y reputación.
+- **Linux y el sandbox de Chromium.** En Ubuntu 24.04 y otros que restringen los espacios de nombres de usuario, Electron puede no abrir. Arreglo del jugador: `sudo chown root chrome-sandbox && sudo chmod 4755 chrome-sandbox` en la carpeta, o abrir con `./kubono --no-sandbox`. Conviene ponerlo en la página.
+- **Pantalla completa** comprobada solo en la tecla (la toma el envoltorio): Xvfb no tiene gestor de ventanas. Probar F11 en cada sistema.
+- **No probado** en Windows ni en macOS reales, ni con itch app, ni con personas. Electron necesita actualizaciones de seguridad: reconstruir con una versión nueva antes de cada salida.
+- Iconos: PNG del juego dentro de `.ico` y `.icns`, sin tamaños pequeños dibujados a mano.
+
+## Prueba
+
+`tests/desktop_smoke.py` construye el build de Linux (o usa `KUBONO_DESKTOP_BUILD`), lo abre en Xvfb y lo maneja por el protocolo de DevTools: ventana de 1280 × 800 titulada Kubono, edición de venta desde `app://kubono`, F11 real (XTest) para el envoltorio y no para el juego, sonido tras el primer clic, guardado, cierre con código 0 al cerrar la ventana, partida conservada al reabrir, guardado en `~/.config/com.playkubono.kubono`. Toda conexión pasa por un proxy que solo las anota: **ninguna**, ni de la página ni de Electron; un `fetch` externo deliberado queda bloqueado. `tests/desktop-package.mjs` revisa protocolo, bloqueo, menús, DevTools, carpeta de guardado, contenido y workflow sin Electron.
+
+El zip web y su prueba (`tests/itch_package_smoke.py`) siguen: son la entrada del envoltorio y sirven si algún día se publica la web.
 
 ## Configuración de la página
 
 | Campo | Valor |
 |---|---|
-| Kind of project | **HTML** |
-| Uploads | El zip, marcado «This file will be played in the browser» |
-| Pricing | US$3,99 («Paid»), si se confirma la duda de arriba |
-| Embed options | Marco **390 × 844**; «Mobile friendly» activado; orientación **Default**; «Fullscreen button» activado; «Automatically start on page load» desactivado; «Click to launch in fullscreen» desactivado |
+| Kind of project | **Downloadable** |
+| Uploads | Un archivo por sistema, cada uno con su etiqueta: Windows → **Windows**; `linux-x64.tar.gz` → **Linux**; `macos-…zip` → **macOS** |
+| Pricing | **Paid**. Precio **pendiente de Jay: US$3,99 o US$4,99** |
 | Classification | Games · Genre: Music (o Exploration) |
 | Visibility | **Draft** (borrador), nunca «Public» sin autorización de Jay |
 
-**Por qué 390 × 844.** Es el tamaño en que se diseñó y se prueba el juego, incluido el criterio de L2 («los textos no se cortan a 390×844»). Es vertical, como se juega en el teléfono. En un portátil de 768 px de alto el marco no cabe entero: la página se desplaza y el botón de pantalla completa da la vista grande, donde el juego se adapta a horizontal. Si Jay lo ve incómodo en su portátil, probar 360 × 720 en el borrador antes de cambiar nada.
-
-**Orientación Default** porque el juego se adapta a las dos; forzar vertical obligaría a girar a quien juega acostado o en tableta.
-
-**Arranque al tocar** (no automático): el sonido necesita un toque y el juego pesa poco.
+Sin zip «played in the browser»: la web no se publica abierta.
 
 ## Textos de la página
 
@@ -75,7 +95,7 @@ Eres un cubo en un universo que suena. Cada lugar tiene su música, y lo que hac
 - **Tu Refugio viaja contigo.** Se despliega desde el cubo donde estés. Coloca objetos que suenan y compón en el Taller.
 - **Tu cubo, a tu manera.** Más de ochenta piezas para cambiar cómo se ve, se mueve y suena.
 
-Pago único. Sin anuncios ni suscripciones; las chispas no se venden. Sin cuenta: tu partida se guarda en este navegador. «Guardar copia» la lleva a otro dispositivo. En español e inglés. Mejor con auriculares.
+Pago único. Sin anuncios ni suscripciones; las chispas no se venden. Sin cuenta ni conexión: tu partida se guarda en este ordenador. «Guardar copia» la lleva a otro. Windows, macOS y Linux. En español e inglés. Mejor con auriculares.
 
 ### English
 
@@ -91,23 +111,39 @@ You are a cube in a universe that sounds. Every place has its own music, and wha
 - **Your Refuge travels with you.** It unfolds from the cube wherever you are. Place objects that play and compose in the Workshop.
 - **Your cube, your way.** Over eighty pieces that change how it looks, moves and sounds.
 
-One-time purchase. No ads, no subscriptions; sparks are never sold. No account: your game is saved in this browser. "Save a copy" takes it to another device. In English and Spanish. Best with headphones.
+One-time purchase. No ads, no subscriptions; sparks are never sold. No account, no connection: your game is saved on this computer. "Save a copy" takes it to another one. Windows, macOS and Linux. In English and Spanish. Best with headphones.
 
 ### Etiquetas
 
-`music`, `exploration`, `relaxing`, `procedural-generation`, `atmospheric`, `minimalist`, `cube`, `singleplayer`, `mobile`, `electronic-music` (itch.io admite hasta 10).
+`music`, `exploration`, `relaxing`, `procedural-generation`, `atmospheric`, `minimalist`, `cube`, `singleplayer`, `offline`, `electronic-music` (itch.io admite hasta 10).
 
 Nombre legal, correo de contacto, capturas y política de privacidad: pendientes (L5 y tareas de Jay).
 
 ## Pasos de Jay (borrador privado, sin publicar)
 
-1. Generar el zip en un commit limpio de `main`: `node scripts/itch-package.mjs`.
-2. En itch.io: «Upload new project».
-3. Título «Kubono»; «Kind of project»: **HTML**.
-4. «Uploads»: subir `dist/kubono-itch-<versión>.zip` y marcar «This file will be played in the browser».
-5. «Embed options»: los valores de la tabla de arriba.
-6. «Pricing»: dejar **sin precio** hasta resolver la duda; luego probar con US$3,99 como se explica arriba.
-7. Descripción corta y larga, género y etiquetas de esta guía.
-8. «Visibility & access»: **Draft**. Guardar. No pulsar «Public».
-9. Abrir la vista previa del borrador en el escritorio y en el teléfono: jugar, tocar para oír, cerrar, volver a abrir y ver que la partida sigue. Probar el botón de pantalla completa y girar el teléfono.
+1. Confirmar el ID de la app (`com.playkubono.kubono`) y el precio (US$3,99 o US$4,99).
+2. En GitHub → Actions → «Desktop builds (itch.io / Steam)» → «Run workflow» sobre `main`. Descargar los dos artefactos.
+3. En itch.io: «Upload new project». Título «Kubono»; «Kind of project»: **Downloadable**.
+4. «Uploads»: subir los tres archivos y marcar en cada uno su sistema (Windows, macOS, Linux).
+5. «Pricing»: Paid, con el precio elegido.
+6. Descripción corta y larga, género y etiquetas de esta guía.
+7. «Visibility & access»: **Draft**. Guardar. No pulsar «Public».
+8. Con el enlace secreto del borrador, en una ventana privada: comprobar que la descarga pide pagar.
+9. Descargar en cada ordenador que tengas: abrir (pasar el aviso de macOS o SmartScreen), jugar, oír, cerrar, volver a abrir y ver que la partida sigue. Probar F11.
 10. Anotar lo que falle; no publicar sin decidirlo.
+
+### Con `butler` (opcional)
+
+`butler` es la herramienta de línea de órdenes de itch.io: sube solo lo que cambió y etiqueta el sistema por el nombre del canal. Jay inicia sesión una vez (`butler login`, en su ordenador; la clave no va al repositorio ni a GitHub) y luego:
+
+```
+butler push dist/desktop/Kubono-win32-x64 USUARIO/kubono:windows --userversion 2.3.0-alpha.225
+butler push dist/desktop/Kubono-linux-x64 USUARIO/kubono:linux --userversion 2.3.0-alpha.225
+butler push Kubono-darwin-universal USUARIO/kubono:mac --userversion 2.3.0-alpha.225
+```
+
+Para macOS, subir la carpeta que contiene `Kubono.app` descomprimida en un Mac (conserva enlaces y firma). Este trabajo no usa `butler`.
+
+## Steam (después)
+
+El mismo build sirve: Steam recibe las carpetas de `dist/desktop/` (una profundidad por sistema) con SteamPipe. Falta la cuenta de Steamworks, la ficha y decidir si se integran logros o la nube de Steam (hoy no).

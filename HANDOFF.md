@@ -22,7 +22,7 @@ CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio.
 
 ## Qué falta
 
-1. **Lanzamiento L3–L6** ([plan](docs/PLAN_LANZAMIENTO.md#salida-web-y-android)): Android de tienda, web en itch.io, fichas y privacidad, prueba cerrada. L1 (sin nube) y L2 (inglés) están hechas; el inglés no lo ha revisado ninguna persona nativa. Cada alta, pago y publicación los hace o autoriza Jay.
+1. **Lanzamiento L3–L6** ([plan](docs/PLAN_LANZAMIENTO.md#salida-web-y-android)): Android de tienda, escritorio en itch.io (descarga Electron; la web no se publica abierta), fichas y privacidad, prueba cerrada. L1 (sin nube) y L2 (inglés) están hechas; el inglés no lo ha revisado ninguna persona nativa. Cada alta, pago y publicación los hace o autoriza Jay.
 2. **Teléfono y personas:** Jay y Luca prueban el juego (27 de octubre en curso). Mirar los dos finales dentro del juego con altavoz y auriculares, el toque, la luz con el retraso real del audio, el Refugio y volver al día siguiente. [Protocolo](docs/PRUEBAS_CON_PERSONAS.md); el [registro](docs/aceptacion-e.json) sigue sin participantes.
 3. **Ramas viejas** en GitHub: borrarlas a mano (la sesión no tiene permiso). Todas están integradas en `main`.
 

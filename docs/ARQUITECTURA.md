@@ -10,6 +10,8 @@ Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseñ
 
 `package.json` y `src/release-info.js` comparten versión; `scripts/bump-version.mjs` actualiza también README, HTML y clave de caché. Documentación sola no sube versión.
 
+**Escritorio (L4).** `desktop/` es la única carpeta con dependencias npm (Electron y su empaquetador, fuera de Git): envuelve la copia sellada del juego y no forma parte de él ([itch.io](ITCH.md)).
+
 `vercel.json` usa `framework:null`, `outputDirectory:"."` y `node scripts/vercel-build.mjs`. Este script sella revisión y fecha en el artefacto mediante `scripts/stamp-deploy.mjs`; fuera de Vercel, sin SHA, no modifica el checkout. No hay bundler ni directorio public requerido.
 
 Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pruebas y documentación no son módulos del producto.
