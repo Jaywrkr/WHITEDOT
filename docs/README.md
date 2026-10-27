@@ -1,6 +1,6 @@
 # Documentación de Kubono
 
-Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión del panel: [sesión 11](panel/sesion-11/informe.md); Q1–Q7 en `main`. Siguiente: [auditoría externa](AUDITORIA_EXTERNA.md).
+Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión del panel: [sesión 11](panel/sesion-11/informe.md); Q1–Q7 en `main`. Ciclo de diseño cerrado. Siguiente: [salida web y Android](PLAN_LANZAMIENTO.md#salida-web-y-android).
 
 ## Empezar
 
@@ -10,7 +10,8 @@ Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión 
 
 | Documento | Contenido |
 |---|---|
-| [Auditoría externa](AUDITORIA_EXTERNA.md) | Cómo auditar, puntuar, entregar un plan y cómo se decide |
+| [Salida web y Android](PLAN_LANZAMIENTO.md#salida-web-y-android) | Fases L1–L6 y tareas de Jay para publicar |
+| [Auditoría externa](AUDITORIA_EXTERNA.md) | Método conservado; la auditoría con Codex no está planificada |
 | [Sesión 11 del panel](panel/sesion-11/informe.md) | Notas, hallazgos y plan Q1–Q7 |
 | [E1–E7](ENTREGA_E.md) | Lo implementado, ramas y prueba de cada fase |
 | [Auditoría E](panel/candidato-e/informe.md) | Hallazgos, correcciones, notas simuladas y límites |

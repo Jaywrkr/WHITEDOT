@@ -1,5 +1,7 @@
 # Auditoría externa de Kubono
 
+> **No planificada.** El 27 de octubre de 2026 Jay descartó la auditoría con Codex y cerró el ciclo de diseño. Esta guía se conserva como método por si se hace una revisión externa más adelante.
+
 Guía para un equipo externo (por ejemplo Codex) que audita el juego sin haber trabajado en él. Vigente para **2.3.0-alpha.222** en `main` (27 de octubre de 2026).
 
 ## Cómo funciona el ciclo
