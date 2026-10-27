@@ -2,7 +2,7 @@
 
 ## Lectura
 
-Leer este archivo antes de tocar código. Después: [README](README.md), [HANDOFF](HANDOFF.md) y la guía del tema en [el índice](docs/README.md). Para auditar el juego como el panel creativo: [docs/PANEL.md](docs/PANEL.md). La petición actual de Jay define el trabajo; los planes antiguos no autorizan fases nuevas ni reabren entregas.
+Leer este archivo antes de tocar código. Después: [README](README.md), [HANDOFF](HANDOFF.md) y la guía del tema en [el índice](docs/README.md). Para auditar el juego como el panel creativo: [docs/PANEL.md](docs/PANEL.md); una auditoría externa sigue [docs/AUDITORIA_EXTERNA.md](docs/AUDITORIA_EXTERNA.md). La petición actual de Jay define el trabajo; los planes antiguos no autorizan fases nuevas ni reabren entregas.
 
 ## Entrega
 

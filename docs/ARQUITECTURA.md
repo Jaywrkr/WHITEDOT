@@ -1,4 +1,6 @@
-# Arquitectura vigente · alpha.207
+# Arquitectura vigente · alpha.221
+
+Sin módulos nuevos desde alpha.207: P1–P8 y Q1–Q6 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 

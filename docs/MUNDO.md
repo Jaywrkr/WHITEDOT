@@ -1,6 +1,6 @@
 # El mundo de Kubono
 
-Reglas vigentes del candidato **alpha.218**. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
+Reglas vigentes en `main`, **alpha.221**. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
 
 ## Propósito y recorrido
 
