@@ -50,7 +50,7 @@ with sync_playwright() as p:
   page.mouse.up();assert not page.locator('#scanner').is_visible()
   page.wait_for_timeout(800);page.mouse.click(center['x'],center['y'])
   assert page.evaluate('window.__testRuntime.influenceState.targets.melody<0'), 'white point reduces a layer'
-  page.mouse.click(30,300);assert page.evaluate('window.__testRuntime.waves.length > 0'), 'empty world still emits a pulse'
+  page.mouse.click(30,300);page.wait_for_function('window.__testRuntime.waves.length > 0',timeout=3000)   # Q5: the wave is born when its note is heard
   page.mouse.move(center['x'],center['y']);before=page.evaluate('window.__testRuntime.S.wx');page.mouse.down();page.mouse.move(center['x']+80,center['y']);page.wait_for_timeout(650)
   assert not page.locator('#scanner').is_visible();assert page.evaluate('window.__testRuntime.S.wx')>before;page.mouse.up()
   page.keyboard.down('e');assert page.locator('#scanner').is_visible();page.keyboard.up('e');assert not page.locator('#scanner').is_visible()
@@ -98,7 +98,8 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.evaluate("document.getElementById('menuMore').open=true");page.locator('#bPrimary').click();page.locator('#bMenu').click();page.evaluate("document.getElementById('menuMore').open=true");page.locator('#bWorld').click();assert page.evaluate('!document.getElementById("reto").hidden') == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')
   page.locator('#bMenu').click();page.wait_for_timeout(2200);before=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).lampUsed');page.wait_for_timeout(2200);after=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).lampUsed');assert abs(after-before)<.1,(before,after)
   page.locator('#dNext').click();assert not page.locator('#reto').is_visible();assert not page.locator('#mCap').is_visible()
-  page.wait_for_timeout(2100);assert page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).mode')=='camino'
+  # D7-C (Q6): a new day keeps a player who opened the World where they were; only the day's crystals start again.
+  page.wait_for_timeout(2100);saved=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4"))');assert saved['mode']=='world' and saved['pathCrystals']==[],(saved['mode'],saved.get('pathCrystals'))
   page.locator('#bMenu').click();page.locator('#bStudio').click();page.wait_for_function('__testRuntime.houseSettled()');bench=page.evaluate('__testRuntime.houseToScreen(339,505)');page.locator('#w').click(position=bench);page.wait_for_function("!document.getElementById('studioPanel').hidden");page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2-min(size['width'],size['height']-260)*.13});assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   page.locator('#stExit').click();assert page.locator('#housePanel').is_visible(),'the Taller goes back to the house';page.locator('#houseExit').click();page.reload(wait_until='domcontentloaded');page.wait_for_function('document.getElementById("bMenu").onclick !== null');assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).journal.music.instruments).length > 0')
