@@ -6,8 +6,8 @@ const base='fd5dfc1939a4774714420d2098cfa3a2d38971bd';
 // musical sections those phases changed are held byte for byte to this commit instead of the E base.
 const approved='5464612636520df3dfb69398bfe0b1edda0fb790';
 // Panel 11 · Q1–Q6 (approved by Jay, 27 Oct 2026, D7, D10, D11): the files and sections those phases changed are held
-// byte for byte to the end of Q6.
-const approvedQ='8e6cbf7d9660f9b0848a1cde4ee2f03ebded99b2';
+// byte for byte to the end of Q6 and its CI fixes.
+const approvedQ='4183856c414a84e18b2120ded87ee422703668e5';
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -20,7 +20,7 @@ const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','sr
 const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js','src/crystal-sparks.js','src/cube-shop-sound.js','src/cube.js','src/cultures.js','src/data.js','src/discovery.js','src/ecology.js','src/encounter-depth.js','src/feedback.js','src/fxpad.js','src/glass.js','src/house-capsules.js','src/house-model.js','src/initiative.js','src/interactions.js','src/jam.js','src/journey-chain.js','src/journey-chapters.js','src/journey-dance.js','src/journey-echo.js','src/journey-games.js','src/journey-guide.js','src/journey-hint.js','src/journey-lasso.js','src/journey-moments.js','src/journey-rebuild.js','src/journey-resonance.js','src/journey-stick.js','src/journey-surf.js','src/journey-victory.js','src/landmarks.js','src/materia.js','src/micro-instruments.js','src/mirrors.js','src/onboarding-model.js','src/patches.js','src/percussion.js','src/phenomena.js','src/pixel-life.js','src/player-profile.js','src/quietud.js','src/render.js','src/save-store.js','src/sharing.js','src/song.js','src/sparks.js','src/studio.js','src/universe-layers.js','src/vida.js','src/world-fauna.js','src/world-light.js','src/world-sheet.js','src/world-visibility.js']);
 // Changed by Q1–Q6: Q1 one notice after the Journey, Q2 the Cueva counts the echo, Q3 the layer that grows, Q4 Refugio
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
-const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
+const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
 for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];

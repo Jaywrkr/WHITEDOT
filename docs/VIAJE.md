@@ -1,6 +1,6 @@
 # El Viaje · diseño vigente
 
-Candidato **alpha.216**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
+Vigente en `main`, **alpha.221**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
 
 ## Recorrido
 

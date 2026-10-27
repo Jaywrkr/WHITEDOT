@@ -63,7 +63,7 @@ node scripts/verify-e-preservation.mjs
 node scripts/acceptance-gate.mjs docs/aceptacion-e.json
 ```
 
-El primero protege 301 archivos y trece contratos desde main alpha.200 (P1 abrió `map.js` y `places-ring.js`, solo dibujo; P2, ocho módulos de menú y cuenta). El segundo informa del registro declarado; `--require-ready` devuelve2 mientras haya criterios pendientes. Ese resultado esperado no es una suite rota ni un permiso para inventar participantes. Ver [protocolo](PRUEBAS_CON_PERSONAS.md).
+El primero protege 301 archivos y trece contratos desde main alpha.200 (P1 abrió `map.js` y `places-ring.js`, solo dibujo; P2, ocho módulos de menú y cuenta). Lo que cambiaron P3–P8 se compara con `main` tras P8 (`5464612`) y lo que cambiaron Q1–Q6 con el final de Q6 (`4183856`); Q7 lo actualizará con sus contratos musicales cuando Jay apruebe la escucha. El segundo informa del registro declarado; `--require-ready` devuelve2 mientras haya criterios pendientes. Ese resultado esperado no es una suite rota ni un permiso para inventar participantes. Ver [protocolo](PRUEBAS_CON_PERSONAS.md).
 
 Los verificadores históricos `n-preservation.mjs` y `pulido-preservation.mjs` pertenecen a sus revisiones. No usarlos como gate actual ni alterar sus referencias para forzar verde. [Herramientas](../scripts/README.md).
 

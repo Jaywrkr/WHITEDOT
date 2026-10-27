@@ -39,7 +39,7 @@ try:
    page.evaluate("()=>{const r=__testRuntime;r.stopAutopilot();r.startAutopilot('wander');r.S.autoPulse=false;}")
    page.evaluate("()=>{const r=__testRuntime;for(let i=0;i<500;i++)r.autopilotVector(.05,false,false);}");assert page.evaluate('__testRuntime.waves.length')==0
    # Enabling pulses remains silent until enough active walking has passed.
-   page.locator('#autoPulse').tap();page.evaluate("()=>{const r=__testRuntime;for(let i=0;i<460;i++)r.autopilotVector(.05,false,false);}");assert page.evaluate('__testRuntime.waves.some(w=>w.origin==="ambient")')
+   page.locator('#autoPulse').tap();page.evaluate("()=>{const r=__testRuntime;for(let i=0;i<460;i++)r.autopilotVector(.05,false,false);}");page.wait_for_function('__testRuntime.waves.some(w=>w.origin==="ambient")',timeout=3000)   # Q5: the wave waits for its heard note
    page.evaluate("__testRuntime.stopAutopilot();__testRuntime.save()");page.reload();page.wait_for_function('__testRuntime?.inWorld()');assert page.evaluate('__testRuntime.S.autoPulse===true&&__testRuntime.S.cat.kept')
    page.evaluate("()=>{document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const r=__testRuntime;window.__beforeFailure={x:r.S.wx,y:r.S.wy};window.__setItem=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key===r.saveStore.key)throw new DOMException('Full','QuotaExceededError');return __setItem.call(this,key,value);};}")
    page.locator('#bStyles').tap();page.locator('[data-music-genre="ambient"]').tap();page.wait_for_function('document.getElementById("musicTravelStatus").textContent.includes("guardado")')

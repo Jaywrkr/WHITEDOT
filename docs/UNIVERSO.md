@@ -1,6 +1,6 @@
 # El universo
 
-Guía vigente del universo procedural en alpha.207. Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
+Guía vigente del universo procedural en alpha.221 (sin cambios de generación desde alpha.207). Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
 
 ## Reglas
 

@@ -16,12 +16,13 @@ GOLD="""async([png,allowed])=>{const img=new Image();img.src='data:image/png;bas
  const rects=document.querySelectorAll(allowed),boxes=[...rects].filter(e=>e.offsetParent!==null||e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [r.left-2,r.top-2,r.right+2,r.bottom+2];}),dpr=W/innerWidth;
  const seen=new Uint8Array(W*H),bad=[];for(let i=0;i<W*H;i++){if(!gold[i]||seen[i])continue;const st=[i];seen[i]=1;let x0=W,y0=H,x1=0,y1=0,n=0;while(st.length){const j=st.pop(),px=j%W,py=(j/W)|0;n++;x0=Math.min(x0,px);y0=Math.min(y0,py);x1=Math.max(x1,px);y1=Math.max(y1,py);
   for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const qx=px+dx,qy=py+dy;if(qx<0||qy<0||qx>=W||qy>=H)continue;const k=qy*W+qx;if(gold[k]&&!seen[k]){seen[k]=1;st.push(k);}}}
-  const b=[x0/dpr,y0/dpr,x1/dpr,y1/dpr],inside=boxes.some(r=>b[0]>=r[0]&&b[1]>=r[1]&&b[2]<=r[2]&&b[3]<=r[3]);if(!inside&&(y1-y0)/dpr>5)bad.push({box:b.map(Math.round),n});}
+  const b=[x0/dpr,y0/dpr,x1/dpr,y1/dpr],inside=boxes.some(r=>b[0]>=r[0]&&b[1]>=r[1]&&b[2]<=r[2]&&b[3]<=r[3]);if(!inside&&(y1-y0)/dpr>5&&(x1-x0)/dpr>=2)bad.push({box:b.map(Math.round),n});}
  return bad;}"""
+# Subpixel text in some CI browsers leaves 1 px orange fringes on white letters: no ★ or ✦ is that thin.
 STARS='#hudStars,#sparkCount,.lugar-stars i.got,#placeStars .got,#portalStars .got'
 try:
  with sync_playwright() as pw:
-  browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
+  browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--disable-lcd-text','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    # A normal browser, as the panel saw it (scripts/panel-capture.py): automation and localhost mark the page as dev, which dims spans.

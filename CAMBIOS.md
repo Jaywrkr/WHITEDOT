@@ -14,6 +14,14 @@ Rama `panel11/q7-finales`, sobre `panel11/q6-mundo-libre` (informe de la sesión
 - Renders para escuchar en `docs/panel/sesion-11/escucha/` (WAV mono, 22 050 Hz): final del Viaje antes y después; final de los once con los once a ★ antes y después, y a ★★ después. El de los once suena sobre el programador real del Mundo (`audio.js`, género minimal), sin oído humano.
 - Límites: el criterio «compás de frase ≥ 8 dB bajo el tutti» no se cumple: queda en 4,4 dB porque callar la radio no cambia la mezcla de las capas, y la mezcla no estaba aprobada. En el render real la radio aportaba poco bajo las frases (≈ 0,3 dB). Jay no ha oído aún los renders; no hay escucha en teléfono.
 
+
+## Documentación al día y guía de auditoría externa · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`, sobre `main` (`1a898ce`). Petición de Jay antes de una auditoría en Codex.
+
+- Nueva [guía de auditoría externa](docs/AUDITORIA_EXTERNA.md): qué queremos, qué no se discute, cómo se puntúa, qué entregar y cómo se decide aquí cada propuesta (sí, no o después, con la nota esperada).
+- README, HANDOFF, HANDOFF_CLAUDE, índice, PANEL y AGENTS reflejan alpha.221 en `main` y Q7 pendiente de escucha.
+- No cambia el juego.
 ## Q6 · Volver y tocar en el Mundo libre · 2.3.0-alpha.221
 
 Rama `panel11/q6-mundo-libre`, sobre `panel11/q5-golpe-al-oirse` (informe de la sesión 11). Chen e Iwai. Decisiones de Jay: D7-C y D11-B.
@@ -91,6 +99,8 @@ Rama `panel11/q1-reglas-a-la-vista`, sobre `claude/charming-darwin-dvbfc7` (info
 - Un mensaje al salir del Viaje: fuera «Se abre el Mundo libre.». «Prólogo» va a la Bitácora sin aviso. El final aterriza en el Refugio sin la voz de primera visita (se oye en la primera visita real). Hasta el primer portal, un color o una pieza ganados esperan en Tu cubo sin aviso.
 - No cambia: música, cubo, mapas, guardados, umbrales ni el dorado de los objetos de juego, del cielo del final ni de los títulos de cierre.
 - Pruebas: `tests/rules-in-sight.mjs` y `tests/rules_in_sight_smoke.py` (sin píxel dorado fuera de ★/✦ en Lugares, Refugio y mapa; HUD alineado). Se actualizan `journey-finale.mjs`, `journey_finale_smoke.py` (ningún aviso entre «Tu mundo se abrió» y el primer toque) y `refugio_lugares_smoke.py`; `crystal_play_smoke.py` y `entry_jump_smoke.py` piden ahora ✦ al tamaño de ★ (antes ≥ 14 px). Auditoría, `npm test` y 49 recorridos de navegador aprobados. `verify-e-preservation` señala `achievements.js` y `celebration.js` (solo avisos). Cabeceras de `docs/VIAJE.md` y `docs/MUNDO.md` en alpha.216.
+
+- Arreglo en el PR de Q1–Q6: los avisos de descubrimiento («Vida», «Forma nueva», «Familia nueva», «Reliquia», «Récord») también callan desde «Tu mundo se abrió» hasta el primer portal; lo encontrado se guarda igual (`src/discovery.js`).
 
 ## Sesión 11 del panel · sin cambio de versión
 
