@@ -54,7 +54,7 @@ Las pruebas instrumentan una copia de `src/main.js`; el runtime no se expone en 
 
 `player_touch_smoke.py` usa gestos reales y navegador sin marca de automatización. `offline_smoke.py` comprueba el shell offline. Las imágenes de `panel-capture.py` son fixtures identificadas con SHA/digest; no prueban rareza, rendimiento físico o comprensión humana.
 
-Los paneles plegados deben abrirse antes de usar sus controles. Mantener ID, foco, pausa, cierres equivalentes y silencio de UI. El libro tiene filtros secundarios plegables; Favoritos abre su destino dentro de la Bitácora.
+Idioma (L2): un navegador automatizado arranca en español; los recorridos que ocultan la marca de automatización declaran también un sistema en español (`navigator.languages`). Los recorridos `english_*_smoke.py` y `language_choice_smoke.py` prueban el inglés ([Traducción](TRADUCCION.md)). Los paneles plegados deben abrirse antes de usar sus controles. Mantener ID, foco, pausa, cierres equivalentes y silencio de UI. El libro tiene filtros secundarios plegables; Favoritos abre su destino dentro de la Bitácora.
 
 ## Preservación y aceptación
 

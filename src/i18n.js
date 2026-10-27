@@ -23,9 +23,9 @@ export const currentLang=()=>lang;
 function compile(dict){
  exact=new Map();numeric=new Map();patterns=[];cache=new Map();
  for(const [es,en]of Object.entries(dict)){
-  // An open part never spans a separator or a sentence break the key itself does not have.
+  // An open part never spans a separator or a sentence break the key itself does not have (inside «» it may).
   if(es.includes('{}')){const stops=[' · ','. ',': ','\n',' — '].filter(x=>!es.includes(x)).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),part=stops?`((?:(?!${stops})[\\s\\S])+?)`:'([\\s\\S]+?)';
-   patterns.push({es,en,re:new RegExp('^'+es.split('{}').map(p=>p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\\\{n\\\}/g,'(\\d+(?:[.,]\\d+)*)')).join(part)+'$')});}
+   patterns.push({es,en,re:new RegExp('^'+es.split('{}').map(p=>p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\\\{n\\\}/g,'(\\d+(?:[.,]\\d+)*)')).reduce((a,p,i)=>a+(/«$/.test(a)&&p.startsWith('»')?'([^»]+?)':part)+p)+'$')});}
   else if(es.includes('{n}'))numeric.set(es,en);
   else exact.set(es,en);
  }
@@ -61,11 +61,13 @@ function tr(s,depth=0){
  // A lower-case first letter (a name inside a sentence): the capitalised key, lower-cased again.
  if(/^\p{Ll}/u.test(s)){const cap=s.charAt(0).toLocaleUpperCase('es')+s.slice(1),v=lookup(cap,depth);if(v!==undefined)return /^[A-Z][a-z]/.test(v)&&!/^(I|I'm|I've|I'll)\b/.test(v)?v.charAt(0).toLowerCase()+v.slice(1):v;}
  if(/\s\s|[\n\t]/.test(s)){const flat=s.replace(/\s+/g,' '),v=lookup(flat,depth);if(v!==undefined)return v;}
- // Pieces: sentences one by one, or the parts between a separator. The split that leaves the fewest Spanish parts wins.
+ // Pieces: sentences one by one, or the parts between a separator. The split that leaves the fewest Spanish parts wins; then the one with the fewest parts.
  let best=null;
- const pieces=(parts,join)=>{if(parts.length<2)return;const out=parts.map(p=>tr(p,depth+1)),left=out.filter((p,i)=>p===parts[i]&&/\p{L}/u.test(p)).length;if(out.some((p,i)=>p!==parts[i])&&(!best||left<best.left))best={left,text:out.join(join)};};
+ const pieces=(parts,join)=>{if(parts.length<2)return;const out=parts.map(p=>tr(p,depth+1)),left=out.filter((p,i)=>p===parts[i]&&/\p{L}/u.test(p)).length;if(out.some((p,i)=>p!==parts[i])&&(!best||left<best.left||left===best.left&&parts.length<best.n))best={left,n:parts.length,text:out.join(join)};};
+ // Between separators, the longest run of parts that is a whole key stays together («Toca para responder · escucha el cambio»).
+ const runs=(parts,sep)=>{const out=[];for(let i=0;i<parts.length;){let j=parts.length;for(;j>i+1;j--){if(lookup(parts.slice(i,j).join(sep).trim(),depth,false)!==undefined)break;}out.push(parts.slice(i,j).join(sep));i=j;}return out;};
+ for(const sep of SEPARATORS)if(s.includes(sep))pieces(runs(s.split(sep),sep),sep);
  pieces(s.split(/(?<=[.!?…])\s+(?=[\p{Lu}¿¡«"(])/u),' ');
- for(const sep of SEPARATORS)if(s.includes(sep))pieces(s.split(sep),sep);
  if(best)return best.text;
  // Dates written by Intl in Spanish inside a text: «12 oct», «12 oct 2026», «12 de oct. de 2026».
  const dated=s.replace(/\b(\d{1,2})(?: de)? (ene|feb|mar|abr|may|jun|jul|ago|sept?|oct|nov|dic)\b\.?(?:(?: de)? (\d{4}))?/gi,(m,d,mo,y)=>MONTHS[mo.toLowerCase()]+' '+d+(y?', '+y:''));

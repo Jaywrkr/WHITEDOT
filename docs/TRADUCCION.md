@@ -56,7 +56,7 @@ Vigente desde **alpha.224** (fase L2 de la [salida web y Android](PLAN_LANZAMIEN
 | Llanura · Lago · Bosque · Tormenta · Vacío | Plain · Lake · Forest · Storm · Void | Capítulos |
 | Jardín · Dunas · Cristales · Faros · Ruinas · Cueva | Garden · Dunes · Crystals · Lighthouses · Ruins · Cave | Lugares |
 | Pegar · Encadenar · Rodear · Bailar · Soltar · Sembrar · Surfear · Resonar · Guiar · Reconstruir | Stick · Chain · Circle · Dance · Release · Sow · Surf · Resonate · Guide · Rebuild | Verbos de cada lugar |
-| a tiempo / contratiempo / el «y» | on time / off-beat / the «and» | Ritmo |
+| a tiempo / contratiempo / el «y» | on time / off-beat / the «&» | Ritmo; «1 · 2y · 3 · 4» → «1 · 2& · 3 · 4» |
 | Do Re Mi Fa Sol La Si | C D E F G A B | Notas |
 | Dórica, Frigia, Lidia… | Dorian, Phrygian, Lydian… | Modos |
 | Jay · diseño y código / Luca · primer jugador | Jay · design and code / Luca · first player | Créditos |
