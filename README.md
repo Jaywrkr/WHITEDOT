@@ -6,11 +6,11 @@ Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión de
 
 ## Estado de la entrega
 
-Las siete fases E y la limpieza están en `main` desde el 26 de octubre (PR #355). El plan P1–P8 de la [sesión 10](docs/panel/sesion-10/informe.md) entró en `main` (PR #357 y #358). La última revisión del panel es la [sesión 11](docs/panel/sesion-11/informe.md), con el plan Q1–Q7. Jay crea los PR y hace merge.
+`main` lleva E1–E7, P1–P8 (sesión 10 del panel) y Q1–Q6 (sesión 11), todo con CI completo en verde (PR #355, #357–#359). Q7, que cambia los finales musicales, espera la escucha de Jay en `panel11/q7-finales`.
 
-Runtime E: `3c9d5dbc`; cierre y evidencias: `7f6374b3`. La limpieza documental conserva exactamente el juego. [Entrega E1–E7](docs/ENTREGA_E.md) · [auditoría y pendientes](docs/panel/candidato-e/informe.md).
+**Siguiente:** una [auditoría externa](docs/AUDITORIA_EXTERNA.md). El equipo externo puntúa y propone un plan; Jay decide aquí qué se hace, qué no y qué nota se espera mover.
 
-[Probar la vista previa E7](https://whitedot-epn5qszxv-jaywrkr-1498s-projects.vercel.app). Vercel confirmó ese despliegue; el CI completo del candidato y la aceptación con personas siguen pendientes.
+Última revisión del panel: [sesión 11](docs/panel/sesion-11/informe.md), media 6,7 sobre alpha.215. Nadie ha puntuado alpha.221. [Probar la vista previa de Q1–Q6](https://whitedot-git-panel11-q6-mundo-libre-jaywrkr-1498s-projects.vercel.app); no hay pruebas con personas ni escucha en teléfono.
 
 ## Leer antes de continuar
 
@@ -18,13 +18,14 @@ Runtime E: `3c9d5dbc`; cierre y evidencias: `7f6374b3`. La limpieza documental c
 2. [HANDOFF.md](HANDOFF.md): estado exacto, rama y siguientes pasos.
 3. [Arquitectura](docs/ARQUITECTURA.md) y [verificación](docs/VERIFICACION.md).
 4. [Índice de documentación](docs/README.md): guías vigentes y registros históricos separados.
+5. [Auditoría externa](docs/AUDITORIA_EXTERNA.md): cómo auditar, puntuar y proponer un plan.
 
 [Entrada para Claude](HANDOFF_CLAUDE.md) apunta al mismo traspaso; no mantiene un plan paralelo.
 
 ## El juego
 
 - **El Viaje:** Camino y cinco capítulos. Aprendes a pegar, encadenar, rodear, bailar y soltar; el cierre abre el Mundo libre.
-- **Once lugares:** retos que se abren en orden. ★ por completar, ★★ con75% a tiempo y ★★★ con70% en Maestro. Las estrellas amplían Tu canción.
+- **Once lugares:** retos que se abren en orden. ★ por completar, ★★ con 75 % a tiempo y ★★★ con 70 % en Maestro. Las estrellas amplían Tu canción.
 - **El universo:** exploración procedural, criaturas, hallazgos, tarjetas, favoritos y música electrónica generativa.
 - **El Refugio:** espacio voluntario para tus trofeos, objetos y jardín de voces.
 
@@ -36,7 +37,7 @@ Runtime E: `3c9d5dbc`; cierre y evidencias: `7f6374b3`. La limpieza documental c
 python3 -m http.server 8000
 ```
 
-Abre `http://localhost:8000`. Cliente estático con módulos ES, Canvas2D y Web Audio; sin compilación ni dependencias npm de ejecución. El nombre WHITEDOT permanece en paquetes y claves para conservar partidas.
+Abre `http://localhost:8000`. Cliente estático con módulos ES, Canvas 2D y Web Audio; sin compilación ni dependencias npm de ejecución. El nombre WHITEDOT permanece en paquetes y claves para conservar partidas.
 
 ```sh
 npm run audit:release

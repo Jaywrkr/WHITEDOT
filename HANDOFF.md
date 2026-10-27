@@ -1,54 +1,49 @@
-# Traspaso vigente · alpha.207
+# Traspaso vigente · alpha.221
 
-**Continuar desde `main`.** Las siete fases E y la limpieza del repositorio entraron en `main` el 26 de octubre de 2026 con el CI completo en verde (PR #355, `d2f93f2e`). Jay crea PR y hace merge; no integrar automáticamente.
+**Continuar desde `main`** (`1a898ce`, 27 de octubre de 2026). Jay crea PR y hace merge salvo que pida otra cosa.
 
-**Lo siguiente:** P1–P8 de la sesión 10 están en `main` (PR #357 y #358, alpha.215, CI completo en verde). La [sesión 11 del panel](docs/panel/sesion-11/informe.md) revisó alpha.215: media 6,7, plan Q1–Q7 (ramas `panel11/…`) y decisiones D7–D11 de Jay. No empezar ninguna fase sin su aprobación.
+**Lo siguiente:** una auditoría externa (Codex) según [Auditoría externa](docs/AUDITORIA_EXTERNA.md). Ellos entregan notas, hallazgos y un plan; Jay decide aquí qué se hace y qué no, con la nota que se espera mover. Mientras tanto, Q7 espera la escucha de Jay.
 
-Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) es solo una entrada a este documento.
+Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) solo apunta aquí.
 
-## Qué hay entregado
+## Qué hay en `main`
 
-| Fase | Rama | Commit funcional |
-|---|---|---|
-| E1 | `excepcional/e1-fiabilidad` | `955cd6ae` |
-| E2 | `excepcional/e2-interaccion` | `f93d4b54` |
-| E3 | `excepcional/e3-aprender` | `b8470e7d` |
-| E4 | `excepcional/e4-interfaz` | `ce2aca02` |
-| E5 | `excepcional/e5-descubrimientos` | `0e0277f5` |
-| E6 | `excepcional/e6-recorrido` | `a824224a` |
-| E7 | `excepcional/e7-validacion` | `3c9d5dbc` (runtime), `7f6374b3` (registro) |
+| Plan | Qué | PR | Versión |
+|---|---|---|---|
+| E1–E7 | Fiabilidad, interacción, interfaz, recorrido | #355 | alpha.207 |
+| Sesión 10 · P1–P8 | Pantallas limpias, menús, un solo reloj, color ganado, menos contadores; D1–D6 | #357, #358 | alpha.208–215 |
+| Sesión 11 · Q1–Q6 | Reglas a la vista, la Cueva cuenta el eco, Tu canción crece y se cierra, Refugio legible, golpe al oírse, día nuevo y un solo gesto; D7, D10, D11 | #359 | alpha.216–221 |
 
-Cada rama contiene la anterior; la de limpieza parte de E7. Un PR de la última a main contiene el conjunto. Si se revisan por separado, preservar el orden; squash/rebase de una base requiere reajustar sus dependencias.
+CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio. Detalle en [CAMBIOS](CAMBIOS.md).
 
-Cambios: resultados/porcentajes coherentes, luces a tiempo, entradas canceladas con foco/pausa, ayuda contextual, destinos claros, salida explícita del final5, Escape equivalente a Salir, jardín transaccional, libro compacto y favoritos directos sin duplicados. Tu canción identifica la frase personal y respeta el silencio visual. [Detalle E](docs/ENTREGA_E.md).
+## Qué falta
 
-La limpieza actualiza guías, separa historial, añade este acceso para Claude y retira163 informes generados sin referencias (6.793.912bytes). [Registro de limpieza](docs/LIMPIEZA_REPOSITORIO.md). No cambia código del juego ni versión. Verificación de limpieza:254 suites Node, auditoría y enlaces aprobados; sin repetir navegador/audio.
+1. **Q7 · Los finales** (D8, D9), rama `panel11/q7-finales` (`903d2e8`, alpha.222). El tema del final del Viaje suena con sus notas reales; el final de los once quita la música del Mundo de debajo y termina en la tónica. Cambia la música: **no entra sin la escucha de Jay**. Grabaciones antes/después en `docs/panel/sesion-11/escucha/` de esa rama. Antes del PR: traer `main` a la rama y actualizar el verificador de preservación con sus contratos musicales.
+2. **Auditoría externa:** [guía](docs/AUDITORIA_EXTERNA.md). Nadie ha puntuado alpha.221.
+3. **Teléfono y personas:** el toque, la luz con el retraso real del audio, el final del Viaje, el Refugio y volver al día siguiente. Android de gama media, Safari, altavoz, auriculares y Bluetooth. [Protocolo](docs/PRUEBAS_CON_PERSONAS.md); el [registro](docs/aceptacion-e.json) sigue sin participantes.
+4. **Ramas viejas** en GitHub: borrarlas a mano (la sesión no tiene permiso).
 
-## Qué está comprobado
+## Notas del panel
 
-- Runtime `3c9d5dbc`, versión `2.3.0-alpha.207`; huella `14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062`.
-- E:254 suites Node, auditoría limpia y veinte recorridos enfocados acumulados; siete renders E1 reutilizados por preservación del sonido.
-- 24 capturas de distintas instantáneas y sus evidencias, con manifiesto/alcance; consultar el [informe](docs/panel/candidato-e/informe.md) para no atribuir imágenes antiguas al último commit.
-- Vercel confirmó Preview de `7f6374b3`: [abrir E7](https://whitedot-epn5qszxv-jaywrkr-1498s-projects.vercel.app). No equivale a CI completo ni a publicación en tiendas.
-- Main alpha.200 tiene CI completo aprobado:[integración](docs/INTEGRACION_ALPHA_200.md). Ese resultado no certifica alpha.207.
+| Sesión | Versión | Media | Menús | Detalle visual |
+|---|---|---|---|---|
+| [10](docs/panel/sesion-10/informe.md) | alpha.207 | 6,7 | 5,5 | 5,5 |
+| [11](docs/panel/sesion-11/informe.md) | alpha.215 | 6,7 | 7 | 5,5 |
 
-## Siguiente paso
-
-1. Hecho: el candidato está en `main` (PR #355, CI completo en verde). Siguiente: las fases P del [panel 10](docs/panel/sesion-10/informe.md) que Jay apruebe.
-2. Completar [aceptación](docs/PRUEBAS_CON_PERSONAS.md):cinco sesiones formativas y confirmación independiente de8–12. El [registro](docs/aceptacion-e.json) sigue sin participantes; no rellenarlo con bots ni respuestas supuestas.
-3. Comprobar Android físico de gama media, Safari, altavoz/auriculares/Bluetooth, lector, interrupciones y retorno. El gusto musical, reconocimiento de la frase y prominencia de Jardín/Ruinas requieren observación real.
-4. Si aparece un fallo, corregir ese criterio con una regresión enfocada. No reabrir planes antiguos ni ampliar el catálogo por una nota simulada.
-
-La meta es diez; aún no está acreditada. El panel son diez lentes simuladas, no opiniones reales ni escucha humana.
+La 11 no se compara directa con la 10: nueve perfiles no puntuaron Audio y seis no puntuaron Sensación. Son lentes simuladas, no opiniones reales ni escucha humana. La meta es diez en cada categoría; no está acreditada.
 
 ## Límites que se mantienen
 
-Conservar música actual, síntesis, notas, armonías, mezcla, RNG, mundos, especies y cubo pequeño. Guardados antiguos/futuros y propiedad de premios se migran sin borrar. El [verificador E](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos (P1 abrió `map.js` y `places-ring.js`, solo dibujo; P2, ocho módulos de menú y cuenta). Los 56 archivos y cinco contratos que cambiaron P3–P8 se comparan byte a byte con `main` tras P8 (`5464612`), no con la base E. Los doce archivos y cuatro contratos que cambiaron Q1–Q6 se comparan con el final de Q6 y sus arreglos de CI (`4183856`).
-
-UI negra, Geist Mono, esquinas rectas, color ganado y menús silenciosos. Supabase/tiendas en pausa; no reaplicar SQL, borrar cuentas, publicar ni contratar. `server/` es prototipo histórico probado, no backend activo. Mantener formatos/fixtures heredados aunque no aparezcan en la UI.
+- Conservar música, síntesis, notas, armonías, mezcla, RNG, mundos, especies y cubo pequeño.
+- Guardados antiguos y futuros se migran sin borrar progreso ni premios.
+- El [verificador de preservación](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos. Lo que cambiaron P3–P8 se compara con `main` tras P8 (`5464612`). Lo que cambiaron Q1–Q6 se compara con el final de Q6 y sus arreglos de CI (`4183856`). Lo demás, con la base E.
+- UI negra, Geist Mono, esquinas rectas, menús silenciosos; dorado solo para ★ y ✦.
+- Supabase y tiendas en pausa: no reaplicar SQL, no borrar cuentas, no publicar. `server/` es un prototipo histórico, no un backend activo.
 
 ## Probar en el teléfono
 
-Abrir la vista previa sin `?dev=1`. Menú → Cómo jugar explica el gesto actual; Lugares → Seguir señala el destino; Libro → tarjeta permite elegir voz; el nombre del lugar abre Favoritos para volver. En Jardín: acercarse, sembrar en el golpe, regar entre golpes, cosechar y cerrar con el árbol dorado.
+Abrir una vista previa de Vercel sin `?dev=1`. La de Q1–Q6 es [esta](https://whitedot-git-panel11-q6-mundo-libre-jaywrkr-1498s-projects.vercel.app) (mismo contenido que `main`).
+
+Qué mirar: tocar donde sea y que suene al apoyar el dedo; que la onda y el cubo coincidan con la nota; la Cueva; Lugares y el Refugio; dejar el juego y volver al día siguiente.
 
 Atajos `?lugar=jardin`, `?anillo=1`, `?festival=1` en un perfil temporal; [lista](docs/MUNDO.md#herramientas-de-prueba). No borrar la partida personal ni contar un atajo como recorrido completo.

@@ -1,6 +1,6 @@
 # Documentación de Kubono
 
-Vigente para **alpha.215** en `main` (26 de octubre de 2026, PR #358). Última revisión del panel: [sesión 11](panel/sesion-11/informe.md), con el plan Q1–Q7.
+Vigente para **alpha.221** en `main` (27 de octubre de 2026, PR #359). Última revisión del panel: [sesión 11](panel/sesion-11/informe.md); Q1–Q6 en `main`, Q7 espera la escucha de Jay. Siguiente: [auditoría externa](AUDITORIA_EXTERNA.md).
 
 ## Empezar
 
@@ -10,6 +10,8 @@ Vigente para **alpha.215** en `main` (26 de octubre de 2026, PR #358). Última r
 
 | Documento | Contenido |
 |---|---|
+| [Auditoría externa](AUDITORIA_EXTERNA.md) | Cómo auditar, puntuar, entregar un plan y cómo se decide |
+| [Sesión 11 del panel](panel/sesion-11/informe.md) | Notas, hallazgos y plan Q1–Q7 |
 | [E1–E7](ENTREGA_E.md) | Lo implementado, ramas y prueba de cada fase |
 | [Auditoría E](panel/candidato-e/informe.md) | Hallazgos, correcciones, notas simuladas y límites |
 | [Verificación](VERIFICACION.md) | Pruebas enfocadas, cierre completo y evidencia reutilizable |

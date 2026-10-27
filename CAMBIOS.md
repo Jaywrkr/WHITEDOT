@@ -2,6 +2,14 @@
 
 Estado: 27 de octubre de 2026. Código **2.3.0-alpha.221**. Las entradas describen su revisión, no certifican producción.
 
+
+## Documentación al día y guía de auditoría externa · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`, sobre `main` (`1a898ce`). Petición de Jay antes de una auditoría en Codex.
+
+- Nueva [guía de auditoría externa](docs/AUDITORIA_EXTERNA.md): qué queremos, qué no se discute, cómo se puntúa, qué entregar y cómo se decide aquí cada propuesta (sí, no o después, con la nota esperada).
+- README, HANDOFF, HANDOFF_CLAUDE, índice, PANEL y AGENTS reflejan alpha.221 en `main` y Q7 pendiente de escucha.
+- No cambia el juego.
 ## Q6 · Volver y tocar en el Mundo libre · 2.3.0-alpha.221
 
 Rama `panel11/q6-mundo-libre`, sobre `panel11/q5-golpe-al-oirse` (informe de la sesión 11). Chen e Iwai. Decisiones de Jay: D7-C y D11-B.
