@@ -1,7 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.224**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.225**. Las entradas describen su revisión, no certifican producción.
 
+
+## L4 · Web de pago en itch.io · 2.3.0-alpha.225
+
+Rama `lanzamiento/l4-itch`, sobre `main` (con L1 y L2). Fila L4 de la [salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android). Guía: [itch.io](docs/ITCH.md).
+
+- `node scripts/itch-package.mjs` escribe `dist/kubono-itch-<versión>.zip` (`dist/` fuera de Git), sin dependencias: copia solo el juego, sella la edición de venta con `set-edition.mjs` y la versión con el commit, y deja `index.html` en la raíz. alpha.225: 340 archivos, 1,44 MB.
+- En itch.io no hay service worker: el zip no lleva `sw.js` y su `index.html` lleva una marca que `src/pwa.js` respeta. Sin enlaces a la vista previa de Vercel. Las rutas ya eran relativas. Vercel y Android no cambian.
+- `docs/ITCH.md`: textos ES/EN, etiquetas, marco 390×844 con pantalla completa, pasos del borrador privado. **Duda abierta:** según el foro de itch.io, un juego HTML se juega gratis en el navegador; hay que comprobarlo en el borrador. El zip no sirve como descarga: con `file://` los módulos no cargan.
+- Música, mapas, guardado y textos del juego sin cambios.
+- Pruebas: `tests/itch-package.mjs` y `tests/itch_package_smoke.py` (zip en `/html/123456/`, en un marco de otro sitio: arranca, suena tras tocar, guarda y recarga, exporta la copia, español e inglés, nada fuera de su carpeta). No probado en itch.io real ni en teléfono.
 
 ## L2 · Inglés · 2.3.0-alpha.224
 

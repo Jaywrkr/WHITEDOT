@@ -30,7 +30,7 @@ Cuenta compartida y guardado automático no conceden cross-buy. La sincronizaci�
 | iOS/iPadOS | Juego web probado en Safari de iPhone; Jay tiene Mac/iPhone | Recursos/modelos/compatibilidad, membresía si decide contratar, proyecto iOS, TestFlight/App Review; iPad si se anuncia |
 | Web/PWA | Cliente existente y recorrido de cuenta comprobado en pruebas locales | Papel comercial/entitlement web, dominio/landing, correo/callbacks/privacidad públicos. No implementar cobro propio sin decidirlo |
 | Windows/macOS/Linux | Cliente reutilizable; emulador Android en PC no cuenta como port desktop | Ruta mínima de empaquetado, builds, firma/distribución y pruebas en cada sistema anunciado |
-| Steam/itch.io | Material base reutilizable | Cuenta/condiciones/ficha/build de Steam; itch.io como canal complementario aún por decidir |
+| Steam/itch.io | Material base reutilizable; zip web de itch.io (L4, [guía](ITCH.md)) | Cuenta/condiciones/ficha/build de Steam; itch.io: confirmar si un juego HTML de pago se juega solo tras comprar |
 | Consolas | Concepto compartido | Acceso a programas, viabilidad, controles y presupuesto antes de comprometer nada |
 
 ## Entregables vigentes

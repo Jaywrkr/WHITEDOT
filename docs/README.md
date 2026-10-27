@@ -11,6 +11,7 @@ Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión 
 | Documento | Contenido |
 |---|---|
 | [Salida web y Android](PLAN_LANZAMIENTO.md#salida-web-y-android) | Fases L1–L6 y tareas de Jay para publicar |
+| [itch.io](ITCH.md) | Zip web, marco, textos de la página y pasos del borrador (L4) |
 | [Auditoría externa](AUDITORIA_EXTERNA.md) | Método conservado; la auditoría con Codex no está planificada |
 | [Sesión 11 del panel](panel/sesion-11/informe.md) | Notas, hallazgos y plan Q1–Q7 |
 | [E1–E7](ENTREGA_E.md) | Lo implementado, ramas y prueba de cada fase |
