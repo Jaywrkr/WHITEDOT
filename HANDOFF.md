@@ -1,4 +1,4 @@
-# Traspaso vigente · alpha.222
+# Traspaso vigente · alpha.224
 
 **Continuar desde `main`** (27 de octubre de 2026, tras el PR de Q7). Jay crea PR y hace merge salvo que pida otra cosa.
 
@@ -16,12 +16,13 @@ Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.
 | Sesión 10 · P1–P8 | Pantallas limpias, menús, un solo reloj, color ganado, menos contadores; D1–D6 | #357, #358 | alpha.208–215 |
 | Sesión 11 · Q1–Q6 | Reglas a la vista, la Cueva cuenta el eco, Tu canción crece y se cierra, Refugio legible, golpe al oírse, día nuevo y un solo gesto; D7, D10, D11 | #359 | alpha.216–221 |
 | Sesión 11 · Q7 | Los dos finales en dub techno: subida, golpe en la tónica y corte seco; el tema con sus notas; el Mundo calla bajo el final de los once; D8, D9. Jay oyó y aprobó los renders | PR de Q7 | alpha.222 |
+| Lanzamiento · L1–L2 | Edición de venta sin cuenta ni red (una bandera que sella el empaquetador); el juego entero en inglés con elección en Ajustes | PR de L1–L2 | alpha.223–224 |
 
 CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio. Detalle en [CAMBIOS](CAMBIOS.md).
 
 ## Qué falta
 
-1. **Lanzamiento L1–L6** ([plan](docs/PLAN_LANZAMIENTO.md#salida-web-y-android)): versión de venta sin nube, inglés, Android de tienda, web en itch.io, fichas y privacidad, prueba cerrada. Cada alta, pago y publicación los hace o autoriza Jay.
+1. **Lanzamiento L3–L6** ([plan](docs/PLAN_LANZAMIENTO.md#salida-web-y-android)): Android de tienda, web en itch.io, fichas y privacidad, prueba cerrada. L1 (sin nube) y L2 (inglés) están hechas; el inglés no lo ha revisado ninguna persona nativa. Cada alta, pago y publicación los hace o autoriza Jay.
 2. **Teléfono y personas:** Jay y Luca prueban el juego (27 de octubre en curso). Mirar los dos finales dentro del juego con altavoz y auriculares, el toque, la luz con el retraso real del audio, el Refugio y volver al día siguiente. [Protocolo](docs/PRUEBAS_CON_PERSONAS.md); el [registro](docs/aceptacion-e.json) sigue sin participantes.
 3. **Ramas viejas** en GitHub: borrarlas a mano (la sesión no tiene permiso). Todas están integradas en `main`.
 
@@ -44,7 +45,7 @@ La 11 no se compara directa con la 10: nueve perfiles no puntuaron Audio y seis 
 
 - Conservar música, síntesis, notas, armonías, mezcla, RNG, mundos, especies y cubo pequeño.
 - Guardados antiguos y futuros se migran sin borrar progreso ni premios.
-- El [verificador de preservación](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos. Lo que cambiaron P3–P8 se compara con `main` tras P8 (`5464612`). Lo que cambiaron Q1–Q6 se compara con el final de Q6 y sus arreglos de CI (`4183856`). Los finales y el silencio del Mundo bajo el final de los once, con Q7 (`fce8496`). Lo demás, con la base E.
+- El [verificador de preservación](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos. Lo que cambiaron P3–P8 se compara con `main` tras P8 (`5464612`). Lo que cambiaron Q1–Q6 se compara con el final de Q6 y sus arreglos de CI (`4183856`). Los finales y el silencio del Mundo bajo el final de los once, con Q7 (`fce8496`). `main.js`, `messages.js` y la lista offline de `sw.js`, con el final de L2. Lo demás, con la base E.
 - UI negra, Geist Mono, esquinas rectas, menús silenciosos; dorado solo para ★ y ✦.
 - Sin cuenta ni nube: Supabase queda en pausa sin plan de reactivarlo. No reaplicar SQL ni borrar cuentas. `server/` es un prototipo histórico, no un backend activo.
 - Tiendas: preparación autorizada (web y Android); publicar requiere la autorización explícita de Jay en cada canal.
