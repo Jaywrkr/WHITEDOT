@@ -73,6 +73,10 @@ Menú (panel 10, P2): «Seguir hacia …» y, debajo, Lugares, Tu cubo, Refugio 
 
 Cuenta opcional y progreso local por defecto. Auth/REST, CAS, RLS y recuperación en [Cuenta y progreso](CUENTA_Y_RESPALDO.md). Configuración de Supabase pausada; no reaplicar SQL ni modificar servicios por leer esta guía. Cuenta compartida no implica multijugador ni cross-buy.
 
+**Edición (L1).** Una sola bandera: `EDITION` en `src/edition.js`. El árbol fuente dice siempre `'web'` (cuenta opcional, como hoy). La edición de venta es `'store'`: sin cuenta, sin nube y sin peticiones fuera de sus propios archivos. No se edita a mano: el empaquetador copia el juego y sella su copia con `node scripts/set-edition.mjs --dir COPIA --edition store`, que se niega a sellar el árbol fuente. Android: `KUBONO_EDITION=store` al ejecutar Gradle (`scripts/android-assets.mjs` sella la copia de assets). El zip de itch.io (L4) hace lo mismo sobre su copia. Un valor desconocido también apaga la nube.
+
+En `'store'`: `main.js` no crea cliente ni llama a `requireAccount()`; `cloud-account.js` oculta Cuenta y su hoja, muestra «Guardar copia» en «Más» y oculta los textos `[data-cloud]` (muestra `[data-store]`); `recovery.html` no consulta nada. Una sesión guardada por la web solo indica de quién es la partida local (`savedAccountOwner()`, lectura local): se sigue usando `kubono:user:ID:…`. La web de Vercel sigue en `'web'`.
+
 `android/` empaqueta el mismo cliente con WebView; `scripts/android-assets.mjs` prepara assets y sellado. [Estado y límites](../android/README.md). No equivale a publicación en Play ni a pruebas físicas recientes.
 
 `server/` conserva el prototipo Python/SQLite usado por `tests/server_api.py`; no es el backend del producto ni la solución al antiguo404 de `/api/session`. Las salas/duetos antiguos no están activos; ganchos opcionales y datos heredados se conservan por compatibilidad.

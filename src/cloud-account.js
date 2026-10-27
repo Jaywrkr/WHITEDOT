@@ -2,9 +2,14 @@ import {CLOUD_CONFIG} from './cloud-config.js';
 import {createCloudClient} from './cloud-client.js';
 import {createCloudSync,purgeUserStorage} from './cloud-sync.js';
 import {validateSave} from './save-store.js';
+import {cloudEnabled} from './edition.js';
 // While the cloud is paused (CLOUD_CONFIG.paused, D6 = A) the sheet offers no «Crear cuenta» and no «Eliminar cuenta».
-export const cloudPaused=(config=CLOUD_CONFIG)=>config?.paused===true;
+// The sale edition has no cloud at all.
+export const cloudPaused=(config=CLOUD_CONFIG)=>config?.paused===true||!cloudEnabled();
 export function initialize(runtime){
+ // Sale edition: no Cuenta and no cloud text; «Guardar copia» takes its place in «Más» (export, import, recover).
+ if(!cloudEnabled()){const $=runtime.$;$('bConnection').hidden=true;$('mConnection').hidden=true;$('bSaveTools').hidden=false;for(const e of document.querySelectorAll('[data-cloud]'))e.hidden=true;for(const e of document.querySelectorAll('[data-store]'))e.hidden=false;
+  Object.defineProperty(runtime,'cloudPaused',{get:()=>()=>true});return;}
  let conflictShown=false;const $=runtime.$,status=text=>{$('connectionStatus').textContent=text;if((text.startsWith('Hay avances distintos')||text.startsWith('La copia online cambió'))&&!document.hidden&&!conflictShown){conflictShown=true;$('mMenu').hidden=true;$('mConnection').hidden=false;}};let client=null,sync=null,busy=false,recovery=false,checked=false,nextTick=0,nextCheck=0,resumePending=false,scopeState=runtime.S;
  try{client=runtime.accountClient||createCloudClient(CLOUD_CONFIG);}catch(e){status(e.message);}
  if(client){let storage;try{storage=globalThis.localStorage;}catch(_){}sync=createCloudSync({client,storage:storage||{getItem:()=>null,setItem(){}},onStatus:status});}

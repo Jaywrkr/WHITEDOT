@@ -7,6 +7,8 @@
 const hash=location.hash;history.replaceState(null,'',location.pathname);
 const status=document.getElementById('status'),form=document.querySelector('form');
 try{
+ // The sale edition has no account: nothing to confirm or recover, and no request leaves the game.
+ if(!(await import('./src/edition.js')).cloudEnabled()){status.textContent='Esta edición no usa cuenta. Tu partida se guarda en el dispositivo.';throw null;}
  const [{CLOUD_CONFIG},{recoverySession}]=await Promise.all([import('./src/cloud-config.js'),import('./src/cloud-recovery.js')]);
  const params=new URLSearchParams(hash.replace(/^#/,''));
  if(params.get('type')==='signup'&&!params.has('error')&&params.get('access_token')){
@@ -20,5 +22,5 @@ try{
   catch(error){status.textContent=error.message;}finally{button.disabled=false;}
  };
  }
-}catch(_){status.textContent='Enlace ausente, vencido o sin conexión. Solicita otro desde el juego.';}
+}catch(error){if(error!==null)status.textContent='Enlace ausente, vencido o sin conexión. Solicita otro desde el juego.';}
 </script></html>

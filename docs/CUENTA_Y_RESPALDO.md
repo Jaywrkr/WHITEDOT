@@ -11,6 +11,14 @@ Revisión documental:26 de octubre de 2026. La evidencia de dispositivos de esta
 - Mientras la nube está en pausa (`CLOUD_CONFIG.paused`, D6 = A del panel 10), Cuenta dice «Opcional. Se juega sin cuenta.», no ofrece «Crear cuenta» ni «Eliminar cuenta» y no se sugiere la nube en el Mundo libre. Entrar, recuperar la clave y salir siguen igual. Quitar `paused` los devuelve.
 - Cerrar sesión vuelve a la entrada. Cambiar usuario no mezcla guardados. Cada dispositivo/origen necesita su primer acceso: los tokens no se transfieren entre navegador y APK.
 
+## Edición de venta sin nube (L1)
+
+- La primera versión de venta sale **sin nube** (`EDITION='store'`, [arquitectura](ARQUITECTURA.md)). No hay Cuenta, ni entrar, crear o eliminar cuenta, ni sincronización, ni aviso de la nube. No llama a Supabase ni a ningún otro servidor.
+- Siguen el guardado local, «Guardar copia» (exportar, importar y recuperar; visible en «Más», donde estaba Cuenta) y «Empezar de cero» con su partida anterior.
+- Partidas existentes: sin sesión se carga la de siempre (`pixel-blanco-v4`). Con una sesión guardada, su identificador solo se lee en el dispositivo para seguir usando `kubono:user:ID:…`; nada se valida ni se envía. La sesión, la partida sin cuenta y las copias online no se borran.
+- **Web (Vercel): sigue en `'web'`.** Es lo de menos riesgo: no cambia nada a quien hoy tiene sesión y la nube ya está en pausa. Pasarla a `'store'` es sellar la copia en `scripts/vercel-build.mjs`; no se hace sin petición de Jay.
+- Prueba: `tests/sale_edition_smoke.py` y `tests/sale-edition.mjs`. Límites: no probado aún en el AAB (L3) ni en el zip de itch.io (L4).
+
 ## Proyecto, almacenamiento y límites
 
 Kubono Dev: `eghmydqxsicqmbmeprgq`, organización Kubono `eebalwznymfdxaexvghc`, us-east-1. Free confirmado durante el desarrollo el 19 de octubre; no se contrató un plan. CORESOLUTIONS está fuera de alcance.

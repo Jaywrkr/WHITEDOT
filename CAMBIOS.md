@@ -1,9 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.222**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.223**. Las entradas describen su revisión, no certifican producción.
 
 
-## Cierre del ciclo de diseño y plan de salida · sin cambio de versión
+## L1 · Versión de venta sin nube · 2.3.0-alpha.223
+
+Rama `lanzamiento/l1-sin-nube`, sobre `claude/charming-darwin-dvbfc7`. Fila L1 de la [salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
+
+- Una sola bandera: `EDITION` en `src/edition.js` (nuevo, en `SHELL`). La fuente dice `'web'`; la edición de venta es `'store'`. El empaquetador la sella en su copia con `scripts/set-edition.mjs` (nuevo), que no toca el árbol fuente. Android: `KUBONO_EDITION=store` al compilar. Un valor desconocido también apaga la nube.
+- En `'store'`: ningún cliente de cuenta ni petición a Supabase; Cuenta y su hoja ocultas; «Guardar copia» aparece en «Más» en su lugar; los textos de la cuenta en Cómo jugar y Tú se ocultan; `recovery.html` no consulta nada.
+- Siguen el guardado local, exportar e importar copia y «Empezar de cero».
+- Partidas existentes: sin sesión, la de siempre. Con sesión guardada, su identificador se lee solo en el dispositivo para cargar `kubono:user:ID:…`; no se borra nada.
+- La web de Vercel sigue en `'web'`: es lo de menos riesgo para quien tiene sesión. La nube sigue en pausa. Supabase no se tocó.
+- No cambian la música, los mapas, el cubo ni la web actual.
+- Pruebas: `tests/sale_edition_smoke.py` (partida guardada por la web, con y sin sesión, carga en la edición de venta; inicio, Viaje, Mundo, menú, Ajustes y Refugio sin peticiones fuera del origen; ningún botón de cuenta; exportar copia; «Empezar de cero» disponible) y `tests/sale-edition.mjs` (bandera, sello y lectura local de la sesión).
+- Límites: el recorrido bloquea el service worker para ver todas las peticiones de la página. Aún no probado en el AAB (L3) ni en el zip de itch.io (L4). · sin cambio de versión
 
 Rama `claude/charming-darwin-dvbfc7`, sobre Q7. Petición de Jay del 27 de octubre.
 

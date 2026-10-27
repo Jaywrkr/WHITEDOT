@@ -9,6 +9,16 @@ const remembered=()=>{try{return localStorage.getItem(LAST_EMAIL)||'';}catch(_){
 const remember=email=>{try{localStorage.setItem(LAST_EMAIL,email);}catch(_){}};
 const localChosen=()=>{try{return localStorage.getItem(LOCAL_PLAY)==='1';}catch(_){return false;}};
 const chooseLocal=on=>{try{if(on)localStorage.setItem(LOCAL_PLAY,'1');else localStorage.removeItem(LOCAL_PLAY);}catch(_){}};
+// Sale edition (src/edition.js): no account and no network. A session saved earlier by the web edition still names
+// whose local save this is (kubono:user:ID:…), so that progress loads as before. Read only; never sent or checked online.
+export function savedAccountOwner(storage){
+ try{storage??=globalThis.localStorage;const id=raw=>{try{const s=JSON.parse(raw||'null');return typeof s?.user?.id==='string'&&s.user.id&&typeof s.access_token==='string'?s.user.id:null;}catch(_){return null;}};
+  let owner=null;try{owner=id(storage.getItem('kubono:auth:'+new URL(CLOUD_CONFIG.url).origin));}catch(_){}
+  if(owner)return owner;
+  const keys=Array.from({length:storage.length||0},(_,i)=>storage.key(i)).filter(k=>typeof k==='string'&&k.startsWith('kubono:auth:'));
+  const owners=[...new Set(keys.map(k=>id(storage.getItem(k))).filter(Boolean))];return owners.length===1?owners[0]:null;
+ }catch(_){return null;}
+}
 export async function requireAccount(){
  const client=createCloudClient(CLOUD_CONFIG),$=id=>document.getElementById(id);
  if(client?.user()){if(client.user().email)remember(client.user().email);client.identity().catch(()=>{});return client;}
