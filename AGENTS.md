@@ -16,7 +16,7 @@ Leer este archivo antes de tocar código. Después: [README](README.md), [HANDOF
 
 ## Reglas técnicas
 
-- Módulos ES nativos, Canvas 2D y Web Audio; sin dependencias npm ni compilación del juego.
+- Módulos ES nativos, Canvas 2D y Web Audio; sin dependencias npm ni compilación del juego. Excepción: `desktop/` (envoltorio Electron, con su `package.json`; `node_modules` fuera de Git) empaqueta aparte.
 - Cada módulo o asset nuevo figura una sola vez en `SHELL` de `sw.js`.
 - No consumir el RNG antiguo al añadir contenido (usar `hashKey`): se conservan semillas y posiciones.
 - Normalizar y migrar guardados sin borrar progreso; conservar formatos futuros y verificar fallos de escritura.

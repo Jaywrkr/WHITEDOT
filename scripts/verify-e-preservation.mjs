@@ -15,6 +15,8 @@ const approvedQ7='fce8496900f3ef3ac97928ba5449e8c30140cb0d';
 // offline shell (two new modules) are held to the end of L2.
 const approvedL='57a6d579acb0aa751d509b21d0ba9dd191e85226';
 const rebasedL=new Set(['src/main.js','src/messages.js']);
+const approvedL4='12e02e9116469517e555dab72021bf6633a024e1';
+const rebasedL4=new Set(['src/pwa.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -29,7 +31,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}

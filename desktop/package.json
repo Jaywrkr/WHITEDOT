@@ -1,0 +1,16 @@
+{
+  "name": "kubono-desktop",
+  "productName": "Kubono",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Desktop wrapper for Kubono (itch.io and Steam). Packaging only: the game has no npm dependencies; the build takes its version from the root package.json.",
+  "main": "main.cjs",
+  "scripts": {
+    "package": "node ../scripts/desktop-package.mjs",
+    "start": "node ../scripts/desktop-package.mjs --run"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "44.7.1"
+  }
+}

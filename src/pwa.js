@@ -12,7 +12,8 @@ export function initialize(runtime){
    if(!hadController){hadController=true;return;}
    if(!reloading&&registration?.active){if(runtime.setRecording){pendingReload=true;offer();runtime.toast('Termina la grabación antes de recargar la nueva versión.');return;}runtime.S.collected=[...runtime.collected];if(!runtime.save()){pendingReload=true;offer();runtime.toast('Hay progreso sin guardar. Exporta una copia antes de recargar la nueva versión.');return;}reloading=true;location.reload();}
   });
-  if(location.protocol==='https:')addEventListener('load',async()=>{try{
+  // The itch.io build (scripts/itch-package.mjs) turns the worker off: the game runs framed from itch's CDN.
+  if(location.protocol==='https:'&&!document.querySelector?.('meta[name="kubono-service-worker"][content="off"]'))addEventListener('load',async()=>{try{
    registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});offer();
    registration.addEventListener('updatefound',()=>registration.installing?.addEventListener('statechange',offer));
   }catch(_){} });

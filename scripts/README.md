@@ -15,6 +15,8 @@ El juego no ejecuta estos scripts. [Arquitectura](../docs/ARQUITECTURA.md) · [v
 | `bump-version.mjs` | Sincroniza versión de ejecución; no usar por documentos |
 | `vercel-build.mjs` / `stamp-deploy.mjs` | Sella el artefacto de publicación |
 | `android-assets.mjs` | Copia el cliente al build Android |
+| `itch-package.mjs` | Zip de la edición de venta en `dist/`; entrada del envoltorio de escritorio ([itch.io](../docs/ITCH.md)) |
+| `desktop-package.mjs` | Builds de escritorio (Electron) en `dist/desktop/`; requiere `cd desktop && npm ci` ([itch.io](../docs/ITCH.md)) |
 | `serve-recovery.py` | Página local de recuperación; no es backend del juego |
 | `store-media.py` | Material de tienda en outputs; requiere autorización de ese trabajo |
 
