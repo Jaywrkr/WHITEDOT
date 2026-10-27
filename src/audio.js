@@ -1,4 +1,4 @@
-import {onTime,audibleTime,scheduleAudibleCue} from './journey-pulse.js';
+import {onTime,audibleTime,scheduleAudibleCue,touchSlot,TOUCH_STEP_VOICES} from './journey-pulse.js';
 import {createTerritoryJourney,approachJourneyTempo} from './territory-journey.js';
 import {approachTempo,transitionGain,sparseFoundationGain} from './territory-transition.js';
 import {createMusicalConductor} from './musical-conductor.js';
@@ -38,6 +38,8 @@ export function initialize(runtime) {
   let BPM=96,SIX=60/BPM/4;
   const KB={llanura:.3,bosque:.4,lago:.1,ruinas:.5,jardin:.5,dunas:.4,cristales:.6,faros:.45,tormenta:.95,cueva:.2,vacio:0};
   const style=()=>{if(runtime.S.mode==="camino")return .08;return runtime.clamp((KB[BI().id]??.3)+(MU.dnaA?MU.dnaA.kOff||0:0),0,1);};
+  // Voices each step plays from the queue and from touches placed on it (touchSoon): at most four per step.
+  const stepVoices=new Map();
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
   const living=()=>!runtime.labClassicMusic&&(runtime.unifiedMusic===true||!!runtime.labLiveMusic||runtime.S.livingMusic!==false);
@@ -333,7 +335,9 @@ export function initialize(runtime) {
     runtime.quietStep?.(s,bar,t);
     runtime.cajasStep?.(s,bar,t);
     runtime.phenomenaStep?.(s,bar,t);
-    let n=0;while(MU.queue.length&&n<4){MU.queue.shift()(t);n++;}
+    let n=0;while(MU.queue.length&&n<TOUCH_STEP_VOICES){MU.queue.shift()(t);n++;}
+    // Voices this step already plays from the queue: a touch placed on it later keeps the same limit (touchSoon).
+    if(n)stepVoices.set(MU.step,n);for(const k of stepVoices.keys())if(k<MU.step-16)stepVoices.delete(k);
   }
   function snap(n,ct){let best=n,bd=99;ct.forEach(c=>{for(let o=-36;o<=36;o+=12){const d=Math.abs(c+o-n);if(d<bd){bd=d;best=c+o;}}});return best;}
   function scaleNotes(){const sc=MU.dnaA?MU.dnaA.scale:BI().scale,out=[];for(let o=-12;o<=36;o+=12)sc.forEach(d=>{const n=A+o+d+MU.tr;if(n>=62&&n<=91)out.push(n);});return out.sort((a,b)=>a-b);}
@@ -590,6 +594,11 @@ export function initialize(runtime) {
     noise(t,"lowpass",420+variation*55,.6,.16,.45+variation*.04,variation%3===0);tom(t,48+variation*5,.085);if(variation%2)noise(t,"bandpass",900+variation*100,.7,.025,.07);
     if(source){runtime.soundCue?.(source,'perc',t);runtime.stormStrikeCue?.({variation,time:t});}}
   const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};
+  // Panel 11 (Q5): the player's touch off the beat sounds on the next scheduled sixteenth at least 20 ms away
+  // (touchSlot), sharing each step's limit of four with the queue; without one free it waits in the queue as before.
+  const touchSoon=(fn,origin="player")=>{if(!ac)return;const play=t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t);
+    const slot=ac.state==="running"?touchSlot(MU.sq,ac.currentTime,stepVoices):null;if(!slot){MU.queue.push(play);return;}
+    stepVoices.set(slot.tick,(stepVoices.get(slot.tick)||0)+1);play(slot.t);};
   const now=fn=>{if(ac&&ac.state==="running")fn(ac.currentTime+.01);};
   function beat(){if(!ac)return 0;const n=audibleTime(ac);const bt=MU.bq.findLast(t=>t<=n);if(bt===undefined||bt>n)return 0;const ph=(n-bt)/(SIX*4);return ph>1?0:Math.pow(1-ph,4)*(.35+MU.E*.65);}
 
@@ -654,6 +663,8 @@ export function initialize(runtime) {
     silenceSongMix:{get:()=>silenceSongMix},restoreSongMix:{get:()=>restoreSongMix},
     clearMusicalFrames:{get:()=>()=>conductor.clear()},
     soon: { get: () => soon },
+    touchSoon: { get: () => touchSoon },
+    stepVoices: { get: () => stepVoices },
     now: { get: () => now },
     beat: { get: () => beat },
   });

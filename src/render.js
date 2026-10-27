@@ -134,6 +134,8 @@ export function initialize(runtime) {
     runtime.drawCubeForm?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     if(runtime.cubeKick>0)runtime.cubeKick=Math.max(0,runtime.cubeKick-dt*8);
     if(runtime.cubeGlow>0){runtime.cubeGlow=Math.max(0,runtime.cubeGlow-dt/((runtime.SIX||.15)*4));runtime.cx.globalAlpha=runtime.cubeGlow*.9;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=2;runtime.cx.strokeRect(Math.round(runtime.W/2-s/2-4),Math.round(runtime.H/2-s/2-4),Math.round(s+8),Math.round(s+8));runtime.cx.globalAlpha=1;}
+    // Panel 11 (Q5, D10-B): one gold per hit, the cube's frame above (and the «1» of the ring). The hit's arc is white.
+    if(runtime.hitFlash>0){runtime.hitFlash=Math.max(0,runtime.hitFlash-dt*2.5);runtime.cx.globalAlpha=runtime.hitFlash*.6;runtime.cx.strokeStyle='#ffffff';runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.hitFlash)*42,0,Math.PI*2);runtime.cx.stroke();}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
     if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const still=runtime.S.reducedMotion||prefersReducedMotion(),k=still?.6:1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.musicInk?.(null,'acorde')||'#fff';runtime.cx.lineWidth=1.2;
       for(let i=0;i<3;i++){const rr=Math.max(0,k-i*.12)*Math.min(54,runtime.W*.14,runtime.H*.14);runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();}

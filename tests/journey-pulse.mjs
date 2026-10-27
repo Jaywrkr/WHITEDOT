@@ -25,7 +25,7 @@ clock=1000;assert.equal(r.journeyPulse(),false,'a quarter beat away is off time'
 clock=1050;assert.equal(r.journeyPulse(),null,'too soon after the last pulse');
 for(let i=0;i<6;i++){clock+=500;r.ac.currentTime=1.5+i*.5+.01;r.MU.bq=[r.ac.currentTime-.01];assert.equal(r.journeyPulse(),true);flush();}
 const s=r.journeyPulseState();assert.equal(s.hits,6);assert.equal(s.misses,1);assert.equal(s.phrases,1,'six on-time pulses complete the theme');assert.equal(s.next,0);assert.equal(queued.length,0,'no separate synth');assert.equal(vib.length,6);assert.deepEqual(vib.at(-1),[12,40,18],'the end of the phrase feels different');
-assert(r.flash>0,'a gold flash answers');
+assert(r.hitFlash>0,'a flash answers the hit');assert.equal(r.flash,0,'Panel 11 (D10-B): the hit does not light the gold arc; only the cube frame is gold');
 r.S.haptics=false;clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];r.journeyPulse();assert.equal(vib.length,6,'vibration can be turned off');
 clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];r.journeyPulse();assert.equal(r.journeyPulseState().degree,THEME[1][0],'the next theme degree goes to the pulse');
 clock+=500;r.ac.currentTime+=.25;r.MU.bq=[r.ac.currentTime-.25];r.journeyPulse();assert.equal(r.journeyPulseState().degree,null,'off the beat: no theme degree');

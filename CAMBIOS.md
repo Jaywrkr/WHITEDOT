@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.219**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.220**. Las entradas describen su revisión, no certifican producción.
+
+## Q5 · El golpe al oírse · 2.3.0-alpha.220
+
+Rama `panel11/q5-golpe-al-oirse`, sobre `panel11/q4-refugio-y-lugares` (informe de la sesión 11). Mizuguchi; Iwai para el toque. Incluye D10-B en el acierto.
+
+- La onda nace con su nota: se crea en el punto del toque y se dibuja, y empieza a alcanzar objetos, cuando su nota se oye (`cueDelay`, en el acierto y fuera de tiempo). Al tocar solo aparece la marca de la Línea. Sin sonido o con el audio suspendido, sale al momento.
+- El toque fuera de tiempo (y el pulso demasiado seguido) suena en la siguiente semicorchea ya programada a 20 ms o más (`touchSlot`, `touchSoon`), no en el siguiente paso aún sin programar. Comparte con la cola el límite de 4 voces por paso. Modelo a 96 BPM: mediana 98 ms y p95 167 ms (antes, 195 y 265).
+- En el Mundo libre, un toque quieto que no abre el escáner es pulso, dure lo que dure: de 450 a 500 ms ya no queda mudo.
+- D10-B: en el acierto, solo el marco del cubo y el «1» son dorados. La onda, la marca de la Línea y el arco del acierto (`hitFlash`) pasan a blanco.
+- No cambia: notas, voces, mezcla, la regla D2 del Mundo libre, el tic de la ronda, los cuadros del eco de la Cueva, el cubo (pequeño), mapas, semillas ni guardados.
+- Pruebas: `tests/touch-timing.mjs` (modelo del programador a 96 BPM: mediana ≤ 100 ms, p95 ≤ 180 ms, ≤ 4 voces por paso) y `tests/strike_heard_smoke.py` (latencia 0,25 s: la onda vence a ≤ 20 ms de su nota; tras un acierto, el único trazo dorado es el marco; toques de 100, 300, 470 y 600 ms dan pulso o escáner). `tests/journey-pulse.mjs` afirma ahora el arco blanco del acierto.
+- Límite: en Chromium sin pantalla el temporizador dispara la onda 2–60 ms tarde bajo carga, como el aterrizaje del cubo. Sin prueba en teléfono ni con personas.
 
 ## Q4 · Refugio y Lugares legibles · 2.3.0-alpha.219
 

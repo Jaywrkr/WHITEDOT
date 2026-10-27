@@ -1,7 +1,7 @@
 import {openSurface,calmMotion} from './frame-state.js';
 // The Journey, phase 1: playing on time. The pulse always sounds in the key; on the beat the pulse itself plays the
 // next note of the cube's theme, in the voice of the place (no separate synth: a bowed tone of its own sounded like a
-// honk over the music), vibrates and leaves a gold mark on the Line that draws the bar.
+// honk over the music), vibrates and leaves a white mark on the Line that draws the bar.
 // The theme: scale degrees (0 = tonic) and lengths in eighths, two bars of 4/4 (see docs/VIAJE.md).
 export const THEME=Object.freeze([[0,3],[1,1],[4,4],[3,2],[2,2],[0,4]].map(Object.freeze));
 // How close to a beat counts as on time, in seconds either side. One window for the whole game: the Journey, portal
@@ -32,6 +32,12 @@ export const LINE_ALPHA=.38,LINE_BACK=.7,LINE_TICK_GAP=12;
 export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isFinite)?Math.max(0,Math.round((beat+latency-now)*1000)):0;
 // Same scheduling rule the pulse already uses; visuals follow the emitted note, not a past judged beat.
 export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
+// Panel 11 (Q5, Mizuguchi): a touch off the beat sounds on the next sixteenth of the grid at least TOUCH_LEAD away,
+// not on the next step still to be scheduled. sq: the steps the music already scheduled ({t,tick}); counts: voices
+// already placed on each tick (the queue and earlier touches). Returns the step to sound on, or null when no scheduled
+// step is free and far enough, and the touch waits in the queue as before. At most TOUCH_STEP_VOICES per step.
+export const TOUCH_LEAD=.02,TOUCH_STEP_VOICES=4;
+export function touchSlot(sq,now,counts){if(!Array.isArray(sq)||!Number.isFinite(now))return null;for(const e of sq){if(!(e?.t>=now+TOUCH_LEAD)||!Number.isSafeInteger(e.tick))continue;if((counts?.get?.(e.tick)||0)<TOUCH_STEP_VOICES)return e;}return null;}
 // The player's own delay (see heardTime below), declared first: the light follows it too.
 let NUDGE=0;
 export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatency||0);return Number.isFinite(v)?Math.max(0,Math.min(.4,v)):0;};
@@ -81,7 +87,7 @@ export function initialize(runtime){
  function scheduleLanding(time){const f=lastLanding;if(!f)return;if(f.timer!==undefined){clearTimeout(f.timer);pending.delete(f.timer);}
   const ac=runtime.ac,wait=runtime.S.sound&&ac?cueDelay(ac,time):0;state.landIn=wait;f.due=performance.now()+wait;
   const land=()=>{pending.delete(f.timer);if(f.epoch!==epoch||f.owner!==runtime.S||f.mode!==runtime.S.mode||f.layer!==runtime.S.layer||globalThis.document?.hidden||openSurface('.modal:not([hidden])')||performance.now()-f.due>150||runtime.S.sound&&runtime.ac?.state&&runtime.ac.state!=='running')return;
-   if(f.waiting)return;vibrate(f.phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
+   if(f.waiting)return;vibrate(f.phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.hitFlash=Math.max(runtime.hitFlash||0,.7);};
   if(wait>0){f.timer=setTimeout(land,wait);pending.add(f.timer);if(pending.size>12){const first=pending.values().next().value;clearTimeout(first);pending.delete(first);}}else land();
  }
  function scaleNow(){const MU=runtime.MU||{};return {scale:MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr:MU.tr||0};}
@@ -140,7 +146,7 @@ export function initialize(runtime){
   // time reaches what the next star asks (runtime.roundTick, the card's own share). No number, no new word.
   const tick=runtime.roundTick?.();if(tick){const tx=Math.round(x1+LINE_TICK_GAP);c.globalAlpha=LINE_BACK;c.fillStyle='#000000';c.fillRect(tx-4,y-9,9,18);c.globalAlpha=tick.lit?.95:.4;c.fillStyle=tick.lit?gold:'#ffffff';const th=tick.lit?14:6;c.fillRect(tx-1,Math.round(y-th/2),2,th);}
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.85;c.fillStyle='#ffffff';c.fillRect(Math.round(cx)-1,y-4,2,8);
-  for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on&&!m.waiting?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();
+  for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.dropped?'#888888':'#ffffff';c.beginPath();
    // An open bracket means a good beat still waiting for the place's action.
    if(m.waiting){c.moveTo(px-5,y-5);c.lineTo(px-5,y-1);c.lineTo(px+5,y-1);c.lineTo(px+5,y-5);}else{c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);}c.stroke();}
   c.restore();}

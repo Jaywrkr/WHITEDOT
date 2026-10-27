@@ -63,12 +63,14 @@ export function initialize(runtime) {
       ptr={x:e.clientX,y:e.clientY,ox,oy};
     }else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   });
+  // Panel 11 (Q5, Iwai): in the World a still touch that did not open the scanner (500 ms) is a pulse, however long it
+  // rested; the old 450 ms cut left 450–500 ms mute. Elsewhere, with no scanner, a long rest still plays nothing.
   const up=e=>{
     if(runtime.housePointerUp?.(e))return;
     if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!directPulse&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<450&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar('player',runtime.tapStart.t);}   // sin modo dedo, un toque siempre es el pulso del cubo
+    if(e.type==="pointerup"&&!held&&!dragging&&!directPulse&&!fromOverlay&&runtime.tapStart&&(runtime.inWorld()||performance.now()-runtime.tapStart.t<450)&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar('player',runtime.tapStart.t);}   // sin modo dedo, un toque siempre es el pulso del cubo
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=directPulse=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);

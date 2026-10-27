@@ -1,4 +1,4 @@
-import {pulseNoteTime,scheduleAudibleCue} from './journey-pulse.js';
+import {pulseNoteTime,scheduleAudibleCue,cueDelay} from './journey-pulse.js';
 // A pulse too soon after the last one sounds at this share of a normal pulse's volume (P5); at most this many wait.
 export const SOFT_PULSE=.45,SOFT_PENDING=8;
 import {calmMotion} from './frame-state.js';
@@ -26,7 +26,7 @@ export function initialize(runtime) {
   let currentWave=null;
   function wsoon(w,fn){if(w.n++<12)runtime.soon(t=>{const before=currentWave;currentWave=w;try{fn(t);}finally{currentWave=before;}},w.origin||"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
-    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:calmMotion(runtime.S)});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*(w.beat?.85:.6);runtime.cx.strokeStyle=w.beat?runtime.GOLD||'#f0d27a':w.color||runtime.S.color;runtime.cx.lineWidth=w.beat?2:1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,calmMotion(runtime.S));}}
+    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:calmMotion(runtime.S)});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*(w.beat?.85:.6);runtime.cx.strokeStyle=w.beat?'#ffffff':w.color||runtime.S.color;runtime.cx.lineWidth=w.beat?2:1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,calmMotion(runtime.S));}}
   // atMs: when the finger touched (performance.now()); the pulse is judged then, not when the finger lifts.
   function sonar(origin='player',atMs=null){
     if(runtime.activityActive)return;
@@ -47,16 +47,25 @@ export function initialize(runtime) {
     const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;
     // A bought look changes only the drawing: its wave keeps the reach of the original pulse.
     const look=origin==='player'&&runtime.inWorld()?runtime.cubeShopPulseLook?.()||'':'',charge=look==='pulse:charged'?Math.min(1,(ms-lastLook)/4000):0;if(look)lastLook=ms;
-    waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,mult:origin==='player'?runtime.sparkLastMultiplier?.()??1:1,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
+    // Panel 11 (Q5, Mizuguchi): the wave is born with its note. It is built at the touch (where the cube was) and
+    // drawn, and starts reaching objects, when that note is heard (heard below); at the touch only the Line's mark shows.
+    const wave={x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,mult:origin==='player'?runtime.sparkLastMultiplier?.()??1:1,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null},addWave=(due=performance.now())=>{waves.push(wave);if(origin==='player')waveLog.push({at:performance.now(),due,beat:wave.beat});if(waveLog.length>24)waveLog.shift();};
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
     // Panel 10 (P5, Mizuguchi): one hit, one image. A pulse on time punches the cube once, when its note is heard
     // (journey-pulse.js, cubeKick); any other pulse swells the cube when its quantized note is heard, not at the touch.
     // Without sound there is no note to wait for: the cube swells at once.
-    runtime.MU.act+=.25;const silent=!runtime.ac||runtime.S.sound===false;if(silent)swell();
-    if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=pulseNoteTime(now,hit.beat);runtime.journeyPulseScheduled?.(t);
+    // A suspended audio clock schedules nothing yet: then, as without sound, the wave and the swell come at once.
+    runtime.MU.act+=.25;const silent=!runtime.ac||runtime.S.sound===false||!!runtime.ac.state&&runtime.ac.state!=='running';if(silent){swell();addWave();}
+    if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=pulseNoteTime(now,hit.beat);runtime.journeyPulseScheduled?.(t);if(!silent)heard(t,addWave);
      if(runtime.inWorld()){const region=runtime.regionOfPos(x,y);runtime.hearVoice?.('pulso',0,t,region,true,1,{x,y},origin);runtime.playTheme(hit.midi,hit.degree,t,region,hit.scale,hit.tr);}else runtime.pluck(hit.midi+12,t,runtime.vel(.1),2);return;}
-    runtime.soon(t=>{pulseVoice(t,x,y,1,origin);if(!silent)scheduleAudibleCue(runtime,t,swell);},origin);
+    // Panel 11 (Q5): the player's touch off the beat sounds on the next sixteenth at least 20 ms away (touchSoon).
+    (origin==='player'&&runtime.touchSoon||runtime.soon)(t=>{pulseVoice(t,x,y,1,origin);if(!silent){scheduleAudibleCue(runtime,t,swell);heard(t,addWave);}},origin);
   }
+  // Runs paint when a note scheduled at `time` is heard (cueDelay: output latency and calibration). Unlike a light cue it
+  // is never dropped for coming late: the wave plays the game (objects answer it), so only a change of surface cancels it.
+  const waveLog=[];
+  function heard(time,paint){const S=runtime.S,mode=S.mode,layer=S.layer,wait=cueDelay(runtime.ac,time),due=performance.now()+wait;if(wait<=0){paint(due);return;}
+    setTimeout(()=>{if(runtime.S!==S||S.mode!==mode||S.layer!==layer)return;paint(due);},wait);}
   function swell(){runtime.pulse=Math.max(runtime.pulse||0,.6);}
   // The pulse's own voice: in the World the place's «pulso», elsewhere the chord's three notes. soft scales its volume.
   function pulseVoice(t,x,y,soft,origin){if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,soft,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08*soft),2));}}
@@ -65,9 +74,9 @@ export function initialize(runtime) {
   // The music's queue plays at most four per step (audio.js), so a flurry spreads over the next steps; softPending
   // only keeps a runaway finger from piling up more than two steps of them.
   let softPending=0;
-  function softPulse(){if(!runtime.ac||softPending>=SOFT_PENDING||runtime.activityActive)return;if(runtime.inWorld()&&(runtime.S.layer||'superficie')!=='superficie')return;
+  function softPulse(){const later=runtime.touchSoon||runtime.soon;if(!runtime.ac||softPending>=SOFT_PENDING||runtime.activityActive)return;if(runtime.inWorld()&&(runtime.S.layer||'superficie')!=='superficie')return;
     const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;softPending++;soft.scheduled++;
-    runtime.soon(t=>{softPending=Math.max(0,softPending-1);soft.played++;pulseVoice(t,x,y,SOFT_PULSE,'player');},'player');}
+    later(t=>{softPending=Math.max(0,softPending-1);soft.played++;pulseVoice(t,x,y,SOFT_PULSE,'player');},'player');}
   const soft={scheduled:0,played:0};
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}
@@ -135,6 +144,7 @@ export function initialize(runtime) {
     updWaves: { get: () => updWaves },
     sonar: { get: () => sonar },
     softPulseState: { get: () => () => ({ ...soft, pending: softPending }) },
+    pulseWaveLog: { get: () => () => waveLog.map(w=>({...w})) },
     boing: { get: () => boing },
     propSound: { get: () => propSound },
     drawProp: { get: () => drawProp },
