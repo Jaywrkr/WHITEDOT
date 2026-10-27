@@ -5,6 +5,8 @@
 <script type="module">
 // Remove credentials before any network request; do not register a service worker.
 const hash=location.hash;history.replaceState(null,'',location.pathname);
+// The game's language (src/i18n.js): in English the page and its messages are translated as they appear.
+try{await import('./src/i18n.js');}catch(_){/* Spanish stays readable. */}
 const status=document.getElementById('status'),form=document.querySelector('form');
 try{
  // The sale edition has no account: nothing to confirm or recover, and no request leaves the game.

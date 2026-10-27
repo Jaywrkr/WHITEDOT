@@ -30,8 +30,10 @@ function compile(dict){
  // The most specific pattern first: more fixed letters, fewer open parts.
  const fixed=p=>p.es.replace(/\{n?\}/g,'').length;patterns.sort((a,b)=>fixed(b)-fixed(a));
 }
-function fill(template,values,numbers){
- let i=0;return template.replace(/\{(n?)(\d?)\}/g,(_,isNumber,index)=>{const v=index?values[index-1]:values[i++];return v===undefined?'':v;});
+// Spanish number marks in English: 50.400 → 50,400 and 1,5 → 1.5.
+const number=x=>/^\d{1,3}(?:\.\d{3})+$/.test(x)?x.replace(/\./g,','):/^\d+,\d+$/.test(x)?x.replace(',','.'):x;
+function fill(template,values){
+ let i=0;return template.replace(/\{(n?)(\d?)\}/g,(_,isNumber,index)=>{const v=index?values[index-1]:values[i++];return v===undefined?'':number(v);});
 }
 const hit=key=>{if(hits)hits.add(key);};
 function lookup(s,depth){
@@ -46,7 +48,7 @@ function tr(s,depth=0){
  const space=/^(\s*)([\s\S]*?)(\s*)$/.exec(s);if(space[1]||space[3]){const core=tr(space[2],depth+1);return space[1]+core+space[3];}
  // Decorations around a known key (· ★ ✦ «» ¿? ¡! a final stop): the key alone.
  const deco=/^([^\p{L}\d]*)([\s\S]*?)([^\p{L}\d]*)$/u.exec(s);
- if(deco[1]||deco[3])for(const [pre,core,post]of [['',deco[1]+deco[2],deco[3]],[deco[1],deco[2]+deco[3],''],[deco[1],deco[2],deco[3]]]){if(!core||core===s||!/\p{L}/u.test(core))continue;const v=lookup(core,depth);if(v!==undefined)return pre.replace(/[¿¡]/g,'')+v+post;}
+ if(deco[1]||deco[3])for(let p=0;p<=deco[1].length;p++)for(let q=deco[3].length;q>=0;q--){const pre=deco[1].slice(0,p),core=deco[1].slice(p)+deco[2]+deco[3].slice(0,q),post=deco[3].slice(q);if(core===s||!/\p{L}/u.test(core))continue;const v=lookup(core,depth);if(v!==undefined)return pre.replace(/[¿¡]/g,'')+v+post;}
  // Upper-case text (DÍA 1, LUGARES): the key in its usual case, then upper case again.
  if(/\p{Lu}/u.test(s)&&s===s.toLocaleUpperCase('es')&&s!==s.toLocaleLowerCase('es')){
   const lower=s.toLocaleLowerCase('es'),cap=lower.charAt(0).toLocaleUpperCase('es')+lower.slice(1),words=lower.replace(/(^|\s)(\p{L})/gu,(m,a,b)=>a+b.toLocaleUpperCase('es'));
@@ -74,11 +76,12 @@ export function translate(text){
  let v=cache.get(text);if(v!==undefined)return v;
  v=tr(text);if(cache.size>6000)cache.clear();cache.set(text,v);return v;
 }
-// A key with variables: t('Hola, {nombre}', {nombre}) in Spanish fills the Spanish key; in English, its translation.
+// A key with variables, t('Hola, {nombre}', {nombre}): in English a key of that exact form uses its English template;
+// otherwise the filled Spanish text is translated as a whole.
 export function t(key,vars){
- let s=lang==='en'&&loaded?(exact.has(key)?(hit(key),exact.get(key)):translate(key)):key;
- if(vars)s=s.replace(/\{(\w+)\}/g,(m,k)=>Object.hasOwn(vars,k)?String(lang==='en'?translate(String(vars[k])):vars[k]):m);
- return s;
+ const put=(template,tr)=>vars?template.replace(/\{(\w+)\}/g,(m,k)=>Object.hasOwn(vars,k)?tr(String(vars[k])):m):template;
+ if(lang==='en'&&loaded&&exact.has(key)){hit(key);return put(exact.get(key),translate);}
+ return translate(put(key,v=>v));
 }
 // Tests: which keys a run of translations used.
 export function trackKeys(on=true){hits=on?new Set():null;return ()=>hits;}
@@ -102,6 +105,12 @@ function attribute(el,name){
  const now=el.getAttribute(name),mem=map.get(name),source=mem&&now===mem.out?mem.src:now,out=lang==='en'?translate(source):source;
  if(mem&&mem.src===source&&mem.out===out&&now===out)return;
  map.set(name,{src:source,out});if(out!==now)el.setAttribute(name,out);
+}
+// The Spanish text of an element as the game wrote it, even after it was shown in English (for labels built from it).
+export function sourceText(el){
+ if(!el)return '';let out='';const it=(el.ownerDocument||globalThis.document).createTreeWalker(el,4);
+ for(let n=it.nextNode();n;n=it.nextNode()){const mem=textMemory.get(n);out+=mem&&n.data===mem.out?mem.src:n.data;}
+ return out;
 }
 function walk(root){
  if(!root)return;if(root.nodeType===3){textNode(root);return;}if(root.nodeType!==1&&root.nodeType!==9&&root.nodeType!==11)return;
@@ -135,13 +144,13 @@ export async function setLang(next,doc=globalThis.document){
 }
 // Before the save is read: ?lang= when given, else the language of the last start, else Spanish for a device that
 // already has a game or for an automated browser (the tests read the Spanish game), else the system's.
-const urlLang=()=>{try{const v=new URLSearchParams(globalThis.location?.search||'').get('lang');return LANGS.includes(v)?v:null;}catch(_){return null;}};
-export function bootLang(storage=(()=>{try{return globalThis.localStorage;}catch(_){return null;}})()){
- const asked=urlLang();if(asked)return asked;
+const urlLang=(search=globalThis.location?.search)=>{try{const v=new URLSearchParams(search||'').get('lang');return LANGS.includes(v)?v:null;}catch(_){return null;}};
+export function bootLang({storage=(()=>{try{return globalThis.localStorage;}catch(_){return null;}})(),nav=globalThis.navigator,search=globalThis.location?.search}={}){
+ const asked=urlLang(search);if(asked)return asked;
  try{const saved=storage?.getItem(LANG_KEY);if(LANGS.includes(saved))return saved;
   if(storage&&Object.keys(storage).some(k=>k==='pixel-blanco-v4'||k.startsWith('kubono:')))return 'es';}catch(_){/* Unknown device: the system decides. */}
- if(globalThis.navigator?.webdriver===true)return 'es';
- return systemLang();
+ if(nav?.webdriver===true)return 'es';
+ return systemLang(nav?.languages||[nav?.language]);
 }
 // The save decides (S.lang). Saves from before L2 have no language and stay in Spanish; a new game takes the language
 // it started in. A language from a later version is kept in the save untouched (this one shows its fallback). Ajustes

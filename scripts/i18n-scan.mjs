@@ -42,7 +42,7 @@ const decode=s=>s.replace(/&(#x?[0-9a-f]+|\w+);/gi,(m,e)=>e[0]==='#'?String.from
 export const LABELS=['aria-label','title','placeholder','alt','aria-roledescription','aria-valuetext','data-tip'];
 // The visible pieces of a piece of markup: text between tags and the labels the game translates.
 export function markupTexts(html){
- const out=[];const body=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<(\w+)\b[^>]*\btranslate="no"[^>]*>[\s\S]*?<\/\1>/g,'').replace(/<(script|style)\b[\s\S]*?<\/\1>/gi,'').replace(/<(textarea)\b[^>]*>[\s\S]*?<\/\1>/gi,'');
+ const out=[];const body=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<(\w+)\b[^>]*\btranslate="no"[^>]*>[\s\S]*?<\/\1>/g,'').replace(/<(script|style)\b[\s\S]*?<\/\1>/gi,'').replace(/(<textarea\b[^>]*>)[\s\S]*?<\/textarea>/gi,'$1');
  const re=/<[^>]*>/g;let last=0,m;
  const skipMeta=tag=>/^<(meta|link|title|svg|path|circle|rect|g|line|polyline|polygon|ellipse|use|defs)\b/i.test(tag);
  while((m=re.exec(body))){const text=body.slice(last,m.index);if(text.trim())out.push(decode(text));last=re.lastIndex;
@@ -61,7 +61,7 @@ export function readable(text){
  const s=text.trim();if(!/\p{L}{2}/u.test(s))return false;
  if(/^[a-z0-9_:.\-/#?=&%]+$/.test(s)||/^[a-z]{2}-[A-Z]{2}$/.test(s))return false;// ids, keys, paths, locales
  if(!/\s/.test(s)&&(/[:_{}|]/.test(s)||/[a-z][A-Z]/.test(s)))return false;// keyed ids: ambient:v1:{}, placeClose
- if(/^[a-z]+( [a-z]+){7,}$/.test(s))return false;// id lists
+ if(/^[a-z]+( [a-z]+){7,}$/.test(s)&&!s.split(' ').some(w=>SPANISH_WORDS.has(w)))return false;// id lists
  if(/^M-?\d/.test(s)||/\[|:not\(|^[a-z]+(,[a-z]+)+$|^(GET|POST|PUT|PNG|NFD|SCRIPT)$/.test(s))return false;// path data, selectors
  if(/^[a-z_0-9]+( [a-z_0-9]+)+$/.test(s)&&/_|\b(organic|floor|broken|calm|melodic|warm|disco|machine|bass|feltpiano|rhodes|minimal|deep|afro|ambient|clav|phasekeys|hollow)\b/.test(s))return false;// tag and id lists
  if(/^[A-Z][a-z]+[A-Z]\w*$/.test(s))return false;// ArrowLeft, KeyE
@@ -77,6 +77,12 @@ export function sourceTexts(root=fileURLToPath(new URL('..',import.meta.url))){
  for(const file of ['index.html','recovery.html']){const html=readFileSync(root+'/'+file,'utf8');for(const text of markupTexts(html))add(text,file,0);
   for(const m of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi))for(const {text,line}of jsStrings(m[1]))add(text,file,line);}
  return rows;
+}
+// Every string the source holds, readable or not (fragments joined at run time such as ' · activada').
+export function sourceCorpus(root=fileURLToPath(new URL('..',import.meta.url))){
+ const out=[];for(const file of readdirSync(root+'/src').filter(f=>f.endsWith('.js')&&!f.startsWith('i18n')))for(const {text}of jsStrings(readFileSync(root+'/src/'+file,'utf8')))out.push(text);
+ for(const file of ['index.html','recovery.html'])out.push(readFileSync(root+'/'+file,'utf8'));
+ return out.join('\n');
 }
 if(process.argv[1]===fileURLToPath(import.meta.url)){
  const {EN}=await import('../src/i18n-en.js'),{useDictionary,setLang,translate}=await import('../src/i18n.js');

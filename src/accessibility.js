@@ -1,3 +1,4 @@
+import {sourceText} from './i18n.js';
 // Menus trap keyboard focus; closing them returns to the control that opened them.
 export function initialize(runtime){
  const canvas=runtime.$('w');canvas.tabIndex=0;canvas.setAttribute('aria-label','Mundo musical: arrastra para caminar; el cubo toca los objetos. Un toque vacío lanza el pulso.');
@@ -9,7 +10,7 @@ export function initialize(runtime){
   dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');
   const heading=dialog.querySelector('h2');if(heading){heading.id||=dialog.id+'Title';dialog.setAttribute('aria-labelledby',heading.id);heading.tabIndex=-1;
    if(!heading.closest('header')){const header=document.createElement('header');header.className='panel-heading';heading.before(header);header.append(heading);
-    if(closers[dialog.id]){const close=document.createElement('button');close.type='button';close.className='sheet-close';close.setAttribute('aria-label','Cerrar '+(heading.textContent||'panel'));close.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';close.onclick=()=>runtime.$(closers[dialog.id]).click();header.append(close);}
+    if(closers[dialog.id]){const close=document.createElement('button');close.type='button';close.className='sheet-close';close.setAttribute('aria-label','Cerrar '+(sourceText(heading)||'panel'));close.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';close.onclick=()=>runtime.$(closers[dialog.id]).click();header.append(close);}
    }
   }
   else dialog.setAttribute('aria-label',dialog.id==='mMenu'?'Menú':'Opciones del juego');
