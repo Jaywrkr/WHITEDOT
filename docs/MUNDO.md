@@ -92,6 +92,7 @@ Las duraciones son objetivos de diseño, no tiempos garantizados de jugadores. E
 | `?festival=1` | Viaje completo con guardado separado y reinicio para otra persona |
 | `?prueba=1` / `?prueba=ver` | Observaciones locales de prueba |
 | `?medir=1` | Medida local de fotogramas |
+| `?lang=en` / `?lang=es` | Arranca en ese idioma y lo guarda en la partida ([Traducción](TRADUCCION.md)) |
 | `?clasico=1` | Comparación heredada de capítulos, mantenida por compatibilidad |
 
 Usar perfiles temporales; no borrar la partida personal. Atajos no equivalen a completar el recorrido. El producto no requiere`?dev=1` ni expone runtime; las pruebas lo instrumentan al servir main.

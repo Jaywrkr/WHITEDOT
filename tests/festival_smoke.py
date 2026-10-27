@@ -15,7 +15,7 @@ try:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   for width,height in [(390,844),(1280,800)]:
    ctx=browser.new_context(viewport={'width':width,'height':height});page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    base=f'http://127.0.0.1:{server.server_port}/'
    page.goto(base+'tests/');page.evaluate(f"localStorage.setItem('pixel-blanco-v4',{json.dumps(MAIN)})")

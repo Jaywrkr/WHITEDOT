@@ -1,9 +1,33 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.222**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.224**. Las entradas describen su revisión, no certifican producción.
 
 
-## Cierre del ciclo de diseño y plan de salida · sin cambio de versión
+## L2 · Inglés · 2.3.0-alpha.224
+
+Rama `lanzamiento/l2-ingles`, sobre `lanzamiento/l1-sin-nube`. Fila L2 de la [salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android). Guía: [Español e inglés](docs/TRADUCCION.md).
+
+- Sistema de textos sin dependencias: `src/i18n.js` (`t(clave, variables)`, `translate`) y el diccionario `src/i18n-en.js` (más de 4000 textos), los dos en `SHELL`. La clave es el texto español. En inglés se traduce en las salidas: texto y etiquetas de la página, texto del canvas y diálogos del navegador. En español no se instala nada: el juego es el mismo.
+- Traducido todo lo visible: menús, hojas, avisos, narrador y La Voz, Bitácora, Lugares, tarjetas, logros, nombres de lugares, especies y regiones, Ajustes, Refugio, Tu canción, créditos, guía «Cómo jugar», `recovery.html` y el texto del canvas. Glosario en la guía («Tu canción» → «Your Song», «El Viaje» → «The Journey», Refugio → Refuge, Bitácora → Logbook).
+- Idioma: el del sistema en el primer arranque; las partidas anteriores siguen en español. Se guarda en la partida (`lang`) y se elige en Ajustes → «Idioma / Language» (cambia al momento; si guardar falla, se queda el anterior). `<html lang>` acorde. `?lang=en|es` para probar. Un arranque en inglés espera su texto (como mucho 4 s) para no mostrar español.
+- «Cómo jugar»: «El progreso se guarda en este dispositivo.» (antes «este navegador»), válido para la app Android. Es el único cambio de texto en español.
+- Los nombres que el jugador escribió (favoritos) no se traducen. En inglés, los nombres de superbiomas de la Bitácora ya no se cortan.
+- No cambian la música, los mapas, el progreso ni los ID de HTML.
+- Pruebas nuevas: `tests/i18n-keys.mjs`, `tests/i18n-coverage.mjs`, `tests/i18n.mjs`, `tests/english_screens_smoke.py`, `tests/english_panels_smoke.py`, `tests/english_menus_smoke.py` y `tests/language_choice_smoke.py`. Herramienta: `scripts/i18n-scan.mjs`.
+- Límites: el texto cortado se mide en el DOM; el canvas se revisó en capturas. Búsquedas y órdenes alfabéticos siguen los nombres en español. Manifiesto y metas para buscadores siguen en español (L5). Sin revisión de una persona nativa.
+
+## L1 · Versión de venta sin nube · 2.3.0-alpha.223
+
+Rama `lanzamiento/l1-sin-nube`, sobre `claude/charming-darwin-dvbfc7`. Fila L1 de la [salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
+
+- Una sola bandera: `EDITION` en `src/edition.js` (nuevo, en `SHELL`). La fuente dice `'web'`; la edición de venta es `'store'`. El empaquetador la sella en su copia con `scripts/set-edition.mjs` (nuevo), que no toca el árbol fuente. Android: `KUBONO_EDITION=store` al compilar. Un valor desconocido también apaga la nube.
+- En `'store'`: ningún cliente de cuenta ni petición a Supabase; Cuenta y su hoja ocultas; «Guardar copia» aparece en «Más» en su lugar; los textos de la cuenta en Cómo jugar y Tú se ocultan; `recovery.html` no consulta nada.
+- Siguen el guardado local, exportar e importar copia y «Empezar de cero».
+- Partidas existentes: sin sesión, la de siempre. Con sesión guardada, su identificador se lee solo en el dispositivo para cargar `kubono:user:ID:…`; no se borra nada.
+- La web de Vercel sigue en `'web'`: es lo de menos riesgo para quien tiene sesión. La nube sigue en pausa. Supabase no se tocó.
+- No cambian la música, los mapas, el cubo ni la web actual.
+- Pruebas: `tests/sale_edition_smoke.py` (partida guardada por la web, con y sin sesión, carga en la edición de venta; inicio, Viaje, Mundo, menú, Ajustes y Refugio sin peticiones fuera del origen; ningún botón de cuenta; exportar copia; «Empezar de cero» disponible) y `tests/sale-edition.mjs` (bandera, sello y lectura local de la sesión).
+- Límites: el recorrido bloquea el service worker para ver todas las peticiones de la página. Aún no probado en el AAB (L3) ni en el zip de itch.io (L4). · sin cambio de versión
 
 Rama `claude/charming-darwin-dvbfc7`, sobre Q7. Petición de Jay del 27 de octubre.
 

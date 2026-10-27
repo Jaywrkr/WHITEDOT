@@ -18,7 +18,7 @@ RECORD="""(still)=>{const r=__r;r.S.reducedMotion=still;const out=[];let a=1;con
 def open_page(browser,size,query=''):
  context=browser.new_context(viewport={'width':size[0],'height':size[1]},device_scale_factor=1)
  page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
- page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+ page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
  page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
  page.goto(f'http://kubono.localhost:{server.server_port}/{query}');page.wait_for_function('!!window.__r',timeout=20000);page.wait_for_timeout(2000)
  page.evaluate("()=>{__r.S.sound=true;__r.audio();}");page.wait_for_function("__r.ac?.state==='running'&&__r.MU.sq.length>0",timeout=15000);page.wait_for_timeout(600)

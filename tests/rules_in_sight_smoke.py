@@ -26,7 +26,7 @@ try:
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    # A normal browser, as the panel saw it (scripts/panel-capture.py): automation and localhost mark the page as dev, which dims spans.
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://kubono.localhost:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000)
    assert not page.evaluate("document.body.classList.contains('dev')")

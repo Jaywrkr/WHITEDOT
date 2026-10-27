@@ -36,7 +36,7 @@ JDK 17, SDK 36, Gradle 8.13 y Node 18 o superior. Para compilar la edición de c
 gradle -p android assembleDebug assembleDebugAndroidTest -PaccountPreview --no-daemon
 ```
 
-Salida Gradle: `android/app/build/outputs/apk/debug/app-debug.apk`. El workflow la copia al nombre `Kubono-accounts.apk`. No instalar una compilación local con clave distinta encima de la validada. Sin `-PaccountPreview`, la configuración usa el sufijo histórico `.preview`; no es el paquete activo de cuentas.
+Edición de venta sin cuenta ni nube (L1): definir `KUBONO_EDITION=store` al ejecutar Gradle; `scripts/android-assets.mjs` sella solo la copia de assets ([arquitectura](../docs/ARQUITECTURA.md)). Sin la variable, la edición es `web`. Salida Gradle: `android/app/build/outputs/apk/debug/app-debug.apk`. El workflow la copia al nombre `Kubono-accounts.apk`. No instalar una compilación local con clave distinta encima de la validada. Sin `-PaccountPreview`, la configuración usa el sufijo histórico `.preview`; no es el paquete activo de cuentas.
 
 Gradle genera assets sin cambiar originales; el APK gestiona su actualización y no incluye el service worker web. El sellado usa revisión/hora reales y el mecanismo existente. `versionCode` comercial y AAB release están pendientes; las propiedades de versión/paquete de `.signingprobe` son solo para probar actualizaciones aisladas.
 

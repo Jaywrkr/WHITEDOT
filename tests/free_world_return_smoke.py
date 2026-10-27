@@ -50,7 +50,7 @@ try:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
   # A real player's browser: new saves start in the Journey, on the Camino.
-  p.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});")
+  p.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});")
   url=f'http://127.0.0.1:{srv.server_port}/'
   p.goto(url);p.wait_for_function('!!window.__r?.journeyMode&&!!__r.worldOpened');p.wait_for_timeout(500)
   assert p.evaluate('[__r.S.mode,__r.worldReady(),__r.worldOpened(),__r.journeyMode()]')==['camino',False,False,'viaje'],'a new player starts on the Camino'

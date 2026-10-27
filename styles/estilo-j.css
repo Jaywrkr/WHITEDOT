@@ -766,3 +766,5 @@ input[type="checkbox"]:checked{border-color:var(--ink)}
 #mMenu .menu-utilities button,#mMenu .menu-utilities button span,#mMenu .menu-group:not(.primary) .tiles button,#mMenu .menu-group:not(.primary) .tiles button span{font-size:13px}
 /* Landscape phones: the same order in fewer lines, so the menu fits with «Más» closed. */
 @media(max-height:500px){#mMenu .menu-group.primary>h3{display:none}#mMenu .menu-group.primary .tiles>button:not(#bContinue){flex-direction:row;align-items:center;min-height:48px;padding:8px}#mMenu .menu-group.primary .tiles>#bContinue{min-height:48px}}
+/* L2 · English: a superbiome name stays whole (the table scrolls sideways). Spanish keeps its layout. */
+html[lang="en"] .super-grid th{max-width:none}

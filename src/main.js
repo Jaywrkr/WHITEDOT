@@ -1,5 +1,7 @@
+import {initialize as i18n} from './i18n.js';
 import {initialize as errorLog} from './error-log.js';
-import {requireAccount} from './account-entry.js';
+import {requireAccount,savedAccountOwner} from './account-entry.js';
+import {EDITION,cloudEnabled} from './edition.js';
 import {isFestival,initialize as festival} from './festival.js';
 import {chapterTest,placeTest,initialize as chapterTestStart} from './chapter-test.js';
 import {initialize as colorSafe} from './color-safe.js';
@@ -175,12 +177,17 @@ import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
 // The festival build and a single chapter test (?capitulo=) play without an account, on their own save.
-const accountClient = isFestival()||chapterTest()||placeTest()?null:await requireAccount();
+// The sale edition (src/edition.js) never builds a cloud client: no account and no network. A saved session only keeps
+// pointing at its own local save.
+const ownSave=!(isFestival()||chapterTest()||placeTest());
+document.documentElement.dataset.edition=EDITION;
+const accountClient = !ownSave||!cloudEnabled()?null:await requireAccount();
 const runtime = Object.create(null);
-Object.defineProperties(runtime,{accountClient:{value:accountClient},accountUserId:{value:accountClient?.user()?.id||null}});
+Object.defineProperties(runtime,{accountClient:{value:accountClient},accountUserId:{value:accountClient?.user()?.id||(ownSave&&!cloudEnabled()?savedAccountOwner():null)},edition:{value:EDITION}});
 Object.defineProperty(runtime,'unifiedMusic',{value:true});
 data(runtime);
 progress(runtime);
+i18n(runtime);
 world(runtime);
 musicTerritories(runtime);
 audio(runtime);

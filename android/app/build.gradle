@@ -21,9 +21,10 @@ android {
 tasks.register('stageGame', Exec) {
     workingDir '../..'
     commandLine 'node', 'scripts/android-assets.mjs'
-    inputs.files(fileTree('../..') { include 'src/**', 'styles/**', 'icons/**', 'assets/**', 'index.html', 'manifest.webmanifest', 'package.json', 'sw.js', 'scripts/android-assets.mjs', 'android/host.js' })
+    inputs.files(fileTree('../..') { include 'src/**', 'styles/**', 'icons/**', 'assets/**', 'index.html', 'manifest.webmanifest', 'package.json', 'sw.js', 'scripts/android-assets.mjs', 'scripts/set-edition.mjs', 'android/host.js' })
     inputs.property 'revision', System.getenv('ANDROID_BUILD_SHA') ?: ''
     inputs.property 'buildTime', System.getenv('ANDROID_BUILD_TIME') ?: ''
+    inputs.property 'edition', System.getenv('KUBONO_EDITION') ?: ''
     outputs.dirs layout.buildDirectory.dir('generated/gameAssets'), layout.buildDirectory.dir('generated/gameRes')
 }
 tasks.named('preBuild').configure { dependsOn 'stageGame' }

@@ -44,7 +44,7 @@ try:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
   for width,height in [(320,568),(390,844),(844,390),(1280,800)]:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True)
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://kubono.localhost:{srv.server_port}/?anillo=1');page.wait_for_function('!!window.__r?.openCube&&__r.inWorld()')

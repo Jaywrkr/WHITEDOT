@@ -18,7 +18,7 @@ try:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   context=browser.new_context(viewport={'width':390,'height':844},has_touch=True,is_mobile=True,device_scale_factor=2)
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});"+FRAMES)
+  page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});"+FRAMES)
   # Only exposes the runtime for reading; the account gate and everything else run as for a player.
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.journeyMode');page.wait_for_timeout(800)

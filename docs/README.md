@@ -31,6 +31,7 @@ Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión 
 | Personalización y catálogo construido | [Tienda del cubo](TIENDA_DEL_CUBO.md) |
 | Habitaciones, objetos y jardín musical | [Casa viva](CASA_VIVA.md) |
 | Guardado local, cuenta y recuperación | [Cuenta y progreso](CUENTA_Y_RESPALDO.md) |
+| Español e inglés: sistema de textos, idioma y glosario | [Traducción](TRADUCCION.md) |
 | Auditoría creativa y método | [Panel](PANEL.md) |
 | Herramientas y resultados generados | [Scripts](../scripts/README.md) |
 | Procedencia de motivos visuales | [Referencias VJ](REFERENCIAS_VJ.md) y [Créditos](../CREDITOS.md) |

@@ -16,7 +16,7 @@ try:
   for width,height in [(320,568),(360,640),(390,844),(844,390),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height},has_touch=True)
    page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=bosque-01&layout=vasto&generation=2')
    page.wait_for_function('__testRuntime?.inWorld()')

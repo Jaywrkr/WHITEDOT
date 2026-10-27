@@ -15,7 +15,7 @@ try:
   for width,height in [(390,844),(844,390),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height},is_mobile=width<1000,has_touch=True);errors=[]
    page.on('pageerror',lambda e:errors.append(str(e)))
-   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
+   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']})")
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=visual-depth&layout=classic&generation=2')
    page.wait_for_function('__testRuntime?.worldVisibility')

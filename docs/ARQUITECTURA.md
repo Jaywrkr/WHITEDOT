@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Sin módulos nuevos desde alpha.207: P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -35,6 +35,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Actividades y encuentros | `universe-activities.js`, `universe-mischief.js` y sus modelos/arte |
 | Guía y avisos | `voice-guide.js`, `onboarding.js`, `notice-lane.js`, `celebration.js` |
 | UI y accesibilidad | `styles/estilo-j.css`, `accessibility.js`, `journal.js`, `favorites.js` |
+| Idiomas | `i18n.js`, `i18n-en.js` |
 | Guardado y cuenta | `save-store.js`, `save-tools.js`, `account-entry.js`, módulos `cloud-*` |
 
 Las fuentes de la tabla están en `src/`. Catálogos y detalles en [Universo](UNIVERSO.md), [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md), [Tienda](TIENDA_DEL_CUBO.md) y [Casa](CASA_VIVA.md).
@@ -72,6 +73,12 @@ Menú (panel 10, P2): «Seguir hacia …» y, debajo, Lugares, Tu cubo, Refugio 
 ## Cuenta, Android y código heredado
 
 Cuenta opcional y progreso local por defecto. Auth/REST, CAS, RLS y recuperación en [Cuenta y progreso](CUENTA_Y_RESPALDO.md). Configuración de Supabase pausada; no reaplicar SQL ni modificar servicios por leer esta guía. Cuenta compartida no implica multijugador ni cross-buy.
+
+**Edición (L1).** Una sola bandera: `EDITION` en `src/edition.js`. El árbol fuente dice siempre `'web'` (cuenta opcional, como hoy). La edición de venta es `'store'`: sin cuenta, sin nube y sin peticiones fuera de sus propios archivos. No se edita a mano: el empaquetador copia el juego y sella su copia con `node scripts/set-edition.mjs --dir COPIA --edition store`, que se niega a sellar el árbol fuente. Android: `KUBONO_EDITION=store` al ejecutar Gradle (`scripts/android-assets.mjs` sella la copia de assets). El zip de itch.io (L4) hace lo mismo sobre su copia. Un valor desconocido también apaga la nube.
+
+**Idiomas (L2).** `src/i18n.js` es el primer import de `main.js` y se inicializa justo después de `progress` (cuando existe `S`). El juego escribe en español; en inglés, `i18n.js` traduce en las salidas (texto y etiquetas de la página con un `MutationObserver`, `fillText`/`strokeText`/`measureText` del canvas y `alert`/`confirm`/`prompt`) con el diccionario `src/i18n-en.js`, que solo se carga en inglés. En español no se instala nada. El idioma vive en `S.lang`; detalle, reglas y glosario en [Español e inglés](TRADUCCION.md).
+
+En `'store'`: `main.js` no crea cliente ni llama a `requireAccount()`; `cloud-account.js` oculta Cuenta y su hoja, muestra «Guardar copia» en «Más» y oculta los textos `[data-cloud]` (muestra `[data-store]`); `recovery.html` no consulta nada. Una sesión guardada por la web solo indica de quién es la partida local (`savedAccountOwner()`, lectura local): se sigue usando `kubono:user:ID:…`. La web de Vercel sigue en `'web'`.
 
 `android/` empaqueta el mismo cliente con WebView; `scripts/android-assets.mjs` prepara assets y sellado. [Estado y límites](../android/README.md). No equivale a publicación en Play ni a pruebas físicas recientes.
 
