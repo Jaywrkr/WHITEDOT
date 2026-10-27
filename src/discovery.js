@@ -5,9 +5,11 @@ import {soundingBpm} from './genre-tempo.js';
 
 // Catálogo, retos y recompensas de exploración.
 export function initialize(runtime) {
+  // Panel 11 (Q1): from «Tu mundo se abrió» to the first portal no notice speaks; what is found is kept all the same.
+  const say=(...a)=>{if(!runtime.achievementsCalm?.())runtime.toast(...a);};
   const notices=installNoticeLane(runtime);
   function discover(sp){runtime.recordElement?.('forma:'+sp.id,runtime.regionOfPos(runtime.S.wx,runtime.S.wy));if(runtime.S.cat[sp.id])return;runtime.S.cat[sp.id]=1;runtime.S.catN=(runtime.S.catN||0)+1;runtime.S.catRecent=[{n:sp.name,r:sp.region,d:runtime.S.todayKey}].concat(runtime.S.catRecent||[]).slice(0,40);
-    runtime.toast("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
+    say("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
     const el=document.getElementById("zone");const render=()=>{
     document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+soundingBpm(d,runtime.GEN)+" BPM";
@@ -60,7 +62,7 @@ export function initialize(runtime) {
     runtime.MU.tune=d.tuneCents||0;
     if(ring>(S.maxRing||0)){S.maxRing=ring;S.maxRingDay=S.todayKey;
       if(ring>=10)runtime.unlock('lejos10');if(ring>=30)runtime.unlock('lejos30');if(ring>=60)runtime.unlock('lejos60');
-      if(ring>=5&&ring%5===0)runtime.toast(`<em>Récord</em> · ${ring} regiones del Origen`);}
+      if(ring>=5&&ring%5===0)say(`<em>Récord</em> · ${ring} regiones del Origen`);}
     if((d.strange||0)>.35&&!S.help.raro){S.help.raro=true;runtime.say(runtime.VOZ.raro,'Tierras raras');}
   }
   const resetContinent=()=>{lastLand=null;wasSea=false;runtime.MU.tune=0;};
@@ -72,7 +74,7 @@ export function initialize(runtime) {
     },first?4:3,'biome:'+z,()=>!runtime.inWorld());
   }
   function burst(x,y,n,gold){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*120;runtime.parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1,g:gold});}}
-  function seen(id){if(runtime.S.species[id])return;runtime.S.species[id]=runtime.S.todayKey;const n=Object.keys(runtime.S.species).length;runtime.toast("<em>Vida</em> · "+runtime.SPECIES.find(s=>s[0]===id)[1]+" · "+n+" / "+runtime.SPECIES.length);if(n>=runtime.SPECIES.length)runtime.unlock("vida");runtime.save();}
+  function seen(id){if(runtime.S.species[id])return;runtime.S.species[id]=runtime.S.todayKey;const n=Object.keys(runtime.S.species).length;say("<em>Vida</em> · "+runtime.SPECIES.find(s=>s[0]===id)[1]+" · "+n+" / "+runtime.SPECIES.length);if(n>=runtime.SPECIES.length)runtime.unlock("vida");runtime.save();}
 
   function collect(m){
     runtime.collected.add(m.id);runtime.S.collected.push(m.id);
@@ -103,7 +105,7 @@ export function initialize(runtime) {
     const region=runtime.regionOfPos(rl.x,rl.y);runtime.soon(t=>runtime.playVoice('reliquia',0,t,region,true,.6,rl,'player'));
     const n=runtime.relicsGot();
     runtime.showPhrase(runtime.ECOS[idx%runtime.ECOS.length],true);
-    runtime.toast("<em>Reliquia "+runtime.S.stars.length+"</em> · "+(rl.name||"Reliquia"));
+    say("<em>Reliquia "+runtime.S.stars.length+"</em> · "+(rl.name||"Reliquia"));
     runtime.unlock("estrella1");if(n>=3){runtime.unlock("dia3");setTimeout(()=>runtime.showPhrase("Tres hallazgos en un día. El mundo todavía guarda secretos."),5200);}
     if(runtime.S.stars.length>=30)runtime.unlock("e30");if(runtime.S.stars.length>=100)runtime.unlock("e100");
     runtime.save();runtime.hud();
@@ -113,7 +115,7 @@ export function initialize(runtime) {
     const B=runtime.BIOMES[z];runtime.setBiome(z);runtime.zoneHops++;if(runtime.zoneHops>=10)runtime.unlock("turista");
     const isNew=!runtime.S.zones[B.id];
     if(isNew){runtime.S.zones[B.id]=runtime.S.todayKey;const n=Object.keys(runtime.S.zones).length;
-      if(n>1)runtime.toast("<em>Familia nueva</em> · "+B.name+" · "+n+" / "+runtime.BIOMES.length);
+      if(n>1)say("<em>Familia nueva</em> · "+B.name+" · "+n+" / "+runtime.BIOMES.length);
       if(n>=5)runtime.unlock("zona5");if(n>=runtime.BIOMES.length)runtime.unlock("atlas");runtime.save();}
   }
 

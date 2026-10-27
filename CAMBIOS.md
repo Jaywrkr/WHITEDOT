@@ -80,6 +80,8 @@ Rama `panel11/q1-reglas-a-la-vista`, sobre `claude/charming-darwin-dvbfc7` (info
 - No cambia: música, cubo, mapas, guardados, umbrales ni el dorado de los objetos de juego, del cielo del final ni de los títulos de cierre.
 - Pruebas: `tests/rules-in-sight.mjs` y `tests/rules_in_sight_smoke.py` (sin píxel dorado fuera de ★/✦ en Lugares, Refugio y mapa; HUD alineado). Se actualizan `journey-finale.mjs`, `journey_finale_smoke.py` (ningún aviso entre «Tu mundo se abrió» y el primer toque) y `refugio_lugares_smoke.py`; `crystal_play_smoke.py` y `entry_jump_smoke.py` piden ahora ✦ al tamaño de ★ (antes ≥ 14 px). Auditoría, `npm test` y 49 recorridos de navegador aprobados. `verify-e-preservation` señala `achievements.js` y `celebration.js` (solo avisos). Cabeceras de `docs/VIAJE.md` y `docs/MUNDO.md` en alpha.216.
 
+- Arreglo en el PR de Q1–Q6: los avisos de descubrimiento («Vida», «Forma nueva», «Familia nueva», «Reliquia», «Récord») también callan desde «Tu mundo se abrió» hasta el primer portal; lo encontrado se guarda igual (`src/discovery.js`).
+
 ## Sesión 11 del panel · sin cambio de versión
 
 Rama `claude/charming-darwin-dvbfc7`. Petición de Jay: revisar de nuevo con puntuación.
