@@ -10,6 +10,7 @@ El juego no ejecuta estos scripts. [Arquitectura](../docs/ARQUITECTURA.md) · [v
 | `run-browser-tests.py` | Catálogo de navegador/audio con Chromium |
 | `verify-e-preservation.mjs` | Preservación del candidato E desde main alpha.200 |
 | `acceptance-gate.mjs` | Registro humano declarado; no certifica una nota |
+| `i18n-scan.mjs` | Lista el texto español del juego que aún no tiene inglés ([Traducción](../docs/TRADUCCION.md)) |
 | `panel-capture.py` |21 estados de teléfono con manifiesto SHA/digest; `CAPTURES` limita la selección |
 | `bump-version.mjs` | Sincroniza versión de ejecución; no usar por documentos |
 | `vercel-build.mjs` / `stamp-deploy.mjs` | Sella el artefacto de publicación |

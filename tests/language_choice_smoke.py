@@ -42,6 +42,10 @@ try:
   c,page,errors=context(browser);page.goto(f'http://127.0.0.1:{port}/');page.wait_for_function(READY);page.wait_for_timeout(1200)
   assert state(page)=={'lang':'en','html':'en','saved':'en','settings':'Settings','guide':'How to play','select':'en'},state(page)
   assert page.evaluate("localStorage.getItem('kubono:lang')")=='en'
+  # The page waited for its English text (no Spanish flash) and is shown once it is ready.
+  assert page.evaluate("!document.documentElement.hasAttribute('data-i18n-wait')&&getComputedStyle(document.body).visibility==='visible'")
+  page.reload(wait_until='commit');assert page.evaluate("document.documentElement.hasAttribute('data-i18n-wait')"),'an English start hides the Spanish page until translated'
+  page.wait_for_function(READY);page.wait_for_function("!document.documentElement.hasAttribute('data-i18n-wait')")
   assert not errors,errors;c.close()
   # 3. A game saved before L2 (no language) on an English phone stays in Spanish, and the save says so from now on.
   c,page,errors=context(browser);page.goto(f'http://127.0.0.1:{port}/manifest.webmanifest');page.evaluate("localStorage.setItem('test:system','es-ES')");page.goto(f'http://127.0.0.1:{port}/');page.wait_for_function(READY)

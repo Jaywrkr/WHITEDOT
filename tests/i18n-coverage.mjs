@@ -39,6 +39,7 @@ const main=read('src/main.js');assert.ok(main.startsWith("import {initialize as 
 const sw=read('sw.js');for(const m of ['"./src/i18n.js"','"./src/i18n-en.js"'])assert.equal(sw.split(m).length-1,1,m);
 const html=read('index.html');
 assert.match(html,/<label for="language" translate="no">Idioma \/ Language<\/label><select id="language" translate="no"><option value="es" lang="es">Español<\/option><option value="en" lang="en">English<\/option><\/select>/);
+assert.match(html,/<style>html\[data-i18n-wait\] body\{visibility:hidden\}<\/style>/);assert.match(html,/setTimeout\(function\(\)\{h\.removeAttribute\('data-i18n-wait'\)\},4000\)/);
 assert.match(html,/<p>El progreso se guarda en este dispositivo\.<span data-cloud>/);assert.ok(!html.includes('este navegador'));
 assert.match(read('recovery.html'),/await import\('\.\/src\/i18n\.js'\)/);
 console.log(`PASS i18n coverage: ${checked.size} Spanish texts in src/, index.html and recovery.html come out in English; ${excepted} named exceptions; Spanish untouched`);

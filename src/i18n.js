@@ -119,7 +119,7 @@ function walk(root){
 }
 let observer=null;
 export function translateDocument(doc=globalThis.document){
- if(!doc)return;doc.documentElement.lang=lang;walk(doc.documentElement);
+ if(!doc)return;doc.documentElement.lang=lang;walk(doc.documentElement);doc.documentElement.removeAttribute?.('data-i18n-wait');
  if(!observer&&lang==='en'&&typeof MutationObserver==='function'){
   observer=new MutationObserver(records=>{for(const r of records){
    if(r.type==='characterData')textNode(r.target);else if(r.type==='attributes')attribute(r.target,r.attributeName);else for(const n of r.addedNodes)walk(n);}});
@@ -173,4 +173,4 @@ export function initialize(runtime){
  Object.defineProperties(runtime,{lang:{get:()=>lang},t:{get:()=>t},translate:{get:()=>translate}});
 }
 // Module start in the page: decide the language before anything is drawn.
-if(globalThis.document){const first=bootLang();if(first==='en')await setLang('en');else globalThis.document.documentElement.lang='es';}
+if(globalThis.document){const first=bootLang();if(first==='en')await setLang('en');else{const root=globalThis.document.documentElement;root.lang='es';root.removeAttribute('data-i18n-wait');}}
