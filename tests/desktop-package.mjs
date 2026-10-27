@@ -71,4 +71,5 @@ const flow=read('.github/workflows/desktop-builds.yml');
 assert.match(flow,/^on:\n  workflow_dispatch:/m);assert.doesNotMatch(flow,/^\s+(push|pull_request|schedule|release):/m,'manual only');
 assert.match(flow,/actions\/upload-artifact@v4/);assert.doesNotMatch(flow,/butler|itch\.io\/api|secrets\./,'nothing is uploaded to itch.io');
 assert.match(flow,/tests\/desktop_smoke\.py/);
+assert.match(read('tests/creative_regression.py'),/'desktop_smoke\.py'/,'the Electron flow stays out of the browser shards');
 console.log('PASS desktop package: app:// serves only the game folder, network blocked, no dictionary download, save under '+APP_ID+', no menus or DevTools in release, sale edition staged, pinned wrapper, manual workflow');

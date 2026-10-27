@@ -63,7 +63,7 @@ El juego son 3,4 MB: el resto es Electron (Chromium).
 
 ## Prueba
 
-`tests/desktop_smoke.py` construye el build de Linux (o usa `KUBONO_DESKTOP_BUILD`), lo abre en Xvfb y lo maneja por el protocolo de DevTools: ventana de 1280 × 800 titulada Kubono, edición de venta desde `app://kubono`, F11 real (XTest) para el envoltorio y no para el juego, sonido tras el primer clic, guardado, cierre con código 0 al cerrar la ventana, partida conservada al reabrir, guardado en `~/.config/com.playkubono.kubono`. Toda conexión pasa por un proxy que solo las anota: **ninguna**, ni de la página ni de Electron; un `fetch` externo deliberado queda bloqueado. `tests/desktop-package.mjs` revisa protocolo, bloqueo, menús, DevTools, carpeta de guardado, contenido y workflow sin Electron.
+`tests/desktop_smoke.py` construye el build de Linux (o usa `KUBONO_DESKTOP_BUILD`), lo abre en Xvfb y lo maneja por el protocolo de DevTools: ventana de 1280 × 800 titulada Kubono, edición de venta desde `app://kubono`, F11 real (XTest) para el envoltorio y no para el juego, sonido tras el primer clic, guardado, cierre con código 0 al cerrar la ventana, partida conservada al reabrir, guardado en `~/.config/com.playkubono.kubono`. Toda conexión pasa por un proxy que solo las anota: **ninguna**, ni de la página ni de Electron; un `fetch` externo deliberado queda bloqueado. No entra en las tandas de navegador del CI (necesita Electron): corre en el workflow manual. `tests/desktop-package.mjs` revisa protocolo, bloqueo, menús, DevTools, carpeta de guardado, contenido y workflow sin Electron.
 
 El zip web y su prueba (`tests/itch_package_smoke.py`) siguen: son la entrada del envoltorio y sirven si algún día se publica la web.
 

@@ -3,7 +3,8 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor,as_completed
 import os,subprocess,sys
 ROOT=Path(__file__).resolve().parents[1]
-flows=sorted(p for p in (ROOT/'tests').glob('*smoke.py') if p.name!='offline_smoke.py')
+# desktop_smoke.py needs the Electron build and runs in the manual desktop workflow instead.
+flows=sorted(p for p in (ROOT/'tests').glob('*smoke.py') if p.name not in ('offline_smoke.py','desktop_smoke.py'))
 # The principal existing journey also validates controls, Studio and reload.
 if ROOT/'tests/smoke.py' not in flows:flows.append(ROOT/'tests/smoke.py')
 # CI splits the catalogue across runners (WHITEDOT_BROWSER_SHARD=index/total): every flow runs in exactly one shard,
