@@ -1,4 +1,4 @@
-"""The explicit cube gesture emits on down. In the free World empty-space gestures stay disambiguated; in a Journey
+"""The explicit cube gesture emits on down. Since panel 11 (Q6, D11-B) empty space in the free World does too; in a Journey
 chapter and a place's round (panel 10, P6, D2-A) a touch anywhere on the canvas is the pulse, on down, and a drag
 still walks."""
 from pathlib import Path
@@ -30,13 +30,17 @@ try:
    assert p.evaluate('__inputs.length')==1,'explicit pulse already dispatched while finger remains down'
    assert p.evaluate('__inputs[0].at-__inputs[0].touch')<40
    p.mouse.up();assert p.evaluate('__inputs.length')==1,'release never emits twice'
+   # Panel 11 (Q6, D11-B): one gesture in the whole game. Empty space in the open Universe pulses on down too; a drag
+   # walks after that one pulse, a still finger opens the scanner at 500 ms, and the release never adds a pulse.
    p.wait_for_timeout(300);p.mouse.move(size['width']*.75,size['height']*.55);p.mouse.down();p.wait_for_timeout(100)
-   assert p.evaluate('__inputs.length')==1,'empty-space intent waits'
-   p.mouse.move(size['width']*.85,size['height']*.55,steps=5);p.wait_for_timeout(200);p.mouse.up();assert p.evaluate('__inputs.length')==1,'drag never emits pulse'
+   assert p.evaluate('__inputs.length')==2,'empty space pulses on down'
+   assert p.evaluate('__inputs[1].at-__inputs[1].touch')<40
+   x0=p.evaluate('__r.S.wx');p.mouse.move(size['width']*.85,size['height']*.55,steps=5);p.wait_for_timeout(200);p.mouse.up();assert p.evaluate('__inputs.length')==2,'drag never emits a second pulse'
+   assert p.evaluate('__r.S.wx')!=x0,'the drag walks'
    p.wait_for_timeout(300);p.mouse.move(size['width']*.75,size['height']*.55);p.mouse.down();p.wait_for_timeout(600)
    assert p.evaluate('__r.scanning'),'hold outside cube opens scanner';p.mouse.up()
-   assert p.evaluate('__inputs.length')==1
-   p.wait_for_timeout(300);p.mouse.click(size['width']*.75,size['height']*.55);assert p.evaluate('__inputs.length')==2,'a blank tap pulses on release'
+   assert p.evaluate('__inputs.length')==3,'the held touch pulsed once, on down'
+   p.wait_for_timeout(300);p.mouse.click(size['width']*.75,size['height']*.55);assert p.evaluate('__inputs.length')==4,'a blank tap pulses once'
    assert not errors,errors;p.close()
    # A Journey chapter: anywhere on the canvas, on down; a drag walks; a hold still opens the scanner.
    p=b.new_page(viewport=size);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
@@ -65,5 +69,5 @@ try:
    p.wait_for_timeout(300);p.mouse.click(size['width']/2,size['height']/2);assert p.evaluate('__inputs.length')==6
    assert not errors,errors;p.close()
   b.close()
- print('PASS explicit cube emits on down under 40 ms, no duplicate release; free World blank drag/hold preserve movement/scanner; in a chapter a blank touch pulses on down within 15 ms, a drag walks and a hold opens the scanner (P6, D2-A)',flush=True)
+ print('PASS explicit cube emits on down under 40 ms, no duplicate release; free World blank touch pulses on down (Q6, D11-B), drag walks and hold opens the scanner; in a chapter a blank touch pulses on down within 15 ms, a drag walks and a hold opens the scanner (P6, D2-A)',flush=True)
 finally:srv.shutdown();srv.server_close()

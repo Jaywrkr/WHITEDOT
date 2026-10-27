@@ -1,5 +1,5 @@
 import {prefersReducedMotion} from './frame-state.js';
-import {SONG_LAYERS,SONG_IDS,tierStep,songChord,placeTier} from './song.js';
+import {SONG_LAYERS,SONG_IDS,SONG_STEPS,tierStep,songChord,chordAt,placeTier} from './song.js';
 import {THEME,themePitch,phraseTimeline,audibleTime} from './journey-pulse.js';
 import {PLACES,TOTAL_STARS,starCount,allComplete} from './places.js';
 // The song seen (plan F7): eleven rings, one per place. A layer you have won lights its ring in its colour and the ring
@@ -22,6 +22,9 @@ export function snapToScale(m,scale,tr=0){const sc=Array.isArray(scale)&&scale.l
 // says only «Tu mundo se abrió» and the master version only its own two lines.
 export const FINAL_LINES=Object.freeze(['Los 11 lugares','Tu canción está completa','Kubono','Jay · diseño y código','Luca · primer jugador']);
 export const MASTER_LINES=Object.freeze(['Las 33 ★','La versión maestra']);
+// Panel 11 (Q3, Simogo): the credits once for real. Once shown, the place's save keeps `credited`; a later finale of the
+// eleven ends on this line alone. The finale closes by itself a while after its last bar, like the Journey's.
+export const REPLAY_LINES=Object.freeze(['Tu canción está completa']),STAGE_LINGER=7;
 // Panel 10 (P6, D5-B, Wintory): while your phrases sound and during the theme's first pass only the pad (Vacío) and the
 // bass (Lago) keep playing; the other layers come back with the second pass. An arrangement of entries: no layer's
 // notes change. Your phrase sounds in the soft voice of the Journey's finale (its arpeggio), not the thin lead.
@@ -32,13 +35,27 @@ export const held=(plan,bar)=>!!plan?.final&&(bar>=plan.notesAt&&bar<plan.silenc
 export const TIER_SATURATION=Object.freeze([0,.45,.75,1]);
 export function tierInk(color,tier){const m=/^#([0-9a-f]{6})$/i.exec(String(color||''));if(!m)return color;const k=TIER_SATURATION[Math.max(0,Math.min(3,Math.floor(tier)||0))],n=parseInt(m[1],16),c=[n>>16&255,n>>8&255,n&255];
  const grey=.299*c[0]+.587*c[1]+.114*c[2],flat=Math.max(...c)-Math.min(...c)<16,out=c.map(v=>Math.round(flat?v*(.55+.45*k):grey+(v-grey)*k));return '#'+out.map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('');}
+// Panel 11 (Q3, Iwai, Pope): the share of a layer that sounds at its tier, in its own hits over the song's eight bars
+// (the Faros in the notes of the theme). The ring's arc is this share: the growth between ★ and ★★ is seen, without a
+// number. A layer whose fragment already plays all its hits (Vacío, Cueva) shows a whole arc at ★.
+export const farosNotes=tier=>tier>=2?THEME.length:3+Math.floor(Math.round((tier-1)*16)/6);
+const shares=new Map();
+export function layerShare(id,tier){if(!(tier>0))return 0;if(tier>=2)return 1;if(id==='faros')return Math.min(THEME.length,farosNotes(tier))/THEME.length;const key=id+':'+tier;if(shares.has(key))return shares.get(key);
+ let n=0,all=0;for(let s=0;s<SONG_STEPS;s++){const c=chordAt(s);n+=tierStep(id,s,c,tier).length;all+=tierStep(id,s,c,2).length;}const v=all?n/all:1;shares.set(key,v);return v;}
 export function ringLayout(W,H,n=SONG_IDS.length){const R=Math.min(W*.36,H*.3),cx=W/2,cy=H*.44,r=Math.max(14,Math.min(26,Math.min(W,H)*.045));
  return Array.from({length:n},(_,i)=>{const a=-Math.PI/2+i/n*2*Math.PI;return {x:cx+Math.cos(a)*R,y:cy+Math.sin(a)*R,r};});}
 // Draw the rings: `lit` says which layers sound, `beat(id)` how hard each is hitting now (0–1), `shown` how many to draw.
 export function drawSongRings(c,W,H,{ids=SONG_IDS,lit=()=>false,beat=()=>0,shown=ids.length,names=true,still=false,color=(id,fallback)=>fallback,tier=null}={}){
  const spots=ringLayout(W,H,ids.length);c.save();c.textAlign='center';c.textBaseline='top';
  ids.forEach((id,i)=>{if(i>=shown)return;const p=spots[i],on=lit(id),k=on?beat(id):0,base=color(id,SONG_LAYERS[id]?.color||'#ffffff'),ink=tier?tierInk(base,tier(id)):base;
-  if(on){c.globalAlpha=.16+.3*k;c.fillStyle=ink;c.beginPath();c.arc(p.x,p.y,p.r*(1+(still?0:.18*k)),0,6.283);c.fill();c.globalAlpha=.95;c.strokeStyle=ink;c.lineWidth=2;c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();}
+  // Panel 11 (Q3, Iwai): with tiers the shape tells the stars apart: ★ an arc as long as what sounds, no fill; ★★ the
+  // whole ring filled; ★★★ also a thin outer ring. The beat swells the fill, or thickens a ★ arc.
+  const t=on&&tier?tier(id):null;
+  if(on&&t!==null&&t<2){const share=layerShare(id,t),a0=-Math.PI/2;c.globalAlpha=.22;c.strokeStyle=ink;c.lineWidth=1;c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();
+   c.globalAlpha=.95;c.lineWidth=2+(still?0:1.5*k);c.beginPath();c.arc(p.x,p.y,p.r,a0,a0+share*2*Math.PI);c.stroke();}
+  else if(on&&t!==null){c.globalAlpha=.45+.3*k;c.fillStyle=ink;c.beginPath();c.arc(p.x,p.y,p.r*(1+(still?0:.12*k)),0,6.283);c.fill();c.globalAlpha=.95;c.strokeStyle=ink;c.lineWidth=2;c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();
+   if(t>=3){c.globalAlpha=.8;c.lineWidth=1;c.beginPath();c.arc(p.x,p.y,p.r+4,0,6.283);c.stroke();}}
+  else if(on){c.globalAlpha=.16+.3*k;c.fillStyle=ink;c.beginPath();c.arc(p.x,p.y,p.r*(1+(still?0:.18*k)),0,6.283);c.fill();c.globalAlpha=.95;c.strokeStyle=ink;c.lineWidth=2;c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();}
   else{c.globalAlpha=.35;c.strokeStyle='#ffffff';c.lineWidth=1;c.setLineDash?.([3,4]);c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();c.setLineDash?.([]);}
   if(names){const place=PLACES.find(q=>q.id===id);c.globalAlpha=1;c.fillStyle=on?'#ffffff':'#a0a0a0';c.font='11px "Geist Mono", monospace';c.fillText(place?.name||id,p.x,p.y+p.r+6);}});
  c.restore();return spots;}
@@ -71,7 +88,7 @@ export function stageEvents(plan,k,chord,{tiers={},notes={},steps={},scale,tr=0}
  const hold=held(plan,bar);for(const [id,at] of Object.entries(plan.entry))if(bar>=at&&(!hold||UNDER_PHRASE.includes(id)))for(const e of tierStep(id,k-at*16,c,tiers[id]||0))out.push({...e,layer:id});
  // The Faros' layer is the melody: the cube's theme in the World's key, two bars long (★ its first three notes, a fourth
  // and a fifth as it grows by six and twelve beats, ★★ all of it, ★★★ also an octave up).
- if(plan.entry.faros!==undefined&&bar>=plan.entry.faros&&(tiers.faros||0)>0&&(!plan.final||bar>=plan.endAt)){const local=(k-plan.entry.faros*16)%32;let at=0;const notes=tiers.faros>=2?THEME.length:3+Math.floor(Math.round((tiers.faros-1)*16)/6);THEME.forEach(([d,l],i)=>{if(at===local&&i<notes){const m=themePitch(d,scale,tr)+12;out.push({what:'lead',midi:m,len:l*2,layer:'faros'});if(tiers.faros>=3)out.push({what:'lead',midi:m+12,len:l*2,layer:'faros',soft:true});}at+=l*2;});}
+ if(plan.entry.faros!==undefined&&bar>=plan.entry.faros&&(tiers.faros||0)>0&&(!plan.final||bar>=plan.endAt)){const local=(k-plan.entry.faros*16)%32;let at=0;const notes=farosNotes(tiers.faros);THEME.forEach(([d,l],i)=>{if(at===local&&i<notes){const m=themePitch(d,scale,tr)+12;out.push({what:'lead',midi:m,len:l*2,layer:'faros'});if(tiers.faros>=3)out.push({what:'lead',midi:m+12,len:l*2,layer:'faros',soft:true});}at+=l*2;});}
  if(plan.final&&bar>=plan.notesAt&&bar<plan.silenceAt){const id=[...plan.noteOrder].reverse().find(id=>bar>=plan.noteStarts[id]),ns=notes[id]||[],timing=plan.noteTimings[id],local=k-plan.noteStarts[id]*16;
   for(let i=0;i<ns.length;i++)if(timing[i]===local&&Number.isFinite(ns[i]))out.push({what:'arp',midi:snapToScale(ns[i],scale,tr)+12,len:2,layer:id,mine:true});}
  if(plan.final&&bar>=plan.themeAt&&bar<plan.endAt){const local=k-plan.themeAt*16,pass=local>=32?1:0;let at=0;for(const [d,l] of THEME){if(at===local-pass*32)out.push({what:'cello',midi:snapToScale(themePitch(d,scale,tr)+12+(pass?7:0),scale,tr),len:l*2,theme:true,second:!!pass});at+=l*2;}}
@@ -124,15 +141,22 @@ export function initialize(runtime){
  function sounding(id){if(!run||!run.ids.includes(id))return false;const k=visualStep(),bar=k<0?-1:Math.floor(k/16);return run.start!==null&&bar>=(run.plan.entry[id]||0);}
  function frame(){if(!run||!run.el)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d'),ms=performance.now()-run.at,still=calm(),time=runtime.ac?audibleTime(runtime.ac):0,cursor=visualStep(),bar=Math.max(0,Math.floor(cursor/16));c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
-  const full=run.ids.filter(id=>sounding(id)).length/SONG_IDS.length,g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.08+.3*full})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
+  // The gold veil is the finale's alone (panel 11, Q3): Tu canción opened from Lugares stays on black.
+  if(run.final){const full=run.ids.filter(id=>sounding(id)).length/SONG_IDS.length,g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.08+.3*full})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);}
   // Without sound the stage still opens: the layers come in by the clock, at the World's tempo.
   if(!run.out&&run.k<run.plan.bars*16)run.k=Math.floor(ms/1000/((runtime.SIX||.125)))-1,run.start=run.start??0;
   const shown=run.final?Math.min(SONG_IDS.length,bar+1):SONG_IDS.length;
-  drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>run.out&&runtime.S.sound?pulse(id,time):(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f,tier:id=>run.tiers[id]||1});
+  run.rings=drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>run.out&&runtime.S.sound?pulse(id,time):(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f,tier:id=>run.tiers[id]||1});
   if(run.final&&!run.credits){const cue=stageCaption(run.plan,run.start===null?-1:cursor),label=cue.text?(runtime.S.sound===false||runtime.musicVolume?.()===0?'Vista silenciosa · ':'')+cue.text:'';if(label!==run.caption){run.caption=label;el.querySelector('.song-stage-text').textContent=label;}}
   // The final: the words and the credits once the theme has sounded (plan I4: at the end, not before your notes).
-  if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;el.querySelector('#songAgain').hidden=false;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
+  if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;el.querySelector('#songAgain').hidden=false;const box=el.querySelector('.song-stage-text');box.replaceChildren(...credits().map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
+  // Panel 11 (Q3, Simogo): the finale ends by itself, STAGE_LINGER seconds after its last bar is heard.
+  if(run.final&&cursor>=run.plan.bars*16){run.endedAt??=performance.now();if(performance.now()-run.endedAt>=STAGE_LINGER*1000){raf=null;close();return;}}
   raf=requestAnimationFrame(frame);}
+ // The credits of authorship once for real (panel 11, Q3): the first finale of the eleven that reaches them keeps
+ // `credited` in the save; later ones end on «Tu canción está completa». The master version keeps its own lines.
+ function credits(){if(run.master)return MASTER_LINES;const d=data();if(d?.credited)return REPLAY_LINES;
+  if(d&&!d.readOnly){d.credited=true;if(runtime.save?.()===false)d.credited=false;}return FINAL_LINES;}
  // With the eleven places complete, once: the true finale, straight after the round that completes them (D5-A). With
  // the 33 stars, once more: the master version, after the round's card is closed.
  function check({at=null}={}){const d=data();if(!d)return false;
@@ -140,5 +164,5 @@ export function initialize(runtime){
   if(d.won&&!d.master&&starCount(d)>=TOTAL_STARS){d.master=true;if(runtime.save?.()===false){d.master=false;return false;}return open({final:true,master:true});}
   return false;}
  Object.defineProperties(runtime,{openSong:{get:()=>open},replaySong:{get:()=>()=>open({final:allComplete(data()),master:starCount(data())>=TOTAL_STARS})},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageStep:{get:()=>step},songLayerPreview:{get:()=>preview},
-  songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,k:run?.k??-1,start:run?.start??null,six:runtime.SIX||null,caption:run?.caption??null,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{},pulses:run?Object.fromEntries(run.ids.map(id=>[id,pulse(id,runtime.ac?audibleTime(runtime.ac):0)])):{},personalNotes:run?Object.fromEntries(Object.entries(run.notes).map(([id,ns])=>[id,[...ns]])):{}})}});
+  songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,ended:run?.endedAt!=null,rings:run?.rings?run.rings.map((p,i)=>({id:SONG_IDS[i],x:p.x,y:p.y,r:p.r})):[],k:run?.k??-1,start:run?.start??null,six:runtime.SIX||null,caption:run?.caption??null,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{},pulses:run?Object.fromEntries(run.ids.map(id=>[id,pulse(id,runtime.ac?audibleTime(runtime.ac):0)])):{},personalNotes:run?Object.fromEntries(Object.entries(run.notes).map(([id,ns])=>[id,[...ns]])):{}})}});
 }

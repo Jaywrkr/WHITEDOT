@@ -1,6 +1,102 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.215**. Las entradas describen su revisión, no certifican producción.
+Estado: 27 de octubre de 2026. Código **2.3.0-alpha.221**. Las entradas describen su revisión, no certifican producción.
+
+## Q6 · Volver y tocar en el Mundo libre · 2.3.0-alpha.221
+
+Rama `panel11/q6-mundo-libre`, sobre `panel11/q5-golpe-al-oirse` (informe de la sesión 11). Chen e Iwai. Decisiones de Jay: D7-C y D11-B.
+
+- D7-C: quien abrió el Mundo alguna vez no vuelve a pagar diez cristales. Un día nuevo ya no saca del Mundo, tampoco a mitad del Viaje: cargas donde estabas, sin salto diario. Quien estaba en el Camino sigue en el Camino, con «Entrar al Mundo» en el dock.
+- El dato es `lastWorldDay` o el logro «mundo»; los dos los guarda `enterWorld` y nada los borra. No hace falta marcador nuevo ni migración. El Estudio abierto desde el Mundo vuelve al Mundo.
+- El Camino del día vuelve como paseo: sus diez primeros cristales dan ✦ (en el Viaje siguen callados, como antes). El décimo solo abre la puerta la primera vez; después no te mete en el Mundo.
+- D11-B: en el Universo abierto el pulso suena al apoyar el dedo, como en el Camino, los capítulos y las rondas. Mantener 500 ms abre el escáner y arrastrar camina; al soltar no suena otro pulso. Se integra el cambio de Q5: el modo dedo de las pruebas (`?dedo`) conserva sus gestos sobre objetos al soltar, y ahí un toque quieto que no abre el escáner sigue siendo pulso.
+- Jugador nuevo: igual que antes, empieza en el Camino y necesita diez cristales, también en un día nuevo.
+- No cambia: notas, voces, mezcla, el cubo (pequeño), mapas, semillas ni guardados.
+- Pruebas: `tests/crystal-path.mjs` afirma que el jugador nuevo sigue necesitando los diez cristales en un día nuevo (línea 26) y añade el que vuelve: guardado en el Mundo a mitad del Viaje con `todayKey` de ayer, guardado antiguo con solo el logro, Estudio, ✦ del paseo y sin entrada forzada. `tests/free_world_return_smoke.py` (navegador): jugador nuevo en el Camino; un guardado en el Bosque con `todayKey` de ayer carga en el Bosque; en el Universo abierto, 40 toques a tiempo con mediana ≤ 15 ms y p95 ≤ 30 ms del `pointerdown` a la nota (sin latencia de salida), un pulso por toque, escáner a los 500 ms y arrastre que camina. `tests/touch_precision_smoke.py` afirma ahora que en el Mundo libre el vacío pulsa al apoyar, una sola vez, y que arrastrar camina y mantener abre el escáner. `tests/strike_heard_smoke.py`: los toques quietos de 100, 300, 470 y 600 ms pulsan una vez al apoyar; el de 600 ms abre además el escáner.
+- Límite: sin prueba en teléfono ni con personas. Quien se queda en el Mundo ya no recibe el salto diario al cargar; lo recibe al entrar desde el Camino.
+
+## Q5 · El golpe al oírse · 2.3.0-alpha.220
+
+Rama `panel11/q5-golpe-al-oirse`, sobre `panel11/q4-refugio-y-lugares` (informe de la sesión 11). Mizuguchi; Iwai para el toque. Incluye D10-B en el acierto.
+
+- La onda nace con su nota: se crea en el punto del toque y se dibuja, y empieza a alcanzar objetos, cuando su nota se oye (`cueDelay`, en el acierto y fuera de tiempo). Al tocar solo aparece la marca de la Línea. Sin sonido o con el audio suspendido, sale al momento.
+- El toque fuera de tiempo (y el pulso demasiado seguido) suena en la siguiente semicorchea ya programada a 20 ms o más (`touchSlot`, `touchSoon`), no en el siguiente paso aún sin programar. Comparte con la cola el límite de 4 voces por paso. Modelo a 96 BPM: mediana 98 ms y p95 167 ms (antes, 195 y 265).
+- En el Mundo libre, un toque quieto que no abre el escáner es pulso, dure lo que dure: de 450 a 500 ms ya no queda mudo.
+- D10-B: en el acierto, solo el marco del cubo y el «1» son dorados. La onda, la marca de la Línea y el arco del acierto (`hitFlash`) pasan a blanco.
+- No cambia: notas, voces, mezcla, la regla D2 del Mundo libre, el tic de la ronda, los cuadros del eco de la Cueva, el cubo (pequeño), mapas, semillas ni guardados.
+- Pruebas: `tests/touch-timing.mjs` (modelo del programador a 96 BPM: mediana ≤ 100 ms, p95 ≤ 180 ms, ≤ 4 voces por paso) y `tests/strike_heard_smoke.py` (latencia 0,25 s: la onda vence a ≤ 20 ms de su nota; tras un acierto, el único trazo dorado es el marco; toques de 100, 300, 470 y 600 ms dan pulso o escáner). `tests/journey-pulse.mjs` afirma ahora el arco blanco del acierto.
+- Límite: en Chromium sin pantalla el temporizador dispara la onda 2–60 ms tarde bajo carga, como el aterrizaje del cubo. Sin prueba en teléfono ni con personas.
+
+## Q4 · Refugio y Lugares legibles · 2.3.0-alpha.219
+
+Rama `panel11/q4-refugio-y-lugares`, sobre `panel11/q3-tu-cancion` (informe de la sesión 11). Wong, Nesbitt y Hodent.
+
+- Refugio: los rótulos de sala se miden con `measureText` y van tras la esquina de su sala, sin cruzar otro texto ni el marco. Si no caben enteros en la franja de la casa, no se dibujan (antes «RAÍZ» salía cortado en horizontal). La barra de pasos y la luz de cada sala quedan sobre su suelo; antes cruzaban el rótulo de la sala de abajo.
+- En vertical, la Voz va bajo el último rótulo de sala, en la franja libre antes del panel. Ya no tapa «Cielo». En horizontal sigue sobre el panel lateral.
+- «PRISMA» va encima del prisma, no sobre la línea del suelo.
+- Salas cerradas, Taller, Prisma y Núcleo a 4,5:1 o más (`#ffffff8c`; eran `#ffffff4d` y `#ffffff73`). Las salas abiertas, `#ffffffcc`.
+- Cada sala cerrada muestra solo la condición más cercana, con un número: «Cielo · faltan 3 lugares» (`roomNeed`: la menor parte que falta; empate, lugares). Tocarla dice lo mismo. La regla D3 no cambia: lugares o ★, lo que ocurra primero.
+- Lugares: «↑ N más arriba» cuando hay filas arriba. ★ a 17 px (cada ★ mide 12 px o más). «Ir» y «Seguir» de 72 px, en la línea del nombre.
+- Con logros sin leer, ☰ → Bitácora abre en Logros (2 toques). Si no, donde se dejó.
+- El mapa llena su caja: mínimo de 4 regiones por lado (eran 12) y margen fijo de 24 px. El círculo del origen no pasa de 12 px.
+- Se conserva lo de Q1: lugares en blanco y `#houseStars` dice «Lugares», sin número. Nuevo ID `#lugaresScrollUp`; los demás se conservan.
+- No cambia: cubo (tampoco el del Refugio), música, mapas, semillas, guardados, salas ni objetos.
+- Pruebas: `tests/refugio-legible.mjs` (la condición más cercana en todos los estados cerrados, un solo número, D3 igual) y `tests/refugio_legible_smoke.py` (teléfono, horizontal y escritorio: ningún texto cruza otro, la Voz ni el marco; rótulos ≥ 4,5:1; Llanura o «↑»; ★ ≥ 10 px; «Ir» y «Seguir» del mismo ancho a ±2 px del nombre; Bitácora en Logros; mapa ≥ 40 % de su caja). `favorites_smoke.py` comprueba que la Bitácora abre en Logros solo con logros sin leer; ese recorrido, `creative_smoke.py`, `glass_smoke.py`, `mirrors_smoke.py`, `encounter_depth_smoke.py` y `smoke.py` pasan a la pestaña Mapa antes de buscar en ella.
+
+## Q3 · Tu canción se ve crecer y se cierra · 2.3.0-alpha.218
+
+Rama `panel11/q3-tu-cancion`, sobre `panel11/q2-lo-que-cuenta` (informe de la sesión 11). Iwai, Simogo y Chen; Pope para el arco.
+
+- El aro de cada capa con ★ se llena en proporción a lo que suena, contado en sus golpes (`layerShare`): Lago a ★ 12/24, a 1,5 16/24, a 1,94 23/24. Sin cifra. Colchón y Eco ya suenan enteros con ★: su arco va cerrado.
+- ★, ★★ y ★★★ también por forma: arco sin relleno; aro relleno; aro relleno con un aro exterior fino. El color por saturación sigue.
+- Sin velo dorado fuera del final.
+- La tarjeta dice «Tu capa de Lago creció» solo si la ronda hizo crecer la capa (`layerGrew`, la misma regla que «crece» en `play-curve.mjs`).
+- Tras el final de once no vuelve la tarjeta. La ronda se conserva: ★ y récord en Lugares, logros en la Bitácora.
+- Créditos una vez de verdad: al mostrarlos se guarda `credited` (campo nuevo, `false` por defecto; se normaliza sin borrar nada). Un final repetido acaba en «Tu canción está completa».
+- El final de once (y la versión maestra) se cierra solo 7 s después de su último compás.
+- No cambia: notas, voces, arreglo, mezcla, umbrales, cubo ni ID de HTML. El final del Viaje sigue dibujando sus anillos como antes.
+- Pruebas: `tests/song-grows.mjs` (arco ≤ 1/16 de los golpes que suenan en las once capas, tres arcos distintos, forma por estrella, línea de crecimiento igual a «crece», `credited` en el guardado). Se actualizan `song-for-everyone.mjs`, `song_finale_flow_smoke.py` (sin tarjeta tras «Seguir»; el segundo final sin nombres y cerrado 5–10 s después del último compás), `result_clarity_smoke.py` y `song_stage_smoke.py` (Ruinas ★ sin relleno, ★★ relleno, sin velo).
+
+## Q2 · Lo que cuenta la ronda · 2.3.0-alpha.217
+
+Rama `panel11/q2-lo-que-cuenta`, sobre `panel11/q1-reglas-a-la-vista` (informe de la sesión 11). Matsuura; Mizuguchi para el reloj.
+
+- La Cueva cuenta el eco, no la corchea. El juego dice qué cuenta cada pulso (`counts`) antes de actuar: un paso del patrón es acierto; un paso equivocado, o fuera de tiempo en el compás de respuesta, es fallo; durante la llamada no cuenta. La gota dorada sigue contando y cierra la ronda.
+- La Cueva juzga con `heardTime` (el reloj calibrado). `journey-pulse.js` le pasa el momento oído del toque.
+- Los pulsos mientras el lugar canta su patrón no cuentan: desde el inicio de la ronda hasta el fin de sus dos compases, tal como se oyen (`rhythmDemo` en `journey-rhythm.js`). Vale también para los capítulos del Viaje. Sin sonido no se canta y todo cuenta, como antes.
+- Aviso: la Cueva será algo más difícil. Es lo justo: la tarjeta mide lo que el lugar pide.
+- No cambia: ventana de ±80 ms, umbrales, ★ ya ganadas, música, guardados.
+- Pruebas: `tests/round-counts.mjs` (un acierto y un eco equivocado dan 50 %; la llamada no suma; con calibración 0,15 se acepta el borde del compás de respuesta; doce toques durante los dos compases cantados dejan `run.total` a 0).
+
+## Q1 · Reglas a la vista · 2.3.0-alpha.216
+
+Rama `panel11/q1-reglas-a-la-vista`, sobre `claude/charming-darwin-dvbfc7` (informe de la sesión 11). Nesbitt y Hodent; Roset para el dorado. D10-B de Jay para ✦.
+
+- Dorado solo para lo ganado. Las cifras de lugares van en blanco: «Lugares 5 / 11», el estante del Refugio («★ N / 33», sin «LUGARES») y la línea de remezcla. «Explorar a pie» es un botón blanco. Las marcas de no leído de Bitácora, Menú y Tu cubo van en blanco. En el mapa, la marca del Refugio también. Las ★ bajo trofeos y portales siguen doradas.
+- ✦ sigue dorada, pero ya no es mayor que ★: las tres cifras del HUD miden 11 px, peso 500. Sin hueco cuando `#sparkGain` está vacío; las tres acaban en la misma x.
+- Una cifra por concepto: `#houseStars` dice «Lugares», sin número (conserva su ID). Una palabra por cuenta: el mapa dice «portales abiertos» y «tu Refugio».
+- «Vista tranquila»: título y subtítulo dicen el estado. El subtítulo nombra Tu cubo, cifras y herramientas.
+- Un mensaje al salir del Viaje: fuera «Se abre el Mundo libre.». «Prólogo» va a la Bitácora sin aviso. El final aterriza en el Refugio sin la voz de primera visita (se oye en la primera visita real). Hasta el primer portal, un color o una pieza ganados esperan en Tu cubo sin aviso.
+- No cambia: música, cubo, mapas, guardados, umbrales ni el dorado de los objetos de juego, del cielo del final ni de los títulos de cierre.
+- Pruebas: `tests/rules-in-sight.mjs` y `tests/rules_in_sight_smoke.py` (sin píxel dorado fuera de ★/✦ en Lugares, Refugio y mapa; HUD alineado). Se actualizan `journey-finale.mjs`, `journey_finale_smoke.py` (ningún aviso entre «Tu mundo se abrió» y el primer toque) y `refugio_lugares_smoke.py`; `crystal_play_smoke.py` y `entry_jump_smoke.py` piden ahora ✦ al tamaño de ★ (antes ≥ 14 px). Auditoría, `npm test` y 49 recorridos de navegador aprobados. `verify-e-preservation` señala `achievements.js` y `celebration.js` (solo avisos). Cabeceras de `docs/VIAJE.md` y `docs/MUNDO.md` en alpha.216.
+
+- Arreglo en el PR de Q1–Q6: los avisos de descubrimiento («Vida», «Forma nueva», «Familia nueva», «Reliquia», «Récord») también callan desde «Tu mundo se abrió» hasta el primer portal; lo encontrado se guarda igual (`src/discovery.js`).
+
+## Sesión 11 del panel · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`. Petición de Jay: revisar de nuevo con puntuación.
+
+- Doce perfiles sobre alpha.215: puntuación ciega y después contraste con la sesión 10. [Informe](docs/panel/sesion-11/informe.md), [expediente](docs/panel/sesion-11/expediente.md) y doce análisis en `docs/panel/sesion-11/`.
+- Media 6,7, Menús 7, Detalle visual 5,5. Plan Q1–Q7 y decisiones D7–D11. No cambia el juego.
+- Capturas de menús adaptadas al menú de P2 (`docs/panel/sesion-11/evidencia/capturas-menus.py`).
+
+## Verificador de preservación tras P3–P8 · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`, sobre `main` (`5464612`). Petición de Jay.
+
+- `scripts/verify-e-preservation.mjs` añade una segunda referencia: `main` tras P8 (`5464612`, PR #357 y #358 con CI completo). Los 56 archivos protegidos que cambiaron P3–P8 y los contratos del final de once, el final del Viaje, el Jardín, la ronda y el paso del final se comparan con ella byte a byte. El resto sigue comparándose con la base E.
+- No abre ningún archivo nuevo a cambios: la lista permitida no crece. Revisado antes de fijarlo: en los módulos de sonido, P5 solo movió las luces a la nota oída y añadió el pulso suave aprobado; notas y síntesis no cambian.
+- Pruebas: el verificador pasa (301 archivos, 13 contratos) y falla al tocar un archivo fijado (`interactions.js`) o una nota del final (`song-stage.js`). Auditoría y `npm test` aprobados. Sin navegador ni audio: no cambia el juego.
 
 ## P8 · Menos contadores · 2.3.0-alpha.215
 

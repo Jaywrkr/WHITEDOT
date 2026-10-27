@@ -53,7 +53,8 @@ try:
    assert p.evaluate("document.activeElement.tagName")=='H2' and p.evaluate("!document.activeElement.matches('button')")
    p.locator('#songClose').click()
    # The result sheet: equal heights in each line; «Seguir» alone on its own line.
-   p.evaluate("""()=>{const r=__r;r.startPlace?.('lago');for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}""")
+   p.evaluate("()=>__r.startPlace?.('lago')");p.wait_for_function('!__r.rhythmDemo()',timeout=15000)  # Panel 11 (Q2): the round counts after the place sings.
+   p.evaluate("""()=>{const r=__r;for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}""")
    p.wait_for_function("!document.getElementById('mPlace').hidden");p.wait_for_timeout(200)
    assert max(p.evaluate(ROWS,'#mPlace .row'))<=1,(w,h,'result buttons differ in height')
    if p.locator('#placeNext').is_visible():

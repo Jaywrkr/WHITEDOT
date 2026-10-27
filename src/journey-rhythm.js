@@ -49,15 +49,19 @@ export function initialize(runtime){
  // Since plan H2 the Line is the one guide (journey-pulse.js draws the counted steps on it): no dots under the cube,
  // and no line of text. When a round or a chapter with a rhythm starts, the place sings its pattern for two bars from
  // the next «1» before asking for it: a click and a note on each step it counts, the Line glowing with it.
- let singing=null,singKey=null,sung=[];
+ let singing=null,singKey=null,sung=[],demoEnd=null;
  function guide(){const r=active(),id=runtime.placeRun?.()?.id||runtime.journeyChapter?.()?.id,key=r&&r.key!=='eco'?`${id}:${r.key}:${runtime.placeRun?.()?.startedAt||''}`:null;
-  if(key!==singKey){singKey=key;sung=[];singing=key?{steps:r.steps,bars:SING_BARS,start:null,played:0,last:null}:null;}}
- function sing(s,t){if(!singing)return;if(singing.start===null){if(s!==0)return;singing.start=t;}const k=Math.round((t-singing.start)/(runtime.SIX||.15));if(k<0)return;if(k>=singing.bars*16){singing=null;return;}
+  if(key!==singKey){singKey=key;sung=[];demoEnd=null;singing=key?{steps:r.steps,bars:SING_BARS,start:null,played:0,last:null}:null;}}
+ function sing(s,t){if(!singing)return;if(singing.start===null){if(s!==0)return;singing.start=t;}const k=Math.round((t-singing.start)/(runtime.SIX||.15));if(k<0)return;if(k>=singing.bars*16){demoEnd=singing.start+singing.bars*16*(runtime.SIX||.15);singing=null;return;}
   if(!singing.steps.includes(k%16)||!runtime.S.sound)return;singing.played++;singing.last={step:k%16,at:t};sung.push(singing.last);if(sung.length>32)sung.shift();runtime.hatHit?.(t,k%16===0?.14:.09);const ct=runtime.chordTones?.()||[60,64,67];let m=ct[0]+24+(k%16===0?0:7);while(m>88)m-=12;runtime.pluck?.(m,t,k%16===0?.07:.05,2);}
  // The step being sung now and how long ago, for the Line.
  function singingNow(){guide();const ac=runtime.ac;if(!ac||!runtime.S.sound)return null;const now=audibleTime(ac),last=sung.findLast(e=>e.at<=now);if(!last)return null;const age=(now-last.at)/((runtime.SIX||.15)*2);return age>=0&&age<1?{step:last.step,age}:null;}
+ // Panel 11 (Q2, Matsuura): while the place sings its pattern (from the start of the round until its two bars end, as
+ // heard) a pulse is not counted by the round; the place is showing, not asking. With the sound off, or the audio not
+ // running yet, nothing is sung.
+ function demo(){guide();const ac=runtime.ac;if(!runtime.S.sound||!ac||ac.state&&ac.state!=='running')return false;if(singing)return true;return demoEnd!==null&&audibleTime(ac)<demoEnd;}
  // journey-pulse.js tells which step a pulse on time answered, for the ring on its dot.
  function hit(step){if(Number.isFinite(step))lastHit={step:Math.round(step)%16,at:performance.now()};}
- Object.defineProperties(runtime,{journeyRhythm:{get:()=>active},journeyRhythmTarget:{get:()=>target},drawRhythmGuide:{get:()=>guide},rhythmMusicStep:{get:()=>sing},rhythmSinging:{get:()=>singingNow},journeyRhythmHit:{get:()=>hit},journeyRhythmGap:{get:()=>gap},
+ Object.defineProperties(runtime,{journeyRhythm:{get:()=>active},journeyRhythmTarget:{get:()=>target},drawRhythmGuide:{get:()=>guide},rhythmMusicStep:{get:()=>sing},rhythmSinging:{get:()=>singingNow},rhythmDemo:{get:()=>demo},journeyRhythmHit:{get:()=>hit},journeyRhythmGap:{get:()=>gap},
   journeyRhythmState:{get:()=>()=>{const r=active();return {rhythm:r?.key||null,steps:r?[...r.steps]:null,guide:!!r&&r.guide!==false,step:stepNow(),lastHit:lastHit?{...lastHit}:null,singing:singing?{bars:singing.bars,played:singing.played,started:singing.start!==null}:null};}}});
 }

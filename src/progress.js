@@ -45,8 +45,10 @@ export function initialize(runtime) {
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
   const isFree=()=>S.todayLight>=runtime.CAP;
-  // Break ten Camino crystals to open today's world.
-  const worldReady=()=>(S.pathCrystals?.length||0)>=10;
+  // Break ten Camino crystals to open the World. Panel 11 (Q6, D7-C): whoever opened it once keeps it open on later days.
+  // `lastWorldDay` and the «mundo» achievement are both written by enterWorld and never cleared, so either one proves it.
+  const worldOpened=()=>!!S.lastWorldDay||!!S.ach?.mundo;
+  const worldReady=()=>(S.pathCrystals?.length||0)>=10||worldOpened();
   const inWorld=()=>S.mode==="world";
   function shownStreak(){if(!S.lastDay)return 0;const d=diffDays(S.lastDay,S.todayKey);return d<=1?S.streak:0;}
   function displayDay(){return S.lastDay===S.todayKey?S.totalDays:S.totalDays+1;}
@@ -61,9 +63,10 @@ export function initialize(runtime) {
   function checkDay(startup=false){
     const k=dayKey();
     if(S.todayKey!==k){S.todayKey=k;S.pathCrystals=[];S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();wchunks.clear();
-      if(inWorld()&&startup)runtime.exitWorld(false);
-      else if(inWorld()){ /* Never interrupt an ongoing musical session at midnight; only tell the player the day changed. */ runtime.toast?.('Nuevo día. Los cristales vuelven a brillar.'); }
-      else if(S.mode==="studio")S.prevMode="camino";
+      // D7-C: the new day no longer takes anyone out of the World, in the Journey or free. The Camino's crystals come back
+      // as a walk (they still pay ✦). Marking today as a World day keeps the player where they were: no daily arrival.
+      if(inWorld()){S.lastWorldDay=k;if(!startup){ /* Never interrupt an ongoing musical session at midnight; only tell the player the day changed. */ runtime.toast?.('Nuevo día. Los cristales vuelven a brillar.'); }}
+      else if(S.mode==="studio"){if(S.prevMode==="world")S.lastWorldDay=k;else S.prevMode="camino";}
       else runtime.setBiome(0);
       document.getElementById("mCap").hidden=true;document.getElementById("mOut").hidden=true;document.getElementById("mHelpW").hidden=true;
       save();}
@@ -99,6 +102,7 @@ export function initialize(runtime) {
     clamp: { get: () => clamp },
     isFree: { get: () => isFree },
     worldReady: { get: () => worldReady },
+    worldOpened: { get: () => worldOpened },
     inWorld: { get: () => inWorld },
     shownStreak: { get: () => shownStreak },
     displayDay: { get: () => displayDay },

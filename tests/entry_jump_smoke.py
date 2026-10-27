@@ -40,7 +40,7 @@ try:
    page.mouse.click(25,height/2);page.wait_for_function('__r.S.sparks===20')
    page.locator('#bJump').wait_for(state='visible')
    assert page.locator('#bJump').is_enabled()
-   assert page.locator('#sparkTotal').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=14
+   assert page.locator('#sparkTotal').evaluate("e=>{const t=document.querySelector('.hud-tally'),f=parseFloat(getComputedStyle(e).fontSize);return f>=11&&f===parseFloat(getComputedStyle(t).fontSize);}"),'panel 11 (Q1, D10-B): ✦ legible, at the size of ★'
    assert page.locator('#sparkTotal').evaluate('e=>getComputedStyle(e).color')=='rgb(240, 210, 122)'
    assert page.locator('#bJump').evaluate('e=>e.parentElement.id')=='dock'
    rect=page.locator('#bJump').bounding_box()

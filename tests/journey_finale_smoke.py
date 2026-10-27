@@ -40,6 +40,8 @@ try:
    page.wait_for_function("__r.journeyFinaleState().credits",timeout=40000);assert 'Tu mundo se abrió' in page.inner_text('#journeyFinale') and 'Kubono' not in page.inner_text('#journeyFinale'),'P6 (D5-C): only «Tu mundo se abrió»; the credits come at the eleven'
    assert page.locator('#journeyExplore').is_visible(),'Explorar opens the World at once'
    if os.environ.get('FINALE_SHOT'):page.wait_for_timeout(3000);page.screenshot(path=os.environ['FINALE_SHOT'].replace('.png',f'-end-{width}.png'))
+   # Panel 11 (Q1): one message on leaving the Journey. From «Tu mundo se abrió» to the first touch no text notice shows.
+   page.evaluate("()=>{window.__notes=[];window.__noteClock=setInterval(()=>{for(const id of ['toast','phrase','voice','zone']){const e=document.getElementById(id),s=e&&getComputedStyle(e);if(e&&e.textContent.trim()&&e.getClientRects().length&&s.visibility!=='hidden'&&Number(s.opacity)>.05)__notes.push(id+': '+e.textContent.trim());}},100);}")
    page.locator('#journeyExplore').click()
    page.wait_for_function("!__r.journeyFinaleState().running",timeout=15000);assert not page.is_visible('#journeyFinale')
    assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
@@ -50,6 +52,7 @@ try:
    page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000);assert page.evaluate('__r.ringRoute().id')=='jardin'
    # And the sparks earned on the way: Tu cubo is marked, without a notice (plan I1: no text before the first portal).
    page.wait_for_function("document.getElementById('bCube').classList.contains('has-new')",timeout=30000);page.wait_for_timeout(3000);assert 'Tu cubo' not in page.evaluate("document.getElementById('toast').textContent");assert page.evaluate("document.getElementById('bCube').classList.contains('has-new')") and page.evaluate('__r.S.journey.sparksHint')==True
+   notes=page.evaluate("clearInterval(__noteClock),[...new Set(__notes)]");assert not notes,('no notice between the credits and the first touch',notes)
    page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();page.wait_for_function("!document.getElementById('bMenu').classList.contains('has-new')")
    page.reload();page.wait_for_function('!!window.__r?.journeyFinale');assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
    assert not page.evaluate("document.body.classList.contains('journey-quiet')")

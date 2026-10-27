@@ -8,6 +8,12 @@ export const LEGACY_ROOMS=Object.freeze({sala:{days:0,found:0},jardin:{days:3,fo
 export const HOUSE_ROOM_RULE=2;
 export const legacyRoomsOpen=(days=0,found=0)=>HOUSE_ROOMS.filter(r=>LEGACY_ROOMS[r.id].days<=days||LEGACY_ROOMS[r.id].found<=found).map(r=>r.id);
 export const roomAsks=r=>r.places+' lugares o '+r.stars+' ★';
+// Panel 11 (Q4): a closed room's label shows only the nearer of its two conditions, with one number. The rule (D3) is the
+// same: places or ★, whichever comes first. «Nearer» is the smaller share still missing (3 of 8 places beats 10 of 15 ★);
+// a tie goes to places.
+export function roomNeed(r,{places=0,stars=0}={}){const p=Math.max(0,r.places-places),s=Math.max(0,r.stars-stars);if(!p||!s)return {kind:p?'stars':'places',left:0};
+ return p/r.places<=s/r.stars?{kind:'places',left:p}:{kind:'stars',left:s};}
+export const roomNeedText=(r,progress)=>{const n=roomNeed(r,progress),one=n.left===1;return n.left?(one?'falta 1 ':'faltan '+n.left+' ')+(n.kind==='places'?(one?'lugar':'lugares'):'★'):'abierta';};
 const biomes=['llanura','bosque','lago','dunas','cristales','jardin','ruinas','cueva','tormenta','faros','vacio'];
 export const HOUSE_OBJECTS=Object.freeze([
  {id:'obj:origen',name:'Pulso de casa',source:'cube:color:ffffff',instrument:'sub',role:'bajo',shape:'square'},

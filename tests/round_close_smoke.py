@@ -6,6 +6,11 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import os,random,shutil,threading
+# CI gives each flow 145 s and every round now waits for the place to sing (Q2): the flow runs in two halves.
+# ROUND_CLOSE_PART=a (default) plays rounds 0–4; =b rounds 5–9, the Lago card and the ring (round_close_b_smoke.py);
+# =all everything.
+PART=os.environ.get('ROUND_CLOSE_PART','a')
+want=lambda n:PART=='all' or (n<5)==(PART=='a')
 ROOT=Path(__file__).resolve().parents[1]
 class H(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
@@ -24,6 +29,8 @@ try:
   rng=random.Random(10)
   for n in range(10):
    total=rng.randint(40,160);share=rng.uniform(.6,.9);hits=[rng.random()<share for _ in range(total)]
+   if not want(n):continue
+   p.wait_for_function('!__r.rhythmDemo()',timeout=15000)  # Panel 11 (Q2): the round counts after the place sings.
    p.evaluate('''hits=>{for(const on of hits)__r.placeHear('jardin',on,{});}''',hits)
    tick=p.evaluate('__r.roundTick()')
    p.evaluate(WATCH)
@@ -43,31 +50,34 @@ try:
   # What the rounds earned waits in the Bitácora.
   assert p.evaluate("document.getElementById('bAch').classList.contains('has-unread')")
   # The live tick is drawn: dark at the start of a round, gold once the share passes 75 %.
+  p.wait_for_function('!__r.rhythmDemo()',timeout=15000)  # Panel 11 (Q2): the round counts after the place sings.
   p.evaluate("()=>{for(let i=0;i<8;i++)__r.placeHear('jardin',true,{});}");assert p.evaluate('__r.roundTick().lit')
   assert not errors,errors;p.close()
-  # The near-miss card of the Lago: the exact gap, no achievement line, «Otra vez» beside «Seguir hacia».
-  p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
-  p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
-  p.goto(f'http://127.0.0.1:{srv.server_port}/?lugar=lago');p.wait_for_function('__r?.placeRun()?.id==="lago"',timeout=20000)
-  p.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.sound=true;r.audio();r.S.lugares.stars.lago=[true,false,false];for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});r.placeFinish('lago');}")
-  p.wait_for_function('!document.getElementById("mPlace").hidden',timeout=15000)
-  rows=p.inner_text('#placeRows');assert 'A 0,4 de ★★' in rows and 'logro' not in rows.lower(),rows
-  a,nx=[p.locator(s).bounding_box() for s in ('#placeAgain','#placeNext')];assert abs(a['y']-nx['y'])<=2 and p.inner_text('#placeNext').startswith('Seguir hacia'),(a,nx)
-  assert not errors,errors;p.close()
-  # After the victory: the objective and the column point to the place without ★★ with the best share; 33 ★, explore.
-  p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
-  p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
-  p.goto(f'http://127.0.0.1:{srv.server_port}/?anillo=1');p.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000)
-  p.evaluate("()=>{const d=__r.placesData();for(const id of Object.keys(d.stars))d.stars[id]=[true,false,false];d.best.lago={onTime:.746,ms:60000,rounds:1};d.best.faros={onTime:.5,ms:60000,rounds:1};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
-  assert p.evaluate('__r.ringState().next')=='lago',p.evaluate('__r.ringState()')
-  p.evaluate("document.getElementById('bMenu').click()");p.wait_for_timeout(200)
-  line=p.evaluate("document.querySelector('#bLugares small')?.textContent||''");assert 'Lago' in line and '74,6' in line,line
-  assert p.inner_text('#bContinue')=='Seguir hacia Lago',p.inner_text('#bContinue')
-  p.evaluate("()=>{const d=__r.placesData();for(const id of Object.keys(d.stars))d.stars[id]=[true,true,true];document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
-  assert p.evaluate('__r.ringState().next') is None
-  p.evaluate("document.getElementById('bMenu').click()");p.wait_for_timeout(200)
-  line=p.evaluate("document.querySelector('#bLugares small')?.textContent||''");assert 'Explora a tu ritmo' in line,line
-  assert not errors,errors;p.close()
+  if PART in ('b','all'):
+   # The near-miss card of the Lago: the exact gap, no achievement line, «Otra vez» beside «Seguir hacia».
+   p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
+   p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
+   p.goto(f'http://127.0.0.1:{srv.server_port}/?lugar=lago');p.wait_for_function('__r?.placeRun()?.id==="lago"',timeout=20000)
+   p.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.sound=true;r.audio();r.S.lugares.stars.lago=[true,false,false];}");p.wait_for_function("__r.ac?.state==='running'&&!__r.rhythmDemo()",timeout=20000)
+   p.evaluate("()=>{const r=__r;for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});r.placeFinish('lago');}")
+   p.wait_for_function('!document.getElementById("mPlace").hidden',timeout=15000)
+   rows=p.inner_text('#placeRows');assert 'A 0,4 de ★★' in rows and 'logro' not in rows.lower(),rows
+   a,nx=[p.locator(s).bounding_box() for s in ('#placeAgain','#placeNext')];assert abs(a['y']-nx['y'])<=2 and p.inner_text('#placeNext').startswith('Seguir hacia'),(a,nx)
+   assert not errors,errors;p.close()
+   # After the victory: the objective and the column point to the place without ★★ with the best share; 33 ★, explore.
+   p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
+   p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
+   p.goto(f'http://127.0.0.1:{srv.server_port}/?anillo=1');p.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000)
+   p.evaluate("()=>{const d=__r.placesData();for(const id of Object.keys(d.stars))d.stars[id]=[true,false,false];d.best.lago={onTime:.746,ms:60000,rounds:1};d.best.faros={onTime:.5,ms:60000,rounds:1};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
+   assert p.evaluate('__r.ringState().next')=='lago',p.evaluate('__r.ringState()')
+   p.evaluate("document.getElementById('bMenu').click()");p.wait_for_timeout(200)
+   line=p.evaluate("document.querySelector('#bLugares small')?.textContent||''");assert 'Lago' in line and '74,6' in line,line
+   assert p.inner_text('#bContinue')=='Seguir hacia Lago',p.inner_text('#bContinue')
+   p.evaluate("()=>{const d=__r.placesData();for(const id of Object.keys(d.stars))d.stars[id]=[true,true,true];document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
+   assert p.evaluate('__r.ringState().next') is None
+   p.evaluate("document.getElementById('bMenu').click()");p.wait_for_timeout(200)
+   line=p.evaluate("document.querySelector('#bLugares small')?.textContent||''");assert 'Explora a tu ritmo' in line,line
+   assert not errors,errors;p.close()
   b.close()
- print('PASS round close: card after the heard drop in 10 Jardín rounds, live tick = card, no achievement line, near ★★ gap with «Otra vez» beside «Seguir hacia», objective and column after the victory, explore with 33 ★')
+ print(f'PASS [{PART}] round close: card after the heard drop in 10 Jardín rounds, live tick = card, no achievement line, near ★★ gap with «Otra vez» beside «Seguir hacia», objective and column after the victory, explore with 33 ★')
 finally:srv.shutdown()

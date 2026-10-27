@@ -107,16 +107,18 @@ export function initialize(runtime){
   if(hx>=WORKBENCH.x0&&hx<=WORKBENCH.x1&&hy>=WORKBENCH.top&&hy<=WORKBENCH.bottom&&at(WORKBENCH.x0-40,WORKBENCH.x1+40)){if(h.readOnly||runtime.houseVisiting?.())return false;
    if(h.workbench!==true){h.workbench=true;runtime.save();}runtime.houseOpenWorkshop?.();return true;}
   return false;}
- function draw(c,{toScreen,k,t,calm:still,house,cube,night=0}){
+ function draw(c,{toScreen,k,t,calm:still,house,cube,night=0,note}){
   c.save();c.globalAlpha=1;
   for(const d of house.decor||[]){const p=CAPSULE_DECOR.find(q=>q.id===d.id),b=roomBox(d.room);if(!p||!b||!(house.unlocked||[]).includes(d.room))continue;const w=wallPoint(b,d.x,d.y),s=toScreen(w.x,w.y);c.save();c.translate(Math.round(s.x),Math.round(s.y));drawDecor(c,p.shape,Math.max(10,26*k),t,{night,calm:still});c.restore();}
-  const now=performance.now(),spin=Math.max(0,1-(now-spinAt)/900),armed=now-armedAt<4000,label=(text,x,y,on)=>{c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='center';c.fillStyle=on?'#ffffff':'#ffffff73';c.fillText(text,x,y);c.textAlign='start';c.letterSpacing='0px';};
+  const now=performance.now(),spin=Math.max(0,1-(now-spinAt)/900),armed=now-armedAt<4000,label=(text,x,y,on)=>{c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='center';c.fillStyle=on?'#ffffff':'#ffffff8c';c.fillText(text,x,y);note?.(c,text,x,y,'center');c.textAlign='start';c.letterSpacing='0px';};
+  // Panel 11 (Q4): labels at 4.5:1 or more on black (#ffffff8c ≈ 6:1; it was #ffffff73 ≈ 4.4:1).
   // The Prism: a slowly turning triangular prism with sparks inside; it spins when it gives something.
   {const p=toScreen(MACHINE.x,MACHINE.floor-36),sz=24*k,a=(still?0:t/2400)+spin*9,near=cube?.floor===1&&Math.abs(cube.x-MACHINE.x)<40,pts=[0,1,2].map(i=>[Math.cos(a+i*2.094)*sz,Math.sin(a+i*2.094)*sz*.35]);
    c.strokeStyle='#ffffff';c.globalAlpha=armed?1:.75;for(const yy of [-sz,sz*.6]){c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(p.x+x,p.y+yy+y):c.moveTo(p.x+x,p.y+yy+y));c.closePath();c.stroke();}pts.forEach(([x,y])=>{c.beginPath();c.moveTo(p.x+x,p.y-sz+y);c.lineTo(p.x+x,p.y+sz*.6+y);c.stroke();});
    CAPSULE_TINTS.slice(0,5).forEach((col,i)=>{c.fillStyle=col;c.fillRect(Math.round(p.x+Math.cos(a*2+i*1.3)*sz*.4-1.5),Math.round(p.y-sz*.2+Math.sin(a*3+i)*sz*.4-1.5),3,3);});
    if(spin>0&&last&&!still){c.fillStyle=last.type==='tint'?last.color:'#f0d27a';c.globalAlpha=spin;c.fillRect(Math.round(p.x-2),Math.round(p.y-sz-(1-spin)*60*k),4,4);}
-   c.globalAlpha=1;label(near?'PRISMA · '+CAPSULE_PRICE+' ✦':'PRISMA',p.x,p.y+sz*1.4,near||armed);}
+   // Panel 11 (Q4): its name stands above the prism, clear of the floor line (it used to sit on it).
+   c.globalAlpha=1;label(near?'PRISMA · '+CAPSULE_PRICE+' ✦':'PRISMA',p.x,p.y-sz*1.35-6,near||armed);}
   // The Taller: its own radial disc, floating in Eco, with the current step lit in white (panel 10, P7: gold only for
   // what is earned; «near» and «armed» are states, in white).
   {const p=toScreen((WORKBENCH.x0+WORKBENCH.x1)/2,474),r=34*k,near=cube?.floor===1&&cube.x>=WORKBENCH.x0-40&&cube.x<=WORKBENCH.x1+40,step=Math.floor((runtime.MU?.step??t/125))%16;c.strokeStyle='#ffffff';

@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-**Vigente: [sesión 10](panel/sesion-10/informe.md), 26 de octubre, alpha.207 en `main`.** Doce perfiles con memoria borrada; media 6,7; plan P1–P8 (ramas `panel10/…`) y decisiones D1–D6 pendientes de Jay. Lo de abajo es el método y el historial.
+**Vigente: [sesión 11](panel/sesion-11/informe.md), 26 de octubre, alpha.215 en `main` tras P1–P8.** Doce perfiles; puntuación ciega y después contraste con la sesión 10; media 6,7 (no comparable directa: nueve abstenciones en Audio y seis en Sensación); plan Q1–Q7 (ramas `panel11/…`) y decisiones D7–D11 pendientes de Jay. Lo de abajo es el método y el historial.
 
 Guía para repetir la auditoría. **Candidato vigente: [E, alpha.207](panel/candidato-e/informe.md), con revisión final y aceptación humana pendiente.** La [sesión9, alpha.200 integrada](panel/sesion-9/informe.md) conserva su7,6 provisional como referencia histórica. [Candidato técnico N](panel/candidato-n/informe.md). Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Diez por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
 
@@ -199,3 +199,8 @@ Durante una evaluación ciega, el coordinador retiene el contexto operativo. A l
 
 Media **6,7** (Visual 6,9 · Audio 7,0 · Creatividad 7,5 · Sensación 6,2 · Cohesión 6,4 · Pulido 6,5); Menús 5,5; Detalle visual 5,5. No se compara con sesiones anteriores. Plan P1–P8, cada fase en `panel10/pN-…`; P6–P8 esperan las decisiones D1–D6 de Jay.
 
+## Undécima sesión · después de P1–P8
+
+[Informe de Pope](panel/sesion-11/informe.md) · [expediente](panel/sesion-11/expediente.md) · doce análisis en `panel/sesion-11/`. Cada perfil puntuó a ciegas y después contrastó con su análisis de la sesión 10 sin cambiar las notas. Material: 21 capturas estándar y 50 de menús de alpha.215 ([script](panel/sesion-11/evidencia/capturas-menus.py)); sin escucha ni personas.
+
+Media **6,7** (Visual 7,0 · Audio 6,3 con tres notas · Creatividad 7,5 · Sensación 6,3 con seis · Cohesión 6,6 · Pulido 6,5); Menús 7; Detalle visual 5,5. Con los mismos perfiles que puntuaron en ambas sesiones, cinco ejes suben un poco y Audio baja. Plan Q1–Q7, cada fase en `panel11/qN-…`; Q6 y Q7 esperan las decisiones D7–D11 de Jay.

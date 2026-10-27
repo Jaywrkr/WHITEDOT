@@ -1,12 +1,12 @@
 # El Viaje · diseño vigente
 
-Candidato **alpha.207**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
+Candidato **alpha.216**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
 
 ## Recorrido
 
 | Etapa | Qué se aprende |
 |---|---|
-| Camino | Acercarse, mover el cubo, pulsar y recoger diez luces |
+| Camino | Acercarse, mover el cubo, pulsar y recoger diez luces. Solo abre el Mundo la primera vez (D7-C) |
 | Llanura | Pegar elementos cercanos |
 | Lago | Encadenar flores |
 | Bosque | Rodear y cerrar una vuelta |
@@ -20,7 +20,7 @@ La duración objetivo es15–20min, pendiente de sesiones reales. Las antiguas t
 
 ## Ritmo y frase propia
 
-El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos y las rondas de lugar, tocar en cualquier punto del lienzo es el pulso y suena al apoyar el dedo (D2-A, panel 10, P6); si el dedo se arrastra, el cubo camina, y si descansa, se abre el escáner. En el Mundo libre el cubo suena al apoyar y el vacío al soltar. La guía dice «Toca al ritmo. Arrastra para moverte.». Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
+El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos y las rondas de lugar, tocar en cualquier punto del lienzo es el pulso y suena al apoyar el dedo (D2-A, panel 10, P6); si el dedo se arrastra, el cubo camina, y si descansa, se abre el escáner. En el Universo abierto también suena al apoyar (panel 11, Q6, D11-B): un solo gesto en todo el juego; mantener 500 ms abre el escáner y arrastrar camina. Solo el modo dedo de las pruebas (`?dedo`) juzga el vacío al soltar, para sus gestos sobre objetos; ahí un toque quieto que no abre el escáner es pulso, dure lo que dure (Q5). La guía dice «Toca al ritmo. Arrastra para moverte.». Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
 
 `journey-pulse.js` define el tema en grados `[0,1,4,3,2,0]`, con duraciones `[3,1,4,2,2,4]` en corcheas. La voz depende del contexto musical; no hay un instrumento separado de premio. La ventana base es±80ms y Maestro la estrecha. No fijar un único tempo para todo el universo.
 
@@ -29,8 +29,10 @@ El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos
 El golpe se ve junto al cubo (panel 10, P3). Un anillo de 1 px se cierra sobre el cubo en los cuatro pasos previos a cada paso que cuenta, con el mismo `approach` y el mismo reloj que la Línea; es dorado en el «1». No cambia el tamaño del cubo; con movimiento reducido no se mueve, solo se ilumina. El dedo fantasma es un anillo de 1 px con punto de 3 px junto al cubo (caja de 14×14, centro a ≤ 30 px). Marca los pasos del lugar (`journeyRhythmState().steps`) en tiempo audible. La Línea tiene base de alfa .38 sobre una franja negra y el «1» dorado cuando cuenta. Las marcas de capítulo miden 4 px y solo se ven dentro de un capítulo. Las chispas doradas vuelan a la posición real de `#bar` (`barTarget` en `journey-games.js`).
 
 Un solo reloj (panel 10, P5). Toda luz que acompaña a una nota espera a que se oiga: `cueDelay`, `audibleTime` o `scheduleAudibleCue` (`journey-pulse.js`). El retraso visual es la latencia de salida más el ajuste medido por la calibración (`latencyNudge`), nunca negativo. Así se mueven juntos la Línea, el anillo, el dedo fantasma, el aterrizaje del acierto y las luces del Mundo. El juicio no cambia (±80 ms, `heardTime`).
-Un golpe, una imagen: el acierto golpea el cubo una vez, al oírse (`cubeKick`); cualquier otro pulso lo engorda cuando suena su nota cuantizada, no al tocar. La onda sigue saliendo al tocar: es la marca del toque y su alcance en el Mundo.
-Ningún toque mudo: un pulso demasiado seguido (240 ms; dos tercios de corchea en ritmos de corcheas, `journey-rhythm.js`) no se juzga, deja la marca gris y suena con la misma voz al 45 % en la siguiente semicorchea. La cola de la música toca como mucho 4 por paso; con más de 8 pendientes (un dedo desbocado) el resto se descarta.
+Un golpe, una imagen: el acierto golpea el cubo una vez, al oírse (`cubeKick`); cualquier otro pulso lo engorda cuando suena su nota cuantizada, no al tocar. La onda nace con su nota (panel 11, Q5): se crea en el punto del toque y se dibuja, y empieza a alcanzar objetos, cuando su nota se oye (`cueDelay`). Esa espera no caduca: la onda juega. Al tocar solo aparece la marca de la Línea.
+El toque fuera de tiempo suena en la siguiente semicorchea ya programada a 20 ms o más (`touchSlot`, `touchSoon` en `audio.js`), no en el siguiente paso aún sin programar. Comparte el límite de 4 voces por paso con la cola. Si no hay paso libre, espera en la cola como antes. Modelo a 96 BPM: del toque a la nota, mediana 98 ms y p95 167 ms (antes, 195 y 265). Notas, voces y mezcla no cambian; solo se adelanta el momento.
+Un oro por golpe (D10-B): en el acierto solo son dorados el marco del cubo y el «1» (del anillo y de la Línea). La onda, la marca de la Línea y el arco del acierto (`hitFlash`) son blancos. El tic de la ronda y los cuadros del eco en la Cueva no cambian.
+Ningún toque mudo: un pulso demasiado seguido (240 ms; dos tercios de corchea en ritmos de corcheas, `journey-rhythm.js`) no se juzga, deja la marca gris y suena con la misma voz al 45 % en la siguiente semicorchea a 20 ms o más. Cada paso toca como mucho 4 de la cola y de estos toques; con más de 8 pendientes (un dedo desbocado) el resto se descarta.
 
 ## Presentación y ayuda
 
@@ -46,7 +48,7 @@ La aportación personal se guarda de forma aditiva y compatible: notas históric
 
 `journey-finale.js` reconstruye tus frases y el tema con voces suaves existentes, armonizadas al contexto. Su partitura abstracta y el arreglo audible son capas distintas; leer la partitura sola no demuestra cómo suena.
 
-El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. No llevan al jugador al Refugio como destino obligatorio.
+El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. **Explorar a pie** es un botón blanco. Después del cierre no sale ningún aviso de texto; «Prólogo» va a la Bitácora sin aviso (panel 11, Q1). No llevan al jugador al Refugio como destino obligatorio.
 
 Guardar el cierre debe funcionar antes de darlo por terminado. Una falla deja posibilidad de reintento. La configuración musical actual se conserva; reconocimiento y emoción requieren escucha real.
 

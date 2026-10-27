@@ -3,7 +3,8 @@ import {PORTAL_NOTES} from './places-ring.js';
 import {roomBox} from './house-view.js';
 // The Refugio as the centre (plan F6, docs/MUNDO.md): it says what you have, what is missing and where to go.
 // In the Sala, a shelf of eleven trophies: each place's gold thing once it has its ★, an empty socket before. Above it,
-// the wall of stars (★ N / 33). In the house bar, «★ N / 33» opens Lugares: the map table (every place with its stars,
+// the wall of stars (★ N / 33, white since panel 11: the stars under the trophies are the gold). In the house bar,
+// «Lugares» opens Lugares (no number since panel 11, Q1: the HUD counts them): the map table (every place with its stars,
 // record and what it asks; fast travel to the ones already entered) and the door to the ring.
 export const TROPHY_SHELF=Object.freeze({x:34,y:76,gap:19});
 // What comes next on the path (plan H3): the first closed place and the one to complete before it; null once all are open.
@@ -31,8 +32,8 @@ export function initialize(runtime){
  const glyphs=id=>stars(id).map(x=>x?'★':'☆').join('');
  const visiting=()=>!!runtime.houseVisiting?.();
  // The shelf and the wall, in the Sala of your own Refugio.
- function draw(c,{toScreen,k,t,calm,house}){hits.length=0;const d=data();if(!d||visiting()||!(house?.unlocked||['sala']).includes('sala'))return;const sala=roomBox('sala'),gold='#f0d27a',have=starCount(d);c.save();
-  const label=toScreen(sala.x+TROPHY_SHELF.x,sala.y+TROPHY_SHELF.y-20);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle=gold;c.globalAlpha=.9;c.fillText(`LUGARES · ★ ${have} / ${TOTAL_STARS}`,label.x,label.y);c.letterSpacing='0px';
+ function draw(c,{toScreen,k,t,calm,house,note}){hits.length=0;const d=data();if(!d||visiting()||!(house?.unlocked||['sala']).includes('sala'))return;const sala=roomBox('sala'),gold='#f0d27a',have=starCount(d);c.save();
+  const label=toScreen(sala.x+TROPHY_SHELF.x,sala.y+TROPHY_SHELF.y-20);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle='#ffffff';c.globalAlpha=.9;c.fillText(`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);note?.(c,`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);c.letterSpacing='0px';
   const lw=Math.max(140,(PLACES.length-1)*TROPHY_SHELF.gap*k+12);hits.push({x:label.x-4,y:label.y-14,w:lw,h:20,open:true});
   PLACES.forEach((p,i)=>{const q=toScreen(sala.x+TROPHY_SHELF.x+i*TROPHY_SHELF.gap,sala.y+TROPHY_SHELF.y),r=Math.max(4,6*k),got=stars(p.id),won=got[0],shine=got.filter(Boolean).length;
    // A socket under every trophy; the trophy itself only once the place has its ★, brighter with each star.
@@ -58,7 +59,8 @@ export function initialize(runtime){
    li.dataset.placeId=p.id;if(p.id===goal.id)li.setAttribute('aria-current','step');const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
    const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${roundPercent(best.onTime)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
-   li.append(name,st,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);li.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0])){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
+   // Panel 11 (Q4): «Seguir» and «Ir» share one width and sit on the name's line, in their own column.
+   const acts=document.createElement('span');acts.className='lugar-actions';li.append(name,st,acts,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);acts.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0])){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);acts.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
    if(place){const quote=document.createElement('span');quote.style.whiteSpace='nowrap';quote.textContent=`${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;line.replaceChildren('Remezcla de hoy: ',quote);btn.onclick=()=>remixGo(mix);}}
@@ -71,14 +73,17 @@ export function initialize(runtime){
   // Near the end the scroll cannot lift the row to the top: the list then ends with the list and starts on a whole row.
   if(whole[0].top>top+1){list.style.maxHeight=Math.floor(bottom-whole[0].top+list.clientTop*2)+'px';list.scrollTop=list.scrollHeight;return;}
   const last=whole.at(-1);if(last.bottom<bottom-1)list.style.maxHeight=Math.ceil(last.bottom-top+list.clientTop*2)+'px';}
- function scrollCue(){const list=$('lugaresList'),hint=$('lugaresScrollHint');if(list&&hint)hint.hidden=list.scrollHeight<=list.clientHeight+2||list.scrollTop+list.clientHeight>=list.scrollHeight-2;}
+ // Two cues: «↓» while rows wait below, «↑ N más arriba» while whole rows are hidden above (panel 11, Q4: what you
+ // already won is above the next place, and the list opens there).
+ function scrollCue(){const list=$('lugaresList'),hint=$('lugaresScrollHint'),up=$('lugaresScrollUp');if(!list)return;if(hint)hint.hidden=list.scrollHeight<=list.clientHeight+2||list.scrollTop+list.clientHeight>=list.scrollHeight-2;
+  if(up){const top=list.getBoundingClientRect?.().top??0,above=list.scrollTop>2?[...list.children].filter(li=>li.getBoundingClientRect().bottom<=top+list.clientTop+1).length:0;up.hidden=!above;if(above)up.textContent=`↑ ${above} más arriba`;}}
  $('lugaresList')?.addEventListener?.('scroll',scrollCue,{passive:true});globalThis.addEventListener?.('resize',()=>{if(!$('mLugares')?.hidden)scrollCue();});
  function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
  function door(){runtime.ringGuide?.();}
  // The house bar shows the wall too, and opens Lugares.
- function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':`${gameObjective(runtime.S,d).completed||0}/11 lugares`;}
+ function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':'Lugares';}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};
  // Plan I6: Lugares is one of the menu's six entries.
  const entry=$('bLugares');if(entry)entry.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);open();};

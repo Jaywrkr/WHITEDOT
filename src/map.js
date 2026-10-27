@@ -16,15 +16,16 @@ export function mapData(runtime){
  return {ring:runtime.ringPortals?.()||[],favorites:(S.favorites?.items||[]).filter(p=>p.layer==='superficie'),cells,reached,heard,me,pos:[S.wx/RP,S.wy/RP],camp,continents,record:S.maxRing||0,RP};
 }
 
-export function drawMap(runtime,x,X,Y,W,H,zoom){
+export function drawMap(runtime,x,X,Y,W,H,zoom,margin=24){
  const m=mapData(runtime);let x0,y0,x1,y1;
  if(zoom==='cerca'){x0=m.pos[0]-7;x1=m.pos[0]+7;y0=m.pos[1]-7;y1=m.pos[1]+7;}
  else{x0=Math.min(-1,m.pos[0]-1);y0=Math.min(-1,m.pos[1]-1);x1=Math.max(2,m.pos[0]+2);y1=Math.max(2,m.pos[1]+2);
   for(const c of m.cells){x0=Math.min(x0,c.rx-1);y0=Math.min(y0,c.ry-1);x1=Math.max(x1,c.rx+2);y1=Math.max(y1,c.ry+2);}
   for(const q of m.ring){x0=Math.min(x0,q.x/m.RP-1);y0=Math.min(y0,q.y/m.RP-1);x1=Math.max(x1,q.x/m.RP+1);y1=Math.max(y1,q.y/m.RP+1);}
   for(const h of m.heard){x0=Math.min(x0,h.rx-1);y0=Math.min(y0,h.ry-1);x1=Math.max(x1,h.rx+2);y1=Math.max(y1,h.ry+2);}
-  const span=Math.max(x1-x0,y1-y0,12),cx=(x0+x1)/2,cy=(y0+y1)/2;x0=cx-span/2;x1=cx+span/2;y0=cy-span/2;y1=cy+span/2;}
- const s=Math.min(W/(x1-x0),H/(y1-y0)),ox=X+(W-(x1-x0)*s)/2-x0*s,oy=Y+(H-(y1-y0)*s)/2-y0*s,P=(a,b)=>[ox+a*s,oy+b*s];
+  // Panel 11 (Q4): the drawing fills its box: a minimum of 4 regions a side (it was 12) and a fixed 24 px margin.
+  const span=Math.max(x1-x0,y1-y0,4),cx=(x0+x1)/2,cy=(y0+y1)/2;x0=cx-span/2;x1=cx+span/2;y0=cy-span/2;y1=cy+span/2;}
+ const pad=zoom==='cerca'?0:Math.min(margin,W/8,H/8),s=Math.min((W-2*pad)/(x1-x0),(H-2*pad)/(y1-y0)),ox=X+(W-(x1-x0)*s)/2-x0*s,oy=Y+(H-(y1-y0)*s)/2-y0*s,P=(a,b)=>[ox+a*s,oy+b*s];
  x.save();x.beginPath();x.rect(X,Y,W,H);x.clip();
  x.fillStyle='#000';x.fillRect(X,Y,W,H);
  const r2=runtime.rng(11);x.fillStyle='#fff';for(let i=0;i<120;i++){x.globalAlpha=.04+r2()*.1;x.fillRect(X+r2()*W,Y+r2()*H,1.5,1.5);}
@@ -58,9 +59,9 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
  // el dorado, solo en sus estrellas.
  for(const q of m.ring){const [px,py]=P(q.x/m.RP,q.y/m.RP),z=Math.max(5,Math.min(11,s*.4));x.globalAlpha=q.open?1:.6;x.strokeStyle=q.ink||(q.open?'#ffffff':'#8a8a8f');x.lineWidth=2;x.beginPath();x.arc(px,py,z,0,6.283);x.stroke();
   for(let i=0;i<3;i++){x.fillStyle=i<q.stars?runtime.GOLD:'#ffffff30';x.fillRect(px-7+i*5.5,py+z+4,3,3);}}
- // Origen, campamento y tú.
- {const [px,py]=P(.5,.5);x.globalAlpha=.8;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,Math.max(5,s*.35),0,6.283);x.stroke();}
- if(m.camp){const [px,py]=P(m.camp[0],m.camp[1]),z=Math.max(6,Math.min(12,s*.45));x.globalAlpha=1;x.strokeStyle=runtime.GOLD;x.lineWidth=2;x.beginPath();x.moveTo(px-z,py);x.lineTo(px,py-z);x.lineTo(px+z,py);x.lineTo(px+z,py+z);x.lineTo(px-z,py+z);x.closePath();x.stroke();}
+ // Origen, campamento y tú. Panel 11 (Q1): the Refugio's mark is white; gold stays for the ★ under the portals.
+ {const [px,py]=P(.5,.5);x.globalAlpha=.8;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,Math.max(5,Math.min(12,s*.35)),0,6.283);x.stroke();}
+ if(m.camp){const [px,py]=P(m.camp[0],m.camp[1]),z=Math.max(6,Math.min(12,s*.45));x.globalAlpha=1;x.strokeStyle='#ffffff';x.lineWidth=2;x.beginPath();x.moveTo(px-z,py);x.lineTo(px,py-z);x.lineTo(px+z,py);x.lineTo(px+z,py+z);x.lineTo(px-z,py+z);x.closePath();x.stroke();}
  {const [px,py]=P(m.pos[0],m.pos[1]),z=Math.max(6,Math.min(12,s*.4));x.globalAlpha=1;x.fillStyle='#fff';x.fillRect(px-z/2,py-z/2,z,z);}
  x.restore();x.globalAlpha=1;
  return m;
@@ -69,13 +70,13 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
 export function initialize(runtime){
  let zoom='mundo';const $=runtime.$;
  function render(){
-  const c=$("mapCv"),x=c.getContext("2d"),m=drawMap(runtime,x,0,0,c.width,c.height,zoom);
+  const c=$("mapCv"),x=c.getContext("2d"),m=drawMap(runtime,x,0,0,c.width,c.height,zoom,24*c.width/(c.clientWidth||c.width));
   $("mRegions").textContent=m.cells.length;$("mConts").textContent=m.continents;$("mRecord").textContent=m.record;
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
   // One item per span: lines break between items, never leaving a separator hanging (panel 10, Nesbitt #14).
   const rare=Object.keys(runtime.S.anomalies||{}).length,open=m.ring.filter(q=>q.open).length;
   // Panel 10 (P8): no counter at zero; regions, continents and record live in Tú (index.html #journalYouPart).
-  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Estudio',open&&`${open} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
+  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Refugio',open&&`${open} portales abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
   runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}

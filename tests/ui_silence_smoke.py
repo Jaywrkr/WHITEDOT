@@ -27,7 +27,7 @@ with sync_playwright() as p:
   page.locator('#settingsClose').click();page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click();page.locator('#settingsClose').click()
   assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
   page.evaluate('()=>{const r=window.__testRuntime;r.MU.queue=[];r.exitWorld(false);r.enterWorld();if(r.MU.queue.length)throw Error("world entry queued a UI jingle");}')
-  page.wait_for_timeout(200);page.locator('#w').click(position={'x':30,'y':300});page.wait_for_timeout(50);assert page.evaluate('window.__testRuntime.waves.length')>0
+  page.wait_for_timeout(200);page.locator('#w').click(position={'x':30,'y':300});page.wait_for_function('window.__testRuntime.waves.length>0',timeout=3000)   # Q5: the wave waits for its heard note
   assert not errors,errors
   print(label+': UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS',flush=True);c.close()
  b.close()

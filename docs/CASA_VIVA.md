@@ -4,7 +4,7 @@ Sistema construido, incluido en main alpha.200 y refinado en el candidato alpha.
 
 ## Vista y habitaciones
 
-Casa de muñecas recorrible con cámara, escaleras y vista general. En horizontal, la casa encaja a la izquierda del panel lateral y la Voz habla sobre el panel; en vertical, bajo y = 120. Los rótulos de habitación se miden y nunca cruzan el borde. El cubo conserva sus controles y tamaño aprobados. Las habitaciones se abren por lugares completos o por ★, lo que ocurra primero (panel 10, P8, D3-B). Nunca por días:
+Casa de muñecas recorrible con cámara, escaleras y vista general. En horizontal, la casa encaja a la izquierda del panel lateral y la Voz habla sobre el panel. En vertical, la Voz va bajo el último rótulo de sala, en la franja libre antes del panel; si no cabe, vuelve arriba (panel 11, Q4). Los rótulos de habitación se miden con `measureText`: van tras la esquina de la sala y nunca cruzan el borde, otro texto ni una línea del marco; si no caben enteros, no se dibujan (tocar la sala lo dice). La barra de pasos y la luz de cada sala quedan sobre su suelo. «PRISMA» va encima del prisma. Rótulos de sala, Taller, Prisma y Núcleo a 4,5:1 o más. El cubo conserva sus controles y tamaño aprobados. Las habitaciones se abren por lugares completos o por ★, lo que ocurra primero (panel 10, P8, D3-B). Nunca por días. El rótulo de una sala cerrada muestra solo la condición más cercana, con un número: «Cielo · faltan 3 lugares» (la menor parte que falta; empate, lugares). Tocarla dice lo mismo. La regla no cambia:
 
 | ID conservado | Nombre | Lugares / ★ |
 |---|---|---|
