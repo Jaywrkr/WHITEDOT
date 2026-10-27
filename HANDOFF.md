@@ -4,7 +4,7 @@
 
 **Cierre del ciclo de diseño (27 de octubre de 2026).** El juego queda completo para esta etapa: E1–E7, P1–P8 y Q1–Q7 están en `main`, todos con CI completo en verde. No hay fases de diseño abiertas. La auditoría externa con Codex quedó descartada por Jay; su [guía](docs/AUDITORIA_EXTERNA.md) se conserva como método.
 
-**Lo siguiente: publicar en web y Android**, en español e inglés, a nombre de Jay, sin nube en la primera versión. Plan L1–L6 y tareas de Jay en [Salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
+**Lo siguiente: publicar en web y Android**, en español e inglés, a nombre de Jay, sin cuenta ni nube (como Monument Valley, Alto's o Florence, que son la vara de calidad). Plan L1–L6 y tareas de Jay en [Salida web y Android](docs/PLAN_LANZAMIENTO.md#salida-web-y-android).
 
 Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) solo apunta aquí.
 
@@ -46,7 +46,7 @@ La 11 no se compara directa con la 10: nueve perfiles no puntuaron Audio y seis 
 - Guardados antiguos y futuros se migran sin borrar progreso ni premios.
 - El [verificador de preservación](scripts/verify-e-preservation.mjs) protege 301 archivos y trece contratos. Lo que cambiaron P3–P8 se compara con `main` tras P8 (`5464612`). Lo que cambiaron Q1–Q6 se compara con el final de Q6 y sus arreglos de CI (`4183856`). Los finales y el silencio del Mundo bajo el final de los once, con Q7 (`fce8496`). Lo demás, con la base E.
 - UI negra, Geist Mono, esquinas rectas, menús silenciosos; dorado solo para ★ y ✦.
-- Supabase en pausa: la primera versión de venta sale sin nube. No reaplicar SQL ni borrar cuentas. `server/` es un prototipo histórico, no un backend activo.
+- Sin cuenta ni nube: Supabase queda en pausa sin plan de reactivarlo. No reaplicar SQL ni borrar cuentas. `server/` es un prototipo histórico, no un backend activo.
 - Tiendas: preparación autorizada (web y Android); publicar requiere la autorización explícita de Jay en cada canal.
 
 ## Probar en el teléfono
