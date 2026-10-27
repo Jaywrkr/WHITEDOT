@@ -83,14 +83,14 @@ export function initialize(runtime){
  let run=null;const state={played:0,skipped:false,finished:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const now=()=>performance.now()/1000;
- function overlay(){let el=document.getElementById('journeyFinale');if(!el){el=document.createElement('div');el.id='journeyFinale';el.setAttribute('role','dialog');el.setAttribute('aria-label','Final del Viaje');el.innerHTML='<canvas></canvas><div class="journey-credits" aria-live="polite"></div><button id="journeySkip" class="journey-skip" disabled>Seguir explorando</button>';document.body.appendChild(el);}el.hidden=false;return el;}
+ function overlay(){let el=document.getElementById('journeyFinale');if(!el){el=document.createElement('div');el.id='journeyFinale';el.setAttribute('role','dialog');el.setAttribute('aria-label','Final del Viaje');el.innerHTML='<canvas></canvas><div class="journey-credits" aria-live="polite"></div><button id="journeySkip" class="journey-skip" aria-label="Saltar al Mundo libre" disabled>Saltar</button>';document.body.appendChild(el);}el.hidden=false;return el;}
  // Sound: your song (song.js) through its own gain, so skipping fades it out. Each chapter's layer comes in at its two
  // bars; the local arrangement interprets your notes over the same harmonic frame.
- function play(score,context){const ac=runtime.ac;return ac?playFinale(runtime,score,context,ac.currentTime+GATHER):null;}
+ function play(score,context){const ac=runtime.ac;return ac?playFinale(runtime,score,context,ac.currentTime+QUICK.gather):null;}
  function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival))return false;
-  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();runtime.closeSong?.();const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.({quiet:true});const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps,j.ticks).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
-  run={el,score,context,events:finaleArrangement(score,context),festival,at:now(),length:scoreLength(score),gain:play(score,context),soundEnd:(runtime.ac?.currentTime||0)+GATHER+scoreLength(score),credits:false};state.played++;
-  el.onclick=null;const skip=el.querySelector('#journeySkip');if(skip){skip.hidden=false;skip.disabled=true;skip.onclick=e=>{e?.stopPropagation?.();if(run&&now()-run.at>2)finish(true);};}requestAnimationFrame(frame);return true;}
+  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();runtime.closeSong?.();const context=finaleContext(runtime);context.six=Math.min(context.six,QUICK.six);const ratio=context.six/.125;runtime.landHouse?.({quiet:true});const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps,j.ticks).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
+  run={el,score,context,events:finaleArrangement(score,context),festival,at:now(),length:scoreLength(score),gain:play(score,context),soundEnd:(runtime.ac?.currentTime||0)+QUICK.gather+scoreLength(score),credits:false};state.played++;
+  el.onclick=null;const skip=el.querySelector('#journeySkip');if(skip){skip.hidden=false;skip.disabled=true;skip.onclick=e=>{e?.stopPropagation?.();if(run&&now()-run.at>QUICK.skipAfter)finish(true);};}requestAnimationFrame(frame);return true;}
  function finish(skipped=false){if(!run)return;const j=runtime.S.journey,ac=runtime.ac;if(run.gain&&ac){const g=run.gain.gain;if(typeof g.cancelAndHoldAtTime==='function')g.cancelAndHoldAtTime(ac.currentTime);else{const end=run.soundEnd,held=Math.min(1,Math.max(0,(end-ac.currentTime)/.45));g.cancelScheduledValues(ac.currentTime);g.setValueAtTime(held,ac.currentTime);}g.setTargetAtTime(.0001,ac.currentTime,.12);}
   // The festival keeps your phrase on screen and waits for the next player.
   if(run.festival){const el=run.el;el.onclick=null;if(!run.credits)credits(run);const again=document.createElement('button');again.className='journey-again';again.id='journeyAgain';again.textContent='Otra persona';again.onclick=()=>runtime.festivalRestart?.();el.appendChild(again);run=null;state.skipped=skipped;state.finished++;return;}
@@ -114,25 +114,30 @@ export function initialize(runtime){
   // «Explorar»: straight into the free World, without waiting for the credits to end.
   if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar a pie';go.onclick=e=>{e?.stopPropagation?.();finish(false);};r.el.appendChild(go);}}
  function frame(){if(!run)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
-  const skip=el.querySelector('#journeySkip');if(skip)skip.disabled=now()-run.at<=2;
-  const c=cv.getContext('2d'),t=now()-run.at,music=run.gain&&runtime.ac?audibleTime(runtime.ac)-(run.soundEnd-run.length):t-GATHER,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
+  const skip=el.querySelector('#journeySkip');if(skip)skip.disabled=now()-run.at<=QUICK.skipAfter;
+  const c=cv.getContext('2d'),t=now()-run.at,music=run.gain&&runtime.ac?audibleTime(runtime.ac)-(run.soundEnd-run.length):t-QUICK.gather,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   // The sky turns gold while your journey plays, and goes dark in the silence.
-  const glow=(music<0?Math.max(0,1+music/GATHER)*.3:.35+.65*Math.min(1,music/end))*(music>end?Math.max(0,1-(music-end)/SILENCE):1);const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.32*glow})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
+  const glow=(music<0?Math.max(0,1+music/QUICK.gather)*.3:.35+.65*Math.min(1,music/end))*(music>end?Math.max(0,1-(music-end)/QUICK.silence):1);const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.32*glow})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
   // Your song's rings: each chapter's lights when its two bars begin, with its name and verb in the middle; with the
   // theme, the six places still to come appear dim. They fade in the silence.
-  const starts=chapterStarts(run.score),chapters=SONG_IDS.filter(id=>id in starts),theme=starts.refugio??0,fade=music>end&&!run.festival?Math.max(0,1-(music-end)/SILENCE):1;
+  const starts=chapterStarts(run.score),chapters=SONG_IDS.filter(id=>id in starts),theme=starts.refugio??0,fade=music>end&&!run.festival?Math.max(0,1-(music-end)/QUICK.silence):1;
   const current=[...chapters].reverse().find(id=>music>=starts[id]&&music<theme),beatAt=(music/(run.context.six*4))%1;c.globalAlpha=fade;
   if(fade>0){c.save();c.globalAlpha=fade;drawSongRings(c,W,H,{lit:id=>id in starts&&music>=starts[id]||music>=theme&&SONG_IDS.indexOf(id)<5&&!run.festival,beat:id=>{if(still)return .4;const hit=run.events.findLast(e=>e.group==='bed'&&e.layer===id&&e.at<=music);return hit?Math.max(0,1-(music-hit.at)/(id==='vacio'?run.context.six*16:run.context.six*4)):0;},shown:music>=theme&&!run.festival?SONG_IDS.length:Math.max(1,chapters.length),still,color:(id,f)=>runtime.placeColor?.(id,CHAPTER_COLORS[id]||f)||CHAPTER_COLORS[id]||f});
    const place=PLACES.find(p=>p.id===current),cy=H*.44;const label=place?'Tu frase de '+place.name:'Tu canción';if(run.label!==label){run.label=label;el.setAttribute('aria-label',label+' · Final del Viaje');}c.textAlign='center';c.textBaseline='middle';
    if(place){c.fillStyle='#ffffff';c.font='22px "Geist Mono", monospace';c.fillText(place.name,W/2,cy-12);c.fillStyle='#f0d27a';c.font='13px "Geist Mono", monospace';c.fillText('Tu frase · '+place.verb,W/2,cy+16);}
    else if(music>=theme&&music<end){c.fillStyle='#f0d27a';c.font='18px "Geist Mono", monospace';c.fillText('Tu canción',W/2,cy);}c.restore();}
   // With the words, the eleven rings come back small below them: your five lit, six still to find.
-  if(music>end&&!run.festival){const k=still?1:Math.min(1,(music-end)/SILENCE);c.save();c.globalAlpha=.85*k;c.translate(W/2,H*.68);c.scale(.55,.55);c.translate(-W/2,-H*.44);
+  if(music>end&&!run.festival){const k=still?1:Math.min(1,(music-end)/QUICK.silence);c.save();c.globalAlpha=.85*k;c.translate(W/2,H*.68);c.scale(.55,.55);c.translate(-W/2,-H*.44);
    drawSongRings(c,W,H,{lit:id=>SONG_IDS.indexOf(id)<5,beat:()=>still?.4:Math.max(0,1-beatAt*2)*.6,names:false,still,color:(id,f)=>runtime.placeColor?.(id,CHAPTER_COLORS[id]||f)||CHAPTER_COLORS[id]||f});c.restore();}
   c.globalAlpha=1;
   // Credits after the silence.
-  if(music>end+SILENCE&&!run.credits)credits(run);
-  if(music>end+SILENCE+CREDITS){finish(false);return;}
+  if(music>end+QUICK.silence&&!run.credits)credits(run);
+  if(music>end+QUICK.silence+QUICK.credits){finish(false);return;}
   requestAnimationFrame(frame);}
- Object.defineProperties(runtime,{journeyFinale:{get:()=>start},journeyFinaleSkip:{get:()=>()=>finish(true)},journeyFinaleState:{get:()=>()=>({...state,running:!!run,credits:!!run?.credits,notes:run?.score.length||0,seconds:run?GATHER+run.length+SILENCE+CREDITS:0})}});
+ Object.defineProperties(runtime,{journeyFinale:{get:()=>start},journeyFinaleSkip:{get:()=>()=>finish(true)},journeyFinaleState:{get:()=>()=>({...state,running:!!run,credits:!!run?.credits,notes:run?.score.length||0,seconds:run?QUICK.gather+run.length+QUICK.silence+QUICK.credits:0})}});
 }
+// Jay (27 Oct 2026, alpha.226): after the five chapters the ring and their music should go faster, and «Saltar» should
+// take you straight to the free World. The score and its arrangement stay as approved in Q7; only the frame around them
+// is shorter: a shorter gathering, silence and credits, and never slower than a sixteenth of .125 s (120 BPM; the
+// quickest worlds keep their own tempo). «Saltar» answers after .6 s, so a tap that closed the Vacío does not skip it.
+export const QUICK=Object.freeze({gather:.8,silence:1,credits:3.5,six:.125,skipAfter:.6});

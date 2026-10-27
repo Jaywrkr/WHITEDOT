@@ -1,6 +1,9 @@
 import {prefersReducedMotion} from './frame-state.js';
 // V2: wind that travels, grass that parts for the cube, rain that lands, and quiet sound beds (rain, night insects).
 // Drawing is a handful of splashes; sound is two gain nodes that stay silent unless it rains or it is night.
+// Jay (27 Oct 2026, alpha.226): the rain was too loud; it is a light texture under the music. Its bed is 12 dB under
+// the level it had (.012 + .02 in a storm), the same filter and the same fade.
+export const RAIN_BED=Object.freeze({calm:.003,storm:.005});
 const hash=s=>{let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 export function initialize(runtime){
  let dirKey='',dx=1,dy=0,splashes=[],rain=null,insectsAt=0,bedsReady=false;
@@ -25,7 +28,7 @@ export function initialize(runtime){
  function beds(){
   const ac=runtime.ac,bus=runtime.bus;if(!ac||!bus||!runtime.noiseBuffer)return;
   if(!bedsReady){bedsReady=true;const src=ac.createBufferSource();src.buffer=runtime.noiseBuffer;src.loop=true;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=1400;const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7000;const g=ac.createGain();g.gain.value=0;src.connect(hp).connect(lp).connect(g).connect(runtime.ambienceBus||bus);src.start();rain={g};}
-  const on=runtime.S.sound&&runtime.inWorld(),target=on&&raining()?.012+.02*Math.min(1,runtime.MU?.storm||0):0;rain.g.gain.setTargetAtTime(target,ac.currentTime,.8);
+  const on=runtime.S.sound&&runtime.inWorld(),target=on&&raining()?RAIN_BED.calm+RAIN_BED.storm*Math.min(1,runtime.MU?.storm||0):0;rain.g.gain.setTargetAtTime(target,ac.currentTime,.8);
   const night=runtime.worldLight?.()?.night||0,biome=runtime.BI?.()?.id||'';
   if(on&&!raining()&&night>.6&&!['mar','cueva','vacio','dunas'].includes(biome)&&(!runtime.S.layer||runtime.S.layer==='superficie')&&ac.currentTime>insectsAt){insectsAt=ac.currentTime+1.4+Math.random()*2.2;chirp(ac,runtime.ambienceBus||bus,ac.currentTime+.05,night);}
  }

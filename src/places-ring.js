@@ -94,14 +94,18 @@ export function initialize(runtime){
   if(step===NEXT_STEP){const next=nextPortal(spots(),data(),S.journey);if(!next)return;const d=Math.hypot(next.x-S.wx,next.y-S.wy);if(d<PORTAL_HEAR*.5)return;const v=beaconGain(d);if(v>0)sound(next,spots().findIndex(q=>q.id===next.id),time,v);return;}
   let best=null,far=PORTAL_HEAR,index=0;spots().forEach((s,i)=>{const d=Math.hypot(s.x-S.wx,s.y-S.wy);if(d<far){far=d;best=s;index=i;}});if(!best)return;
   const near=1-far/PORTAL_HEAR,open=placeOpen(data(),best.id,S.journey);sound(best,index,time,(open?.09:.035)*near*near);}
- // Fast travel from the map to the places already entered: beside their portal, free.
- function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!placeOpen(data(),id,runtime.S.journey)||!data().seen[id]&&!stars(id)[0])return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
+ // Fast travel from the map to the places already entered: beside their portal, free. Jay (27 Oct 2026, alpha.226):
+ // far from the ring (beyond where its next portal is heard) the next place on the path can be reached the same way,
+ // so a jump never leaves you far, far away from it.
+ function far(id){const s=spots().find(q=>q.id===id),next=nextPortal(spots(),data(),runtime.S.journey);return !!(s&&next&&next.id===id&&Math.hypot(s.x-runtime.S.wx,s.y-runtime.S.wy)>=NEXT_HEAR);}
+ const canTravel=id=>!!(active()&&placeOpen(data(),id,runtime.S.journey)&&(data().seen[id]||stars(id)[0]||far(id)));
+ function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!canTravel(id))return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
  function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]||stars(p.id)[0]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
   const row=box.querySelector('.row');for(const p of seen){const b=document.createElement('button');b.textContent=`${p.name} ${'★'.repeat(stars(p.id).filter(Boolean).length)}`.trim();b.onclick=()=>travel(p.id);row.appendChild(b);}}
  // Leaving a round from the menu: only shown while a round is being played.
  const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.();});}
  // The portals for the map: where each is, and whether it is open, with its stars.
  function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>{const open=placeOpen(d,s.id,runtime.S.journey);return {...s,name:name(s.id),open,complete:complete(d,s.id),ink:portalInk(s.id,open,d),stars:stars(s.id).filter(Boolean).length};});}
- Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},renderRingTravel:{get:()=>travelList},
+ Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringCanTravel:{get:()=>canTravel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},renderRingTravel:{get:()=>travelList},
   ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s,ink:portalInk(s.id,placeOpen(data(),s.id,runtime.S.journey))})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }

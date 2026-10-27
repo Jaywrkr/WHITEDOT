@@ -53,6 +53,8 @@ Guardar un lugar conserva semilla/identidad, capa y coordenadas. Tocar el nombre
 
 Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; saltar no cuenta como caminar. [Universo](UNIVERSO.md) y `practice-travel.js`.
 
+**Saltar a otro lugar (Jay, alpha.226).** Dentro de un nivel no hay salto: ni en un capítulo del Viaje sin terminar, ni en una ronda de un lugar, ni bajo el final del Viaje. Se ocultan «Otro paisaje», «Volver al punto anterior» y «Viajar a otra tierra», y el código también los rechaza (y las sorpresas que teletransportan). Antes, «Volver al punto anterior» aparecía en los capítulos (la llegada del día deja un punto anterior) y podía dejar al jugador lejos del capítulo; «Otro paisaje» solo aparecía con 20 chispas ganadas, así que tras el Viaje, sin chispas, no estaba. Ahora, al terminar el Viaje, «Otro paisaje» está a la vista desde el primer momento y el primer salto es gratis (`S.journey.freeJumpUsed`); los siguientes cuestan 20 ✦ y volver al punto anterior sigue gratis. Lejos del anillo (más allá de donde se oye su siguiente portal, 9600 px), Lugares ofrece **Ir** al siguiente lugar del camino, gratis, junto a su portal.
+
 ## Chispas y colección
 
 Chispas✦ y estrellas★ son distintas. Las chispas compran piezas y viajes; las estrellas nunca se gastan.
@@ -94,6 +96,7 @@ Las duraciones son objetivos de diseño, no tiempos garantizados de jugadores. E
 | `?medir=1` | Medida local de fotogramas |
 | `?lang=en` / `?lang=es` | Arranca en ese idioma y lo guarda en la partida ([Traducción](TRADUCCION.md)) |
 | `?clasico=1` | Comparación heredada de capítulos, mantenida por compatibilidad |
+| `?rapido=1` | Todas las metas de los capítulos y de las rondas a un quinto, para pasar rápido. Guardado propio (`kubono:rapido`) y sin cuenta: sus ★ no cuentan en la partida normal. Con `?capitulo=` o `?lugar=` usa el guardado de esos atajos. Funciona también en la edición de venta |
 
 Usar perfiles temporales; no borrar la partida personal. Atajos no equivalen a completar el recorrido. El producto no requiere`?dev=1` ni expone runtime; las pruebas lo instrumentan al servir main.
 

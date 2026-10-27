@@ -12,6 +12,7 @@ Guía vigente del universo procedural en alpha.221 (sin cambios de generación d
   - *cerca*: los detalles con los que se juega.
 - **Bordes:** al cruzar de región, las capas se mezclan durante unos 300 px.
 - **Sonido:** los sonidos propios de cada región suenan muy por debajo de la música, casi al nivel del ambiente. La música de cada lugar no cambia por esta guía.
+- **Lluvia (Jay, alpha.226):** una textura ligera bajo la música. Su cama de ruido (`RAIN_BED` en `world-weather.js`) baja 12 dB: 0,003 en calma y 0,008 en tormenta (antes 0,012 y 0,032). Render aislado (`tests/rain_mix.py`): −64 dBFS en calma y −56 dBFS en tormenta (antes −52 y −44), frente a −13,6 dBFS de una mezcla de música. Las gotas que tocan el cubo siguen sonando como notas; no cambiaron.
 - **Datos:** las regiones conservan sus identificadores internos (`llanura`, `bosque`…), así que mapas, música y guardados no se mueven. Ningún detalle consume el azar antiguo; todo sale de hashes.
 
 ## Las regiones
