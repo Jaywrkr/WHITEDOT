@@ -32,14 +32,14 @@ assert.equal(r.queue.length,2);flush(r);assert.equal(r.notes.length,2);assert(r.
 r.S.wx=site.x+SKY_LEAVE+50;r.S.wy=site.y;tick(r);st=r.skyMapState();assert(!st.scene);assert.equal(st.summary,'Gato · 2 de 5 · guardada');assert.equal(r.S.skyMap.sites[site.id].lit,2);assert.equal(r.liveEncounterState().travel,0);
 // Coming back resumes it as it was.
 r.S.wx=site.x;r.S.wy=site.y;tick(r);st=r.skyMapState();assert(st.scene&&st.scene.site.id===site.id);assert.equal(st.title,'Gato · 2 de 5');assert.equal(st.hint,'La dejaste aquí. Sigue.');
-// A pulse on time near the next star lights it; walking does the rest; complete: the motif and 15 ✦, once, one notice.
+// A pulse on time near the next star lights it; walking does the rest; complete: the motif and 30 ✦, once, one notice.
 const p2=skyStar(site,2);r.waves.push({x:p2.x+20,y:p2.y,origin:'player',beat:true});r.S.wx=p2.x+300;tick(r);assert(site.lit>=3&&site.onTime);
 for(let k=site.lit;k<5;k++)goTo(r,k);assert(site.done);st=r.skyMapState();assert.equal(st.scene.stage,'done');
 assert.equal(r.S.sparks,SKY_REWARD.onTime);assert.equal(r.S.skyMap.earned,SKY_REWARD.onTime);assert.equal(r.S.skyMap.figures.gato.done,1);assert.equal(r.S.skyMap.figures.gato.onTime,1);
-assert.equal(r.toasts.length,1);assert.match(r.toasts[0][0],/Constelación nueva.*Gato/);assert.equal(r.S.sparkEconomy.log.at(-1).text,'Mapa del cielo · +15 chispas');
+assert.equal(r.toasts.length,1);assert.match(r.toasts[0][0],/Constelación nueva.*Gato/);assert.equal(r.S.sparkEconomy.log.at(-1).text,`Mapa del cielo · +${SKY_REWARD.onTime} chispas`);
 const before=r.notes.length;flush(r);const motif=r.notes.slice(before).filter(n=>n.gain===SKY_MOTIF_GAIN);assert.equal(motif.length,skyFigure('gato').motif.length,'its motif, note by note');
 assert(motif.every((n,i)=>i===0||Math.abs(n.time-motif[i-1].time-.25)<1e-9),'on the eighths');
-tick(r,Math.ceil(SKY_GLOW/.05)+2);st=r.skyMapState();assert(!st.scene);assert.equal(st.summary,'Gato · completa · +15 ✦');assert(r.S.skyMap.sites[site.id].done,'it stays as a faint drawing');
+tick(r,Math.ceil(SKY_GLOW/.05)+2);st=r.skyMapState();assert(!st.scene);assert.equal(st.summary,'Gato · completa · +30 ✦');assert(r.S.skyMap.sites[site.id].done,'it stays as a faint drawing');
 // Another Gato elsewhere: the music and the light, no sparks and no notice (once per figure).
 r.S.wx+=5000;tick(r);assert(r.skyMapSpawn('gato'));assert.equal(r.skyMapState().title,'Gato · ya en tu mapa');let again=r.skyMapState().scene.site;for(let k=0;k<5;k++)goTo(r,k);
 assert.equal(r.S.sparks,SKY_REWARD.onTime);assert.equal(r.toasts.length,1);assert.equal(r.S.skyMap.figures.gato.done,2);tick(r,Math.ceil(SKY_GLOW/.05)+2);assert.equal(r.skyMapState().summary,'Gato · completa · ya en tu mapa');
@@ -59,4 +59,4 @@ assert(r.skyMapSpawn('piscis'));for(let k=0;k<5;k++)goTo(r,k);
 assert(r.S.skyMap.halo&&r.S.skyMap.wear.halo===true&&r.skyMapState().halo);assert.equal(r.toasts.length,1);assert.match(r.toasts[0][0],/Halo de estrellas/);assert.equal(r.S.sparks,SKY_REWARD.base);
 assert(r.skyMapToggleHalo());assert.equal(r.S.skyMap.wear.halo,false);assert(!r.skyMapState().halo);assert(r.skyMapToggleHalo());assert(r.skyMapState().halo);
 assert.match(r.skyMapSection(),/Zodiaco · 12 de 12 <em class="sky-earned">Halo de estrellas<\/em>/);
-console.log('PASS sky map runtime: only in the free World after the Journey and never in a level; one scene at a time with the living encounters (their clock waits and starts again); joined in order with its notes, saved with the first star, left half-done and resumed; complete: the motif on the eighths and 15 ✦ once, one notice; a repeat pays nothing; a failed save keeps nothing; the Bitácora lets it go; the zodiac gives the halo, worn and taken off');
+console.log('PASS sky map runtime: only in the free World after the Journey and never in a level; one scene at a time with the living encounters (their clock waits and starts again); joined in order with its notes, saved with the first star, left half-done and resumed; complete: the motif on the eighths and 30 ✦ once, one notice; a repeat pays nothing; a failed save keeps nothing; the Bitácora lets it go; the zodiac gives the halo, worn and taken off');

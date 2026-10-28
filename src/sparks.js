@@ -3,13 +3,17 @@ import {TOTEM_DAILY_LIMIT} from './sculpture-totems-model.js';
 import {CUBE_SHOP_SLOTS,shopPiece,shopSlot,wearing} from './cube-shop-model.js';
 import {pieceImage} from './cube-shop-preview.js';
 import {SHOP_PULSES} from './cube-shop-pulse.js';
-import {crystalFragments,fragmentMask} from './crystal-play-model.js';
+import {crystalFragments,fragmentMask,DIM_FRAGMENT_SPARKS} from './crystal-play-model.js';
 import {POWERS,POWER_IDS} from './expansion-music.js';
 import {rhythmMultiplier,nextStreak} from './spark-rules.js';
 import {SPARK_JUMP_COST,SPARK_SITE_LIMIT,SPARK_SHOP,SPARK_SETS,SPARK_BADGES,SPARK_MILESTONES,SPARK_UNIVERSE,universeProgress,sparkNumber,normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress} from './sparks-model.js';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
  const $=runtime.$;let owner=null,day='',clock=0,refresh=0,lastDistance=0,sessionDistance=0,segment=0,anchor=null,home=null,homeTime=0,newCards=new Set(),neighbors=new Set(),worldBroken=0,inspector={id:'',count:0},lastJump=null,delta=0,deltaUntil=0,trail=[],lastTrail=null,pickups=[],jumpAvailable=false,jumpUntil=0;
+ // H1 (Jay, alpha.233): sparks are of the open universe. Inside a level (a chapter of the Journey, a round of a place,
+ // the Journey's finale) nothing pays ✦ and the counter hides; goals reached there are paid once you are out.
+ const level=()=>!!(runtime.travelInLevel?.()||runtime.placeRun?.());
+ const levelHud=()=>level()||!!runtime.placeCardDue?.()||$('mPlace')?.hidden===false;
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function book(){
   if(owner!==runtime.S){owner=runtime.S;owner.sparkEconomy=normalizeSparkEconomy(owner.sparkEconomy,owner.sparks,owner.todayKey);day=owner.todayKey;clock=0;refresh=0;lastDistance=sparkNumber(owner.playerProfile?.distanceUnits);sessionDistance=0;segment=0;anchor=home=null;homeTime=0;newCards=new Set();neighbors=new Set();worldBroken=0;inspector={id:'',count:0};lastJump=null;trail=[];lastTrail=null;delta=0;deltaUntil=0;pickups=[];jumpAvailable=owner.sparkEconomy.earned>=SPARK_JUMP_COST;jumpUntil=0;}
@@ -35,15 +39,15 @@ export function initialize(runtime){
   if(path&&owner.pathCrystals.includes(o.id))return prior?{...prior}:null;
   let amount=0,result=null,first=false;
   const ok=commit(next=>{const p=next.sites[o.id]||{x:o.x,y:o.y,size:o.size,value:o.value,hits:0,broken:false,collected:false,rare:!path&&o.rare===true,fragments:0};
-   if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;if(!runtime.journeyQuiet?.())amount=creditSparks(owner,o.value*mult);}}else if(mult!==1)p.mult=mult;}}
-   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,(dim&&f.rare?1:f.value)*([2,3].includes(p.mult)?p.mult:1));}p.collected=p.fragments===fragmentMask(p);}else return false;
+   if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;}}else if(mult!==1)p.mult=mult;}}
+   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,(dim&&f.rare?DIM_FRAGMENT_SPARKS:f.value)*([2,3].includes(p.mult)?p.mult:1));}p.collected=p.fragments===fragmentMask(p);}else return false;
    next.sites[o.id]=p;result={...p};
   });
   if(!ok)return null;if(amount)changeNotice(amount);if(action==='hit'&&result.broken&&!path)worldBroken++;if(first)runtime.onFirstLight?.();if(path)runtime.hud?.();return result;
  }
  function rewardTotem(id){
   const q=book();if(q.version!==1||typeof id!=='string'||!id.startsWith('totem:v1:')||id.length>=120)return false;
-  if(runtime.labMode||owner.previewSeed&&!runtime.realTravel||q.totems[id]||Object.keys(q.totems).length>=TOTEM_DAILY_LIMIT)return {amount:0};
+  if(runtime.labMode||owner.previewSeed&&!runtime.realTravel||level()||q.totems[id]||Object.keys(q.totems).length>=TOTEM_DAILY_LIMIT)return {amount:0};
   let amount=0;if(!commit(next=>{next.totems[id]=true;amount=creditSparks(owner,2);} ))return false;
   changeNotice(amount);if(amount)pickup(amount,{x:owner.wx,y:owner.wy});return {amount};
  }
@@ -69,7 +73,7 @@ export function initialize(runtime){
   sessionDistance+=walk;segment+=walk;q.stats.sinceJump+=walk;
   const point={x:owner.wx,y:owner.wy,layer:owner.layer||'superficie'};
   if(!anchor)anchor={...point};if(!home||home.layer!==point.layer||Math.hypot(home.x-point.x,home.y-point.y)>70){home={...point};homeTime=0;}else homeTime+=step;
-  refresh+=step;if(refresh<.25)return;refresh=0;
+  refresh+=step;if(refresh<.25||level())return;refresh=0;
   const progress=sparkSetProgress(owner),earned=[];
   for(const set of SPARK_SETS)if(progress[set.id]>=set.need&&!q.claims['set:'+set.id])earned.push({id:'set:'+set.id,value:set.reward,title:set.title,text:set.name+' completa'});
   for(const m of SPARK_MILESTONES)if(dist>=m.meters*10&&!q.claims['distance:'+m.meters])earned.push({id:'distance:'+m.meters,value:0,title:m.title,text:m.meters+' metros caminados'});
@@ -110,7 +114,7 @@ export function initialize(runtime){
   $('sparkStatus').textContent=!runtime.inWorld()?'Abre el Mundo con diez cristales.':!ring()?(shopLeft?'Ahorra para una apariencia permanente.':'Tienes todas las apariencias.'):sparkNumber(owner.sparks)<SPARK_JUMP_COST?'Toca a tiempo junto a los cristales. Te faltan '+(SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas para saltar.':(SPARK_SHOP.some(p=>!book().purchases?.[p.id])?'Puedes saltar o ahorrar para una apariencia permanente.':'Tienes todas las apariencias. Usa tus chispas para saltar.');const travel=runtime.inWorld()&&runtime.canPracticeTravel?.()!==false;$('sparkBack').disabled=!travel||!owner.practiceTravel?.previous;$('sparkJump').disabled=!travel||!freeJump()&&sparkNumber(owner.sparks)<SPARK_JUMP_COST;$('sparkJump').textContent='Otro paisaje · '+(freeJump()?'gratis':SPARK_JUMP_COST+' ✦');
  }
  function open(tab='travel'){runtime.openCube?.(tab);render();}
- function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks)+' chispas';gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!runtime.inWorld()||!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
+ function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks)+' chispas';gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('sparkCount').hidden=levelHud();$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!runtime.inWorld()||levelHud()||!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
  function pickup(amount,point,mult=1){
   if(!(amount>0))return;const q=book(),last=pickups.at(-1);
   if(last&&clock-last.at<.12){last.amount+=amount;last.mult=Math.max(last.mult||1,mult);return;}

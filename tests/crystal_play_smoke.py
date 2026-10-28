@@ -32,7 +32,7 @@ try:
    for _ in range(3):page.mouse.click(25,height/2);page.wait_for_timeout(900)
    page.wait_for_function('__r.savedCrystal(fixtures.rare.id)?.broken')
    page.wait_for_timeout(1600)
-   assert page.evaluate('__r.S.sparks')==23,'ordinary shards pay four; the rare shard remains to chase'
+   assert page.evaluate('__r.S.sparks')==31,'ordinary shards pay twelve (four ×3, H1); the rare shard remains to chase'
    assert not page.evaluate('__r.savedCrystal(fixtures.rare.id).collected')
    # Jay (alpha.230): «Otro paisaje» waits for the eleven places of the ring; then it is there.
    page.wait_for_timeout(300);assert page.locator('#bJump').is_hidden(),'no jump before the eleven places'
@@ -44,7 +44,7 @@ try:
    rare_id=page.evaluate('fixtures.rare.id');mask=page.evaluate('__r.savedCrystal(fixtures.rare.id).fragments')
    from browser_helpers import keep_place_on_reload
    keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick');page.locator('#returnContinue').click()
-   assert page.evaluate('__r.S.sparks')==23
+   assert page.evaluate('__r.S.sparks')==31
    assert page.evaluate('id=>__r.savedCrystal(id).fragments',rare_id)==mask
    # The rare fragment runs for five seconds: chase it straight away to keep its bonus.
    held=set()
@@ -61,7 +61,7 @@ try:
     page.wait_for_timeout(40)
    for k in held:page.keyboard.up(k)
    page.wait_for_function('id=>__r.savedCrystal(id).collected',arg=rare_id)
-   assert page.evaluate('__r.S.sparks')==27,'the cian fragment pays one plus three bonus sparks'
+   assert page.evaluate('__r.S.sparks')==43,'the cian fragment pays one plus three bonus sparks, ×3 since H1'
    before=page.evaluate('__r.S.sparks');keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick');page.locator('#returnContinue').click();page.wait_for_timeout(300)
    assert page.evaluate('__r.S.sparks')==before
    # Find a natural adjacent pair again after reload; a single real pulse starts the chain.

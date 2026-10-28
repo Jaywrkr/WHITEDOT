@@ -19,7 +19,7 @@ for(const [i,b] of BIOMES.entries()){assert.equal(liveFor(b),CHASE[i]);assert.eq
 for(const d of DO)assert(d.life>=20&&d.life<=30&&d.need>=2&&d.need<=12,d.id);
 // Fleeing lasts a short while: 8 to 15 seconds.
 for(const d of FLEE)assert(d.life>=8&&d.life<=15,d.id);
-assert.equal(liveFor('pradera'),null);assert.deepEqual(LIVE_REWARD,{base:10,onTime:15});
+assert.equal(liveFor('pradera'),null);assert.deepEqual(LIVE_REWARD,{base:30,onTime:45},'H1 (alpha.233): three times the 10/15 of E1');
 // 60–90 s of travel, from the hash, the same on every replay; the spot is near and ahead of the cube.
 const gaps=Array.from({length:400},(_,n)=>liveInterval('w',n));assert(gaps.every(g=>g>=LIVE_EVERY.min&&g<=LIVE_EVERY.max));assert(Math.max(...gaps)-Math.min(...gaps)>25,'they vary');assert.deepEqual(gaps,Array.from({length:400},(_,n)=>liveInterval('w',n)));
 for(let n=0;n<200;n++){const h=n*.37,p=liveSpawnPoint({x:100,y:-50},h,'w',n),dx=p.x-100,dy=p.y+50,ahead=dx*Math.cos(h)+dy*Math.sin(h),side=Math.abs(-dx*Math.sin(h)+dy*Math.cos(h));assert(ahead>=280&&ahead<=340&&side<=90,JSON.stringify(p));assert.deepEqual(p,liveSpawnPoint({x:100,y:-50},h,'w',n));}
@@ -42,7 +42,7 @@ for(const def of CHASE){
  assert.equal(pulsed,20,def.id+' a pulse on time near it always catches it');assert.equal(offBeat,0,def.id+' a pulse off time never counts as on time');
  assert(walked>=5,def.id+': it can be caught by walking alone ('+walked+'/20)');assert(walkTime/walked>pulseTime/pulsed*1.15||walked<20,def.id+': walking alone is harder');
 }
-// The pulse's own rule: on time within reach catches (15 ✦), a little further holds it still, off time does nothing.
+// The pulse's own rule: on time within reach catches (45 ✦), a little further holds it still, off time does nothing.
 {const def=liveDefinition('polilla'),player={x:0,y:0},make=()=>createLive(def,{x:200,y:0,seed:7},player);
  let s=make();stepLive(s,player,.05,{pulses:[{x:200-LIVE_PULSE_CATCH+20,y:0,beat:true}]});assert.equal(s.stage,'caught');assert(s.onTime);assert.equal(liveReward(s),LIVE_REWARD.onTime);
  s=make();stepLive(s,player,.05,{pulses:[{x:200-LIVE_PULSE_HOLD+20,y:0,beat:true}]});assert.equal(s.stage,'run');assert(s.hold>1.9);const x=s.x;stepLive(s,player,.05,{});assert(Math.abs(s.x-x)<178*.05*.25,'held, it barely moves');
@@ -68,9 +68,9 @@ for(const def of FLEE){const row=sums[def.id]={flee:0,late:0,latePulse:0};
   // Standing still, it reaches you: no reward, a short nudge (at most a second, a few dozen units), never more.
   const still=flee(def,seed,{still:true});assert.equal(still.s.stage,'hit',def.id+' standing still it reaches you');assert.equal(liveReward(still.s),0);assert(liveLost(still.s)&&!liveWon(still.s));
   assert(still.knockTime<=LIVE_KNOCK+.06&&still.knock<=LIVE_KNOCK_SPEED*LIVE_KNOCK+3,def.id+' a soft nudge: '+still.knock);
-  // Pulses on time always help: from the start or 1.5 s late, it always ends in an escape with 15 ✦.
+  // Pulses on time always help: from the start or 1.5 s late, it always ends in an escape with 45 ✦.
   for(const delay of [0,1.5]){const p=flee(def,seed,{pulse:true,delay});assert.equal(p.s.stage,'safe',def.id+' pulses on time always escape ('+delay+' s late, seed '+seed+')');assert(p.s.onTime);assert.equal(liveReward(p.s),LIVE_REWARD.onTime);if(delay)row.latePulse++;}
-  // Walking alone it can be done (10 ✦); late, often not.
+  // Walking alone it can be done (30 ✦); late, often not.
   const w=flee(def,seed);if(w.s.stage==='safe'){row.flee++;assert.equal(w.s.onTime,false);assert.equal(liveReward(w.s),LIVE_REWARD.base);}
   const late=flee(def,seed,{delay:1.5});if(late.s.stage==='safe')row.late++;
   // A pulse off time is never on time.
@@ -103,10 +103,10 @@ for(const def of DO){const row=doing[def.id]={pulse:0,walk:0,late:0,lateSlow:0,l
  for(let seed=0;seed<20;seed++){
   // Standing still nothing gets done: it ends kindly, without a reward, within its time.
   const still=work(def,seed,{still:true});assert.equal(still.s.stage,'escaped',def.id+' standing still it just ends');assert.equal(liveReward(still.s),0);assert(liveLost(still.s)&&!liveWon(still.s));assert(still.t<=def.life+.1,def.id);
-  // Pulses on time always help: done every time, 15 ✦, quicker than on foot; also 1.5 s late and at a slower tempo.
+  // Pulses on time always help: done every time, 45 ✦, quicker than on foot; also 1.5 s late and at a slower tempo.
   const p=work(def,seed,{pulse:true});assert.equal(p.s.stage,'done',def.id+' with pulses on time (seed '+seed+')');assert(p.s.onTime);assert.equal(liveReward(p.s),LIVE_REWARD.onTime);row.pulse++;row.pulseTime+=p.t;
   for(const o of [{delay:1.5},{beatLen:.62}])assert.equal(work(def,seed,{pulse:true,...o}).s.stage,'done',def.id+' with pulses on time '+JSON.stringify(o));
-  // On foot it can be done (10 ✦); 1.5 s late, slower (140 u/s) or without sound too, most of the time.
+  // On foot it can be done (30 ✦); 1.5 s late, slower (140 u/s) or without sound too, most of the time.
   const w=work(def,seed);if(w.s.stage==='done'){row.walk++;row.walkTime+=w.t;assert.equal(w.s.onTime,false);assert.equal(liveReward(w.s),LIVE_REWARD.base);}
   const late=work(def,seed,{delay:1.5});if(late.s.stage==='done'){row.late++;row.lateTime+=late.t;}
   if(work(def,seed,{delay:1.5,speed:140}).s.stage==='done')row.lateSlow++;
@@ -145,4 +145,4 @@ const n=normalizeLive({kinds:{polilla:{caught:3,onTime:9,escaped:-2,first:'2026-
 assert.deepEqual(n.kinds.polilla,{caught:3,onTime:3,escaped:0,first:'2026-10-27',x:1});assert.equal(normalizeLive({kinds:{ola:{caught:1,hit:-3}}}).kinds.ola.hit,0);assert.equal(normalizeLive({kinds:{ola:{caught:1,hit:2}}}).kinds.ola.hit,2);assert(n.kinds.manta);assert.equal(n.count,0);assert.equal(n.extra,'kept');assert(!('bad' in n.kinds));assert.equal(n.version,1);
 assert.deepEqual(normalizeLive(null),{version:1,kinds:{},count:0,caught:0,earned:0});
 assert.equal(liveForced('?encuentro=polilla'),'polilla');assert.equal(liveForced('?encuentro=nada'),null);assert.equal(liveForced(''),null);
-console.log('PASS living encounters model: eleven «perseguir», eleven «huir» and eleven «hacer», one of each per biome, the roll picks one in thirds; 60–90 s from the hash, ahead of the cube; chasing, a pulse on time always catches (15 ✦) or holds, walking alone is possible but slower (10 ✦); fleeing, pulses on time always escape (15 ✦, also 1.5 s late), walking toward the arrow escapes most of the time (10 ✦), standing still it reaches you for nothing but a one-second nudge; doing, pulses on time always finish (15 ✦) and quicker, on foot, 1.5 s late, slower or without sound most of the time (10 ✦), standing still it ends kindly; no Math.random; future saves kept · '+JSON.stringify(sums)+' · '+JSON.stringify(doing));
+console.log('PASS living encounters model: eleven «perseguir», eleven «huir» and eleven «hacer», one of each per biome, the roll picks one in thirds; 60–90 s from the hash, ahead of the cube; chasing, a pulse on time always catches (45 ✦) or holds, walking alone is possible but slower (30 ✦); fleeing, pulses on time always escape (45 ✦, also 1.5 s late), walking toward the arrow escapes most of the time (30 ✦), standing still it reaches you for nothing but a one-second nudge; doing, pulses on time always finish (45 ✦) and quicker, on foot, 1.5 s late, slower or without sound most of the time (30 ✦), standing still it ends kindly; no Math.random; future saves kept · '+JSON.stringify(sums)+' · '+JSON.stringify(doing));

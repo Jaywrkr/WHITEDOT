@@ -5,8 +5,9 @@
 // Everything comes from hashKey: no old random sequence is read and nothing on the map moves.
 import {hashKey} from './universe-regions.js';
 export const LIVE_VERSION=1;
-// Paid only on completion, every time: 10 ✦, or 15 ✦ when a pulse on time made the catch.
-export const LIVE_REWARD=Object.freeze({base:10,onTime:15});
+// Paid only on completion, every time: 30 ✦, or 45 ✦ when a pulse on time made the catch. H1 (Jay, alpha.233): sparks
+// are of the open universe only, so it pays three times what it did (10 and 15 until alpha.232).
+export const LIVE_REWARD=Object.freeze({base:30,onTime:45});
 // One every 60 to 90 seconds of travel (time moving in the free World, never paused or standing in a menu).
 export const LIVE_EVERY=Object.freeze({min:60,max:90});
 // Where it appears: ahead of the cube, a little to one side.

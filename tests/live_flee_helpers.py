@@ -1,8 +1,8 @@
 """Shared walk for the living encounters of batch 2 (the eleven «huir»), used by live_flee_a_smoke.py and
 live_flee_b_smoke.py (two files, so each stays under the 145 s of a browser flow). For each one: the page opens with
 «?anillo=1&encuentro=<id>» in its biome, a few seconds of travel bring it ahead of the cube with its line, and then
-three endings on the same page: escaping with pulses on time (15 ✦, the Bitácora and its notice the first time),
-escaping on foot (10 ✦) and being reached (no sparks given or taken, its kind goodbye and a nudge of about a second).
+three endings on the same page: escaping with pulses on time (45 ✦, the Bitácora and its notice the first time),
+escaping on foot (30 ✦) and being reached (no sparks given or taken, its kind goodbye and a nudge of about a second).
 Lasting is the only way out of the falling stones and the pollen: after a second of play the walk skips to their last
 seconds. The odds of escaping on foot are measured in tests/live-encounters.mjs, not here: on foot the pulsar's core is
 reached in one step."""
@@ -57,21 +57,21 @@ def flee(browser,kind,shot=False,toast=False):
   # A pulse on time just before: the white shield round the cube shows in the picture.
   page.wait_for_timeout(900);page.evaluate("(()=>{const r=__r;r.waves.push({x:r.S.wx,y:r.S.wy,r:0,prev:0,max:340,n:0,origin:'player',beat:true});})()")
   page.wait_for_timeout(550);path=SHOTS/f"kubono-e2-{d['id']}-390.png";page.screenshot(path=str(path))
- # 1 · Pulses on time: always out, 15 ✦; the first time, into the Bitácora (and one notice naming it).
+ # 1 · Pulses on time: always out, 45 ✦; the first time, into the Bitácora (and one notice naming it).
  before=page.evaluate(STATE,d['id'])
  got=page.evaluate(DRIVE,['pulse',20]);assert got and got['stage']=='safe' and got['onTime'],(d['id'],got)
  page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id'])
- assert after['reward']==15 and after['earned']==before['earned']+15 and after['sparks']>=before['sparks']+15 and after['caught']==1 and after['onTime']==1 and after['book'],(d['id'],before,after)
+ assert after['reward']==45 and after['earned']==before['earned']+45 and after['sparks']>=before['sparks']+45 and after['caught']==1 and after['onTime']==1 and after['book'],(d['id'],before,after)
  # Other finds on the way (a crystal, an achievement) may log their own sparks just after.
- assert {'title':d['name'],'text':'Encuentro vivo · +15 chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
+ assert {'title':d['name'],'text':'Encuentro vivo · +45 chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
  # Achievements earned on the way (a landscape, the World) may show first: the notice waits its turn (as in live_do_helpers.py).
  if toast:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=15000);t=page.locator('#toast').inner_text();assert d['name'] in t and 'Logro' not in t,t
  page.wait_for_function(GONE,timeout=5000)
- # 2 · On foot, no pulse: out, 10 ✦.
+ # 2 · On foot, no pulse: out, 30 ✦.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])
  got=page.evaluate(DRIVE,['walk',20]);assert got and got['stage']=='safe' and not got['onTime'],(d['id'],got)
  page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id'])
- assert after['reward']==10 and after['earned']==before['earned']+10 and after['caught']==2 and after['onTime']==1,(d['id'],after)
+ assert after['reward']==30 and after['earned']==before['earned']+30 and after['caught']==2 and after['onTime']==1,(d['id'],after)
  page.wait_for_function(GONE,timeout=5000)
  # 3 · Reached: nothing given, nothing taken, its kind goodbye, a nudge of about a second, then it goes.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])

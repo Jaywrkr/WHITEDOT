@@ -40,11 +40,11 @@ try:
    if os.environ.get('ECHO_SHOT'):page.wait_for_function("__r.journeyEcho().phase?.kind==='call'",timeout=10000);page.wait_for_timeout(700);page.screenshot(path=os.environ['ECHO_SHOT'].replace('.png',f'-{width}.png'))
    page.evaluate("()=>{__r.S.journey.echo.points=__r.journeyEcho().goal;}");page.wait_for_function("!!__r.journeyEcho().gold",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
-   last=page.evaluate('__r.places().last');assert last['id']=='cueva' and last['stars'][0] and last['sparks']>=10,last
+   last=page.evaluate('__r.places().last');assert last['id']=='cueva' and last['stars'][0] and last['sparks']==0,last
    # Panel 10 (P6, D5-A): ?lugar=cueva completes the eleventh place, so its round flows straight into the final song;
    # the round's card waits for that song to close.
    page.wait_for_function("!document.getElementById('mPlace').hidden||(__r.songStageState().running&&__r.songStageState().final)",timeout=15000);assert page.evaluate('__r.places().stars.cueva[0]')
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Cueva on phone and desktop: ?lugar=cueva sings a pattern from the «1» in a call bar, answering it on time in the next bar is an echo that scores and lengthens the next, off the eighths is not on time, the bar follows the round in both modes, the gold drop ends it with stars, sparks and its card',flush=True)
+ print('PASS Cueva on phone and desktop: ?lugar=cueva sings a pattern from the «1» in a call bar, answering it on time in the next bar is an echo that scores and lengthens the next, off the eighths is not on time, the bar follows the round in both modes, the gold drop ends it with stars and its card, no sparks (H1)',flush=True)
 finally:server.shutdown()

@@ -23,12 +23,12 @@ modal=true;walk(r,30);modal=false;assert.equal(r.liveEncounterState().travel,0,'
 walk(r,first-1);assert(!r.liveEncounterState().scene);walk(r,1.2);const s=r.liveEncounterState().scene;assert(s,'one appears after its 60–90 s of travel');
 assert.equal(s.kind,'polilla','the biome where the cube travels (Polvo) chooses it');assert(s.x-r.S.wx>=250&&s.x-r.S.wx<=360,'ahead of the cube');assert.equal(r.liveEncounterState().line,'Una polilla de luz. Atrápala.');
 assert.equal(r.liveEncounterState().book.count,1);
-// A pulse on time near it catches it: 15 ✦, once in the Bitácora, one notice naming it.
+// A pulse on time near it catches it: 45 ✦, once in the Bitácora, one notice naming it.
 r.waves.push({x:s.x-40,y:s.y,origin:'player',beat:true});r.liveTick(.05);assert.equal(r.liveEncounterState().scene.stage,'caught');
 assert.equal(r.S.sparks,LIVE_REWARD.onTime);assert.deepEqual(r.elements,['live:polilla']);assert.equal(r.toasts.length,1);assert.match(r.toasts[0][0],/Encuentro nuevo.*Polilla de luz/);assert(!/Logro/.test(r.toasts[0][0]));
 assert.equal(r.S.sparkEconomy.log.at(-1).title,'Polilla de luz');assert.equal(r.S.liveEncounters.kinds.polilla.caught,1);assert.equal(r.S.liveEncounters.kinds.polilla.onTime,1);
 for(let i=0;i<40;i++)r.liveTick(.05);assert(!r.liveEncounterState().scene,'its goodbye ends');
-// The next one waits its own 60–90 s; caught by walking into it: 10 ✦, no second notice, no second Bitácora entry.
+// The next one waits its own 60–90 s; caught by walking into it: 30 ✦, no second notice, no second Bitácora entry.
 assert(r.liveEncounterSpawn('polilla'));let t=r.liveEncounterState().scene;r.S.wx=t.x-10;r.S.wy=t.y;r.liveTick(.05);assert.equal(r.S.sparks,LIVE_REWARD.onTime+LIVE_REWARD.base);assert.equal(r.toasts.length,1);assert.equal(r.elements.length,1);
 for(let i=0;i<40;i++)r.liveTick(.05);
 // Getting away costs nothing.
@@ -52,7 +52,7 @@ for(const [key,value] of [['travelInLevel',()=>true],['placeRun',()=>({})],['son
 // Batch 2 · huir. The same timer picks chase or flight in the biome from the hash: both come, in the order of the hash.
 {const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=[];for(let n=0;n<12;n++){const want=liveFor('llanura',hashKey('live:pick:v1:'+scope+':'+n)).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want,'the hash picks it');kinds.push(sc.kind);g.liveEncounterState().scene.stage='escaped';g.liveEncounterState().scene.result='escaped';g.liveEncounterState().scene.over=9;g.liveTick(.05);}
  assert(kinds.includes('polilla')&&kinds.includes('remolino'),kinds.join());}
-// Escaping on foot: 10 ✦, its own Bitácora entry and one notice; with a pulse on time, 15 ✦; reached, nothing but a nudge.
+// Escaping on foot: 30 ✦, its own Bitácora entry and one notice; with a pulse on time, 45 ✦; reached, nothing but a nudge.
 {const g=game();assert(g.liveEncounterSpawn('ola'));const s=g.liveEncounterState().scene;assert.equal(s.verb,'huir');assert.equal(g.liveEncounterState().line,'Una ola gigante. Llega al anillo.');
  g.S.wx=s.safe.x;g.S.wy=s.safe.y;g.liveTick(.05);assert.equal(s.stage,'safe');assert.equal(g.S.sparks,LIVE_REWARD.base);assert.deepEqual(g.elements,['live:ola']);assert.match(g.toasts.at(-1)[0],/Encuentro nuevo.*Ola gigante/);assert.equal(g.S.liveEncounters.kinds.ola.caught,1);
  for(let i=0;i<40;i++)g.liveTick(.05);assert(!g.liveEncounterState().scene);
@@ -71,7 +71,7 @@ for(const [key,value] of [['travelInLevel',()=>true],['placeRun',()=>({})],['son
 // Batch 3 · hacer. The roll in thirds brings the three verbs of the biome over enough encounters, in the order of the hash.
 {const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=new Set();for(let n=0;n<24;n++){const want=liveFor('llanura',hashKey('live:pick:v1:'+scope+':'+n)).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want);kinds.add(sc.kind);sc.stage=sc.result='escaped';sc.over=9;g.liveTick(.05);}
  assert(kinds.has('polilla')&&kinds.has('remolino')&&kinds.has('motas'),[...kinds].join());}
-// Done on foot: 10 ✦, its Bitácora entry and one notice; with a pulse on time, 15 ✦; walking away, nothing lost or given.
+// Done on foot: 30 ✦, its Bitácora entry and one notice; with a pulse on time, 45 ✦; walking away, nothing lost or given.
 {const g=game();assert(g.liveEncounterSpawn('motas'));const s=g.liveEncounterState().scene;assert.equal(s.verb,'hacer');assert.equal(g.liveEncounterState().line,'Siembra cinco motas en orden.');
  for(const q of s.items)for(let i=0;i<20&&!q.done;i++){g.S.wx=q.x;g.S.wy=q.y;g.liveTick(.05);}assert.equal(s.stage,'done');assert.equal(g.S.sparks,LIVE_REWARD.base);assert.deepEqual(g.elements,['live:motas']);assert.match(g.toasts.at(-1)[0],/Encuentro nuevo.*Cinco motas/);assert.equal(g.S.liveEncounters.kinds.motas.caught,1);
  for(let i=0;i<40;i++)g.liveTick(.05);assert(!g.liveEncounterState().scene);
@@ -89,4 +89,4 @@ for(const [key,value] of [['travelInLevel',()=>true],['placeRun',()=>({})],['son
  const h=game();assert(h.liveEncounterSpawn('nodos'));const q=h.liveEncounterState().scene;const heard=[];h.liveAudioCue=n=>heard.push(n);for(let i=0;i<200&&q.show;i++)h.liveTick(.05);assert(!q.show);assert.equal(heard.length,0,'no sound, no note');}
 // Reloading keeps what was caught and the count of encounters seen.
 {const g=game(structuredClone(r.S));assert.equal(g.S.liveEncounters.kinds.polilla.caught,2);assert.equal(g.S.liveEncounters.count,r.S.liveEncounters.count);}
-console.log('PASS living encounters runtime: travel counts only while moving (not standing, paused or in a menu); one appears ahead after 60–90 s in the biome\'s own kind; on time 15 ✦, walking 10 ✦; one Bitácora entry and one notice the first time; escape costs nothing; atomic save with bounded retries; never in chapters, rounds, finales, activities, the Refugio or underground; one at a time with mischief; future saves kept; batch 2: the hash picks chase or flight, escaping pays 10 ✦ (15 ✦ with a pulse on time), being reached costs nothing and nudges a second; batch 3: the roll in thirds brings «hacer» too, done pays 10 ✦ (15 ✦ with a pulse on time), walking away costs nothing, the prism\'s nodes sound quietly only with sound on');
+console.log('PASS living encounters runtime: travel counts only while moving (not standing, paused or in a menu); one appears ahead after 60–90 s in the biome\'s own kind; on time 45 ✦, walking 30 ✦; one Bitácora entry and one notice the first time; escape costs nothing; atomic save with bounded retries; never in chapters, rounds, finales, activities, the Refugio or underground; one at a time with mischief; future saves kept; batch 2: the hash picks chase or flight, escaping pays 30 ✦ (45 ✦ with a pulse on time), being reached costs nothing and nudges a second; batch 3: the roll in thirds brings «hacer» too, done pays 30 ✦ (45 ✦ with a pulse on time), walking away costs nothing, the prism\'s nodes sound quietly only with sound on');

@@ -1,6 +1,6 @@
 # El mundo de Kubono
 
-Reglas vigentes en `main`, **alpha.221**; los arreglos de Jay A–E (alpha.230) y el Mapa del cielo (alpha.231) están en rama. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
+Reglas vigentes en `main`, **alpha.231**; «Chispas solo en el universo» (H1, alpha.233) está en rama. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
 
 ## Propósito y recorrido
 
@@ -13,7 +13,7 @@ Explorar para descubrir sonidos, tocar a tiempo y construir Tu canción. El reco
 | Universo abierto | Música procedural, criaturas, hallazgos, actividades y favoritos |
 | Refugio | Trofeos, objetos, colección y jardín de voces |
 
-Volver no es empezar (panel 11, Q6, D7-C). Diez cristales del Camino abren el Mundo la primera vez. Después, un día nuevo te deja donde estabas: en el Mundo, también a mitad del Viaje, o en el Camino. No hay salto diario al cargar. El Camino del día vuelve como paseo: sus diez primeros cristales dan ✦ y el décimo no te mete en el Mundo; «Entrar al Mundo» espera en el dock. Lo prueba `lastWorldDay` o el logro «mundo», que guarda `enterWorld`; no hace falta migrar.
+Volver no es empezar (panel 11, Q6, D7-C). Diez cristales del Camino abren el Mundo la primera vez. Después, un día nuevo te deja donde estabas: en el Mundo, también a mitad del Viaje, o en el Camino. No hay salto diario al cargar. El Camino del día vuelve como paseo: sus cristales dan luz, no ✦ (desde alpha.233, H1), y el décimo no te mete en el Mundo; «Entrar al Mundo» espera en el dock. Lo prueba `lastWorldDay` o el logro «mundo», que guarda `enterWorld`; no hace falta migrar.
 
 El cubo permanece pequeño. Música, generación y partidas se conservan; color ganado y señales de estado orientan sin llenar el vacío de controles.
 
@@ -61,9 +61,16 @@ Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; sa
 
 Chispas✦ y estrellas★ son distintas. Las chispas compran piezas y viajes; las estrellas nunca se gastan.
 
+**Chispas solo en el universo (Jay, 28 de octubre de 2026; H1, alpha.233).** Las chispas de los niveles no se mezclan con las del mundo abierto.
+
+- **Los niveles dan ★ y Tu canción, nunca ✦.** Un nivel es un capítulo del Viaje, su Camino (también el paseo del día) y una ronda de los once lugares, con Maestro y remezcla, y el final del Viaje. Cerrar una ronda no paga chispas (`LEVEL_SPARKS`, `places.js`), ni la remezcla (`wild.js`). Dentro de un nivel no paga nada más: no se abren actividades ni travesuras, las esculturas suenan sin pagar y las metas de chispas (colecciones, logros) esperan a que salgas. Encuentros vivos y Mapa del cielo ya no aparecían en niveles.
+- **Dentro de un nivel el HUD no muestra ✦**, solo ★ de 33 y lugares de 11. La hoja de fin de ronda muestra ★, sus umbrales, el tiempo y el récord, sin chispas. Al volver al Mundo libre, el contador ✦ reaparece con lo que tenías.
+- **Las chispas se ganan en el universo abierto:** cristales del Mundo, encuentros vivos, Mapa del cielo, actividades, travesuras, la chispa salvaje, esculturas, colecciones y logros. Se gastan en la tienda del cubo y en saltos.
+- **Nadie pierde chispas ni compras.** No cambia ningún formato de guardado y no hay migración: el saldo, lo gastado y lo comprado quedan igual. Quien está a mitad de una ronda al actualizar la termina con sus ★, sin chispas. Las chispas ya ganadas en rondas siguen en el saldo. Un cristal del Mundo a medio recoger conserva sus fragmentos; los que faltan valen ya el triple.
+
 Un solo ★ (panel 10, P8, D3-A): ★ y «Estrellas» solo cuentan las de los lugares (`S.lugares.stars`, máximo 33). Las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora y las tarjetas. En la vista completa, el HUD muestra tres cifras: ★ de 33, ✦ y lugares de 11, al mismo tamaño y peso y alineadas a la derecha (panel 11, Q1). Día, distancia, regiones, continentes y récord están en «Tú» de la Bitácora; la meta de chispas, en Tu cubo. Ninguna hoja de primer nivel muestra un contador a cero. Cada aviso nombra como mucho un logro; los demás esperan en la Bitácora.
 
-Recoger fragmentos conserva valor base fuera de tempo. A tiempo se multiplica×2, o×3 desde la racha de ocho. Completar una ronda da 80–170✦ (60–120 hasta alpha.226); Maestro duplica. Tras las tres primeras rondas diarias de un lugar se reduce ese premio a la mitad. Encuentros, remezclas y algunos logros tienen reglas adicionales. Un encuentro vivo (perseguir, huir o hacer) da 10 ✦, o 15 ✦ con un pulso a tiempo, cada vez; una figura nueva del [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo), 10 ✦ o 15 ✦, solo la primera vez; una actividad, 15 ✦, y una travesura, 10 ✦, una vez por lugar (E1, Jay: «más chispas»; [tabla antes y después](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos)). Fuente: `src/spark-rules.js`.
+Un cristal del Mundo da 3, 9 o 15 ✦ según su tamaño (el triple que hasta alpha.232; `CRYSTAL_SPARK_SCALE`), en los mismos fragmentos. Recoger fragmentos conserva su valor fuera de tempo. A tiempo se multiplica ×2, o ×3 desde la racha de ocho. Un encuentro vivo (perseguir, huir o hacer) da 30 ✦, o 45 ✦ con un pulso a tiempo, cada vez; una figura nueva del [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo), 20 ✦ o 30 ✦, solo la primera vez; una actividad, 30 ✦, y una travesura, 20 ✦, una vez por lugar; la chispa salvaje, 45 ✦. Hasta alpha.232 eran 10/15, 10/15, 15, 10 y 15, y una ronda daba 80–170 ✦ (Maestro ×2, mitad desde la cuarta del día) y la remezcla 30 ✦ más. [Economía antes y después](HALLAZGOS_Y_ACTIVIDADES.md#chispas-solo-en-el-universo). Fuente: `src/spark-rules.js`.
 
 Las tarjetas guardan el hallazgo, su procedencia y una interpretación musical. Puedes elegir hasta cuatro voces para el jardín sin consumir la propiedad. Libro, filtros, selección y Refugio comparten estado. [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md) · [Casa](CASA_VIVA.md).
 

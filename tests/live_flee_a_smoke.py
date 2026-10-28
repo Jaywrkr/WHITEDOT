@@ -1,6 +1,6 @@
 """Living encounters, batch 2 (Jay, 27 Oct 2026): the first four «huir» (Polvo, Cúmulo, Marea, Restos),
 each forced with «?encuentro=<id>» and played to its three endings (live_flee_helpers.py): out with pulses on time for
-15 ✦ (the Bitácora and one notice the first time), out on foot for 10 ✦, reached for nothing but a kind goodbye and a
+45 ✦ (the Bitácora and one notice the first time), out on foot for 30 ✦, reached for nothing but a kind goodbye and a
 short nudge. One at a time, also with the mischief scenes. Screenshots at 390×844."""
 from playwright.sync_api import sync_playwright
 import os,shutil,json
@@ -24,5 +24,5 @@ try:
   assert page.evaluate("__r.liveEncounterState().scene?.kind==='derrumbe'"),'the encounter still runs'
   assert page.evaluate('!__r.mischiefState.scene'),'no mischief scene while an encounter runs'
   assert not errors,errors;page.close();browser.close()
- print('PASS living encounters, batch 2 (a): remolino, enjambre, ola and derrumbe forced with «?encuentro=», ahead with their line; out with pulses on time 15 ✦ (Bitácora and one notice the first time), on foot 10 ✦, reached nothing given or taken and a short nudge; one at a time, also with mischief; screenshots '+json.dumps(shots),flush=True)
+ print('PASS living encounters, batch 2 (a): remolino, enjambre, ola and derrumbe forced with «?encuentro=», ahead with their line; out with pulses on time 45 ✦ (Bitácora and one notice the first time), on foot 30 ✦, reached nothing given or taken and a short nudge; one at a time, also with mischief; screenshots '+json.dumps(shots),flush=True)
 finally:server.shutdown()

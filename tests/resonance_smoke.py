@@ -34,9 +34,9 @@ try:
    # The bar full: the gold crystal, and one pulse on time ends the round.
    page.evaluate("()=>{__r.S.journey.resonance.points=__r.journeyResonance().goal;}");page.wait_for_function("!!__r.journeyResonance().gold",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
-   last=page.evaluate('__r.places().last');assert last['id']=='cristales' and last['stars'][0] and last['sparks']>=60,last
+   last=page.evaluate('__r.places().last');assert last['id']=='cristales' and last['stars'][0] and last['sparks']==0,last
    page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000)
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Cristales on phone and desktop: ?lugar=cristales rings a crystal only on time, three notes make a chord, the bar is seen in both screen modes, the gold crystal ends the round with stars, sparks and its card',flush=True)
+ print('PASS Cristales on phone and desktop: ?lugar=cristales rings a crystal only on time, three notes make a chord, the bar is seen in both screen modes, the gold crystal ends the round with stars and its card, no sparks (H1)',flush=True)
 finally:server.shutdown()

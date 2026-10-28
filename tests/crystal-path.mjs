@@ -20,7 +20,7 @@ for(let i=0;i<10;i++){
  r.crystalTick(.02);assert.equal(r.S.pathCrystals.length,i+1);r.crystalTick(.02);
  assert.equal(entered,i===9?1:0);if(i<9)assert(!r.worldReady());
 }
-assert.equal(r.S.sparks,10);assert(r.worldReady());assert.equal(entered,1);
+assert.equal(r.S.sparks,0,'H1 (alpha.233): the Camino gives light, never ✦');assert.equal(r.S.todayLight,110);assert(r.worldReady());assert.equal(entered,1);
 const saved=r.S.pathCrystals.slice();r.S.mode='camino';r.waves=[];r.crystalTick(.02);assert.equal(r.S.mode,'camino','returning to the Camino does not immediately re-enter');r.S.mode='camino';r.S.pathCrystals=saved.slice(0,9);r.S.px=90;r.S.py=r.pathY(90);r.waves=[];r.crystalTick(.02);const o=pathCrystalField(90,r.pathY,r.S.todayKey).find(p=>p.id.endsWith(':0'));
 r.waves=[{x:o.x-10,y:o.y,r:11,prev:9,origin:'player'}];r.crystalTick(.02);assert.equal(r.S.pathCrystals.length,9,'saved broken crystals cannot count twice');
 r.S.todayKey='2000-01-01';r.S.mode='camino';r.checkDay();assert.equal(r.S.pathCrystals.length,0,'new day restores the ten-crystal goal');assert(!r.worldOpened()&&!r.worldReady(),'a new player who never opened the World still needs the ten crystals');
@@ -38,10 +38,11 @@ console.log('PASS real fallback pulse breaks further Camino crystals without pay
  assert.deepEqual([back.S.wx,back.S.wy,back.S.layer],[48210,-9120,'superficie'],'right where the player was');assert.equal(back.S.journey.chapter,3,'mid-Journey progress kept');
  assert.equal(back.S.todayKey,back.dayKey());assert.equal(back.S.lastWorldDay,back.S.todayKey,'today is a World day: no daily jump on load');
  assert.equal(back.S.pathCrystals.length,0,'the day\'s Camino comes back');assert(back.worldReady(),'the World stays open without the ten crystals');
- // The day's Camino is a walk: its crystals still pay sparks; the tenth one does not pull the player into the World.
+ // The day's Camino is a walk: since H1 (alpha.233) its crystals give light and no sparks, like the Journey's; the tenth
+ // one does not pull the player into the World.
  back.S.mode='camino';back.S.sound=false;back.S.journey={mode:'libre'};initialize(back);back.crystalTick(.02);
  for(let i=0;i<10;i++){const o=pathCrystalField(i*160,back.pathY,back.S.todayKey).find(p=>p.id.endsWith(':'+i));back.S.px=o.x;back.S.py=o.y-20;back.waves=[];back.crystalTick(.02);back.waves=[{x:o.x-10,y:o.y,r:11,prev:9,origin:'player'}];back.crystalTick(.02);back.crystalTick(.02);}
- assert.equal(back.S.pathCrystals.length,10);assert.equal(back.S.sparks,50,'the walk\'s crystals still give ✦');assert.equal(entries,0,'no forced entry for a returning player');assert.equal(back.S.mode,'camino');
+ assert.equal(back.S.pathCrystals.length,10);assert.equal(back.S.sparks,40,'the walk\'s crystals give no ✦ (H1), and the wallet is kept');assert.equal(entries,0,'no forced entry for a returning player');assert.equal(back.S.mode,'camino');
  // Old saves: the «mundo» achievement alone proves the World was opened; a Camino save stays in the Camino.
  const old={};data(old);progress(old);Object.assign(old,{unlock(){},showPhrase(){},setBiome(){},hud(){},exitWorld(){throw Error('no exit');}});Object.assign(old.S,{mode:'camino',todayKey:'2000-01-01',lastWorldDay:null,ach:{mundo:'2026-09-01'}});
  old.checkDay(true);assert.equal(old.S.mode,'camino','where they were: the Camino');assert(old.worldReady(),'legacy achievement keeps the World open');assert.equal(old.S.ach.mundo,'2026-09-01');

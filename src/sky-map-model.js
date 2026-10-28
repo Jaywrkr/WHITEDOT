@@ -17,9 +17,10 @@ export const SKY_SHARE=Object.freeze({base:.16,vacio:.3,faros:.3,constelaciones:
 export const SKY_SCALE=160,SKY_START=300,SKY_LEAVE=720,SKY_TOUCH=26,SKY_PULSE=150,SKY_HINT=1600;
 // Seconds: the notice, the summary, the figure shining when complete.
 export const SKY_NOTICE=3,SKY_SUMMARY=3,SKY_GLOW=3;
-// Decision 9: small and repeatable pays a few sparks; a figure pays once, the first time it is joined (10, or 15 with a
-// pulse on time). Another copy of a figure already in your map pays nothing: the music and the light are its reward.
-export const SKY_REWARD=Object.freeze({base:10,onTime:15});
+// Decision 9: small and repeatable pays a few sparks; a figure pays once, the first time it is joined (20, or 30 with a
+// pulse on time; 10 and 15 until H1, alpha.233, when sparks became the open universe's only). Another copy of a figure
+// already in your map pays nothing: the music and the light are its reward.
+export const SKY_REWARD=Object.freeze({base:20,onTime:30});
 // Notes, far under the music (docs/IDEAS_UNIVERSO.md, audio): a star is quieter than a living encounter's note; the
 // motif sits at a living encounter's level.
 export const SKY_STAR_GAIN=.012,SKY_MOTIF_GAIN=.02;

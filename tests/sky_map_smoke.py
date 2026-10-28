@@ -2,7 +2,7 @@
 cube after a few seconds of travel, with its name. The next star is white with a ring and the white arrow points to it;
 passing through the stars in order lights them (another star does nothing), a pulse on time near the next one lights it
 and the one after; walking away leaves it half-done and saved, coming back resumes it; complete, it shines a moment,
-pays 15 ✦ once with one notice and goes to the Bitácora («Mapa del cielo»), drawn, the others as silhouettes. A figure
+pays 30 ✦ once with one notice and goes to the Bitácora («Mapa del cielo»), drawn, the others as silhouettes. A figure
 of the map itself (from hashKey, no shortcut) starts when the cube walks to it. Screenshots at 390×844."""
 from pathlib import Path
 from functools import partial
@@ -59,7 +59,7 @@ try:
   assert page.evaluate(f"__r.S.skyMap.sites['{sid}'].lit")==4,'kept across a reload'
   page.evaluate(f"(()=>{{const s=__r.S.skyMap.sites['{sid}'];__r.S.wx=s.x;__r.S.wy=s.y;}})()");page.wait_for_function(f"__r.skyMapState().scene?.site.id==='{sid}'",timeout=4000)
   st=page.evaluate(SCENE);assert st['lit']==4 and st['title']=='Orión · 4 de 7' and st['hint']=='La dejaste aquí. Sigue.',st
-  # 4 · Complete: it shines, 15 ✦ once (a pulse on time made it), one notice; then the summary.
+  # 4 · Complete: it shines, 30 ✦ once (a pulse on time made it), one notice; then the summary.
   before=page.evaluate('__r.S.sparks')
   for k in range(4,7):assert page.evaluate(WALK,[k,320])==k+1 or page.evaluate(SCENE)['stage']=='done'
   page.wait_for_function("__r.skyMapState().scene?.stage==='done'",timeout=3000)
@@ -67,8 +67,8 @@ try:
   path=SHOTS/'kubono-f1-orion-completa-390.png';page.screenshot(path=str(path));shots.append(str(path))
   page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Constelación nueva')",timeout=5000);assert 'Orión' in page.locator('#toast').inner_text()
   q=page.evaluate("(()=>{const r=__r;return {sparks:r.S.sparks,earned:r.S.skyMap.earned,fig:r.S.skyMap.figures.orion,log:r.sparkEconomy.log.at(-1)}})()")
-  assert q['earned']==15 and q['sparks']>=before+15 and q['fig']['done']==1 and q['fig']['onTime']==1 and q['log']['text']=='Mapa del cielo · +15 chispas',q
-  page.wait_for_function("!__r.skyMapState().scene",timeout=6000);assert page.evaluate(SCENE)['summary']=='Orión · completa · +15 ✦'
+  assert q['earned']==30 and q['sparks']>=before+30 and q['fig']['done']==1 and q['fig']['onTime']==1 and q['log']['text']=='Mapa del cielo · +30 chispas',q
+  page.wait_for_function("!__r.skyMapState().scene",timeout=6000);assert page.evaluate(SCENE)['summary']=='Orión · completa · +30 ✦'
   # 5 · The Bitácora: «Mapa del cielo», Orion drawn, the rest as silhouettes, the series' progress.
   page.evaluate("()=>{__r.openJournal('places');}");page.wait_for_selector('#journalSkyMap')
   page.evaluate("()=>{const d=document.getElementById('journalSkyMap');d.open=true;d.querySelector('[data-sky-series=sur]').scrollIntoView({block:'start'});}");page.wait_for_timeout(300)
@@ -81,7 +81,7 @@ try:
   page.evaluate("(()=>{__r.S.wx+=6000;})()");page.wait_for_timeout(200)
   assert page.evaluate("__r.skyMapSpawn('orion')");assert page.evaluate(SCENE)['title']=='Orión · ya en tu mapa'
   for k in range(7):page.evaluate(WALK,[k,400])
-  page.wait_for_function("!__r.skyMapState().scene",timeout=6000);assert page.evaluate(SCENE)['summary']=='Orión · completa · ya en tu mapa' and page.evaluate('__r.S.skyMap.earned')==15
+  page.wait_for_function("!__r.skyMapState().scene",timeout=6000);assert page.evaluate(SCENE)['summary']=='Orión · completa · ya en tu mapa' and page.evaluate('__r.S.skyMap.earned')==30
   assert not errors,errors;page.close()
   # 7 · A figure of the map itself (no shortcut): from hashKey, near the cube; walking to it starts it with its name.
   page,errors=page_for(browser,'?anillo=1');page.wait_for_timeout(500);page.evaluate(FREE)
@@ -96,5 +96,5 @@ try:
   st=page.evaluate(SCENE);assert st['scene'] and st['id']==site['id'] and st['fig']==site['fig'],(st,site)
   assert st['title'].startswith('Mapa del cielo · '),st
   assert not errors,errors;page.close();browser.close()
- print('PASS sky map: «?cielo=orion» brings Orion ahead with its name; joined in order (another star does nothing, off time does not count, a pulse on time counts double), saved with each star, left half-done and kept across a reload, resumed; complete: 15 ✦ once with one notice and its summary; the Bitácora draws it among 27 silhouettes with the series; a repeat pays nothing; a figure of the map itself starts when walked to; screenshots '+json.dumps(shots),flush=True)
+ print('PASS sky map: «?cielo=orion» brings Orion ahead with its name; joined in order (another star does nothing, off time does not count, a pulse on time counts double), saved with each star, left half-done and kept across a reload, resumed; complete: 30 ✦ once with one notice and its summary; the Bitácora draws it among 27 silhouettes with the series; a repeat pays nothing; a figure of the map itself starts when walked to; screenshots '+json.dumps(shots),flush=True)
 finally:server.shutdown()

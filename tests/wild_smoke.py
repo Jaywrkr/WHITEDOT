@@ -1,6 +1,6 @@
 """The wild World (plan F18) on ?anillo=1: a wild spark turns up ahead of the cube; five pulses on time beside it
-catch it for 15 sparks, one far from it does nothing. Lugares shows today's remix; it starts that place's round with
-another rhythm, and closing it pays 30 sparks more."""
+catch it for 45 sparks, one far from it does nothing. Lugares shows today's remix; it starts that place's round with
+another rhythm, and closing it pays no sparks (H1, alpha.233: a level gives ★, never ✦), nor shows them on its card."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -29,17 +29,17 @@ try:
     if not s:break
     page.evaluate(f"()=>{{__r.S.wx={s['x']};__r.S.wy={s['y']};}}");page.evaluate(ON);page.wait_for_timeout(300)
    st=page.evaluate('__r.wildState()');assert st['spark'] is None and st['caught']==1 and st['today']==1,st
-   assert page.evaluate('__r.S.sparks')-sparks>=15
+   assert page.evaluate('__r.S.sparks')-sparks>=45
    # Today's remix in Lugares: it starts the round with another rhythm and pays 30 more.
    mix=page.evaluate('__r.dailyRemix()');assert mix and mix['id'] and mix['rhythm'],mix
    page.evaluate('__r.openLugares()');assert page.locator('#lugaresRemix').is_visible() and page.locator('#lugaresRemixLine').is_visible()
    page.locator('#lugaresRemix').click();page.wait_for_function(f"__r.places().run?.id==='{mix['id']}'&&__r.places().run.remix==='{mix['rhythm']}'",timeout=8000)
    page.wait_for_function(f"__r.journeyRhythmState().rhythm==='{mix['rhythm']}'",timeout=8000)
    assert page.evaluate(f"__r.startPlace('{mix['id']}',{{remix:'tiempo'}})") is False
-   page.evaluate(f"__r.placeFinish('{mix['id']}')");last=page.evaluate('__r.places().last');assert last['remix']==mix['rhythm'] and last['extra']['sparks']>=30,last
-   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.locator('#placeTitle').inner_text().endswith(' · Remezcla')
+   wallet=page.evaluate('__r.S.sparks');page.evaluate(f"__r.placeFinish('{mix['id']}')");last=page.evaluate('__r.places().last');assert last['remix']==mix['rhythm'] and last['extra']['sparks']==0 and last['sparks']==0,last;assert page.evaluate('__r.S.sparks')==wallet
+   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.locator('#placeTitle').inner_text().endswith(' · Remezcla');assert '✦' not in page.locator('#mPlace').inner_text()
    if os.environ.get('WILD_SHOT'):page.locator('#placeClose').click();page.evaluate('__r.wildSpawn()');page.wait_for_timeout(500);page.screenshot(path=os.environ['WILD_SHOT'].replace('.png',f'-{width}.png'))
    assert not errors,errors;page.close()
   browser.close()
- print('PASS wild World on phone and desktop: a wild spark ahead of the cube, nothing far from it, five on time beside it catch it for 15 sparks; today\'s remix from Lugares plays its place with another rhythm and pays 30 more',flush=True)
+ print('PASS wild World on phone and desktop: a wild spark ahead of the cube, nothing far from it, five on time beside it catch it for 45 sparks; today\'s remix from Lugares plays its place with another rhythm and pays no sparks (H1)',flush=True)
 finally:server.shutdown()

@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 28 de octubre de 2026. Código **2.3.0-alpha.231**. Las entradas describen su revisión, no certifican producción.
+Estado: 28 de octubre de 2026. Código **2.3.0-alpha.233** en la rama `jay/h1-chispas`. Las entradas describen su revisión, no certifican producción.
+
+
+## Chispas solo en el universo (H1) · 2.3.0-alpha.233
+
+Rama `jay/h1-chispas`, desde `main` (`2b3daf3`, alpha.231). En paralelo van `jay/arreglos-g` (alpha.232) y `jay/h2-refugio`. Decisión de Jay: las chispas de los niveles no se mezclan con las del mundo abierto. Guía: [El mundo](docs/MUNDO.md#chispas-y-colección) y [economía antes y después](docs/HALLAZGOS_Y_ACTIVIDADES.md#chispas-solo-en-el-universo).
+
+- **Los niveles dan ★ y Tu canción, no ✦.** Cerrar una ronda (también Maestro y remezcla) no paga chispas (`LEVEL_SPARKS` en `spark-rules.js`; `places.js`, `wild.js`). El Camino es parte del Viaje: sus cristales dan luz, no ✦, también en el paseo del día (`sparks.js`, `crystal-sparks.js`). Dentro de un nivel no se abren actividades ni travesuras, las esculturas no pagan y las metas de chispas esperan a que salgas.
+- **HUD y hoja.** Dentro de un nivel (y con la hoja de la ronda abierta) el HUD muestra ★ y lugares, sin ✦. La hoja de fin de ronda dice el tiempo y el récord, sin chispas. En el Mundo libre el contador ✦ vuelve igual.
+- **El universo paga más.** Cristales del Mundo ×3 (3, 9 o 15 ✦, mismos fragmentos), encuentros vivos 30/45 ✦ (eran 10/15), figura nueva del Mapa del cielo 20/30 ✦ (10/15), actividad 30 ✦ (15), travesura 20 ✦ (10), chispa salvaje 45 ✦ (15). Precios de la tienda iguales.
+- **Economía** (`node scripts/play-curve.mjs`; el modelo ya no paga rondas y supone 1,6 min de Mundo tras cada ronda). Chispas a 30/60/120 min, alpha.231 → alpha.233: 60 %, 486/1.626/3.915 → 394/1.545/3.848; 75 %, 679/2.175/6.054 → 668/2.091/4.841; 90 %, 890/3.074/7.217 → 872/3.046/7.005; sin sonido, 532/1.634/3.884 → 352/1.256/3.107. Veinte minutos solo explorando: 11–20 % del precio de la tienda (antes 4–7 %). Tienda completa con la mitad del tiempo en lugares: 6,9 → 5,6 h y 5,2 → 3,8 h.
+- **Guardado.** Sin migración ni cambio de formato: nadie pierde chispas ni compras; las ya ganadas en rondas se quedan. Una ronda a medias se termina sin chispas.
+- **Textos.** «Cómo jugar» dice que las chispas se ganan en el universo abierto, no en los niveles, que los lugares dan estrellas y Tu canción, y los importes nuevos de encuentros y travesuras; inglés en `i18n-en.js`.
+- Pruebas actualizadas sin quitar aserciones de otras cosas: lógica (`spark-rules`, `play-curve`, `spark-economy-sim`, `sparks-economy`, `places*`, `crystal-*`, encuentros vivos, Mapa del cielo) y recorridos de navegador (lugares, hoja de ronda, remezcla, Camino, cristales, encuentros vivos, Mapa del cielo, Viaje, inglés). Capturas a 390×844 del HUD en un nivel, la hoja y el HUD en el Mundo.
+- Preservación: cambian a propósito archivos protegidos (rondas, chispas, cristales, actividades, travesuras, remezcla y la lista offline de `sw.js` por la versión), con su capa `approvedH1`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Mapa del cielo (F1) · 2.3.0-alpha.231

@@ -20,8 +20,8 @@ try:
   assert page.evaluate('__r.S.sparks')==before and page.locator('#mPlace').is_hidden()
   page.evaluate("()=>{window.__denyWrites=false;__r.journeyGamePulse(true,{step:0,silent:true});}")
   page.wait_for_function("!document.getElementById('mPlace').hidden")
-  assert page.evaluate('__r.S.sparks')==before+170 and page.evaluate('__r.S.lugares.best.llanura.rounds')==1
-  assert page.evaluate("JSON.parse(localStorage.getItem(__r.saveStore.key)).sparks")==before+170
+  assert page.evaluate('__r.S.sparks')==before and page.evaluate('__r.S.lugares.best.llanura.rounds')==1
+  assert page.evaluate("JSON.parse(localStorage.getItem(__r.saveStore.key)).sparks")==before,"H1: the round pays no sparks"
   page.evaluate("()=>{window.__restoreStorage();__r.S=structuredClone(__r.S);__r.places();}")
   assert page.locator('#mPlace').is_hidden() and page.evaluate('__r.places().last') is None
   assert not errors,errors;browser.close()

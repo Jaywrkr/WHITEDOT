@@ -36,7 +36,8 @@ export function initialize(r){
  function music(){if(!scene?.notes.length||queued||!r.S.sound||r.ac?.state!=='running')return;const bar=Math.floor((r.MU.step||0)/16);if(bar!==musicBar){musicBar=bar;musicHits=0;}if(musicHits>=(scene.kind==='farewell'?6:2))return;musicHits++;const s=scene,state=r.S,key=scope,index=s.notes.shift();queued=true;
   r.beatSoon?.(time=>{queued=false;if(scene!==s||state!==r.S||scope!==key||key!==JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie')+':'+r.S.todayKey||!active()||Math.hypot(s.x-r.S.wx,s.y-r.S.wy)>reach(s))return;playMischiefNote(r,index,time,s.kind==='farewell'&&s.relays?.length?s.relays[Math.max(0,index-1)%s.relays.length]:null);},null,'player');
  }
- function tick(dt,paused=false){const q=book();if(!r.inWorld()||r.activityActive){scene=null;queued=false;return;}if(paused||!active()||q.version!==1)return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
+ // H1 (alpha.233): mischief is of the open universe; inside a level (a chapter, a round, the finale) no scene stays or starts.
+ function tick(dt,paused=false){const q=book();if(!r.inWorld()||r.activityActive||r.travelInLevel?.()||r.placeRun?.()){scene=null;queued=false;return;}if(paused||!active()||q.version!==1)return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
   if(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused){scene=null;return;}
   const player={x:r.S.wx,y:r.S.wy};if(scene&&Math.hypot(scene.x-player.x,scene.y-player.y)>reach(scene)){blocked=scene.id;scene=null;cooldown=clock+15;queued=false;}
   // One at a time: while a living encounter runs (live-encounters.js) no scene starts.

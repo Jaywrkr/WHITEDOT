@@ -16,7 +16,7 @@ Catálogo construido y conservado en alpha.207. Las tandas0–7 están implement
 
 81 piezas, 78 nuevas. Precio total: 17030 ✦ tras la revisión de economía de la tanda 7, que dejó a la mitad el precio de las 78 piezas nuevas (antes 33790 ✦; las tres primeras conservan el suyo). La minería medida con `scripts/sparks-calibration.mjs` da de 10 a 14 ✦ por minuto caminando a velocidad normal, así que completar la tienda lleva del orden de 20 a 28 horas de juego activo (antes de 40 a 56); el salto (20 ✦) sigue siendo el gasto repetible.
 
-Desde F3 ([El mundo](MUNDO.md)) tocar a tiempo en el Mundo libre vale ×2 (×3 desde el octavo seguido) y las rondas de los lugares dan 60–120 ✦: con `scripts/spark-economy.mjs` la tienda completa queda en unas 9,4 horas para quien toca a tiempo seis de cada diez pulsos y unas 7 para quien toca nueve de cada diez. Los precios no cambian.
+Desde F3 ([El mundo](MUNDO.md)) tocar a tiempo en el Mundo libre vale ×2 (×3 desde el octavo seguido) y las rondas de los lugares dan 60–120 ✦: con `scripts/spark-economy.mjs` la tienda completa queda en unas 9,4 horas para quien toca a tiempo seis de cada diez pulsos y unas 7 para quien toca nueve de cada diez. Los precios no cambian. Desde alpha.233 ([Chispas solo en el universo](HALLAZGOS_Y_ACTIVIDADES.md#chispas-solo-en-el-universo)) las rondas no dan chispas y el universo abierto paga más: con la mitad del tiempo en lugares, unas 5,6 y 3,8 horas. Los precios siguen igual.
 
 ### Movimiento
 

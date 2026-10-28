@@ -16,4 +16,4 @@ const none={stars:{}};for(let d=1;d<=20;d++){const m=dailyRemix('2026-12-'+d,non
 assert.equal(remixSparks(.8,.9),REMIX_SPARKS);assert.equal(remixSparks(.95,.9),REMIX_SPARKS+REMIX_RECORD);
 // Plan H6: the spark is louder near, never silent within its reach of a walk.
 {let prev=1;for(let d=0;d<=WILD_HEAR*2;d+=50){const g=wildGain(d);assert(g>0&&g<=prev);prev=g;}assert(wildGain(0)>wildGain(WILD_HEAR)*3);}
-console.log('PASS wild: a wild spark after a minute and 1 200 px walked (always by two), today\'s remix of an open place with another rhythm, 30 ✦ and 20 more over the day\'s best');
+console.log('PASS wild: a wild spark after a minute and 1 200 px walked (always by two), today\'s remix of an open place with another rhythm (it paid 30 ✦ and 20 more over the day\'s best until H1; now none)');

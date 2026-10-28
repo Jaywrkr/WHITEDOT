@@ -49,9 +49,9 @@ assert.equal(skyStep(site,{x:999,y:999},[{...st(1),beat:false}]).lit,0,'off time
 const both=skyStep(site,{x:999,y:999},[{x:(st(1).x+st(2).x)/2,y:(st(1).y+st(2).y)/2,beat:true}]);assert.equal(both.lit,2,'a pulse on time counts double when the next two are near');assert(both.onTime&&site.onTime);
 assert.equal(skyStep(site,{x:st(3).x+SKY_TOUCH-1,y:st(3).y}).lit,1);
 for(let k=site.lit;k<7;k++)skyStep(site,st(k));assert(site.done&&site.lit===7);assert.equal(skyStep(site,st(0)).lit,0,'done stays done');
-// Rewards: 10 ✦, 15 ✦ with a pulse on time, the first time only.
+// Rewards: 20 ✦, 30 ✦ with a pulse on time (10 and 15 until H1, alpha.233), the first time only.
 assert.equal(skyReward({onTime:true},true),SKY_REWARD.onTime);assert.equal(skyReward({onTime:false},true),SKY_REWARD.base);assert.equal(skyReward({onTime:true},false),0);
-assert(SKY_REWARD.base===10&&SKY_REWARD.onTime===15&&SKY_STAR_GAIN<=.012&&SKY_MOTIF_GAIN<=.02);
+assert(SKY_REWARD.base===20&&SKY_REWARD.onTime===30&&SKY_STAR_GAIN<=.012&&SKY_MOTIF_GAIN<=.02);
 // Notes: in the scale, from its tonic.
 const dorian=[0,2,3,5,7,9,10];assert.equal(skyNote(dorian,69,0),69);assert.equal(skyNote(dorian,69,2),72);assert.equal(skyNote(dorian,69,7),81);assert.equal(skyNote(dorian,69,-1),67);assert.equal(skyNote(null,60,4),67);
 // Words and the hour.

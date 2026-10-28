@@ -1,10 +1,11 @@
 // The spark economy of plan F3 (docs/MUNDO.md): how long the whole cube shop takes for two kinds of player. Mining is
-// measured on the real economy and crystals (the route of sparks-calibration.mjs) at ×1, ×2 and ×3; rounds in places
-// come from spark-rules.js. A model of play time, not a measurement of people.
+// measured on the real economy and crystals (the route of sparks-calibration.mjs) at ×1, ×2 and ×3. Since H1 (Jay,
+// alpha.233) rounds in places pay no sparks (LEVEL_SPARKS); until then they came from roundSparks. The time in places
+// earns ★ and the song, the time in the World earns the sparks. A model of play time, not a measurement of people.
 import {initialize as economy} from '../src/sparks.js';
 import {initialize as crystals} from '../src/crystal-sparks.js';
 import {CUBE_SHOP} from '../src/cube-shop-model.js';
-import {roundSparks} from '../src/spark-rules.js';
+import {roundSparks,LEVEL_SPARKS,ECONOMY_BEFORE_H1} from '../src/spark-rules.js';
 import {LIVE_REWARD,LIVE_EVERY} from '../src/live-encounters-model.js';
 // E1 (Jay, 27 Oct 2026): living encounters while travelling, one every 60–90 s of travel (75 on average). The model
 // assumes a player catches 45 % of them plus four tenths of their share on time (60 % on time → 69 %), and makes a
@@ -34,8 +35,9 @@ export function minePerMinute(mult){const nodes={},r={S:{mode:'world',todayKey:'
 export const ROUND_MINUTES=2.75;
 // Two players: one who plays on time six pulses in ten without long streaks, one who plays on time nine in ten.
 export const PROFILES=Object.freeze([{id:'casual',onTime:.6,streakShare:0,placeShare:.5},{id:'ritmo',onTime:.9,streakShare:.6,placeShare:.5}]);
-export function simulate(){const mine={0:0,1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
- const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,live=livePerMinute(p,LIVE_REWARD),world=off*mine[1]+on2*mine[2]+on3*mine[3]+live,places=roundSparks(p.onTime)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
+// before: the economy of alpha.231/232 (rounds 80–170, crystals a third, encounters 10/15) for the before-and-after.
+export function simulate({before=false}={}){const scale=before?ECONOMY_BEFORE_H1.mine:1,measured={0:0,1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},mine=Object.fromEntries(Object.entries(measured).map(([k,v])=>[k,v*scale])),shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
+ const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,live=livePerMinute(p,before?ECONOMY_BEFORE_H1.live:LIVE_REWARD),world=off*mine[1]+on2*mine[2]+on3*mine[3]+live,places=(before?roundSparks(p.onTime):LEVEL_SPARKS)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
   return {...p,livePerMinute:+live.toFixed(1),worldPerMinute:+world.toFixed(1),placesPerMinute:+places.toFixed(1),perMinute:+perMinute.toFixed(1),shopHours:+(shop/perMinute/60).toFixed(1)};});
  return {shop,minePerMinute:Object.fromEntries(Object.entries(mine).map(([k,v])=>[k,+v.toFixed(1)])),players};}
-if(import.meta.url===`file://${process.argv[1]}`)console.log(JSON.stringify({method:'Mining measured on the real economy (ten-minute route, pulse every 0.9 s) at ×1, ×2 and ×3 (off time earns its ×1 base since K2); rounds from spark-rules.js at 2.75 min; half the time in places; travelling in the World also meets living encounters (play-curve.mjs). A model, not people.',...simulate()},null,2));
+if(import.meta.url===`file://${process.argv[1]}`)console.log(JSON.stringify({method:'Mining measured on the real economy (ten-minute route, pulse every 0.9 s) at ×1, ×2 and ×3 (off time earns its ×1 base since K2); half the time in places, which pay ★ and no sparks since H1 (before: rounds from spark-rules.js at 2.75 min); travelling in the World also meets living encounters (play-curve.mjs). A model, not people.',...simulate(),before:simulate({before:true}).players.map(({id,perMinute,shopHours})=>({id,perMinute,shopHours}))},null,2));

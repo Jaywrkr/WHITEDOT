@@ -1,6 +1,6 @@
 """Living encounters, clearer (Jay, 28 Oct 2026, alpha.230), on a 390×844 phone, one of each verb (polilla, ola, motas):
 the start draws its name and verb («Polilla de luz · atrápala»), a thin white ring of the time left round the cube and a
-white arrow to the next step; a win bursts in the biome's light and leaves «Polilla · atrapada · +15 ✦»; a loss drifts
+white arrow to the next step; a win bursts in the biome's light and leaves «Polilla · atrapada · +45 ✦»; a loss drifts
 away fading with its goodbye and leaves «… · sin premio». With «Textos en el universo» off the words go, the ring and the
 arrow stay (as in the quiet view, which writes no words in the World). Rules and rewards are the ones of tests/live-encounters.mjs; here only what the player sees."""
 from playwright.sync_api import sync_playwright
@@ -49,19 +49,19 @@ try:
   # Chase: the moth, caught with a pulse on time; then one that gets away.
   start('polilla','llanura','Polilla de luz · atrápala');shot('polilla-inicio')
   got=page.evaluate(DRIVE,['pulse',20]);assert got['stage']=='caught',got
-  ending('polilla','Polilla · atrapada · +15 ✦','polilla-gana')
+  ending('polilla','Polilla · atrapada · +45 ✦','polilla-gana')
   start('polilla','llanura','Polilla de luz · atrápala');page.evaluate("__r.S.wx+=1600")
   ending('polilla','Polilla · se escapó · sin premio','polilla-escapa','La polilla se fue volando.')
   # Flee: the wave, reached by walking to the white ring; then standing still, it reaches the cube.
   start('ola','lago','Ola gigante · llega al anillo');shot('ola-inicio')
   got=page.evaluate(DRIVE,['walk',14]);assert got['stage']=='safe',got
-  ending('ola','Ola · a salvo · +10 ✦','ola-gana')
+  ending('ola','Ola · a salvo · +30 ✦','ola-gana')
   start('ola','lago','Ola gigante · llega al anillo')
   ending('ola','Ola · te alcanzó · sin premio','ola-escapa','La ola te mojó. Ya pasó.')
   # Do: the five motes, sown with pulses on time; then walking away from them.
   start('motas','llanura','Cinco motas · siémbralas en orden');shot('motas-inicio')
   got=page.evaluate(DRIVE,['pulse',25]);assert got['stage']=='done',got
-  ending('motas','Motas · hecho · +15 ✦','motas-gana')
+  ending('motas','Motas · hecho · +45 ✦','motas-gana')
   start('motas','llanura','Cinco motas · siémbralas en orden');page.evaluate("__r.S.wx+=1600")
   ending('motas','Motas · sin terminar · sin premio','motas-escapa','El viento guardó las motas.')
   # «Textos en el universo» off: no words, the ring and the arrow stay.

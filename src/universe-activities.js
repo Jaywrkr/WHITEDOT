@@ -22,7 +22,8 @@ export function initialize(r){
   if(r.save()===false){delete q.done[a.o.id];q.types=previousTypes;r.S.sparks=before.balance;r.S.sparkEconomy=before.economy;return false;}a.paid=true;
   const active=a;if(r.S.sound&&r.ac?.state==='running')r.beatSoon?.(time=>{if(current!==active||!ready()||openSurface('.modal:not([hidden])')||!r.S.sound)return;const tones=r.chordTones();for(let i=0;i<3;i++)r.hookInst('feltpiano',tones[i%tones.length],time+i*(r.SIX||.125)*2,r.vel(.06),r.regionOfPos(r.S.wx,r.S.wy));},null,'player');return true;
  }
- function tick(dt,paused=false){book();if(current||paused||!ready()||openSurface('.modal:not([hidden])'))return;clock+=Math.max(0,Math.min(.05,dt||0));const p={x:r.S.wx,y:r.S.wy},moved=last?Math.hypot(p.x-last.x,p.y-last.y):0;last=p;
+ // H1 (alpha.233): activities are of the open universe; none opens inside a level (a chapter, a round, the finale).
+ function tick(dt,paused=false){book();if(current||paused||!ready()||r.travelInLevel?.()||r.placeRun?.()||openSurface('.modal:not([hidden])'))return;clock+=Math.max(0,Math.min(.05,dt||0));const p={x:r.S.wx,y:r.S.wy},moved=last?Math.hypot(p.x-last.x,p.y-last.y):0;last=p;
   if(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused)return;
   const near=portals().find(o=>Math.hypot(o.x-p.x,o.y-p.y)<38);if(blocked&&!portals().some(o=>o.id===blocked&&Math.hypot(o.x-p.x,o.y-p.y)<120))blocked=null;
   if(!near||near.id===blocked||moved>2){hold=0;waiting=null;return;}

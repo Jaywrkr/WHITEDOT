@@ -1,8 +1,9 @@
 import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
-import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT} from './crystal-play-model.js';
+import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT,DIM_FRAGMENT_SPARKS} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
 import {fillRapidCamino} from './chapter-test.js';
+import {CRYSTAL_SPARK_SCALE} from './spark-rules.js';
 const CELL=200,MAX_SITES=8192;
 export const normalizeSparks=value=>Number.isFinite(value)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value))):0;
 // Regional abundance and an independent lattice keep clear gaps between crystals.
@@ -48,7 +49,8 @@ export function initialize(runtime){
   const pos=position(),path=S().mode==='camino',key=path?'path:'+S().todayKey+':'+Math.floor(pos.x/160):'world:'+Math.floor(pos.x/CELL)+','+Math.floor(pos.y/CELL);
   if(key!==cell){cell=key;near=path?pathCrystalField(pos.x,runtime.pathY,S().todayKey):crystalField(pos.x,pos.y,runtime.seedOf);}
   // Panel 11 (Q6, D7-C): the tenth crystal is the door only the first time. For whoever already opened the World the
-  // Camino is a walk: its crystals pay ✦ and «Entrar al Mundo» waits in the dock, without pulling the player in.
+  // Camino is a walk and «Entrar al Mundo» waits in the dock, without pulling the player in. H1 (Jay, alpha.233): the
+  // Camino is part of the Journey, so its crystals give light and never ✦, also on that walk.
   let completed=false;const door=!runtime.worldOpened?.();
   for(const o of near){
    if(path&&S().pathCrystals.includes(o.id)&&!sites.has(o.id))continue;
@@ -60,7 +62,7 @@ export function initialize(runtime){
     let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);if(path)wave.spent=true;
     if(!site){site={hits:0,flash:0,broken:false,collected:false};sites.set(o.id,site);}
     site.hits++;site.flash=seconds+.18;if(site.hits<o.size)impact(o,site);
-    if(site.hits>=o.size){site.broken=true;if(path){if(S().pathCrystals.length<10){if(!S().pathCrystals.length)runtime.onFirstLight?.();S().pathCrystals.push(o.id);completed=S().pathCrystals.length===10;S().todayLight=(S().todayLight||0)+1;S().totalLight=(S().totalLight||0)+1;earn(o.value);}site.rewarded=true;runtime.hud?.();}
+    if(site.hits>=o.size){site.broken=true;if(path){if(S().pathCrystals.length<10){if(!S().pathCrystals.length)runtime.onFirstLight?.();S().pathCrystals.push(o.id);completed=S().pathCrystals.length===10;S().todayLight=(S().todayLight||0)+1;S().totalLight=(S().totalLight||0)+1;}site.rewarded=true;runtime.hud?.();}
      site.particles=particles(o,{rare:false});impact(o,site);break;}
    }
    if(site?.broken&&!site.collected&&!(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused)&&Math.hypot(o.x-pos.x,o.y-pos.y)<70){
@@ -69,7 +71,7 @@ export function initialize(runtime){
      const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),travel=step*180;
      if(d>3&&!reduced()){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;if(d>travel+3)arrived=false;}
     }
-    if(arrived){site.collected=true;if(!site.rewarded)earn(o.value);}
+    if(arrived){site.collected=true;if(!site.rewarded)earn(o.value*CRYSTAL_SPARK_SCALE);}
    }
   }
   if(!path&&runtime.crystalTransaction)tickChains();
@@ -145,7 +147,7 @@ export function initialize(runtime){
      c.fillStyle=c.strokeStyle=ink;for(let i=0;i<(p.trail?.length||0);i++){c.globalAlpha=opacity*.15*(i+1)/p.trail.length;c.fillRect(p.trail[i].x+ox-1,p.trail[i].y+oy-1,2,2);}
      c.globalAlpha=opacity*.3;c.beginPath();c.arc(x,y,p.rare?12:10,0,Math.PI*2);c.fill();
      c.globalAlpha=opacity*(reduced()?1:.85+.15*Math.sin(seconds*2));c.beginPath();c.moveTo(x,y-6);c.lineTo(x+4,y);c.lineTo(x,y+6);c.lineTo(x-4,y+1);c.closePath();c.fill();c.fillStyle='#fff';c.fillRect(x-1,y-2,2,3);
-     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+(dim?1:p.value)+' ✦',x,y-15);}}
+     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+(dim?DIM_FRAGMENT_SPARKS:p.value)+' ✦',x,y-15);}}
     }
     continue;
    }

@@ -1,6 +1,6 @@
 """Living encounters, batch 3 (Jay, 28 Oct 2026): the first four «hacer» (Polvo, Cúmulo, Marea, Restos), each forced with
-«?encuentro=<id>» and played to its three endings (live_do_helpers.py): done with pulses on time for 15 ✦ (the Bitácora
-and one notice the first time), done on foot for 10 ✦, walking away for nothing but a kind goodbye. One at a time, also
+«?encuentro=<id>» and played to its three endings (live_do_helpers.py): done with pulses on time for 45 ✦ (the Bitácora
+and one notice the first time), done on foot for 30 ✦, walking away for nothing but a kind goodbye. One at a time, also
 with the mischief scenes. Screenshots at 390×844."""
 from playwright.sync_api import sync_playwright
 import os,shutil,json
@@ -24,5 +24,5 @@ try:
   assert page.evaluate("__r.liveEncounterState().scene?.kind==='burbujas'"),'the encounter still runs'
   assert page.evaluate('!__r.mischiefState.scene'),'no mischief scene while an encounter runs'
   assert not errors,errors;page.close();browser.close()
- print('PASS living encounters, batch 3 (a): motas, estrellita, burbujas and guardian forced with «?encuentro=», ahead with their line; done with pulses on time 15 ✦ (Bitácora and one notice the first time), on foot 10 ✦, walking away nothing given or taken; one at a time, also with mischief; screenshots '+json.dumps(shots),flush=True)
+ print('PASS living encounters, batch 3 (a): motas, estrellita, burbujas and guardian forced with «?encuentro=», ahead with their line; done with pulses on time 45 ✦ (Bitácora and one notice the first time), on foot 30 ✦, walking away nothing given or taken; one at a time, also with mischief; screenshots '+json.dumps(shots),flush=True)
 finally:server.shutdown()
