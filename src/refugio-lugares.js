@@ -61,6 +61,8 @@ export function initialize(runtime){
    const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${roundPercent(best.onTime)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
    // Panel 11 (Q4): «Seguir» and «Ir» share one width and sit on the name's line, in their own column.
    const acts=document.createElement('span');acts.className='lugar-actions';li.append(name,st,acts,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);acts.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0]||runtime.ringCanTravel?.(p.id))){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);acts.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
+  // Jay (28 Oct 2026, alpha.230): «Volver al anillo», always there after the Journey, free; first when you are far away.
+  const ring=$('lugaresRing');if(ring){const show=runtime.S.journey?.finished===true&&!d.readOnly&&!runtime.placeRun?.();ring.hidden=!show;ring.classList.toggle('next',show&&!!runtime.ringAway?.());ring.onclick=home;}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
    if(place){const quote=document.createElement('span');quote.style.whiteSpace='nowrap';quote.textContent=`${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;line.replaceChildren('Remezcla de hoy: ',quote);btn.onclick=()=>remixGo(mix);}}
@@ -82,6 +84,8 @@ export function initialize(runtime){
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
  function door(){runtime.ringGuide?.();}
+ // Out of the Refugio and back to the ring's centre; if it cannot move (a recording, a failed save), Lugares stays open.
+ function home(){if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.ringHome?.()){$('mLugares').hidden=true;return true;}runtime.toast?.('Ahora no se puede volver. Inténtalo otra vez.');return false;}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':'Lugares';}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};

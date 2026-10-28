@@ -33,7 +33,7 @@ try:
   page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();assert page.locator('#bLivingMusic').is_hidden();page.locator('#muClose').click();page.locator('#settingsClose').click()
   page.locator('#w').click(position={'x':30,'y':300});page.wait_for_function('__testRuntime.MU.radio?.labScore')
   assert page.evaluate('__testRuntime.MU.radio.labScore.id')==first['band']
-  page.locator('#bStyles').click();page.locator('#musicTravelFull').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
+  page.evaluate('__testRuntime.openMusicTravel()');page.locator('#musicTravelFull').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
   page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic?.count===10')
   page.evaluate("()=>{const r=__testRuntime;window.__fieldFoundation=[];r.labPerformanceCue=e=>__fieldFoundation.push(e);r.audioNoteCue=e=>{if(e.origin==='family-drums')__fieldFoundation.push({...e,role:'perc'});else if(e.origin==='track'&&Number.isFinite(e.note))__fieldFoundation.push({...e,role:'lead'});};for(const id of ['kick','snare','clap','hat'])delete r.S.journal.music.instruments[id];r.givePower('campo');}")
   page.locator('#w').focus();page.keyboard.down('ArrowRight')

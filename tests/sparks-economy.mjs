@@ -38,7 +38,10 @@ loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').hidden);loop.openSparks();
 loop.S.playerProfile.distanceUnits=9000;loop.sparkTick(.1);loop.S.mode='world';loop.sparkTick(.1);assert.equal(loop.sparkEconomy.stats.sinceJump,0,'Camino distance cannot leak into world-only badges');
 loop.S.playerProfile.distanceUnits+=5000;loop.sparkTick(.1,true);loop.sparkTick(.1);assert.equal(loop.sparkEconomy.stats.sinceJump,0,'paused distance cannot leak into the next active frame');
 loop.S.playerProfile.distanceUnits+=20;loop.sparkTick(.1);assert.equal(loop.sparkEconomy.stats.sinceJump,20);
-loop.openSparks();assert(loop.$('sparkJump').disabled);assert(loop.$('sparkStatus').textContent.includes('10 chispas'));
+// Jay (alpha.230): before the eleven places, Tu cubo hides «Otro paisaje» and says nothing of jumping; then as before.
+loop.openSparks();assert(loop.$('sparkJump').hidden);assert(!/salt/i.test(loop.$('sparkStatus').textContent));assert(!loop.$('sparkGoalSelect').innerHTML.includes('Ahorrar para un salto'));
+loop.placesAllComplete=()=>true;
+loop.openSparks();assert(!loop.$('sparkJump').hidden);assert(loop.$('sparkJump').disabled);assert(loop.$('sparkStatus').textContent.includes('10 chispas'));assert(loop.$('sparkGoalSelect').innerHTML.includes('Ahorrar para un salto'));
 creditSparks(loop.S,50);loop.canPracticeTravel=()=>false;loop.S.practiceTravel={previous:{x:0,y:0}};loop.openSparks();assert(loop.$('sparkJump').disabled);assert(loop.$('sparkBack').disabled);
 loop.canPracticeTravel=()=>true;loop.openSparks();assert(!loop.$('sparkJump').disabled);assert(!loop.$('sparkBack').disabled);loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').textContent.includes('Salto disponible'));
 assert(loop.buySparkStyle('dust'));loop.sparkEconomy.goal='shop:dust';loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').textContent.includes('Meta cumplida'));

@@ -23,6 +23,8 @@ CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio.
 
 **En rama, sin PR (28 de octubre de 2026): E3 · hacer** (`universo/e3-hacer`, alpha.229, desde `main` `fc7c4f8`). Los once de hacer sobre el mismo motor; la tirada común se reparte en tercios entre perseguir, huir y hacer. Con ella los [33 encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos) están completos. Probado en local (lógica, recorridos de navegador y render de audio); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
 
+**En rama, sin PR (28 de octubre de 2026): arreglos de Jay A–E** (`jay/arreglos-a-e`, alpha.230, desde `main` `25ed913`). Tras jugar alpha.229: A, `?rapido=2` corto de verdad (Camino de 2 cristales, portal a 1 s; un bot juega el Viaje entero en 69 s); B, «Otro paisaje» y «Viajar a otra tierra» solo con los once lugares (el primer salto, gratis); C, sin «Estilos»; D, encuentros vivos con aviso, aro de tiempo, flecha blanca, final visible y resumen; E, «Volver al anillo» en Lugares. Detalle en [CAMBIOS](CAMBIOS.md). Probado en local (lógica y recorridos de navegador); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
+
 ## Qué falta
 
 1. **Lanzamiento L3–L6** ([plan](docs/PLAN_LANZAMIENTO.md#salida-web-y-android)): Android de tienda, escritorio en itch.io (descarga Electron; la web no se publica abierta), fichas y privacidad, prueba cerrada. L1 (sin nube) y L2 (inglés) están hechas; el inglés no lo ha revisado ninguna persona nativa. Cada alta, pago y publicación los hace o autoriza Jay.

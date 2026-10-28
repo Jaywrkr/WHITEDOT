@@ -30,7 +30,7 @@ export function initialize(runtime) {
     else if(runtime.inWorld()){if(!runtime.journeyQuiet?.())fill.style.width="100%";   // in the Journey the chapter sets it (journey-chapters.js)
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Explora a tu ritmo";   // regions and forms are counted in the Bitácora
       gr.textContent="Sin reloj";}
-    else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
+    else{const need=runtime.rapidLevel===2?2:10,n=Math.min(need,runtime.S.pathCrystals.length);fill.style.width=(n/need*100)+"%";goal.textContent="Cristales · "+n+" / "+need;gr.textContent="Acércate y lanza un pulso";}
     // Panel 10 (P2): one way to go at a time. In the World, «Volver al Camino» (#bPrimary) heads «Más › Ir» and #bWorld
     // hides; elsewhere #bPrimary stays in the dock and #bWorld («Explorar») enters the World or leaves the Refugio.
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary"),bw=$("bWorld"),world=runtime.inWorld();bw.querySelector("span").firstChild.nodeValue="Explorar";$("bWorldHint").textContent=world?"Volver al Camino":"Explorar el Mundo";

@@ -1,6 +1,6 @@
 # El mundo de Kubono
 
-Reglas vigentes en `main`, **alpha.221**. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
+Reglas vigentes en `main`, **alpha.221**; los arreglos de Jay A–E (alpha.230) están en rama. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
 
 ## Propósito y recorrido
 
@@ -53,7 +53,9 @@ Guardar un lugar conserva semilla/identidad, capa y coordenadas. Tocar el nombre
 
 Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; saltar no cuenta como caminar. [Universo](UNIVERSO.md) y `practice-travel.js`.
 
-**Saltar a otro lugar (Jay, alpha.226).** Dentro de un nivel no hay salto: ni en un capítulo del Viaje sin terminar, ni en una ronda de un lugar, ni bajo el final del Viaje. Se ocultan «Otro paisaje», «Volver al punto anterior» y «Viajar a otra tierra», y el código también los rechaza (y las sorpresas que teletransportan). Antes, «Volver al punto anterior» aparecía en los capítulos (la llegada del día deja un punto anterior) y podía dejar al jugador lejos del capítulo; «Otro paisaje» solo aparecía con 20 chispas ganadas, así que tras el Viaje, sin chispas, no estaba. Ahora, al terminar el Viaje, «Otro paisaje» está a la vista desde el primer momento y el primer salto es gratis (`S.journey.freeJumpUsed`); los siguientes cuestan 20 ✦ y volver al punto anterior sigue gratis. Lejos del anillo (más allá de donde se oye su siguiente portal, 9600 px), Lugares ofrece **Ir** al siguiente lugar del camino, gratis, junto a su portal.
+**Saltar a otro lugar (Jay, alpha.226 y alpha.230).** Dentro de un nivel no hay salto: ni en un capítulo del Viaje sin terminar, ni en una ronda de un lugar, ni bajo el final del Viaje. Se ocultan «Otro paisaje», «Volver al punto anterior» y «Viajar a otra tierra», y el código también los rechaza (y las sorpresas que teletransportan). **Desde alpha.230, «Otro paisaje» y «Viajar a otra tierra» solo existen con los once lugares del anillo completos:** antes no están en el dock, en «Más» ni en Tu cubo (tampoco su meta «Ahorrar para un salto») y el código rechaza el salto. El primer salto tras los once es gratis (`S.journey.freeJumpUsed`); los siguientes cuestan 20 ✦. «Volver al punto anterior» sigue gratis y como estaba. Quien ya está en otra semilla conserva el camino de vuelta, y `?dev=1` (o un servidor local) sus herramientas. Lejos del anillo (más allá de donde se oye su siguiente portal, 9600 px), Lugares ofrece **Ir** al siguiente lugar del camino, gratis, junto a su portal: solo a ese, no es un salto libre.
+
+**Volver al anillo (Jay, alpha.230).** Tras el Viaje, Lugares tiene siempre «Volver al anillo», gratis: lleva al centro del anillo, un paso hacia el siguiente portal; nunca a un lugar nuevo ni a otra tierra. Lejos del anillo (más de 7800 px de su centro) es la primera acción de la hoja; dentro, va bajo «Seguir hacia …». Usa el mismo viaje que los demás, así que «Volver al punto anterior» devuelve al sitio de antes. La brújula junto al cubo y la columna de luz apuntan al siguiente lugar. `places-ring.js` (`ringHome`) y `refugio-lugares.js`.
 
 ## Chispas y colección
 
@@ -98,7 +100,7 @@ Las duraciones son objetivos de diseño, no tiempos garantizados de jugadores. E
 | `?clasico=1` | Comparación heredada de capítulos, mantenida por compatibilidad |
 | `?encuentro=polilla` | Fuerza ese encuentro vivo (cualquiera de los treinta y tres; perseguir: `polilla`, `racimo`, `pez`, `tambor`, `semilla`, `cometa`, `reflejo`, `pulsar`, `llamarada`, `eco`, `estrella`; huir: `remolino`, `enjambre`, `ola`, `derrumbe`, `polen`, `arena`, `rayos`, `ondas`, `llamaradas`, `pozo`, `agujero`; hacer: `motas`, `estrellita`, `burbujas`, `guardian`, `brotes`, `caravana`, `nodos`, `pulsares`, `antena`, `luciernagas`, `constelacion`) tras 3 s de viaje en vez de 60–90 s, una y otra vez. Solo en el Mundo libre, como los demás: no aparece en capítulos, rondas ni finales. Usa la partida normal; combinarlo con `?anillo=1` para un guardado propio ([Encuentros vivos](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos)) |
 | `?rapido=1` | Todas las metas de los capítulos y de las rondas a un quinto, para pasar rápido. Guardado propio (`kubono:rapido`) y sin cuenta: sus ★ no cuentan en la partida normal. Con `?capitulo=` o `?lugar=` usa el guardado de esos atajos. Funciona también en la edición de venta |
-| `?rapido=2` | Igual que `?rapido=1`, pero a un veinteavo: los cinco capítulos en unos pocos pulsos cada uno. Mismo guardado propio |
+| `?rapido=2` | Corto de verdad (alpha.230): metas a un veinteavo, el Camino con 2 cristales, cada capítulo en 2–3 pulsos y su portal abierto a 1 s. El Vacío conserva su cielo corto al recargar. El final del Viaje no cambia («Saltar» lo cierra). Un bot lo juega entero, de la primera pantalla al Mundo libre, en unos 70 s (`tests/rapido2_viaje_smoke.py`). Mismo guardado propio |
 
 Usar perfiles temporales; no borrar la partida personal. Atajos no equivalen a completar el recorrido. El producto no requiere`?dev=1` ni expone runtime; las pruebas lo instrumentan al servir main.
 

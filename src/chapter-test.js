@@ -15,9 +15,16 @@ export function placeTest(search=globalThis.location?.search){try{const q=new UR
 // to go through the whole game quickly. It plays on a save of its own and without an account, so its stars never count
 // in a normal game; with «?capitulo=» or «?lugar=» it uses theirs. Without the parameter nothing changes.
 // «?rapido=2» (Jay, 28 Oct 2026): a twentieth, to run through the five chapters in a few pulses each.
-export const RAPID_KEY='kubono:rapido',RAPID_SCALE=.2,RAPID_SCALE_2=.05;
-export function rapidTest(search=globalThis.location?.search){try{const v=new URLSearchParams(search||'').get('rapido');return v==='1'||v==='2';}catch(_){return false;}}
-export function rapidScale(search=globalThis.location?.search){try{const v=new URLSearchParams(search||'').get('rapido');return v==='2'?RAPID_SCALE_2:v==='1'?RAPID_SCALE:1;}catch(_){return 1;}}
+// «?rapido=2» short for real (Jay, 28 Oct 2026, alpha.230: «tienen que ser cortos los cinco niveles»): besides the
+// twentieth, the Camino asks for two crystals instead of ten and a kept chapter opens its portal after one second
+// instead of waiting for its close to sound (journey-chapters.js), and the Vacío keeps its short sky after a reload. «?rapido=1» and the normal game keep both.
+export const RAPID_KEY='kubono:rapido',RAPID_SCALE=.2,RAPID_SCALE_2=.05,RAPID_CAMINO=2;
+export function rapidLevel(search=globalThis.location?.search){try{const v=new URLSearchParams(search||'').get('rapido');return v==='2'?2:v==='1'?1:0;}catch(_){return 0;}}
+export function rapidTest(search=globalThis.location?.search){return rapidLevel(search)>0;}
+export function rapidScale(search=globalThis.location?.search){const v=rapidLevel(search);return v===2?RAPID_SCALE_2:v===1?RAPID_SCALE:1;}
+// The Camino's door with «?rapido=2»: once two crystals are kept, the other eight count as kept too (marked «rapido:»),
+// so everything that reads ten crystals (the World's door, the Journey's bar) sees the Camino done.
+export function fillRapidCamino(S){const list=S?.pathCrystals;if(!Array.isArray(list)||list.length<RAPID_CAMINO||list.length>=10)return false;for(let i=list.length;i<10;i++)list.push('rapido:'+i);return true;}
 export function chapterTest(search=globalThis.location?.search){try{const id=new URLSearchParams(search||'').get('capitulo');return TEST_CHAPTERS.includes(id)?id:null;}catch(_){return null;}}
 // The save as it should be on arrival: the Camino and earlier chapters done, this chapter fresh.
 export function prepareChapterTest(S,id){const j=S.journey||(S.journey={}),index=CHAPTERS.indexOf(id);if(index<1)return false;
@@ -25,7 +32,7 @@ export function prepareChapterTest(S,id){const j=S.journey||(S.journey={}),index
  delete j[CHAPTER_GAME_STATE[id]];if(j.progress)delete j.progress[id];j.chapter=index===1?0:index-1;
  if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;S.help={...(S.help&&typeof S.help==='object'?S.help:{}),camino:true,mundo:true};S.pathCrystals=Array.from({length:10},(_,i)=>'capitulo:'+i);return true;}
 export function initialize(runtime){
- const id=chapterTest(),place=placeTest(),rapid=rapidTest();Object.defineProperty(runtime,'chapterTest',{get:()=>id});Object.defineProperty(runtime,'rapidScale',{value:rapid?rapidScale():1});
+ const id=chapterTest(),place=placeTest(),rapid=rapidTest();Object.defineProperty(runtime,'chapterTest',{get:()=>id});Object.defineProperty(runtime,'rapidScale',{value:rapid?rapidScale():1});Object.defineProperty(runtime,'rapidLevel',{value:rapidLevel()});
  if(place){let tries=0;const go=()=>{if(!runtime.S?.journey||!runtime.startPlace||!runtime.enterWorld||!runtime.worldReady){if(tries++<200)setTimeout(go,50);return;}
   // The Journey finished: every chapter kept, the free World open; then the round (and its ★★ first, for a Maestro one).
   const S=runtime.S,j=S.journey;j.mode='viaje';j.free=true;j.finished=true;j.chapter=6;j.done={...(j.done||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};j.colors={...(j.colors||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};S.pathCrystals=Array.from({length:10},(_,i)=>'lugar:'+i);S.help={...(S.help||{}),camino:true,mundo:true};if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;

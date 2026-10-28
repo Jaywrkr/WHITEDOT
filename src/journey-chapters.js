@@ -28,8 +28,9 @@ export const VOID_CAP=.1,VOID_ECHO_AFTER=8,VOID_PHRASE=12;
 // an estimate until people play it (phase 7 of the plan).
 export const CHAPTER_BARS=Object.freeze({llanura:48,lago:56,bosque:56,tormenta:64,vacio:40});
 export const LOTUS_GOAL=3,FOLLOW_GOAL=600,BOLT_GOAL=4,ECHO_GOAL=1;
-// The portal opens after the theme in tutti: at least four seconds of Plenitud first.
-export const PORTAL_WAIT=4000;
+// The portal opens after the theme in tutti: at least four seconds of Plenitud first. With «?rapido=2» (chapter-test.js,
+// alpha.230) after one second, whatever the close still plays.
+export const PORTAL_WAIT=4000,RAPID_PORTAL_WAIT=1000;
 // Whether a chapter's moment was lived, from its saved progress and the moments of journey-moments.js.
 export function momentLived(id,progress={},moments={}){
  if(id==='llanura')return moments.faro?.reached===true;
@@ -116,7 +117,7 @@ export function initialize(runtime){
  function complete(id=current()){if(runtime.placeRun?.()?.id===id)return runtime.placeFinish(id);const j=own();if(j.done[id]||current()!==id)return false;const places=runtime.placesData?.(),savedStars=places?.stars?.[id]?[...places.stars[id]]:null;j.done[id]=true;runtime.placeChapterKept?.(id);if(runtime.save()===false){delete j.done[id];if(savedStars)places.stars[id]=savedStars;return false;}
   // The Tormenta's Plenitud: a bar of bolts, one on every beat.
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
-  const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
+  const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+(runtime.rapidLevel===2?RAPID_PORTAL_WAIT:Math.max(PORTAL_WAIT,theme))};return true;}
  // Through the portal: the next chapter's biome, found on the map near here.
  function travel(){runtime.cancelJourneyVictory?.();const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
   // A festival build with fewer chapters would end early, in the Refugio, with your phrase (since plan I5 it has all five).

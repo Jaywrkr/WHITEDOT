@@ -1,7 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 28 de octubre de 2026. Código **2.3.0-alpha.229**. Las entradas describen su revisión, no certifican producción.
+Estado: 28 de octubre de 2026. Código **2.3.0-alpha.230**. Las entradas describen su revisión, no certifican producción.
 
+
+## Arreglos de Jay A–E · 2.3.0-alpha.230
+
+Rama `jay/arreglos-a-e`, desde `main` (`25ed913`, alpha.229 con `?rapido=2`). Jay jugó alpha.229 y pidió cinco arreglos. Regla para todos: siempre se ve el siguiente paso, siempre se puede volver sin perder nada, nada cambia para siempre sin avisar, sin castigos.
+
+- **A · `?rapido=2` corto de verdad.** Además del veinteavo: el Camino pide **2 cristales** (los otros ocho cuentan como hechos, marcados `rapido:`), y un capítulo cumplido abre su portal **a 1 s** en vez de esperar a que suene su cierre (4–6 s). Cada capítulo se cierra en 2–3 pulsos. Tras recargar, el Vacío conserva su cielo corto (antes volvía a 12 estrellas). El final del Viaje no cambia (su música está aprobada; «Saltar» lo cierra al momento). `?rapido=1` y el juego normal, igual. **Medido** con un bot que camina a la velocidad del cubo y toca a tiempo, de la primera pantalla al Mundo libre a 390×844 (`tests/rapido2_viaje_smoke.py`): **69,0 s** (antes 112,7 s; final 35,6 s incluido). Una persona tardará más (leer, buscar): unos 2–3 min estimados, no medidos.
+- **B · «Otro paisaje» y «Viajar a otra tierra» tras los once lugares.** Antes no aparecen en ninguna parte: ni en el dock, ni en «Más», ni en Tu cubo (su botón, su texto y la meta «Ahorrar para un salto»), y el código rechaza el salto. El primer salto gratis (`S.journey.freeJumpUsed`) es el primero tras los once. «Volver al punto anterior» sigue igual. Quien ya está en otra semilla conserva el camino de vuelta; `?dev=1` y un servidor local conservan sus herramientas.
+- **C · Sin «Estilos».** `#bStyles` queda oculto en todas las vistas (id y hoja conservados; `openMusicTravel` la abre por código para las pruebas).
+- **D · Encuentros vivos más claros.** Al empezar, su nombre y su verbo («Polilla de luz · atrápala») con su línea debajo. En los tres verbos, un aro blanco fino alrededor del cubo con el tiempo que queda (se llena en los de huir que basta aguantar, como antes) y una flecha blanca siempre visible al siguiente paso (la de perseguir era del color del bioma). Al ganar, una explosión de luz breve en el color del bioma; al escaparse o fallar, se aleja despacio desvaneciéndose (1,4 s) con su despedida. Después, una línea: «Polilla · atrapada · +15 ✦», «Ola · te alcanzó · sin premio». Las palabras siguen «Textos en el universo» y la vista tranquila; el aro, la flecha y el final no. Reglas, premios y frecuencia sin cambios.
+- **E · No quedar a 77 km sin salida.** Lugares ofrece **«Volver al anillo»** siempre tras el Viaje, gratis: lleva al centro del anillo, un paso hacia el siguiente portal (nunca a un lugar nuevo ni a otra tierra), y la brújula apunta al siguiente lugar. Lejos del anillo va primero; dentro, bajo «Seguir hacia …». Pasa por el mismo viaje que los demás, así que «Volver al punto anterior» te devuelve donde estabas. El «Ir» de lejos (alpha.226) sigue siendo solo al siguiente lugar, junto a su portal, a más de 9600 px: no es un salto libre.
+- Inglés de todo lo nuevo en `i18n-en.js`.
+- Pruebas nuevas: `tests/rapido-2.mjs`, `tests/live-encounters-clear.mjs`, `tests/rapido2_viaje_smoke.py`, `tests/live_clear_smoke.py`, `tests/arreglos_ae_smoke.py`. Ajustadas a la nueva regla del salto: `practice-travel.mjs`, `sparks-economy.mjs`, `notas_jay_smoke.py`, `crystal_play_smoke.py`, `entry_jump_smoke.py`, `journey_ui_smoke.py`, `practice_travel_smoke.py`, `game_loop_smoke.py`, `sparks_economy_smoke.py`. Abren «Estilos» por código: `ambient_world`, `focusui`, `lab_score`, `micro_instruments`, `music_menu`, `music_travel`.
+- Preservación: cambian a propósito siete archivos protegidos (`chapter-test.js`, `crystal-sparks.js`, `journey-chapters.js`, `journey-release.js`, `music-travel.js`, `practice-travel.js`, `sparks.js`), con su capa `approvedAE`. Sonido sin cambios (sin render nuevo). Probado en local; sin CI remoto, sin teléfono ni personas.
 
 ## Prueba más rápida · `?rapido=2`
 

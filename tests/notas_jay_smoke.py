@@ -1,5 +1,5 @@
-"""Jay's notes on alpha.225 (27 Oct 2026): no jump to another place inside a level; after the Journey the jump is there
-from the first moment (the first one free) and the next place can be reached from far away; «Saltar» ends the Journey's
+"""Jay's notes on alpha.225 (27 Oct 2026): no jump to another place inside a level; after the Journey the jump waits for
+the eleven places (alpha.230; then the first one is free) and the next place can be reached from far away; «Saltar» ends the Journey's
 finale at once with the same state; the magic box says one short line, whole on a phone and on a desktop; «?rapido=1»
 plays every goal at a fifth on a save of its own."""
 from pathlib import Path
@@ -51,9 +51,15 @@ try:
   state=page.evaluate("()=>{const r=__r,j=r.S.journey;return {finished:j.finished,mode:r.journeyMode(),free:j.free,skipped:r.journeyFinaleState().skipped,saved:JSON.parse(localStorage.getItem('pixel-blanco-v4')).journey.finished}}")
   assert state=={'finished':True,'mode':'libre','free':True,'skipped':True,'saved':True},state
   assert page.locator('#journeyFinale').is_hidden()
-  # 3 · The free World from the first moment: the jump is there, free the first time, then «Volver al punto anterior».
+  # 3 · The free World after the Journey: since alpha.230 (Jay) no jump and no other land until the eleven places of the
+  # ring are complete, in the dock, «Más» or by code. Then the jump is there, free the first time, then «Volver al punto anterior».
   page.evaluate("()=>{"+HIDE+";const r=__r;if(!r.inWorld())r.exitHouse?.();if(!r.inWorld())r.enterWorld({automatic:true});r.S.sparks=0;r.S.practiceTravel.previous=null;r.save();}")
-  page.wait_for_function('__r.inWorld()');page.evaluate(HIDE)
+  # (A local server marks the page «dev», which keeps the seed tools; a player's page is not.)
+  page.wait_for_function('__r.inWorld()');page.evaluate(HIDE);page.evaluate("document.body.classList.remove('dev')");page.wait_for_timeout(400)
+  assert page.locator('#bJump').is_hidden() and page.evaluate('__r.jumpPracticePlace()')==False and page.evaluate('__r.S.journey.freeJumpUsed')!=True
+  ids=menu_ids(page);assert 'bJump' not in ids and 'bWorlds' not in ids,ids
+  page.evaluate("(()=>{const d=__r.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__r.save();})()");page.evaluate(HIDE)
+  ids=menu_ids(page);assert 'bWorlds' in ids,'with the eleven, «Viajar a otra tierra» is there'
   page.wait_for_function("!document.getElementById('bJump').hidden&&!document.getElementById('bJump').disabled",timeout=3000)
   assert page.locator('#bJump').inner_text()=='Otro paisaje · gratis' and page.locator('#bJump').is_visible()
   before=page.evaluate('[__r.S.wx,__r.S.wy]');page.locator('#bJump').click();page.wait_for_function('!!__r.S.practiceTravel.previous')
@@ -102,5 +108,5 @@ try:
   page.goto(URL);page.wait_for_function('!!window.__r?.placeGoalScale')
   assert page.evaluate('__r.placeGoalScale()')==1 and page.evaluate('__r.S.sparks')!=7,'a normal game keeps its goals and its save'
   assert not errors,errors;page.close();browser.close()
- print('PASS Jay notes: no jump in chapters, rounds or finale; «Saltar» ends the finale with the same state; free first jump and «Ir» to the next place from far; whole short magic-box line at 390 and 1280; ?rapido=1 at a fifth on its own save',flush=True)
+ print('PASS Jay notes: no jump in chapters, rounds or finale; «Saltar» ends the finale with the same state; no jump before the eleven places, then a free first one and «Ir» to the next place from far; whole short magic-box line at 390 and 1280; ?rapido=1 at a fifth on its own save',flush=True)
 finally:server.shutdown()

@@ -54,7 +54,9 @@ try:
   assert not page.evaluate('!!__r.sparkEconomy.purchases.facet')
   assert 'No se guardó' in page.locator('#cubeHint').inner_text()
   page.evaluate('Storage.prototype.setItem=originalSet;__r.save();__r.S.sparks=60;__r.sparkEconomy.earned=60+__r.sparkEconomy.spent;__r.save();')
-  page.locator('#cubeTabTravel').click();page.locator('#sparkJump').click()
+  # Jay (alpha.230): before the eleven places Tu cubo has no «Otro paisaje»; then it does.
+  page.locator('#cubeTabTravel').click();assert page.locator('#sparkJump').is_hidden()
+  page.evaluate("(()=>{const d=__r.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__r.save();})()");page.evaluate("__r.openSparks('travel')");page.locator('#sparkJump').click()
   assert page.evaluate('__r.S.sparks')==40
   assert page.locator('#mCube').is_hidden()
   paid=page.evaluate('({x:__r.S.wx,y:__r.S.wy})')

@@ -11,7 +11,7 @@ import {audibleTime} from './journey-pulse.js';
 import {hashKey} from './universe-regions.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
-import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,liveDefinition,liveFor,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost} from './live-encounters-model.js';
+import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,LIVE_NOTICE,LIVE_SUMMARY,LIVE_FAREWELL,liveDefinition,liveFor,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost,liveTitle,liveSummary} from './live-encounters-model.js';
 import {drawLive} from './live-encounters-art.js';
 // The catch note: one note of the harmony that sounds, an octave up, in the place's own lead, far under the music.
 // A step of a task (batch 3: the prism's nodes as they sound and as you touch them) plays the same way, quieter, its
@@ -25,7 +25,10 @@ export function playLiveNote(r,kind,time,point,gain=LIVE_NOTE_GAIN,step=null){
  if(r.withVoiceOrigin)r.withVoiceOrigin('player',emit);else emit();return true;
 }
 export function initialize(r){
- let owner=null,scope='',scene=null,travel=0,clock=0,last=null,heading=null,seen=new WeakSet(),line=null,queued=false;
+ // Jay (28 Oct 2026, alpha.230): clearer, never gone «sin más». notice: its name and what to do, as it starts; line: the
+ // goodbye while it fades away; summary: one line once it is over («Polilla · atrapada · +15 ✦»). All three are words
+ // in the World, so «Textos en el universo» hides them (universe-texts.js); the timer ring, the arrow and the end stay.
+ let owner=null,scope='',scene=null,travel=0,clock=0,last=null,heading=null,seen=new WeakSet(),line=null,notice=null,summary=null,queued=false;
  const forced=liveForced();
  const reduced=()=>!!(r.S.reducedMotion||prefersReducedMotion());
  // Where encounters live: the free World's surface, outside every level, activity, the Refugio and the finales.
@@ -35,7 +38,7 @@ export function initialize(r){
  const wandering=()=>r.autopilotState?.mode==='wander'&&!r.autopilotState.paused;
  // One at a time: no encounter while a mischief scene plays (universe-mischief.js waits for us in the same way).
  const mischiefBusy=()=>!!r.mischiefState?.scene;
- function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.liveEncounters=normalizeLive(owner.liveEncounters);scene=null;line=null;queued=false;last=null;if(fresh)travel=0;}return owner.liveEncounters;}
+ function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.liveEncounters=normalizeLive(owner.liveEncounters);scene=null;line=null;notice=null;summary=null;queued=false;last=null;if(fresh)travel=0;}return owner.liveEncounters;}
  const need=()=>forced?3:liveInterval(scope,book().count);
  const biomeAt=(x,y)=>{const d=r.regionOfPos(x,y);return d?.sea?'vacio':r.BIOMES?.[d?.z]?.id||'vacio';};
  const colorOf=s=>r.placeColor?.(s.biome,LIVE_COLORS[s.biome])||LIVE_COLORS[s.biome]||'#ffffff';
@@ -47,7 +50,7 @@ export function initialize(r){
   const point=liveSpawnPoint(player,heading??0,scope,n);scene=createLive(def,point,player,{now:clock});q.count=n+1;travel=0;
   // Pulses already in flight are not this encounter's.
   for(const w of r.waves||[])seen.add(w);
-  line={text:def.line,until:clock+3};return true;
+  notice={title:liveTitle(def.id),text:def.line,until:clock+LIVE_NOTICE};line=null;summary=null;return true;
  }
  function phase(){const ac=r.ac,bq=r.MU?.bq,six=r.SIX;if(!ac||!r.S.sound||ac.state!=='running'||!bq?.length||!(six>0))return undefined;const now=audibleTime(ac),beat=bq.findLast(t=>t<=now);return beat===undefined?undefined:((now-beat)/(six*4))%1;}
  function pay(){
@@ -67,11 +70,11 @@ export function initialize(r){
  function tick(dt,modal=false){
   const q=book();if(q.version!==LIVE_VERSION){scene=null;return;}
   // Outside the free World, in a level, an activity or the Refugio it simply goes: nothing counted, nothing lost.
-  if(!allowed()){scene=null;line=null;last=null;return;}
+  if(!allowed()){scene=null;line=null;notice=null;summary=null;last=null;return;}
   if(modal||paused())return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
   const player={x:r.S.wx,y:r.S.wy};let moving=false;
   if(last){const dx=player.x-last.x,dy=player.y-last.y,l=Math.hypot(dx,dy);if(l>.5&&l<60){const a=Math.atan2(dy,dx);heading=heading==null?a:heading+Math.atan2(Math.sin(a-heading),Math.cos(a-heading))*Math.min(1,step*6);moving=step>0&&l/step>25;}}last=player;
-  if(line&&clock>line.until)line=null;
+  if(line&&clock>line.until)line=null;if(notice&&clock>notice.until)notice=null;if(summary&&clock>summary.until)summary=null;
   if(!scene){if(moving&&!wandering()&&!mischiefBusy())travel+=step;if(travel>=need())spawn(forced);return;}
   const pulses=[];for(const w of r.waves||[])if(!seen.has(w)){seen.add(w);if(w.origin==='player')pulses.push({x:w.x,y:w.y,beat:!!w.beat});}
   const was=scene.stage;stepLive(scene,player,step,{pulses,beatPhase:phase()});
@@ -80,16 +83,16 @@ export function initialize(r){
   // A threat's pull (the well, the black hole), the short nudge when one reaches the cube and a task's own push (a bubble
   // lifting it, the solar wind, the guardian's shove) move it a little.
   if(scene.drag){r.S.wx+=scene.drag.x*step;r.S.wy+=scene.drag.y*step;}
-  if(liveLost(scene)&&was==='run'){const k=q.kinds[scene.kind]||={first:'',caught:0,onTime:0,escaped:0};k.escaped++;if(scene.stage==='hit')k.hit=(k.hit||0)+1;line={text:liveDefinition(scene.kind).bye,until:clock+1.6};}
+  if(liveLost(scene)&&was==='run'){const k=q.kinds[scene.kind]||={first:'',caught:0,onTime:0,escaped:0};k.escaped++;if(scene.stage==='hit')k.hit=(k.hit||0)+1;line={text:liveDefinition(scene.kind).bye,until:clock+LIVE_FAREWELL};notice=null;}if(scene.stage!=='run')notice=null;
   if(liveWon(scene))pay();
-  if(liveFinished(scene)&&(liveLost(scene)||scene.paid)){scene=null;travel=0;}
+  if(liveFinished(scene)&&(liveLost(scene)||scene.paid)){summary={text:liveSummary(scene,scene.reward||0),won:liveWon(scene),until:clock+LIVE_SUMMARY};line=null;scene=null;travel=0;}
  }
- function draw(){if(!allowed()||!scene&&!line)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',clock});}
+ function draw(){if(!allowed()||!scene&&!line&&!notice&&!summary)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:scene?'':summary?.text||'',clock});}
  Object.defineProperties(r,{
   liveTick:{get:()=>tick},drawLive:{get:()=>draw},
   liveEncounterActive:{get:()=>()=>!!scene},
   // Tests only (the runtime is never published): start one now, read the state.
   liveEncounterSpawn:{get:()=>kind=>allowed()&&!mischiefBusy()&&!!liveDefinition(kind)&&spawn(kind)},
-  liveEncounterState:{get:()=>()=>({book:book(),scene,travel,need:need(),clock,line:line?.text||'',forced,allowed:allowed()})}
+  liveEncounterState:{get:()=>()=>({book:book(),scene,travel,need:need(),clock,line:line?.text||notice?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:summary?.text||'',forced,allowed:allowed()})}
  });book();
 }

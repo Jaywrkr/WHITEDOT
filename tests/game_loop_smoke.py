@@ -68,6 +68,8 @@ try:
   page.locator('#cubeTabTravel').click();page.locator('#sparkGoalSelect').select_option('shop:dust');page.locator('#cubeClose').click()
   page.wait_for_function('document.getElementById("sparkGoal").textContent.includes("Meta cumplida")')
   before_jump=page.evaluate('__r.S.sparks')
+  # Jay (alpha.230): the jump exists once the eleven places are complete.
+  page.evaluate("(()=>{const d=__r.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__r.save();})()")
   page.wait_for_function('!document.getElementById("bJump").hidden&&!document.getElementById("bJump").disabled')
   page.locator('#bJump').click();page.wait_for_function('!!__r.S.practiceTravel.previous')
   assert page.evaluate('__r.S.sparks')==before_jump-20

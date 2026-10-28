@@ -4,7 +4,10 @@
 // and a white arrow by the cube points to it; a thin white arc round the cube fills while lasting is enough.
 // Doing (batch 3): the task in the biome's colour, the next step ringed in white with the white arrow on it, a counter of
 // small squares under the cube and a thin white arc round it that empties with the time left.
-import {liveDefinition,liveGoal,LIVE_COLORS,LIVE_FAREWELL,LIVE_PULSE_CATCH,LIVE_BURN} from './live-encounters-model.js';
+// Jay (28 Oct 2026, alpha.230): for every verb a thin white ring round the cube says the time left and a white arrow
+// the next step (white is what to do next); the start says its name and verb; a win bursts in the biome's light, a loss
+// drifts away and fades (about a second), never a cut; then one summary line.
+import {liveDefinition,liveGoal,LIVE_COLORS,LIVE_FAREWELL,LIVE_TOUCH,LIVE_BURN} from './live-encounters-model.js';
 const TAU=Math.PI*2;
 function glow(c,x,y,r,color,alpha){const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=alpha;c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2);}
 function ring(c,x,y,r){c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();}
@@ -114,17 +117,38 @@ function safety(c,s,ox,oy,t,reduced){c.save();c.strokeStyle=c.fillStyle='#ffffff
 // By the cube (screen centre): a white shield while a pulse on time protects it; a thin arc that fills while lasting is enough.
 function cubeMarks(r,s,def,reduced){const c=r.cx,x=r.W/2,y=r.H/2;c.save();c.strokeStyle='#ffffff';
  if(s.shield>0){c.globalAlpha=.85*Math.min(1,s.shield*1.5);c.lineWidth=2;ring(c,x,y,15+(reduced?0:(1-s.shield)*4));}
- if(def.survive){c.globalAlpha=.25;c.lineWidth=1.5;ring(c,x,y,20);c.globalAlpha=.9;c.beginPath();c.arc(x,y,20,-Math.PI/2,-Math.PI/2+TAU*Math.min(1,s.age/def.life));c.stroke();}
  c.restore();}
+// The time left, for every verb: a thin white ring round the cube that empties; when lasting is enough to escape it
+// fills instead (it was that way since batch 2), so full always means the end of the encounter.
+export function liveTimeLeft(s,def=liveDefinition(s?.kind)){if(!s||!def)return 0;const life=def.life+(s.bonus||0);return Math.max(0,Math.min(1,1-s.age/life));}
+function timeRing(r,s,def){const c=r.cx,x=r.W/2,y=r.H/2,left=liveTimeLeft(s,def),fill=def.verb==='huir'&&!!def.survive;c.save();c.strokeStyle='#ffffff';c.lineWidth=1.5;c.globalAlpha=.2;ring(c,x,y,20);
+ c.globalAlpha=.9;c.beginPath();c.arc(x,y,20,-Math.PI/2,-Math.PI/2+TAU*(fill?1-left:left));c.stroke();c.restore();}
 // Doing: the time left (an arc that empties) and the steps (small squares under the cube, white when done).
 function doMarks(r,s,def){const c=r.cx,x=r.W/2,y=r.H/2;c.save();c.strokeStyle=c.fillStyle='#ffffff';
- const left=Math.max(0,1-s.age/(def.life+(s.bonus||0)));c.globalAlpha=.2;c.lineWidth=1.5;ring(c,x,y,20);c.globalAlpha=.85;c.beginPath();c.arc(x,y,20,-Math.PI/2,-Math.PI/2+TAU*left);c.stroke();
  const n=s.need,w=n*7-3;for(let i=0;i<n;i++){c.globalAlpha=i<s.done?1:.3;c.fillRect(Math.round(x-w/2+i*7),Math.round(y+27),4,4);}c.restore();}
 // The next step: a white ring that breathes.
 function nextMark(c,x,y,t,reduced){c.save();c.strokeStyle='#ffffff';c.globalAlpha=.9;c.lineWidth=1.5;ring(c,x,y,15+(reduced?0:Math.sin(t*5)*1.5));c.restore();}
 // The scene: the prey and its light; a ring while a pulse on time holds it; the catch opens in its colour; on escape it fades.
-export function drawLive(r,s,{color,reduced=false,line='',clock=0}={}){
- if(!s)return;const c=r.cx,ox=r.W/2-r.camX,oy=r.H/2-r.camY,x=s.x+ox,y=s.y+oy,t=reduced?0:s.age,def=liveDefinition(s.kind),flee=s.verb==='huir',doing=s.verb==='hacer',atCube=flee||doing;
+export function drawLive(r,s,{color,reduced=false,line='',title='',hint='',summary='',clock=0}={}){
+ const c=r.cx;c.save();if(s)drawScene(r,s,color,reduced);
+ // Words, one place under the cube: the notice (its name and what to do, then its line), the goodbye, the summary.
+ // «Textos en el universo» hides them all (universe-texts.js); everything drawn above stays.
+ const ty=Math.min(r.H-135,r.H/2+130),width=r.W-32;c.textAlign='center';
+ if(title){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(title,r.W/2,ty,width);if(hint){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='11px "Geist Mono",monospace';c.fillText(hint,r.W/2,ty+18,width);}}
+ else if(line){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='11px "Geist Mono",monospace';c.fillText(line,r.W/2,ty,width);}
+ else if(summary){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(summary,r.W/2,ty,width);}
+ c.restore();
+}
+// A shape fading out: every alpha it sets is scaled by f (the shapes set their own alphas, so one value set before
+// them would not fade them). The canvas keeps its own setting; the override lives only on this context, while drawing.
+function faded(c,f,fn){let d=null;for(let o=Object.getPrototypeOf(c);o&&!d;o=Object.getPrototypeOf(o))d=Object.getOwnPropertyDescriptor(o,'globalAlpha');
+ if(!d?.set||!d.get){c.globalAlpha=f;return fn();}const k=Math.max(1e-3,f);c.save();Object.defineProperty(c,'globalAlpha',{configurable:true,get(){return d.get.call(c)/k;},set(v){d.set.call(c,Math.max(0,Math.min(1,v))*k);}});
+ try{fn();}finally{delete c.globalAlpha;c.restore();}}
+// The win: a short burst of light in the biome's colour (its first 0.9 s), a ring and twelve sparks opening.
+function burst(c,x,y,over,color,reduced){const k=Math.min(1,over/.9),e=1-(1-k)*(1-k);if(k>=1)return;glow(c,x,y,reduced?46:26+e*104,color,.7*(1-k));
+ c.strokeStyle=c.fillStyle=color;c.globalAlpha=.9*(1-k);c.lineWidth=2;ring(c,x,y,8+e*(reduced?18:58));c.lineWidth=1;for(let i=0;i<12;i++){const q=i*TAU/12,rad=6+e*(reduced?14:48);c.fillRect(x+Math.cos(q)*rad-2,y+Math.sin(q)*rad-2,4,4);}}
+function drawScene(r,s,color,reduced){
+ const c=r.cx,ox=r.W/2-r.camX,oy=r.H/2-r.camY,x=s.x+ox,y=s.y+oy,t=reduced?0:s.age,def=liveDefinition(s.kind),flee=s.verb==='huir',doing=s.verb==='hacer',atCube=flee||doing;
  c.save();c.lineWidth=1;c.strokeStyle=c.fillStyle=color;
  if(s.stage==='run'){
   if(doing){c.globalAlpha=.95;SHAPES[s.kind]?.(c,x,y,s.heading||0,t,s,ox,oy);const g=liveGoal(s,{x:r.S.wx,y:r.S.wy});if(g){nextMark(c,g.x+ox,g.y+oy,s.age,reduced);pointer(r,s,g.x+ox,g.y+oy,'#ffffff',reduced);}doMarks(r,s,def);}
@@ -134,19 +158,23 @@ export function drawLive(r,s,{color,reduced=false,line='',clock=0}={}){
   // the prey clear on any light without making it bigger.
   if(!s.hidden){glow(c,x,y,30,color,.42);c.save();c.globalAlpha=.55;c.fillStyle='#000';c.beginPath();c.arc(x,y,12,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=color;ring(c,x,y,12.5);c.restore();}c.globalAlpha=1;c.strokeStyle=c.fillStyle=color;SHAPES[s.kind]?.(c,x,y,s.heading||0,t,s,ox,oy);
   if(s.hold>0){c.globalAlpha=.6*Math.min(1,s.hold);ring(c,x,y,13);}
-  pointer(r,s,x,y,color,reduced);}
+  // The prey's way: white, like every next step (it was in the biome's colour until alpha.229).
+  pointer(r,s,x,y,'#ffffff',reduced);}
+  timeRing(r,s,def);
  }else{
   const k=Math.min(1,s.over/LIVE_FAREWELL),won=s.stage==='caught'||s.stage==='safe'||s.stage==='done',bx=atCube?r.W/2:x,by=atCube?r.H/2:y;
-  if(won){c.globalAlpha=(1-k)*.85;ring(c,bx,by,8+k*(reduced?14:40));for(let i=0;i<8;i++){const q=i*TAU/8,rad=6+k*(reduced?10:30);c.fillRect(bx+Math.cos(q)*rad-1.5,by+Math.sin(q)*rad-1.5,3,3);}}
-  if(!won||atCube){c.globalAlpha=(1-k)*.7;SHAPES[s.kind]?.(c,x,y,s.heading||0,t,{...s,hidden:false,trail:[]},ox,oy);}
+  if(won){burst(c,bx,by,s.over,color,reduced);c.strokeStyle=c.fillStyle=color;}
+  // What is left goes away slowly, fading: a prey keeps flying on its way (the model moves it); a threat or a task
+  // drifts away from the cube. Never a cut.
+  if(!won||atCube){const ax=x-r.W/2,ay=y-r.H/2,l=Math.hypot(ax,ay),u=l>1?{x:ax/l,y:ay/l}:{x:Math.cos(s.heading||0),y:Math.sin(s.heading||0)},drift=won||s.verb==='perseguir'||reduced?0:70*(1-(1-k)*(1-k)),dx=u.x*drift,dy=u.y*drift;
+   faded(c,(won?.6:.85)*(1-k),()=>{c.globalAlpha=1;SHAPES[s.kind]?.(c,x+dx,y+dy,s.heading||0,t,{...s,hidden:false,trail:[]},ox+dx,oy+dy);});}
  }
- // One short line: when it appears, and its goodbye when it gets away. «Textos en el universo» hides both.
- if(line){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText(line,r.W/2,Math.min(r.H-135,r.H/2+130));}
  c.restore();
 }
 // Where it went: an arrow by the cube while it is on screen and away; at the edge of the screen when it is beyond.
+// Always there while it runs, unless the goal is under the cube already.
 function pointer(r,s,x,y,color,reduced){
- const c=r.cx,cx=r.W/2,cy=r.H/2,dx=x-cx,dy=y-cy,l=Math.hypot(dx,dy);if(l<LIVE_PULSE_CATCH*.6)return;const a=Math.atan2(dy,dx),off=x<14||y<14||x>r.W-14||y>r.H-14;
+ const c=r.cx,cx=r.W/2,cy=r.H/2,dx=x-cx,dy=y-cy,l=Math.hypot(dx,dy);if(l<LIVE_TOUCH)return;const a=Math.atan2(dy,dx),off=x<14||y<14||x>r.W-14||y>r.H-14;
  const pulse=reduced?.7:.55+.3*Math.sin(performance.now()/180);c.save();c.fillStyle=color;c.globalAlpha=pulse;
  let px=cx+Math.cos(a)*24,py=cy+Math.sin(a)*24,size=4;
  if(off){const k=Math.min((r.W/2-18)/Math.abs(Math.cos(a)||1e-6),(r.H/2-90)/Math.abs(Math.sin(a)||1e-6));px=cx+Math.cos(a)*k;py=cy+Math.sin(a)*k;size=7;}

@@ -12,6 +12,12 @@ import {formatDistance} from './player-profile-model.js';
 export const RING_RADIUS=6000,PORTAL_REACH=40,PORTAL_HEAR=1800,RING_SEA_STEP=300,RING_SEA_TRIES=6;
 // Plan H6: the next portal on the path is heard from the Refugio and beyond, softly, on the bar's «3», from its side.
 export const NEXT_HEAR=RING_RADIUS*1.6,NEXT_STEP=8;
+// Jay (28 Oct 2026, alpha.230): nobody stays 77 km away with no way back. «Volver al anillo» (Lugares) lands, free, at
+// the ring's centre, a step toward the next portal; beyond RING_AWAY from the centre it is the next thing to do.
+export const RING_HOME_STEP=160,RING_AWAY=RING_RADIUS+PORTAL_HEAR;
+// Where «Volver al anillo» lands: from the centre, a step toward the next portal (south of it when there is none).
+export function ringHomePoint(center,next){if(!center)return null;const d=next?Math.hypot(next.x-center.x,next.y-center.y):0;
+ return d>0?{x:Math.round(center.x+(next.x-center.x)/d*RING_HOME_STEP),y:Math.round(center.y+(next.y-center.y)/d*RING_HOME_STEP),layer:'superficie'}:{x:center.x,y:center.y+RING_HOME_STEP,layer:'superficie'};}
 // How loud the beacon of the next portal is at a distance: a floor far away, more as you come near; 0 beyond its reach.
 export const beaconGain=d=>d>=NEXT_HEAR?0:.012+.04*(1-d/NEXT_HEAR)**2;
 // Notes of the portals, a pentatonic over two octaves: each place has its own.
@@ -98,6 +104,14 @@ export function initialize(runtime){
  // far from the ring (beyond where its next portal is heard) the next place on the path can be reached the same way,
  // so a jump never leaves you far, far away from it.
  function far(id){const s=spots().find(q=>q.id===id),next=nextPortal(spots(),data(),runtime.S.journey);return !!(s&&next&&next.id===id&&Math.hypot(s.x-runtime.S.wx,s.y-runtime.S.wy)>=NEXT_HEAR);}
+ // Back to the ring: never a new place or another land, only its centre; it goes through the same move as any travel
+ // (practice-travel.js), so «Volver al punto anterior» brings you back where you were, and the compass then points to
+ // the next place.
+ const homePoint=()=>active()?ringHomePoint(center(),nextPortal(spots(),data(),runtime.S.journey)):null;
+ const away=()=>{const c=active()&&center();return !!c&&Math.hypot(runtime.S.wx-c.x,runtime.S.wy-c.y)>RING_AWAY;};
+ function home(){if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});const p=homePoint();if(!p)return false;if(runtime.S.destination)runtime.cancelDestination?.();
+  const moved=runtime.travelPracticePoint?runtime.travelPracticePoint(p):(()=>{const was={wx:runtime.S.wx,wy:runtime.S.wy};runtime.S.wx=p.x;runtime.S.wy=p.y;if(runtime.save?.()===false){Object.assign(runtime.S,was);return false;}return true;})();
+  if(!moved)return false;owner=runtime.S;target=null;inside=null;runtime.enterFx=1;runtime.narrate?.('travel');return true;}
  const canTravel=id=>!!(active()&&placeOpen(data(),id,runtime.S.journey)&&(data().seen[id]||stars(id)[0]||far(id)));
  function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!canTravel(id))return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
  function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]||stars(p.id)[0]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
@@ -106,6 +120,6 @@ export function initialize(runtime){
  const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.();});}
  // The portals for the map: where each is, and whether it is open, with its stars.
  function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>{const open=placeOpen(d,s.id,runtime.S.journey);return {...s,name:name(s.id),open,complete:complete(d,s.id),ink:portalInk(s.id,open,d),stars:stars(s.id).filter(Boolean).length};});}
- Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringCanTravel:{get:()=>canTravel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},renderRingTravel:{get:()=>travelList},
+ Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringCanTravel:{get:()=>canTravel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},ringHome:{get:()=>home},ringHomePoint:{get:()=>homePoint},ringAway:{get:()=>away},renderRingTravel:{get:()=>travelList},
   ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s,ink:portalInk(s.id,placeOpen(data(),s.id,runtime.S.journey))})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }
