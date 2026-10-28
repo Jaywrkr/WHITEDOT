@@ -1,4 +1,4 @@
-# Traspaso vigente · alpha.224
+# Traspaso vigente · alpha.232
 
 **Continuar desde `main`** (27 de octubre de 2026, tras el PR de Q7). Jay crea PR y hace merge salvo que pida otra cosa.
 
@@ -18,14 +18,15 @@ Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.
 | Sesión 11 · Q7 | Los dos finales en dub techno: subida, golpe en la tónica y corte seco; el tema con sus notas; el Mundo calla bajo el final de los once; D8, D9. Jay oyó y aprobó los renders | PR de Q7 | alpha.222 |
 | Lanzamiento · L1–L2 | Edición de venta sin cuenta ni red (una bandera que sella el empaquetador); el juego entero en inglés con elección en Ajustes | PR de L1–L2 | alpha.223–224 |
 | Universo vivo · E1–E2 | Encuentros vivos: los once de perseguir y los once de huir, uno cada 60–90 s de viaje en el Mundo libre | #366, #367 | alpha.227–228 |
+| Universo vivo · E3 | Los once de hacer: los 33 encuentros vivos completos | #368 | alpha.229 |
+| Arreglos de Jay A–E | `?rapido=2` corto, salto tras los once, sin «Estilos», encuentros más claros, «Volver al anillo» | #369, #371 | alpha.230 |
+| Universo · F1 | Mapa del cielo: 28 figuras que se unen en el Mundo libre | #372 | alpha.231 |
 
 CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio. Detalle en [CAMBIOS](CAMBIOS.md).
 
-**En rama, sin PR (28 de octubre de 2026): E3 · hacer** (`universo/e3-hacer`, alpha.229, desde `main` `fc7c4f8`). Los once de hacer sobre el mismo motor; la tirada común se reparte en tercios entre perseguir, huir y hacer. Con ella los [33 encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos) están completos. Probado en local (lógica, recorridos de navegador y render de audio); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
+Para E3, A–E y F1 este traspaso no registra el resultado de CI; su detalle está en [CAMBIOS](CAMBIOS.md).
 
-**En rama, sin PR (28 de octubre de 2026): arreglos de Jay A–E** (`jay/arreglos-a-e`, alpha.230, desde `main` `25ed913`). Tras jugar alpha.229: A, `?rapido=2` corto de verdad (Camino de 2 cristales, portal a 1 s; un bot juega el Viaje entero en 69 s); B, «Otro paisaje» y «Viajar a otra tierra» solo con los once lugares (el primer salto, gratis); C, sin «Estilos»; D, encuentros vivos con aviso, aro de tiempo, flecha blanca, final visible y resumen; E, «Volver al anillo» en Lugares. Detalle en [CAMBIOS](CAMBIOS.md). Probado en local (lógica y recorridos de navegador); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
-
-**En rama, sin PR (28 de octubre de 2026): F1 · Mapa del cielo** (`universo/f1-mapa-del-cielo`, alpha.231, desde `main` `ccb661a`). Estrellas tenues en el Mundo libre que se unen en 28 figuras pasando por ellas en orden; nota de la escala por estrella y motivo al completar, muy por debajo de la música (medido); a medias queda guardada; 10/15 ✦ la primera vez por figura; el zodiaco da el halo de estrellas; sección en la Bitácora. Una escena a la vez con encuentros vivos y travesuras. Atajo `?cielo=orion`. [Guía](docs/HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Probado en local (lógica, recorridos de navegador y render de audio); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
+**En rama, sin PR (28 de octubre de 2026): arreglos de Jay G1–G3** (`jay/arreglos-g`, alpha.232, desde `main` `2b3daf3`). Tras jugar alpha.231: G1, el cierre de cada ronda sobre negro opaco, con sus ★ y un solo botón blanco que sigue; G2, sin «Paseo musical» en ninguna vista; G3, una hoja al cerrarse el final de los once («Completaste los once lugares…», con «Explorar» y el salto a otro paisaje), una vez por partida y guardada en Lugares. Detalle en [CAMBIOS](CAMBIOS.md) y [El mundo](docs/MUNDO.md). Probado en local (lógica y recorridos de navegador); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
 
 ## Qué falta
 
