@@ -40,6 +40,12 @@ const rebasedAE=new Set(['src/chapter-test.js','src/crystal-sparks.js','src/jour
 // contracts below are untouched.
 const approvedF1='10c3c64ee64778c034885f05b0e51912faf0289b';
 const rebasedF1=new Set(['src/cube.js','src/main.js','src/render.js','src/universe-mischief.js']);
+// H1 · Chispas solo en el universo (Jay, 28 Oct 2026, alpha.233): levels give ★ and the song, never ✦ (rounds, remix,
+// the Camino, nothing paid inside a level, the ✦ counter hidden there); the open universe pays more (crystals ×3,
+// encounters, sky, activities, mischief, wild spark); help texts in English; the offline shell only changes its key.
+// These protected files and the shell are held to the first commit of jay/h1-chispas; the music's contracts are untouched.
+const approvedH1='be706d89013af96718da636fbb6031841912c65e';
+const rebasedH1=new Set(['src/crystal-play-model.js','src/crystal-sparks.js','src/i18n-en.js','src/live-encounters-model.js','src/sky-map-model.js','src/spark-rules.js','src/sparks.js','src/universe-activities.js','src/universe-mischief.js','src/wild.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -54,7 +60,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedH1.has(file)?approvedH1:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
@@ -63,7 +69,7 @@ sameSection('src/journey-finale.js','export const CHAPTER_COLORS','export functi
 sameSection('src/journey-pulse.js',' function judge(',' function draw(','pulse judgement, note selection and recorded timing; Q2 passes the heard time to the games',approvedQ);
 sameSection('src/journey-garden.js','import {calmMotion','export const gardenProgress','garden positions, rules, growth and save normalization as approved in P3',approved);
 sameSection('src/places.js','const object=','export function gameObjective','star rules, migration and existing open places; Q3 keeps credited',approvedQ);
-sameSection('src/places.js',' function start(',' // The round\'s card:','round execution, reward, restore and failed-save rollback as approved in P4–P6, Q2 and Q3',approvedQ);
+sameSection('src/places.js',' function start(',' // The round\'s card:','round execution, reward, restore and failed-save rollback as approved in P4–P6, Q2 and Q3; H1 takes the sparks out of the reward',approvedH1);
 sameSection('src/collection-garden.js',' function build(',' function definition(','successful card voices, instruments, timbres and garden score');
 sameSection('src/journey-rhythm.js','export const RHYTHMS','export function initialize','all rhythm patterns, judgement grid and timing rules');
 sameSection('src/house.js',' function brush(',' function cubeAt(','Refugio object proximity and audible brush scheduling');
@@ -90,7 +96,7 @@ if(audio!==before('src/audio.js',approved).toString())throw Error('Audio differs
 if(source('src/audio.js')!==before('src/audio.js',approvedQ7).toString())throw Error('Audio differs from the engine approved in Q5 and Q7');
 contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling and the Q7 finale hush',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
 const shell=source('sw.js').replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'");
-if(shell!==before('sw.js',approvedF1).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
+if(shell!==before('sw.js',approvedH1).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
 const runtimeFiles=[...readdirSync('src').filter(n=>n.endsWith('.js')).sort().map(n=>'src/'+n),...readdirSync('styles').filter(n=>n.endsWith('.css')).sort().map(n=>'styles/'+n),'index.html','package.json','sw.js'],hash=createHash('sha256');
 for(const file of runtimeFiles)hash.update(file+'\0').update(readFileSync(file));
 const report={base,revision:git('rev-parse','HEAD').toString().trim(),version:JSON.parse(source('package.json')).version,runtimeDigest:hash.digest('hex'),runtimeDirty:spawnSync('git',['diff','--quiet','HEAD','--','src','styles','assets','index.html','package.json','sw.js']).status!==0,protectedFiles,contracts,scope:'Byte preservation and exact protected musical functions; no perceptual listening or human acceptance implied.'};
