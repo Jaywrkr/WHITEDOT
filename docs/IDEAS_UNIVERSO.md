@@ -370,11 +370,11 @@ Ideas que casi existen. Propuesta: construir sobre lo que hay, no al lado.
 6. **Melodías de dominio público:** «Oda a la alegría», «Frère Jacques» y «Estrellita, ¿dónde estás?».
 7. **Cumpleaños de Luca (38):** 1 de agosto. Solo día y mes; el año no se guarda ni se muestra.
 
-### Aún abiertas
+8. **«Mano de Luca»:** se llama «La Mano». Es un guiño secreto y no nombra a nadie.
+9. **Premios:** lo pequeño y repetible da chispas (10–15 ✦, como los encuentros). Lo especial y único da un adorno del cubo o del Refugio y su página en la Bitácora, sin chispas. Las series completas dan un premio grande y visible (el zodiaco: halo de estrellas para el cubo).
+10. **Controles nuevos:** «Dos cubos en un teléfono» (67) entra más adelante como fase propia, con su botón «Jugar de a dos». La palabra secreta (105) se cambia por un secreto sin control: tocar el logo siete veces o el código de flechas.
+11. **Densidad por km:** algo a la vista cada km (boya, baliza o constelación) y como mucho una escena activa a la vez cada 60–90 s, con el reloj de los encuentros vivos. Desde 20 km lo raro sale más; desde 50 km aparecen leyendas. Un satélite de descanso cada 10 km y una puerta para volver.
 
-- «Mano de Luca» como nombre de una figura de estrellas.
-- Premios de cada fase: chispas, adornos o solo la Bitácora, sin disparar la economía.
-- Dos cubos en un teléfono (67) y palabra secreta en Ajustes (105): añaden controles.
-- Densidad por km: propuesta de una cosa a la vista por km y una escena cada 60–90 s como máximo.
+Ya no quedan decisiones abiertas para empezar.
 
 Las mediciones y escuchas de este catálogo no existen todavía. Nada aquí está construido, probado en teléfono ni con personas.
