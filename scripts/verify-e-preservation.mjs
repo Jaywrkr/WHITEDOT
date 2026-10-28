@@ -29,6 +29,11 @@ const rebasedM1=new Set(['src/celebration.js','src/chapter-test.js','src/main.js
 // files and the offline shell (three new modules) are held to that commit; the music's contracts below are untouched.
 const approvedE1='8f0eabbce9a208afc739fe2a0b47ca6f93927be4';
 const rebasedE1=new Set(['src/content-manifest.js','src/element-book-model.js','src/main.js','src/render.js','src/spark-rules.js','src/universe-activities.js','src/universe-mischief-art.js','src/universe-mischief.js']);
+// Jay's fixes A–E after alpha.229 (28 Oct 2026, alpha.230): ?rapido=2 short for real (two Camino crystals, the portal
+// after one second, the Vacío's sky kept), the jump and the other land only after the eleven places, «Estilos» hidden.
+// These protected files are held to that commit; the music's contracts below are untouched.
+const approvedAE='e937e85b2f2bf57be8649fdced7de2adb965067f';
+const rebasedAE=new Set(['src/chapter-test.js','src/crystal-sparks.js','src/journey-chapters.js','src/journey-release.js','src/music-travel.js','src/practice-travel.js','src/sparks.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -43,7 +48,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
