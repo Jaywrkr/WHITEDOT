@@ -48,9 +48,10 @@ const rebasedG=new Set(['src/achievement-metadata.js','src/main.js']);
 // H1 · Chispas solo en el universo (Jay, 28 Oct 2026, alpha.233): levels give ★ and the song, never ✦ (rounds, remix,
 // the Camino, nothing paid inside a level, the ✦ counter hidden there); the open universe pays more (crystals ×3,
 // encounters, sky, activities, mischief, wild spark); help texts in English; the offline shell only changes its key.
-// These protected files and the shell are held to the merge of main (alpha.232, with G) into jay/h1-chispas, so G's
-// changes (main.js, the shell's new module) are in it; the music's contracts are untouched.
-const approvedH1='1722b0a0813aa32036023ba18ae4c0bb025b70af';
+// Jay's correction (PR #374): no inflation, a loose spark 1 (2 on time), the rest by one rule (base × difficulty ×
+// distance × rarity). These protected files and the shell are held to that commit, after the merge of main (alpha.232,
+// with G), so G's changes (main.js, the shell's new module) are in it; the music's contracts are untouched.
+const approvedH1='00cbf87dd7d25e0d2233c9f57aa2a4bd3c0f8122';
 const rebasedH1=new Set(['src/crystal-play-model.js','src/crystal-sparks.js','src/i18n-en.js','src/live-encounters-model.js','src/sky-map-model.js','src/spark-rules.js','src/sparks.js','src/universe-activities.js','src/universe-mischief.js','src/wild.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
