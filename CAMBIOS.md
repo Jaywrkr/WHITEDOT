@@ -1,7 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 28 de octubre de 2026. Código **2.3.0-alpha.227**. Las entradas describen su revisión, no certifican producción.
+Estado: 28 de octubre de 2026. Código **2.3.0-alpha.228**. Las entradas describen su revisión, no certifican producción.
 
+
+## Encuentros vivos · tanda 2 (huir) · 2.3.0-alpha.228
+
+Rama `universo/e2-huir`, desde `main` (`36fab14`, alpha.227, con la tanda 1 integrada). Segunda de las tres tandas que aprobó Jay. Guía: [Encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos).
+
+- **Los once de huir**, sobre el mismo motor (filas, un comportamiento corto cada uno y la regla `huir`): remolino de polvo, enjambre celoso, ola gigante, derrumbe al compás, nube de polen, tormenta de arena, rayos del prisma, ondas del púlsar, lluvia de llamaradas, pozo que arrastra y agujero negro. Escapar es llegar a un lugar seguro visible, salir de un círculo, alejarse o aguantar 10–14 s.
+- **Perseguir o huir:** el temporizador común de 60–90 s no cambia; la tirada que ya existía (`live:pick:v1`) elige: por debajo de 0,5, el de perseguir de siempre; desde 0,5, el de huir del bioma. Cuándo y dónde aparecen, igual.
+- **Tocar a tiempo ayuda siempre:** un pulso a tiempo protege 1 s y, según el encuentro, deshace, frena, sopla o te hace saltar fuera. **Que te alcance no castiga:** el cubo se desvía un segundo, una despedida amable y sin premio. 10 ✦ al escapar, 15 ✦ si usaste un pulso a tiempo; la primera vez de cada uno, a la Bitácora (22 en «Encuentros vivos», 179 familias) con un aviso (D3).
+- **Legibilidad:** amenaza en el color del bioma, lugar seguro en blanco, flecha blanca junto al cubo y arco que se llena si basta aguantar. Las criaturas de la tanda 1 se perdían sobre algunas luces: halo más fuerte, disco oscuro y aro fino de su color; mismo tamaño, cubo igual de pequeño.
+- **Sonido:** la música no cambia. Al escapar suena la misma nota discreta de la tanda 1. Render: música igual a alpha.226 y las veintidós notas 28,6–29,8 dB bajo la música.
+- **Economía** sin cambios de importes ni precios. Modelo de dos horas, alpha.227 → alpha.228, jugador al 75 %: 30 min 669 → 671 ✦, 60 min 2.142 → 2.149, 120 min 5.985 → 6.000; tienda entera, 7 → 6,9 h (casual).
+- «Cómo jugar» dice que unas veces hay que atrapar y otras huir. Inglés completo en `i18n-en.js`. Atajo `?encuentro=ola` (o cualquiera de los veintidós).
+- Pruebas nuevas: `tests/live_flee_a_smoke.py`, `tests/live_flee_b_smoke.py`, `tests/live_flee_c_smoke.py` (con `tests/live_flee_helpers.py`; tres archivos para quedar bajo 145 s). Ampliadas: `live-encounters.mjs`, `live-encounters-runtime.mjs`, `live_encounters_mix.py` (y `audio_mix.mjs`). Ajustadas a las 179 familias: `element_book`, `journal-album`, `discoveries_smoke.py`; `live_encounters_smoke.py` filtra los de perseguir.
+- Preservación: no cambia ningún archivo protegido (sin capa nueva). No probado en teléfono ni con personas; sin CI remoto. La tanda 3 (hacer), pendiente.
 
 ## Encuentros vivos · tanda 1 (perseguir) · 2.3.0-alpha.227
 
