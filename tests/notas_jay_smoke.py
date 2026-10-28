@@ -96,6 +96,9 @@ try:
   page.evaluate("()=>{__r.S.sparks=7;__r.save();}");keys=page.evaluate('Object.keys(localStorage)')
   assert 'kubono:rapido' in keys and 'pixel-blanco-v4' not in keys,keys
   assert page.evaluate("JSON.parse(localStorage.getItem('kubono:rapido')).sparks")==7
+  # «?rapido=2»: a twentieth, same save of its own.
+  page.goto(URL+'?rapido=2');page.wait_for_function('!!window.__r?.placeGoalScale')
+  assert page.evaluate('__r.placeGoalScale()')==.05 and page.evaluate("JSON.parse(localStorage.getItem('kubono:rapido')).sparks")==7
   page.goto(URL);page.wait_for_function('!!window.__r?.placeGoalScale')
   assert page.evaluate('__r.placeGoalScale()')==1 and page.evaluate('__r.S.sparks')!=7,'a normal game keeps its goals and its save'
   assert not errors,errors;page.close();browser.close()

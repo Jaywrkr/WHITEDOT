@@ -3,6 +3,10 @@
 Estado: 28 de octubre de 2026. Código **2.3.0-alpha.229**. Las entradas describen su revisión, no certifican producción.
 
 
+## Prueba más rápida · `?rapido=2`
+
+Jay pidió pasar los cinco capítulos aún más rápido para probarlo todo. `?rapido=2` pone las metas de capítulos y rondas a un veinteavo, con el mismo guardado propio que `?rapido=1`. Sin el parámetro nada cambia. Recorrido `notas_jay_smoke` ampliado.
+
 ## Encuentros vivos · tanda 3 (hacer) · 2.3.0-alpha.229
 
 Rama `universo/e3-hacer`, desde `main` (`fc7c4f8`, alpha.228, con las tandas 1 y 2 integradas). Tercera y última de las tandas que aprobó Jay: con ella están los 33. Guía: [Encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos).
