@@ -37,7 +37,8 @@ export function initialize(r){
  const paused=()=>document.hidden||!!r.scanning||!!r.noticeLane?.inspecting||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  const wandering=()=>r.autopilotState?.mode==='wander'&&!r.autopilotState.paused;
  // One at a time: no encounter while a mischief scene plays (universe-mischief.js waits for us in the same way).
- const mischiefBusy=()=>!!r.mischiefState?.scene;
+ // And none while a figure of the Mapa del cielo is being joined (sky-map.js); after one, the clock starts again.
+ const mischiefBusy=()=>!!r.mischiefState?.scene||!!r.skyMapActive?.();
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.liveEncounters=normalizeLive(owner.liveEncounters);scene=null;line=null;notice=null;summary=null;queued=false;last=null;if(fresh)travel=0;}return owner.liveEncounters;}
  const need=()=>forced?3:liveInterval(scope,book().count);
  const biomeAt=(x,y)=>{const d=r.regionOfPos(x,y);return d?.sea?'vacio':r.BIOMES?.[d?.z]?.id||'vacio';};
@@ -90,7 +91,7 @@ export function initialize(r){
  function draw(){if(!allowed()||!scene&&!line&&!notice&&!summary)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:scene?'':summary?.text||'',clock});}
  Object.defineProperties(r,{
   liveTick:{get:()=>tick},drawLive:{get:()=>draw},
-  liveEncounterActive:{get:()=>()=>!!scene},
+  liveEncounterActive:{get:()=>()=>!!scene},liveEncounterRest:{get:()=>()=>{if(!scene)travel=0;}},
   // Tests only (the runtime is never published): start one now, read the state.
   liveEncounterSpawn:{get:()=>kind=>allowed()&&!mischiefBusy()&&!!liveDefinition(kind)&&spawn(kind)},
   liveEncounterState:{get:()=>()=>({book:book(),scene,travel,need:need(),clock,line:line?.text||notice?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:summary?.text||'',forced,allowed:allowed()})}
