@@ -29,6 +29,7 @@ Vigente para **alpha.222** en `main` (27 de octubre de 2026). Última revisión 
 | Regiones, familias y direcciones guardadas | [Universo](UNIVERSO.md) |
 | Inicialización, módulos, audio, UI y guardado | [Arquitectura](ARQUITECTURA.md) |
 | Objetos, encuentros y actividades | [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md) |
+| 119 ideas para el universo y Constelaciones (catálogo; no autoriza construir) | [Ideas del universo](IDEAS_UNIVERSO.md) |
 | Personalización y catálogo construido | [Tienda del cubo](TIENDA_DEL_CUBO.md) |
 | Habitaciones, objetos y jardín musical | [Casa viva](CASA_VIVA.md) |
 | Guardado local, cuenta y recuperación | [Cuenta y progreso](CUENTA_Y_RESPALDO.md) |

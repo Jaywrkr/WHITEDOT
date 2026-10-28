@@ -104,6 +104,8 @@ La ventana original de ocho semanas (19 oct–13 dic 2026) queda como **estimaci
 
 **Encuentros vivos completos:** con E3 están los 33 del catálogo (11 biomas × perseguir, huir, hacer). Falta lo de siempre: CI remoto tras el PR, el teléfono y personas.
 
+**Ideas del universo (28 de octubre de 2026):** el [catálogo de 119 ideas y Constelaciones](IDEAS_UNIVERSO.md) existe, con fases F0–F6. Es una dirección aprobada; no autoriza construir nada hasta que Jay elija la fase.
+
 ## Comunicación y venta
 
 Propuesta: mostrar primero una acción del cubo y su respuesta visual/musical. Tres mensajes: explorar un universo sonoro, romper/recoger y avanzar, descubrir escenas/actividades raras. La electrónica no debe desaparecer de la identidad; mostrar cómo se mezcla con otras familias sin atribuir grabaciones ajenas.
