@@ -17,8 +17,11 @@ Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.
 | Sesión 11 · Q1–Q6 | Reglas a la vista, la Cueva cuenta el eco, Tu canción crece y se cierra, Refugio legible, golpe al oírse, día nuevo y un solo gesto; D7, D10, D11 | #359 | alpha.216–221 |
 | Sesión 11 · Q7 | Los dos finales en dub techno: subida, golpe en la tónica y corte seco; el tema con sus notas; el Mundo calla bajo el final de los once; D8, D9. Jay oyó y aprobó los renders | PR de Q7 | alpha.222 |
 | Lanzamiento · L1–L2 | Edición de venta sin cuenta ni red (una bandera que sella el empaquetador); el juego entero en inglés con elección en Ajustes | PR de L1–L2 | alpha.223–224 |
+| Universo vivo · E1–E2 | Encuentros vivos: los once de perseguir y los once de huir, uno cada 60–90 s de viaje en el Mundo libre | #366, #367 | alpha.227–228 |
 
 CI completo en verde en cada merge: lógica, 6 tandas de navegador y 6 de audio. Detalle en [CAMBIOS](CAMBIOS.md).
+
+**En rama, sin PR (28 de octubre de 2026): E3 · hacer** (`universo/e3-hacer`, alpha.229, desde `main` `fc7c4f8`). Los once de hacer sobre el mismo motor; la tirada común se reparte en tercios entre perseguir, huir y hacer. Con ella los [33 encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos) están completos. Probado en local (lógica, recorridos de navegador y render de audio); sin CI remoto, sin teléfono ni personas. Jay crea el PR.
 
 ## Qué falta
 

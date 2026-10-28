@@ -1,7 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 28 de octubre de 2026. Código **2.3.0-alpha.228**. Las entradas describen su revisión, no certifican producción.
+Estado: 28 de octubre de 2026. Código **2.3.0-alpha.229**. Las entradas describen su revisión, no certifican producción.
 
+
+## Encuentros vivos · tanda 3 (hacer) · 2.3.0-alpha.229
+
+Rama `universo/e3-hacer`, desde `main` (`fc7c4f8`, alpha.228, con las tandas 1 y 2 integradas). Tercera y última de las tandas que aprobó Jay: con ella están los 33. Guía: [Encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos).
+
+- **Los once de hacer**, sobre el mismo motor (filas, un comportamiento corto cada uno y la regla `hacer`): cinco motas en orden, estrellita perdida, burbujas al ritmo, guardián de piedra, cinco brotes, caravana, nodos que suenan, cuatro púlsares, antena caída, luciérnagas del pozo y constelación. Tareas de 26–30 s con el objetivo a la vista: números, destino marcado, pasos en cuadraditos bajo el cubo y un arco que se vacía con el tiempo.
+- **Perseguir, huir o hacer:** el temporizador común de 60–90 s no cambia; la misma tirada (`live:pick:v1`) se reparte ahora en tercios. Frente a alpha.228, las tiradas de 1/3 a 0,5 pasan de perseguir a huir y las de 2/3 en adelante, de huir a hacer (en 20.000 tiradas: 33,3 / 33,4 / 33,3 %).
+- **Tocar a tiempo ayuda siempre:** suma 1 s (hasta 6) y cuenta doble, acelera, protege o evita que se apague, según el encuentro. Se completa también sin tocar a tiempo y sin sonido (reloj fijo; los nodos quedan numerados). **Fallar no castiga:** si se acaba el tiempo, se seca un brote o te alejas, una despedida amable y sin premio. 10 ✦, o 15 ✦ con un pulso a tiempo; la primera vez de cada uno, a la Bitácora (33 en «Encuentros vivos», 190 familias) con un aviso (D3).
+- **Dificultad medida** (bots en `tests/live-encounters.mjs`, 20 posiciones): reaccionando 1,5 s tarde y sin tocar a tiempo se completan los once siempre (también a 140 u/s y sin sonido); con pulsos a tiempo, siempre y más rápido. Un bot no duda: una persona tardará más.
+- **Sonido:** la música no cambia. Al completar suena la nota discreta de las otras tandas; los nodos del Prisma suenan, más bajo, al encenderse y al tocarlos. Render: música igual a alpha.226 y las treinta y ocho notas 28,8–29,6 dB bajo la música.
+- **Economía** sin cambios de importes ni precios. Modelo de dos horas, alpha.228 → alpha.229, jugador al 75 %: 30 min 671 → 673 ✦, 60 min 2.149 → 2.154, 120 min 6.000 → 6.010; tienda entera 6,9 h (casual) y 5,3 → 5,2 h (a tiempo).
+- «Cómo jugar» dice «huir o hacer algo». Inglés completo en `i18n-en.js`. Atajo `?encuentro=motas` (o cualquiera de los treinta y tres).
+- Pruebas nuevas: `tests/live_do_a_smoke.py`, `tests/live_do_b_smoke.py`, `tests/live_do_c_smoke.py` (con `tests/live_do_helpers.py`). Ampliadas: `live-encounters.mjs`, `live-encounters-runtime.mjs`, `live_encounters_mix.py` y `audio_mix.mjs`. Ajustadas a las 190 familias: `element_book`, `journal-album`, `discoveries_smoke.py`.
+- Preservación: no cambia ningún archivo protegido (sin capa `approvedE3`). No probado en teléfono ni con personas; sin CI remoto.
 
 ## Encuentros vivos · tanda 2 (huir) · 2.3.0-alpha.228
 

@@ -2,8 +2,9 @@
 and from the commit before the encounters (2ae74a8, alpha.226) is the same in two places and at 44.1 and 48 kHz: the
 same peak and the same level in every half second, within the render's own run-to-run jitter (about 0.0001 dB; the
 renders are not bit-identical even from one tree). The only sound an encounter adds is one quiet note on the catch (batch
-1) or the escape (batch 2): the twenty-two of them, over the same music, add far less than the music itself (measured
-against the same calls made inaudible, more than 25 dB under it, its peak under a fifth of the music's)."""
+1), the escape (batch 2) or the task done (batch 3), and, for the prism's nodes, a quieter one per node: the thirty-three
+and the five, over the same music, add far less than the music itself (measured against the same calls made inaudible,
+more than 25 dB under it, its peak under a fifth of the music's)."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -44,15 +45,16 @@ try:
     drift=max(abs(x-y) for x,y in zip(ra['windows'],rb['windows']))
     assert len(ra['windows'])==len(rb['windows'])==18 and drift<.01,(genre,rate,drift)
     assert abs(ra['rmsDb']-rb['rmsDb'])<.001 and abs(ra['peak']-rb['peak'])<1e-5,(ra['rmsDb'],rb['rmsDb'],ra['peak'],rb['peak'])
-    # The same music with the twenty-two notes, against the same calls made far below hearing: what is left is the notes.
-    # Fifteen seconds, one note every 0.6 s as in batch 1: the same density of notes, now twenty-two.
-    rp=a.evaluate(RENDER,{'genre':genre,'rate':rate,'live':'silent','seconds':15});a.evaluate('()=>{window.__plain=window.__last;}');rl=a.evaluate(RENDER,{'genre':genre,'rate':rate,'live':True,'seconds':15});d=a.evaluate(DIFF,{'rate':rate});a.close()
-    assert len(rl['notes'])==22 and all(n['gain']<=.02 and 36<=n['note']<=96 for n in rl['notes']),rl['notes']
+    # The same music with the thirty-three notes and the five steps, against the same calls made far below hearing: what
+    # is left is the notes. Twenty-four seconds, one note every 0.6 s as in batch 1: the same density of notes.
+    rp=a.evaluate(RENDER,{'genre':genre,'rate':rate,'live':'silent','seconds':24});a.evaluate('()=>{window.__plain=window.__last;}');rl=a.evaluate(RENDER,{'genre':genre,'rate':rate,'live':True,'seconds':24});d=a.evaluate(DIFF,{'rate':rate});a.close()
+    assert len(rl['notes'])==38 and all(n['gain']<=.02 and 36<=n['note']<=96 for n in rl['notes']),rl['notes']
+    assert [n.get('step') for n in rl['notes'][33:]]==[0,1,2,3,4] and all(n['gain']<=.012 for n in rl['notes'][33:]),rl['notes'][33:]
     assert d['diffDb']<rp['rmsDb']-25 and d['diffPeak']<rp['peak']/5,(genre,rp['rmsDb'],d)
     assert rl['peak']<.96
     rows.append({'genre':genre,'rate':rate,'beforeDb':round(rb['rmsDb'],4),'nowDb':round(ra['rmsDb'],4),'windowDriftDb':round(drift,5),'peak':round(ra['peak'],4),'musicDb':round(rp['rmsDb'],1),'catchDiffDb':round(d['diffDb'],1),'catchDiffPeak':round(d['diffPeak'],4),'noteGain':rl['notes'][0]['gain']})
     print('PASS '+json.dumps(rows[-1]),flush=True)
    browser.close()
-  print('PASS living encounters audio: the World\'s music matches alpha.226 (same peak, same level in every half second) and the twenty-two catch and escape notes sit '+', '.join(f"{r['musicDb']-r['catchDiffDb']:.1f} dB" for r in rows)+' under the music',flush=True)
+  print('PASS living encounters audio: the World\'s music matches alpha.226 (same peak, same level in every half second) and the thirty-three notes (catch, escape, task done) and the five node steps sit '+', '.join(f"{r['musicDb']-r['catchDiffDb']:.1f} dB" for r in rows)+' under the music',flush=True)
  finally:now.shutdown();before.shutdown()
 finally:shutil.rmtree(tmp,ignore_errors=True)
