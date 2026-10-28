@@ -69,7 +69,9 @@ export function initialize(runtime){
  for(const [button,value]of [['musicTravelGenres','genres'],['musicTravelHybrids','hybrids']])$(button).onclick=()=>{if(busy)return;mode=value;query='';$('musicTravelSearch').value='';render();};
  $('musicTravelSearch').oninput=e=>{query=e.target.value.toLocaleLowerCase('es');render();};
  $('musicTravelList').onclick=e=>{const b=e.target.closest('[data-music-genre]');if(b)go(b.dataset.musicGenre);};
- $('bStyles').hidden=!runtime.inWorld();
- setInterval(()=>{$('bStyles').hidden=!runtime.inWorld();reset();},250);
+ // Jay (28 Oct 2026, alpha.230): «Estilos» was for testing; it is in no view or menu any more. The button and its sheet
+ // stay (their ids too) and openMusicTravel still opens it from code.
+ $('bStyles').hidden=true;
+ setInterval(()=>{$('bStyles').hidden=true;reset();},250);
  Object.defineProperties(runtime,{openMusicTravel:{get:()=>open},travelMusicGenre:{get:()=>go}});
 }

@@ -13,7 +13,7 @@ try:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=groves&generation=2');page.wait_for_function('__testRuntime?.inWorld()');page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
-  page.wait_for_function('!document.getElementById("bStyles").hidden');page.locator('#bStyles').tap();page.locator('#musicTravelConnections').tap();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
+  page.evaluate('__testRuntime.openMusicTravel()');page.locator('#musicTravelConnections').tap();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
   page.evaluate('__testRuntime.audio();__testRuntime.S.sound=true')
   page.wait_for_function('__testRuntime.encounterObjects.filter(o=>o.groveStyle).length>=6')
   point=page.evaluate('''()=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.groveStyle&&Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<30);if(!o)throw Error('Travel missed the natural grove');return {x:o.x,y:o.y,id:o.id};}''')
@@ -22,7 +22,7 @@ try:
   assert page.evaluate('__notes.length>0&&__node.modularSignal.routes>0'),'the connection must route real audio'
   page.screenshot(path='/tmp/whitedot-connection-grove.png')
   # Opening style travel pauses the actual automatic walk, including lite-sheet ancestors.
-  page.evaluate("__testRuntime.startAutopilot('wander')");page.locator('#bStyles').tap();page.wait_for_timeout(150);before=page.evaluate('[__testRuntime.S.wx,__testRuntime.S.wy]');page.wait_for_timeout(250);assert page.evaluate('[__testRuntime.S.wx,__testRuntime.S.wy]')==before
+  page.evaluate("__testRuntime.startAutopilot('wander')");page.evaluate('__testRuntime.openMusicTravel()');page.wait_for_timeout(150);before=page.evaluate('[__testRuntime.S.wx,__testRuntime.S.wy]');page.wait_for_timeout(250);assert page.evaluate('[__testRuntime.S.wx,__testRuntime.S.wy]')==before
   page.locator('#musicTravelClose').tap();page.evaluate('__testRuntime.stopAutopilot();__testRuntime.save()');page.reload();page.wait_for_function('__testRuntime?.inWorld()');page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
   page.wait_for_function('''id=>__testRuntime.encounterObjects.some(o=>o.id===id&&o.state.weave?.edges.length>0)''',arg=point['id'])
   # Real Canvas draw emits colored pixels only inside a limited part of the viewport.

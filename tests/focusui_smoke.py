@@ -21,13 +21,14 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   page.wait_for_function('document.body.classList.contains("world-focus")')
-  assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu','bStyles']
+  # «Estilos» was for testing and is gone from the dock (Jay, alpha.230).
+  assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu']
   assert not page.locator('#goal').is_visible()
   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();assert page.locator('#bFx').is_visible()
-  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible();assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu','bStyles'];page.locator('#fxClose').click()
+  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible();assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu'];page.locator('#fxClose').click()
   page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bDetails').click();page.locator('#settingsClose').click();assert page.locator('#goal').is_visible()
   page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bDetails').click();page.locator('#settingsClose').click();assert not page.locator('#goal').is_visible()
-  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.mouse.click(30,300);assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu','bStyles']
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.mouse.click(30,300);assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu']
   page.evaluate('window.__testRuntime.startScanner()');assert page.locator('#scanner').is_visible();page.evaluate('window.__testRuntime.stopScanner()')
   dims=page.evaluate('({vw:innerWidth,sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,vh:innerHeight})');assert dims['sw']<=dims['vw'] and dims['sh']<=dims['vh'],dims
   page.wait_for_timeout(700);page.screenshot(path=f'/tmp/whitedot-focus-{label}.png')

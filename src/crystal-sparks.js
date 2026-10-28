@@ -2,6 +2,7 @@ import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
+import {fillRapidCamino} from './chapter-test.js';
 const CELL=200,MAX_SITES=8192;
 export const normalizeSparks=value=>Number.isFinite(value)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value))):0;
 // Regional abundance and an independent lattice keep clear gaps between crystals.
@@ -72,6 +73,8 @@ export function initialize(runtime){
    }
   }
   if(!path&&runtime.crystalTransaction)tickChains();
+  // «?rapido=2» (alpha.230): two crystals open the Camino's door.
+  if(path&&runtime.rapidLevel===2&&fillRapidCamino(S())){runtime.save?.();runtime.hud?.();completed=true;}
   if(completed&&door){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';feedback=[];}
  }
  function impact(o,site,point=o){if(reduced())return;feedback.push({x:point.x,y:point.y,at:seconds,broken:site.broken,size:o.size});feedback=feedback.slice(-48);}

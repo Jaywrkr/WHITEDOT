@@ -64,7 +64,8 @@ body.world-focus .goal{color:var(--dim)}
 body.world-mode #bPrimary{padding:0 6px}
 #bJump{padding:0 10px;min-width:72px;min-height:44px;font-family:var(--mono);flex-shrink:0}
 #bStyles{padding:0 8px;min-width:70px;min-height:44px;flex-shrink:0}
-body.world-mode:not(.tools-open) .dock>button#bStyles{display:inline-flex}
+/* «Estilos» was for testing (Jay, alpha.230): hidden everywhere; the id stays. */
+.dock>button#bStyles{display:none!important}
 #mMusicTravel .sheet{max-width:440px}#mMusicTravel h2{font-size:17px}#mMusicTravel p,#mMusicTravel label{font-size:11px}#musicTravelSearch{width:100%;min-width:0;box-sizing:border-box}#musicTravelList{max-height:48dvh;margin:8px 0}.music-destination{display:flex;align-items:center;gap:8px;border-top:1px solid #ffffff22}.music-destination button{flex:1;min-width:0;min-height:44px;font-size:12px;text-align:left;background:#000;border:0;padding:10px 4px}.music-destination span{font-size:11px;color:#ffffff88;flex-shrink:0}.music-destination .music-heard{color:#f0d27a}#autopilotHud #autoPulse{min-width:74px;font-size:11px;padding:0 6px}
 body.world-mode .dock{flex-wrap:wrap}
 
@@ -105,7 +106,7 @@ body.world-mode .dock{flex-wrap:wrap}
 .devbox{display:none}
 body.dev .devbox{display:block}
 /* Seed travel and the lab catalog create separate saves: development only, except to return from another seed. */
-body:not(.dev):not(.seed-travel) #bWorlds,body:not(.dev) p:has(> #guideCatalog){display:none}
+body:not(.dev):not(.seed-travel):not(.ring-complete) #bWorlds,body:not(.dev) p:has(> #guideCatalog){display:none}
 
 /* Discoveries keep their own ink; everything else stays black and white. */
 .rare-card{background:var(--void)}
@@ -705,6 +706,10 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* Buttons in one row share their height; the action that goes on leads, alone and full width. */
 .sheet .row,.guide-sheet>.row{align-items:stretch}
 .sheet .row>:is(#placeNext,#lugaresDoor,#portalPlay){flex-basis:100%;order:-1}
+/* «Volver al anillo» (alpha.230): a whole row under «Seguir hacia …»; above it when you are far from the ring. */
+.sheet .row>#lugaresRing{flex-basis:100%;order:-1}.sheet .row>#lugaresRing.next{order:-2}
+/* One more row of buttons: the list gives up that row, so «Cerrar» stays whole on a phone. */
+.lugares-sheet:has(#lugaresRing:not([hidden])) .lugares-list{max-height:calc(52vh - 60px)}
 /* Panel 10 (P4): near ★★ (70–74,9 %), «Otra vez» stands beside «Seguir hacia», on the first line. */
 #mPlace[data-near] .sheet .row>#placeNext{flex:1 1 170px}#mPlace[data-near] .sheet .row>#placeAgain{order:-1;flex:0 1 auto;padding-inline:18px;border-color:var(--ink)}#mPlace[data-near] .sheet .row>#placeClose{flex-basis:100%}
 .sheet .place-rows .place-near{color:var(--ink)}

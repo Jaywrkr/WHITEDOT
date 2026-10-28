@@ -9,6 +9,8 @@ try{
  const genres=new Set(),regions=new Set();for(let i=0;i<30;i++){const p=choosePracticePlace(r,r.rng(r.seedOf('travel-unit:'+i)));assert(p&&p.score>=10&&p.layer==='superficie');assert(!p.region.sea);genres.add(p.region.genre);regions.add(p.region.key);}
  assert(genres.size>5&&regions.size>20);
  r.S.ach.kept='2026-10-14';r.S.cat.kept=true;const point={x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};let refuseSave=false,saveCalls=0,failAt=0;const proxy=new Proxy(r,{get:(o,k)=>k==='save'?()=>{if(refuseSave||++saveCalls===failAt)return false;return o.save();}:Reflect.get(o,k)});initialize(proxy);
+ // Jay (alpha.230): no jump before the eleven places of the ring are complete; then it goes.
+ let ring=false;r.placesAllComplete=()=>ring;assert.equal(r.jumpPracticePlace(),false);assert.equal(r.S.wx,point.x);assert.equal(r.S.wy,point.y);assert.equal(r.S.practiceTravel.previous,null);ring=true;
  assert.equal(r.jumpPracticePlace(),true);assert(Math.hypot(r.S.wx-point.x,r.S.wy-point.y)>900);assert.deepEqual(r.S.practiceTravel.previous,point);assert(r.S.cat.kept&&r.S.ach.kept);
  assert.equal(r.returnPracticePlace(),true);assert.equal(r.S.wx,point.x);assert.equal(r.S.wy,point.y);assert.equal(r.S.layer,point.layer);
  assert.equal(r.S.practiceTravel.recent.length,1);assert.equal(normalizePracticeTravel({previous:{x:Infinity,y:0,layer:'cielo'}}).previous,null);

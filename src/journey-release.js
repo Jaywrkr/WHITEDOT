@@ -18,7 +18,9 @@ export const releaseProgress=(released,total)=>total>0?Math.max(0,Math.min(1,rel
 export const releaseScale=(released,total)=>1+1.2*(1-releaseProgress(released,total));
 // Where a released thing becomes a star: up and around from where the cube was, by hash of its number.
 export function starSpot(n,from,seed='release:v1'){const a=-1.571+(hashKey(seed+':'+n+':a')-.5)*2.6,d=60+70*hashKey(seed+':'+n+':d');return {x:Math.round(from.x+Math.cos(a)*d),y:Math.round(from.y+Math.sin(a)*d)};}
-export function normalizeRelease(raw){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};const total=Number.isInteger(q.total)?releaseTotal(q.total):0;
+// A saved sky keeps its size: the quick tests (chapter-test.js) save fewer than twelve, and a reload must not raise
+// them back to the minimum (alpha.230). A normal game never saves fewer than RELEASE_MIN.
+export function normalizeRelease(raw){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};const total=Number.isInteger(q.total)&&q.total>0?Math.min(RELEASE_MAX,q.total):0;
  const point=p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)?{x:Math.round(p.x),y:Math.round(p.y)}:null;
  return {total,released:Number.isInteger(q.released)?Math.max(0,Math.min(total,q.released)):0,stars:Array.isArray(q.stars)?q.stars.map(point).filter(Boolean).slice(-RELEASE_STARS):[],light:point(q.light),lit:q.lit===true,hinted:q.hinted===true,spaceHint:q.spaceHint===true};}
 export function initialize(runtime){

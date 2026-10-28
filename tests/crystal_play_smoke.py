@@ -34,7 +34,9 @@ try:
    page.wait_for_timeout(1600)
    assert page.evaluate('__r.S.sparks')==23,'ordinary shards pay four; the rare shard remains to chase'
    assert not page.evaluate('__r.savedCrystal(fixtures.rare.id).collected')
-   assert page.locator('#bJump').is_visible()
+   # Jay (alpha.230): «Otro paisaje» waits for the eleven places of the ring; then it is there.
+   page.wait_for_timeout(300);assert page.locator('#bJump').is_hidden(),'no jump before the eleven places'
+   page.evaluate("(()=>{const d=__r.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__r.save();})()");page.wait_for_function("!document.getElementById('bJump').hidden",timeout=3000);assert page.locator('#bJump').is_visible()
    # Panel 11 (Q1, D10-B): ✦ stays legible but never larger than ★ (the HUD's three numbers share 11 px).
    assert page.locator('#sparkCount').evaluate("e=>{const t=document.querySelector('.hud-tally');return parseFloat(getComputedStyle(e).fontSize)===parseFloat(getComputedStyle(t).fontSize)&&parseFloat(getComputedStyle(e).fontSize)>=11}")
    assert page.evaluate('()=>{const p=__r.crystalState.near.find(o=>o.id===fixtures.rare.id).particles.find(p=>p.rare);return Math.hypot(p.x-fixtures.rare.x,p.y-fixtures.rare.y)>40;}')

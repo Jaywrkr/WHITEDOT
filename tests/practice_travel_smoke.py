@@ -17,7 +17,8 @@ try:
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=sonidos&generation=2&layout=vasto');page.wait_for_function('__testRuntime?.inWorld()')
    page.evaluate('''()=>{document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const r=__testRuntime;r.S.cat.held=true;r.S.ach.held=r.S.todayKey;window.__pulses=0;const original=r.sessionAction;window.__point={x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}''')
-   page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40');page.wait_for_function('!document.getElementById("w").inert');page.wait_for_function('!document.getElementById("bJump").hidden')
+   # Jay (alpha.230): the jump exists once the eleven places are complete.
+   page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40');page.evaluate("(()=>{const d=__testRuntime.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__testRuntime.save();})()");page.wait_for_function('!document.getElementById("w").inert');page.wait_for_function('!document.getElementById("bJump").hidden')
    before=page.evaluate('__point');old=page.evaluate('__testRuntime.regionOfPos(__point.x,__point.y).genre')
    page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40');button=page.locator('#bJump').bounding_box()
    page.locator('#bJump').tap();page.wait_for_function('__testRuntime.S.practiceTravel.previous!==null&&__testRuntime.MU.dnaA?.genre!=='+repr(old))

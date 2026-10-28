@@ -28,7 +28,8 @@ try:
    before=page.evaluate('__r.playerProfile.distanceUnits');page.keyboard.down('d');page.wait_for_timeout(280);page.keyboard.up('d');page.wait_for_timeout(100)
    assert page.evaluate('__r.playerProfile.distanceUnits')>before+10;assert page.locator('#walkDistance').text_content()!='Caminado · 0 m'
    before=page.evaluate('__r.playerProfile.distanceUnits');page.evaluate('__r.S.wx+=1');page.wait_for_timeout(80);assert page.evaluate('__r.playerProfile.distanceUnits')==before
-   page.evaluate('__r.S.sparks=20;__r.sparkEconomy.earned=20');assert page.evaluate('__r.jumpPracticePlace()');page.wait_for_timeout(80);assert page.evaluate('__r.playerProfile.distanceUnits')==before
+   # Jay (alpha.230): the jump exists once the eleven places are complete.
+   page.evaluate('__r.S.sparks=20;__r.sparkEconomy.earned=20');assert not page.evaluate('__r.jumpPracticePlace()');page.evaluate("(()=>{const d=__r.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__r.save();})()");assert page.evaluate('__r.jumpPracticePlace()');page.wait_for_timeout(80);assert page.evaluate('__r.playerProfile.distanceUnits')==before
    page.evaluate('''async()=>{const r=__r,{distantDirections}=await import('/src/distant-colors.js'),size=r.REG*r.WCH;for(let x=0;x<8;x++)for(let y=0;y<8;y++){const px=(x+.5)*size,py=(y+.5)*size;if(distantDirections(px,py,size,r.W,r.H,r.regionOfPos,r.seedOf).length===2){r.S.wx=px;r.S.wy=py;return;}}throw Error('No real musical horizon');}''')
    page.wait_for_function('__r.distantSignals.filter(s=>s.opacity>.3).length>=2')
    assert page.evaluate('''()=>__r.distantSignals.every(s=>{const d=__r.regionOfPos(s.target.x,s.target.y);return d.key===s.key&&!d.sea;})''')

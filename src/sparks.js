@@ -49,7 +49,9 @@ export function initialize(runtime){
  }
  // Jay (27 Oct 2026, alpha.226): the jump is there as soon as the Journey ends; the first one after it is free, so a
  // player who arrives with no sparks can still go somewhere else (and come back free). Kept in S.journey.freeJumpUsed.
- const freeJump=()=>book().version===1&&owner.journey?.finished===true&&owner.journey.freeJumpUsed!==true&&!(owner.journey.version>1);
+ // Since alpha.230 (Jay) the jump only exists once the eleven places are complete: the free one is the first after that.
+ const ring=()=>runtime.placesAllComplete?.()===true;
+ const freeJump=()=>book().version===1&&owner.journey?.finished===true&&ring()&&owner.journey.freeJumpUsed!==true&&!(owner.journey.version>1);
  function reserveJump(){const q=book();if(freeJump()){const ticket={free:true,balance:owner.sparks,economy:structuredClone(q)};owner.journey.freeJumpUsed=true;q.stats.jumps++;q.stats.sinceJump=0;return ticket;}
   if(q.version!==1||sparkNumber(owner.sparks)<SPARK_JUMP_COST){notice('Necesitas '+Math.max(0,SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas más');return false;}
   const ticket={balance:owner.sparks,economy:structuredClone(q)};debitSparks(owner,SPARK_JUMP_COST);q.stats.jumps++;q.stats.sinceJump=0;return ticket;
@@ -85,7 +87,8 @@ export function initialize(runtime){
  function equip(id){const q0=book();if(q0.version!==1)return false;if(id&&(!q0.purchases[id]||!shopPiece(id)))return false;const ok=commit(q=>{q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(!id){q.wear={};q.on={};q.equipped='';return;}const p=shopPiece(id);if(shopSlot(p.slot)?.many)q.on[id]=true;else q.wear[p.slot]=id;q.equipped=id;});if(ok){trail=[];render();}return ok;}
  function unequip(id){const q0=book();if(q0.version!==1||!wearing(q0,id))return false;const ok=commit(q=>{const p=shopPiece(id);q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(shopSlot(p.slot)?.many)delete q.on[id];else delete q.wear[p.slot];if(q.equipped===id)q.equipped=Object.values(q.wear).find(v=>shopPiece(v))||'';});if(ok){trail=[];render();}return ok;}
  function goalText(){const q=book(),progress=sparkSetProgress(owner),goal=q.goal;
-  if(goal==='none')return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Otro paisaje · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
+  // The default goal is the jump; before the eleven places there is no jump, so no goal line about it either.
+  if(goal==='none'||goal==='jump'&&!ring())return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Otro paisaje · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
   const p=SPARK_SHOP.find(p=>'shop:'+p.id===goal);if(p)return q.purchases[p.id]?p.name+' · Meta cumplida':p.name+' · '+Math.min(owner.sparks,p.cost)+'/'+p.cost+' ✦';
   const set=SPARK_SETS.find(p=>'set:'+p.id===goal);if(set)return set.name+' · '+(q.claims['set:'+set.id]?'Meta cumplida':Math.min(progress[set.id],set.need)+'/'+set.need);
   if(goal==='universe'){const u=universeProgress(owner);return q.claims['universe:complete']?SPARK_UNIVERSE.name+' · Meta cumplida':'Universo · '+u.value+'/'+u.need;}
@@ -100,9 +103,11 @@ export function initialize(runtime){
   $('sparkBadges').innerHTML=SPARK_BADGES.map(b=>'<p>'+ (q.claims['badge:'+b.id]?'<b>'+b.name+'</b> · '+b.text:'Logro secreto · Sigue explorando.')+'</p>').join('')+SPARK_MILESTONES.map(m=>'<p>'+m.meters+' m · '+m.title+(q.claims['distance:'+m.meters]?' · Ganado':'')+'</p>').join('');
   const titles=Object.keys(q.claims).map(id=>SPARK_BADGES.find(b=>'badge:'+b.id===id)?.name||SPARK_SETS.find(s=>'set:'+s.id===id)?.title||SPARK_MILESTONES.find(m=>'distance:'+m.meters===id)?.title||(id==='universe:complete'?SPARK_UNIVERSE.title:undefined)).filter(Boolean);
   $('sparkTitle').innerHTML='<option value="">Sin título</option>'+titles.map(t=>'<option '+(q.title===t?'selected':'')+'>'+escape(t)+'</option>').join('');
-  $('sparkGoalSelect').innerHTML=[['none','Sin meta'],['jump','Ahorrar para un salto'],...SPARK_SHOP.map(p=>['shop:'+p.id,p.name]),...SPARK_SETS.map(p=>['set:'+p.id,p.name]),['universe',SPARK_UNIVERSE.name],...SPARK_MILESTONES.map(p=>['distance:'+p.meters,p.meters+' metros'])].map(([id,t])=>'<option value="'+id+'" '+(q.goal===id?'selected':'')+'>'+t+'</option>').join('');
+  $('sparkGoalSelect').innerHTML=[['none','Sin meta'],...(ring()?[['jump','Ahorrar para un salto']]:[]),...SPARK_SHOP.map(p=>['shop:'+p.id,p.name]),...SPARK_SETS.map(p=>['set:'+p.id,p.name]),['universe',SPARK_UNIVERSE.name],...SPARK_MILESTONES.map(p=>['distance:'+p.meters,p.meters+' metros'])].map(([id,t])=>'<option value="'+id+'" '+(q.goal===id?'selected':'')+'>'+t+'</option>').join('');
   $('sparkLog').innerHTML=q.log.slice().reverse().map(e=>'<p><b>'+escape(e.title)+'</b> · '+escape(e.text)+'</p>').join('')||'<p>Tu recorrido empieza aquí.</p>';
-  $('sparkStatus').textContent=!runtime.inWorld()?'Abre el Mundo con diez cristales.':sparkNumber(owner.sparks)<SPARK_JUMP_COST?'Toca a tiempo junto a los cristales. Te faltan '+(SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas para saltar.':(SPARK_SHOP.some(p=>!book().purchases?.[p.id])?'Puedes saltar o ahorrar para una apariencia permanente.':'Tienes todas las apariencias. Usa tus chispas para saltar.');const travel=runtime.inWorld()&&runtime.canPracticeTravel?.()!==false;$('sparkBack').disabled=!travel||!owner.practiceTravel?.previous;$('sparkJump').disabled=!travel||!freeJump()&&sparkNumber(owner.sparks)<SPARK_JUMP_COST;$('sparkJump').textContent='Otro paisaje · '+(freeJump()?'gratis':SPARK_JUMP_COST+' ✦');
+  // Before the eleven, Tu cubo says nothing of the jump: «Otro paisaje» is hidden there too (only «Volver gratis» stays).
+  const shopLeft=SPARK_SHOP.some(p=>!book().purchases?.[p.id]),jumpSection=$('sparkJump').closest?.('section');$('sparkJump').hidden=!ring();if(jumpSection){for(const e of jumpSection.querySelectorAll('h3,p'))e.hidden=!ring();jumpSection.hidden=!ring()&&!owner.practiceTravel?.previous;}
+  $('sparkStatus').textContent=!runtime.inWorld()?'Abre el Mundo con diez cristales.':!ring()?(shopLeft?'Ahorra para una apariencia permanente.':'Tienes todas las apariencias.'):sparkNumber(owner.sparks)<SPARK_JUMP_COST?'Toca a tiempo junto a los cristales. Te faltan '+(SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas para saltar.':(SPARK_SHOP.some(p=>!book().purchases?.[p.id])?'Puedes saltar o ahorrar para una apariencia permanente.':'Tienes todas las apariencias. Usa tus chispas para saltar.');const travel=runtime.inWorld()&&runtime.canPracticeTravel?.()!==false;$('sparkBack').disabled=!travel||!owner.practiceTravel?.previous;$('sparkJump').disabled=!travel||!freeJump()&&sparkNumber(owner.sparks)<SPARK_JUMP_COST;$('sparkJump').textContent='Otro paisaje · '+(freeJump()?'gratis':SPARK_JUMP_COST+' ✦');
  }
  function open(tab='travel'){runtime.openCube?.(tab);render();}
  function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks)+' chispas';gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!runtime.inWorld()||!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
@@ -128,7 +133,7 @@ export function initialize(runtime){
  }
  $('sparkGoal').onclick=()=>open();
  for(const id of ['bJump','sparkJump'])$(id).textContent='Otro paisaje · '+SPARK_JUMP_COST+' ✦';
- $('sparkJump').onclick=()=>{if(!freeJump()&&sparkNumber(runtime.S.sparks)<SPARK_JUMP_COST){$('sparkStatus').textContent='Necesitas '+(SPARK_JUMP_COST-sparkNumber(runtime.S.sparks))+' chispas más.';return;}$('mCube').hidden=true;runtime.jumpPracticePlace();};
+ $('sparkJump').onclick=()=>{if(!ring())return;if(!freeJump()&&sparkNumber(runtime.S.sparks)<SPARK_JUMP_COST){$('sparkStatus').textContent='Necesitas '+(SPARK_JUMP_COST-sparkNumber(runtime.S.sparks))+' chispas más.';return;}$('mCube').hidden=true;runtime.jumpPracticePlace();};
  $('sparkBack').onclick=()=>{$('mCube').hidden=true;runtime.returnPracticePlace();};
  $('sparkShop').onclick=e=>{const b=e.target.closest('[data-spark-buy]');if(b)buy(b.dataset.sparkBuy);};
  $('sparkGoalSelect').onchange=e=>{commit(q=>{q.goal=e.target.value;});};$('sparkTitle').onchange=e=>{commit(q=>{q.title=e.target.value;});};

@@ -65,6 +65,23 @@ export const LIVE_ENCOUNTERS=Object.freeze([
 ].map(Object.freeze));
 const BY_ID=new Map(LIVE_ENCOUNTERS.map(d=>[d.id,d]));
 export const liveDefinition=id=>BY_ID.get(id)||null;
+// Jay (28 Oct 2026, alpha.230): an encounter says what it is and what to do as it starts («Polilla de luz · atrápala»)
+// and leaves one line as it ends («Polilla · atrapada · +15 ✦», «Ola · te alcanzó · sin premio»). Per encounter: a short
+// name, its verb as an order and, to chase, whether the prey is «la» or «el». Rules and rewards do not change.
+export const LIVE_WORDS=Object.freeze(Object.fromEntries(Object.entries({
+ polilla:['Polilla','atrápala','f'],racimo:['Racimo','atrápalo','m'],pez:['Pez','atrápalo','m'],tambor:['Tambor','atrápalo','m'],semilla:['Semilla','atrápala','f'],cometa:['Cometa','atrápala','f'],reflejo:['Reflejo','atrápalo','m'],pulsar:['Púlsar','atrápalo','m'],llamarada:['Llamarada','atrápala','f'],eco:['Eco','atrápalo','m'],estrella:['Estrella','atrápala','f'],
+ remolino:['Remolino','aléjate'],enjambre:['Enjambre','sal de su círculo'],ola:['Ola','llega al anillo'],derrumbe:['Derrumbe','esquiva las piedras'],polen:['Polen','que no te alcance'],arena:['Arena','escóndete'],rayos:['Rayos','sal de su alcance'],ondas:['Ondas','llega al centro'],llamaradas:['Llamaradas','sal del círculo'],pozo:['Pozo','sube al borde'],agujero:['Agujero','escapa'],
+ motas:['Motas','siémbralas en orden'],estrellita:['Estrellita','llévala a su racimo'],burbujas:['Burbujas','rómpelas'],guardian:['Guardián','tócale la espalda'],brotes:['Brotes','riégalos'],caravana:['Caravana','llévala al oasis'],nodos:['Nodos','tócalos en orden'],pulsares:['Púlsares','enciende los cuatro'],antena:['Antena','llévala a su base'],luciernagas:['Luciérnagas','súbelas a la boca'],constelacion:['Constelación','pasa por todas']
+}).map(([id,[short,cue,g]])=>[id,Object.freeze({short,cue,...(g?{g}:{})})])));
+// How long the notice and the summary stay, in seconds.
+export const LIVE_NOTICE=3,LIVE_SUMMARY=3;
+export function liveTitle(kind){const d=liveDefinition(kind),w=LIVE_WORDS[kind];return d&&w?d.name+' · '+w.cue:d?.name||'';}
+// What happened, in one or two words: caught (by gender), safe, done; reached you, got away or the task left undone.
+export function liveOutcome(s){const d=liveDefinition(s?.kind),w=LIVE_WORDS[s?.kind];if(!d||!w)return '';const r=s.result;
+ if(r==='caught')return w.g==='m'?'atrapado':'atrapada';if(r==='safe')return 'a salvo';if(r==='done')return 'hecho';if(r==='hit')return 'te alcanzó';
+ if(r==='escaped')return d.verb==='perseguir'?'se escapó':d.verb==='huir'?'se fue':'sin terminar';return '';}
+// The summary line: «Polilla · atrapada · +15 ✦»; without a reward «… · sin premio».
+export function liveSummary(s,reward=0){const w=LIVE_WORDS[s?.kind],outcome=liveOutcome(s);if(!w||!outcome)return '';return w.short+' · '+outcome+' · '+(reward>0?'+'+reward+' ✦':'sin premio');}
 // The encounters a biome offers, in the order of the rows (its «perseguir», its «huir», its «hacer»); the roll picks one.
 // The controller rolls with the same hash as batch 1 (live:pick:v1), now in thirds: under one third the chase it always
 // had, from one third to two thirds the biome's «huir», from two thirds up its «hacer» (batch 2 split it in halves).

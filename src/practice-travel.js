@@ -60,11 +60,15 @@ export function initialize(runtime){
  // Journey still being played, a round of a place or the Journey's finale. Once the Journey is over the jump is there
  // from the first moment (its first one is free, sparks.js), and «Volver al punto anterior» is always free.
  const inLevel=()=>{const j=runtime.S.journey;return !!(runtime.placeRun?.()||runtime.journeyFinaleState?.()?.running||j&&j.finished!==true&&j.mode==='viaje');};
- function ui(){const world=runtime.inWorld(),level=inLevel(),after=runtime.S.journey?.finished===true;$('bJump').hidden=!world||level||!after&&runtime.sparkJumpEarned?.()!==true;$('bJumpBack').hidden=!world||level||!runtime.S.practiceTravel?.previous;
+ // Jay (28 Oct 2026, alpha.230): «Otro paisaje» and «Viajar a otra tierra» only once the eleven places of the ring are
+ // complete; before, they are nowhere (dock, menu, Tu cubo) and the code refuses the jump. The first jump after that is
+ // free (sparks.js). «Volver al punto anterior» stays as it was; a player already in another seed keeps the way home, and «?dev=1» keeps its tools.
+ const ringDone=()=>runtime.placesAllComplete?.()===true;
+ function ui(){const world=runtime.inWorld(),level=inLevel(),ring=ringDone();$('bJump').hidden=!world||level||!ring;document.body?.classList?.toggle('ring-complete',ring);$('bJumpBack').hidden=!world||level||!runtime.S.practiceTravel?.previous;
   $('bJump').disabled=blocked()||runtime.canAffordSparkJump?.()===false;$('bJumpBack').disabled=blocked();
   const label='Otro paisaje · '+(runtime.sparkJumpFree?.()?'gratis':SPARK_JUMP_COST+' ✦');if($('bJump').textContent!==label)$('bJump').textContent=label;
   // «Viajar a otra tierra» leaves this world: not from inside a round either.
-  const worlds=$('bWorlds');if(worlds&&worlds.hidden!==level)worlds.hidden=level;}
+  const worlds=$('bWorlds'),away=level||!(ring||!!runtime.S.previewSeed||!!document.body?.classList?.contains('dev'));if(worlds&&worlds.hidden!==away)worlds.hidden=away;}
  function move(point,state,prepare=null,updateAddress=true){
   const old={wx:runtime.S.wx,wy:runtime.S.wy,layer:runtime.S.layer,destination:runtime.S.destination,practiceTravel:runtime.S.practiceTravel};
   state.sights=[...(state.sights||[]),explorationContext(runtime.regionOfPos(point.x,point.y),point.x,point.y,runtime.seedOf).signature].slice(-8);
@@ -77,7 +81,7 @@ export function initialize(runtime){
   runtime.waves.length=0;runtime.clearSoundCues?.();runtime.clearMusicalFrames?.();runtime.curRegion=null;runtime.RP=null;
   if(updateAddress&&!runtime.labMode&&typeof location!=='undefined'&&typeof history!=='undefined'){const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(runtime.worldIdentity,point.x,point.y,point.layer)));history.replaceState(null,'',url.href);}
   runtime.hud();ui();return true;}
- function jump(){if(!runtime.inWorld()||inLevel()||blocked()||openSurface('.modal:not([hidden])'))return false;
+ function jump(){if(!runtime.inWorld()||inLevel()||!ringDone()||blocked()||openSurface('.modal:not([hidden])'))return false;
   // Commit the current place/progress before replacing coordinates. UI itself emits no note.
   if(!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds,state.sights);

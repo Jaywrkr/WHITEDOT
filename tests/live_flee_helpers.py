@@ -64,7 +64,8 @@ def flee(browser,kind,shot=False,toast=False):
  assert after['reward']==15 and after['earned']==before['earned']+15 and after['sparks']>=before['sparks']+15 and after['caught']==1 and after['onTime']==1 and after['book'],(d['id'],before,after)
  # Other finds on the way (a crystal, an achievement) may log their own sparks just after.
  assert {'title':d['name'],'text':'Encuentro vivo · +15 chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
- if toast:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=5000);t=page.locator('#toast').inner_text();assert d['name'] in t and 'Logro' not in t,t
+ # Achievements earned on the way (a landscape, the World) may show first: the notice waits its turn (as in live_do_helpers.py).
+ if toast:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=15000);t=page.locator('#toast').inner_text();assert d['name'] in t and 'Logro' not in t,t
  page.wait_for_function(GONE,timeout=5000)
  # 2 · On foot, no pulse: out, 10 ✦.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])

@@ -15,7 +15,7 @@ try:
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.set_viewport_size({'width':width,'height':height});page.emulate_media(reduced_motion='no-preference');page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=micro-{width}&travel=1')
    page.wait_for_function('!!window.__r?.microNear');page.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.todayLight=1;r.S.mode='world';r.S.help.mundo=true;r.hud();window.__notes=[];r.microVoiceCue=n=>__notes.push(n);}")
-   page.locator('#bStyles').click();page.locator('#musicTravelMicro').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=45000)
+   page.evaluate('__r.openMusicTravel()');page.locator('#musicTravelMicro').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=45000)
    assert page.evaluate('__r.microNear(150).length')>0
    page.evaluate("()=>{const r=__r;r.S.sound=true;r.audio();window.__source=r.microNear(150)[0];r.S.wx=__source.x-45;r.S.wy=__source.y;r.stopAutopilot?.();}");page.wait_for_timeout(180)
    page.evaluate('__r.S.wx=__source.x;__r.S.wy=__source.y');page.wait_for_function('__notes.length>0',timeout=15000)
