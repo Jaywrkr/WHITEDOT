@@ -91,6 +91,16 @@ Precios aprobados: US$2,99 Android, **US$3,99 web** (Jay, 27 de octubre) y US$4,
 
 La ventana original de ocho semanas (19 oct–13 dic 2026) queda como **estimación histórica no revalidada**. Plan anterior en Git: `docs/historial/PLAN_LANZAMIENTO_ANTES_REVISION.md`, revisión 5914ca9.
 
+## Universo vivo · encuentros
+
+**Decisión de Jay (27 de octubre de 2026):** viajar por el universo es bonito pero aburre. Aprobó un catálogo de **33 encuentros vivos**, tres por bioma (perseguir, huir, hacer), en el mismo mundo donde se viaja, uno cada 60–90 s de viaje, sin castigo al fallar, que solo pagan chispas al completarlos (10 ✦, 15 ✦ con un pulso a tiempo, cada vez); la música no se toca. El mismo día pidió **más chispas y la economía general al alza** sin regalar la tienda. Reglas y economía en [Encuentros vivos](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos). No reabre L1–L6 ni las fases de diseño cerradas; estas tandas no son E1–E7 del candidato E.
+
+| Tanda | Rama | Qué | Estado |
+|---|---|---|---|
+| E1 · Perseguir | `universo/e1-perseguir`, sobre `lanzamiento/m1-notas-jay` (alpha.226, PR #365) | Motor común y los once de perseguir; rondas 80–170 ✦, actividades 15 ✦ y travesuras 10 ✦ | Hecha en la rama (alpha.227); sin PR, sin CI remoto, sin teléfono ni personas |
+| E2 · Huir | — | Once de huir sobre el mismo motor | Pendiente |
+| E3 · Hacer | — | Once de hacer sobre el mismo motor | Pendiente |
+
 ## Comunicación y venta
 
 Propuesta: mostrar primero una acción del cubo y su respuesta visual/musical. Tres mensajes: explorar un universo sonoro, romper/recoger y avanzar, descubrir escenas/actividades raras. La electrónica no debe desaparecer de la identidad; mostrar cómo se mezcla con otras familias sin atribuir grabaciones ajenas.

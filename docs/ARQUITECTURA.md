@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Módulos nuevos desde alpha.207: `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2). P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -34,7 +34,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Hallazgos y tarjetas | `rare-card-model.js`, `rare-cards.js`, `musical-wonders.js` |
 | Colección musical | `garden-model.js`, `collection-garden.js`, `journal.js` |
 | Refugio | `house-model.js`, `house.js`, `house-view.js`, `house-audio.js`, `house-collection.js` |
-| Actividades y encuentros | `universe-activities.js`, `universe-mischief.js` y sus modelos/arte |
+| Actividades y encuentros | `universe-activities.js`, `universe-mischief.js`, `live-encounters.js` y sus modelos/arte |
 | Guía y avisos | `voice-guide.js`, `onboarding.js`, `notice-lane.js`, `celebration.js` |
 | UI y accesibilidad | `styles/estilo-j.css`, `accessibility.js`, `journal.js`, `favorites.js` |
 | Idiomas | `i18n.js`, `i18n-en.js` |

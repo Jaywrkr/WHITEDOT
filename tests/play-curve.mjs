@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {curve,simulate,PROFILES,HORIZON,NOVELTY_GAP} from '../scripts/play-curve.mjs';
+import {curve,simulate,PROFILES,HORIZON,NOVELTY_GAP,CHECKPOINTS} from '../scripts/play-curve.mjs';
+import {ECONOMY_BEFORE_E1} from '../src/spark-rules.js';import {CUBE_SHOP} from '../src/cube-shop-model.js';
 import {TOTAL_STARS} from '../src/places.js';
 // Plan H7: the model is deterministic, plays the Journey first and the places in order.
 const all=curve(),again=curve();assert.deepEqual(all.map(({events,...r})=>r),again.map(({events,...r})=>r));assert.equal(all.length,PROFILES.length);
@@ -22,4 +23,11 @@ assert(!simulate(PROFILES[1],{rhythmStar:.85,maestroStar:.8}).rule,'with the old
 // Without the growth the same 60 % player would stop after the win: «crece» is what passes the rule.
 {const r=by('60'),after=r.events.filter(e=>e.t>r.won+.1&&['lugar','★★','★★★','victoria','maestro'].includes(e.kind));assert.deepEqual(after,[],'after the win only «crece» grows the 60 % player\'s song');}
 assert.equal(by('sin sonido').stars120,11,'without sound only ★');
-console.log(`PASS play curve: four players, the Journey then the places in order, the win before an hour; the ${NOVELTY_GAP}-minute rule counts only what grows the song (not purchases); 60, 75 and 90 % keep growing (60 % by «crece»), no sound stops after the win and the risk of leaving is marked there`);
+// E1 (Jay, 27 Oct 2026, «more sparks»): with rounds at 80–170 and living encounters, every player earns at least a third
+// more in two hours and buys more pieces; the shop (17,030 ✦) is still far from bought: not everything in twenty minutes.
+{const before=curve({economy:ECONOMY_BEFORE_E1}),shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
+ for(const [i,r] of all.entries()){const b=before[i];assert.deepEqual(Object.keys(r.earnedAt).map(Number),CHECKPOINTS);
+  for(const m of CHECKPOINTS)assert(r.earnedAt[m]>=b.earnedAt[m],r.id+' '+m);assert(r.earnedAt[120]>=b.earnedAt[120]*1.33,`${r.id}: ${b.earnedAt[120]} → ${r.earnedAt[120]}`);
+  assert(r.bought120>b.bought120,r.id);assert(r.earnedAt[30]<shop*.06&&r.earnedAt[120]<shop*.5,r.id);
+  for(let k=1;k<CHECKPOINTS.length;k++)assert(r.earnedAt[CHECKPOINTS[k]]>=r.earnedAt[CHECKPOINTS[k-1]]);}}
+console.log(`PASS play curve: four players, the Journey then the places in order, the win before an hour; the ${NOVELTY_GAP}-minute rule counts only what grows the song (not purchases); 60, 75 and 90 % keep growing (60 % by «crece»), no sound stops after the win and the risk of leaving is marked there; E1 earns a third more in two hours and buys more, the shop still far away`);

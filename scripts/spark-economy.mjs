@@ -5,6 +5,14 @@ import {initialize as economy} from '../src/sparks.js';
 import {initialize as crystals} from '../src/crystal-sparks.js';
 import {CUBE_SHOP} from '../src/cube-shop-model.js';
 import {roundSparks} from '../src/spark-rules.js';
+import {LIVE_REWARD,LIVE_EVERY} from '../src/live-encounters-model.js';
+// E1 (Jay, 27 Oct 2026): living encounters while travelling, one every 60–90 s of travel (75 on average). The model
+// assumes a player catches 45 % of them plus four tenths of their share on time (60 % on time → 69 %), and makes a
+// share of those catches with a pulse on time equal to their share on time; without sound, half and none on time.
+// Assumptions of a model, not measurements of people.
+export const LIVE_GAP=(LIVE_EVERY.min+LIVE_EVERY.max)/2/60;
+export const liveCatch=p=>p.sound===false?.5:.45+.4*p.onTime;
+export function livePerMinute(p,live=LIVE_REWARD){if(!live)return 0;const share=p.sound===false?0:p.onTime;return liveCatch(p)*(share*live.onTime+(1-share)*live.base)/LIVE_GAP;}
 const seedOf=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 globalThis.document??={hidden:false,querySelector:()=>null};
 // Ten minutes walking at a normal pace (100 units/s), a pulse every 0.9 s, every pulse at the given multiplier.
@@ -17,7 +25,7 @@ export const ROUND_MINUTES=2.75;
 // Two players: one who plays on time six pulses in ten without long streaks, one who plays on time nine in ten.
 export const PROFILES=Object.freeze([{id:'casual',onTime:.6,streakShare:0,placeShare:.5},{id:'ritmo',onTime:.9,streakShare:.6,placeShare:.5}]);
 export function simulate(){const mine={0:0,1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
- const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,world=off*mine[1]+on2*mine[2]+on3*mine[3],places=roundSparks(p.onTime)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
-  return {...p,worldPerMinute:+world.toFixed(1),placesPerMinute:+places.toFixed(1),perMinute:+perMinute.toFixed(1),shopHours:+(shop/perMinute/60).toFixed(1)};});
+ const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,live=livePerMinute(p,LIVE_REWARD),world=off*mine[1]+on2*mine[2]+on3*mine[3]+live,places=roundSparks(p.onTime)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
+  return {...p,livePerMinute:+live.toFixed(1),worldPerMinute:+world.toFixed(1),placesPerMinute:+places.toFixed(1),perMinute:+perMinute.toFixed(1),shopHours:+(shop/perMinute/60).toFixed(1)};});
  return {shop,minePerMinute:Object.fromEntries(Object.entries(mine).map(([k,v])=>[k,+v.toFixed(1)])),players};}
-if(import.meta.url===`file://${process.argv[1]}`)console.log(JSON.stringify({method:'Mining measured on the real economy (ten-minute route, pulse every 0.9 s) at ×1, ×2 and ×3 (off time earns its ×1 base since K2); rounds from spark-rules.js at 2.75 min; half the time in places. A model, not people.',...simulate()},null,2));
+if(import.meta.url===`file://${process.argv[1]}`)console.log(JSON.stringify({method:'Mining measured on the real economy (ten-minute route, pulse every 0.9 s) at ×1, ×2 and ×3 (off time earns its ×1 base since K2); rounds from spark-rules.js at 2.75 min; half the time in places; travelling in the World also meets living encounters (play-curve.mjs). A model, not people.',...simulate()},null,2));
