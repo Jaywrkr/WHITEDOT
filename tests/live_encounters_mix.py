@@ -27,7 +27,9 @@ DIFF="""async o=>{const plain=window.__plain,live=window.__last;let sum=0,peak=0
  return {diffDb:sum?20*Math.log10(Math.sqrt(sum/n)):-Infinity,diffPeak:peak};}"""
 tmp=tempfile.mkdtemp(prefix='kubono-before-e1-')
 try:
- # The tree before the encounters, straight from Git.
+ # The tree before the encounters, straight from Git (CI audio shards check out shallow: fetch it if missing).
+ if subprocess.run(['git','-C',str(ROOT),'cat-file','-e',BEFORE+'^{commit}'],capture_output=True).returncode:
+  subprocess.run(['git','-C',str(ROOT),'fetch','--no-tags','--depth=1','origin',BEFORE],check=True,capture_output=True)
  archive=subprocess.run(['git','-C',str(ROOT),'archive',BEFORE,'src','tests/audio_mix.mjs','index.html','styles','assets'],check=True,capture_output=True).stdout
  tarfile.open(fileobj=io.BytesIO(archive)).extractall(tmp,filter='data')
  now,before=serve(ROOT),serve(tmp)
