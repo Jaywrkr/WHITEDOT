@@ -18,7 +18,8 @@ try:
    hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
    # A friend's house: an object, three capsule prizes and a colour, shared as WH2.
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=false;s.totalDays=14;Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=i<8?[true,true,true]:[false,false,false]);s.sparks=300;s.sparkEconomy.earned=s.sparkEconomy.spent+300;s.house={...s.house,objects:[{kind:'obj:origen',room:'sala',x:.5,y:.4}],decor:[],tints:{},playerRoom:'sala'};r.save();r.enterHouse();for(let i=0;i<3;i++)r.openHouseCapsule();}")
-   page.wait_for_function('__r.houseSettled()');page.evaluate(hide);page.locator('#houseShare').click();code=page.locator('#houseCode').input_value();assert code.startswith('WH2-'),code
+   # Refugio simple (alpha.234): the code, the Taller and the Prisma wait under «Más».
+   page.wait_for_function('__r.houseSettled()');page.evaluate(hide);assert page.locator('#houseShare').is_hidden();page.locator('#houseMore > summary').click();page.locator('#houseShare').click();code=page.locator('#houseCode').input_value();assert code.startswith('WH2-'),code
    friend=page.evaluate('JSON.stringify(__r.currentHouse().decor)');page.locator('#houseCodeClose').click()
    # Our own code does not count as a visit.
    page.locator('#houseShare').click();page.locator('#houseVisit').click();assert page.evaluate('Object.keys(__r.S.house.visitedHouses||{}).length')==0;page.locator('#houseExit').click()
@@ -34,11 +35,12 @@ try:
    page.evaluate("__r.houseWalkTo('jardin',.5)");page.wait_for_function("__r.houseStand().room==='jardin'",timeout=8000)
    assert page.evaluate('JSON.stringify({o:__r.S.house.objects,d:__r.S.house.decor,t:__r.S.house.tints})')==mine,'visiting changes nothing at home'
    page.locator('#houseExit').click()
-   # Keyboard: walk to the machine, Enter asks, Enter again turns it; the room is told in words.
+   # «Más» → Prisma: the first tap asks, the second opens a capsule; Enter by the old machine spends nothing; the room
+   # is told in words.
    page.evaluate("()=>{"+hide+";__r.enterHouse();__r.houseWalkTo('sala',.34);}");page.wait_for_function("__r.houseSettled()&&__r.houseStand().room==='sala'",timeout=8000)
-   page.wait_for_function("document.getElementById('houseSummary').textContent.includes('Cerca: Prisma')")
-   page.evaluate(hide);page.locator('#w').focus();page.keyboard.press('Enter');assert page.evaluate('__r.currentHouse().capsules.count')==0;page.keyboard.press('Enter');page.wait_for_function('__r.currentHouse().capsules.count===1')
-   assert page.evaluate("document.getElementById('houseSummary').textContent").startswith('Eco: 1 objeto')
+   page.evaluate(hide);page.locator('#w').focus();page.keyboard.press('Enter');page.keyboard.press('Enter');page.wait_for_timeout(200);assert page.evaluate('__r.currentHouse().capsules.count')==0,'Enter no longer turns a hidden Prism'
+   page.locator('#houseMore > summary').click();page.locator('#houseCapsule').click();assert page.evaluate('__r.currentHouse().capsules.count')==0;assert page.locator('#houseCapsule').inner_text().startswith('Abrir');page.locator('#houseCapsule').click();page.wait_for_function('__r.currentHouse().capsules.count===1')
+   page.wait_for_function("document.getElementById('houseSummary').textContent.startsWith('Eco: ')");assert 'Prisma' not in page.evaluate("document.getElementById('houseSummary').textContent")
    # The compact menu retains the Refugio entry; its news model and Bitácora track the house.
    page.locator('#houseExit').click();page.evaluate("()=>{"+hide+";__r.S.ach['test:nuevo']='2026-10-21';}");page.locator('#bMenu').click();assert page.locator('#bStudio span').inner_text()=='Refugio'
    assert page.evaluate("async()=>{const {houseNews}=await import('/src/house-guide.js');return houseNews(__r.S);}")=='Trofeos nuevos'
@@ -53,5 +55,5 @@ try:
    assert note!='Trofeos nuevos' or len(now)>seen,('only a trophy earned after leaving is new',[k for k in now if k not in held])
    assert not errors,errors;page.close()
   browser.close()
- print('PASS house visits and closing on phone and desktop: WH2 visit read-only and kept once, own code not counted, no spending or changes at home, Enter uses the machine, room summary, compact menu, unseen trophies and Bitácora link',flush=True)
+ print('PASS house visits and closing on phone and desktop: WH2 visit read-only and kept once, own code not counted, no spending or changes at home, the Prisma under «Más» asks first, room summary, compact menu, unseen trophies and Bitácora link',flush=True)
 finally:server.shutdown()

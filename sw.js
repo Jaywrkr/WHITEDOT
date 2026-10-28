@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.231';
+const CACHE='whitedot-2.3.0-alpha.234';
 const SHELL=[
  "./src/account-entry.js", "./src/edition.js",
  "./recovery.html", "./src/cloud-recovery.js",
@@ -61,6 +61,7 @@ const SHELL=[
  "./src/house.js", "./src/house-view.js", "./src/house-collection.js", "./src/house-capsules.js", "./src/house-guide.js", "./src/journey-pulse.js", "./src/journey-rhythm.js", "./src/journey-mode.js", "./src/world-sheet.js", "./src/ambience.js", "./src/universe-layers.js", "./src/universe-regions.js", "./src/superbiomes.js", "./src/superbiome-rarity.js", "./src/superbiome-fusion.js", "./src/superbiome-journal.js", "./src/universe-rare.js", "./src/genre-tempo.js", "./src/journey-chapters.js", "./src/journey-finale.js", "./src/journey-hint.js","./src/journey-games.js","./src/journey-stick.js","./src/journey-chain.js","./src/journey-lasso.js","./src/journey-dance.js","./src/journey-release.js","./src/journey-victory.js","./src/places.js", "./src/places-ring.js", "./src/refugio-lugares.js", "./src/song.js", "./src/song-stage.js", "./src/narrator.js", "./src/journey-garden.js", "./src/journey-surf.js", "./src/journey-resonance.js", "./src/journey-guide.js", "./src/journey-rebuild.js", "./src/journey-echo.js", "./src/wild.js", "./src/rhythm-calibration.js", "./src/bar-beat-hint.js","./src/chapter-test.js","./src/playtest.js", "./src/theme-key.js", "./src/journey-moments.js", "./src/festival.js", "./src/color-safe.js",
  "./src/house-model.js",
  "./src/house-audio.js",
+ "./src/house-auto.js",
 
  "./src/musical-hybrids.js",
  "./src/modular-synth.js",

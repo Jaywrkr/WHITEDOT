@@ -17,6 +17,8 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000)
    page.evaluate("()=>{__r.S.lugares.stars.lago=[true,true,false];__r.S.lugares.seen.lago=true;__r.landHouse();}")
    page.wait_for_function("__r.houseActive()&&!__r.houseLanding()&&__r.houseLugaresState().hits.length===12",timeout=10000)
+   # Refugio simple (alpha.234): «Lugares» waits under «Más»; the shelf and its wall still open it.
+   assert page.locator('#houseStars').is_hidden();page.locator('#houseMore > summary').click()
    assert page.locator('#houseStars').is_visible() and page.inner_text('#houseStars')=='Lugares',page.inner_text('#houseStars')
    if os.environ.get('REFUGIO_SHOT'):page.screenshot(path=os.environ['REFUGIO_SHOT'].replace('.png',f'-{width}.png'))
    # A trophy: its place and stars.

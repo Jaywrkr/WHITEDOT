@@ -20,12 +20,13 @@ try:
    # Panel 10 (P8): thirty days open nothing; six places open the Jardín, not the Azotea.
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=false;s.totalDays=30;s.ach={};Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=[i<6,false,false]);s.sparks=200;s.sparkEconomy.earned=s.sparkEconomy.spent+200;s.house={...s.house,objects:[{kind:'obj:origen',room:'sala',x:.5,y:.4}],unlocked:['sala'],playerRoom:'sala'};r.save();r.enterHouse();}")
    page.wait_for_function('__r.houseSettled()');assert page.evaluate('__r.currentHouse().unlocked')==['sala','jardin']
-   # From afar a tap on the machine walks to it; standing at it, the first tap asks.
-   page.evaluate("()=>{"+hide+";__r.houseWalkTo('sala',.34);}");page.wait_for_function("__r.houseSettled()&&Math.abs(__r.houseStand().fx-204)<10",timeout=8000)
-   # The machine: the first tap asks, the second turns the knob and takes 60 sparks.
-   page.evaluate(hide);spot=page.evaluate('__r.houseToScreen(204,505)');page.locator('#w').click(force=True,position=spot);page.wait_for_timeout(150)
+   # Refugio simple (alpha.234): the Prism is no longer drawn in Eco; a tap where it stood spends nothing.
+   page.evaluate(hide);spot=page.evaluate('__r.houseToScreen(204,505)');page.locator('#w').click(force=True,position=spot);page.locator('#w').click(force=True,position=spot);page.wait_for_timeout(150)
+   assert page.evaluate('__r.currentHouse().capsules.count')==0;assert page.evaluate('__r.S.sparks')==200;assert 'PRISMA' not in [t['text'] for t in page.evaluate('__r.houseLayout()')['texts']]
+   # «Más» → Prisma: the first tap asks, the second opens a capsule and takes 60 sparks.
+   page.locator('#houseMore > summary').click();page.locator('#houseCapsule').click();page.wait_for_timeout(150)
    assert page.evaluate('__r.currentHouse().capsules.count')==0;assert page.evaluate('__r.S.sparks')==200
-   page.locator('#w').click(force=True,position=spot);page.wait_for_function('__r.currentHouse().capsules.count===1')
+   page.locator('#houseCapsule').click();page.wait_for_function('__r.currentHouse().capsules.count===1')
    assert page.evaluate('__r.S.sparks')==140;assert page.evaluate('__r.currentHouse().decor.length')==1
    page.evaluate("()=>{const r=__r;r.openHouseCapsule();r.openHouseCapsule();}");state=page.evaluate('__r.currentHouse()');assert state['capsules']['count']==3 and page.evaluate('__r.S.sparks')==20,state
    assert page.evaluate('__r.openHouseCapsule()') is None and page.evaluate('__r.currentHouse().capsules.count')==3,'no sparks, no capsule'
@@ -33,12 +34,13 @@ try:
    # Everything stays after a reload.
    kept=page.evaluate('JSON.stringify({d:__r.S.house.decor,t:__r.S.house.tints,c:__r.S.house.capsules.count})');page.evaluate('__r.exitHouse()');page.reload();page.wait_for_function('!!window.__r?.enterHouse')
    assert page.evaluate('JSON.stringify({d:__r.S.house.decor,t:__r.S.house.tints,c:__r.S.house.capsules.count})')==kept
-   # The Taller disc in Eco opens the Taller; leaving it comes back to the Refugio.
+   # The Taller, under «Más»; leaving it comes back to the Refugio.
    page.evaluate("()=>{"+hide+";const r=__r;r.S.totalDays=14;Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=i<8?[true,true,true]:[false,false,false]);r.save();r.enterHouse();}");page.wait_for_function('__r.houseSettled()');page.evaluate("()=>{"+hide+";__r.houseWalkTo('sala',.6);}");page.wait_for_function("__r.houseStand().room==='sala'&&__r.houseSettled()",timeout=15000)
    page.screenshot(path=f'/tmp/kubono-house-capsules-{width}.png')
-   page.evaluate(hide);bench=page.evaluate('__r.houseToScreen(339,505)');page.locator('#w').click(force=True,position=bench);page.wait_for_function("!document.getElementById('studioPanel').hidden");page.locator('#stExit').click();assert page.locator('#housePanel').is_visible() and page.evaluate('__r.houseActive()'),'the Taller comes back to the house'
+   # «Más» → Taller opens it (and counts as the disc for its achievement).
+   page.evaluate(hide);page.locator('#houseMore > summary').click();page.locator('#houseWorkshop').click();page.wait_for_function("!document.getElementById('studioPanel').hidden");page.locator('#stExit').click();assert page.locator('#housePanel').is_visible() and page.evaluate('__r.houseActive()'),'the Taller comes back to the house'
    assert page.evaluate('__r.S.house.workbench')==True;page.wait_for_function("!!__r.S.ach['house:workbench']",timeout=6000)
    assert not errors,errors;page.close()
   browser.close()
- print('PASS house that grows on phone and desktop: Jardín by achievements, capsule machine asks then charges 60 sparks, no capsule without sparks, prizes kept after reload, workbench opens the Taller and returns to the house with its achievement',flush=True)
+ print('PASS house that grows on phone and desktop: Jardín by achievements, the Prisma under «Más» asks then charges 60 sparks, no capsule without sparks, prizes kept after reload, «Más» opens the Taller and returns to the house with its achievement',flush=True)
 finally:server.shutdown()

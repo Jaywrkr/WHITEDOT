@@ -26,7 +26,7 @@ export function initialize(runtime) {
     runtime.elementBookUI?.();
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
-    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=(house?"Refugio · ":"Taller · ")+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Refugio":"Taller")+(n?" · "+n+" sonando":"");gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
+    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=(house?"Refugio · ":"Taller · ")+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=house?"Refugio":"Taller"+(n?" · "+n+" sonando":"");gr.textContent=house?"Mira y escucha.":"Toca un punto";}
     else if(runtime.inWorld()){if(!runtime.journeyQuiet?.())fill.style.width="100%";   // in the Journey the chapter sets it (journey-chapters.js)
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Explora a tu ritmo";   // regions and forms are counted in the Bitácora
       gr.textContent="Sin reloj";}

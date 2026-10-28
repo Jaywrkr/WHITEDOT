@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Módulos nuevos desde alpha.207: `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231). P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -33,7 +33,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Personalización | `cube.js`, `cube-shop-model.js`, módulos `cube-shop-*` |
 | Hallazgos y tarjetas | `rare-card-model.js`, `rare-cards.js`, `musical-wonders.js` |
 | Colección musical | `garden-model.js`, `collection-garden.js`, `journal.js` |
-| Refugio | `house-model.js`, `house.js`, `house-view.js`, `house-audio.js`, `house-collection.js` |
+| Refugio | `house-model.js`, `house-auto.js`, `house.js`, `house-view.js`, `house-audio.js`, `house-collection.js` |
 | Actividades y encuentros | `universe-activities.js`, `universe-mischief.js`, `live-encounters.js`, `sky-map.js` y sus modelos/arte |
 | Guía y avisos | `voice-guide.js`, `onboarding.js`, `notice-lane.js`, `celebration.js` |
 | UI y accesibilidad | `styles/estilo-j.css`, `accessibility.js`, `journal.js`, `favorites.js` |
