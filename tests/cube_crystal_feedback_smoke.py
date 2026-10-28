@@ -25,7 +25,7 @@ try:
    page.wait_for_function('matrix().a>1.02',timeout=3000)
    page.screenshot(path=str(ROOT.parent/f'crystal-impact-{width}.png'))
    page.wait_for_timeout(900);page.mouse.click(30,height/2);page.wait_for_function('__r.savedCrystal(crystal.id)?.broken');page.screenshot(path=str(ROOT.parent/f'crystal-break-{width}.png'))
-   page.wait_for_function('__r.savedCrystal(crystal.id)?.collected');assert page.evaluate('__r.S.sparks')==page.evaluate('balance+9'),page.evaluate('({balance,sparks:__r.S.sparks,log:__r.sparkEconomy.log,site:__r.savedCrystal(crystal.id)})')
+   page.wait_for_function('__r.savedCrystal(crystal.id)?.collected');assert page.evaluate('__r.S.sparks')==page.evaluate('balance+3'),page.evaluate('({balance,sparks:__r.S.sparks,log:__r.sparkEconomy.log,site:__r.savedCrystal(crystal.id)})')
    page.wait_for_function('__r.crystalState.feedback===0')
    page.emulate_media(reduced_motion='reduce');page.wait_for_timeout(100);assert page.evaluate('matrix()')=={'a':1,'b':0,'c':0,'d':1}
    page.emulate_media(reduced_motion='no-preference');page.evaluate('__r.S.reducedMotion=true');page.wait_for_timeout(100);assert page.evaluate('matrix()')=={'a':1,'b':0,'c':0,'d':1}

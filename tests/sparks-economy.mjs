@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import {CRYSTAL_SPARK_SCALE} from '../src/spark-rules.js';
 import {normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress,SPARK_JUMP_COST,universeProgress,SPARK_UNIVERSE} from '../src/sparks-model.js';
 import {ACTIVITIES} from '../src/universe-activities-model.js';
 import {WONDERS} from '../src/musical-wonders-model.js';
@@ -22,12 +21,12 @@ assert(r.buySparkStyle('dust'));assert.equal(r.S.sparks,160);assert(!r.buySparkS
 fail=true;assert(!r.buySparkStyle('facet'));assert.equal(r.S.sparks,160);assert(!r.sparkEconomy.purchases.facet);fail=false;
 const ticket=r.reserveSparkJump();assert(ticket);assert.equal(r.S.sparks,160-SPARK_JUMP_COST);r.cancelSparkJump(ticket);assert.equal(r.S.sparks,160);assert.equal(r.sparkEconomy.stats.jumps,0);
 const crystal={id:'a',x:20,y:0,size:2,value:3};assert.equal(r.crystalTransaction(crystal,'hit').hits,1);fail=true;assert.equal(r.crystalTransaction(crystal,'hit'),null);assert.equal(r.savedCrystal('a').hits,1);fail=false;
-assert(r.crystalTransaction(crystal,'hit').broken);assert(!r.savedCrystal('a').collected);assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,169,'H1: three fragments of 3 (×3)');
-assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,169,'collect never pays twice');
-r=runtime(structuredClone(saved));assert(r.savedCrystal('a').collected);assert.equal(r.S.sparks,169,'reload keeps mining and wallet');
+assert(r.crystalTransaction(crystal,'hit').broken);assert(!r.savedCrystal('a').collected);assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163,'H1: three loose sparks of 1');
+assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163,'collect never pays twice');
+r=runtime(structuredClone(saved));assert(r.savedCrystal('a').collected);assert.equal(r.S.sparks,163,'reload keeps mining and wallet');
 // H1 (alpha.233): inside a level (a round, a chapter) goals wait, the counter hides; out of it they pay once.
-r.S.rareBook={items:cards};r.travelInLevel=()=>true;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,169,'no sparks inside a level');r.drawSparkEconomyHUD();assert(r.$('sparkCount').hidden,'no ✦ counter inside a level');assert(r.$('sparkGoal').hidden);
-r.travelInLevel=()=>false;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,224);r.$('mPlace').hidden=true;r.drawSparkEconomyHUD();assert(!r.$('sparkCount').hidden,'the ✦ counter is back in the free World');const amount=r.S.sparks;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,amount,'retroactive sets pay once');
+r.S.rareBook={items:cards};r.travelInLevel=()=>true;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,163,'no sparks inside a level');r.drawSparkEconomyHUD();assert(r.$('sparkCount').hidden,'no ✦ counter inside a level');assert(r.$('sparkGoal').hidden);
+r.travelInLevel=()=>false;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,218);r.$('mPlace').hidden=true;r.drawSparkEconomyHUD();assert(!r.$('sparkCount').hidden,'the ✦ counter is back in the free World');const amount=r.S.sparks;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,amount,'retroactive sets pay once');
 r.S.playerProfile.distanceUnits=10000;for(let i=0;i<6;i++)r.sparkTick(.1);assert(r.sparkEconomy.claims['distance:1000']);assert(r.sparkEconomy.claims['badge:taxi']);assert.equal(r.sparkEconomy.earned-r.sparkEconomy.spent,r.S.sparks);
 r.drawSparkEconomyHUD();assert(r.$('sparkTotal').textContent.includes(String(r.S.sparks)));
 const novice=runtime({mode:'world',todayKey:day,sparks:19,pathCrystals:[]});assert(!novice.sparkJumpEarned());assert(!novice.canAffordSparkJump());creditSparks(novice.S,1);assert(novice.sparkJumpEarned());assert(novice.canAffordSparkJump());debitSparks(novice.S,20);assert(novice.sparkJumpEarned(),'earned jump stays unlocked after spending');assert(!novice.canAffordSparkJump());const restored=runtime(structuredClone(novice.S));assert(restored.sparkJumpEarned());
@@ -77,5 +76,5 @@ assert(w.equipSparkStyle(''));assert.deepEqual(w.sparkEconomy.wear,{});assert.eq
 console.log('PASS pieces worn per slot, removal keeps the rest, saved wear survives reload and everything comes off at once');
 
 // K2: every collected fragment keeps its value; rhythm is a bonus, not a condition.
-for(const mult of [0,1,2,3]){const w=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]});const o={id:'base:'+mult,x:0,y:0,size:1,value:1};w.crystalTransaction(o,'hit',false,null,false,mult);w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,CRYSTAL_SPARK_SCALE*Math.max(1,mult));w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,CRYSTAL_SPARK_SCALE*Math.max(1,mult),'no duplicate credit');}
-{const w=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]}),o={id:'legacy-zero',x:0,y:0,size:2,value:3};w.crystalTransaction(o,'hit');w.crystalTransaction(o,'hit');w.savedCrystal(o.id);w.sparkEconomy.sites[o.id].mult=0;w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,3*CRYSTAL_SPARK_SCALE,'pending zero-multiplier fragments recover base value');const restored=runtime(structuredClone(w.S));restored.crystalTransaction(o,'collect');assert.equal(restored.S.sparks,3*CRYSTAL_SPARK_SCALE,'a reload never pays collected fragments again');}
+for(const mult of [0,1,2,3]){const w=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]});const o={id:'base:'+mult,x:0,y:0,size:1,value:1};w.crystalTransaction(o,'hit',false,null,false,mult);w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,Math.max(1,mult));w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,Math.max(1,mult),'no duplicate credit');}
+{const w=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]}),o={id:'legacy-zero',x:0,y:0,size:2,value:3};w.crystalTransaction(o,'hit');w.crystalTransaction(o,'hit');w.savedCrystal(o.id);w.sparkEconomy.sites[o.id].mult=0;w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,3,'pending zero-multiplier fragments recover base value');const restored=runtime(structuredClone(w.S));restored.crystalTransaction(o,'collect');assert.equal(restored.S.sparks,3,'a reload never pays collected fragments again');}

@@ -3,7 +3,6 @@ import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT,DIM_FRAGMENT_SPARKS} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
 import {fillRapidCamino} from './chapter-test.js';
-import {CRYSTAL_SPARK_SCALE} from './spark-rules.js';
 const CELL=200,MAX_SITES=8192;
 export const normalizeSparks=value=>Number.isFinite(value)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value))):0;
 // Regional abundance and an independent lattice keep clear gaps between crystals.
@@ -71,7 +70,7 @@ export function initialize(runtime){
      const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),travel=step*180;
      if(d>3&&!reduced()){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;if(d>travel+3)arrived=false;}
     }
-    if(arrived){site.collected=true;if(!site.rewarded)earn(o.value*CRYSTAL_SPARK_SCALE);}
+    if(arrived){site.collected=true;if(!site.rewarded)earn(crystalFragments(o,false).reduce((n,f)=>n+f.value,0));}
    }
   }
   if(!path&&runtime.crystalTransaction)tickChains();

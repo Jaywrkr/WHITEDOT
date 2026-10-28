@@ -1,7 +1,7 @@
 """Living encounters, batch 1 (Jay, 27 Oct 2026): the eleven «perseguir» in the free World (the eleven «huir» of batch 2
 have their own walks, live_flee_a_smoke.py and live_flee_b_smoke.py). Each one forced with the test
-shortcut appears ahead of the cube with its line, runs from it, and a pulse on time near it catches it for 45 ✦ (the first
-time also into the Bitácora, with one notice naming it); walking into one pays 30 ✦; an off-time pulse does not count;
+shortcut appears ahead of the cube with its line, runs from it, and a pulse on time near it catches it for its ✦ (more on time) (the first
+time also into the Bitácora, with one notice naming it); walking into one pays its ✦; an off-time pulse does not count;
 one that gets away costs nothing. One at a time, also with the mischief scenes; never in a chapter, a round or the
 Journey's finale; «?encuentro=cometa» brings that one after a few seconds of travel. Screenshots at 390×844."""
 from pathlib import Path
@@ -9,6 +9,9 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import threading,os,shutil,json
+# H1 (Jay, alpha.233): the reward is the universe's rule (base × difficulty × distance × rarity, ×1.5 on time), so the
+# expected amount is asked of the model for this encounter where it appeared.
+EXPECT="""async onTime=>{const m=await import('/src/live-encounters-model.js'),s=__r.liveEncounterState().scene;return m.liveRewardFor(m.liveDefinition(s.kind),{x:s.origin.x,y:s.origin.y,onTime});}"""
 ROOT=Path(__file__).resolve().parents[1]
 SHOTS=Path(os.environ.get('KUBONO_SHOTS','/tmp'))
 class Handler(SimpleHTTPRequestHandler):
@@ -62,20 +65,22 @@ try:
    page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000)
    after=page.evaluate("(()=>{const r=__r;return {earned:r.S.liveEncounters.earned,reward:r.liveEncounterState().scene.reward,sparks:r.S.sparks,log:r.sparkEconomy.log.at(-1),book:!!r.S.elementBook?.found?.['live:"+d['id']+"'],kinds:r.S.liveEncounters.kinds['"+d['id']+"']}})()")
    # Other finds on the way (a crystal, a set) may add their own sparks; this encounter paid exactly 15.
-   assert after['reward']==45 and after['earned']==earned+45 and after['sparks']>=before+45,(d['id'],before,after)
-   assert after['log']['title']==d['name'] and after['log']['text']=='Encuentro vivo · +45 chispas',after
+   exp=page.evaluate(EXPECT,True)
+   assert after['reward']==exp and after['earned']==earned+exp and after['sparks']>=before+exp,(d['id'],before,after)
+   assert after['log']['title']==d['name'] and after['log']['text']==f'Encuentro vivo · +{exp} chispas',after
    assert after['book'] and after['kinds']['caught']==1 and after['kinds']['onTime']==1,after
    if i==0:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=5000);assert 'Polilla de luz' in page.locator('#toast').inner_text() and 'Logro' not in page.locator('#toast').inner_text()
    page.wait_for_function(GONE,timeout=5000)
   # The Bitácora lists them with the other finds.
   assert page.evaluate("__r.elementBookCards().includes('Encuentros vivos')&&__r.elementBookCards().includes('Estrella fugaz')")
-  # 2 · Walking into it: 30 ✦ and no second notice; a pulse off time does not count; getting away costs nothing.
+  # 2 · Walking into it: its ✦ off time and no second notice; a pulse off time does not count; getting away costs nothing.
   before=page.evaluate('__r.S.liveEncounters.earned');page.evaluate("__r.liveEncounterSpawn('polilla')")
   page.evaluate("(()=>{const r=__r,s=r.liveEncounterState().scene;r.S.wx=s.x-60;r.S.wy=s.y;r.waves.push({x:r.S.wx,y:r.S.wy,r:0,prev:0,max:340,n:0,origin:'player',beat:false});})()");page.wait_for_timeout(200)
   assert page.evaluate("__r.liveEncounterState().scene.stage")=='run','off time is not on time'
   page.evaluate("""async()=>{const r=__r;for(let i=0;i<60;i++){const s=r.liveEncounterState().scene;if(!s||s.stage!=='run')break;r.S.wx=s.x-8;r.S.wy=s.y;await new Promise(f=>requestAnimationFrame(f));}}""")
   page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000)
-  assert page.evaluate('__r.S.liveEncounters.earned')==before+30 and page.evaluate('__r.liveEncounterState().scene.reward')==30 and page.evaluate("__r.S.liveEncounters.kinds.polilla.caught")==2
+  exp=page.evaluate(EXPECT,False)
+  assert page.evaluate('__r.S.liveEncounters.earned')==before+exp and page.evaluate('__r.liveEncounterState().scene.reward')==exp and page.evaluate("__r.S.liveEncounters.kinds.polilla.caught")==2
   page.wait_for_function(GONE,timeout=5000);before=page.evaluate('[__r.S.liveEncounters.earned,__r.S.sparks]')
   page.evaluate("__r.liveEncounterSpawn('estrella')");page.evaluate("(()=>{__r.S.wx+=1600;})()")
   page.wait_for_function("__r.liveEncounterState().scene?.stage==='escaped'",timeout=3000)
@@ -116,5 +121,5 @@ try:
   page.evaluate('__r.journeyFinale()');page.wait_for_function('__r.journeyFinaleState().running',timeout=5000)
   assert not page.evaluate("__r.liveEncounterSpawn('polilla')"),'not under the finale'
   assert not errors,errors;page.close();browser.close()
- print('PASS living encounters: the eleven «perseguir» forced, ahead with their line, chased and caught on time for 45 ✦ (Bitácora and one notice the first time), 30 ✦ walking, off time does not count, escaping costs nothing; one at a time with mischief; «?encuentro=» after travel; never in rounds, chapters or the finale; screenshots '+json.dumps(shots),flush=True)
+ print('PASS living encounters: the eleven «perseguir» forced, ahead with their line, chased and caught on time for its ✦ (more on time) (Bitácora and one notice the first time), its ✦ walking, off time does not count, escaping costs nothing; one at a time with mischief; «?encuentro=» after travel; never in rounds, chapters or the finale; screenshots '+json.dumps(shots),flush=True)
 finally:server.shutdown()

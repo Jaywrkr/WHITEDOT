@@ -27,7 +27,7 @@ export function initialize(runtime){
  function changeNotice(amount){if(!amount)return;delta=clock<deltaUntil&&Math.sign(delta)===Math.sign(amount)?delta+amount:amount;deltaUntil=clock+1.5;if(amount>0&&!jumpAvailable&&book().earned>=SPARK_JUMP_COST){jumpAvailable=true;jumpUntil=clock+3;notice('Ya puedes saltar');}}
  function notice(title,text=''){runtime.toast?.(title+(text?' · '+text:''),{level:2,category:'spark-result',detail:'sparks',ttl:120000});}
  // The free World's rhythm (plan F3): each player pulse, judged by journey-pulse.js, updates the streak; the wave it
- // sends carries the multiplier for what it breaks: off time ×1 (K2), on time ×2, from the eighth in a row ×3.
+ // sends carries the multiplier for what it breaks: off time ×1 (K2), on time ×2 (H1: the ×3 from the eighth in a row is gone).
  // Never in the Journey; without sound there is no beat to meet, so every pulse counts ×1.
  let streak=0,lastRhythm=-1e9,lastMult=1;
  function rhythmPulse(on){const now=performance.now();// Without sound there is no beat to meet: every pulse counts as on time there, so it earns no multiplier.

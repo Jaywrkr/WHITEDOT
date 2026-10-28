@@ -5,6 +5,7 @@
 // Everything comes from hashKey: no old random sequence is read and nothing on the map moves. A figure is data: its
 // stars in the order they are joined, where each line comes from, and the notes of its motif.
 import {hashKey} from './universe-regions.js';
+import {UNIVERSE_BASE,DIFFICULTY,RARITY,universeReward} from './spark-rules.js';
 export const SKY_VERSION=1;
 // The world in cells of half a kilometre (10 u are 1 m): at most one figure per cell, kept off the cell's edges so two
 // figures are always far apart. Seen from the cube, about one every kilometre or less (decision 11).
@@ -17,10 +18,14 @@ export const SKY_SHARE=Object.freeze({base:.16,vacio:.3,faros:.3,constelaciones:
 export const SKY_SCALE=160,SKY_START=300,SKY_LEAVE=720,SKY_TOUCH=26,SKY_PULSE=150,SKY_HINT=1600;
 // Seconds: the notice, the summary, the figure shining when complete.
 export const SKY_NOTICE=3,SKY_SUMMARY=3,SKY_GLOW=3;
-// Decision 9: small and repeatable pays a few sparks; a figure pays once, the first time it is joined (20, or 30 with a
-// pulse on time; 10 and 15 until H1, alpha.233, when sparks became the open universe's only). Another copy of a figure
-// already in your map pays nothing: the music and the light are its reward.
-export const SKY_REWARD=Object.freeze({base:20,onTime:30});
+// Decision 9: a figure pays once, the first time it is joined; another copy of a figure already in your map pays
+// nothing: the music and the light are its reward. How much, by the universe's rule (spark-rules.js, H1, alpha.233):
+// base 4 × difficulty (its stars: up to 5 easy, 6–7 medium, 8 or more hard) × distance from the origin × rarity (a
+// legend, La Mano, ×3; a figure only at night or from 20 km, rare, ×1.5), ×1.5 if a pulse on time lit a star. Until
+// alpha.232, 10 or 15 for every figure; H1 first had 20 and 30. SKY_REWARD (below the catalogue) is only for the model.
+export const skyDifficulty=f=>{const n=f?.stars?.length||0;return n>=8?DIFFICULTY.hard:n>=6?DIFFICULTY.medium:DIFFICULTY.easy;};
+export const skyRarity=f=>f?.legend?RARITY.legend:f?.night||f?.km>=20?RARITY.rare:RARITY.common;
+export const skyRewardFor=(f,{x=0,y=0,onTime=false}={})=>universeReward(UNIVERSE_BASE.sky,{difficulty:skyDifficulty(f),x,y,rarity:skyRarity(f),onTime});
 // Notes, far under the music (docs/IDEAS_UNIVERSO.md, audio): a star is quieter than a living encounter's note; the
 // motif sits at a living encounter's level.
 export const SKY_STAR_GAIN=.012,SKY_MOTIF_GAIN=.02;
@@ -72,6 +77,9 @@ export const SKY_FIGURES=Object.freeze([
  F('mano','La Mano','propias',{km:50,legend:true,secret:true},[[0,.95],[0,.15],[-.85,.05],[-.45,-.8],[-.05,-.95],[.35,-.8],[.7,-.5]],[-1,0,1,1,1,1,1],[],[0,2,4,7,4,2,0])
 ]);
 const BY_ID=new Map(SKY_FIGURES.map(f=>[f.id,f]));
+// For the economy model only (scripts/play-curve.mjs): the average first reward of the short figures near the origin.
+const NEAR=SKY_FIGURES.filter(f=>!f.km&&!f.night);
+export const SKY_REWARD=Object.freeze({base:NEAR.reduce((n,f)=>n+skyRewardFor(f),0)/NEAR.length,onTime:NEAR.reduce((n,f)=>n+skyRewardFor(f,{onTime:true}),0)/NEAR.length});
 export const skyFigure=id=>BY_ID.get(id)||null;
 export const skySeries=id=>SKY_FIGURES.filter(f=>f.series===id);
 // The lines of a figure: one from each star to the one it comes from, then the extras.
@@ -139,7 +147,7 @@ export function skyStep(site,player,pulses=[]){
  for(const w of pulses){if(!w.beat||site.lit>=n)continue;if(!near(site.lit,w,SKY_PULSE))continue;onTime=true;site.lit++;lit++;if(site.lit<n&&near(site.lit,w,SKY_PULSE)){site.lit++;lit++;}}
  if(site.lit>=n)site.done=true;if(onTime)site.onTime=true;return {lit,onTime};
 }
-export const skyReward=(site,first)=>first?(site?.onTime?SKY_REWARD.onTime:SKY_REWARD.base):0;
+export const skyReward=(site,first)=>first?skyRewardFor(skyFigure(site?.fig),{x:site?.x,y:site?.y,onTime:!!site?.onTime}):0;
 // The direction of a point seen from the cube, in words for the Bitácora («al norte»).
 export function skyDirection(from,to){const dx=to.x-from.x,dy=to.y-from.y;if(Math.hypot(dx,dy)<SKY_LEAVE)return 'aquí';const a=Math.atan2(dy,dx),k=Math.round(a/(Math.PI/4));return ['al este','al sureste','al sur','al suroeste','al oeste','al noroeste','al norte','al noreste','al este'][(k+8)%8];}
 // Shortcut for tests (docs/MUNDO.md#herramientas-de-prueba): «?cielo=orion» brings that figure near after 3 s.

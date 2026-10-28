@@ -35,8 +35,9 @@ export function minePerMinute(mult){const nodes={},r={S:{mode:'world',todayKey:'
 export const ROUND_MINUTES=2.75;
 // Two players: one who plays on time six pulses in ten without long streaks, one who plays on time nine in ten.
 export const PROFILES=Object.freeze([{id:'casual',onTime:.6,streakShare:0,placeShare:.5},{id:'ritmo',onTime:.9,streakShare:.6,placeShare:.5}]);
-// before: the economy of alpha.231/232 (rounds 80–170, crystals a third, encounters 10/15) for the before-and-after.
-export function simulate({before=false}={}){const scale=before?ECONOMY_BEFORE_H1.mine:1,measured={0:0,1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},mine=Object.fromEntries(Object.entries(measured).map(([k,v])=>[k,v*scale])),shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
+// before: the economy of alpha.231/232 (rounds 80–170, fragments of 1, 3 or 5 by size and ×3 from eight in a row,
+// encounters 10/15) for the before-and-after. Since H1 a loose spark is 1, or 2 on time: the ×3 is gone.
+export function simulate({before=false}={}){const scale=before?ECONOMY_BEFORE_H1.mine:1,measured={0:0,1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},mine=Object.fromEntries(Object.entries(measured).map(([k,v])=>[k,(k==='3'&&!before?measured[2]:v)*scale])),shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
  const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,live=livePerMinute(p,before?ECONOMY_BEFORE_H1.live:LIVE_REWARD),world=off*mine[1]+on2*mine[2]+on3*mine[3]+live,places=(before?roundSparks(p.onTime):LEVEL_SPARKS)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
   return {...p,livePerMinute:+live.toFixed(1),worldPerMinute:+world.toFixed(1),placesPerMinute:+places.toFixed(1),perMinute:+perMinute.toFixed(1),shopHours:+(shop/perMinute/60).toFixed(1)};});
  return {shop,minePerMinute:Object.fromEntries(Object.entries(mine).map(([k,v])=>[k,+v.toFixed(1)])),players};}

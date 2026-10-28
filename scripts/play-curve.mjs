@@ -30,15 +30,17 @@ export const CHECKPOINTS=Object.freeze([15,30,60,120]);
 // about one in sight per km, most of them joined); within these two hours, near the ring, only the short figures of the
 // first 5 km are there to find (SKY_NEAR), so the sparks of the sky stop when those are in the map.
 export const SKY_JOINED=.12,SKY_NEAR=SKY_FIGURES.filter(f=>!f.km&&!f.night).length;
-// H1 (Jay, 28 Oct 2026, alpha.233): levels give ★ and Tu canción, never ✦; sparks are of the open universe only. Its
-// sources pay more (spark-rules.js: the World's crystals ×3, living encounters 30/45, the sky 20/30, the wild spark 45,
-// activities 30, mischief 20). An economy says what each source pays: rounds (roundBase + roundPerTenth per tenth),
-// living encounters (live), the sky (sky), the World's crystals against today's code (mine) and the wild spark (wild).
+// H1 (Jay, 28 Oct 2026, alpha.233): levels give ★ and Tu canción, never ✦; sparks are of the open universe only. There a
+// loose spark is worth 1 and 2 on time (no ×3 any more), the wild spark 15, and what appears or has to be done pays by
+// one rule (spark-rules.js, universeReward): base × difficulty × distance × rarity. Near the ring, where these two hours
+// are played, that is a few sparks a thing (LIVE_REWARD and SKY_REWARD are their averages there). An economy says what
+// each source pays: rounds (roundBase + roundPerTenth per tenth), living encounters (live), the sky (sky), the World's
+// crystals against today's code (mine) and whether a streak tripled them (streak), and the wild spark (wild).
 // The route is how long the player roams the free World between rounds: until H1, WANDER minutes every WANDER_EVERY
 // rounds (the rounds paid, so there was little reason to roam); since H1 the sparks are out there, so the model has the
 // player roam ROUTE_NOW.wander minutes after every round on the way to the next portal. An assumption, not a measure.
 export const ROUTE_BEFORE=Object.freeze({wander:WANDER,every:WANDER_EVERY}),ROUTE_NOW=Object.freeze({wander:1.6,every:1});
-export const ECONOMY_NOW=Object.freeze({roundBase:LEVEL_SPARKS,roundPerTenth:LEVEL_SPARKS,live:LIVE_REWARD,sky:SKY_REWARD,mine:1,wild:WILD_SPARKS,route:ROUTE_NOW});
+export const ECONOMY_NOW=Object.freeze({roundBase:LEVEL_SPARKS,roundPerTenth:LEVEL_SPARKS,live:LIVE_REWARD,sky:SKY_REWARD,mine:1,streak:false,wild:WILD_SPARKS,route:ROUTE_NOW});
 // alpha.231/232: rounds paid 80–170 and the open universe a third (crystals) or half of today (spark-rules.js).
 export const ECONOMY_BEFORE=Object.freeze({...ECONOMY_BEFORE_H1,route:ROUTE_BEFORE});
 // alpha.230: alpha.231 without the Mapa del cielo, so the curves show what F1 added.
@@ -48,7 +50,7 @@ const routeOf=e=>e.route||(e.roundBase>0?ROUTE_BEFORE:ROUTE_NOW);
 export const PROFILES=Object.freeze([{id:'60',onTime:.6},{id:'75',onTime:.75},{id:'90',onTime:.9},{id:'sin sonido',onTime:.6,sound:false}]);
 const roundMinutes=(id,onTime,maestro)=>ROUND_AT_75[id]*Math.min(1.6,.75/Math.max(.3,onTime))*(maestro?MAESTRO_GOAL/MAESTRO_TEMPO:1);
 export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=MAESTRO_STAR,economy=ECONOMY_NOW}={}){
- const measured=mine||{1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},scale=economy.mine??1,rate={1:measured[1]*scale,2:measured[2]*scale,3:measured[3]*scale},sound=profile.sound!==false;
+ const measured=mine||{1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},scale=economy.mine??1,rate={1:measured[1]*scale,2:measured[2]*scale,3:(economy.streak?measured[3]:measured[2])*scale},sound=profile.sound!==false;
  const route=routeOf(economy),wild=economy.wild??WILD_SPARKS;
  // Without sound there is no beat to meet: every pulse counts once (spark-rules.js).
  const world=!sound?rate[1]:profile.onTime*(profile.onTime>=.85?.5*rate[2]+.5*rate[3]:rate[2]);
@@ -98,7 +100,7 @@ export function curve(rules={}){const mine={1:minePerMinute(1),2:minePerMinute(2
 // World's crystals and living encounters, a wild spark every WILD_EVERY minutes and the near figures of the sky.
 export const WILD_EVERY=1.5;
 export function explorer(profile,minutes=20,{mine=null,economy=ECONOMY_NOW}={}){const measured=mine||{1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},scale=economy.mine??1,sound=profile.sound!==false;
- const world=(!sound?measured[1]:profile.onTime*(profile.onTime>=.85?.5*measured[2]+.5*measured[3]:measured[2]))*scale,live=livePerMinute(profile,economy.live);
+ const world=(!sound?measured[1]:profile.onTime*(profile.onTime>=.85?.5*measured[2]+.5*(economy.streak?measured[3]:measured[2]):measured[2]))*scale,live=livePerMinute(profile,economy.live);
  const skyEach=economy.sky?(sound?profile.onTime*economy.sky.onTime+(1-profile.onTime)*economy.sky.base:economy.sky.base):0;
  const earned=Math.round(minutes*(world+live)+Math.floor(minutes/WILD_EVERY)*(economy.wild??WILD_SPARKS)+Math.min(SKY_NEAR,SKY_JOINED*minutes)*skyEach);
  let left=earned,bought=0;for(const p of [...CUBE_SHOP].sort((a,b)=>a.cost-b.cost)){if(left<p.cost)break;left-=p.cost;bought++;}

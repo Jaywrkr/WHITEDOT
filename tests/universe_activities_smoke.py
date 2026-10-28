@@ -29,7 +29,7 @@ try:
   page.wait_for_function('__r.activityActive');assert page.evaluate('__r.activityState.kind')=='orchestra'
   nodes=page.evaluate('__r.activityState.level.nodes')
   for node in nodes:walk(page,node['x'],node['y'])
-  page.wait_for_function('__r.activityState.player.done');assert page.evaluate('__r.S.sparks')==page.evaluate('balance+30');assert page.evaluate('__r.S.wx===worldPoint.x&&__r.S.wy===worldPoint.y')
+  page.wait_for_function('__r.activityState.player.done');assert page.evaluate("async()=>{const m=await import('/src/spark-rules.js');return __r.S.sparks===balance+m.activityReward('orchestra',worldPoint.x,worldPoint.y);}"),'H1: the activity pays by size and distance';assert page.evaluate('__r.S.wx===worldPoint.x&&__r.S.wy===worldPoint.y')
   page.screenshot(path=str(ROOT.parent/'activity-orchestra-390.png'))
   page.locator('#bMenu').click();page.locator('#bSettings').click();before=page.evaluate('__r.activityState.player.time');page.wait_for_timeout(200);assert page.evaluate('__r.activityState.player.time')==before
   page.locator('#universeTexts').uncheck();assert page.evaluate('__r.S.universeTexts') is False;assert page.evaluate('document.body.classList.contains("universe-texts-off")')

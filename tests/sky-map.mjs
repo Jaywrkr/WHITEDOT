@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {SKY_VERSION,SKY_CELL,SKY_MARGIN,SKY_SHARE,SKY_REWARD,SKY_TOUCH,SKY_PULSE,SKY_MAX_OPEN,SKY_MAX_DONE,SKY_STAR_GAIN,SKY_MOTIF_GAIN,SKY_FIGURES,SKY_SERIES,skyFigure,skySeries,skyLines,skyCell,skyStar,skyStars,skyEligible,skyStep,skyReward,skyNote,skyNight,skyDirection,skyForced,skySeriesProgress,skyZodiacComplete,normalizeSkyMap} from '../src/sky-map-model.js';
+import {SKY_VERSION,SKY_CELL,SKY_MARGIN,SKY_SHARE,SKY_REWARD,SKY_TOUCH,SKY_PULSE,SKY_MAX_OPEN,SKY_MAX_DONE,SKY_STAR_GAIN,SKY_MOTIF_GAIN,SKY_FIGURES,SKY_SERIES,skyFigure,skySeries,skyLines,skyCell,skyStar,skyStars,skyEligible,skyStep,skyReward,skyDifficulty,skyRarity,skyNote,skyNight,skyDirection,skyForced,skySeriesProgress,skyZodiacComplete,normalizeSkyMap} from '../src/sky-map-model.js';
 // Mapa del cielo (F1, Jay, 28 Oct 2026): the catalog, where the figures are (from hashKey, never the old random
 // sequence), joining in order, the save (half-done kept, futures kept), the rewards and the series.
 const ids=SKY_FIGURES.map(f=>f.id);assert.equal(new Set(ids).size,ids.length);assert.equal(SKY_FIGURES.length,28);
@@ -49,9 +49,12 @@ assert.equal(skyStep(site,{x:999,y:999},[{...st(1),beat:false}]).lit,0,'off time
 const both=skyStep(site,{x:999,y:999},[{x:(st(1).x+st(2).x)/2,y:(st(1).y+st(2).y)/2,beat:true}]);assert.equal(both.lit,2,'a pulse on time counts double when the next two are near');assert(both.onTime&&site.onTime);
 assert.equal(skyStep(site,{x:st(3).x+SKY_TOUCH-1,y:st(3).y}).lit,1);
 for(let k=site.lit;k<7;k++)skyStep(site,st(k));assert(site.done&&site.lit===7);assert.equal(skyStep(site,st(0)).lit,0,'done stays done');
-// Rewards: 20 ✦, 30 ✦ with a pulse on time (10 and 15 until H1, alpha.233), the first time only.
-assert.equal(skyReward({onTime:true},true),SKY_REWARD.onTime);assert.equal(skyReward({onTime:false},true),SKY_REWARD.base);assert.equal(skyReward({onTime:true},false),0);
-assert(SKY_REWARD.base===20&&SKY_REWARD.onTime===30&&SKY_STAR_GAIN<=.012&&SKY_MOTIF_GAIN<=.02);
+// Rewards (H1, Jay, alpha.233), the first time only: base 4 × difficulty (stars) × distance × rarity, ×1.5 on time.
+const at=(fig,km,onTime=false)=>skyReward({fig,x:km*10000,y:0,onTime},true);
+assert.equal(at('casiopea',1),4,'small and near: a few');assert.equal(at('casiopea',1,true),6);assert.equal(at('orion',6),9,'7 stars, past 5 km');assert.equal(at('ballena',25),24,'8 stars, far and rare');
+assert.equal(at('mano',60),54,'the legend, far: the most');assert.equal(at('mano',60,true),81);assert.equal(skyReward({fig:'gato',onTime:true},false),0,'a copy pays nothing');
+assert.equal(skyDifficulty(skyFigure('ballena')),2);assert.equal(skyRarity(skyFigure('cisne')),1.5);assert.equal(skyRarity(skyFigure('mano')),3);assert.equal(skyRarity(skyFigure('lira')),1);
+assert(SKY_REWARD.base>=4&&SKY_REWARD.base<6&&SKY_REWARD.onTime>SKY_REWARD.base&&SKY_STAR_GAIN<=.012&&SKY_MOTIF_GAIN<=.02);
 // Notes: in the scale, from its tonic.
 const dorian=[0,2,3,5,7,9,10];assert.equal(skyNote(dorian,69,0),69);assert.equal(skyNote(dorian,69,2),72);assert.equal(skyNote(dorian,69,7),81);assert.equal(skyNote(dorian,69,-1),67);assert.equal(skyNote(null,60,4),67);
 // Words and the hour.

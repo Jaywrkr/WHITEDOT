@@ -6,10 +6,10 @@ import {RHYTHMS,PLACE_RHYTHMS} from './journey-rhythm.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
 import {directionPan} from './spatial.js';
 // The wild World (plan F18, docs/MUNDO.md): exploring far gives something every one or two minutes. A wild spark
-// turns up ahead of the cube, singing on the beat from its side (plan H6); five pulses on time beside it within 30 s catch it (45 ✦;
-// 15 until H1, alpha.233). And every day one place is remixed: its game with another place's rhythm. Until H1 it paid 30 ✦
+// turns up ahead of the cube, singing on the beat from its side (plan H6); five pulses on time beside it within 30 s catch it (15 ✦: a
+// spark you chase is worth more than a loose one). And every day one place is remixed: its game with another place's rhythm. Until H1 it paid 30 ✦
 // more, and 20 more for beating the day's best; since H1 it is a level like any round: ★, never ✦.
-export const WILD_AFTER=60000,WILD_SURE=120000,WILD_WALK=1200,WILD_LIFE=30000,WILD_HOPS=5,WILD_REACH=120,WILD_HOP=150,WILD_AHEAD=150,WILD_SPARKS=45;
+export const WILD_AFTER=60000,WILD_SURE=120000,WILD_WALK=1200,WILD_LIFE=30000,WILD_HOPS=5,WILD_REACH=120,WILD_HOP=150,WILD_AHEAD=150,WILD_SPARKS=15;
 export const REMIX_SPARKS=30,REMIX_RECORD=20;
 // Plan H6: the spark is found by ear. It sings on every beat from its side, louder as you come near; the arrow at the
 // edge of the screen is only for playing without sound.
