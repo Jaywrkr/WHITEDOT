@@ -360,18 +360,21 @@ Ideas que casi existen. Propuesta: construir sobre lo que hay, no al lado.
 | 31 y 63 Postales | `share-tools.js` | Una sola idea |
 | 57 y 118 Gusanos | Favoritos y saltos pagados | Una sola idea |
 
-## Decisiones pendientes de Jay
+## Decisiones de Jay (28 de octubre de 2026)
 
-1. **Qué fase va primero** tras F0. La propuesta es F1.
-2. **Fecha del cumpleaños de Luca** (38).
-3. **Qué ideas tachar.** Candidatas: 104 y 108 (ya existen), 71 y 91 (casi existen), 20, 26 y 56 (tocan la música base).
-4. **Frecuencia y densidad por km.** Propuesta: una cosa nueva a la vista cada km como mínimo y como máximo una escena cada 60–90 s, compartiendo el temporizador de los encuentros vivos.
-5. **Distancia desde dónde.** Desde el origen (0,0) del mundo o caminada. La propuesta es el origen: es fija y no depende de los saltos.
-6. **Nombres repetidos.** Hay cinco cosas llamadas «constelación». Propuesta: «Mapa del cielo» para F1.
-7. **«Mano de Luca».** Es una figura de estrellas, no una persona. ¿Se queda con ese nombre?
-8. **Melodías de dominio público.** ¿Vale la «Oda a la alegría»? ¿Cuáles más?
-9. **Premios.** ¿Chispas, adornos o solo la Bitácora? La economía actual no debe dispararse.
-10. **Dos cubos en un teléfono (67).** Pide un control nuevo y otra forma de tocar. ¿Entra?
-11. **Palabra secreta en Ajustes (105).** Añade un control. ¿Entra?
+1. **Orden:** F0 arreglos A–E, luego F1 «Mapa del cielo», F2 Recorrer lejos, F3 Instrumentos, F4 Seres que vuelven, F5 Easter eggs y fechas, F6 Escenas y juegos por tandas.
+2. **Nombre:** F1 se llama «Mapa del cielo». Cada figura sigue siendo una constelación.
+3. **Repetidas:** no se tachan. Se mejora lo que ya existe con la idea nueva (8 amplía el looper; 27 hace nacer la mascota de un huevo; 51 se caza a tiempo; 104 se une a la «Gravedad invertida»; 31 y 63 son una sola «Postal del universo»). Las demás se unen igual y se listan antes de tocarlas.
+4. **20, 26 y 56:** solo como efecto breve con aviso que vuelve solo. La música base no cambia: 20 cambia solo las capas nuevas; 26 suena en 8 bits solo dentro de la zona; 56 acelera el pulso 20 s, como la «Región en canon».
+5. **Distancia:** desde el origen (0,0).
+6. **Melodías de dominio público:** «Oda a la alegría», «Frère Jacques» y «Estrellita, ¿dónde estás?».
+7. **Cumpleaños de Luca (38):** 1 de agosto. Solo día y mes; el año no se guarda ni se muestra.
+
+### Aún abiertas
+
+- «Mano de Luca» como nombre de una figura de estrellas.
+- Premios de cada fase: chispas, adornos o solo la Bitácora, sin disparar la economía.
+- Dos cubos en un teléfono (67) y palabra secreta en Ajustes (105): añaden controles.
+- Densidad por km: propuesta de una cosa a la vista por km y una escena cada 60–90 s como máximo.
 
 Las mediciones y escuchas de este catálogo no existen todavía. Nada aquí está construido, probado en teléfono ni con personas.
