@@ -7,6 +7,7 @@ import {ECOLOGY_CONTENT} from './ecology-model.js';
 import {FAMILIES} from './encounter-families.js';
 import {CULTURES} from './culture-model.js';
 import {SPECIES} from './vida-music.js';
+import {LIVE_ENCOUNTERS} from './live-encounters-model.js';
 const rows=(group,entries,prefix='')=>Object.entries(entries).map(([id,value])=>({id:prefix+id,name:typeof value==='string'?value:value.name,group}));
 export const DISCOVERY_ELEMENTS=Object.freeze([
  ...LIVING_CATALOG.map(d=>({id:'living:'+d.id,name:d.name,group:d.group==='architecture'?'Arquitectura viva':'Universo vivo'})),
@@ -19,7 +20,9 @@ export const DISCOVERY_ELEMENTS=Object.freeze([
  ...rows('Instalaciones',{glass:'Vidrios cromáticos',mirror:'Espejos musicales',strings:'Cuerdas tensables',prism:'Prisma de luz',membrane:'Membrana resonante'},'installation:'),
  ...rows('Vida',SPECIES,'life:'),{id:'life:plant',name:'Flora que crece',group:'Vida'},
  ...rows('Guardianes',CULTURES,'culture:'),
- ...rows('Hallazgos',{box:'Caja misteriosa',relic:'Reliquia',landmark:'Hito de horizonte',pet:'Compañía ganada'})
+ ...rows('Hallazgos',{box:'Caja misteriosa',relic:'Reliquia',landmark:'Hito de horizonte',pet:'Compañía ganada'}),
+ // Living encounters (Jay, 27 Oct 2026): the first completion of each kind. Appended last, so earlier ids keep their place.
+ ...LIVE_ENCOUNTERS.map(d=>({id:'live:'+d.id,name:d.name,group:'Encuentros vivos'}))
 ].map(Object.freeze));
 const directory=new Map(DISCOVERY_ELEMENTS.map(e=>[e.id,e]));
 export const discoveryElement=id=>directory.get(id)||null;
@@ -53,6 +56,7 @@ export function migrateElementBook(state){
  for(const [k,v]of Object.entries(state.cultures?.collections||{}))if(v>0)add('culture:'+k);
  for(const [k,v]of Object.entries(state.vida?.seen||{}))if(v)add('life:'+k);
  for(const kind of Object.keys(state.livingSeen||{}))add('living:'+kind);
+ for(const [k,v]of Object.entries(state.liveEncounters?.kinds||{}))if(v?.caught>0)add('live:'+k);
  if(state.boxesOpened>0)add('box');if(['golondrina','grulla','luciernaga'].includes(state.pet?.species))add('pet');if((state.stars||[]).length)add('relic');if(state.landmarksN>0)add('landmark');
  return b;
 }

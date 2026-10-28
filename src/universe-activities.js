@@ -4,6 +4,7 @@ import {playWonderNote} from './musical-wonders-audio.js';
 import {ACTIVITIES,ACTIVITY_CELL,ACTIVITY_TILE,activityCell,activityDefinition,activityLevel,activityState,moveActivity,updateActivity,normalizeActivities} from './universe-activities-model.js';
 import {drawActivity,drawActivityPortal} from './universe-activities-art.js';
 import {creditSparks} from './sparks-model.js';
+import {ACTIVITY_SPARKS} from './spark-rules.js';
 export function initialize(r){
  let owner=null,scope='',cache=new Map(),current=null,clock=0,last=null,waiting=null,hold=0,blocked=null,retry=0;
  const ready=()=>r.inWorld()&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting;
@@ -17,7 +18,7 @@ export function initialize(r){
  function finish(){const q=book(),a=current;if(!a||q.version!==1)return false;if(q.done[a.o.id])return true;
   if(clock<a.retryAt)return false;a.retryAt=clock+2;if(Object.keys(q.done).length>=8192)return true;
   const economy=r.sparkEconomy;if(!economy||economy.version!==1)return false;const before={balance:r.S.sparks,economy:structuredClone(economy)};
-  const previousTypes={...q.types};q.types={...q.types,[a.o.kind]:true};q.done[a.o.id]=true;const amount=creditSparks(r.S,5);economy.log.push({title:a.level.def.name,text:'Actividad completada · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
+  const previousTypes={...q.types};q.types={...q.types,[a.o.kind]:true};q.done[a.o.id]=true;const amount=creditSparks(r.S,ACTIVITY_SPARKS);economy.log.push({title:a.level.def.name,text:'Actividad completada · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
   if(r.save()===false){delete q.done[a.o.id];q.types=previousTypes;r.S.sparks=before.balance;r.S.sparkEconomy=before.economy;return false;}a.paid=true;
   const active=a;if(r.S.sound&&r.ac?.state==='running')r.beatSoon?.(time=>{if(current!==active||!ready()||openSurface('.modal:not([hidden])')||!r.S.sound)return;const tones=r.chordTones();for(let i=0;i<3;i++)r.hookInst('feltpiano',tones[i%tones.length],time+i*(r.SIX||.125)*2,r.vel(.06),r.regionOfPos(r.S.wx,r.S.wy));},null,'player');return true;
  }

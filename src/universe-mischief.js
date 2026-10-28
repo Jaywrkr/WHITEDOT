@@ -4,6 +4,7 @@ import {drawMischief,drawMischiefClue} from './universe-mischief-art.js';
 import {crystalField} from './crystal-sparks.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
+import {MISCHIEF_SPARKS} from './spark-rules.js';
 export function playMischiefNote(r,index,time,source=null){
  if(!r.S.sound||r.ac?.state!=='running')return false;
  const d=r.regionOfPos(source?.x??r.S.wx,source?.y??r.S.wy),tones=r.chordTones(),instrument=musicFamily(d.genre)?.leads[0]||'p_gutguitar';if(!tones.length)return false;
@@ -29,7 +30,7 @@ export function initialize(r){
   const before={mischief:structuredClone(q),sparkEconomy:structuredClone(economy),sparks:r.S.sparks,rewards:r.S.rewards?structuredClone(r.S.rewards):undefined};
   q.done[s.id]={kind:s.kind,at:r.S.todayKey};q.counts[s.kind]=Math.min(100000,(Number.isSafeInteger(q.counts[s.kind])?q.counts[s.kind]:0)+1);for(const flag of s.flags)q.tricks[flag]=true;
   if(s.target?.kind&&s.kind==='dance')q.sculptures[s.target.kind]=true;if(s.festival)q.tricks.festivalManager=true;
-  const amount=creditSparks(r.S,3);economy.log.push({title:MISCHIEF.find(d=>d.id===s.kind).name,text:'Encuentro completado · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
+  const amount=creditSparks(r.S,MISCHIEF_SPARKS);economy.log.push({title:MISCHIEF.find(d=>d.id===s.kind).name,text:'Encuentro completado · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
   if(r.save()===false){Object.assign(r.S,before);return false;}s.paid=true;s.reward=amount;r.showSparkPickup?.(amount,{x:r.S.wx,y:r.S.wy});s.notes=[6];r.mischiefCompletionCue?.({kind:s.kind,id:s.id,amount});return true;
  }
  function music(){if(!scene?.notes.length||queued||!r.S.sound||r.ac?.state!=='running')return;const bar=Math.floor((r.MU.step||0)/16);if(bar!==musicBar){musicBar=bar;musicHits=0;}if(musicHits>=(scene.kind==='farewell'?6:2))return;musicHits++;const s=scene,state=r.S,key=scope,index=s.notes.shift();queued=true;
@@ -38,7 +39,8 @@ export function initialize(r){
  function tick(dt,paused=false){const q=book();if(!r.inWorld()||r.activityActive){scene=null;queued=false;return;}if(paused||!active()||q.version!==1)return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
   if(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused){scene=null;return;}
   const player={x:r.S.wx,y:r.S.wy};if(scene&&Math.hypot(scene.x-player.x,scene.y-player.y)>reach(scene)){blocked=scene.id;scene=null;cooldown=clock+15;queued=false;}
-  if(!scene){if(clock<cooldown)return;const candidates=sites().filter(o=>o.id!==blocked&&Math.hypot(o.x-player.x,o.y-player.y)<95);for(const o of candidates){scene=prepare(o);if(scene){frozenTimes=new WeakMap();break;}}if(!scene){if(!sites().some(o=>o.id===blocked&&Math.hypot(o.x-player.x,o.y-player.y)<150))blocked=null;return;}}
+  // One at a time: while a living encounter runs (live-encounters.js) no scene starts.
+  if(!scene){if(clock<cooldown||r.liveEncounterActive?.())return;const candidates=sites().filter(o=>o.id!==blocked&&Math.hypot(o.x-player.x,o.y-player.y)<95);for(const o of candidates){scene=prepare(o);if(scene){frozenTimes=new WeakMap();break;}}if(!scene){if(!sites().some(o=>o.id===blocked&&Math.hypot(o.x-player.x,o.y-player.y)<150))blocked=null;return;}}
   if(scene.done){if(!scene.paid)finish();scene.celebration=(scene.celebration||0)+step;music();if(scene.paid&&scene.celebration>3){blocked=scene.id;scene=null;cooldown=clock+12;streakUntil=clock+32;queued=false;}return;}
   if(scene.kind==='helper'&&scene.target){const view=r.crystalState?.near?.find(o=>o.id===scene.target.id),point=view&&(view.run||view.drop||view);if(point)scene.target={...scene.target,x:point.x,y:point.y};}
   const before=scene.stage;stepMischief(scene,player,step,{reduced:reduced(),broken:!!(scene.target&&r.savedCrystal?.(scene.target.id)?.broken),totem:r.totemNear?.(110)?.[0]});
@@ -46,5 +48,5 @@ export function initialize(r){
   if(scene.done)finish();music();
  }
  const frozen=o=>r.inWorld()&&!r.activityActive&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done&&Math.hypot(o.x-scene.x,o.y-scene.y)<130;
- Object.defineProperties(r,{mischiefTick:{get:()=>tick},drawMischief:{get:()=>()=>{if(active()){if(!scene&&clock>=cooldown&&!(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused))drawMischiefClue(r,sites(),reduced(),clock<streakUntil?600:320);drawMischief(r,scene,reduced());}}},mischiefFrozen:{get:()=>frozen},mischiefTime:{get:()=>(o,t)=>{if(!frozen(o))return t;if(!frozenTimes.has(o))frozenTimes.set(o,t);return frozenTimes.get(o);}},mischiefHush:{get:()=>active()&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done},mischiefDancing:{get:()=>id=>!!scene&&scene.kind==='dance'&&scene.target?.id===id},mischiefNear:{get:()=>sites},mischiefState:{get:()=>({book:book(),scene,cache:cache.size,clock})}});book();
+ Object.defineProperties(r,{mischiefTick:{get:()=>tick},drawMischief:{get:()=>()=>{if(active()){if(!scene&&clock>=cooldown&&!r.liveEncounterActive?.()&&!(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused))drawMischiefClue(r,sites(),reduced(),clock<streakUntil?600:320);drawMischief(r,scene,reduced());}}},mischiefFrozen:{get:()=>frozen},mischiefTime:{get:()=>(o,t)=>{if(!frozen(o))return t;if(!frozenTimes.has(o))frozenTimes.set(o,t);return frozenTimes.get(o);}},mischiefHush:{get:()=>active()&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done},mischiefDancing:{get:()=>id=>!!scene&&scene.kind==='dance'&&scene.target?.id===id},mischiefNear:{get:()=>sites},mischiefState:{get:()=>({book:book(),scene,cache:cache.size,clock})}});book();
 }

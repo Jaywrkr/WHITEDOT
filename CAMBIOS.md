@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 27 de octubre de 2026. Código **2.3.0-alpha.226**. Las entradas describen su revisión, no certifican producción.
+Estado: 28 de octubre de 2026. Código **2.3.0-alpha.227**. Las entradas describen su revisión, no certifican producción.
+
+
+## Encuentros vivos · tanda 1 (perseguir) · 2.3.0-alpha.227
+
+Rama `universo/e1-perseguir`, **sobre `lanzamiento/m1-notas-jay`** (`2ae74a8`, alpha.226, PR #365 aún sin merge): dependencia explícita. Jay pidió algo que perseguir, huir o hacer en cada bioma; aprobó 33 encuentros en tres tandas. Esta es la primera. Guía: [Encuentros vivos](docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos).
+
+- **Motor común** (`src/live-encounters-model.js`, `src/live-encounters.js`, `src/live-encounters-art.js`, en `SHELL` una vez cada uno). Uno cada 60–90 s de viaje en el Mundo libre, delante del cubo, de `hashKey`; nunca en capítulos, rondas, su tarjeta, finales, actividades, el Refugio ni bajo tierra. Uno a la vez, también con las travesuras (`universe-mischief.js` espera a que acabe). Las tandas 2 y 3 añaden filas, un comportamiento corto y la regla de su verbo.
+- **Los once de perseguir**: polilla de luz, racimo saltarín, pez de onda, tambor rodante, semilla traviesa, cometa en el viento, tu reflejo, púlsar fugaz, llamarada viva, tu eco y estrella fugaz. Un pulso a tiempo cerca lo atrapa (o lo frena); alcanzarlo moviéndose también vale, pero cuesta más. Si se escapa, una línea de despedida y nada más.
+- **Chispas al completarlos**: 10 ✦, 15 ✦ con un pulso a tiempo, cada vez. La primera de cada tipo va a la Bitácora (Colección, «Encuentros vivos»: 157 → 168 familias) con un solo aviso que la nombra (D3). Cobro y Bitácora, atómicos.
+- **Economía al alza** (Jay): rondas 60–120 → 80–170 ✦; actividades 5 → 15 ✦ y travesuras 3 → 10 ✦, una vez por lugar (`spark-rules.js` reúne los importes). Precios sin cambios. Modelo de dos horas, jugador al 75 %: 30 min 474 → 669 ✦, 60 min 1.524 → 2.142, 120 min 4.259 → 5.985, piezas 45 → 53; toda la tienda, de 9,4 a 7 h (casual). Ningún guardado pierde chispas ni compras; no cambia ningún formato.
+- **Sonido**: la música no cambia. Al atrapar, una nota de la armonía que suena con el instrumento melódico del lugar, a 0,02 de ganancia y en el pulso. `tests/live_encounters_mix.py` (nuevo): la música del Mundo renderizada desde este árbol y desde `2ae74a8` tiene el mismo pico y el mismo nivel en cada medio segundo (deriva ≤ 0,0003 dB, la del propio render), y las once notas quedan 29–31 dB bajo la música.
+- **Dibujo**: formas simples en la luz del color de su bioma, del tamaño del cubo; una flecha pequeña junto al cubo (o en el borde) dice hacia dónde. Se dibujan sobre la luz del Mundo (`render.js`), para que se lean de noche. Una línea al aparecer; «Textos en el universo» la oculta. Cubo igual de pequeño.
+- **Ayuda**: «Cómo jugar» explica los encuentros vivos en una línea y que las travesuras dan diez chispas. Inglés completo en `i18n-en.js`.
+- **Atajo** `?encuentro=polilla` (o cualquiera de los once): ese encuentro tras 3 s de viaje. [Herramientas de prueba](docs/MUNDO.md#herramientas-de-prueba).
+- Pruebas nuevas: `tests/live-encounters.mjs`, `tests/live-encounters-runtime.mjs`, `tests/live_encounters_smoke.py` (los once forzados, persecución, atrapar a tiempo, chispas, escape sin castigo, uno a la vez con travesuras, nunca en rondas, capítulos ni final; capturas a 390×844) y `tests/live_encounters_mix.py`. Ajustadas a los importes nuevos: `spark-rules`, `places`, `places-boundaries`, `places-durability`, `play-curve`, `spark-economy-sim`, `universe-activities-runtime`, `universe-mischief-runtime`, `universe_activities_smoke.py`; a las 168 familias: `element_book`, `journal-album`, `discoveries_smoke.py`. `tests/audio_mix.mjs` gana `liveBatch`.
+- Preservación: capa `approvedE1` para los archivos protegidos que cambian a propósito (`main.js`, `render.js`, `universe-mischief.js`, `universe-mischief-art.js`, `universe-activities.js`, `spark-rules.js`, `element-book-model.js`, `content-manifest.js` y la lista offline de `sw.js`).
+- No probado en teléfono ni con personas; sin CI remoto. Las tandas 2 (huir) y 3 (hacer), pendientes.
 
 
 ## Notas de Jay · 2.3.0-alpha.226
