@@ -4320,4 +4320,10 @@ export const EN=Object.freeze({
  "Cohete":"Rocket",
  "Guitarra":"Guitar",
  "La Mano":"The Hand",
+ "Completaste los once lugares.":"You completed the eleven places.",
+ "Aún te quedan estrellas por ganar en cada uno: ★★ a tiempo, ★★★ Maestro.":"There are still stars to win in each one: ★★ on time, ★★★ Master.",
+ "Ya puedes saltar a otro paisaje. El primer salto es gratis.":"You can now jump to another landscape. The first jump is free.",
+ "Ya puedes saltar a otro paisaje.":"You can now jump to another landscape.",
+ "El universo es infinito. Explóralo: encontrarás maravillas.":"The universe is endless. Explore it: you will find wonders.",
+ "Completaste los once lugares ›":"You completed the eleven places ›",
 });

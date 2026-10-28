@@ -40,6 +40,11 @@ const rebasedAE=new Set(['src/chapter-test.js','src/crystal-sparks.js','src/jour
 // contracts below are untouched.
 const approvedF1='10c3c64ee64778c034885f05b0e51912faf0289b';
 const rebasedF1=new Set(['src/cube.js','src/main.js','src/render.js','src/universe-mischief.js']);
+// Jay's fixes G1–G3 after alpha.231 (28 Oct 2026, alpha.232): main loads the note after the eleven places, the «Paseo
+// musical» achievement is retired with its button, and the offline shell lists one new module. These protected files
+// and the shell are held to that commit; the music's contracts below are untouched.
+const approvedG='cff410355ceff34c96c103e5b4d535018b477882';
+const rebasedG=new Set(['src/achievement-metadata.js','src/main.js']);
 // H1 · Chispas solo en el universo (Jay, 28 Oct 2026, alpha.233): levels give ★ and the song, never ✦ (rounds, remix,
 // the Camino, nothing paid inside a level, the ✦ counter hidden there); the open universe pays more (crystals ×3,
 // encounters, sky, activities, mischief, wild spark); help texts in English; the offline shell only changes its key.
@@ -60,7 +65,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedH1.has(file)?approvedH1:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
