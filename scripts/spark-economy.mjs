@@ -15,9 +15,13 @@ export const LIVE_GAP=(LIVE_EVERY.min+LIVE_EVERY.max)/2/60;
 // little easier than catching: in tests/live-encounters.mjs walking toward the arrow at once gets out of almost all of
 // them, though 1.5 s late five of the eleven nearly always reach you. The model assumes a player escapes 55 % plus four tenths of
 // their share on time (60 % on time → 79 %), 60 % without sound; the chase keeps batch 1's numbers. Assumptions, not measures.
-export const LIVE_VERB_SHARE=Object.freeze({perseguir:.5,huir:.5});
-export const liveChase=p=>p.sound===false?.5:.45+.4*p.onTime,liveFlight=p=>p.sound===false?.6:Math.min(.95,.55+.4*p.onTime);
-export const liveCatch=p=>LIVE_VERB_SHARE.perseguir*liveChase(p)+LIVE_VERB_SHARE.huir*liveFlight(p);
+// E3 (Jay, 28 Oct 2026): the same roll now splits in thirds: chase, flight and a task («hacer»). Tasks are the kindest:
+// in tests/live-encounters.mjs a bot walking toward the arrow finishes all eleven nearly always, also 1.5 s late, slower
+// or without sound. People steer by hand and read the task first, so the model assumes a player finishes 60 % plus four
+// tenths of their share on time (60 % on time → 84 %), 65 % without sound. Assumptions, not measures.
+export const LIVE_VERB_SHARE=Object.freeze({perseguir:1/3,huir:1/3,hacer:1/3});
+export const liveChase=p=>p.sound===false?.5:.45+.4*p.onTime,liveFlight=p=>p.sound===false?.6:Math.min(.95,.55+.4*p.onTime),liveTask=p=>p.sound===false?.65:Math.min(.95,.6+.4*p.onTime);
+export const liveCatch=p=>LIVE_VERB_SHARE.perseguir*liveChase(p)+LIVE_VERB_SHARE.huir*liveFlight(p)+LIVE_VERB_SHARE.hacer*liveTask(p);
 export function livePerMinute(p,live=LIVE_REWARD){if(!live)return 0;const share=p.sound===false?0:p.onTime;return liveCatch(p)*(share*live.onTime+(1-share)*live.base)/LIVE_GAP;}
 const seedOf=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 globalThis.document??={hidden:false,querySelector:()=>null};

@@ -1,7 +1,7 @@
 // Living encounters (Jay, 27 Oct 2026; docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos): something to chase, flee or do
 // in every biome of the free World, in the same world you travel, one at a time. Batch 1 builds the common engine and
-// the eleven «perseguir»; batch 2 adds the eleven «huir». A new encounter is one row of data and, at most, one small
-// behaviour; a new verb is one rule.
+// the eleven «perseguir»; batch 2 adds the eleven «huir»; batch 3 the eleven «hacer». A new encounter is one row of data
+// and, at most, one small behaviour; a new verb is one rule.
 // Everything comes from hashKey: no old random sequence is read and nothing on the map moves.
 import {hashKey} from './universe-regions.js';
 export const LIVE_VERSION=1;
@@ -16,6 +16,9 @@ export const LIVE_TOUCH=26,LIVE_PULSE_CATCH=110,LIVE_PULSE_HOLD=260,LIVE_HOLD_SE
 // Fleeing: a pulse on time always shields the cube a moment (SHIELD) and helps in its own way; being reached only nudges
 // the cube aside for KNOCK seconds at KNOCK_SPEED and ends the encounter without a reward. BODY: the cube's half size.
 export const LIVE_SHIELD=1,LIVE_KNOCK=1,LIVE_KNOCK_SPEED=60,LIVE_BODY=6;
+// Doing (batch 3): a target counts when the cube is within REACH of it; a pulse on time does a step from up to PULSE away
+// (or two: it counts double) and always adds BONUS seconds to the task, up to BONUS_MAX. A lit pulsar burns BURN seconds.
+export const LIVE_DO_REACH=24,LIVE_DO_PULSE=150,LIVE_DO_BONUS=1,LIVE_DO_BONUS_MAX=6,LIVE_BURN=9;
 export const LIVE_VERBS=Object.freeze(['perseguir','huir','hacer']);
 // Region colours of docs/UNIVERSO.md: the encounter shines in the light of its biome.
 export const LIVE_COLORS=Object.freeze({llanura:'#eb9a3c',bosque:'#6fe08a',lago:'#5cc8ff',ruinas:'#a88c6a',jardin:'#ff8fc8',dunas:'#f3e6b0',cristales:'#9ef0e6',faros:'#fff36a',tormenta:'#b48cff',cueva:'#ff4f3a',vacio:'#ffffff'});
@@ -45,13 +48,27 @@ export const LIVE_ENCOUNTERS=Object.freeze([
  {id:'ondas',biome:'faros',verb:'huir',name:'Ondas del púlsar',behavior:'rings',speed:110,life:13,line:'Ondas en el beat. Crúzalas a tiempo.',bye:'Una onda te empujó. Ya pasó.'},
  {id:'llamaradas',biome:'tormenta',verb:'huir',name:'Lluvia de llamaradas',behavior:'flares',speed:0,life:12,survive:true,line:'Llueven llamaradas. Sal del círculo.',bye:'Una llamarada te rozó. Ya pasó.'},
  {id:'pozo',biome:'cueva',verb:'huir',name:'Pozo que arrastra',behavior:'well',speed:125,life:14,survive:true,line:'El pozo te arrastra. Sube a tiempo.',bye:'Tocaste fondo. Ya saliste.'},
- {id:'agujero',biome:'vacio',verb:'huir',name:'Agujero negro',behavior:'hole',speed:175,life:14,survive:true,line:'Un agujero negro. Escapa a tiempo.',bye:'El agujero te soltó. Ya pasó.'}
+ {id:'agujero',biome:'vacio',verb:'huir',name:'Agujero negro',behavior:'hole',speed:175,life:14,survive:true,line:'Un agujero negro. Escapa a tiempo.',bye:'El agujero te soltó. Ya pasó.'},
+ // Batch 3 · hacer. life: seconds for the task (pulses on time add a little); need: its steps, shown as a counter by the
+ // cube. bye: the kind goodbye when time runs out or you walk away. Nothing is lost.
+ {id:'motas',biome:'llanura',verb:'hacer',name:'Cinco motas',behavior:'sow',life:30,need:5,line:'Siembra cinco motas en orden.',bye:'El viento guardó las motas.'},
+ {id:'estrellita',biome:'bosque',verb:'hacer',name:'Estrellita perdida',behavior:'carry',life:28,need:2,line:'Lleva la estrellita a su racimo.',bye:'La estrellita sigue buscando.'},
+ {id:'burbujas',biome:'lago',verb:'hacer',name:'Burbujas al ritmo',behavior:'bubbles',life:26,need:12,line:'Rompe burbujas al ritmo. Sube.',bye:'Las burbujas se fueron arriba.'},
+ {id:'guardian',biome:'ruinas',verb:'hacer',name:'Guardián de piedra',behavior:'guardian',life:30,need:3,line:'Golpea sus marcas por la espalda.',bye:'El guardián volvió a dormirse.'},
+ {id:'brotes',biome:'jardin',verb:'hacer',name:'Cinco brotes',behavior:'water',life:30,need:5,line:'Riega los brotes. Que no se marchiten.',bye:'Los brotes esperarán la lluvia.'},
+ {id:'caravana',biome:'dunas',verb:'hacer',name:'Caravana',behavior:'caravan',life:30,need:4,line:'Guía la caravana entre las piedras.',bye:'La caravana acampó aquí.'},
+ {id:'nodos',biome:'cristales',verb:'hacer',name:'Nodos que suenan',behavior:'melody',life:30,need:5,line:'Toca los nodos en el orden que suenan.',bye:'Los nodos se callaron.'},
+ {id:'pulsares',biome:'faros',verb:'hacer',name:'Cuatro púlsares',behavior:'ignite',life:30,need:4,line:'Enciende los cuatro a la vez.',bye:'Los púlsares se durmieron.'},
+ {id:'antena',biome:'tormenta',verb:'hacer',name:'Antena caída',behavior:'antenna',life:30,need:2,line:'Lleva la antena a su base.',bye:'La antena puede esperar.'},
+ {id:'luciernagas',biome:'cueva',verb:'hacer',name:'Luciérnagas del pozo',behavior:'fireflies',life:30,need:5,line:'Reúne cinco luciérnagas. Súbelas.',bye:'Las luciérnagas volvieron al fondo.'},
+ {id:'constelacion',biome:'vacio',verb:'hacer',name:'Constelación',behavior:'constellation',life:28,need:6,line:'Pasa por sus estrellas. Dibújala.',bye:'Las estrellas siguen ahí.'}
 ].map(Object.freeze));
 const BY_ID=new Map(LIVE_ENCOUNTERS.map(d=>[d.id,d]));
 export const liveDefinition=id=>BY_ID.get(id)||null;
-// The encounters a biome offers, in the order of the rows (its «perseguir», then its «huir»); the roll picks one of them.
-// The controller rolls with the same hash as batch 1 (live:pick:v1): a roll under one half keeps the chase it always
-// had, from one half up it is now the biome's «huir». Timing and places do not move. Later batches add rows, never a new engine.
+// The encounters a biome offers, in the order of the rows (its «perseguir», its «huir», its «hacer»); the roll picks one.
+// The controller rolls with the same hash as batch 1 (live:pick:v1), now in thirds: under one third the chase it always
+// had, from one third to two thirds the biome's «huir», from two thirds up its «hacer» (batch 2 split it in halves).
+// Timing and places do not move. New batches add rows, never a new engine.
 export const liveFor=(biome,roll=0)=>{const list=LIVE_ENCOUNTERS.filter(d=>d.biome===biome);return list.length?list[Math.min(list.length-1,Math.floor(Math.max(0,roll)*list.length))]:null;};
 // Seconds of travel before the n-th encounter of a world: 60 to 90, from the hash, the same on every replay.
 export function liveInterval(scope,n){return LIVE_EVERY.min+(LIVE_EVERY.max-LIVE_EVERY.min)*hashKey('live:every:v1:'+scope+':'+n);}
@@ -93,6 +110,8 @@ export function createLive(def,point,player,{now=0}={}){
  if(def.behavior==='shoot'){const side=unit(s,'cross')<.5?1:-1;s.heading=Math.atan2(player.y-point.y,player.x-point.x)+side*Math.PI/2;s.x-=Math.cos(s.heading)*330;s.y-=Math.sin(s.heading)*330;}
  // Fleeing: the spot ahead only gives the direction (dir) and the seed; each threat places itself.
  if(def.verb==='huir'){s.shield=0;s.drag=null;s.dir={x:Math.cos(s.heading),y:Math.sin(s.heading)};SETUP[def.behavior]?.(s,player,def);s.origin={x:s.x,y:s.y};}
+ // Doing: the task is laid out ahead of the cube; s.x,s.y is its middle (walking far from it ends the task).
+ if(def.verb==='hacer'){s.done=0;s.need=def.need;s.bonus=0;s.cues=[];s.drag=null;s.lost=false;s.dir={x:Math.cos(s.heading),y:Math.sin(s.heading)};SETUP_DO[def.behavior]?.(s,player,def);s.origin={x:s.x,y:s.y};}
  return s;
 }
 // Where each threat starts (batch 2). rim: getting out of that circle is safe; safe: reaching that ring is.
@@ -185,9 +204,140 @@ const HELP={
  pollen(s,p,w){if(dist(s,w)<=220){s.blow=.2;s.blowDir=away(s,w);s.shrink=Math.min(40,s.shrink+12);}},
  well(s){s.jump=.25;},hole(s){s.jump=.25;}
 };
+// Batch 3 · hacer. Where the task is laid out: at(s,p,ahead,side) is a point ahead of the cube along its heading.
+const at=(s,p,f,side)=>({x:p.x+s.dir.x*f-s.dir.y*side,y:p.y+s.dir.y*f+s.dir.x*side});
+const mid=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});
+const range=n=>Array.from({length:n},(_,i)=>i);
+// A fixed order from the seed (the prism's tune, which sprout dries first).
+const order=(s,n,k)=>range(n).sort((a,b)=>unit(s,k+':'+a)-unit(s,k+':'+b));
+// Something that follows the cube (or the one ahead of it) at most speed u/s and stops gap units behind.
+const follow=(o,lead,speed,gap,dt)=>{const l=dist(o,lead);if(l<=gap)return;const u=toward(o,lead),k=Math.min(l-gap,speed*dt);o.x+=u.x*k;o.y+=u.y*k;};
+// Constellations: six stars (ahead, aside) and the lines that draw them, faint until you pass.
+const SKY=[
+ {stars:[[-170,-110],[-85,-85],[0,-40],[85,-10],[95,95],[190,70]],lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,3]]},
+ {stars:[[-190,-40],[-115,70],[-35,-50],[45,70],[125,-50],[195,60]],lines:[[0,1],[1,2],[2,3],[3,4],[4,5]]},
+ {stars:[[-170,0],[-70,0],[30,0],[140,0],[30,-115],[30,115]],lines:[[0,1],[1,2],[2,3],[4,2],[2,5]]}
+];
+const SETUP_DO={
+ // Five numbered motes in a gentle zigzag ahead: stand on each, in order, until it takes root.
+ sow(s,p){s.items=range(5).map(i=>({...at(s,p,130+i*95,(i%2?1:-1)*(60+unit(s,'mote:'+i)*50)),r:LIVE_DO_REACH,n:i+1,grow:0,done:false}));Object.assign(s,at(s,p,320,0));},
+ // A little lost star and its cluster (the marked ring), some way off to one side.
+ carry(s,p){const side=unit(s,'side')<.5?1:-1,a=Math.atan2(s.dir.y,s.dir.x)+side*(.5+unit(s,'turn')*.5);s.star={...at(s,p,170,side*50),held:false};s.home={x:s.star.x+Math.cos(a)*600,y:s.star.y+Math.sin(a)*600,r:44};Object.assign(s,mid(s.star,s.home));s.boost=0;},
+ // Bubbles rise around the cube, one on each beat: pop twelve to climb.
+ bubbles(s,p){s.x=p.x;s.y=p.y;s.bubbles=[];s.pops=[];s.lift=0;},
+ // A slow stone guardian faces the cube; its three marks are on its back.
+ guardian(s,p){Object.assign(s,at(s,p,230,0));s.face=Math.atan2(p.y-s.y,p.x-s.x);s.stun=0;s.cool=0;s.armed=true;s.bump=0;s.behind=false;s.back={x:s.x,y:s.y};},
+ // Five sprouts round a clearing; each dries at its own time (the soonest first in the order of the seed).
+ water(s,p){const c=at(s,p,210,0),h=Math.atan2(s.dir.y,s.dir.x),rank=order(s,5,'thirst');s.sprouts=range(5).map(i=>{const a=h+i*TAU/5+(unit(s,'sprout:'+i)-.5)*.5,r=120+unit(s,'far:'+i)*90,left=13+3.5*rank.indexOf(i);return {x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r,r:LIVE_DO_REACH,wet:0,done:false,dry:false,left,full:left};});Object.assign(s,c);},
+ // A caravan of four waits ahead; its oasis is far beyond three stones.
+ caravan(s,p){const side=unit(s,'side')<.5?1:-1,start=at(s,p,150,0);s.oasis={...at(s,p,700,side*80),r:80};s.camels=range(4).map(i=>({...at(s,p,150+i*18,0),stuck:0,bumped:false}));
+  s.stones=[.3,.55,.8].map((f,i)=>{const q={x:start.x+(s.oasis.x-start.x)*f,y:start.y+(s.oasis.y-start.y)*f},off=(unit(s,'stone:'+i)-.5)*60;return {x:q.x-s.dir.y*off,y:q.y+s.dir.x*off,r:26};});Object.assign(s,mid(start,s.oasis));s.joined=false;s.rush=0;},
+ // Five nodes of the prism's mesh; they sound (and light) one by one, then wait to be touched in that order.
+ melody(s,p){const c=at(s,p,240,0),a0=unit(s,'mesh')*TAU;s.nodes=range(5).map(i=>({x:c.x+Math.cos(a0+i*TAU/5)*120,y:c.y+Math.sin(a0+i*TAU/5)*120,r:LIVE_DO_REACH,n:0,done:false,flash:-9,wrong:-9}));s.seq=order(s,5,'tune');s.shown=0;s.show=true;Object.assign(s,c);},
+ // Four pulsars asleep round a wide square: lit, each burns for nine seconds.
+ ignite(s,p){const c=at(s,p,230,0),a0=unit(s,'lamp')*TAU;s.lamps=range(4).map(i=>({x:c.x+Math.cos(a0+i*TAU/4)*210,y:c.y+Math.sin(a0+i*TAU/4)*210,r:LIVE_DO_REACH,lit:0,warm:0}));Object.assign(s,c);},
+ // A fallen antenna and its base, some way off; the solar wind gusts on the beat.
+ antenna(s,p){const side=unit(s,'side')<.5?1:-1,a=Math.atan2(s.dir.y,s.dir.x)+side*(.7+unit(s,'turn')*.4);s.mast={...at(s,p,160,side*50),held:false};s.base={x:s.mast.x+Math.cos(a)*600,y:s.mast.y+Math.sin(a)*600,r:40};Object.assign(s,mid(s.mast,s.base));s.gust=null;s.guard=0;s.boost=0;},
+ // Five fireflies circle down in the well; its mouth (the ring) is where the cube stands.
+ fireflies(s,p){const c=at(s,p,270,0);s.well={x:c.x,y:c.y,r:240};s.mouth={...at(s,p,40,0),r:46};s.flies=range(5).map(i=>{const a=unit(s,'fly:'+i)*TAU,r=60+unit(s,'deep:'+i)*150;return {hx:c.x+Math.cos(a)*r,hy:c.y+Math.sin(a)*r,x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r,ph:unit(s,'ph:'+i)*TAU,w:.8+unit(s,'w:'+i)*.8,got:false};});s.got=0;Object.assign(s,c);},
+ // Six stars of a constellation; passing through each draws its line.
+ constellation(s,p){const sky=SKY[Math.floor(unit(s,'sky')*SKY.length)];s.lines=sky.lines;s.stars=sky.stars.map(([f,side])=>({...at(s,p,300+f*1.4,side*1.4),r:LIVE_DO_REACH,seen:false}));s.drawn=[];s.last=-1;Object.assign(s,at(s,p,300,0));}
+};
+// Each step of a task: true when it is complete. s.done counts its steps for the counter by the cube.
+const pop=(s,b,k)=>{b.popped=true;s.done=Math.min(s.need,s.done+k);s.lift=.3;s.pops.push({x:b.x,y:b.y,at:s.age});if(s.pops.length>8)s.pops.shift();};
+const strike=s=>{s.done++;s.armed=false;s.cool=1.4;};
+const touchNode=(s,q)=>{q.done=true;q.flash=s.age;s.cues.push({step:s.nodes.indexOf(q)});s.done++;};
+const see=(s,i)=>{const q=s.stars[i];if(q.seen)return;q.seen=true;if(s.last>=0)s.drawn.push([s.last,i]);s.last=i;s.done++;};
+Object.assign(BEHAVIORS,{
+ sow(s,p,dt){const q=s.items.find(i=>!i.done);if(q&&dist(q,p)<=q.r){q.grow+=dt/.9;if(q.grow>=1){q.grow=1;q.done=true;s.done++;}}return s.done>=s.need;},
+ // The lost star drifts shyly away until you reach it; then it follows the cube, slower than the cube walks.
+ carry(s,p,dt){const st=s.star;if(s.boost>0){s.boost-=dt;const u=toward(p,s.home);s.drag=u?{x:u.x*300,y:u.y*300}:null;if(s.drag){st.x+=s.drag.x*dt;st.y+=s.drag.y*dt;}}else s.drag=null;
+  if(!st.held){const u=toward(p,st);if(u&&s.age>.6&&dist(st,p)<260){st.x+=u.x*45*dt;st.y+=u.y*45*dt;}if(dist(st,p)<=LIVE_DO_REACH+4){st.held=true;s.done=1;}return false;}
+  follow(st,p,110,16,dt);if(dist(st,s.home)<=s.home.r){s.done=2;return true;}return false;},
+ bubbles(s,p,dt,d,k,env){s.x=p.x;s.y=p.y;if(s.lift>0){s.lift-=dt;s.drag={x:0,y:-110};}else s.drag=null;
+  for(const b of s.bubbles){b.y-=35*dt;b.age+=dt;}
+  if(beat(s,env)&&s.age>.6){const n=s.beats,a=-Math.PI/2+(unit(s,'bub:'+n)-.5)*2.6,r=100+unit(s,'bubr:'+n)*100;s.bubbles.push({x:p.x+Math.cos(a)*r,y:p.y+Math.sin(a)*r,r:14,age:0});}
+  for(const b of s.bubbles)if(!b.popped&&dist(b,p)<=b.r+LIVE_BODY+6)pop(s,b,1);
+  s.bubbles=s.bubbles.filter(b=>!b.popped&&b.age<3.4);return s.done>=s.need;},
+ // It turns slowly toward the cube and walks a little; touching its back (from behind) strikes a mark. From the front it
+ // only nudges the cube away.
+ guardian(s,p,dt){const f={x:Math.cos(s.face),y:Math.sin(s.face)},rel={x:p.x-s.x,y:p.y-s.y};s.back={x:s.x-f.x*30,y:s.y-f.y*30};s.behind=rel.x*f.x+rel.y*f.y<-8;
+  if(s.bump>0)s.bump-=dt;else s.drag=null;
+  if(s.cool>0)s.cool-=dt;else if(s.stun>0)s.stun-=dt;else if(s.age>.8){const turn=wrap(Math.atan2(rel.y,rel.x)-s.face);s.face+=Math.sign(turn)*Math.min(Math.abs(turn),1*dt);if(Math.hypot(rel.x,rel.y)>70){s.x+=f.x*45*dt;s.y+=f.y*45*dt;}}
+  if(!s.armed&&dist(p,s.back)>70)s.armed=true;
+  if(s.armed&&s.behind&&dist(p,s.back)<=LIVE_DO_REACH)strike(s);
+  else if(!s.behind&&dist(p,s)<34&&s.bump<=0){const u=toward(s,p)||s.dir;s.drag={x:u.x*90,y:u.y*90};s.bump=.4;}
+  return s.done>=s.need;},
+ // Standing on a sprout waters it; one left dry ends the task (kindly: nothing is lost).
+ water(s,p,dt){for(const q of s.sprouts){if(q.done)continue;q.left-=dt;if(q.left<=0){q.left=0;q.dry=true;s.lost=true;}else if(dist(q,p)<=q.r){q.wet+=dt;if(q.wet>=1){q.wet=1;q.done=true;s.done++;}}}return s.done>=s.need;},
+ // Touch the first camel and the caravan follows, each one behind the other, cutting corners: a camel that bumps into a
+ // stone waits a moment. The counter is the camels in the oasis.
+ caravan(s,p,dt){if(!s.joined){if(dist(p,s.camels[0])<=40)s.joined=true;return false;}
+  const fast=s.rush>0;if(fast)s.rush-=dt;let lead=p;
+  s.camels.forEach((c,i)=>{if(c.stuck>0&&!fast)c.stuck-=dt;else follow(c,lead,fast?240:120,i?16:22,dt);let touch=false;
+   if(!fast)for(const q of s.stones){const l=dist(c,q);if(l<q.r+5){const u=toward(q,c)||s.dir;c.x=q.x+u.x*(q.r+5);c.y=q.y+u.y*(q.r+5);touch=true;}}
+   if(touch&&!c.bumped)c.stuck=.6;c.bumped=touch;lead=c;});
+  s.done=s.camels.filter(c=>dist(c,s.oasis)<=s.oasis.r).length;return s.done>=s.need;},
+ // First the tune: one node lights and sounds on each beat. Then touch them in that order; a wrong one only flickers.
+ melody(s,p,dt,d,k,env){const b=beat(s,env);
+  if(s.show){if(b&&s.age>.8){const i=s.seq[s.shown],q=s.nodes[i];q.n=s.shown+1;q.flash=s.age;s.cues.push({step:i});if(++s.shown>=s.nodes.length)s.show=false;}return false;}
+  const q=s.nodes[s.seq[s.done]];if(q&&dist(q,p)<=q.r)touchNode(s,q);else for(const o of s.nodes)if(!o.done&&o!==q&&dist(o,p)<=o.r)o.wrong=s.age;
+  return s.done>=s.need;},
+ // Staying a moment on a pulsar lights it (or lights it again); it burns nine seconds. All four at once completes it.
+ ignite(s,p,dt){for(const q of s.lamps){if(q.lit>0)q.lit=Math.max(0,q.lit-dt);if(dist(q,p)<=q.r&&q.lit<LIVE_BURN-.3){q.warm+=dt;if(q.warm>=.4){q.lit=LIVE_BURN;q.warm=0;}}else q.warm=0;}s.done=s.lamps.filter(q=>q.lit>0).length;return s.done>=s.need;},
+ // Once picked up, the antenna rides on the cube against a steady wind; every two beats the solar wind marks a gust
+ // (one beat ahead) that pushes the cube aside a moment.
+ antenna(s,p,dt,d,k,env){const m=s.mast,b=beat(s,env);if(s.guard>0)s.guard-=dt;
+  if(s.boost>0){s.boost-=dt;const u=toward(p,s.base);s.drag=u?{x:u.x*260,y:u.y*260}:null;}
+  else if(s.gust&&s.age>=s.gust.from&&s.age<s.gust.until&&!(s.guard>0))s.drag={x:s.gust.x*110,y:s.gust.y*110};
+  // Carrying it, the wind blows against the cube from the base (a pulse on time keeps it off a moment).
+  else if(m.held&&!(s.guard>0)){const u=toward(p,s.base);s.drag=u?{x:-u.x*50,y:-u.y*50}:null;}else s.drag=null;
+  if(!m.held){if(dist(m,p)<=LIVE_DO_REACH+4){m.held=true;s.done=1;}return false;}
+  m.x=p.x;m.y=p.y;if(b&&s.beats%2===0){const u=toward(p,s.base)||s.dir,side=unit(s,'gust:'+s.beats)<.5?1:-1,L=s.beatLen||.55;s.gust={x:-u.y*side,y:u.x*side,from:s.age+L,until:s.age+L+.45};}
+  if(dist(p,s.base)<=s.base.r){s.done=2;return true;}return false;},
+ // The fireflies circle in the well; touched, one joins the line behind the cube. All five at the mouth completes it.
+ fireflies(s,p,dt){let lead=p;for(const f of s.flies){if(f.got){follow(f,lead,170,14,dt);lead=f;continue;}const a=s.age*f.w+f.ph;f.x=f.hx+Math.cos(a)*40;f.y=f.hy+Math.sin(a)*40;if(dist(f,p)<=LIVE_DO_REACH+4){f.got=true;s.got++;}}
+  s.done=s.got;return s.got>=s.need&&dist(p,s.mouth)<=s.mouth.r;},
+ constellation(s,p){s.stars.forEach((q,i)=>{if(!q.seen&&dist(q,p)<=q.r)see(s,i);});return s.done>=s.need;}
+});
+// What a pulse on time does while doing, besides adding a second: it counts double, speeds up, shields or keeps alight.
+const HELP_DO={
+ sow(s,p,w){for(let n=0;n<2;n++){const q=s.items.find(i=>!i.done);if(!q||dist(q,w)>LIVE_DO_PULSE)break;q.grow=1;q.done=true;s.done++;}},
+ carry(s,p,w){if(!s.star.held){if(dist(s.star,w)<=LIVE_DO_PULSE+10){s.star.held=true;s.done=1;}}else s.boost=.3;},
+ bubbles(s,p,w){for(const b of s.bubbles)if(!b.popped&&dist(b,w)<=LIVE_DO_PULSE)pop(s,b,2);},
+ guardian(s,p,w){if(dist(s,w)<=LIVE_DO_PULSE+10)s.stun=1.6;if(s.armed&&s.behind&&dist(w,s.back)<=70)strike(s);},
+ water(s,p,w){for(const q of s.sprouts){if(q.done||q.dry)continue;if(dist(q,w)<=LIVE_DO_PULSE){q.wet=1;q.done=true;s.done++;}else{q.left+=3;q.full=Math.max(q.full,q.left);}}},
+ caravan(s,p,w){if(!s.joined&&dist(w,s.camels[0])<=LIVE_DO_PULSE+10)s.joined=true;if(s.joined){s.rush=1.5;for(const c of s.camels)c.stuck=0;}},
+ melody(s,p,w){if(s.show){s.seq.forEach((i,k)=>{s.nodes[i].n=k+1;});s.shown=s.nodes.length;s.show=false;return;}for(let n=0;n<2;n++){const q=s.nodes[s.seq[s.done]];if(!q||dist(q,w)>LIVE_DO_PULSE)break;touchNode(s,q);}},
+ ignite(s,p,w){for(const q of s.lamps)if(q.lit>0||dist(q,w)<=LIVE_DO_PULSE)q.lit=LIVE_BURN;},
+ antenna(s,p,w){if(!s.mast.held){if(dist(s.mast,w)<=LIVE_DO_PULSE+10){s.mast.held=true;s.done=1;}}else{s.guard=1.2;s.boost=.3;}},
+ fireflies(s,p,w){for(const f of s.flies)if(!f.got&&dist(f,w)<=LIVE_DO_PULSE+10){f.got=true;s.got++;}s.done=s.got;},
+ constellation(s,p,w){s.stars.forEach((q,i)=>{if(!q.seen&&dist(q,w)<=LIVE_DO_PULSE)see(s,i);});}
+};
+const nearest=(list,p)=>list.slice().sort((a,b)=>dist(a,p)-dist(b,p))[0]||null;
+// Where to go while doing (the arrow and the white ring): the next step of the task. The caravan's way goes round the
+// stones; the guardian's, round its side to its back.
+function doGoal(s,p){
+ switch(s.kind){
+  case 'motas':return s.items.find(i=>!i.done)||null;
+  case 'estrellita':return s.star.held?s.home:s.star;
+  case 'burbujas':return nearest(s.bubbles.filter(b=>!b.popped),p)||{x:p.x,y:p.y-80};
+  case 'guardian':{const f={x:Math.cos(s.face),y:Math.sin(s.face)};if(!s.armed)return {x:s.x-f.x*120,y:s.y-f.y*120};if(s.behind)return s.back;const rel={x:p.x-s.x,y:p.y-s.y},side=Math.sign(f.x*rel.y-f.y*rel.x)||1;return {x:s.x-f.x*40-f.y*side*80,y:s.y-f.y*40+f.x*side*80};}
+  case 'brotes':{const open=s.sprouts.filter(q=>!q.done&&!q.dry),urgent=open.filter(q=>q.left<4).sort((a,b)=>a.left-b.left)[0];return urgent||nearest(open,p);}
+  case 'caravana':{if(!s.joined)return s.camels[0];const g=s.oasis,dx=g.x-p.x,dy=g.y-p.y,len=Math.hypot(dx,dy)||1,ux=dx/len,uy=dy/len;
+   for(const q of s.stones.slice().sort((a,b)=>((a.x-p.x)*ux+(a.y-p.y)*uy)-((b.x-p.x)*ux+(b.y-p.y)*uy))){const along=(q.x-p.x)*ux+(q.y-p.y)*uy,off=(q.y-p.y)*ux-(q.x-p.x)*uy;if(along<-10||along>len)continue;if(Math.abs(off)<q.r+45){const side=off>0?-1:1;return {x:q.x-uy*side*(q.r+60),y:q.y+ux*side*(q.r+60)};}}return g;}
+  case 'nodos':return s.show?null:s.nodes[s.seq[s.done]]||null;
+  case 'pulsares':return nearest(s.lamps.filter(q=>q.lit<=0),p)||nearest(s.lamps.slice().sort((a,b)=>a.lit-b.lit).slice(0,1),p);
+  case 'antena':return s.mast.held?s.base:s.mast;
+  case 'luciernagas':return s.got>=s.need?s.mouth:nearest(s.flies.filter(f=>!f.got),p);
+  case 'constelacion':{if(s.last>=0){const next=s.lines.find(([a,b])=>a===s.last&&!s.stars[b].seen||b===s.last&&!s.stars[a].seen);if(next)return s.stars[next[0]===s.last?next[1]:next[0]];}return s.stars.find(q=>!q.seen)||null;}
+ }
+ return null;
+}
 // Where to go while fleeing (the arrow by the cube): the safe ring, the nearest shelter, out of the circle, away from the
 // threat, or the clearest spot among the falling stones.
 export function liveGoal(s,p){
+ if(s?.verb==='hacer')return doGoal(s,p);
  if(!s||s.verb!=='huir')return s?{x:s.x,y:s.y}:null;
  if(s.safe)return {x:s.safe.x,y:s.safe.y};
  if(s.stones)return s.stones.map(q=>q.shelter).sort((a,b)=>dist(a,p)-dist(b,p))[0];
@@ -215,13 +365,22 @@ const VERB_RULES={
   if(s.age>=d.life)return d.survive?'safe':'escaped';
   if(dist(s,p)>LIVE_FAR*1.5)return 'escaped';
   return '';
+ },
+ // hacer: done when the task is complete; it ends kindly, with nothing lost, when its time runs out (plus the seconds
+ // pulses on time added), a sprout dries or the cube walks far from it.
+ hacer(s,p,env,d,complete){
+  if(complete)return 'done';
+  if(s.lost||s.age>=d.life+s.bonus||dist(p,s)>LIVE_FAR)return 'escaped';
+  return '';
  }
 };
 // Before the step: pulses heard while fleeing. Any on time shields the cube and counts for the 15 ✦; some also help more.
+// While doing, any pulse on time counts for the 15 ✦, adds a second to the task and helps in its own way (HELP_DO).
 const VERB_PRE={
- huir(s,p,env,d){for(const w of env.pulses||[]){if(!w.beat)continue;s.onTime=true;s.shield=LIVE_SHIELD;const r=HELP[d.behavior]?.(s,p,w,d);if(r)return r;}return '';}
+ huir(s,p,env,d){for(const w of env.pulses||[]){if(!w.beat)continue;s.onTime=true;s.shield=LIVE_SHIELD;const r=HELP[d.behavior]?.(s,p,w,d);if(r)return r;}return '';},
+ hacer(s,p,env,d){for(const w of env.pulses||[]){if(!w.beat)continue;s.onTime=true;s.bonus=Math.min(LIVE_DO_BONUS_MAX,s.bonus+LIVE_DO_BONUS);HELP_DO[d.behavior]?.(s,p,w,d);}return '';}
 };
-const WIN=new Set(['caught','safe']),LOSE=new Set(['escaped','hit']);
+const WIN=new Set(['caught','safe','done']),LOSE=new Set(['escaped','hit']);
 export const liveWon=s=>!!s&&WIN.has(s.result);
 export const liveLost=s=>!!s&&LOSE.has(s.result);
 // One step: dt in seconds (bounded), the cube's position and the pulses heard since the last step ({x,y,beat}).
