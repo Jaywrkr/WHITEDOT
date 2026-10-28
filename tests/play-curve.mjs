@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {curve,simulate,PROFILES,HORIZON,NOVELTY_GAP,CHECKPOINTS} from '../scripts/play-curve.mjs';
+import {curve,simulate,PROFILES,HORIZON,NOVELTY_GAP,CHECKPOINTS,ECONOMY_BEFORE_F1,SKY_NEAR} from '../scripts/play-curve.mjs';
+import {SKY_REWARD} from '../src/sky-map-model.js';
 import {ECONOMY_BEFORE_E1} from '../src/spark-rules.js';import {CUBE_SHOP} from '../src/cube-shop-model.js';
 import {TOTAL_STARS} from '../src/places.js';
 // Plan H7: the model is deterministic, plays the Journey first and the places in order.
@@ -30,4 +31,7 @@ assert.equal(by('sin sonido').stars120,11,'without sound only ★');
   for(const m of CHECKPOINTS)assert(r.earnedAt[m]>=b.earnedAt[m],r.id+' '+m);assert(r.earnedAt[120]>=b.earnedAt[120]*1.33,`${r.id}: ${b.earnedAt[120]} → ${r.earnedAt[120]}`);
   assert(r.bought120>b.bought120,r.id);assert(r.earnedAt[30]<shop*.06&&r.earnedAt[120]<shop*.5,r.id);
   for(let k=1;k<CHECKPOINTS.length;k++)assert(r.earnedAt[CHECKPOINTS[k]]>=r.earnedAt[CHECKPOINTS[k-1]]);}}
-console.log(`PASS play curve: four players, the Journey then the places in order, the win before an hour; the ${NOVELTY_GAP}-minute rule counts only what grows the song (not purchases); 60, 75 and 90 % keep growing (60 % by «crece»), no sound stops after the win and the risk of leaving is marked there; E1 earns a third more in two hours and buys more, the shop still far away`);
+// F1 (alpha.231): the Mapa del cielo adds a little and stops: new figures only, at most the near ones in two hours.
+{const before=curve({economy:ECONOMY_BEFORE_F1});for(const [i,r] of all.entries()){const b=before[i],gain=r.earnedAt[120]-b.earnedAt[120];
+ assert(gain>0&&gain<=SKY_NEAR*SKY_REWARD.onTime+1,`${r.id}: +${gain}`);assert(gain<=b.earnedAt[120]*.03,r.id);for(const m of CHECKPOINTS)assert(r.earnedAt[m]>=b.earnedAt[m]);}}
+console.log(`PASS play curve: four players, the Journey then the places in order, the win before an hour; the ${NOVELTY_GAP}-minute rule counts only what grows the song (not purchases); 60, 75 and 90 % keep growing (60 % by «crece»), no sound stops after the win and the risk of leaving is marked there; E1 earns a third more in two hours and buys more, the shop still far away; the Mapa del cielo adds under 3 % and stops`);

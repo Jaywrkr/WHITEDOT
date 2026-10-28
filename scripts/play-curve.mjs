@@ -10,6 +10,7 @@
 import {PLACES,RHYTHM_STAR,MAESTRO_STAR,MAESTRO_TEMPO,MAESTRO_GOAL,TOTAL_STARS} from '../src/places.js';
 import {roundSparks,ROUND_BASE,ROUND_PER_TENTH,ECONOMY_BEFORE_E1} from '../src/spark-rules.js';
 import {LIVE_REWARD} from '../src/live-encounters-model.js';
+import {SKY_REWARD,SKY_FIGURES} from '../src/sky-map-model.js';
 import {CUBE_SHOP} from '../src/cube-shop-model.js';
 import {hashKey} from '../src/universe-regions.js';
 import {minePerMinute,livePerMinute} from './spark-economy.mjs';
@@ -23,7 +24,14 @@ export const WALK=.4,WANDER=2,WANDER_EVERY=3,RETRIES=3,PRACTICE=.015,PRACTICE_MA
 // E1 (Jay, 27 Oct 2026): living encounters while travelling (livePerMinute, spark-economy.mjs). Earnings are reported
 // at 15, 30, 60 and 120 minutes, for today's economy and for the one before E1.
 export const CHECKPOINTS=Object.freeze([15,30,60,120]);
-export const ECONOMY_NOW=Object.freeze({roundBase:ROUND_BASE,roundPerTenth:ROUND_PER_TENTH,live:LIVE_REWARD});
+// F1 (Jay, 28 Oct 2026, alpha.231): the Mapa del cielo pays 10 ✦ (15 with a pulse on time) the first time each figure is
+// joined, never again. While travelling, about SKY_JOINED figures a minute are joined (a figure every few minutes of travel:
+// about one in sight per km, most of them joined); within these two hours, near the ring, only the short figures of the
+// first 5 km are there to find (SKY_NEAR), so the sparks of the sky stop when those are in the map.
+export const SKY_JOINED=.12,SKY_NEAR=SKY_FIGURES.filter(f=>!f.km&&!f.night).length;
+export const ECONOMY_NOW=Object.freeze({roundBase:ROUND_BASE,roundPerTenth:ROUND_PER_TENTH,live:LIVE_REWARD,sky:SKY_REWARD});
+// alpha.230: today's economy without the Mapa del cielo, so the curves show what F1 adds.
+export const ECONOMY_BEFORE_F1=Object.freeze({roundBase:ROUND_BASE,roundPerTenth:ROUND_PER_TENTH,live:LIVE_REWARD,sky:null});
 export const PROFILES=Object.freeze([{id:'60',onTime:.6},{id:'75',onTime:.75},{id:'90',onTime:.9},{id:'sin sonido',onTime:.6,sound:false}]);
 const roundMinutes=(id,onTime,maestro)=>ROUND_AT_75[id]*Math.min(1.6,.75/Math.max(.3,onTime))*(maestro?MAESTRO_GOAL/MAESTRO_TEMPO:1);
 export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=MAESTRO_STAR,economy=ECONOMY_NOW}={}){
@@ -31,7 +39,10 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  // Without sound there is no beat to meet: every pulse counts once (spark-rules.js).
  const world=!sound?rate[1]:profile.onTime*(profile.onTime>=.85?.5*rate[2]+.5*rate[3]:rate[2]);
  const stars=Object.fromEntries(PLACES.map(p=>[p.id,[false,false,false]])),best={},tries={},shop=[...CUBE_SHOP].sort((a,b)=>a.cost-b.cost);
- const events=[],earnedAt={},live=livePerMinute(profile,economy.live);let t=0,sparks=0,earned=0,rounds=0,won=null,master=null;
+ const events=[],earnedAt={},live=livePerMinute(profile,economy.live);let t=0,sparks=0,earned=0,rounds=0,won=null,master=null,skyJoined=0;
+ // The sky's sparks for some minutes of travel: new figures only, until the near ones are all in the map.
+ const skyEach=economy.sky?(sound?profile.onTime*economy.sky.onTime+(1-profile.onTime)*economy.sky.base:economy.sky.base):0;
+ const sky=minutes=>{if(!skyEach)return 0;const n=Math.min(SKY_NEAR-skyJoined,SKY_JOINED*minutes);skyJoined+=n;return n*skyEach;};
  // Time passes with what it earns: a checkpoint inside a stretch gets its share of that stretch.
  const advance=(minutes,gain)=>{for(const m of CHECKPOINTS)if(earnedAt[m]===undefined&&m>t&&m<=t+minutes)earnedAt[m]=Math.round(earned+gain*(m-t)/minutes);t+=minutes;earned+=gain;sparks+=gain;};
  const note=(kind,what)=>{if(t<=HORIZON)events.push({t:+t.toFixed(2),kind,what});};
@@ -39,12 +50,12 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  const buy=()=>{while(shop.length&&sparks>=shop[0].cost){const p=shop.shift();sparks-=p.cost;note('compra',p.id);}};
  // A round's share on time: the player's own, a little up or down each time, better with practice; narrower in a Maestro.
  const share=(id,maestro)=>{const n=tries[id]=(tries[id]||0)+1;return Math.max(0,Math.min(1,profile.onTime+(hashKey(`curve:${profile.id}:${id}:${n}`)-.5)*2*SPREAD+Math.min(PRACTICE_MAX,PRACTICE*(n-1))-(maestro?MAESTRO_COST:0)));};
- function round(id,maestro=false){const q=share(id,maestro),s=stars[id],had=s.filter(Boolean).length;advance(WALK+roundMinutes(id,q,maestro),roundSparks(q,{maestro,base:economy.roundBase,perTenth:economy.roundPerTenth})+WALK*live);rounds++;
+ function round(id,maestro=false){const q=share(id,maestro),s=stars[id],had=s.filter(Boolean).length;advance(WALK+roundMinutes(id,q,maestro),roundSparks(q,{maestro,base:economy.roundBase,perTenth:economy.roundPerTenth})+WALK*live+sky(WALK));rounds++;
   const grew=sound&&!s[1]&&s[0]&&q<rhythmStar&&growthSteps(q)>growthSteps(best[id]);if(sound)best[id]=Math.max(best[id]??0,q);
   if(!s[0]){s[0]=true;note('lugar',id);}if(sound&&q>=rhythmStar&&!s[1]){s[1]=true;note('★★',id);}if(grew){note('crece',id);}if(sound&&maestro&&q>=maestroStar&&!s[2]){s[2]=true;note('★★★',id);}
   note('interpretacion',id);buy();
   if(!won&&PLACES.every(p=>stars[p.id][0])){won=t;note('victoria','once lugares');}if(!master&&count()===TOTAL_STARS){master=t;note('maestro','33 ★');}
-  if(rounds%WANDER_EVERY===0){advance(WANDER,WANDER*world+15+WANDER*live);note('salvaje','chispa');buy();}
+  if(rounds%WANDER_EVERY===0){advance(WANDER,WANDER*world+15+WANDER*live+sky(WANDER));note('salvaje','chispa');buy();}
   return s.filter(Boolean).length>had||grew;}
  for(const [id,min] of JOURNEY){advance(min,0);if(stars[id])stars[id][0]=true;note('viaje',id);}
  // In order, like the tracks of a record: the six places after the Journey open one by one.
@@ -59,7 +70,7 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  // The longest stretch without a novelty, up to the end of the two hours or the 33 ★ (after those, the free World
  // is all there is): once counting the pieces bought, once counting only what grows the song.
  // After the last round the player keeps travelling the free World: mining and encounters, for the earnings only.
- for(const m of CHECKPOINTS)if(earnedAt[m]===undefined)earnedAt[m]=Math.round(earned+(m-t)*(world+live));
+ for(const m of CHECKPOINTS)if(earnedAt[m]===undefined)earnedAt[m]=Math.round(earned+(m-t)*(world+live)+sky(m-t));
  const end=Math.min(HORIZON,master??HORIZON);
  function longest(kinds){const m=[0,...events.filter(e=>kinds.includes(e.kind)&&e.t<=end).map(e=>e.t),end];let gap=0,from=0;for(let i=1;i<m.length;i++)if(m[i]-m[i-1]>gap){gap=m[i]-m[i-1];from=m[i-1];}return {gap:+gap.toFixed(1),from:+from.toFixed(1)};}
  const any=longest(['viaje','lugar','crece','★★','★★★','victoria','maestro','compra']),song=longest(['viaje','lugar','crece','★★','★★★','victoria','maestro']);
@@ -75,4 +86,6 @@ if(import.meta.url===`file://${process.argv[1]}`){const all=curve();
  console.log('Antes de I5 (★★ 85 %, ★★★ 80 %):');for(const r of curve({rhythmStar:.85,maestroStar:.8}))console.log(line(r));
  console.log('Chispas ganadas a los '+CHECKPOINTS.join(', ')+' min · antes de E1 → hoy (piezas compradas a los 120 min):');
  const before=curve({economy:ECONOMY_BEFORE_E1});for(const [i,r] of all.entries()){const b=before[i];console.log(`${r.sound?r.id+' %':r.id}  `+CHECKPOINTS.map(m=>`${m} min ${b.earnedAt[m]} → ${r.earnedAt[m]}`).join(' · ')+` · piezas ${b.bought120} → ${r.bought120}`);}
+ console.log('Chispas ganadas a los '+CHECKPOINTS.join(', ')+' min · alpha.230 → hoy, con el Mapa del cielo (F1):');
+ const before230=curve({economy:ECONOMY_BEFORE_F1});for(const [i,r] of all.entries()){const b=before230[i];console.log(`${r.sound?r.id+' %':r.id}  `+CHECKPOINTS.map(m=>`${m} min ${b.earnedAt[m]} → ${r.earnedAt[m]}`).join(' · ')+` · piezas ${b.bought120} → ${r.bought120}`);}
  if(process.argv.includes('--json'))console.log(JSON.stringify(all.map(({events,...r})=>r),null,1));}

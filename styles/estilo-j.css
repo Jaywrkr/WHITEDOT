@@ -194,6 +194,9 @@ body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(
 .journal-progress{display:flex;align-items:center;gap:12px;margin:12px 0;font-size:12px}.journal-progress svg{width:44px;height:44px;fill:none;stroke:#ffffff22;stroke-width:2}.journal-progress .earned{stroke:#f0d27a;transform:rotate(-90deg);transform-origin:center}
 #journalSky{width:100%;max-width:320px;background:#000}#journalNext,#journalMore{min-height:44px;margin-bottom:8px}
 @media(max-width:350px){.journal-album{grid-template-columns:1fr}}
+/* Mapa del cielo (F1): figures drawn in white once joined, silhouettes until then; gold only for the earned halo. */
+.sky-series{margin:14px 0 4px;font:600 12px/1.4 var(--mono)}.sky-album{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 14px}.sky-figure{min-width:0;border:1px solid #ffffff22;padding:8px;text-align:center}.sky-figure svg{width:100%;max-width:72px;aspect-ratio:1;display:block;margin:0 auto 4px;stroke:#ffffff26;fill:#ffffff40;stroke-width:1;stroke-dasharray:2 3}.sky-figure svg .on{stroke:#fff;fill:#fff;stroke-dasharray:none}.sky-figure[data-state="done"] svg{stroke:#fff;fill:#fff;stroke-dasharray:none}.sky-figure h4{margin:0;font:11px/1.4 var(--mono);overflow-wrap:anywhere;color:#ffffff99}.sky-figure[data-state="done"] h4{color:#fff}.sky-earned{color:var(--earned);font-style:normal}
+.sky-open{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0;font-size:12px}.sky-open span{min-width:0;overflow-wrap:anywhere}.sky-open button{flex:none}
 
 .journal-progress .available{stroke:#fff;transform:rotate(-90deg);transform-origin:center}
 

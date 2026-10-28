@@ -1,7 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 28 de octubre de 2026. Código **2.3.0-alpha.230**. Las entradas describen su revisión, no certifican producción.
+Estado: 28 de octubre de 2026. Código **2.3.0-alpha.231**. Las entradas describen su revisión, no certifican producción.
 
+
+## Mapa del cielo (F1) · 2.3.0-alpha.231
+
+Rama `universo/f1-mapa-del-cielo`, desde `main` (`ccb661a`, alpha.230). Primera fase del [catálogo del universo](docs/IDEAS_UNIVERSO.md), elegida por Jay con sus decisiones del 28 de octubre. Guía: [Mapa del cielo](docs/HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo).
+
+- **Estrellas que se unen.** En el Mundo libre, tras el Viaje, estrellas tenues forman 28 figuras con nombre: el zodiaco (12), el cielo del norte (5), el del sur (3) y ocho propias, con «La Mano» como guiño secreto. Se colocan con `hashKey` en celdas de 500 m, como mucho una por celda; más de noche (hora real) y en el Vacío, los Púlsares y la región Constelaciones. Rareza por distancia al origen: cortas cerca, zodiaco desde 5 km, raras desde 20, la leyenda desde 50; Osa Mayor al norte, Cruz del Sur al sur. Nada del mapa se mueve.
+- **Unir en orden.** Al acercarse: «Mapa del cielo · Orión». La siguiente estrella va en blanco con aro y la flecha blanca la señala; pasar por otra no hace nada. Un pulso a tiempo cerca enciende la siguiente y la de después si está igual de cerca. Cada estrella suena con una nota de la escala del lugar a la corchea siguiente y su línea crece en un pulso. Completa, brilla 3 s, toca su motivo de 5–8 notas una octava arriba y queda como un dibujo tenue.
+- **Reversible.** Alejarse la deja a medias y guardada («Orión · 4 de 7 · guardada»); al volver sigue igual. La Bitácora la muestra con su dirección y «Soltar». Sin tiempo límite ni castigo.
+- **Uno a la vez.** Las estrellas esperan mientras hay un encuentro vivo o una travesura; mientras se une una figura no empieza ninguno, el reloj de los encuentros espera y vuelve a cero al acabar (`liveEncounterRest`).
+- **Premios.** 10 ✦, o 15 ✦ con un pulso a tiempo, la primera vez por figura, con un aviso; repetir no paga (la ficha dice «paga chispas una vez»; lo repetible ya lo pagan los encuentros). El zodiaco completo da el **halo de estrellas** dorado alrededor del cubo, con su aviso; se quita y se pone en Tu cubo → Llevar («Mapa del cielo», `#cubeSkyHalo`). Economía (`node scripts/play-curve.mjs`, alpha.230 → alpha.231, a los 120 min): 60 % 3.874 → 3.915, 75 % 6.010 → 6.054, 90 % 7.133 → 7.217, sin sonido 3.852 → 3.884 ✦; menos del 3 %, y se detiene.
+- **Bitácora.** Mapa → «Mapa del cielo · N de 28»: las figuras a medias y cada serie con sus figuras dibujadas o en silueta.
+- **Sonido.** Estrella a 0,012 y motivo a 0,02, en la escala y la corchea del lugar. Render (`tests/sky_map_mix.py`): la música del Mundo igual que en alpha.230 y alpha.226; las notas, 32,8–32,9 dB por debajo. Escucha en teléfono: pendiente.
+- **Guardado.** `S.skyMap` versión 1, migrado sin perder nada (campos y figuras desconocidos conservados, versión futura intacta), acotado a 64 figuras a medias y 200 completas por sitio.
+- **Atajo** `?cielo=orion` (cualquiera de los 28 ids), en [herramientas](docs/MUNDO.md#herramientas-de-prueba).
+- Inglés de todo lo nuevo en `i18n-en.js` («Sky map»).
+- Pruebas nuevas: `tests/sky-map.mjs`, `tests/sky-map-runtime.mjs`, `tests/sky_map_smoke.py`, `tests/sky_map_halo_smoke.py`, `tests/sky_map_mix.py`. Ampliadas: `tests/play-curve.mjs` y `tests/audio_mix.mjs` (`skyBatch`).
+- Preservación: cambian a propósito cuatro archivos protegidos (`main.js`, `render.js`, `universe-mischief.js` y la vista previa de `cube.js`) y la lista offline de `sw.js` (tres módulos nuevos), con su capa `approvedF1`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 ## Arreglos de Jay A–E · 2.3.0-alpha.230
 

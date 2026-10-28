@@ -4,6 +4,8 @@ Catálogo de 119 ideas para que recorrer el universo sea más divertido. Más **
 
 **Qué es y qué no es.** Jay aprueba el catálogo como dirección. **No autoriza construir nada.** Cada fase empieza solo cuando Jay la elige. Una idea elegida no está construida, probada con personas ni publicada.
 
+**Estado (28 de octubre de 2026):** **F1 «Mapa del cielo» está hecha** en la rama `universo/f1-mapa-del-cielo` (alpha.231), sin PR, sin CI remoto, sin teléfono ni personas. Qué entró y qué quedó para después, en [F1](#f1--constelaciones) y en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Las demás fases siguen sin empezar.
+
 **Las dos direcciones son lentes simuladas.** Como el [panel](PANEL.md), son perfiles hechos a partir de obra pública. No son esas personas ni sus opiniones reales. Las decisiones de Jay mandan.
 
 [Traspaso](../HANDOFF.md) · [Universo](UNIVERSO.md) · [Encuentros vivos](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos) · [El mundo](MUNDO.md) · [Plan](PLAN_LANZAMIENTO.md#universo-vivo--encuentros)
@@ -305,6 +307,8 @@ En curso en otra rama. No es parte de este catálogo. Las demás fases esperan a
 - **Reutiliza:** `hashKey`, la región Constelaciones, `world-light.js` (hora real), `journey-pulse.js`, la nota de los encuentros vivos y la Bitácora.
 - **Riesgos:** rendimiento (estrellas en la capa lejana), legibilidad (confusión con Púlsares), mezcla (motivos encima) y nombres repetidos.
 - **Bien cuando:** se une una figura sin ayuda; a medias queda guardada; la música queda idéntica en render; postal aprobada.
+- **Hecha (alpha.231, rama `universo/f1-mapa-del-cielo`).** Guía y medidas en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Entró: 28 figuras (las 12 del zodiaco; Osa Mayor, Osa Menor, Casiopea, Cisne y Lira en el cielo del norte; Orión, Cruz del Sur y Can Mayor en el del sur; Gato, Vinilo, Auricular, Cubo, Ballena, Cohete, Guitarra y «La Mano»), colocadas con `hashKey` en celdas de 500 m (más de noche y en Vacío, Púlsares y la región Constelaciones; bandas de 0, 5, 20 y 50 km; Osa Mayor y Osa Menor al norte, Cruz del Sur al sur, zodiaco en su franja); unir en orden con aro blanco y flecha; pulso a tiempo que cuenta doble; nota de la escala por estrella y motivo de 5–8 notas al completar (32,8 dB bajo la música, medido); a medias guardada y retomada; «Soltar» en la Bitácora; una escena a la vez con encuentros vivos y travesuras, con su reloj compartido; 10/15 ✦ la primera vez por figura, repetir no paga; zodiaco → halo de estrellas dorado, en Tu cubo; sección «Mapa del cielo» en la Bitácora por series; atajo `?cielo=`. De la base común entró la línea «A medias» de la Bitácora (regla 5); el arco de transformación (regla 3) no hacía falta (nada se transforma) y el techo de nivel de las capas (regla 7) queda en los valores medidos (estrella 0,012, motivo 0,02), sin un módulo propio.
+- **Quedó para después:** las 60 figuras que faltan hasta las 88; los premios de Cielo del norte, Cielo del sur y Propias; las figuras a medias en el mapa de la Bitácora; la escucha en teléfono con auriculares; una persona que una su primera figura sin ayuda. Orión va en «Cielo del sur» (es ecuatorial; se lee mejor junto a la Cruz y el Can Mayor): Jay puede moverla.
 
 ### F2 · Recorrer lejos (59–66, 115–119 y 57)
 
@@ -377,4 +381,4 @@ Ideas que casi existen. Propuesta: construir sobre lo que hay, no al lado.
 
 Ya no quedan decisiones abiertas para empezar.
 
-Las mediciones y escuchas de este catálogo no existen todavía. Nada aquí está construido, probado en teléfono ni con personas.
+Las mediciones de F1 (render y modelo de economía) están en su [guía](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo); las demás ideas no tienen medidas. Nada aquí está probado en teléfono ni con personas.
