@@ -788,3 +788,18 @@ html[lang="en"] .super-grid th{max-width:none}
 #celebration[data-layout="compact"] #celebrationContinue{flex:0 0 auto;min-height:44px;min-width:0;padding:0 8px;font-size:11px;border-color:#ffffff40!important}
 #celebration[data-layout="compact"] #celebrationDismiss{height:100%;min-height:44px}
 #celebration[data-layout="full"] #celebrationLine{display:none}
+/* Jay (alpha.232, G1): the end of a round on black. The screen goes dark, then the sheet with the stars; nothing of the
+   World shows behind it. One white button: the one that follows («Seguir hacia …», or «Otra vez» with no next place). */
+#mPlace{background:#000}
+#mPlace .sheet .row>#placeAgain.gold{flex-basis:100%;order:-1}
+@media (prefers-reduced-motion:no-preference){#mPlace:not([hidden]){animation:place-black .5s ease-out both}#mPlace:not([hidden])>.sheet{animation:place-sheet .4s ease-out .3s both}}
+@keyframes place-black{from{background-color:#0000}to{background-color:#000}}
+@keyframes place-sheet{from{opacity:0}to{opacity:1}}
+/* Jay (alpha.232, G2): no «Paseo musical» button in any view; the autopilot stays in code for the tests. */
+#bAuto,#favWalk{display:none!important}
+/* Jay (alpha.232, G3): the note after the eleven places, on black, one white button. */
+#mEleven{background:#000}
+.eleven-sheet p{margin:0;font-size:13px;line-height:1.55;color:var(--ink)}
+.eleven-sheet #elevenDone{font-weight:600}
+.eleven-sheet .row>#elevenExplore{flex-basis:100%}
+.lugares-eleven{width:100%;margin:0;text-align:left;font-size:12px}
