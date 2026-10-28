@@ -14,8 +14,10 @@ export function placeTest(search=globalThis.location?.search){try{const q=new UR
 // «?rapido=1» (Jay, 27 Oct 2026, alpha.226): every goal of the Journey's chapters and of the places' rounds at a fifth,
 // to go through the whole game quickly. It plays on a save of its own and without an account, so its stars never count
 // in a normal game; with «?capitulo=» or «?lugar=» it uses theirs. Without the parameter nothing changes.
-export const RAPID_KEY='kubono:rapido',RAPID_SCALE=.2;
-export function rapidTest(search=globalThis.location?.search){try{return new URLSearchParams(search||'').get('rapido')==='1';}catch(_){return false;}}
+// «?rapido=2» (Jay, 28 Oct 2026): a twentieth, to run through the five chapters in a few pulses each.
+export const RAPID_KEY='kubono:rapido',RAPID_SCALE=.2,RAPID_SCALE_2=.05;
+export function rapidTest(search=globalThis.location?.search){try{const v=new URLSearchParams(search||'').get('rapido');return v==='1'||v==='2';}catch(_){return false;}}
+export function rapidScale(search=globalThis.location?.search){try{const v=new URLSearchParams(search||'').get('rapido');return v==='2'?RAPID_SCALE_2:v==='1'?RAPID_SCALE:1;}catch(_){return 1;}}
 export function chapterTest(search=globalThis.location?.search){try{const id=new URLSearchParams(search||'').get('capitulo');return TEST_CHAPTERS.includes(id)?id:null;}catch(_){return null;}}
 // The save as it should be on arrival: the Camino and earlier chapters done, this chapter fresh.
 export function prepareChapterTest(S,id){const j=S.journey||(S.journey={}),index=CHAPTERS.indexOf(id);if(index<1)return false;
@@ -23,7 +25,7 @@ export function prepareChapterTest(S,id){const j=S.journey||(S.journey={}),index
  delete j[CHAPTER_GAME_STATE[id]];if(j.progress)delete j.progress[id];j.chapter=index===1?0:index-1;
  if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;S.help={...(S.help&&typeof S.help==='object'?S.help:{}),camino:true,mundo:true};S.pathCrystals=Array.from({length:10},(_,i)=>'capitulo:'+i);return true;}
 export function initialize(runtime){
- const id=chapterTest(),place=placeTest(),rapid=rapidTest();Object.defineProperty(runtime,'chapterTest',{get:()=>id});Object.defineProperty(runtime,'rapidScale',{value:rapid?RAPID_SCALE:1});
+ const id=chapterTest(),place=placeTest(),rapid=rapidTest();Object.defineProperty(runtime,'chapterTest',{get:()=>id});Object.defineProperty(runtime,'rapidScale',{value:rapid?rapidScale():1});
  if(place){let tries=0;const go=()=>{if(!runtime.S?.journey||!runtime.startPlace||!runtime.enterWorld||!runtime.worldReady){if(tries++<200)setTimeout(go,50);return;}
   // The Journey finished: every chapter kept, the free World open; then the round (and its ★★ first, for a Maestro one).
   const S=runtime.S,j=S.journey;j.mode='viaje';j.free=true;j.finished=true;j.chapter=6;j.done={...(j.done||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};j.colors={...(j.colors||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};S.pathCrystals=Array.from({length:10},(_,i)=>'lugar:'+i);S.help={...(S.help||{}),camino:true,mundo:true};if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;

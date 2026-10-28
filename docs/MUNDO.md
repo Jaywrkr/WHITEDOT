@@ -98,6 +98,7 @@ Las duraciones son objetivos de diseño, no tiempos garantizados de jugadores. E
 | `?clasico=1` | Comparación heredada de capítulos, mantenida por compatibilidad |
 | `?encuentro=polilla` | Fuerza ese encuentro vivo (cualquiera de los treinta y tres; perseguir: `polilla`, `racimo`, `pez`, `tambor`, `semilla`, `cometa`, `reflejo`, `pulsar`, `llamarada`, `eco`, `estrella`; huir: `remolino`, `enjambre`, `ola`, `derrumbe`, `polen`, `arena`, `rayos`, `ondas`, `llamaradas`, `pozo`, `agujero`; hacer: `motas`, `estrellita`, `burbujas`, `guardian`, `brotes`, `caravana`, `nodos`, `pulsares`, `antena`, `luciernagas`, `constelacion`) tras 3 s de viaje en vez de 60–90 s, una y otra vez. Solo en el Mundo libre, como los demás: no aparece en capítulos, rondas ni finales. Usa la partida normal; combinarlo con `?anillo=1` para un guardado propio ([Encuentros vivos](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos)) |
 | `?rapido=1` | Todas las metas de los capítulos y de las rondas a un quinto, para pasar rápido. Guardado propio (`kubono:rapido`) y sin cuenta: sus ★ no cuentan en la partida normal. Con `?capitulo=` o `?lugar=` usa el guardado de esos atajos. Funciona también en la edición de venta |
+| `?rapido=2` | Igual que `?rapido=1`, pero a un veinteavo: los cinco capítulos en unos pocos pulsos cada uno. Mismo guardado propio |
 
 Usar perfiles temporales; no borrar la partida personal. Atajos no equivalen a completar el recorrido. El producto no requiere`?dev=1` ni expone runtime; las pruebas lo instrumentan al servir main.
 
