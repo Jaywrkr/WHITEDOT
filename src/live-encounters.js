@@ -1,13 +1,15 @@
 // Living encounters in the free World (docs/HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos). One every 60–90 s of travel,
 // ahead of the cube, never in a chapter, a round, under a finale, inside an activity or while a mischief scene plays.
+// Each biome offers something to chase and something to flee; the hash of the world and the count picks one (liveFor).
 // Completing one pays sparks (more with a pulse on time) and the first of each kind goes to the Bitácora; failing costs
-// nothing. Sound: at most one quiet note of the place's harmony on the catch, far under the music; the music is untouched.
+// nothing: a threat that reaches the cube only nudges it aside a second. Sound: at most one quiet note of the place's
+// harmony on the catch or the escape, far under the music; the music is untouched.
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {audibleTime} from './journey-pulse.js';
 import {hashKey} from './universe-regions.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
-import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,liveDefinition,liveFor,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced} from './live-encounters-model.js';
+import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,liveDefinition,liveFor,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost} from './live-encounters-model.js';
 import {drawLive} from './live-encounters-art.js';
 // The catch note: one note of the harmony that sounds, an octave up, in the place's own lead, far under the music.
 export const LIVE_NOTE_GAIN=.02;
@@ -35,6 +37,7 @@ export function initialize(r){
  const colorOf=s=>r.placeColor?.(s.biome,LIVE_COLORS[s.biome])||LIVE_COLORS[s.biome]||'#ffffff';
  function spawn(kind=null){
   const q=book();if(q.version!==LIVE_VERSION||scene)return false;const player={x:r.S.wx,y:r.S.wy},n=q.count;
+  // Chase or flee: the same roll as batch 1 (below one half, the chase it always had; from one half up, the biome's «huir»).
   const def=kind?liveDefinition(kind):liveFor(biomeAt(player.x,player.y),hashKey('live:pick:v1:'+scope+':'+n));if(!def)return false;
   const point=liveSpawnPoint(player,heading??0,scope,n);scene=createLive(def,point,player,{now:clock});q.count=n+1;travel=0;
   // Pulses already in flight are not this encounter's.
@@ -51,7 +54,7 @@ export function initialize(r){
   // The first of each kind stays in the Bitácora, with the other finds (element-book-model.js).
   if(first)r.recordElement?.('live:'+s.kind,r.regionOfPos(s.x,s.y));
   if(r.save()===false){Object.assign(r.S,before);if(before.elementBook===undefined)delete r.S.elementBook;r.elementBookUI?.();return;}
-  s.paid=true;s.reward=amount;r.showSparkPickup?.(amount,{x:s.x,y:s.y});
+  s.paid=true;s.reward=amount;r.showSparkPickup?.(amount,s.verb==='huir'?{x:r.S.wx,y:r.S.wy}:{x:s.x,y:s.y});
   // D3: one notice, naming only this encounter, the first time; later catches show only their sparks.
   if(first&&!r.achievementsCalm?.())r.toast?.('<em>Encuentro nuevo</em> · '+def.name,{level:2,category:'ganado'});
   if(!queued&&r.S.sound&&r.ac?.state==='running'&&r.beatSoon){queued=true;const state=r.S,mine=s;r.beatSoon(time=>{queued=false;if(state!==r.S||scene!==mine||!allowed())return;playLiveNote(r,mine.kind,time,mine);},null,'player');}
@@ -67,9 +70,11 @@ export function initialize(r){
   if(!scene){if(moving&&!wandering()&&!mischiefBusy())travel+=step;if(travel>=need())spawn(forced);return;}
   const pulses=[];for(const w of r.waves||[])if(!seen.has(w)){seen.add(w);if(w.origin==='player')pulses.push({x:w.x,y:w.y,beat:!!w.beat});}
   const was=scene.stage;stepLive(scene,player,step,{pulses,beatPhase:phase()});
-  if(scene.stage==='escaped'&&was==='run'){const k=q.kinds[scene.kind]||={first:'',caught:0,onTime:0,escaped:0};k.escaped++;line={text:liveDefinition(scene.kind).bye,until:clock+1.6};}
-  if(scene.stage==='caught')pay();
-  if(liveFinished(scene)&&(scene.stage==='escaped'||scene.paid)){scene=null;travel=0;}
+  // A threat's pull (the well, the black hole) and the short nudge when one reaches the cube move it a little.
+  if(scene.drag){r.S.wx+=scene.drag.x*step;r.S.wy+=scene.drag.y*step;}
+  if(liveLost(scene)&&was==='run'){const k=q.kinds[scene.kind]||={first:'',caught:0,onTime:0,escaped:0};k.escaped++;if(scene.stage==='hit')k.hit=(k.hit||0)+1;line={text:liveDefinition(scene.kind).bye,until:clock+1.6};}
+  if(liveWon(scene))pay();
+  if(liveFinished(scene)&&(liveLost(scene)||scene.paid)){scene=null;travel=0;}
  }
  function draw(){if(!allowed()||!scene&&!line)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',clock});}
  Object.defineProperties(r,{

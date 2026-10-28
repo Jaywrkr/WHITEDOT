@@ -98,7 +98,8 @@ La ventana original de ocho semanas (19 oct–13 dic 2026) queda como **estimaci
 | Tanda | Rama | Qué | Estado |
 |---|---|---|---|
 | E1 · Perseguir | `universo/e1-perseguir`, sobre `lanzamiento/m1-notas-jay` (alpha.226, PR #365) | Motor común y los once de perseguir; rondas 80–170 ✦, actividades 15 ✦ y travesuras 10 ✦ | Hecha en la rama (alpha.227); sin PR, sin CI remoto, sin teléfono ni personas |
-| E2 · Huir | — | Once de huir sobre el mismo motor | Pendiente |
+| E1 · Perseguir (integrada) | PR #366 en `main` (`36fab14`) | — | Integrada |
+| E2 · Huir | `universo/e2-huir`, desde `main` (`36fab14`, alpha.227) | Once de huir sobre el mismo motor; el temporizador común elige perseguir o huir con `hashKey`; criaturas de E1 con más contraste | Hecha en la rama (alpha.228); sin PR, sin CI remoto, sin teléfono ni personas |
 | E3 · Hacer | — | Once de hacer sobre el mismo motor | Pendiente |
 
 ## Comunicación y venta

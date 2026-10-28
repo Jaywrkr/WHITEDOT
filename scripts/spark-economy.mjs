@@ -11,7 +11,13 @@ import {LIVE_REWARD,LIVE_EVERY} from '../src/live-encounters-model.js';
 // share of those catches with a pulse on time equal to their share on time; without sound, half and none on time.
 // Assumptions of a model, not measurements of people.
 export const LIVE_GAP=(LIVE_EVERY.min+LIVE_EVERY.max)/2/60;
-export const liveCatch=p=>p.sound===false?.5:.45+.4*p.onTime;
+// E2 (Jay, 28 Oct 2026): the same timer now brings a chase or a flight, half and half (the roll of the hash). Escaping is a
+// little easier than catching: in tests/live-encounters.mjs walking toward the arrow at once gets out of almost all of
+// them, though 1.5 s late five of the eleven nearly always reach you. The model assumes a player escapes 55 % plus four tenths of
+// their share on time (60 % on time → 79 %), 60 % without sound; the chase keeps batch 1's numbers. Assumptions, not measures.
+export const LIVE_VERB_SHARE=Object.freeze({perseguir:.5,huir:.5});
+export const liveChase=p=>p.sound===false?.5:.45+.4*p.onTime,liveFlight=p=>p.sound===false?.6:Math.min(.95,.55+.4*p.onTime);
+export const liveCatch=p=>LIVE_VERB_SHARE.perseguir*liveChase(p)+LIVE_VERB_SHARE.huir*liveFlight(p);
 export function livePerMinute(p,live=LIVE_REWARD){if(!live)return 0;const share=p.sound===false?0:p.onTime;return liveCatch(p)*(share*live.onTime+(1-share)*live.base)/LIVE_GAP;}
 const seedOf=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 globalThis.document??={hidden:false,querySelector:()=>null};

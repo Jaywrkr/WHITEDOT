@@ -2,12 +2,13 @@ import assert from 'node:assert/strict';
 import {initialize} from '../src/live-encounters.js';
 import {initialize as mischief} from '../src/universe-mischief.js';
 import {mischiefCell} from '../src/universe-mischief-model.js';
-import {LIVE_ENCOUNTERS,LIVE_REWARD,LIVE_EVERY,liveInterval} from '../src/live-encounters-model.js';
+import {LIVE_ENCOUNTERS,LIVE_REWARD,LIVE_EVERY,LIVE_KNOCK_SPEED,liveInterval,liveFor} from '../src/live-encounters-model.js';
+import {hashKey} from '../src/universe-regions.js';
 // The engine inside a small runtime: when it appears, what pauses it, where it never appears, one at a time with the
 // mischief scenes, what it pays (atomically) and what it leaves in the Bitácora.
 let modal=false,fail=false,saves=0;globalThis.document={hidden:false,querySelector:()=>modal?{}:null};
 const seedOf=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
-const BIOMES=LIVE_ENCOUNTERS.map(d=>({id:d.biome}));
+const BIOMES=LIVE_ENCOUNTERS.filter(d=>d.verb==='perseguir').map(d=>({id:d.biome}));
 function game(raw,biome=0){const toasts=[],elements=[],queue=[],r={S:raw||{mode:'world',todayKey:'2026-10-27',layer:'superficie',wx:0,wy:0,sparks:0,sound:false,sparkEconomy:{version:1,earned:0,spent:0,log:[]}},
  worldIdentity:{seed:'live',generation:2},BIOMES,seedOf,waves:[],regionOfPos:()=>({z:biome,sea:false,genre:'deep'}),inWorld(){return this.S.mode==='world';},save(){saves++;return !fail;},
  get sparkEconomy(){return this.S.sparkEconomy;},toast:(...a)=>toasts.push(a),recordElement:(id)=>{elements.push(id);r.S.elementBook={version:1,found:{...(r.S.elementBook?.found||{}),[id]:{}}};return true;},showSparkPickup(){},
@@ -48,6 +49,25 @@ for(const [key,value] of [['travelInLevel',()=>true],['placeRun',()=>({})],['son
 // Another biome offers its own; the forced shortcut and a later save version.
 {const g=game(null,6);for(let i=0;i<2000&&!g.liveEncounterState().scene;i++)walk(g,.05);assert.equal(g.liveEncounterState().scene.kind,'reflejo');}
 {const future={version:3,opaque:1},g=game({mode:'world',todayKey:'2026-10-27',layer:'superficie',wx:0,wy:0,sparks:0,sparkEconomy:{version:1,earned:0,log:[]},liveEncounters:future});walk(g,100);assert(!g.liveEncounterState().scene);assert.equal(g.S.liveEncounters,future);}
+// Batch 2 · huir. The same timer picks chase or flight in the biome from the hash: both come, in the order of the hash.
+{const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=[];for(let n=0;n<12;n++){const want=liveFor('llanura',hashKey('live:pick:v1:'+scope+':'+n)).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want,'the hash picks it');kinds.push(sc.kind);g.liveEncounterState().scene.stage='escaped';g.liveEncounterState().scene.result='escaped';g.liveEncounterState().scene.over=9;g.liveTick(.05);}
+ assert(kinds.includes('polilla')&&kinds.includes('remolino'),kinds.join());}
+// Escaping on foot: 10 ✦, its own Bitácora entry and one notice; with a pulse on time, 15 ✦; reached, nothing but a nudge.
+{const g=game();assert(g.liveEncounterSpawn('ola'));const s=g.liveEncounterState().scene;assert.equal(s.verb,'huir');assert.equal(g.liveEncounterState().line,'Una ola gigante. Llega al anillo.');
+ g.S.wx=s.safe.x;g.S.wy=s.safe.y;g.liveTick(.05);assert.equal(s.stage,'safe');assert.equal(g.S.sparks,LIVE_REWARD.base);assert.deepEqual(g.elements,['live:ola']);assert.match(g.toasts.at(-1)[0],/Encuentro nuevo.*Ola gigante/);assert.equal(g.S.liveEncounters.kinds.ola.caught,1);
+ for(let i=0;i<40;i++)g.liveTick(.05);assert(!g.liveEncounterState().scene);
+ assert(g.liveEncounterSpawn('arena'));const a=g.liveEncounterState().scene;g.waves.push({x:g.S.wx,y:g.S.wy,origin:'player',beat:true});g.liveTick(.05);assert(a.onTime&&a.shield>0,'a pulse on time shields');const shelter=a.stones[0].shelter;g.S.wx=shelter.x;g.S.wy=shelter.y;
+ for(let i=0;i<200&&a.stage==='run';i++)g.liveTick(.05);assert.equal(a.stage,'safe');assert.equal(g.S.sparks,LIVE_REWARD.base+LIVE_REWARD.onTime);assert.equal(g.toasts.length,2);
+ for(let i=0;i<40;i++)g.liveTick(.05);
+ // Reached: no sparks taken, none given, a nudge of a second, its kind goodbye; the next one can come.
+ assert(g.liveEncounterSpawn('pozo'));const w=g.liveEncounterState().scene,bank=g.S.sparks,from={x:g.S.wx,y:g.S.wy};for(let i=0;i<200&&w.stage==='run';i++)g.liveTick(.05);
+ assert.equal(w.stage,'hit');assert(Math.hypot(g.S.wx-from.x,g.S.wy-from.y)>100,'the well pulled the cube');assert.equal(g.liveEncounterState().line,'Tocaste fondo. Ya saliste.');
+ const at={x:g.S.wx,y:g.S.wy};for(let i=0;i<40;i++)g.liveTick(.05);assert(Math.hypot(g.S.wx-at.x,g.S.wy-at.y)<=LIVE_KNOCK_SPEED+3,'a soft nudge only');assert(!g.liveEncounterState().scene);
+ assert.equal(g.S.sparks,bank);assert.equal(g.S.liveEncounters.kinds.pozo.hit,1);assert.equal(g.S.liveEncounters.kinds.pozo.caught,0);assert(!g.elements.includes('live:pozo'));
+ // One at a time, whatever the verb.
+ assert(g.liveEncounterSpawn('rayos'));assert(!g.liveEncounterSpawn('polilla'));assert(!g.liveEncounterSpawn('ondas'));
+ // Never in a level: the threat just goes, and its pull stops.
+ g.travelInLevel=()=>true;const x=g.S.wx;g.liveTick(.05);assert(!g.liveEncounterState().scene);g.liveTick(.05);assert.equal(g.S.wx,x);}
 // Reloading keeps what was caught and the count of encounters seen.
 {const g=game(structuredClone(r.S));assert.equal(g.S.liveEncounters.kinds.polilla.caught,2);assert.equal(g.S.liveEncounters.count,r.S.liveEncounters.count);}
-console.log('PASS living encounters runtime: travel counts only while moving (not standing, paused or in a menu); one appears ahead after 60–90 s in the biome\'s own kind; on time 15 ✦, walking 10 ✦; one Bitácora entry and one notice the first time; escape costs nothing; atomic save with bounded retries; never in chapters, rounds, finales, activities, the Refugio or underground; one at a time with mischief; future saves kept');
+console.log('PASS living encounters runtime: travel counts only while moving (not standing, paused or in a menu); one appears ahead after 60–90 s in the biome\'s own kind; on time 15 ✦, walking 10 ✦; one Bitácora entry and one notice the first time; escape costs nothing; atomic save with bounded retries; never in chapters, rounds, finales, activities, the Refugio or underground; one at a time with mischief; future saves kept; batch 2: the hash picks chase or flight, escaping pays 10 ✦ (15 ✦ with a pulse on time), being reached costs nothing and nudges a second');

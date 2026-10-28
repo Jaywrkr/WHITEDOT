@@ -1,4 +1,5 @@
-"""Living encounters, batch 1 (Jay, 27 Oct 2026): the eleven «perseguir» in the free World. Each one forced with the test
+"""Living encounters, batch 1 (Jay, 27 Oct 2026): the eleven «perseguir» in the free World (the eleven «huir» of batch 2
+have their own walks, live_flee_a_smoke.py and live_flee_b_smoke.py). Each one forced with the test
 shortcut appears ahead of the cube with its line, runs from it, and a pulse on time near it catches it for 15 ✦ (the first
 time also into the Bitácora, with one notice naming it); walking into one pays 10 ✦; an off-time pulse does not count;
 one that gets away costs nothing. One at a time, also with the mischief scenes; never in a chapter, a round or the
@@ -38,7 +39,7 @@ try:
   page.evaluate("()=>{"+HIDE+";const r=__r;r.S.sound=false;r.stopAutopilot?.();r.setJourneyMode('libre');const d=r.placesData?.();if(d)d.seen={...(d.seen||{}),llanura:true};r.save();}")
   assert page.evaluate('__r.inWorld()&&!__r.travelInLevel()&&__r.liveEncounterState().allowed&&!__r.journeyQuiet()'),'the free World, after the Journey'
   assert not page.evaluate('__r.achievementsCalm()'),'notices speak here'
-  defs=page.evaluate("async()=>(await import('/src/live-encounters-model.js')).LIVE_ENCOUNTERS.map(d=>({id:d.id,name:d.name,line:d.line,biome:d.biome}))")
+  defs=page.evaluate("async()=>(await import('/src/live-encounters-model.js')).LIVE_ENCOUNTERS.filter(d=>d.verb==='perseguir').map(d=>({id:d.id,name:d.name,line:d.line,biome:d.biome}))")
   assert len(defs)==11 and len({d['biome'] for d in defs})==11
   shots=[]
   for i,d in enumerate(defs):
