@@ -106,6 +106,10 @@ La ventana original de ocho semanas (19 oct–13 dic 2026) queda como **estimaci
 
 **Ideas del universo (28 de octubre de 2026):** el [catálogo de 119 ideas y Constelaciones](IDEAS_UNIVERSO.md) existe, con fases F0–F6. Es una dirección aprobada; no autoriza construir nada hasta que Jay elija la fase.
 
+| Fase | Rama | Qué | Estado |
+|---|---|---|---|
+| F1 · Mapa del cielo | `universo/f1-mapa-del-cielo`, desde `main` (`ccb661a`, alpha.230) | 28 figuras que se unen en orden en el Mundo libre; nota por estrella y motivo; a medias guardada; 10/15 ✦ una vez por figura; zodiaco → halo de estrellas; sección en la Bitácora ([guía](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo)) | **Hecha** en la rama (alpha.231); sin PR, sin CI remoto, sin teléfono ni personas |
+
 ## Comunicación y venta
 
 Propuesta: mostrar primero una acción del cubo y su respuesta visual/musical. Tres mensajes: explorar un universo sonoro, romper/recoger y avanzar, descubrir escenas/actividades raras. La electrónica no debe desaparecer de la identidad; mostrar cómo se mezcla con otras familias sin atribuir grabaciones ajenas.

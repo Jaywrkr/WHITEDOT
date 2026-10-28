@@ -71,7 +71,7 @@ try:
   page.wait_for_function("!__r.skyMapState().scene",timeout=6000);assert page.evaluate(SCENE)['summary']=='Orión · completa · +15 ✦'
   # 5 · The Bitácora: «Mapa del cielo», Orion drawn, the rest as silhouettes, the series' progress.
   page.evaluate("()=>{__r.openJournal('places');}");page.wait_for_selector('#journalSkyMap')
-  page.evaluate("()=>{const d=document.getElementById('journalSkyMap');d.open=true;d.querySelector('[data-sky-series="sur"]').scrollIntoView({block:'start'});}");page.wait_for_timeout(300)
+  page.evaluate("()=>{const d=document.getElementById('journalSkyMap');d.open=true;d.querySelector('[data-sky-series=sur]').scrollIntoView({block:'start'});}");page.wait_for_timeout(300)
   info=page.evaluate("""(()=>{const d=document.getElementById('journalSkyMap');return {summary:d.querySelector('summary').innerText,done:[...d.querySelectorAll('[data-state="done"]')].map(a=>a.dataset.skyFigure),none:d.querySelectorAll('[data-state="none"]').length,heads:[...d.querySelectorAll('h3.sky-series')].map(h=>h.innerText),mano:d.querySelector('[data-sky-figure="mano"] h4').innerText}})()""")
   assert info['summary']=='Mapa del cielo · 1 de 28' and info['done']==['orion'] and info['none']==27 and info['mano']=='???',info
   assert 'Cielo del sur · 1 de 3' in info['heads'] and 'Zodiaco · 0 de 12' in info['heads'],info

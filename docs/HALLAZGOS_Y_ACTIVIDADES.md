@@ -204,6 +204,59 @@ Encuentros por minuto, jugador casual 7,7 → 8 ✦ y a tiempo 10 → 10,3 ✦; 
 
 Pruebas: `tests/live-encounters.mjs` (modelo de los 33 y bots de hacer), `tests/live-encounters-runtime.mjs`, `tests/live_encounters_smoke.py` (perseguir), `tests/live_flee_a_smoke.py`, `tests/live_flee_b_smoke.py` y `tests/live_flee_c_smoke.py` (los once de huir con su atajo, con `tests/live_flee_helpers.py`), `tests/live_do_a_smoke.py`, `tests/live_do_b_smoke.py` y `tests/live_do_c_smoke.py` (los once de hacer con su atajo, con `tests/live_do_helpers.py`) y `tests/live_encounters_mix.py`. Atajos: `?encuentro=polilla`, `?encuentro=ola`, `?encuentro=motas`… ([herramientas de prueba](MUNDO.md#herramientas-de-prueba)). No probado en teléfono ni con personas.
 
+## Mapa del cielo
+
+F1 del [catálogo del universo](IDEAS_UNIVERSO.md#constelaciones--ficha-ampliada-f1), elegida por Jay (28 de octubre de 2026, alpha.231). Estrellas sueltas en el Mundo libre que se unen en figuras con nombre. En la interfaz se llama **«Mapa del cielo»** (decisión 2); cada figura es una constelación dentro del mapa. No se confunde con la región Constelaciones del Abismo, el encuentro `constelacion`, la actividad «Constelación caída», las constelaciones de `identity-play.js` ni «Tu constelación» de las reliquias: ninguna de ellas cambia ni cuenta para el mapa.
+
+**Dónde.** Solo en el Mundo libre después del Viaje (`freeOpen`), en la superficie. Nunca en un capítulo, una ronda, un final, una actividad, el Refugio ni dentro de otra escena. El mundo se parte en celdas de 500 m; cada celda tiene como mucho una figura, lejos de sus bordes (dos figuras quedan siempre a más de 200 m). La celda, su figura, su posición y su giro salen de `hashKey('sky:v1:'+mundo+':'+celda)`: no se consume el azar antiguo y nada del mapa se mueve.
+
+| Qué hay debajo | Celdas con figura de día | De noche (20:00–5:59, hora real) |
+|---|---|---|
+| Tierra | 16 % | 30 % |
+| Vacío y Púlsares | 30 % | 44 % |
+| Región Constelaciones del Abismo | 45 % | 59 % |
+
+La noche solo añade figuras: las del día siguen iguales en su sitio. Según el modelo, desde el cubo se ve como mucho alrededor de una por kilómetro de viaje (decisión 11; no medido con personas): una estrella blanca tenue en el borde de la pantalla señala la figura sin terminar más cercana a menos de 160 m que no se ve todavía.
+
+**Rareza por distancia al origen (decisión 5) y hora.** Hasta 5 km, figuras cortas (Casiopea, Lira, Gato, Cubo; Osa Menor al norte y Cruz del Sur al sur). Desde 5 km, Orión, la Osa Mayor (al norte) y el zodiaco, en una franja de 12 km a cada lado del ecuador del mapa. Desde 20 km, las largas y raras (Vinilo, Auricular, Ballena, Cohete, Guitarra, Can Mayor), que allí pesan más que las cortas. Desde 50 km, la leyenda: «La Mano». El Cisne y el Can Mayor solo salen de noche. Los pesos están en `skyWeight`.
+
+**Cómo se une.** Al acercarse a menos de 30 m del centro empieza: «Mapa del cielo · Orión» y «Pasa por sus estrellas en orden.» durante 3 s. La siguiente estrella es blanca con un aro que respira, y la flecha blanca junto al cubo la señala (en el borde de la pantalla si está fuera). Pasar el cubo por ella la enciende; pasar por otra no hace nada. Un pulso a tiempo a menos de 15 m de la siguiente la enciende, y también la de después si está igual de cerca: cuenta doble. No hay tiempo límite («da tiempo» no aplica). Cada estrella suena con una nota de la escala del lugar (el grado de su motivo) a la corchea siguiente, y su línea crece desde la anterior durante un pulso, desde que se oye. Sin sonido, la línea crece al momento y el orden se lee en el aro y la flecha.
+
+**Al completarla.** La figura brilla entera 3 s, con líneas más gruesas y luz en cada estrella, y luego queda como un dibujo tenue en su sitio. Suena su motivo de 5–8 notas, una octava por encima de las estrellas, en corcheas desde la siguiente, con el primer instrumento melódico de la familia del lugar. Tres motivos son melodías de dominio público (decisión 6): Orión, la «Oda a la alegría»; Osa Mayor, «Estrellita, ¿dónde estás?»; Casiopea, el comienzo de «Frère Jacques». Después, una línea: «Orión · completa · +15 ✦».
+
+**Reversible y claro (reglas 1–7).** Alejarse más de 72 m del centro deja la figura a medias, guardada desde su primera estrella: «Orión · 4 de 7 · guardada». Al volver sigue igual: «Orión · 4 de 7 · La dejaste aquí. Sigue.». La Bitácora muestra las que están a medias con su dirección («Orión · 4 de 7 · al norte») y «Soltar», que la deja como estaba. Fallar no existe: no hay tiempo, castigo ni pérdida.
+
+**Uno a la vez (decisión 11).** Mientras un encuentro vivo o una travesura están en marcha, las estrellas esperan; mientras se une una figura, no empieza ningún encuentro vivo ni travesura y el reloj de los encuentros no avanza. Al acabar una figura (completa o dejada) ese reloj vuelve a cero: la siguiente escena llega tras otros 60–90 s de viaje.
+
+**Premios (decisión 9).** Cada figura nueva da **10 ✦, o 15 ✦ si un pulso a tiempo encendió alguna estrella**, la primera vez, con un aviso: «Constelación nueva · Orión». Otra copia de una figura que ya está en el mapa no paga ni avisa («Orión · ya en tu mapa»): se une por la música y la luz. Motivo de la decisión: la ficha dice «paga chispas una vez» y lo pequeño y repetible ya lo pagan los encuentros vivos; así el mapa no se convierte en una mina. Como mucho, 28 × 15 = 420 ✦ en toda la partida. El pago es atómico: si no se guarda, no queda nada y se reintenta hasta tres veces.
+
+**Series.** Zodiaco (12), Cielo del norte (Osa Mayor, Osa Menor, Casiopea, Cisne, Lira), Cielo del sur (Orión, Cruz del Sur, Can Mayor) y Propias (Gato, Vinilo, Auricular, Cubo, Ballena, Cohete, Guitarra y «La Mano», el guiño secreto: su nombre sale como «???» hasta unirla). Completar el **zodiaco** da el **halo de estrellas**: doce estrellas doradas pequeñas que giran despacio alrededor del cubo (dorado: es ganado; el cubo no crece). Se pone solo al ganarlo, con un aviso único («Halo de estrellas · Zodiaco completo») en lugar del de la figura, y se quita o pone en Tu cubo → Llevar → «Mapa del cielo» (`#cubeSkyHalo`). Las otras tres series muestran su progreso; su premio queda para después.
+
+**Bitácora.** Mapa → «Mapa del cielo · N de 28» (plegado): primero «A medias», después cada serie con su progreso y sus figuras dibujadas (blancas si están en el mapa; a medias, la parte unida en blanco; las demás, siluetas de puntos y trazos).
+
+**Arte (lista de Ken Wong, lente simulada).** Estrella suelta: punto blanco de 2 px con cruz tenue y halo sobre un disco oscuro, para leerse sobre la luz de cualquier región. Encendida: 3 px con cruz de luz que titila. Líneas de 1 px. Siguiente: aro blanco y flecha blanca. Una figura aparece creciendo desde su centro (0,8 s) al entrar en pantalla; el aro de la siguiente se abre desde un punto al empezar; al completarse, brilla y se queda tenue. Con movimiento reducido no hay titileo ni aro que respire. Las palabras siguen «Textos en el universo» y la vista tranquila. Postales a 390×844 en los recorridos.
+
+**Audio (lista de Disasterpeace, lente simulada).** Estrella a 0,012 de ganancia (más baja que la nota de un encuentro) y motivo a 0,02, en la escala del lugar (`MU.dnaA.scale`, transposición `MU.tr`), cuantizados a la corchea (`beatSoon`). La música base no cambia. **Medido por render** (`tests/sky_map_mix.py`): la música del Mundo es la misma que en alpha.230 (`ccb661a`) y alpha.226 (`2ae74a8`): mismo pico y mismo nivel por medio segundo (deriva < 0,0005 dB). Las siete estrellas de Orión y tres motivos quedan **32,8 dB** (minimal, 48 kHz) y **32,9 dB** (deep, 44,1 kHz) por debajo de la música, con su pico a menos de 1/13 del de la música. Escucha en teléfono con auriculares: **pendiente**.
+
+**Economía.** `node scripts/play-curve.mjs`: el modelo supone 0,12 figuras unidas por minuto de viaje y, en dos horas cerca del anillo, solo las seis figuras cortas de los primeros 5 km. Chispas ganadas, alpha.230 → alpha.231:
+
+| Jugador | 30 min | 60 min | 120 min | Piezas a los 120 min |
+|---|---|---|---|---|
+| 60 % | 481 → 486 | 1.610 → 1.626 | 3.874 → 3.915 | 43 → 43 |
+| 75 % | 673 → 679 | 2.154 → 2.175 | 6.010 → 6.054 | 53 → 53 |
+| 90 % | 883 → 890 | 3.051 → 3.074 | 7.133 → 7.217 | 53 → 53 |
+| Sin sonido | 528 → 532 | 1.621 → 1.634 | 3.852 → 3.884 | 42 → 43 |
+
+Menos del 3 % y se detiene cuando las figuras cercanas están en el mapa. Toda la tienda sigue en 6,9 h (casual) y 5,2 h (a tiempo). Supuestos de un modelo, no medidas de personas.
+
+**Guardado.** `S.skyMap`, versión 1 (`normalizeSkyMap`): `figures` (por figura: primera vez, veces unida, veces a tiempo), `sites` (por sitio: figura, posición, giro, estrellas encendidas en orden, completa, a tiempo, día), `earned`, `halo` y `wear.halo`. Se guarda desde la primera estrella. Un guardado sin `skyMap` empieza vacío; los campos desconocidos y las figuras o sitios de un catálogo futuro se conservan; una versión futura no se toca. Como mucho 64 figuras a medias y 200 completas por sitio (las más antiguas se van; su figura sigue en el mapa).
+
+**Atajo.** `?cielo=orion` (o cualquier id) trae esa figura delante del cubo tras 3 s de viaje en el Mundo libre, una y otra vez ([herramientas](MUNDO.md#herramientas-de-prueba)).
+
+**Para después.** Las 60 figuras que faltan hasta las 88; premios de las otras tres series (un adorno o una pieza del Refugio, decisión 9); que las figuras a medias se vean en el mapa de la Bitácora; ideas que dependen de F1 (87 «Taller de enanas blancas», 109 «Telescopio vivo»). Ninguna está construida.
+
+Pruebas: `tests/sky-map.mjs` (catálogo, colocación determinista, orden, guardado y migración, premios, series), `tests/sky-map-runtime.mjs` (dónde aparece, uno a la vez y el reloj compartido, a medias y retomar, pago atómico, Bitácora, halo), `tests/sky_map_smoke.py` (atajo, unir en orden con y sin pulso a tiempo, alejarse, recargar y retomar, completar, aviso, Bitácora, repetir, figura natural), `tests/sky_map_halo_smoke.py` (zodiaco → halo, Tu cubo, recarga, uno a la vez con encuentros y travesuras, nunca en rondas, capítulos ni el final, inglés), `tests/sky_map_mix.py` (render) y `tests/play-curve.mjs` (economía).
+
 ## Tarjeta inspeccionable · N6
 
 El primer aviso importante permanece pequeño; «Ver tarjeta» abre el detalle voluntario. Allí se detienen movimiento y cuenta atrás, la música continúa y los demás avisos esperan. Incluye función musical, frecuencia condicional sin inventar probabilidades por hora, lugar e identidad. «Ver en mi libro» conserva el hallazgo seleccionado. Repeticiones no reabren continuamente la presentación. Elegir otra interpretación se revierte si no se guarda.
