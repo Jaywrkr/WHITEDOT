@@ -1,5 +1,22 @@
 # Cambios recientes de Kubono
 
+Estado: 29 de octubre de 2026. Código **2.3.0-alpha.235** en la rama `jay/mapa-universo`. Las entradas describen su revisión, no certifican producción.
+
+
+## Mapa del universo · 2.3.0-alpha.235
+
+Rama `jay/mapa-universo`, desde `main` (`e5d48fe`, alpha.233). En paralelo va `jay/h2-refugio` (alpha.234, Refugio simple). Aprobado por Jay: «el mapa tiene que ser perfecto». Guía: [El mundo](docs/MUNDO.md#mapa-del-universo).
+
+- **Pantalla propia.** Un toque desde el botón del mapa junto al menú (`#bUniverseMap`), en el Mundo libre tras el Viaje. La pestaña Mapa de la Bitácora muestra una vista quieta de lo descubierto; «Abrir el mapa» o tocarla abre la misma pantalla. Sustituye al recuadro de cuadros marrones (`map.js` ya no dibuja, conserva `mapData`, la nota, «Ir a» y Compartir, que usa el dibujo nuevo). No se quitó ningún control.
+- **Tres acercamientos:** Anillo, Región y Universo, con «+» y «−», pellizco y rueda; arrastrar desplaza; ◎ centra en ti. Lejos, los once lugares son un anillo pequeño.
+- **Niebla real:** lo visitado con el color de su bioma, en discos suaves que se funden; lo demás negro. Anillos a 5, 20 y 50 km del origen y el porcentaje descubierto del primero sin completar. Un anillo entero descubierto se guarda, se pinta en dorado y avisa una vez; sin chispas (lo especial no paga, decisión 9).
+- **Tú y lo tuyo:** el cubo con su rumbo, una línea blanca al siguiente lugar con su distancia, los once con sus ★, el Refugio, favoritos, hitos y rumores «?», rarezas, figuras del Mapa del cielo completas y a medias, y los encuentros vivos que viste (se anotan al terminar). Leyenda plegable.
+- **Tarjeta al tocar:** «Ir» solo donde ya se podía ir (un lugar pisado o con ★, el siguiente desde lejos, «Volver al anillo», un favorito), con las funciones de Lugares y Favoritos: sin saltos libres antes de los once. Lo demás, «Marcar»: una sola marca, guardada; la brújula del cubo y la línea bajo el HUD la siguen; se quita en su tarjeta, al llegar o con «Seguir hacia».
+- **Mini-mapa** opcional en Ajustes, apagado por defecto (el Mundo ya orienta con brújula y columna de luz); encendido, 90 px abajo a la izquierda, sin tapar HUD ni avisos.
+- **Rendimiento:** nada se dibuja con el mapa cerrado; la niebla va cacheada. En Chromium sin GPU abre en 24 ms (600 regiones) y 56 ms (3.000). Sin medida en teléfono.
+- **Guardado nuevo** `S.universeMap` (versión 1, migrado sin perder campos; una versión futura se respeta). Ningún otro formato cambia. Inglés en `i18n-en.js`. Música y sonido sin cambios (el mapa no suena).
+- Pruebas nuevas: `tests/universe-map.mjs`, `tests/universe_map_smoke.py`, `tests/universe_map_mark_smoke.py` y `tests/universe_map_english_smoke.py`. Ajustadas sin quitar aserciones de otras cosas: `refugio-legible.mjs` (el dibujo llena su caja, ahora en `universe-map.js`), `journey_smoke.py` («Abrir el mapa» abre la pantalla; se vuelve para Compartir) y `focusui_smoke.py` (el dock del Mundo tiene menú y mapa).
+- Preservación: cambian a propósito `i18n-en.js` y la lista offline de `sw.js` (tres módulos nuevos), con su capa `approvedM`. `map.js` y `places-ring.js` ya estaban abiertos (P1). Probado en local; sin CI remoto, sin teléfono ni personas.
 Estado: 28 de octubre de 2026. Código **2.3.0-alpha.234** en la rama `jay/h2-refugio` (en `main`, alpha.233). Las entradas describen su revisión, no certifican producción.
 
 

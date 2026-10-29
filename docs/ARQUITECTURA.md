@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»). P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»); `universe-map-model.js`, `universe-map-art.js` y `universe-map.js` (Mapa del universo, alpha.235, cargados por `map.js`). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -35,6 +35,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Colección musical | `garden-model.js`, `collection-garden.js`, `journal.js` |
 | Refugio | `house-model.js`, `house-auto.js`, `house.js`, `house-view.js`, `house-audio.js`, `house-collection.js` |
 | Actividades y encuentros | `universe-activities.js`, `universe-mischief.js`, `live-encounters.js`, `sky-map.js` y sus modelos/arte |
+| Mapa y orientación | `map.js` (Bitácora), `universe-map.js` y su modelo/arte (pantalla del mapa, marca, mini-mapa), `places-ring.js` (brújula y columna), `navigation.js` (rumbo a favoritos) |
 | Guía y avisos | `voice-guide.js`, `onboarding.js`, `notice-lane.js`, `celebration.js` |
 | UI y accesibilidad | `styles/estilo-j.css`, `accessibility.js`, `journal.js`, `favorites.js` |
 | Idiomas | `i18n.js`, `i18n-en.js` |
@@ -68,7 +69,7 @@ Negro, Geist Mono, esquinas rectas, blanco para estados y dorado ganado. Cubo pe
 
 Menú (panel 10, P2): «Seguir hacia …» y, debajo, Lugares, Tu cubo, Refugio y Bitácora; Ajustes y Cómo jugar siempre a la vista. «Más» se abre cerrado y agrupa Ir (vuelta al Camino o «Explorar», Mapa y favoritos, punto anterior, otra tierra), Crear y Tú. Un rótulo sin filas visibles se oculta (`tidyMenu`); la fila principal reparte el ancho entre los botones que se ven. La vista tranquila conserva Lugares y Bitácora sin cifras; Tu cubo y la tienda siguen solo en la completa. En el Mundo, `#bPrimary` («Volver al Camino») encabeza Ir y `#bWorld` se oculta. Ajustes empieza por el volumen y se ordena en Sonido y tiempo, Ver y sentir y Partida, con «Empezar de cero» al final; «Más sonido» vuelve a Ajustes. Todo cierre inferior dice «Cerrar». Texto de menú desde 12 px.
 
-`journal.js` reúne Hoy, Colección, Mapa, Música, Logros y Tú. Mueve paneles existentes desde `#journalParts` al contenido de la pestaña. El libro pliega filtros secundarios y muestra primero el hallazgo; Favoritos desplaza al destino guardado y no duplica listados. IDs existentes conservados.
+`journal.js` reúne Hoy, Colección, Mapa, Música, Logros y Tú. En Mapa, el dibujo es la vista quieta del Mapa del universo (alpha.235), que se abre en su propia pantalla (`#mUniverseMap`) también desde el dock del Mundo (`#bUniverseMap`). Su marca entra en la brújula por `mapMarkRoute` (`places-ring.js`); los encuentros vivos anotan dónde terminaron con `mapNoteLive`. Mueve paneles existentes desde `#journalParts` al contenido de la pestaña. El libro pliega filtros secundarios y muestra primero el hallazgo; Favoritos desplaza al destino guardado y no duplica listados. IDs existentes conservados.
 
 `voice-guide.js` comparte la acción de Jardín con `gardenTarget`; distingue acercarse, sembrar, regar, cosechar y árbol final. `accessibility.js` gestiona aislamiento, foco y cierres. `canvas.js` cancela entradas al perder foco/ocultarse/enfocar UI. `notice-lane.js` coordina avisos para evitar solapamientos.
 

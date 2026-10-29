@@ -253,7 +253,7 @@ Menos del 3 % y se detiene cuando las figuras cercanas están en el mapa. Toda l
 
 **Atajo.** `?cielo=orion` (o cualquier id) trae esa figura delante del cubo tras 3 s de viaje en el Mundo libre, una y otra vez ([herramientas](MUNDO.md#herramientas-de-prueba)).
 
-**Para después.** Las 60 figuras que faltan hasta las 88; premios de las otras tres series (un adorno o una pieza del Refugio, decisión 9); que las figuras a medias se vean en el mapa de la Bitácora; ideas que dependen de F1 (87 «Taller de enanas blancas», 109 «Telescopio vivo»). Ninguna está construida.
+**Para después.** Las 60 figuras que faltan hasta las 88; premios de las otras tres series (un adorno o una pieza del Refugio, decisión 9); ideas que dependen de F1 (87 «Taller de enanas blancas», 109 «Telescopio vivo»). Ninguna está construida. Las figuras completas y a medias ya se ven en el [Mapa del universo](MUNDO.md#mapa-del-universo) (alpha.235).
 
 Pruebas: `tests/sky-map.mjs` (catálogo, colocación determinista, orden, guardado y migración, premios, series), `tests/sky-map-runtime.mjs` (dónde aparece, uno a la vez y el reloj compartido, a medias y retomar, pago atómico, Bitácora, halo), `tests/sky_map_smoke.py` (atajo, unir en orden con y sin pulso a tiempo, alejarse, recargar y retomar, completar, aviso, Bitácora, repetir, figura natural), `tests/sky_map_halo_smoke.py` (zodiaco → halo, Tu cubo, recarga, uno a la vez con encuentros y travesuras, nunca en rondas, capítulos ni el final, inglés), `tests/sky_map_mix.py` (render) y `tests/play-curve.mjs` (economía).
 

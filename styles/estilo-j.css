@@ -466,7 +466,7 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 
 .music-destination span{flex:0 1 46%;min-width:0;line-height:1.6;overflow-wrap:anywhere}.music-destination button{line-height:1.6;overflow-wrap:anywhere}
 
-#universeTexts,#haptics,#colorSafe{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
+#universeTexts,#haptics,#colorSafe,#miniMapSetting{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
 
 /* Silent unread marker without changing button layout. */
 /* Panel 11 (Q1): notices are states, so white; gold is for what was earned. */
@@ -803,6 +803,53 @@ html[lang="en"] .super-grid th{max-width:none}
 .eleven-sheet #elevenDone{font-weight:600}
 .eleven-sheet .row>#elevenExplore{flex-basis:100%}
 .lugares-eleven{width:100%;margin:0;text-align:left;font-size:12px}
+/* Mapa del universo (alpha.235): a screen of its own, black, thin lines; white for you and what is next, gold for ★. */
+.modal.umap{padding:0;background:#000;display:block;overflow:hidden;touch-action:none}
+.umap #umapCv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;outline:none}
+.umap #umapCv:active{cursor:grabbing}
+.umap-head{position:absolute;top:0;left:0;right:0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 8px) 16px 8px;background:linear-gradient(#000,#000d 70%,#0000);pointer-events:none}
+.umap-head>*{pointer-events:auto}
+.umap-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;min-width:0;padding-top:10px}
+.umap-title h2{margin:0;font-size:15px;font-weight:600;outline:none}
+#umapLevel{font-size:12px;color:var(--ink);border:1px solid var(--line);padding:2px 8px}
+#umapShare{flex-basis:100%;font-size:12px;color:var(--dim)}
+#umapClose{width:44px;height:44px;border:1px solid var(--line);background:#000}
+.umap-tools{position:absolute;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
+.umap-tools button{width:44px;height:44px;padding:0;display:flex;align-items:center;justify-content:center;background:#000;font-size:20px;line-height:1}
+.umap-tools button:disabled{opacity:.35}
+.umap-tools svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.5;fill:none}
+.umap-legend{position:absolute;left:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);max-width:min(300px,calc(100vw - 32px));background:#000;border:1px solid var(--line);font-size:12px}
+.umap-legend summary{min-height:44px;display:flex;align-items:center;padding:0 12px;cursor:pointer}
+.umap-legend ul{list-style:none;margin:0;padding:4px 12px 12px;display:grid;gap:6px;max-height:min(46dvh,360px);overflow:auto}
+.umap-legend li{display:flex;align-items:center;gap:10px;line-height:1.3}
+.umap-legend i{flex:none;width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-style:normal;color:#8a8a8f;position:relative}
+.umap-legend .lg-me::before{content:"";width:7px;height:7px;background:#fff}
+.umap-legend .lg-next::before{content:"";width:16px;height:1px;background:#fff}
+.umap-legend .lg-place::before{content:"";width:10px;height:10px;border:1.5px solid #fff;border-radius:50%}
+.umap-legend .lg-gold{color:var(--gold);font-weight:400}
+.umap-legend .lg-home::before{content:"⌂";color:#fff;font-size:14px}
+.umap-legend .lg-mark::before{content:"⊕";color:#fff;font-size:15px}
+.umap-legend .lg-sky::before{content:"✧";color:#fff;font-size:12px}
+.umap-legend .lg-live::before{content:"";width:7px;height:7px;transform:rotate(45deg);border:1.5px solid #6fe08a}
+.umap-legend .lg-fav::before{content:"◇";color:#fff;font-size:13px}
+.umap-legend .lg-lm::before{content:"△";color:#fff;font-size:12px}
+.umap-legend .lg-band::before{content:"";width:14px;height:14px;border:1px dashed #ffffff80;border-radius:50%}
+.umap-legend .lg-fog::before{content:"";width:14px;height:10px;background:linear-gradient(90deg,#eb9a3c80,#6fe08a80,#5cc8ff80)}
+.umap-card{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);max-width:420px;margin:0 auto;background:#000;border:1px solid #ffffff59;padding:12px 16px 16px}
+.umap-card #umapCardClose{position:absolute;top:2px;right:2px;width:44px;height:44px;border:0;background:none}
+.umap-card h3{margin:4px 48px 6px 0;font-size:15px;font-weight:600;overflow-wrap:anywhere}
+.umap-card p{margin:0 0 4px;font-size:12px;line-height:1.5;color:var(--dim)}
+.umap-card #umapCardDist{color:var(--ink)}
+.umap-card .row{display:flex;gap:8px;margin-top:12px}
+.umap-card .row button{flex:1;min-height:44px}
+.umap[data-card] .umap-legend{display:none}
+@media (orientation:landscape) and (max-height:520px){.umap-tools{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:none;flex-direction:row}.umap-legend ul{max-height:52dvh}.umap-card{left:auto;right:184px;width:360px;bottom:16px}}
+.mini-map,button.mini-map{position:fixed;z-index:3;left:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:90px;height:90px;min-width:0;min-height:0;padding:0!important;overflow:hidden;box-sizing:border-box;border:1px solid var(--line);background:#000;display:block;opacity:.92}
+.mini-map[hidden]{display:none}
+.mini-map canvas{width:88px;height:88px;display:block}
+body.world-mode .dock>button#bUniverseMap:not([hidden]){display:inline-flex!important}
+body.world-mode.activity-open .dock>button#bUniverseMap:not([hidden]){display:none!important}
+#miniMapRow[hidden]{display:none}
 /* Refugio simple (Jay, alpha.234): three buttons in sight, the rest under «Más»; «1 nuevo» in white (a state); the menu's
    Refugio gets one quiet dot while something new waits, like the Bitácora's. */
 .house-panel .house-main{grid-template-columns:repeat(3,minmax(0,1fr))}

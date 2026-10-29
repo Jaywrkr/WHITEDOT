@@ -31,7 +31,9 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bMap').click();assert page.locator('#journalMapPart').is_visible()
   assert int(page.locator('#mRegions').inner_text())>=10 and int(page.locator('#mRecord').inner_text())>=60
   page.screenshot(path=f'/tmp/whitedot-map-{label}.png')
-  page.locator('#mapZoom').click();page.screenshot(path=f'/tmp/whitedot-map-near-{label}.png')
+  # Since alpha.235 «Abrir el mapa» opens the Mapa del universo on its own screen; × brings back the Bitácora's map.
+  page.locator('#mapZoom').click();assert page.locator('#mUniverseMap').is_visible();page.screenshot(path=f'/tmp/whitedot-map-near-{label}.png')
+  page.locator('#umapClose').click();page.evaluate('window.__testRuntime.openMap()');page.wait_for_timeout(200)
   page.locator('#mapShare').click();page.wait_for_function('document.getElementById("shareImg").naturalWidth===1080')
   assert page.locator('#mShare').is_visible();page.locator('#sClose').click()
   assert page.evaluate('!!window.__testRuntime.S.ach.mapa1')
