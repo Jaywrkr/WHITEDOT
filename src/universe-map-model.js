@@ -69,7 +69,8 @@ export const toScreen=(view,W,H,x,y)=>[W/2+(x-view.x)*view.scale,H/2+(y-view.y)*
 export const toWorld=(view,W,H,px,py)=>[view.x+(px-W/2)/view.scale,view.y+(py-H/2)/view.scale];
 
 // What a tap finds: the nearest point within reach, the more important first when two overlap.
-export const UMAP_PRIORITY=Object.freeze({me:0,mark:1,place:2,ringHome:3,refugio:4,favorite:5,sky:6,live:7,landmark:8,heard:9,rare:10});
+// A rumor (Descubrir, alpha.240) is something to go to: right after your favourites.
+export const UMAP_PRIORITY=Object.freeze({me:0,mark:1,place:2,ringHome:3,refugio:4,favorite:5,rumor:5.5,sky:6,live:7,landmark:8,heard:9,rare:10});
 export function hitTest(items,view,W,H,px,py,reach=UMAP_TOUCH){let best=null,bd=Infinity;for(const it of items||[]){const [sx,sy]=toScreen(view,W,H,it.x,it.y),d=Math.hypot(sx-px,sy-py);if(d>reach)continue;const score=d+(UMAP_PRIORITY[it.kind]??12)*2;if(score<bd){bd=score;best=it;}}return best;}
 
 // What a card offers. go: the move of today's rules (a place of the ring you can travel to, «Volver al anillo», a

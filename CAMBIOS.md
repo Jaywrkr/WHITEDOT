@@ -1,5 +1,21 @@
 # Cambios recientes de Kubono
 
+Estado: 29 de octubre de 2026. Código **2.3.0-alpha.240** en la rama `jay/descubrir`. Las entradas describen su revisión, no certifican producción.
+
+
+## Descubrir · 2.3.0-alpha.240
+
+Rama `jay/descubrir`, desde `jay/ritmo` (`14f6627`, alpha.237), mezclada después con `main` (Ritmo ya en `main`, `20008af`). La versión es alpha.240: alpha.239 es «Con Luca» (`jay/con-luca`, PR #379), que esta rama no toca. Aprobado por Jay: rumores y álbum de sonidos en el universo abierto. Guía: [El mundo](docs/MUNDO.md#descubrir).
+
+- **Rumores.** Completar un encuentro vivo, una figura del Mapa del cielo, una actividad o una travesura trae a veces (el primero siempre; luego cerca de uno de cada dos, por `hashKey`) un aviso: «Rumor · Dicen que al sureste, a 40 km, canta una ballena.». Apunta siempre a algo que está allí, a esa distancia y en ese rumbo: una figura del cielo de las de día, una rareza, un hito, un sonido raro o, si no, el bioma. Lejos manda lo raro (desde 20 km rarezas y figuras raras; desde 50 km, leyendas). Tres abiertos como mucho, sin caducidad. En el Mapa del universo, un «?» blanco cuya tarjeta ofrece «Marcar» (la brújula lo sigue); en la Bitácora, con dónde está ahora, «Marcar» y «Soltar» (sin coste). Al llegar se cumple: aviso, «Cumplido · …» en la Bitácora y la marca se quita. No paga chispas.
+- **Álbum de sonidos.** Cinco sonidos raros por bioma (55), uno por celda de 600 m con `hashKey`, del bioma de allí; el cuarto y el quinto, más raros cerca del origen. Cantan cada dos compases a menos de 260 m (punto del color del bioma, aro blanco de cerca, marca blanca en el borde si no se ve). Se recogen pasando por ellos o con un pulso a tiempo cerca. Premio por `universeReward`: nuevo, como un encuentro vivo raro (8 ✦ cerca, 11 a tiempo); repetido en otro sitio, 1 ✦. La serie completa de un bioma enciende su arco del **Aro de sonidos** (dorado, alrededor del cubo; se quita en Tu cubo), sin chispas.
+- **Tu mezcla.** En el álbum (Bitácora › Mapa › «Abrir el álbum») eliges hasta cuatro y suenan juntos en bucle suave, en los compases de la música que suena, encima de ella. «Parar» o cerrar el álbum lo para.
+- **Sonido:** capas encima, en la escala y el pulso del lugar (los compases de `MU.sq`; `audio.js` intacto), con un recorte por instrumento medido por render. La música del Mundo es idéntica a alpha.237 y alpha.226; los sonidos quedan 28,0 y 28,9 dB por debajo (`tests/descubrir_mix.py`).
+- **Guardado nuevo:** `S.rumors` y `S.soundAlbum` (versión 1). Partidas anteriores empiezan vacías; campos desconocidos conservados; una versión futura solo se lee; un fallo al guardar deshace todo (chispas incluidas).
+- Cableado: `main.js` arranca `descubrir.js`; `render.js` le da su paso, su dibujo y el Aro; `journal.js` su sección; `universe-map*.js` el icono, la tarjeta y `setMapMark` (la leyenda separa «Rumor» y «Hito oído»); `index.html` añade `mSoundAlbum` y `cubeSoundSection` (ningún id quitado); `estilo-j.css`; inglés en `i18n-en.js`.
+- Pruebas nuevas: `tests/descubrir.mjs`, `tests/descubrir_rumores_smoke.py`, `tests/descubrir_sonidos_smoke.py` (390×844 y 1280×800, inglés) y `tests/descubrir_mix.py`; `tests/audio_mix.mjs` gana la tanda `soundBatch`.
+- Preservación: cambian a propósito `main.js`, `render.js` y la lista offline de `sw.js` (dos módulos nuevos), con su capa `approvedD`. Probado en local; sin CI remoto, sin teléfono ni personas.
+
 Estado: 29 de octubre de 2026. Código **2.3.0-alpha.237** en la rama `jay/ritmo`. Las entradas describen su revisión, no certifican producción.
 
 
