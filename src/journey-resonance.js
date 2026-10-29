@@ -22,7 +22,7 @@ export function resonancePulse(state,pos,now,{reach=RES_REACH,ringMs=4000,goal=R
  state.points=Math.min(goal,state.points+gained);return {gained,events};}
 export const resonanceProgress=(points,goal=RES_GOAL)=>Math.max(0,Math.min(1,points/goal));
 export function initialize(runtime){
- const goal=()=>RES_GOAL*(runtime.placeGoalScale?.()||1),ringBeats=()=>runtime.placeRun?.()?.maestro?RES_MAESTRO_RING:RES_RING_BEATS;
+ const goal=()=>RES_GOAL*(runtime.placeGoalScale?.()||1),ringBeats=()=>runtime.placeRun?.()?.maestro?RES_MAESTRO_RING:runtime.tranquiloValue?.('resonanceRing',RES_RING_BEATS)??RES_RING_BEATS;
  let owner=null,state=null,misses=0,shiver=0,goldPulse=0;const glows=[],toBar=[];
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||(runtime.S.journey={});if(owner!==runtime.S||j.resonance!==state){owner=runtime.S;j.resonance=normalizeResonance(j.resonance);state=j.resonance;glows.length=0;toBar.length=0;}

@@ -39,6 +39,8 @@ Vigente desde **alpha.224** (fase L2 de la [salida web y Android](PLAN_LANZAMIEN
 | estrellas ★ | stars ★ | |
 | Maestro / Libre / Jugar | Master / Free / Play | Modos de un lugar |
 | Remezcla | Remix | |
+| Reto entre dos / marca | Challenge for two / record | Con Luca (alpha.239); «Uno» y «Dos» → «One» y «Two»; un nombre escrito no se traduce |
+| Modo tranquilo para niños | Calm mode for kids | Distinto de «Vista tranquila» (Calm view) |
 | Cómo jugar | How to play | |
 | Ajustes | Settings | |
 | Más | More | |

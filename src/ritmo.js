@@ -28,11 +28,12 @@ export function initialize(runtime){
  const roundsOf=id=>places()?.best?.[id]?.rounds||0;
  function track(){own();const run=runtime.placeRun?.(),S=runtime.S;
   if(run&&(!round||round.startedAt!==run.startedAt)){const plain=!run.free&&!run.maestro&&!run.remix;
-   round={id:run.id,startedAt:run.startedAt,echo:pendingEcho===run.id&&plain,origin:{x:S.wx,y:S.wy},rec:plain?ghostRecorder():null,rounds:roundsOf(run.id),ghost:plain&&writable()?state.ghosts?.[run.id]||null:null};pendingEcho=null;}
+   // Con Luca (alpha.239, duos.js): in a challenge for two the rival's mark runs as the ghost (or none), not yours.
+   const duo=runtime.duoGhost?.(run);round={id:run.id,startedAt:run.startedAt,echo:pendingEcho===run.id&&plain,origin:{x:S.wx,y:S.wy},rec:plain?ghostRecorder():null,rounds:roundsOf(run.id),duo:duo!==undefined,ghost:duo!==undefined?duo:plain&&writable()?state.ghosts?.[run.id]||null:null};pendingEcho=null;}
   if(run&&round){if(round.rec)ghostSample(round.rec,Date.now()-run.startedAt,S.wx-round.origin.x,S.wy-round.origin.y);return;}
   if(!run&&round){const r=round;round=null;if(roundsOf(r.id)>r.rounds){const last=runtime.places?.()?.last;if(last&&last.id===r.id)done(r,last);}}}
  // A round closed (its ★ already kept by places.js): Eco's best, and the path when it is the best time.
- function done(r,last){const info={id:r.id,ms:last.ms,echo:r.echo,ghost:null};
+ function done(r,last){const info={id:r.id,ms:last.ms,echo:r.echo,duo:!!r.duo,ghost:null};
   if(r.rec&&r.rec.pts.length>=2){const old=writable()?state.ghosts?.[r.id]||null:null,better=ghostBetter(old,last.ms),kept=better?ghostFrom(r.rec,last.ms):null;info.ghost={had:old?.ms??null,record:!!(better&&kept)};
    if(kept&&!commit(s=>{s.ghosts[r.id]=kept;}))info.ghost.record=false;}
   if(r.echo)commit(s=>{const e=s.echo[r.id]||{best:0,rounds:0};e.rounds++;if(last.sound)e.best=Math.max(e.best,last.onTime||0);s.echo[r.id]=e;});
@@ -45,7 +46,7 @@ export function initialize(runtime){
  // The steps are not drawn once the place has sung its phrase; without sound (nothing to remember) they come back.
  const hideSignals=()=>{const r=live();return !!(r?.echo&&sound()&&!runtime.rhythmDemo?.());};
  // The card's words for this round: «Eco» and the ghost.
- function card(r){if(!finished||finished.id!==r?.id||finished.ms!==r.ms)return null;const rows=[];if(finished.echo)rows.push('De memoria, sin señales.');const g=finished.ghost;
+ function card(r){if(!finished||finished.id!==r?.id||finished.ms!==r.ms)return null;const rows=[];if(finished.echo)rows.push('De memoria, sin señales.');const g=finished.duo?null:finished.ghost;
   if(g)rows.push(g.had===null?'Tu fantasma correrá contigo la próxima vez.':g.record?`Le ganaste a tu fantasma · ${roundTime(g.had)}.`:`Tu fantasma · ${roundTime(g.had)}.`);return {echo:finished.echo,rows};}
  // ---------- the combo ----------
  let combo={streak:0},seen={hits:0,misses:0,at:null},fade=null;const trail=[];
@@ -163,6 +164,6 @@ export function initialize(runtime){
   ritmoDuelActive:{get:()=>()=>!!duel},ritmoDuelQuit:{get:()=>()=>quit('Saliste del duelo. No perdiste nada.')},ritmoDuelOpen:{get:()=>open},ritmoDuelAsk:{get:()=>ask},ritmoDuelStart:{get:()=>start},
   // Tests only (the runtime is never published): a pulse heard at a time on the audio clock, and the state.
   ritmoDuelPulse:{get:()=>heard=>hear(heard)},ritmoToggleCrown:{get:()=>toggleCrown},
-  ritmoState:{get:()=>()=>({save:structuredClone(own()),round:round?{id:round.id,echo:round.echo,ghost:!!round.ghost,samples:round.rec?.pts.length||0,every:round.rec?.every||0}:null,hidden:hideSignals(),drawn:{...drawn},combo:combo.streak,trail:trail.length,fading:!!fade,finished:finished?structuredClone(finished):null,
+  ritmoState:{get:()=>()=>({save:structuredClone(own()),round:round?{id:round.id,echo:round.echo,duo:!!round.duo,ghost:!!round.ghost,samples:round.rec?.pts.length||0,every:round.rec?.every||0}:null,hidden:hideSignals(),drawn:{...drawn},combo:combo.streak,trail:trail.length,fading:!!fade,finished:finished?structuredClone(finished):null,
    duel:duel?{i:duel.i,n:duel.list.length,phase:duel.phase?{kind:duel.phase.kind,id:duel.phase.id,start:duel.phase.start,end:duel.phase.end,pattern:[...duel.phase.pattern],steps:[...(duel.phase.steps||[])],wrong:duel.phase.wrong||0}:null,score:{...duel.score},center:{...duel.center}}:null,open:open()})}});
 }

@@ -18,7 +18,7 @@ export function rides(wave,pos,beatTime,{band=SURF_BAND}={}){return !!wave&&Math
 export function normalizeSurf(raw){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
  return {points:Number.isFinite(q.points)?Math.max(0,q.points):0,streak:Number.isInteger(q.streak)?Math.max(0,q.streak):0,best:Number.isInteger(q.best)?Math.max(0,q.best):0,rides:Number.isInteger(q.rides)?Math.max(0,q.rides):0,n:Number.isInteger(q.n)?Math.max(0,q.n):0,gold:q.gold===true,opened:q.opened===true,hinted:q.hinted===true};}
 export function initialize(runtime){
- const goal=()=>SURF_GOAL*(runtime.placeGoalScale?.()||1),band=()=>runtime.placeRun?.()?.maestro?SURF_MAESTRO_BAND:SURF_BAND;
+ const goal=()=>SURF_GOAL*(runtime.placeGoalScale?.()||1),band=()=>runtime.placeRun?.()?.maestro?SURF_MAESTRO_BAND:runtime.tranquiloValue?.('surfBand',SURF_BAND)??SURF_BAND;
  let owner=null,state=null,misses=0,shiver=0,push=null;const waves=[],splashes=[],toBar=[];
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||(runtime.S.journey={});if(owner!==runtime.S||j.surf!==state){owner=runtime.S;j.surf=normalizeSurf(j.surf);state=j.surf;waves.length=0;splashes.length=0;toBar.length=0;push=null;}return state;}

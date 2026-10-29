@@ -32,7 +32,7 @@ export function guideStep(state,pos,now,dt,{goal=GUIDE_GOAL,speed=GUIDE_SPEED}={
   state.boats=state.boats.filter(b=>!home.includes(b));state.docked+=home.length;state.best=Math.max(state.best,convoy);state.points=Math.min(goal,state.points+gained);guideFill(state);}
  return {gained,docked};}
 export function initialize(runtime){
- const goal=()=>GUIDE_GOAL*(runtime.placeGoalScale?.()||1),followBars=()=>runtime.placeRun?.()?.maestro?GUIDE_MAESTRO_FOLLOW:GUIDE_FOLLOW_BARS;
+ const goal=()=>GUIDE_GOAL*(runtime.placeGoalScale?.()||1),followBars=()=>runtime.placeRun?.()?.maestro?GUIDE_MAESTRO_FOLLOW:runtime.tranquiloValue?.('guideFollow',GUIDE_FOLLOW_BARS)??GUIDE_FOLLOW_BARS;
  let owner=null,state=null,misses=0,shiver=0,goldPulse=0,last=null,flash=null;const glows=[],toBar=[];
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||(runtime.S.journey={});if(owner!==runtime.S||j.guide!==state){owner=runtime.S;j.guide=normalizeGuide(j.guide);state=j.guide;glows.length=0;toBar.length=0;last=null;}

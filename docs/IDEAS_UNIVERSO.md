@@ -338,6 +338,10 @@ Construido en la rama `jay/ritmo`, a petición de Jay. No es una fase de este ca
 - **10 · Duelo con un púlsar:** sin construir. El Duelo final es otra cosa: un nivel en el centro del anillo, con su ★, tras los once.
 - **103 · Confeti tras 100 aciertos:** sin construir. El combo de Ritmo es una estela desde 8 aciertos, solo dentro de una ronda.
 
+#### Con Luca (alpha.239)
+
+Construido en la rama `jay/con-luca` (sobre `jay/ritmo`), a petición de Jay, para jugar con Luca. No es una fase de este catálogo ni una idea numerada: son el **Reto entre dos** (dos jugadores en el mismo teléfono, una marca de tiempo por lugar, el fantasma del rival) y el **Modo tranquilo para niños** (sin reloj, señales grandes, ★ sin ★★) ([El mundo](MUNDO.md#con-luca)). Sigue las reglas: el siguiente paso en blanco, salir sin perder nada, lo inacabado guardado, sin castigos, la música base intacta, el cubo pequeño, sin chispas. Relación con el catálogo: ninguna idea queda construida por esto; el universo sigue sin humanos (los jugadores son un apodo y un símbolo, no personajes).
+
 ### F3 · Instrumentos del cosmos (1–10, 70–79)
 
 - **Qué entra:** los veinte instrumentos, por tandas de cinco.
