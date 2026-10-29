@@ -75,7 +75,7 @@ export function initialize(runtime) {
     const rhythm=Object.keys(runtime.S.rhythmFound||{}).filter(k=>RHYTHM_ELEMENTS[k]);
     const rhythmCard=rhythm.length?card('Paisaje de percusión',rhythm.map(k=>RHYTHM_ELEMENTS[k].name).join(' · '),''):'';
     const fold=(name,html)=>html?`<details class="journal-section" data-journal-detail="${escape(name)}"><summary>${escape(name)}</summary>${html}</details>`:'';
-    const records=fold('Recuerdos y vínculos',(runtime.rewardCollectionCard?.()||'')+(runtime.livingStoryCard?.()||'')+(runtime.livingCard?.()||'')+(runtime.worldMemoryCard?.()||'')+(runtime.voiceDiaryCard?.()||'')+(runtime.petCard?.()||'')+(runtime.cultureCard?.()||''));
+    const records=fold('Recuerdos y vínculos',(runtime.skyStreakCard?.()||'')+(runtime.rewardCollectionCard?.()||'')+(runtime.livingStoryCard?.()||'')+(runtime.livingCard?.()||'')+(runtime.worldMemoryCard?.()||'')+(runtime.voiceDiaryCard?.()||'')+(runtime.petCard?.()||'')+(runtime.cultureCard?.()||''));
     const discoveries=fold('Paisajes vivos',ecologyCard)+fold('Tu recorrido creativo',(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+rhythmCard+installations);
     if(regionCount>regionLimit)runtime.$('journalMore').hidden=false;
     return `<div class="journal-summary"><span><b>${regionCount}</b>Regiones</span><span><b>${favorites.length}</b>Guardados</span><span><b>${Object.keys(data().music.instruments).length}</b>Instrumentos</span></div>`+records+discoveries+(regions.length?regions.map(region=>{

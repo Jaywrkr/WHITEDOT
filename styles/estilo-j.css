@@ -401,6 +401,8 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 @media(max-width:480px){.spark-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.spark-goal{max-width:155px}}
 
 .spark-power{max-width:190px;font:11px/1.5 var(--mono);color:var(--earned);text-align:right}.spark-power button{min-height:26px;padding:2px 6px;font-size:11px}#toast[data-detail="save"]{pointer-events:auto;cursor:pointer}
+/* Carta del universo (alpha.236): a tap closes it; the title in white, the line in the usual grey. */
+#toast[data-detail="carta"]{pointer-events:auto;cursor:pointer}#toast[data-detail="carta"] em{color:#fff;font-style:normal}
 
 .spark-goal,.spark-power button{pointer-events:auto}
 
