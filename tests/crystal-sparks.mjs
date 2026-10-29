@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {initialize,crystalField,normalizeSparks} from '../src/crystal-sparks.js';
+import {crystalFragments} from '../src/crystal-play-model.js';
 import {validateSave} from '../src/save-store.js';
 import {worldIdentity} from '../src/world-identity.js';
 const seedOf=s=>{let h=2166136261;for(const ch of s)h=Math.imul(h^ch.charCodeAt(0),16777619);return h>>>0;};
@@ -24,10 +25,10 @@ for(const size of [1,2,3]){
  }
  r.waves=[];r.autopilotState={mode:'wander',paused:false};for(let i=0;i<20;i++)r.crystalTick(.05);assert.equal(r.S.sparks,expected,'autopilot cannot collect');
  r.autopilotState.paused=true;for(let i=0;i<20;i++)r.crystalTick(.05);
- expected+=o.value;assert.equal(r.S.sparks,expected);r.drawSparkHUD();
+ expected+=crystalFragments(o,false).length;assert.equal(r.S.sparks,expected);r.drawSparkHUD();
  const before=expected;r.waves=[wave('player')];for(let i=0;i<20;i++)r.crystalTick(.05);assert.equal(r.S.sparks,before,'depleted sites never pay twice');
 }
-assert.equal(expected,9);assert.equal(saves,3);assert.equal(hud.sparkTotal.textContent,'✦ 9');
+assert.equal(expected,7,'H1: one spark a fragment (1, 3 and 3)');assert.equal(saves,3);assert.equal(hud.sparkTotal.textContent,'✦ 7');
 r.S.wx=10000;r.crystalTick(.02);r.S.wx=0;r.S.wy=0;r.crystalTick(.02);assert.equal(r.crystalState.near.filter(o=>o.collected).length,3,'travel does not respawn sites');
 const identity=worldIdentity('', 'classic',1),defaults={sparks:0,studio:{},journal:{music:{}}};
 assert.equal(validateSave({},defaults,identity).sparks,0);assert.equal(validateSave({sparks:9},defaults,identity).sparks,9);assert.equal(validateSave({sparks:-2},defaults,identity).sparks,0);

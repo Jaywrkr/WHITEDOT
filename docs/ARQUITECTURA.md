@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Módulos nuevos desde alpha.207: `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»). P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -28,7 +28,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Capítulos y juegos | `journey-chapters.js`, `journey-games.js`, módulos `journey-*` |
 | Reloj, ritmo y frases | `journey-pulse.js`, `journey-rhythm.js` |
 | Rondas, premios y destinos | `places.js`, `places-ring.js`, `refugio-lugares.js` |
-| Finales | `journey-finale.js` (cinco capítulos), `song-stage.js` (once lugares), `song.js` |
+| Finales | `journey-finale.js` (cinco capítulos), `song-stage.js` (once lugares) y `eleven-note.js` (la hoja que le sigue), `song.js` |
 | Chispas y compras | `spark-rules.js`, `sparks-model.js`, `sparks.js`, `crystal-sparks.js` |
 | Personalización | `cube.js`, `cube-shop-model.js`, módulos `cube-shop-*` |
 | Hallazgos y tarjetas | `rare-card-model.js`, `rare-cards.js`, `musical-wonders.js` |

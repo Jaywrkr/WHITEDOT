@@ -43,7 +43,7 @@ try:
   assert page.evaluate('__r.inWorld()')
   assert page.locator('#mHelpW').is_hidden()
   assert page.locator('#mCap').is_hidden()
-  assert page.evaluate('__r.S.sparks')>=10
+  assert page.evaluate('__r.S.sparks')==0,'H1 (alpha.233): the Camino gives light, never ✦'
   for width,height in [(390,844),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(300)
    assert page.locator('#walkDistance').is_hidden(),'panel 10 (P8): the HUD keeps three numbers';wallet=page.locator('#sparkCount').bounding_box()

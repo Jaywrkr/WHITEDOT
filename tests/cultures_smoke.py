@@ -1,4 +1,4 @@
-"""Actual cube mode: a guardian, ordered clues/door, three saved relics, laboratory, vast worlds and visible autopilot."""
+"""Actual cube mode: a guardian, ordered clues/door, three saved relics, laboratory, vast worlds and the autopilot by code (no button since alpha.232)."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -38,9 +38,9 @@ try:
    assert page.evaluate('__testRuntime.S.rareBook.items.filter(c=>c.type==="culture:artifact").length')==3
    assert page.evaluate('__testRuntime.cultureHome().residents.length')==2
    page.screenshot(path=f'/tmp/whitedot-cultures-{width}.png');page.reload();page.wait_for_function('__testRuntime?.labMode');assert page.evaluate('__testRuntime.S.cultures.collections.altiplano')==3
-   # The compact visible control starts/stops travel without sending a sonar.
-   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)");assert page.locator('#bAuto').is_visible()
-   page.locator('#bAuto').click();assert page.evaluate('__testRuntime.autopilotState.mode')=='wander';page.locator('#bAuto').click();assert page.evaluate('__testRuntime.autopilotState.mode') is None
+   # «Paseo musical» has no button any more (Jay, alpha.232, G2); by code it still starts and stops travel.
+   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)");assert page.locator('#bAuto').is_hidden()
+   page.evaluate("__testRuntime.startAutopilot('wander')");assert page.evaluate('__testRuntime.autopilotState.mode')=='wander';page.evaluate("__testRuntime.stopAutopilot()");assert page.evaluate('__testRuntime.autopilotState.mode') is None
    page.evaluate("__testRuntime.labGo('life:golondrina')")
    page.wait_for_function('__testRuntime.body.ready&&!__testRuntime.body.jump&&Math.abs(__testRuntime.body.x-__testRuntime.S.wx)<1')
    page.evaluate("()=>{const r=__testRuntime,f=r.nearbyFlocks(500).find(f=>f.species==='golondrina');window.__flock=f;f.trust=1;f.follow=45;f.formation=119.99;r.body.speed=100;r.body.vx=100}")

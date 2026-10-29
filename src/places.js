@@ -1,13 +1,13 @@
 import {audibleTime} from './journey-pulse.js';
 import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
-import {roundSparks} from './spark-rules.js';
-import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
+import {LEVEL_SPARKS} from './spark-rules.js';
 import {placeTier,layerGrew} from './song.js';
 // The eleven places (plan F4, docs/MUNDO.md). After the Journey each chapter is a place you can play again: a round is
 // the chapter's game from an empty bar, closed by its gold thing. Stars are for going forward and winning: ★ complete,
 // ★★ with 75 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
-// with 70 % on time. Sparks come from playing: each round pays by spark-rules.js. Stars never pay sparks.
+// with 70 % on time. Stars never pay sparks. H1 (Jay, alpha.233): a round pays no sparks either (LEVEL_SPARKS, spark-rules.js):
+// it gives ★ and grows Tu canción; sparks are earned in the open universe.
 // They live in S.lugares: S.places already holds the regions visited, for the map and the Bitácora.
 // Plan H3 (24 October): the ring opens in order, like the tracks of a record: each place after the Journey opens when
 // the one before it is complete. Completing all eleven wins the game; the 33 stars are the master version of your song.
@@ -121,7 +121,7 @@ export function initialize(runtime){
  function grant(id,stars){const s=own(),got=s.stars[id],fresh=stars.map((x,i)=>x&&!got[i]);stars.forEach((x,i)=>{if(x)got[i]=true;});return fresh;}
  // A Journey chapter kept: its ★, and its ★★ if it was played on time with sound.
  function chapterKept(id){const s=own();if(s.readOnly||!WORLD_CHAPTERS.includes(id))return;const j=s.journeyShare[id]||{hits:0,total:0};grant(id,[true,!j.silent&&share(j.hits,j.total)>=RHYTHM_STAR,false]);}
- // The gold thing of a round closed: stars, sparks, record, and the chapter's state back as it was.
+ // The gold thing of a round closed: stars, record, and the chapter's state back as it was (no sparks since H1).
  function finish(id){const s=own(),r=s.run;if(s.readOnly||!r||r.id!==id)return false;
   // Reward, record, personal notes, remix and restored chapter are one durable operation.
   const game=gameKey(id),playing=runtime.S.journey?.[game];
@@ -132,7 +132,7 @@ export function initialize(runtime){
   if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}shown=null;runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
   if(s.rounds.day!==today()){s.rounds.day=today();s.rounds.counts={};}const roundsToday=s.rounds.counts[id]||0;s.rounds.counts[id]=roundsToday+1;
   const stars=roundStars({onTime,maestro:r.maestro,sound}),fresh=grant(id,stars);
-  runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,runtime.S.todayKey);const sparks=creditSparks(runtime.S,roundSparks(onTime,{maestro:r.maestro,roundsToday}));
+  const sparks=LEVEL_SPARKS;
   const extra=r.remix?runtime.remixDone?.(onTime)||null:null;
   // Panel 10 (P6, D1-B): the best share grows the song's layer, so only a round with sound raises it (without sound
   // every pulse counts and the share says nothing of the beat).
@@ -160,18 +160,20 @@ export function initialize(runtime){
  function abandon(){const s=own(),r=s.run;if(!r||s.readOnly)return false;const key=gameKey(r.id),playing=runtime.S.journey?.[key],position={wx:runtime.S.wx,wy:runtime.S.wy},tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;restore(r);s.run=null;back(r.from);
   if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
   runtime.narrate?.('abandon');runtime.hud?.();return true;}
- // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
+ // The round's card: the three stars, what each asks, and the time. No sparks (H1). Silent buttons.
  function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime),near=!r.maestro&&r.sound&&!own().stars[r.id][1]?nearMiss(r.onTime):null;box.toggleAttribute?.('data-near',!!near);
   runtime.$('placeTitle').textContent=(PLACES.find(p=>p.id===r.id)?.name||r.id)+' · '+(r.maestro?'Maestro':r.remix?'Remezcla':'Completo');
   runtime.$('placeStars').setAttribute('aria-label','Tu colección de estrellas');runtime.$('placeRows').setAttribute('aria-label','Esta ronda');runtime.$('placeStars').innerHTML='<small>Tu colección</small>'+['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
   runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,near?`<li class="place-near">A ${near} de ★★</li>`:'',`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.grew?`<li>Tu capa de ${PLACES.find(p=>p.id===r.id)?.name||r.id} creció.</li>`:'')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
-  runtime.$('placeEarned').textContent=`${roundTime(r.ms)} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
+  runtime.$('placeEarned').textContent=`${roundTime(r.ms)}${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
   // Panel 10 (P4, Chen, Matsuura, Pope): the card speaks only of the round; new achievements wait in the Bitácora.
   runtime.quietAchievements?.();const nar=runtime.$('placeNarrator');if(nar){nar.hidden=true;nar.textContent='';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
   // The next track on the path, straight from the card (plan H3); after the eleven, the place nearest its next star.
   // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
-  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
+  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}
+  // Jay (alpha.232, G1): one white button, the one that follows; with no next place on the path, «Otra vez».
+  runtime.$('placeAgain')?.classList?.toggle('gold',!nb||nb.hidden);}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
   placesAllComplete:{get:()=>()=>allComplete(own())},placeGoalScale:{get:()=>()=>(run()?.maestro?MAESTRO_GOAL:1)*(runtime.rapidScale||1)},placeNext:{get:()=>()=>nextGoal(own(),runtime.S.journey)?.id||null},placeCardDue:{get:()=>()=>!!cardDue&&cardDue===shown&&!run()},placeFinaleClosed:{get:()=>finaleClosed},roundTick:{get:()=>()=>roundTick(run(),runtime.S.sound!==false)},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }

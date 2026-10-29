@@ -115,7 +115,7 @@ try:
   assert page.evaluate('__r.sparkEconomy.earned-__r.sparkEconomy.spent===__r.S.sparks')
   # K2: outside timing still gives the base; the breaking pulse carries its bonus.
   amounts=page.evaluate("""()=>{const r=__r;r.S.sound=true;const base=r.sparkRhythmPulse(false);if(base!==1)throw Error('off-time base missing');return [base,2,3].map((mult,i)=>{const o={id:'k2:browser:'+i,x:r.S.wx,y:r.S.wy,size:1,value:1},before=r.S.sparks;r.crystalTransaction(o,'hit',false,null,false,mult);r.crystalTransaction(o,'collect');r.crystalTransaction(o,'collect');return r.S.sparks-before;});}""")
-  assert amounts==[1,2,3],amounts
+  assert amounts==[1,2,3],amounts  # a saved ×3 (before H1) still pays its fragments ×3
   paid=page.evaluate('__r.S.sparks');keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick')
   assert page.evaluate('__r.S.sparks')==paid,'collected rewards survive reload exactly once'
   assert not errors,errors

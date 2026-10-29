@@ -40,9 +40,23 @@ const rebasedAE=new Set(['src/chapter-test.js','src/crystal-sparks.js','src/jour
 // contracts below are untouched.
 const approvedF1='10c3c64ee64778c034885f05b0e51912faf0289b';
 const rebasedF1=new Set(['src/cube.js','src/main.js','src/render.js','src/universe-mischief.js']);
+// Jay's fixes G1–G3 after alpha.231 (28 Oct 2026, alpha.232): main loads the note after the eleven places, the «Paseo
+// musical» achievement is retired with its button, and the offline shell lists one new module. These protected files
+// and the shell are held to that commit; the music's contracts below are untouched.
+const approvedG='cff410355ceff34c96c103e5b4d535018b477882';
+const rebasedG=new Set(['src/achievement-metadata.js','src/main.js']);
+// H1 · Chispas solo en el universo (Jay, 28 Oct 2026, alpha.233): levels give ★ and the song, never ✦ (rounds, remix,
+// the Camino, nothing paid inside a level, the ✦ counter hidden there); the open universe pays more (crystals ×3,
+// encounters, sky, activities, mischief, wild spark); help texts in English; the offline shell only changes its key.
+// Jay's correction (PR #374): no inflation, a loose spark 1 (2 on time), the rest by one rule (base × difficulty ×
+// distance × rarity). These protected files and the shell are held to that commit, after the merge of main (alpha.232,
+// with G), so G's changes (main.js, the shell's new module) are in it; the music's contracts are untouched.
+const approvedH1='00cbf87dd7d25e0d2233c9f57aa2a4bd3c0f8122';
+const rebasedH1=new Set(['src/crystal-play-model.js','src/crystal-sparks.js','src/i18n-en.js','src/live-encounters-model.js','src/sky-map-model.js','src/spark-rules.js','src/sparks.js','src/universe-activities.js','src/universe-mischief.js','src/wild.js']);
 // H2 · Refugio simple (Jay, 28 Oct 2026, alpha.234): the house plays its objects only while you listen (house-audio.js,
 // same notes and rooms), the Prism and the Taller's disc leave Eco for «Más» (house-capsules.js) and one notice replaces
-// the ready-capsule line (house-guide.js); the offline shell lists one new module. Held to that commit.
+// the ready-capsule line (house-guide.js); the offline shell lists one new module. Held to the merge of main (alpha.233,
+// with G and H1) into jay/h2-refugio, so the shell holds every module once.
 const approvedH2='bde3f924200327e22870a5167757f02eb440b897';
 const rebasedH2=new Set(['src/house-audio.js','src/house-capsules.js','src/house-guide.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
@@ -59,7 +73,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedH2.has(file)?approvedH2:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
@@ -68,7 +82,7 @@ sameSection('src/journey-finale.js','export const CHAPTER_COLORS','export functi
 sameSection('src/journey-pulse.js',' function judge(',' function draw(','pulse judgement, note selection and recorded timing; Q2 passes the heard time to the games',approvedQ);
 sameSection('src/journey-garden.js','import {calmMotion','export const gardenProgress','garden positions, rules, growth and save normalization as approved in P3',approved);
 sameSection('src/places.js','const object=','export function gameObjective','star rules, migration and existing open places; Q3 keeps credited',approvedQ);
-sameSection('src/places.js',' function start(',' // The round\'s card:','round execution, reward, restore and failed-save rollback as approved in P4–P6, Q2 and Q3',approvedQ);
+sameSection('src/places.js',' function start(',' // The round\'s card:','round execution, reward, restore and failed-save rollback as approved in P4–P6, Q2 and Q3; H1 takes the sparks out of the reward',approvedH1);
 sameSection('src/collection-garden.js',' function build(',' function definition(','successful card voices, instruments, timbres and garden score');
 sameSection('src/journey-rhythm.js','export const RHYTHMS','export function initialize','all rhythm patterns, judgement grid and timing rules');
 sameSection('src/house.js',' function brush(',' function cubeAt(','Refugio object proximity and audible brush scheduling');

@@ -19,8 +19,8 @@ assert.equal(liveSummary({kind:'polilla',result:'caught'},15),'Polilla · atrapa
 assert.equal(liveSummary({kind:'ola',result:'hit'},0),'Ola · te alcanzó · sin premio');assert.equal(liveSummary({kind:'ola',result:'safe'},15),'Ola · a salvo · +15 ✦');
 assert.equal(liveSummary({kind:'motas',result:'done'},10),'Motas · hecho · +10 ✦');assert.equal(liveSummary({kind:'motas',result:'escaped'},0),'Motas · sin terminar · sin premio');
 assert.equal(liveSummary({kind:'polilla',result:'escaped'},0),'Polilla · se escapó · sin premio');assert.equal(liveOutcome({kind:'nada',result:'caught'}),'');
-// Rules, rewards and frequency as they were.
-assert.deepEqual({...LIVE_REWARD},{base:10,onTime:15});assert.deepEqual({...LIVE_EVERY},{min:60,max:90});assert.equal(LIVE_FAREWELL,1.4);
+// Rules and frequency as they were; rewards by the universe's rule since H1 (alpha.233).
+assert(LIVE_REWARD.onTime>LIVE_REWARD.base);assert.deepEqual({...LIVE_EVERY},{min:60,max:90});assert.equal(LIVE_FAREWELL,1.4);
 // The controller: the notice at the start, the goodbye while it fades, then the summary, each for its time.
 const seedOf=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 const BIOMES=LIVE_ENCOUNTERS.filter(d=>d.verb==='perseguir').map(d=>({id:d.biome}));
@@ -31,7 +31,7 @@ const tick=(r,seconds)=>{for(let i=0;i<Math.round(seconds/.05);i++)r.liveTick(.0
 {const r=game();assert(r.liveEncounterSpawn('polilla'));let st=r.liveEncounterState();assert.equal(st.title,'Polilla de luz · atrápala');assert.equal(st.hint,liveDefinition('polilla').line);assert.equal(st.summary,'');
  // Caught with a pulse on time: a summary with its sparks, once the burst is over; the notice goes as soon as it ends.
  const s=st.scene;r.waves.push({x:s.x,y:s.y,origin:'player',beat:true});r.liveTick(.05);st=r.liveEncounterState();assert.equal(st.scene.stage,'caught');assert.equal(st.title,'');
- tick(r,LIVE_FAREWELL+.1);st=r.liveEncounterState();assert(!st.scene);assert.equal(st.summary,'Polilla · atrapada · +15 ✦');assert.equal(r.S.sparks,15);
+ tick(r,LIVE_FAREWELL+.1);st=r.liveEncounterState();assert(!st.scene);assert.equal(st.summary,'Polilla · atrapada · +8 ✦');assert.equal(r.S.sparks,8);
  tick(r,LIVE_SUMMARY+.1);assert.equal(r.liveEncounterState().summary,'','the summary goes after its time');}
 {const r=game();assert(r.liveEncounterSpawn('ola'));tick(r,.2);assert.equal(r.liveEncounterState().title,'Ola gigante · llega al anillo');
  tick(r,LIVE_NOTICE);assert.equal(r.liveEncounterState().title,'','the notice is short');

@@ -44,7 +44,7 @@ try:
   assert page.evaluate('__r.inWorld()')
   assert page.locator('#mHelpW').is_hidden()
   assert page.locator('#mCap').is_hidden()
-  assert page.evaluate('__r.S.sparks')>=10
+  assert page.evaluate('__r.S.sparks')==0,'H1 (alpha.233): the Camino gives light, never ✦'
   page.evaluate("""async()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.stopAutopilot?.();r.noticeLane.quietRoutine();const {totemCell,TOTEMS}=await import('/src/sculpture-totems-model.js'),{crystalField}=await import('/src/crystal-sparks.js');let site=null;for(let x=-20;x<20&&!site;x++)for(let y=-20;y<20&&!site;y++)site=totemCell(x,y,r.seedOf).find(o=>TOTEMS[o.kind].action==='guide'&&!crystalField(o.x,o.y,r.seedOf).some(c=>Math.hypot(c.x-o.x,c.y-o.y)<220));if(!site)throw Error('Missing guide');window.site=site;r.S.wx=site.x;r.S.wy=site.y-40;window.beforeTotem=r.S.sparks;}""")
   page.wait_for_timeout(800);page.mouse.click(30,422)
   page.wait_for_function('__r.S.sparks===beforeTotem+2')

@@ -46,9 +46,9 @@ try:
    # The bar full: the gold tree, and one pulse on time ends the round.
    page.evaluate("()=>{__r.S.journey.garden.points=__r.journeyGarden().goal;}");page.wait_for_function("!!__r.journeyGarden().tree",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
-   last=page.evaluate('__r.places().last');assert last['id']=='jardin' and last['stars'][0] and last['sparks']>=60,last
+   last=page.evaluate('__r.places().last');assert last['id']=='jardin' and last['stars'][0] and last['sparks']==0,last
    page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.evaluate('__r.places().stars.jardin[0]')
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Jardín on phone and desktop: ?lugar=jardin sows and grows on time only, the bar follows the round in both screen modes, the gold tree ends it with stars, sparks and its card',flush=True)
+ print('PASS Jardín on phone and desktop: ?lugar=jardin sows and grows on time only, the bar follows the round in both screen modes, the gold tree ends it with stars and its card, no sparks (H1)',flush=True)
 finally:server.shutdown()

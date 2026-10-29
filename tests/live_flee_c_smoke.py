@@ -27,5 +27,5 @@ try:
   page.evaluate('__r.journeyFinale()');page.wait_for_function('__r.journeyFinaleState().running',timeout=5000)
   assert not page.evaluate("__r.liveEncounterSpawn('pozo')"),'not under the finale'
   assert not errors,errors;page.close();browser.close()
- print('PASS living encounters, batch 2 (c): llamaradas, pozo and agujero forced with «?encuentro=», ahead with their line; out with pulses on time 15 ✦ (Bitácora and one notice the first time), on foot 10 ✦, reached nothing given or taken and a short nudge; never in rounds, chapters or the finale; screenshots '+json.dumps(shots),flush=True)
+ print('PASS living encounters, batch 2 (c): llamaradas, pozo and agujero forced with «?encuentro=», ahead with their line; out with pulses on time more ✦ (Bitácora and one notice the first time), on foot its ✦, reached nothing given or taken and a short nudge; never in rounds, chapters or the finale; screenshots '+json.dumps(shots),flush=True)
 finally:server.shutdown()

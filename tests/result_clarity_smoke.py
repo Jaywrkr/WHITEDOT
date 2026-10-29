@@ -21,7 +21,9 @@ try:
    assert 'Tu colección' in p.inner_text('#placeStars') and 'Esta ronda' in p.inner_text('#placeRows')
    assert '74,6 % / 75 % a tiempo' in p.inner_text('#placeRows')
    assert not p.evaluate('__r.places().last.stars[1]')
-   assert p.inner_text('#placeEarned').startswith('0:59 ·'),p.inner_text('#placeEarned')
+   assert p.inner_text('#placeEarned').startswith('0:59'),p.inner_text('#placeEarned')
+   # H1 (Jay, alpha.233): the round's card shows ★ and the time, never ✦.
+   assert '✦' not in p.inner_text('#mPlace') and 'chispa' not in p.inner_text('#mPlace').lower(),p.inner_text('#mPlace')
    assert p.locator('#mPlace .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
    p.locator('#placeAgain').click();p.wait_for_function('__r.placeRun()?.id==="lago"')
    p.evaluate("()=>{for(let i=0;i<4;i++)__r.placeHear('lago',i<3,{});__r.placeFinish('lago');}")

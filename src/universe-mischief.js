@@ -4,7 +4,7 @@ import {drawMischief,drawMischiefClue} from './universe-mischief-art.js';
 import {crystalField} from './crystal-sparks.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
-import {MISCHIEF_SPARKS} from './spark-rules.js';
+import {mischiefReward} from './spark-rules.js';
 export function playMischiefNote(r,index,time,source=null){
  if(!r.S.sound||r.ac?.state!=='running')return false;
  const d=r.regionOfPos(source?.x??r.S.wx,source?.y??r.S.wy),tones=r.chordTones(),instrument=musicFamily(d.genre)?.leads[0]||'p_gutguitar';if(!tones.length)return false;
@@ -30,13 +30,14 @@ export function initialize(r){
   const before={mischief:structuredClone(q),sparkEconomy:structuredClone(economy),sparks:r.S.sparks,rewards:r.S.rewards?structuredClone(r.S.rewards):undefined};
   q.done[s.id]={kind:s.kind,at:r.S.todayKey};q.counts[s.kind]=Math.min(100000,(Number.isSafeInteger(q.counts[s.kind])?q.counts[s.kind]:0)+1);for(const flag of s.flags)q.tricks[flag]=true;
   if(s.target?.kind&&s.kind==='dance')q.sculptures[s.target.kind]=true;if(s.festival)q.tricks.festivalManager=true;
-  const amount=creditSparks(r.S,MISCHIEF_SPARKS);economy.log.push({title:MISCHIEF.find(d=>d.id===s.kind).name,text:'Encuentro completado · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
+  const amount=creditSparks(r.S,mischiefReward(s.kind,s.x,s.y));economy.log.push({title:MISCHIEF.find(d=>d.id===s.kind).name,text:'Encuentro completado · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
   if(r.save()===false){Object.assign(r.S,before);return false;}s.paid=true;s.reward=amount;r.showSparkPickup?.(amount,{x:r.S.wx,y:r.S.wy});s.notes=[6];r.mischiefCompletionCue?.({kind:s.kind,id:s.id,amount});return true;
  }
  function music(){if(!scene?.notes.length||queued||!r.S.sound||r.ac?.state!=='running')return;const bar=Math.floor((r.MU.step||0)/16);if(bar!==musicBar){musicBar=bar;musicHits=0;}if(musicHits>=(scene.kind==='farewell'?6:2))return;musicHits++;const s=scene,state=r.S,key=scope,index=s.notes.shift();queued=true;
   r.beatSoon?.(time=>{queued=false;if(scene!==s||state!==r.S||scope!==key||key!==JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie')+':'+r.S.todayKey||!active()||Math.hypot(s.x-r.S.wx,s.y-r.S.wy)>reach(s))return;playMischiefNote(r,index,time,s.kind==='farewell'&&s.relays?.length?s.relays[Math.max(0,index-1)%s.relays.length]:null);},null,'player');
  }
- function tick(dt,paused=false){const q=book();if(!r.inWorld()||r.activityActive){scene=null;queued=false;return;}if(paused||!active()||q.version!==1)return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
+ // H1 (alpha.233): mischief is of the open universe; inside a level (a chapter, a round, the finale) no scene stays or starts.
+ function tick(dt,paused=false){const q=book();if(!r.inWorld()||r.activityActive||r.travelInLevel?.()||r.placeRun?.()){scene=null;queued=false;return;}if(paused||!active()||q.version!==1)return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
   if(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused){scene=null;return;}
   const player={x:r.S.wx,y:r.S.wy};if(scene&&Math.hypot(scene.x-player.x,scene.y-player.y)>reach(scene)){blocked=scene.id;scene=null;cooldown=clock+15;queued=false;}
   // One at a time: while a living encounter runs (live-encounters.js) no scene starts.

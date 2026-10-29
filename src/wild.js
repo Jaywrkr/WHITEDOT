@@ -6,8 +6,9 @@ import {RHYTHMS,PLACE_RHYTHMS} from './journey-rhythm.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
 import {directionPan} from './spatial.js';
 // The wild World (plan F18, docs/MUNDO.md): exploring far gives something every one or two minutes. A wild spark
-// turns up ahead of the cube, singing on the beat from its side (plan H6); five pulses on time beside it within 30 s catch it (15 ✦). And every day one place is
-// remixed: its game with another place's rhythm, worth 30 ✦ more, and 20 more for beating the day's best.
+// turns up ahead of the cube, singing on the beat from its side (plan H6); five pulses on time beside it within 30 s catch it (15 ✦: a
+// spark you chase is worth more than a loose one). And every day one place is remixed: its game with another place's rhythm. Until H1 it paid 30 ✦
+// more, and 20 more for beating the day's best; since H1 it is a level like any round: ★, never ✦.
 export const WILD_AFTER=60000,WILD_SURE=120000,WILD_WALK=1200,WILD_LIFE=30000,WILD_HOPS=5,WILD_REACH=120,WILD_HOP=150,WILD_AHEAD=150,WILD_SPARKS=15;
 export const REMIX_SPARKS=30,REMIX_RECORD=20;
 // Plan H6: the spark is found by ear. It sings on every beat from its side, louder as you come near; the arrow at the
@@ -24,7 +25,7 @@ export function normalizeWild(raw){const q=object(raw)?raw:{},r=object(q.remix)?
 // Today's remix: one open place and a rhythm that is not its own, both from the day's key; null with none open.
 export function dailyRemix(day,places,journey,own=id=>null){const open=REMIX_PLACES.filter(id=>placeOpen(places,id,journey));if(!open.length||!day)return null;
  const id=open[Math.floor(hashKey('remix:place:'+day)*open.length)],pool=REMIX_RHYTHMS.filter(k=>k!==own(id)),rhythm=pool[Math.floor(hashKey('remix:rhythm:'+day)*pool.length)];return {id,rhythm};}
-// What a remixed round pays on top: 30, and 20 more for a better share on time than the day's best.
+// What a remixed round paid on top until H1 (kept for the record): 30, and 20 more for a better share than the day's best.
 export const remixSparks=(onTime,best)=>REMIX_SPARKS+(onTime>best?REMIX_RECORD:0);
 // Should a wild spark turn up now: far enough walked and long enough since the last. `draw` (0–1, drawn once after
 // each spark) places the moment between one and two minutes.
@@ -59,9 +60,8 @@ export function initialize(runtime){
   emit=()=>runtime.pluck(ct[(step/4)%ct.length|0]+24,time,wildGain(d),2),pan=directionPan(spark,S.wx,S.wy,WILD_HEAR*.6);heard++;runtime.withPan?runtime.withPan(pan,emit):emit();}
  // Today's remix, for the Lugares sheet and the places' rounds.
  function remix(){const d=runtime.placesData?.();if(!d)return null;return dailyRemix(today(),d,runtime.S.journey,id=>PLACE_RHYTHMS[id]);}
- // A remixed round closed: what it pays on top, and the day's best kept.
- function remixDone(onTime){const s=own().remix;if(s.day!==today()){s.day=today();s.best=0;}const n=remixSparks(onTime,s.best),record=onTime>s.best;s.best=Math.max(s.best,onTime);s.done++;
-  runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());return {sparks:creditSparks(runtime.S,n),record};}
+ // A remixed round closed: the day's best kept. Since H1 (Jay, alpha.233) a remix is a level and pays no sparks.
+ function remixDone(onTime){const s=own().remix;if(s.day!==today()){s.day=today();s.best=0;}const record=onTime>s.best;s.best=Math.max(s.best,onTime);s.done++;return {sparks:0,record};}
  const remixName=key=>RHYTHMS[key]?.name||key;
  Object.defineProperties(runtime,{drawWild:{get:()=>draw},wildMusicStep:{get:()=>musicStep},wildPulse:{get:()=>pulse},dailyRemix:{get:()=>remix},remixDone:{get:()=>remixDone},remixName:{get:()=>remixName},
   wildState:{get:()=>()=>{const s=own();return {active:active(),heard,caught:s.caught,today:s.today,walked,since:performance.now()-last,spark:spark?{x:spark.x,y:spark.y,hops:spark.hops}:null,remix:remix(),remixBest:s.remix.day===today()?s.remix.best:0};}},

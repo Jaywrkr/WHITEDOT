@@ -42,9 +42,9 @@ try:
     page.evaluate("()=>{const j=__r.S.journey.rebuild;j.stones=[7,7,5,3,7,7,2,1];j.arches[4]=true;}");page.evaluate(f"()=>{{__r.S.wx={g['spots'][0]['x']};__r.S.wy={g['spots'][0]['y']}+60;}}");page.wait_for_timeout(500);page.screenshot(path=os.environ['RUINS_SHOT'].replace('.png',f'-{width}.png'))
    page.evaluate("()=>{__r.S.journey.rebuild.points=__r.journeyRebuild().goal;}");page.wait_for_function("!!__r.journeyRebuild().gold",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
-   last=page.evaluate('__r.places().last');assert last['id']=='ruinas' and last['stars'][0] and last['sparks']>=10,last
+   last=page.evaluate('__r.places().last');assert last['id']=='ruinas' and last['stars'][0] and last['sparks']==0,last
    page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.evaluate('__r.places().stars.ruinas[0]')
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Ruinas on phone and desktop: ?lugar=ruinas lays a stone for three steps of the pattern in a bar beside a pillar, off the pattern is not on time, the bar follows the round in both screen modes, the gold capstone ends it with stars, sparks and its card',flush=True)
+ print('PASS Ruinas on phone and desktop: ?lugar=ruinas lays a stone for three steps of the pattern in a bar beside a pillar, off the pattern is not on time, the bar follows the round in both screen modes, the gold capstone ends it with stars and its card, no sparks (H1)',flush=True)
 finally:server.shutdown()

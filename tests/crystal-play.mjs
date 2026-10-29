@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {LOOSE_SPARK} from '../src/spark-rules.js';
 import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_LIMIT} from '../src/crystal-play-model.js';
 import {crystalField,initialize as crystals} from '../src/crystal-sparks.js';
 import {initialize as economy} from '../src/sparks.js';
@@ -11,7 +12,9 @@ let fail=false,lastSave=null;const messages=[];
 function game(raw=null){const nodes={},r={S:raw||{mode:'world',todayKey:'2026-10-16',wx:0,wy:0,sparks:0,pathCrystals:[]},W:390,H:844,camX:0,camY:0,cx,worldIdentity:{seed:'play-test'},seedOf,waves:[],inWorld(){return this.S.mode==='world';},save(){if(fail)return false;lastSave=structuredClone(this.S);return true;},toast(message){messages.push(message);},$:id=>nodes[id]||={classList:{toggle(){}},addEventListener(){}}};economy(r);crystals(r);r.crystalTick(.05);return r;}
 const run=(r,n)=>{for(let i=0;i<n;i++){r.crystalTick(.05);r.sparkTick(.05);}};
 const tap=(r,o)=>{r.waves=[{x:o.x-10,y:o.y,r:11,prev:9,origin:'player'}];r.crystalTick(.05);r.waves=[];};
-for(const size of [1,2,3]){const o={size};assert.equal(crystalFragments(o,false).reduce((n,p)=>n+p.value,0),[1,3,5][size-1]);assert.equal(crystalFragments(o,true).reduce((n,p)=>n+p.value,0),[1,3,5][size-1]+3);assert.equal(crystalFragments(o,true).filter(p=>p.rare).length,1);}
+// H1 (Jay, alpha.233): each fragment is a loose spark of 1 (a rare one, chased, 3 more); one, three and three fragments as
+// before, so saved masks stay.
+for(const size of [1,2,3]){const o={size};assert.equal(crystalFragments(o,false).length,[1,3,3][size-1]);assert(crystalFragments(o,false).every(p=>p.value===LOOSE_SPARK));assert.equal(crystalFragments(o,false).reduce((n,p)=>n+p.value,0),[1,3,3][size-1]);assert.equal(crystalFragments(o,true).reduce((n,p)=>n+p.value,0),[1,3,3][size-1]+3);assert.equal(crystalFragments(o,true).filter(p=>p.rare).length,1);}
 assert.deepEqual(crystalPlay({id:'path:day:0',size:2},()=>0),{rare:false,runner:false});
 let variant=null,runner=null,root=null,neighbor=null;
 for(let x=0;x<500&&!((variant&&runner&&root));x++){
@@ -31,7 +34,7 @@ assert(rare&&Math.hypot(rare.x-variant.x,rare.y-variant.y)>40,'rare fragments vi
 r.drawCrystals();assert(ink.includes('#77e8ff'));assert(draws.some(d=>d[0]==='fillText'&&String(d[1]).includes('✦')));r.drawSparkCosmetics(0);
 const partial=r.S.sparks,mask=r.savedCrystal(variant.id).fragments;
 fail=true;assert.equal(r.crystalTransaction(variant,'collect',false,rare.index),null);assert.equal(r.S.sparks,partial);assert.equal(r.savedCrystal(variant.id).fragments,mask);fail=false;
-r=game(structuredClone(r.S));assert.equal(r.savedCrystal(variant.id).fragments,mask,'partial collection survives reload');assert.equal(r.S.sparks,partial);r.crystalTick(.05);run(r,50);state=r.crystalState.near.find(p=>p.id===variant.id);const chase=state.particles.find(p=>p.rare);r.S.wx=chase.x;r.S.wy=chase.y;run(r,20);assert(r.savedCrystal(variant.id).collected);assert.equal(r.S.sparks,variant.value+3);const paid=r.S.sparks;run(r,30);assert.equal(r.S.sparks,paid);r=game(structuredClone(lastSave));run(r,30);assert.equal(r.S.sparks,paid,'reload cannot repeat the bonus');
+r=game(structuredClone(r.S));assert.equal(r.savedCrystal(variant.id).fragments,mask,'partial collection survives reload');assert.equal(r.S.sparks,partial);r.crystalTick(.05);run(r,50);state=r.crystalState.near.find(p=>p.id===variant.id);const chase=state.particles.find(p=>p.rare);r.S.wx=chase.x;r.S.wy=chase.y;run(r,20);assert(r.savedCrystal(variant.id).collected);assert.equal(r.S.sparks,crystalFragments(variant,true).reduce((n,p)=>n+p.value,0));const paid=r.S.sparks;run(r,30);assert.equal(r.S.sparks,paid);r=game(structuredClone(lastSave));run(r,30);assert.equal(r.S.sparks,paid,'reload cannot repeat the bonus');
 const old=normalizeSparkEconomy({day:'d',sites:{old:{x:0,y:0,size:3,hits:3,collected:true}}},5,'d');assert.equal(old.sites.old.fragments,7);assert.equal(old.sites.old.rare,false,'legacy depletion never grows a retroactive bonus');
 r=game();r.S.wx=root.x+270;r.S.wy=root.y;r.crystalTick(.05);tap(r,root);run(r,80);assert((r.savedCrystal(neighbor.id)?.hits||0)>=1,'the actual nearby crystal receives the chain');
 const hits=Object.values(r.sparkEconomy.sites).reduce((n,p)=>n+p.hits,0);assert(hits<=CRYSTAL_CHAIN_LIMIT+1,'one root cannot damage an unbounded chain');tap(r,root);run(r,30);assert.equal(Object.values(r.sparkEconomy.sites).reduce((n,p)=>n+p.hits,0),hits,'spent crystals cannot restart a chain');
