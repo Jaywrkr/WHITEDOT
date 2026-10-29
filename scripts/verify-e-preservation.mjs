@@ -57,7 +57,7 @@ const rebasedH1=new Set(['src/crystal-play-model.js','src/crystal-sparks.js','sr
 // same notes and rooms), the Prism and the Taller's disc leave Eco for «Más» (house-capsules.js) and one notice replaces
 // the ready-capsule line (house-guide.js); the offline shell lists one new module. Held to the merge of main (alpha.233,
 // with G and H1) into jay/h2-refugio, so the shell holds every module once.
-const approvedH2='bde3f924200327e22870a5167757f02eb440b897';
+const approvedH2='b8f103e711339f48b1a8cf2f2e8e0de47b3fd273';
 const rebasedH2=new Set(['src/house-audio.js','src/house-capsules.js','src/house-guide.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
