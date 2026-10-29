@@ -36,7 +36,7 @@ export function gardenTarget(state,pos){if(!state?.center||!state?.beds?.length|
  const at=near.find(p=>p.d<=GARDEN_BED_R+18)||near.find(p=>p.stage>0&&p.stage<4&&p.d<=GARDEN_REACH)||near[0],water=at.stage>0&&at.stage<4,move=at.d>(water?GARDEN_REACH:GARDEN_BED_R+18);
  return {...at,water,move,phase:move?'approach':at.stage===4?'harvest':water?'water':'sow'};}
 export function initialize(runtime){
- const goal=()=>GARDEN_GOAL*(runtime.placeGoalScale?.()||1),wiltBars=()=>runtime.placeRun?.()?.maestro?GARDEN_MAESTRO_WILT:GARDEN_WILT_BARS;
+ const goal=()=>GARDEN_GOAL*(runtime.placeGoalScale?.()||1),wiltBars=()=>runtime.placeRun?.()?.maestro?GARDEN_MAESTRO_WILT:runtime.tranquiloValue?.('gardenWilt',GARDEN_WILT_BARS)??GARDEN_WILT_BARS;
  let owner=null,state=null,misses=0,shiver=0,treePulse=0;const glows=[],toBar=[];let lessonOwner=null,lessonAt=0,lastCare=0,lessonDone=false,replay=false,lessonMiss=0;
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||(runtime.S.journey={});if(owner!==runtime.S||j.garden!==state){owner=runtime.S;j.garden=normalizeGarden(j.garden);state=j.garden;glows.length=0;toBar.length=0;}

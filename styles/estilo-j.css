@@ -870,3 +870,27 @@ body.world-mode.activity-open .dock>button#bUniverseMap:not([hidden]){display:no
 #duelStars{display:flex;gap:14px;line-height:1;font-family:system-ui,sans-serif;margin:6px 0 12px;color:var(--faint)}
 #duelStars span{font-size:34px!important;line-height:1}
 #duelStars .got{color:#f0d27a}
+/* Con Luca (alpha.239): the challenge for two. Its sheet on black like a round's end; who plays as two pressed buttons
+   (a white frame = chosen; the one white button is «Jugar»); the mark in white; names and symbols are the players' own. The line while you play sits under the
+   top of the screen, small, white on black; it never covers the cube. The calm switch sits with the others. */
+#mDuo{background:#000}
+.duo-sheet select{width:100%;margin:0 0 10px}
+.duo-ask{margin:6px 0 6px;font-size:12px;color:var(--dim)}
+.duo-players{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+.duo-players button{min-height:48px;font-size:14px}
+.duo-players button{color:var(--dim)}
+.duo-players button[aria-pressed="true"]{color:var(--ink);border:2px solid var(--ink);background:#ffffff14;font-weight:600}
+.duo-mark{margin:4px 0 12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.duo-edit{display:grid;gap:8px;margin:0 0 12px}
+.duo-edit-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px}
+.duo-edit-row button{min-height:44px;font-size:18px;padding:0}
+.duo-edit-row input{min-width:0;min-height:44px;font:14px var(--mono);background:#000;color:var(--ink);border:1px solid var(--line);padding:0 10px}
+.duo-hint{margin:0;font-size:11px;color:var(--dim)}
+.duo-marks{list-style:none;margin:0 0 12px;padding:0;font-size:12px;line-height:1.8;color:var(--dim)}
+.sheet .row>#duoPlay{flex-basis:100%;order:-1}
+.sheet .place-rows .duo-row{color:var(--ink)}
+.duo-who{white-space:nowrap}
+.duo-live{position:fixed;z-index:3;top:calc(env(safe-area-inset-top,0px) + 64px);left:50%;transform:translateX(-50%);margin:0;padding:4px 10px;max-width:calc(100vw - 32px);background:#000;border:1px solid var(--line);font:12px/1.5 var(--mono);color:#fff;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#calmKids{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}
+.duo-live[hidden]{display:none}
+#mPlace .row>#placeDuo:not([hidden]){flex-basis:100%;order:-2}

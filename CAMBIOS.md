@@ -1,5 +1,19 @@
 # Cambios recientes de Kubono
 
+Estado: 29 de octubre de 2026. Código **2.3.0-alpha.239** en la rama `jay/con-luca`. Las entradas describen su revisión, no certifican producción.
+
+
+## Con Luca · 2.3.0-alpha.239
+
+Rama `jay/con-luca`, desde `jay/ritmo` (`14f6627`, alpha.237; PR #378 abierto): **depende de Ritmo** (usa su fantasma). En paralelo va `jay/descubrir` (alpha.238), que esta rama no toca. Aprobado por Jay para jugar con Luca en el mismo teléfono, sin cuentas ni red; ni chispas ni cambios en la música. Guía: [El mundo](docs/MUNDO.md#con-luca).
+
+- **Reto entre dos** (`src/duos.js`, `src/duos-model.js`). Dos jugadores locales (nombre de hasta 8 letras y un símbolo blanco; «Uno» y «Dos» por defecto). Desde Lugares («Reto entre dos ›») o la hoja del portal («Reto»). La hoja dice «Marca de Dos: 0:42 · ¿la superas?»; durante la ronda, «● Uno · 0:12 / 0:42»; el fantasma del rival corre contigo. Al cerrar, sin castigo: «Primera marca.», «¡Nueva marca!», «Empate con la marca.», «Casi: a 1,2 s.» o «A 12,3 s de la marca.», y «Le toca a ▲ Dos» como único botón blanco. Una marca por lugar, con su camino; se borra con dos toques. **Decisión:** el reto es una ronda normal (mismas ★, Tu canción y récord); solo la marca es aparte.
+- **Modo tranquilo para niños** (`src/tranquilo.js`, `src/tranquilo-model.js`). Ajustes → «Modo tranquilo para niños». En las rondas (no Maestro, que se oculta) y en el Viaje: sin reloj (el círculo de la Tormenta espera, el Jardín no se marchita, los Faros siguen 32 compases, los Cristales suenan 64 tiempos, la ola de las Dunas desde 70 u), ventana a tiempo de ±140 ms, la Línea y el aro del cubo más grandes y claros, y lo siguiente marcado con un aro blanco o una flecha en el borde. El cubo sigue pequeño. **Decisión de ★:** jugado así cuenta como sin sonido: ★ sí, ★★ y ★★★ no (la ventana ancha las regalaría); la hoja lo dice. Nada ganado se pierde; se apaga cuando se quiera.
+- **Guardados nuevos** `S.duos` y `S.tranquilo` (versión 1 cada uno). Se conservan campos desconocidos; una versión futura no se toca ni se escribe. `S.retos` (retos de región) no cambia.
+- Cableado: `places-ring.js` carga los dos módulos; `places.js` (solo la hoja: título «Reto», filas, Maestro oculto y el turno; los contratos de reglas y ronda intactos), `ritmo.js` (el fantasma del rival), `journey-pulse.js` (Línea, aro y objetivo; el juicio intacto), `journey-garden.js` (fuera de su contrato), `refugio-lugares.js`, `index.html` (`mDuo`, `duoLive`, `portalDuo`, `placeDuo`, `lugaresDuo`, `calmKids`; ningún id quitado) y `estilo-j.css`.
+- Pruebas nuevas: `tests/luca.mjs`, `tests/luca_reto_smoke.py` y `tests/luca_tranquilo_smoke.py` (390×844 y 1280×800, inglés).
+- Preservación: cambian a propósito `i18n-en.js`, `journey-dance.js`, `journey-guide.js`, `journey-resonance.js` y `journey-surf.js` (una línea cada uno: preguntan su valor tranquilo) y la lista offline de `sw.js` (cuatro módulos), con la capa `approvedL5`. Probado en local; sin CI remoto, sin teléfono ni niños.
+
 Estado: 29 de octubre de 2026. Código **2.3.0-alpha.237** en la rama `jay/ritmo`. Las entradas describen su revisión, no certifican producción.
 
 

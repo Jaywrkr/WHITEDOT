@@ -66,6 +66,8 @@ export function initialize(runtime){
    const acts=document.createElement('span');acts.className='lugar-actions';li.append(name,st,acts,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);acts.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0]||runtime.ringCanTravel?.(p.id))){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);acts.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Ritmo (alpha.237, ritmo.js): «Eco» on each complete place, and the Duelo final once it is open.
   runtime.ritmoLugares?.(list);
+  // Con Luca (alpha.239, duos.js): «Reto entre dos ›» once a place is complete.
+  runtime.duoLugares?.();
   // Jay (28 Oct 2026, alpha.230): «Volver al anillo», always there after the Journey, free; first when you are far away.
   const ring=$('lugaresRing');if(ring){const show=runtime.S.journey?.finished===true&&!d.readOnly&&!runtime.placeRun?.();ring.hidden=!show;ring.classList.toggle('next',show&&!!runtime.ringAway?.());ring.onclick=home;}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
