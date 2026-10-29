@@ -78,7 +78,8 @@ export function initialize(runtime){
   const all=$('duoClearAll');if(all){let asked=false;all.textContent='Borrar todas las marcas';all.onclick=()=>{if(!asked){asked=true;all.textContent='¿Borrar todas? Toca otra vez';return;}if(commit(s=>{s.marks={};}))runtime.toast?.('Marcas borradas.',{force:true});all.textContent='Borrar todas las marcas';asked=false;fill();};}
   $('duoClose').onclick=()=>{box.hidden=true;};box.hidden=false;return true;}
  // Lugares: one line, «Reto entre dos ›», after the Journey (like «Volver al anillo») once a place is complete.
- function lugares(){const link=$('lugaresDuo'),d=places();if(!link)return;const show=writable()&&!!d&&!d.readOnly&&runtime.S.journey?.finished===true&&duoPlaces(d).length>0&&!runtime.placeRun?.();link.hidden=!show;
+ // Far from the ring, «Volver al anillo» leads Lugares; the challenge waits until you are back (and «Cerrar» stays whole).
+ function lugares(){const link=$('lugaresDuo'),d=places();if(!link)return;const show=writable()&&!!d&&!d.readOnly&&runtime.S.journey?.finished===true&&duoPlaces(d).length>0&&!runtime.placeRun?.()&&!runtime.ringAway?.();link.hidden=!show;
   link.onclick=()=>{$('mLugares')&&($('mLugares').hidden=true);if(!open())runtime.toast?.('Ahora no se puede. Inténtalo en el Mundo.',{force:true});};}
  // ritmo.js asks, for a round, which ghost runs: undefined when it is not a challenge; the mark's path (or none) when it is.
  function ghost(run){if(!run)return undefined;adopt();if(!active||active.run!==run)return undefined;return active.mark?.ghost||null;}
