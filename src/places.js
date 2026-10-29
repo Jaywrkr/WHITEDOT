@@ -176,6 +176,8 @@ export function initialize(runtime){
   // The next track on the path, straight from the card (plan H3); after the eleven, the place nearest its next star.
   // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
   const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}
+  // Clean screens (P4): near ★★, only «Otra vez» stands beside «Seguir hacia»; Eco waits in Lugares and at the portal.
+  if(echo&&near&&nb&&!nb.hidden)echo.hidden=true;
   // Jay (alpha.232, G1): one white button, the one that follows; with no next place on the path, «Otra vez».
   runtime.$('placeAgain')?.classList?.toggle('gold',!nb||nb.hidden);}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
