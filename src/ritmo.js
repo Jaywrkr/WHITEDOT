@@ -107,7 +107,8 @@ export function initialize(runtime){
   const S=runtime.S,c=duel.center;
   if(!runtime.inWorld?.()||(S.layer||'superficie')!=='superficie'||runtime.houseActive?.()||runtime.placeRun?.()||!sound()||Math.hypot(S.wx-c.x,S.wy-c.y)>DUEL_LEAVE)quit('Saliste del duelo. No perdiste nada.');}
  function tick(){if(!runtime.S)return;own();track();comboTick();pulseTick();duelTick();}
- setInterval(tick,60);
+ // A timer that never keeps a process alive on its own (the Node tests load the ring).
+ setInterval(tick,60)?.unref?.();
  // ---------- drawing ----------
  const gold=()=>runtime.GOLD||'#f0d27a',drawn={ghost:null};
  // In the ring (places-ring.js): the duel's portal in the centre, white while it is the next thing (a diamond and a
