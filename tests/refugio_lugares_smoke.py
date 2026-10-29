@@ -22,8 +22,13 @@ try:
    assert page.locator('#houseStars').is_visible() and page.inner_text('#houseStars')=='Lugares',page.inner_text('#houseStars')
    if os.environ.get('REFUGIO_SHOT'):page.screenshot(path=os.environ['REFUGIO_SHOT'].replace('.png',f'-{width}.png'))
    # A trophy: its place and stars.
-   hit=next(h for h in page.evaluate('__r.houseLugaresState().hits') if h.get('id')=='lago')
-   page.mouse.click(hit['x']+hit['w']/2,hit['y']+hit['h']/2);page.wait_for_function("__r.houseLugaresState().last==='lago'",timeout=3000)
+   # The shelf is drawn each frame and the camera may still settle on a slow machine: read the trophy again before each tap.
+   for attempt in range(5):
+    hit=next(h for h in page.evaluate('__r.houseLugaresState().hits') if h.get('id')=='lago')
+    page.mouse.click(hit['x']+hit['w']/2,hit['y']+hit['h']/2)
+    try:page.wait_for_function("__r.houseLugaresState().last==='lago'",timeout=1500);break
+    except Exception:
+     if attempt==4:raise
    page.wait_for_function("document.getElementById('toast').textContent.startsWith('Lago ★★☆')",timeout=10000)
    # The wall opens Lugares.
    wall=next(h for h in page.evaluate('__r.houseLugaresState().hits') if h.get('open'))
