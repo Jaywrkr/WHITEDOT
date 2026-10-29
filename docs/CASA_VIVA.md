@@ -30,6 +30,10 @@ Fuente: `src/house-model.js`. Se guardan IDs antiguos para no mover objetos ni i
 - Ya estaban a la vista sin colocar: trofeos y ★ (Eco), tarjetas enmarcadas, constelación de logros, piezas compradas (columnas de la Raíz) y visitas. Nuevo: las constelaciones del Mapa del cielo, hasta 28 en lo alto del Cielo; tocar una dice su nombre.
 - Los objetos se dibujan en blanco: el dorado queda para ★ y ✦ (panel 11, Q1). Un color de cápsula se sigue viendo.
 
+## Cielo de días
+
+Racha suave (alpha.236, rama `jay/volver`; reglas en [El mundo](MUNDO.md#ganas-de-volver)). Encima de la casa, en el cielo libre, una estrella blanca por cada día que jugaste, en orden, de izquierda a derecha y fila a fila; las últimas filas quedan a la vista. Los días seguidos se unen con un hilo fino; el hilo de ahora brilla un poco más y la estrella de hoy respira (quieta con movimiento reducido). En pantalla ancha, sin sitio encima, el cielo va a la derecha del Cielo. El rótulo («19 estrellas · 5 días seguidos», «Juega hoy y se enciende una estrella.» sin estrellas) se mide como los demás y no pisa textos, marco ni la Voz. Tocar el cielo: «Cada día que juegas enciende una estrella. Si faltas, se quedan.». La posición de cada estrella depende solo de su número (`hashKey`), así que la de mañana no mueve las de hoy. No se dibuja de visita en otro refugio. Blanco, no dorado: no es ★ ni ✦.
+
 ## Botones
 
 Tres a la vista, del mismo ancho: **Escuchar**, **Colocar** y **Salir**. Encima, una línea con el siguiente paso: lo nuevo, lo que hace Colocar o el siguiente lugar («Siguiente: Bosque.»).
@@ -55,7 +59,7 @@ Añadir, retirar, guardar/cargar conjuntos y mover posiciones se confirman al es
 
 Modelo de casa versión 2: migra versión 1, conserva campos desconocidos y abre versiones futuras para lectura. El Refugio simple no sube la versión: sus marcas son campos nuevos que una versión anterior conserva sin usar. WH1 conserva compatibilidad con casas de objetos; WH2 añade adornos/tintes. Las visitas son de solo lectura y no mezclan la colección del dueño con la propia.
 
-Módulos: `house-model.js`, `house-auto.js`, `house-view.js`, `house.js`, `house-audio.js`, `house-collection.js`, `house-capsules.js`, `house-guide.js`, `collection-garden.js` y `refugio-lugares.js`.
+Módulos: `house-model.js`, `house-auto.js`, `sky-streak.js` (cielo de días), `house-view.js`, `house.js`, `house-audio.js`, `house-collection.js`, `house-capsules.js`, `house-guide.js`, `collection-garden.js` y `refugio-lugares.js`.
 
 Tienda y apariencia viven solo en Tu cubo (Llevar, Tienda, Chispas), donde se gastan las chispas; el Refugio no tiene accesos a ellas.
 
