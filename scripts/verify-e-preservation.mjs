@@ -83,7 +83,7 @@ const rebasedL5=new Set(['src/i18n-en.js','src/journey-dance.js','src/journey-gu
 // Descubrir (Jay, 29 Oct 2026, alpha.240): rumors and the album of sounds. main starts descubrir.js, the frame gives it its
 // tick, its drawing and the ring of sounds round the cube, and the offline shell lists two new modules. Held to the merge
 // of main (with Ritmo) into jay/descubrir; the music's contracts are untouched (the sounds play on top, measured by render).
-const approvedD='9f7eec27ae24e36e25c675891f1d3def35b5df31';
+const approvedD='68a4553a98bea171dbce9ea63fe78a70b5136b0a';
 const rebasedD=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
