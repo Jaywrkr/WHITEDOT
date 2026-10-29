@@ -25,5 +25,7 @@ const caps=readFileSync(new URL('../src/house-capsules.js',import.meta.url),'utf
 const lugares=readFileSync(new URL('../src/refugio-lugares.js',import.meta.url),'utf8');assert.match(lugares,/lugar-actions/);assert.match(lugares,/más arriba/);
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const id of ['lugaresScrollUp','lugaresScrollHint','lugaresList','houseStars','bAch','mapCv'])assert.match(html,new RegExp(`id="${id}"`));
 const controls=readFileSync(new URL('../src/controls.js',import.meta.url),'utf8');assert.match(controls,/achievementsUnread\?\.\(\)\?'achievements'/);
-const map=readFileSync(new URL('../src/map.js',import.meta.url),'utf8');assert.match(map,/Math\.max\(x1-x0,y1-y0,4\)/);assert.doesNotMatch(map,/y1-y0,12\)/);
+// Since alpha.235 the Bitácora's drawing is the Mapa del universo's still view: it fills its box the same way (at least
+// 16.000 u a side, about four regions, and a 24 px margin).
+const map=readFileSync(new URL('../src/map.js',import.meta.url),'utf8')+readFileSync(new URL('../src/universe-map.js',import.meta.url),'utf8');assert.match(map,/Math\.max\(16000,x1-x0\+RP\(\),y1-y0\+RP\(\)\)/);assert.match(map,/margin:24\*c\.width/);assert.doesNotMatch(map,/y1-y0,12\)/);
 console.log('PASS Refugio y Lugares legibles: one number per room label, the nearer condition, D3 unchanged');

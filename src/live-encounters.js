@@ -86,7 +86,8 @@ export function initialize(r){
   if(scene.drag){r.S.wx+=scene.drag.x*step;r.S.wy+=scene.drag.y*step;}
   if(liveLost(scene)&&was==='run'){const k=q.kinds[scene.kind]||={first:'',caught:0,onTime:0,escaped:0};k.escaped++;if(scene.stage==='hit')k.hit=(k.hit||0)+1;line={text:liveDefinition(scene.kind).bye,until:clock+LIVE_FAREWELL};notice=null;}if(scene.stage!=='run')notice=null;
   if(liveWon(scene))pay();
-  if(liveFinished(scene)&&(liveLost(scene)||scene.paid)){summary={text:liveSummary(scene,scene.reward||0),won:liveWon(scene),until:clock+LIVE_SUMMARY};line=null;scene=null;travel=0;}
+  // Mapa del universo (alpha.235): the encounter stays on the map where you met it.
+  if(liveFinished(scene)&&(liveLost(scene)||scene.paid)){r.mapNoteLive?.({kind:scene.kind,x:scene.x,y:scene.y,won:liveWon(scene)});summary={text:liveSummary(scene,scene.reward||0),won:liveWon(scene),until:clock+LIVE_SUMMARY};line=null;scene=null;travel=0;}
  }
  function draw(){if(!allowed()||!scene&&!line&&!notice&&!summary)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:scene?'':summary?.text||'',clock});}
  Object.defineProperties(r,{

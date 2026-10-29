@@ -4,7 +4,7 @@ Catálogo de 119 ideas para que recorrer el universo sea más divertido. Más **
 
 **Qué es y qué no es.** Jay aprueba el catálogo como dirección. **No autoriza construir nada.** Cada fase empieza solo cuando Jay la elige. Una idea elegida no está construida, probada con personas ni publicada.
 
-**Estado (28 de octubre de 2026):** **F1 «Mapa del cielo» está hecha** en la rama `universo/f1-mapa-del-cielo` (alpha.231), sin PR, sin CI remoto, sin teléfono ni personas. Qué entró y qué quedó para después, en [F1](#f1--constelaciones) y en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Las demás fases siguen sin empezar.
+**Estado (28 de octubre de 2026):** **F1 «Mapa del cielo» está hecha** en la rama `universo/f1-mapa-del-cielo` (alpha.231), sin PR, sin CI remoto, sin teléfono ni personas. Qué entró y qué quedó para después, en [F1](#f1--constelaciones) y en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Las demás fases siguen sin empezar. **El [Mapa del universo](MUNDO.md#mapa-del-universo)** (alpha.235, rama `jay/mapa-universo`, pedido por Jay aparte de las fases) cubre parte de F2: ver [Mapa del universo y F2](#mapa-del-universo-y-f2).
 
 **Las dos direcciones son lentes simuladas.** Como el [panel](PANEL.md), son perfiles hechos a partir de obra pública. No son esas personas ni sus opiniones reales. Las decisiones de Jay mandan.
 
@@ -308,7 +308,7 @@ En curso en otra rama. No es parte de este catálogo. Las demás fases esperan a
 - **Riesgos:** rendimiento (estrellas en la capa lejana), legibilidad (confusión con Púlsares), mezcla (motivos encima) y nombres repetidos.
 - **Bien cuando:** se une una figura sin ayuda; a medias queda guardada; la música queda idéntica en render; postal aprobada.
 - **Hecha (alpha.231, rama `universo/f1-mapa-del-cielo`).** Guía y medidas en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Entró: 28 figuras (las 12 del zodiaco; Osa Mayor, Osa Menor, Casiopea, Cisne y Lira en el cielo del norte; Orión, Cruz del Sur y Can Mayor en el del sur; Gato, Vinilo, Auricular, Cubo, Ballena, Cohete, Guitarra y «La Mano»), colocadas con `hashKey` en celdas de 500 m (más de noche y en Vacío, Púlsares y la región Constelaciones; bandas de 0, 5, 20 y 50 km; Osa Mayor y Osa Menor al norte, Cruz del Sur al sur, zodiaco en su franja); unir en orden con aro blanco y flecha; pulso a tiempo que cuenta doble; nota de la escala por estrella y motivo de 5–8 notas al completar (32,8 dB bajo la música, medido); a medias guardada y retomada; «Soltar» en la Bitácora; una escena a la vez con encuentros vivos y travesuras, con su reloj compartido; 10/15 ✦ la primera vez por figura, repetir no paga; zodiaco → halo de estrellas dorado, en Tu cubo; sección «Mapa del cielo» en la Bitácora por series; atajo `?cielo=`. De la base común entró la línea «A medias» de la Bitácora (regla 5); el arco de transformación (regla 3) no hacía falta (nada se transforma) y el techo de nivel de las capas (regla 7) queda en los valores medidos (estrella 0,012, motivo 0,02), sin un módulo propio.
-- **Quedó para después:** las 60 figuras que faltan hasta las 88; los premios de Cielo del norte, Cielo del sur y Propias; las figuras a medias en el mapa de la Bitácora; la escucha en teléfono con auriculares; una persona que una su primera figura sin ayuda. Orión va en «Cielo del sur» (es ecuatorial; se lee mejor junto a la Cruz y el Can Mayor): Jay puede moverla.
+- **Quedó para después:** las 60 figuras que faltan hasta las 88; los premios de Cielo del norte, Cielo del sur y Propias; las figuras a medias en el mapa de la Bitácora (hecho en alpha.235 con el [Mapa del universo](MUNDO.md#mapa-del-universo)); la escucha en teléfono con auriculares; una persona que una su primera figura sin ayuda. Orión va en «Cielo del sur» (es ecuatorial; se lee mejor junto a la Cruz y el Can Mayor): Jay puede moverla.
 
 ### F2 · Recorrer lejos (59–66, 115–119 y 57)
 
@@ -316,6 +316,18 @@ En curso en otra rama. No es parte de este catálogo. Las demás fases esperan a
 - **Reutiliza:** la distancia de «Tú» en la Bitácora, Favoritos, `landmarks.js` (se oye antes de verse), `clues.js` y el Refugio.
 - **Riesgos:** que las puertas sean saltos libres (rompen la economía de saltos); que haya demasiadas boyas; rendimiento lejos del origen.
 - **Bien cuando:** a 10 km siempre hay algo a la vista; se vuelve de 77 km sin saltos libres; nada se mueve en el mapa.
+
+#### Mapa del universo y F2
+
+Construido en alpha.235 (rama `jay/mapa-universo`), fuera del orden de fases, a petición de Jay. Qué cubre de este catálogo:
+
+- **60 · Rareza por distancia:** los anillos de 5, 20 y 50 km se ven en el mapa con el porcentaje descubierto; un anillo entero queda en dorado. La «banda en la Bitácora» de la idea es este mapa. La rareza por distancia ya existía (Mapa del cielo, `universeReward`).
+- **65 · Balizas:** las balizas son un tipo de hito (`landmarks.js`); el mapa muestra los hitos visitados y los oídos («?»). No se añadieron balizas nuevas.
+- **118 y 57 · Volver de lejos sin saltos libres:** solo con lo que ya existía. «Volver al anillo» y el «Ir» gratis al siguiente lugar desde lejos (alpha.230) se pueden pedir desde la tarjeta del mapa. No hay puertas de gusano nuevas.
+- **62 · Mapas del tesoro (parcial):** «Marcar» deja una marca que la brújula sigue; no hay cadenas ni tesoros.
+- **La niebla** (lo no visitado en negro) no es una idea numerada de este catálogo: la idea 8 es el cristal que graba. Queda registrada como parte del mapa.
+- **F1, quedó para después:** las figuras a medias ya se ven en el mapa.
+- **No cubre:** boyas de luz (59), planetas de un solo timbre (61), postales (63), cápsulas (64), satélites (66), el púlsar del fin (115) ni las escenas 116, 117 y 119.
 
 ### F3 · Instrumentos del cosmos (1–10, 70–79)
 
