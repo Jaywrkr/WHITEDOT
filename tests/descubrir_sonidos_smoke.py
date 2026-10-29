@@ -80,6 +80,8 @@ try:
    assert page.evaluate("__r.discoverState().album.mix")==['lago:pez','lago:ola','lago:burbuja','lago:rana']
    page.click('#soundAlbumList [data-sound-id="lago:rana"]');page.click('#soundAlbumList [data-sound-id="lago:ballena"]')
    assert page.evaluate("__r.discoverState().album.mix")==['lago:pez','lago:ola','lago:burbuja','lago:ballena']
+   # Choosing a sound lets you hear it once on the next beat; let that preview pass before listening to the mix.
+   page.wait_for_timeout(1500)
    page.evaluate("window.__notes=[]");page.click('#soundMixPlay');assert page.inner_text('#soundMixPlay')=='Parar' and page.evaluate("__r.discoverState().mixOn")
    page.wait_for_function("new Set(__notes.filter(n=>n.gain<=.012).map(n=>n.sound)).size>=4",timeout=12000)
    mix=page.evaluate("__notes");assert all(n['gain']<=.012 for n in mix),mix
