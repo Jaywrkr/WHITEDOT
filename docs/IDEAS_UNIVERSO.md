@@ -331,6 +331,13 @@ Construido en alpha.235 (rama `jay/mapa-universo`), fuera del orden de fases, a 
 - **F1, quedó para después:** las figuras a medias ya se ven en el mapa.
 - **No cubre:** boyas de luz (59), planetas de un solo timbre (61), postales (63), cápsulas (64), satélites (66), el púlsar del fin (115) ni las escenas 116, 117 y 119.
 
+#### Ritmo (alpha.237)
+
+Construido en la rama `jay/ritmo`, a petición de Jay. No es una fase de este catálogo: son modos dentro de los once lugares, que dan ★ y nunca chispas ([El mundo](MUNDO.md#ritmo)). Sigue las siete reglas: el siguiente paso en blanco, salir sin perder nada, sin castigos, la música base intacta. Relación con el catálogo:
+
+- **10 · Duelo con un púlsar:** sin construir. El Duelo final es otra cosa: un nivel en el centro del anillo, con su ★, tras los once.
+- **103 · Confeti tras 100 aciertos:** sin construir. El combo de Ritmo es una estela desde 8 aciertos, solo dentro de una ronda.
+
 ### F3 · Instrumentos del cosmos (1–10, 70–79)
 
 - **Qué entra:** los veinte instrumentos, por tandas de cinco.

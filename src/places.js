@@ -162,16 +162,22 @@ export function initialize(runtime){
   runtime.narrate?.('abandon');runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and the time. No sparks (H1). Silent buttons.
  function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime),near=!r.maestro&&r.sound&&!own().stars[r.id][1]?nearMiss(r.onTime):null;box.toggleAttribute?.('data-near',!!near);
-  runtime.$('placeTitle').textContent=(PLACES.find(p=>p.id===r.id)?.name||r.id)+' · '+(r.maestro?'Maestro':r.remix?'Remezcla':'Completo');
+  // Ritmo (alpha.237, ritmo.js): an Eco round says so, and the card says how the ghost went.
+  const ritmo=runtime.ritmoCard?.(r)||null;
+  runtime.$('placeTitle').textContent=(PLACES.find(p=>p.id===r.id)?.name||r.id)+' · '+(r.maestro?'Maestro':r.remix?'Remezcla':ritmo?.echo?'Eco':'Completo');
   runtime.$('placeStars').setAttribute('aria-label','Tu colección de estrellas');runtime.$('placeRows').setAttribute('aria-label','Esta ronda');runtime.$('placeStars').innerHTML='<small>Tu colección</small>'+['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
-  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,near?`<li class="place-near">A ${near} de ★★</li>`:'',`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.grew?`<li>Tu capa de ${PLACES.find(p=>p.id===r.id)?.name||r.id} creció.</li>`:'')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
+  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,near?`<li class="place-near">A ${near} de ★★</li>`:'',`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.grew?`<li>Tu capa de ${PLACES.find(p=>p.id===r.id)?.name||r.id} creció.</li>`:'')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'')+(ritmo?.rows||[]).map(x=>`<li>${x}</li>`).join('');
   runtime.$('placeEarned').textContent=`${roundTime(r.ms)}${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
   // Panel 10 (P4, Chen, Matsuura, Pope): the card speaks only of the round; new achievements wait in the Bitácora.
   runtime.quietAchievements?.();const nar=runtime.$('placeNarrator');if(nar){nar.hidden=true;nar.textContent='';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
+  // Eco (alpha.237): the same place from memory, once it is complete.
+  const echo=runtime.$('placeEcho');if(echo){echo.hidden=!runtime.ritmoEchoOffered?.(r.id);echo.onclick=()=>{box.hidden=true;runtime.ritmoStartEcho?.(r.id,{from:r.from});};}
   // The next track on the path, straight from the card (plan H3); after the eleven, the place nearest its next star.
   // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
   const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}
+  // Clean screens (P4): near ★★, only «Otra vez» stands beside «Seguir hacia»; Eco waits in Lugares and at the portal.
+  if(echo&&near&&nb&&!nb.hidden)echo.hidden=true;
   // Jay (alpha.232, G1): one white button, the one that follows; with no next place on the path, «Otra vez».
   runtime.$('placeAgain')?.classList?.toggle('gold',!nb||nb.hidden);}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},

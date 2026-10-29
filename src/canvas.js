@@ -27,7 +27,7 @@ export function initialize(runtime) {
   // Panel 11 (Q6, D11-B): one gesture in the whole game. In the open Universe the pulse also sounds when the finger goes
   // down; resting 500 ms still opens the scanner and dragging still walks. The explicit finger mode (?dedo, automated
   // tests) keeps its object gestures, which are judged on release.
-  const tapAnywhere=()=>runtime.S.mode==='camino'||runtime.inWorld()&&(!runtime.fingerTouch||(runtime.S.layer||'superficie')==='superficie'&&(!!runtime.placeRun?.()||!!runtime.journeyQuiet?.()&&runtime.S.journey?.finished!==true));
+  const tapAnywhere=()=>runtime.S.mode==='camino'||runtime.inWorld()&&(!runtime.fingerTouch||(runtime.S.layer||'superficie')==='superficie'&&(!!runtime.placeRun?.()||!!runtime.ritmoDuelActive?.()||!!runtime.journeyQuiet?.()&&runtime.S.journey?.finished!==true));
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;
     if(!e.isPrimary||activePointer!==null||runtime.S.mode==="studio")return;
