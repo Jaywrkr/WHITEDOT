@@ -48,7 +48,8 @@ try:
    gold('lugares');page.evaluate(hide)
    # The Refugio: the wall says ★ N / 33 in white and the house bar says «Lugares».
    page.evaluate("__r.landHouse()");page.wait_for_function("__r.houseActive()&&!__r.houseLanding()&&__r.houseLugaresState().hits.length===12",timeout=10000);page.evaluate(hide)
-   assert page.inner_text('#houseStars')=='Lugares',page.inner_text('#houseStars')
+   # Refugio simple (alpha.234): «Lugares» waits under «Más».
+   page.locator('#houseMore > summary').click();assert page.inner_text('#houseStars')=='Lugares',page.inner_text('#houseStars')
    gold('refugio')
    page.evaluate("__r.exitHouse()");page.wait_for_function("!__r.houseActive()",timeout=5000)
    # The map: one word per count.

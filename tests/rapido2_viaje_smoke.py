@@ -100,7 +100,13 @@ try:
   close_help();page.wait_for_function("__r.journeyRelease().active",timeout=10000);n=0
   while not page.evaluate('__r.journeyRelease().light') and n<30:
    page.evaluate("""async()=>{const p=__bot.pos();await __bot.walk(p.x+110,p.y);await __bot.on(true);}""");n+=1
-  page.evaluate('__bot.on()');n+=1;page.wait_for_function('__r.journeyChapter().done.vacio',timeout=5000);actions['vacio']=n;mark(f'Vacío ({n} pulsos)')
+  # A slow machine can miss the «1» with the closing pulse: pulse again, a few times at most, until the chapter closes.
+  for attempt in range(4):
+   page.evaluate('__bot.on()');n+=1
+   try:page.wait_for_function('__r.journeyChapter().done.vacio',timeout=5000);break
+   except Exception:
+    if attempt==3:raise
+  actions['vacio']=n;mark(f'Vacío ({n} pulsos)')
   # 7 · The last portal opens the finale; it plays whole (nobody presses «Saltar») and leaves the free World.
   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=20000)
   page.evaluate("async()=>{const p=__r.journeyChapter().portal;await __bot.walk(p.x,p.y,6);}")

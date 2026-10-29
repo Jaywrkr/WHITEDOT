@@ -23,7 +23,7 @@ try:
   p.evaluate("()=>{Storage.prototype.setItem=originalSet;__r.gardenState.sets=[{name:'Otra voz',cards:[__r.rareCards[1].id],positions:{}}];__r.save();}")
   p.locator('[data-journal-house]').click();p.wait_for_function('__r.houseSettled()')
   p.evaluate("__r.houseWalkTo('jardin',.5)");p.wait_for_function("__r.houseStand().room==='jardin'&&!document.getElementById('houseGardenTools').hidden",timeout=10000)
-  p.locator('#houseGardenTools summary').click();baseline=p.evaluate('JSON.stringify(__r.gardenState)')
+  p.locator('#houseMore > summary').click();p.locator('#houseGardenTools summary').click();baseline=p.evaluate('JSON.stringify(__r.gardenState)')
   p.evaluate("()=>{Storage.prototype.setItem=function(k,v){if(k===__r.saveStore.key)throw Error('quota');return originalSet.call(this,k,v);};}")
   p.locator('#gardenSave').click();assert p.evaluate('JSON.stringify(__r.gardenState)')==baseline
   p.locator('#gardenSlots button').first.click();assert p.evaluate('JSON.stringify(__r.gardenState)')==baseline
@@ -33,6 +33,8 @@ try:
   p.reload();p.wait_for_function('!!window.__r?.gardenState');assert p.evaluate('__r.gardenState.cards.length===1&&__r.gardenState.sets.length===2&&__r.gardenState.extra.kept&&__r.rareCards.length===5')
   # The same transaction also protects real dragging inside the Refugio.
   p.evaluate("()=>{document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);__r.enterHouse();}");p.wait_for_function('__r.houseSettled()');p.evaluate("__r.houseWalkTo('sala',.5)");p.wait_for_function("__r.houseStand().room==='sala'&&__r.houseSettled()",timeout=15000)
+  # Refugio simple (alpha.234): moving is in Colocar.
+  p.locator('#housePlace').click();p.wait_for_timeout(200);p.wait_for_function('__r.houseSettled()')
   def card_point():
    return p.evaluate("()=>{const r=__r,o=r.gardenObjects(r.currentHouse()).find(o=>o.gardenCard&&!o.gardenSeed),b=r.houseRoomRect(o.room);return {x:b.x+o.x*b.w,y:b.y+o.y*b.h};}")
   def drag_card(end):

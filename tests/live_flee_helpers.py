@@ -61,6 +61,8 @@ def flee(browser,kind,shot=False,toast=False):
   page.wait_for_timeout(900);page.evaluate("(()=>{const r=__r;r.waves.push({x:r.S.wx,y:r.S.wy,r:0,prev:0,max:340,n:0,origin:'player',beat:true});})()")
   page.wait_for_timeout(550);path=SHOTS/f"kubono-e2-{d['id']}-390.png";page.screenshot(path=str(path))
  # 1 · Pulses on time: always out, more ✦; the first time, into the Bitácora (and one notice naming it).
+ # Every notice shown from here is kept: on a loaded runner the first-encounter notice can wait behind achievements and pass between two looks.
+ if toast:page.evaluate("()=>{const el=document.getElementById('toast');window.__notices=[];const keep=()=>{const t=el.innerText||'';if(t&&!el.hidden)window.__notices.push(t);};new MutationObserver(keep).observe(el,{childList:true,subtree:true,characterData:true,attributes:true});keep();}")
  before=page.evaluate(STATE,d['id'])
  got=page.evaluate(DRIVE,['pulse',20]);assert got and got['stage']=='safe' and got['onTime'],(d['id'],got)
  page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id']);exp=page.evaluate(EXPECT,True)
@@ -68,7 +70,7 @@ def flee(browser,kind,shot=False,toast=False):
  # Other finds on the way (a crystal, an achievement) may log their own sparks just after.
  assert {'title':d['name'],'text':f'Encuentro vivo · +{exp} chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
  # Achievements earned on the way (a landscape, the World) may show first: the notice waits its turn (as in live_do_helpers.py).
- if toast:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=15000);t=page.locator('#toast').inner_text();assert d['name'] in t and 'Logro' not in t,t
+ if toast:page.wait_for_function("(window.__notices||[]).some(t=>t.includes('Encuentro nuevo'))",timeout=30000);t=next(t for t in page.evaluate('window.__notices') if 'Encuentro nuevo' in t);assert d['name'] in t and 'Logro' not in t,t
  page.wait_for_function(GONE,timeout=5000)
  # 2 · On foot, no pulse: out, its ✦.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])

@@ -803,3 +803,12 @@ html[lang="en"] .super-grid th{max-width:none}
 .eleven-sheet #elevenDone{font-weight:600}
 .eleven-sheet .row>#elevenExplore{flex-basis:100%}
 .lugares-eleven{width:100%;margin:0;text-align:left;font-size:12px}
+/* Refugio simple (Jay, alpha.234): three buttons in sight, the rest under «Más»; «1 nuevo» in white (a state); the menu's
+   Refugio gets one quiet dot while something new waits, like the Bitácora's. */
+.house-panel .house-main{grid-template-columns:repeat(3,minmax(0,1fr))}
+.house-panel .house-new{display:inline-block;margin-right:8px;padding:2px 6px;background:#fff;color:#000}
+.house-panel .house-new[hidden]{display:none}
+.house-panel .house-more-tools>summary{padding:8px 4px;min-height:28px;cursor:pointer;color:#ffffffcc}
+.house-panel .house-more-tools[open]>summary{margin-bottom:6px}
+#bStudio.has-new span::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;vertical-align:middle;background:var(--ink)}
+.house-panel .house-more .house-stars{min-height:44px;margin-right:0;padding:8px 4px;font-size:11px}

@@ -22,7 +22,7 @@ CONTRAST="""async([png,texts])=>{const img=new Image();img.src='data:image/png;b
 def cross(a,b):return a['x']<b['x']+b['w'] and b['x']<a['x']+a['w'] and a['y']<b['y']+b['h'] and b['y']<a['y']+a['h']
 def seg(l):
  x0,x1=sorted([l['x0'],l['x1']]);y0,y1=sorted([l['y0'],l['y1']]);return {'x':x0-.5,'y':y0-.5,'w':x1-x0+1,'h':y1-y0+1}
-ROOMS=('ECO','JARDÍN DE VOCES','CIELO','RAÍZ')
+ROOMS=('ECO','JARDÍN','CIELO','RAÍZ')
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
@@ -52,7 +52,9 @@ try:
    assert rooms,(tag,'room labels drawn')
    for t in rooms:assert len(re.findall(r'\d+',t))<=1,(tag,'one number per room label',t)
    if tag=='tel':
-    assert any(t.startswith('CIELO · FALTA') for t in rooms),rooms
+    # Refugio simple (alpha.234): a closed room shows its name above and, in its middle, only the nearer condition.
+    opens=[t['text'] for t in texts if re.search(r'\d',t['text']) and ('SE ABRE' in t['text'] or 'MÁS' in t['text'])]
+    assert opens and all(len(re.findall(r'\d+',t))==1 for t in opens),[t['text'] for t in texts]
     assert lay['voice'] is not None and v['y']>=max(t['y']+t['h'] for t in texts if t['text'].startswith(ROOMS)),(tag,'the Voz under the last room label',v,lay['voice'])
    page.evaluate("__r.exitHouse()");page.wait_for_function("!__r.houseActive()",timeout=5000);page.evaluate(hide)
    # --- Lugares: Llanura in sight or a cue upward; ★ of 10 px or more; one width and the name's line for every action.
