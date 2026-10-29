@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {initialize} from '../src/places.js';
-import {ROUND_BASE} from '../src/spark-rules.js';
+import {LEVEL_SPARKS} from '../src/spark-rules.js';
 import {initialize as stick,STICK_GOAL} from '../src/journey-stick.js';
 const original=setTimeout;globalThis.setTimeout=()=>0;
 try{
@@ -12,6 +12,6 @@ try{
  // The real gold handler retains its state reference while a failed finish rolls back.
  let blocked=false,g;
  const a={S:{wx:0,wy:0,sparks:0,sound:false,todayKey:'2026-10-25',journey:{finished:true,stick:{points:7}}},BIOMES:[{id:'llanura'}],biomeOfPos:()=>0,regionOfPos:()=>({}),MU:{},save:()=>!blocked,$:()=>null,registerJourneyGame:(id,game)=>g=game,journeyGamePlaying:()=>true};
- initialize(a);a.journeyComplete=id=>a.placeFinish(id);stick(a);assert(a.startPlace('llanura'));a.journeyStick();a.S.journey.stick.points=STICK_GOAL;blocked=true;assert.equal(g.pulse(true),null);assert.equal(a.S.journey.stick.swallowed,false,'failed gold close stays retryable through its real game handler');blocked=false;assert.equal(g.pulse(true),'swallow');assert.equal(a.placeRun(),null);assert(a.places().stars.llanura[0]);assert.equal(a.S.sparks,ROUND_BASE,'paid exactly once');
+ initialize(a);a.journeyComplete=id=>a.placeFinish(id);stick(a);assert(a.startPlace('llanura'));a.journeyStick();a.S.journey.stick.points=STICK_GOAL;blocked=true;assert.equal(g.pulse(true),null);assert.equal(a.S.journey.stick.swallowed,false,'failed gold close stays retryable through its real game handler');blocked=false;assert.equal(g.pulse(true),'swallow');assert.equal(a.placeRun(),null);assert(a.places().stars.llanura[0]);assert.equal(a.S.sparks,LEVEL_SPARKS,'a level pays no sparks (H1), once or twice');
  console.log('PASS failed entry preserves position and replaced saves cannot show a prior reward card');
 }finally{globalThis.setTimeout=original;}

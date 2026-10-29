@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {initialize} from '../src/universe-activities.js';
-import {ACTIVITY_SPARKS} from '../src/spark-rules.js';
+import {activityReward} from '../src/spark-rules.js';
 import {initialize as texts} from '../src/universe-texts.js';
 import {activityCell,normalizeActivities} from '../src/universe-activities-model.js';
 import {normalizeSparkEconomy} from '../src/sparks-model.js';
@@ -14,10 +14,10 @@ function enter(r){r.S.wx=site.x+200;r.S.wy=site.y;run(r,1);r.S.wx=site.x;run(r,2
 let r=game();r.autopilotState={mode:'wander',paused:false};enter(r);assert(!r.activityActive);r.autopilotState.paused=true;fail=true;enter(r);assert(!r.activityActive);assert(!Object.keys(r.activityState.book.progress).length);fail=false;run(r,50);assert(r.activityActive);
 const original={x:r.S.wx,y:r.S.wy},paused=structuredClone(r.activityState.player);r.activityFrame(0,.05,1,0,true);assert.deepEqual(r.activityState.player,paused);
 function solve(r){const {level:l,player:s}=r.activityState;for(const node of l.nodes){s.x=node.x;s.y=node.y;r.activityFrame(0,.05,0,0);s.x=l.spawn.x;s.y=l.spawn.y;r.activityFrame(0,.05,0,0);}}
-fail=true;solve(r);assert.equal(r.S.sparks,0);assert(!r.activityState.book.done[site.id]);assert(!r.activityState.book.types?.orchestra);const attempts=writes;for(let i=0;i<10;i++)r.activityFrame(0,.05,0,0);assert.equal(writes,attempts,'failed reward writes have backoff');fail=false;for(let i=0;i<45;i++)r.activityFrame(0,.05,0,0);assert.equal(r.S.sparks,ACTIVITY_SPARKS);assert(r.activityState.book.done[site.id]);assert(r.activityState.book.types.orchestra);assert.equal(r.S.sparkEconomy.earned-r.S.sparkEconomy.spent,ACTIVITY_SPARKS);assert.deepEqual({x:r.S.wx,y:r.S.wy},original);
+fail=true;solve(r);assert.equal(r.S.sparks,0);assert(!r.activityState.book.done[site.id]);assert(!r.activityState.book.types?.orchestra);const attempts=writes;for(let i=0;i<10;i++)r.activityFrame(0,.05,0,0);assert.equal(writes,attempts,'failed reward writes have backoff');fail=false;for(let i=0;i<45;i++)r.activityFrame(0,.05,0,0);assert.equal(r.S.sparks,activityReward(site.kind,site.x,site.y));assert(r.activityState.book.done[site.id]);assert(r.activityState.book.types.orchestra);assert.equal(r.S.sparkEconomy.earned-r.S.sparkEconomy.spent,activityReward(site.kind,site.x,site.y));assert.deepEqual({x:r.S.wx,y:r.S.wy},original);
 let p=r.activityState.player,l=r.activityState.level;p.x=l.exit.x;p.y=l.exit.y;r.activityFrame(0,.05,0,0);assert(!r.activityActive);for(const fn of r.pending)fn(0);assert.equal(notes,0,'callbacks from exited places cannot play');
-r=game(structuredClone(r.S));enter(r);solve(r);assert.equal(r.S.sparks,ACTIVITY_SPARKS,'completed places never pay twice after reload');
-delete r.S.activities.types;const legacy=game(structuredClone(r.S));assert(legacy.S.activities.types.orchestra,'legacy deterministic claims restore their completed type without payment');assert.equal(legacy.S.sparks,ACTIVITY_SPARKS);
+r=game(structuredClone(r.S));enter(r);solve(r);assert.equal(r.S.sparks,activityReward(site.kind,site.x,site.y),'completed places never pay twice after reload');
+delete r.S.activities.types;const legacy=game(structuredClone(r.S));assert(legacy.S.activities.types.orchestra,'legacy deterministic claims restore their completed type without payment');assert.equal(legacy.S.sparks,activityReward(site.kind,site.x,site.y));
 const progress=structuredClone(r.S.activities);r=game({...r.S,activities:progress});assert(r.activityState.book.done[site.id]);
 const future={version:8,secret:7};r=game({mode:'world',wx:0,wy:0,layer:'superficie',sparks:0,activities:future});enter(r);assert(!r.activityActive);assert.equal(r.S.activities,future);
 const control={checked:true};r=game();r.$=()=>control;let displayed=0;c.fillText=()=>displayed++;texts(r);c.fillText('visible');assert.equal(displayed,1);control.checked=false;control.onchange();assert.equal(r.S.universeTexts,false);c.fillText('hidden');assert.equal(displayed,1);assert(css.has('universe-texts-off'));fail=true;control.checked=true;control.onchange();assert.equal(r.S.universeTexts,false);assert.equal(control.checked,false);fail=false;r.S.mode='camino';c.fillText('Camino');assert.equal(displayed,2);

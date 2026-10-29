@@ -4,9 +4,18 @@
 // and, at most, one small behaviour; a new verb is one rule.
 // Everything comes from hashKey: no old random sequence is read and nothing on the map moves.
 import {hashKey} from './universe-regions.js';
+import {UNIVERSE_BASE,DIFFICULTY,RARITY,universeReward} from './spark-rules.js';
 export const LIVE_VERSION=1;
-// Paid only on completion, every time: 10 ✦, or 15 ✦ when a pulse on time made the catch.
-export const LIVE_REWARD=Object.freeze({base:10,onTime:15});
+// Paid only on completion, every time, by the universe's rule (spark-rules.js, H1, alpha.233): base 5 × difficulty ×
+// distance from the origin × rarity, ×1.5 when a pulse on time did it. Difficulty is measured: LIVE_FOOT is the share of
+// 40 seeds a bot walking toward it (or toward the white arrow) completes without a pulse, at once and 1.5 s late,
+// averaged (tests/live-encounters.mjs measures it again). 90 % or more is easy, 40 % or more medium, below, hard. Every
+// biome shows up about as often as the others (5–9 % of the map each, the Void 42–44 %), so no encounter is rarer than
+// another: rarity ×1. Until alpha.232 it was 10 ✦, or 15 ✦ on time (E1); H1 first had 30 and 45.
+export const LIVE_FOOT=Object.freeze({tambor:.5,semilla:.66,cometa:.28,eco:.14,estrella:.5,derrumbe:.5,rayos:.5,ondas:.55,llamaradas:.5,agujero:.5});
+export const liveFoot=def=>LIVE_FOOT[def?.id]??1;
+export const liveDifficulty=def=>{const f=liveFoot(def);return f>=.9?DIFFICULTY.easy:f>=.4?DIFFICULTY.medium:DIFFICULTY.hard;};
+export const liveRewardFor=(def,{x=0,y=0,onTime=false}={})=>universeReward(UNIVERSE_BASE.live,{difficulty:liveDifficulty(def),x,y,rarity:RARITY.common,onTime});
 // One every 60 to 90 seconds of travel (time moving in the free World, never paused or standing in a menu).
 export const LIVE_EVERY=Object.freeze({min:60,max:90});
 // Where it appears: ahead of the cube, a little to one side.
@@ -411,6 +420,8 @@ export function stepLive(s,player,dt,env={}){
  return s;
 }
 export const liveFinished=s=>!!s&&s.stage!=='run'&&s.over>=LIVE_FAREWELL;
-export const liveReward=s=>liveWon(s)?(s.onTime?LIVE_REWARD.onTime:LIVE_REWARD.base):0;
+export const liveReward=s=>liveWon(s)?liveRewardFor(liveDefinition(s.kind),{x:s.origin?.x,y:s.origin?.y,onTime:s.onTime}):0;
+// For the economy model only (scripts/spark-economy.mjs): the average reward of the 33 near the origin, off and on time.
+export const LIVE_REWARD=Object.freeze({base:LIVE_ENCOUNTERS.reduce((n,d)=>n+liveRewardFor(d),0)/LIVE_ENCOUNTERS.length,onTime:LIVE_ENCOUNTERS.reduce((n,d)=>n+liveRewardFor(d,{onTime:true}),0)/LIVE_ENCOUNTERS.length});
 // Shortcut for tests (docs/MUNDO.md#herramientas-de-prueba): «?encuentro=polilla» forces that encounter soon.
 export function liveForced(search=globalThis.location?.search){try{const id=new URLSearchParams(search||'').get('encuentro');return BY_ID.has(id)?id:null;}catch(_){return null;}}

@@ -222,7 +222,7 @@ Abreviaturas: *alejarse* = 720 u, como los encuentros vivos. *Nota de encuentro*
 | 42 | Cubo con cara rara | Gesto secreto | Ninguno | Vuelve solo en 10 s | Dos puntos y una línea | Nada | F5 |
 | 101 | Cubo dorado a 100 km | Llegar a 100 km | Boyas de distancia | Se puede quitar en Tu cubo | Cubo dorado (ganado) | Acorde mayor | F5 |
 | 102 | Asteroide secreto con una nota de Jay y Luca | Coordenada secreta | Ninguno | Alejarse | Asteroide con texto | Frase corta | F5 |
-| 103 | Confeti tras 100 aciertos seguidos (ya existe parecido: la racha ×3 desde 8) | 100 a tiempo seguidos | Contador de racha | Pasa solo | Confeti geométrico | Nada extra | F5 |
+| 103 | Confeti tras 100 aciertos seguidos (la racha ×3 desde 8 existió hasta alpha.232) | 100 a tiempo seguidos | Contador de racha | Pasa solo | Confeti geométrico | Nada extra | F5 |
 | 104 | Universo espejado (ya existe parecido: «Gravedad invertida» de `wonders.js`) | Puerta espejo | Arco con el tiempo | Se quita al cruzar otra vez | Mundo reflejado | La música no cambia | F5 |
 | 105 | Palabra secreta en Ajustes (añade un control: decisión de Jay) | Campo de texto | Ninguno | Borrarla | Nada | Nada | F5 |
 | 106 | Escena tras los créditos | Esperar tras el final | Ninguno | Tocar para salir | Cubo en el Abismo | Último acorde | F5 |

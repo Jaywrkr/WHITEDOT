@@ -1,8 +1,8 @@
 """Shared walk for the living encounters of batch 3 (the eleven «hacer»), used by live_do_a_smoke.py, live_do_b_smoke.py
 and live_do_c_smoke.py (three files, so each stays under the 145 s of a browser flow). For each one: the page opens with
 «?anillo=1&encuentro=<id>» in its biome, a few seconds of travel bring it ahead of the cube with its line, and then
-three endings on the same page: done with pulses on time (15 ✦, the Bitácora and its notice the first time), done on
-foot toward the white arrow (10 ✦) and walking away or running out of time (its kind goodbye, nothing given or taken). Sound is off, so the
+three endings on the same page: done with pulses on time (its ✦ by the universe's rule, the Bitácora and its notice the first time), done on
+foot toward the white arrow (a little less, off time) and walking away or running out of time (its kind goodbye, nothing given or taken). Sound is off, so the
 beat is the steady clock. How often a late or slow player finishes is measured in tests/live-encounters.mjs, not here."""
 from pathlib import Path
 from functools import partial
@@ -31,6 +31,9 @@ DRIVE="""async([mode,seconds])=>{const r=__r,{liveGoal}=await import('/src/live-
   requestAnimationFrame(step);};requestAnimationFrame(step);});
  const s=r.liveEncounterState().scene;return s&&{stage:s.stage,onTime:s.onTime,kind:s.kind,done:s.done,need:s.need};}"""
 GONE="!__r.liveEncounterState().scene"
+# H1 (Jay, alpha.233): the reward is the universe's rule (base × difficulty × distance × rarity, ×1.5 on time), so the
+# expected amount is asked of the model for this encounter where it appeared.
+EXPECT="""async onTime=>{const m=await import('/src/live-encounters-model.js'),s=__r.liveEncounterState().scene;return m.liveRewardFor(m.liveDefinition(s.kind),{x:s.origin.x,y:s.origin.y,onTime});}"""
 STATE="""id=>{const r=__r,k=r.S.liveEncounters.kinds[id]||{};return {earned:r.S.liveEncounters.earned,sparks:r.S.sparks,caught:k.caught||0,onTime:k.onTime||0,escaped:k.escaped||0,book:!!r.S.elementBook?.found?.['live:'+id],log:r.sparkEconomy.log.slice(-4),line:r.liveEncounterState().line,reward:r.liveEncounterState().scene?.reward};}"""
 def task(browser,kind,shot=0,toast=False):
  """One «hacer» forced by its shortcut, then its three endings. shot: milliseconds to wait before a screenshot (0: none)."""
@@ -49,20 +52,20 @@ def task(browser,kind,shot=0,toast=False):
  assert not page.evaluate("__r.liveEncounterSpawn('polilla')") and not page.evaluate("__r.liveEncounterSpawn('ola')") and not page.evaluate("__r.liveEncounterSpawn('motas')")
  path=None
  if shot:page.wait_for_timeout(shot);path=SHOTS/f"kubono-e3-{d['id']}-390.png";page.screenshot(path=str(path))
- # 1 · Pulses on time: done, 15 ✦; the first time, into the Bitácora (and one notice naming it).
+ # 1 · Pulses on time: done, more ✦; the first time, into the Bitácora (and one notice naming it).
  before=page.evaluate(STATE,d['id'])
  got=page.evaluate(DRIVE,['pulse',25]);assert got and got['stage']=='done' and got['onTime'],(d['id'],got)
- page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id'])
- assert after['reward']==15 and after['earned']==before['earned']+15 and after['sparks']>=before['sparks']+15 and after['caught']==1 and after['onTime']==1 and after['book'],(d['id'],before,after)
- assert {'title':d['name'],'text':'Encuentro vivo · +15 chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
+ page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id']);exp=page.evaluate(EXPECT,True)
+ assert after['reward']==exp and after['earned']==before['earned']+exp and after['sparks']>=before['sparks']+exp and after['caught']==1 and after['onTime']==1 and after['book'],(d['id'],before,after)
+ assert {'title':d['name'],'text':f'Encuentro vivo · +{exp} chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
  # Achievements earned on the way (a landscape, the World) may show first: the notice waits its turn.
  if toast:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=15000);t=page.locator('#toast').inner_text();assert d['name'] in t and 'Logro' not in t,t
  page.wait_for_function(GONE,timeout=5000)
- # 2 · On foot, no pulse: done, 10 ✦.
+ # 2 · On foot, no pulse: done, its ✦.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])
  got=page.evaluate(DRIVE,['walk',30]);assert got and got['stage']=='done' and not got['onTime'],(d['id'],got)
- page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id'])
- assert after['reward']==10 and after['earned']==before['earned']+10 and after['caught']==2 and after['onTime']==1,(d['id'],after)
+ page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id']);exp=page.evaluate(EXPECT,False)
+ assert after['reward']==exp and after['earned']==before['earned']+exp and after['caught']==2 and after['onTime']==1,(d['id'],after)
  page.wait_for_function(GONE,timeout=5000)
  # 3 · Walking away (the bubbles rise round the cube wherever it goes: their time runs out instead): its kind goodbye,
  # nothing given, nothing taken, then it goes.

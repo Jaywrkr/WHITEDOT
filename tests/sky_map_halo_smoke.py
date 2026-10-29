@@ -83,8 +83,8 @@ try:
   # 5 · English: the words follow.
   page,errors=page_for(browser,'?anillo=1&lang=en',lang='en-US');page.wait_for_timeout(500);page.evaluate(FREE)
   assert page.evaluate("__r.skyMapSpawn('gato')")
-  words=page.evaluate("async()=>{const {translate}=await import('/src/i18n.js'),s=__r.skyMapState();return [translate(s.title),translate(s.hint),translate('Gato · 2 de 5 · guardada'),translate('Orión · completa · +15 ✦')]}")
-  assert words==['Sky map · Cat','Pass through its stars in order.','Cat · 2 of 5 · saved','Orion · complete · +15 ✦'],words
+  words=page.evaluate("async()=>{const {translate}=await import('/src/i18n.js'),s=__r.skyMapState();return [translate(s.title),translate(s.hint),translate('Gato · 2 de 5 · guardada'),translate('Orión · completa · +14 ✦')]}")
+  assert words==['Sky map · Cat','Pass through its stars in order.','Cat · 2 of 5 · saved','Orion · complete · +14 ✦'],words
   page.evaluate("()=>{__r.openJournal('places');}");page.wait_for_selector('#journalSkyMap');page.wait_for_timeout(200)
   text=page.evaluate("document.querySelector('#journalSkyMap summary').innerText");assert text=='Sky map · 0 of 28',text
   assert not errors,errors;page.close();browser.close()

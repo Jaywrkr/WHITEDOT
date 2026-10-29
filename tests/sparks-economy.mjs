@@ -21,10 +21,12 @@ assert(r.buySparkStyle('dust'));assert.equal(r.S.sparks,160);assert(!r.buySparkS
 fail=true;assert(!r.buySparkStyle('facet'));assert.equal(r.S.sparks,160);assert(!r.sparkEconomy.purchases.facet);fail=false;
 const ticket=r.reserveSparkJump();assert(ticket);assert.equal(r.S.sparks,160-SPARK_JUMP_COST);r.cancelSparkJump(ticket);assert.equal(r.S.sparks,160);assert.equal(r.sparkEconomy.stats.jumps,0);
 const crystal={id:'a',x:20,y:0,size:2,value:3};assert.equal(r.crystalTransaction(crystal,'hit').hits,1);fail=true;assert.equal(r.crystalTransaction(crystal,'hit'),null);assert.equal(r.savedCrystal('a').hits,1);fail=false;
-assert(r.crystalTransaction(crystal,'hit').broken);assert(!r.savedCrystal('a').collected);assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163);
+assert(r.crystalTransaction(crystal,'hit').broken);assert(!r.savedCrystal('a').collected);assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163,'H1: three loose sparks of 1');
 assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163,'collect never pays twice');
 r=runtime(structuredClone(saved));assert(r.savedCrystal('a').collected);assert.equal(r.S.sparks,163,'reload keeps mining and wallet');
-r.S.rareBook={items:cards};for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,218);const amount=r.S.sparks;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,amount,'retroactive sets pay once');
+// H1 (alpha.233): inside a level (a round, a chapter) goals wait, the counter hides; out of it they pay once.
+r.S.rareBook={items:cards};r.travelInLevel=()=>true;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,163,'no sparks inside a level');r.drawSparkEconomyHUD();assert(r.$('sparkCount').hidden,'no ✦ counter inside a level');assert(r.$('sparkGoal').hidden);
+r.travelInLevel=()=>false;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,218);r.$('mPlace').hidden=true;r.drawSparkEconomyHUD();assert(!r.$('sparkCount').hidden,'the ✦ counter is back in the free World');const amount=r.S.sparks;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,amount,'retroactive sets pay once');
 r.S.playerProfile.distanceUnits=10000;for(let i=0;i<6;i++)r.sparkTick(.1);assert(r.sparkEconomy.claims['distance:1000']);assert(r.sparkEconomy.claims['badge:taxi']);assert.equal(r.sparkEconomy.earned-r.sparkEconomy.spent,r.S.sparks);
 r.drawSparkEconomyHUD();assert(r.$('sparkTotal').textContent.includes(String(r.S.sparks)));
 const novice=runtime({mode:'world',todayKey:day,sparks:19,pathCrystals:[]});assert(!novice.sparkJumpEarned());assert(!novice.canAffordSparkJump());creditSparks(novice.S,1);assert(novice.sparkJumpEarned());assert(novice.canAffordSparkJump());debitSparks(novice.S,20);assert(novice.sparkJumpEarned(),'earned jump stays unlocked after spending');assert(!novice.canAffordSparkJump());const restored=runtime(structuredClone(novice.S));assert(restored.sparkJumpEarned());
@@ -52,6 +54,9 @@ console.log('PASS connected Camino/world guidance, active-only badge distance, c
 const beyond=runtime({mode:'camino',todayKey:day,sparks:10,pathCrystals:Array.from({length:10},(_,i)=>'earned:'+i),todayLight:10,totalLight:10});
 const beforeBeyond=structuredClone(beyond.S),extra={id:'path:extra',x:90,y:0,size:1,value:1};
 assert(beyond.crystalTransaction(extra,'hit',true).broken);assert(beyond.savedCrystal(extra.id).collected);assert.equal(beyond.S.sparks,10);assert.deepEqual(beyond.S.pathCrystals,beforeBeyond.pathCrystals);assert.equal(beyond.S.todayLight,10);assert.equal(beyond.S.totalLight,10);assert.equal(beyond.sparkEconomy.stats.broken,0);
+// H1 (alpha.233): the Camino is part of the Journey; its first ten crystals of the day give light, never ✦, also on the walk.
+{const walk=runtime({mode:'camino',todayKey:day,sparks:10,pathCrystals:[],journey:{finished:true}});const before=structuredClone(walk.sparkEconomy);
+ for(let i=0;i<3;i++)assert(walk.crystalTransaction({id:'path:walk:'+i,x:90*i,y:0,size:1,value:1},'hit',true).broken);assert.equal(walk.S.pathCrystals.length,3);assert.equal(walk.S.todayLight,3);assert.equal(walk.S.sparks,10,'the Camino pays no sparks');assert.equal(walk.sparkEconomy.earned,before.earned);}
 fail=true;assert.equal(beyond.crystalTransaction({...extra,id:'path:failed'},'hit',true),null);assert(!beyond.savedCrystal('path:failed'));fail=false;
 console.log('PASS returning Camino crystals break without currency, daily light, objective or badge farming; failed writes roll back');
 

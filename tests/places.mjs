@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {roundSparks} from '../src/spark-rules.js';
+import {LEVEL_SPARKS} from '../src/spark-rules.js';
 import {PLACES,PLACE_IDS,TOTAL_STARS,roundStars,roundPercent,roundTime,normalizePlaces,starCount,placeOpen,previousPlace,nextOnPath,allComplete,initialize} from '../src/places.js';
 // Eleven places, 33 stars; the five of the Journey open after it, the six new ones in order, each after the one before
 // it (plan H3).
@@ -18,7 +18,7 @@ assert(placeOpen(normalizePlaces({stars:{dunas:[true]}},{}),'dunas',{finished:tr
  assert.equal(nextOnPath(v1,{finished:true}).id,'tormenta','the next on the path: the first open and not complete');}
 // Winning is the eleven complete; the 33 stars are the master version.
 {const eleven=normalizePlaces({stars:Object.fromEntries(PLACE_IDS.map(id=>[id,[true]]))},{});assert(allComplete(eleven));assert.equal(starCount(eleven),11);assert.equal(nextOnPath(eleven,{finished:true}),null);}
-// Runtime: a round of the Lago, stars, sparks, record, and the chapter's own state back as it was.
+// Runtime: a round of the Lago, stars, record, and the chapter's own state back as it was. H1 (Jay, alpha.233): no sparks.
 const realNow=Date.now;let clock=1e9;Date.now=()=>clock;globalThis.setTimeout=()=>0;
 const r={S:{wx:0,wy:0,sound:true,sparks:5,todayKey:'2026-10-23',journey:{finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true},chain:{points:340,opened:true,hinted:true}}},
  BIOMES:[{id:'llanura'},{id:'lago'}],biomeOfPos:(x,y)=>x>1000?1:0,regionOfPos:()=>({}),MU:{},save:()=>true,hud(){},$:()=>null};
@@ -27,13 +27,13 @@ assert.equal(r.startPlace('lago',{maestro:true}),false,'Maestro asks ★★ firs
 assert.equal(r.startPlace('lago'),true);assert(r.S.wx>1000,'taken to the Lago');assert.deepEqual(r.S.journey.chain,{hinted:true},'an empty bar, the rule already told');
 for(let i=0;i<20;i++)r.placeHear('lago',i<18,{});assert.deepEqual(r.places().run,{id:'lago',maestro:false,hits:18,total:20});
 clock+=150000;assert.equal(r.placeFinish('lago'),true);
-let st=r.places();assert.deepEqual(st.stars.lago,[true,true,false]);assert.equal(st.last.sparks,roundSparks(.9),'80 + 9×9');assert.equal(roundSparks(.9),161);assert.equal(r.S.sparks,5+161);assert.equal(st.best.lago.ms,150000);assert.equal(st.run,null);
+let st=r.places();assert.deepEqual(st.stars.lago,[true,true,false]);assert.equal(LEVEL_SPARKS,0);assert.equal(st.last.sparks,0,'a level pays no sparks');assert.equal(r.S.sparks,5,'the wallet is untouched, never less');assert.equal(st.best.lago.ms,150000);assert.equal(st.run,null);
 assert.deepEqual(r.S.journey.chain,{points:340,opened:true,hinted:true},'the Journey chapter as it was');
-// Maestro now open: ★★★ with 70 %, tempo and window while it lasts, sparks doubled.
+// Maestro now open: ★★★ with 70 %, tempo and window while it lasts; no sparks either.
 assert.equal(r.startPlace('lago',{maestro:true}),true);assert.equal(r.MU.tempoScale,1.1);assert.equal(r.MU.onTimeWindow,.06);assert.equal(r.placeGoalScale(),1.5);
-for(let i=0;i<10;i++)r.placeHear('lago',i<8,{});r.placeFinish('lago');st=r.places();assert.deepEqual(st.stars.lago,[true,true,true]);assert.equal(st.last.sparks,2*(80+72));assert.equal(r.MU.tempoScale,1);assert.equal(st.count,7);
-// From the fourth round of the day in a place, half.
-for(let k=0;k<2;k++){r.startPlace('lago');r.placeHear('lago',true,{});r.placeFinish('lago');}assert.equal(r.places().last.sparks,85);
+for(let i=0;i<10;i++)r.placeHear('lago',i<8,{});r.placeFinish('lago');st=r.places();assert.deepEqual(st.stars.lago,[true,true,true]);assert.equal(st.last.sparks,0);assert.equal(r.S.sparks,5);assert.equal(r.MU.tempoScale,1);assert.equal(st.count,7);
+// The rounds of the day are still counted (the fourth of a place in a day); none pays.
+for(let k=0;k<2;k++){r.startPlace('lago');r.placeHear('lago',true,{});r.placeFinish('lago');}assert.equal(r.places().last.sparks,0);assert.equal(r.places().last.roundsToday,3);assert.equal(r.S.sparks,5);
 // Without sound: only ★.
 r.startPlace('bosque');r.placeHear('bosque',true,{silent:true});r.placeFinish('bosque');assert.deepEqual(r.places().stars.bosque,[true,false,false]);
 // A round left open by a reload is dropped and the chapter's state restored.
@@ -43,7 +43,7 @@ const r3={...r,S:{wx:0,wy:0,sound:true,journey:{done:{}}}};initialize(r3);for(le
 Date.now=realNow;
 // Plan I4: the steps of your notes are kept beside them, only when there is one for each note.
 {const n=normalizePlaces({version:2,notes:{lago:[60,62],cueva:[67]},noteSteps:{lago:[0,6],cueva:[1,2],jardin:[3]}});assert.deepEqual(n.noteSteps,{lago:[0,6]});assert.deepEqual(normalizePlaces({}).noteSteps,{});}
-console.log('PASS places: eleven places and 33 stars, the Journey gives ★ (★★ if played on time), a round gives stars, sparks and a record and gives back the chapter, Maestro opens with ★★ (tempo, window, ×1.5), half from the fourth round, only ★ without sound, an open round dropped on reload');
+console.log('PASS places: eleven places and 33 stars, the Journey gives ★ (★★ if played on time), a round gives stars and a record and no sparks (H1) and gives back the chapter, Maestro opens with ★★ (tempo, window, ×1.5), only ★ without sound, an open round dropped on reload');
 
 // Display precision must never announce a rhythm threshold that was not earned.
 for(const ratio of [.6999,.7,.746,.74999,.75,1]){const display=Number(roundPercent(ratio).replace(',','.'));assert(display<=ratio*100+1e-9);if(display>=75)assert(roundStars({onTime:ratio})[1]);}

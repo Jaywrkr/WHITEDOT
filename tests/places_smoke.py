@@ -29,10 +29,10 @@ try:
    assert page.evaluate('__r.places().run.total')>=6
    page.evaluate("()=>{__r.S.journey.chain.points=340;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
-   last=page.evaluate('__r.places().last');assert last['id']=='lago' and last['stars'][0] and last['sparks']>=60,last
-   assert page.evaluate('__r.S.sparks')>=sparks+60,'the round pays sparks'
+   last=page.evaluate('__r.places().last');assert last['id']=='lago' and last['stars'][0] and last['sparks']==0,last
+   assert page.evaluate('__r.S.sparks')==sparks,'H1 (alpha.233): a round pays ★, never ✦'
    page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000)
-   assert page.locator('#placeStars .got').count()>=1 and 'a tiempo' in page.inner_text('#placeRows') and '✦' in page.inner_text('#placeEarned')
+   assert page.locator('#placeStars .got').count()>=1 and 'a tiempo' in page.inner_text('#placeRows') and '✦' not in page.inner_text('#mPlace')
    if width==390 and os.environ.get('PLACE_SHOT'):page.screenshot(path=os.environ['PLACE_SHOT'])
    # Plan H3: the card's gold button goes to the next place on the path, the Jardín after the Journey's five.
    assert page.locator('#placeNext').is_visible() and page.inner_text('#placeNext')=='Seguir hacia Jardín',page.inner_text('#placeNext')
@@ -49,5 +49,5 @@ try:
    page.evaluate("()=>{__r.S.journey.dance.points=250;}");page.wait_for_timeout(300);assert not page.evaluate('__r.journeyDance().eye'),'a Maestro bar asks half as much again'
    assert not errors,errors;page.close()
   browser.close()
- print('PASS places on phone and desktop: ?lugar= plays a round on its own save, its gold close gives stars, sparks and a card with Otra vez and Salir, the next round starts empty, Maestro is faster with a narrower window and a longer bar',flush=True)
+ print('PASS places on phone and desktop: ?lugar= plays a round on its own save, its gold close gives stars and a card with Otra vez and Salir, no sparks (H1), the next round starts empty, Maestro is faster with a narrower window and a longer bar',flush=True)
 finally:server.shutdown()

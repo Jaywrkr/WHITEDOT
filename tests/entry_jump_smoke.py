@@ -34,7 +34,7 @@ try:
    page.keyboard.press('Escape');page.locator('#returnEntrance').wait_for(state='hidden')
    page.wait_for_function('!document.getElementById("w").inert')
    assert page.locator('#bJump').is_hidden()
-   # Supply nineteen earlier earned sparks; the final spark comes from a real manual pulse.
+   # Supply nineteen earlier earned sparks; the final spark comes from a real manual pulse (a loose spark is 1).
    page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.help.mundo=true;r.S.ach.mundo=r.S.todayKey;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'entry:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.S.sparks=19;r.sparkEconomy.earned=19;r.save();const {crystalField}=await import('/src/crystal-sparks.js');let crystal=null;for(let i=0;i<500&&!crystal;i++){const field=crystalField(i*1200,0,r.seedOf);crystal=field.find(c=>c.size===1&&!c.rare&&field.every(o=>o.id===c.id||Math.hypot(o.x-c.x,o.y-c.y)>240));}if(!crystal)throw Error('No native small crystal');r.S.wx=crystal.x;r.S.wy=crystal.y-30;window.site=crystal.id;}''')
    page.wait_for_timeout(700);assert page.locator('#bJump').is_hidden()
    page.mouse.click(25,height/2);page.wait_for_function('__r.S.sparks===20')

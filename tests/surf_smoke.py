@@ -36,9 +36,9 @@ try:
    # The bar full: the gold wave, and riding it ends the round.
    page.evaluate("()=>{__r.S.journey.surf.points=__r.journeySurf().goal;}");page.wait_for_function("__r.journeySurf().waves.some(w=>w.gold)",timeout=12000)
    page.wait_for_function("__r.journeySurf().waves.find(w=>!w.ridden)?.gold",timeout=12000);page.evaluate(RIDE,0);page.wait_for_function("!__r.places().run",timeout=5000)
-   last=page.evaluate('__r.places().last');assert last['id']=='dunas' and last['stars'][0] and last['sparks']>=60,last
+   last=page.evaluate('__r.places().last');assert last['id']=='dunas' and last['stars'][0] and last['sparks']==0,last
    page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000)
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Dunas on phone and desktop: ?lugar=dunas rides a wave only on its beat inside its ring, in a row worth more, the bar follows the round, the gold wave ends it with stars, sparks and its card',flush=True)
+ print('PASS Dunas on phone and desktop: ?lugar=dunas rides a wave only on its beat inside its ring, in a row worth more, the bar follows the round, the gold wave ends it with stars and its card, no sparks (H1)',flush=True)
 finally:server.shutdown()

@@ -1,4 +1,4 @@
-"""Plan F3 and H5: in the free World a pulse on time doubles the sparks of what it breaks (shown ×2 in gold), from the eighth in a row it triples them, off time it earns its base value (K2), and without sound there is no multiplier."""
+"""Plan F3 and H5: in the free World a pulse on time doubles the sparks of what it breaks (shown ×2 in gold), (until alpha.232 the eighth in a row tripled them; since H1 it stays ×2), off time it earns its base value (K2), and without sound there is no multiplier."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -32,12 +32,12 @@ try:
   o,gain,m=mine(page,1,OFF);assert m==1 and gain>=o['value'],(gain,m,o)
   # On time: double, kept in the save, and the pickup says ×2.
   o,gain,m=mine(page,1,ON);assert m==2 and gain>=2*o['value'],(gain,m,o)
-  # Eight on time in a row: triple.
+  # Eight on time in a row: still double (H1, Jay: a loose spark is 1, on time 2; the ×3 is gone).
   for i in range(7):page.evaluate(ON);page.wait_for_timeout(330)
   assert page.evaluate('__r.sparkStreak()')>=7
-  o,gain,m=mine(page,1,ON);assert m==3 and gain>=3*o['value'],(gain,m,o,page.evaluate('__r.sparkStreak()'))
+  o,gain,m=mine(page,1,ON);assert m==2 and gain>=2*o['value'],(gain,m,o,page.evaluate('__r.sparkStreak()'))
   # Without sound there is no beat: no multiplier.
   page.evaluate("()=>{__r.S.sound=false;}");o,gain,m=mine(page,1,"()=>__r.sonar('player')");assert m==1 and gain>=o['value'],(gain,m,o)
   assert not errors,errors;browser.close()
- print('PASS spark rhythm: off time a crystal pays its base value, on time it is worth double (saved), from eight in a row triple, without sound no multiplier',flush=True)
+ print('PASS spark rhythm: off time a crystal pays its base value, on time it is worth double (saved), eight in a row still double (H1), without sound no multiplier',flush=True)
 finally:server.shutdown()
