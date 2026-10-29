@@ -61,11 +61,12 @@ export function initialize(runtime){
   const el=$('toast'),lane=runtime.noticeLane;if(!el||!lane)return false;
   const ok=lane.enqueue('toast',el,()=>{el.innerHTML=letterHTML(letter.text);},LETTER_SECONDS,'carta:'+day+':'+q.count,()=>true,{category:'carta',detail:'carta',ttl:60000});
   if(!ok)return false;pending=null;shown={id:letter.id,text:letter.text,day};const before={...q};q.count++;q.last={day,text:letter.text};q.seenAt=Date.now();if(runtime.save?.()===false)Object.assign(q,before);return true;}
- // While open, the time seen is written now and then (and when the page hides), so the next opening knows the gap.
+ // While open, the time seen is kept now and then (and when the page hides); the game's own saves carry it, so the
+ // next opening knows the gap. The letter never writes the save by itself on leaving: leaving touches nothing.
  function beat(force=false){if(frozen||!force&&globalThis.document?.hidden)return;const q=own();if(q.version>LETTER_VERSION)return;q.seenAt=Date.now();}
  const el=$('toast');if(el){el.addEventListener('click',()=>{if(el.dataset.detail==='carta')runtime.noticeLane?.cancel('toast');});}
- globalThis.document?.addEventListener('visibilitychange',()=>{if(document.hidden){hiddenAt=Date.now();beat(true);runtime.save?.();}else{const away=hiddenAt;hiddenAt=null;if(away!==null&&!frozen){const q=own();if(letterDue({...q,seenAt:away},Date.now()))pending={at:Date.now()};}beat();}});
- globalThis.addEventListener?.('pagehide',()=>{beat(true);if(!frozen)runtime.save?.();});
+ globalThis.document?.addEventListener('visibilitychange',()=>{if(document.hidden){hiddenAt=Date.now();beat(true);}else{const away=hiddenAt;hiddenAt=null;if(away!==null&&!frozen){const q=own();if(letterDue({...q,seenAt:away},Date.now()))pending={at:Date.now()};}beat();}});
+ globalThis.addEventListener?.('pagehide',()=>beat(true));
  arm();const wasDue=!!pending;beat();
  setInterval(()=>{if(pending)show();},500);setInterval(()=>beat(),LETTER_BEAT_MS);
  Object.defineProperties(runtime,{universeLetterCheck:{get:()=>show},universeLetterState:{get:()=>()=>({pending:!!pending,shown,wasDue,busy:busy(),...own()})},
