@@ -46,6 +46,13 @@ try:
   page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000)
   marks={}
   def mark(name):marks[name]=round(time.time()-t0,1);say(f'{marks[name]:6.1f}s  {name}')
+  # A slow machine can miss the beat with a chapter's closing pulse: pulse again, a few times at most, until it closes.
+  def close(chapter,n):
+   for attempt in range(4):
+    page.evaluate('__bot.on()');n+=1
+    try:page.wait_for_function(f'__r.journeyChapter().done.{chapter}',timeout=5000);return n
+    except Exception:
+     if attempt==3:raise
   mark('primera pantalla')
   # 1 · The Camino: walk to the next crystal and pulse on time until the World opens.
   for i in range(14):
@@ -71,7 +78,7 @@ try:
    page.evaluate("""async()=>{const m=await import('./src/journey-stick.js'),r=__r,cx=Math.floor(r.S.wx/m.STICK_CELL),cy=Math.floor(r.S.wy/m.STICK_CELL),taken=new Set(r.S.journey.stick.gone);let best=null;
     for(let i=cx-6;i<=cx+6;i++)for(let j=cy-6;j<=cy+6;j++){const it=m.cellItem(i,j);if(!it||taken.has(it.id)||r.BIOMES[r.biomeOfPos(it.x,it.y)].id!=='llanura')continue;const d=Math.hypot(it.x-r.S.wx,it.y-r.S.wy);if(!best||d<best.d)best={...it,d};}
     if(best)await __bot.walk(best.x+4,best.y);await __bot.on();}""");n+=1;page.wait_for_timeout(120)
-  page.evaluate('__bot.on()');n+=1;page.wait_for_function('__r.journeyChapter().done.llanura',timeout=5000);actions['llanura']=n;mark(f'Llanura ({n} pulsos)')
+  n=close('llanura',n);actions['llanura']=n;mark(f'Llanura ({n} pulsos)')
   portal('portal a Lago')
   # 3 · Lago «Encadena»: just before the first flower of a cluster, a pulse on time; the ripple runs through it.
   close_help();page.wait_for_function("__r.journeyChain().active",timeout=10000);n=0
@@ -79,7 +86,7 @@ try:
    page.evaluate("""async()=>{const m=await import('./src/journey-chain.js'),r=__r,cx=Math.floor(r.S.wx/m.CHAIN_CELL),cy=Math.floor(r.S.wy/m.CHAIN_CELL),lit=new Set(r.S.journey.chain.lit);
     for(let d=0;d<10;d++)for(let i=cx-d;i<=cx+d;i++)for(let j=cy-d;j<=cy+d;j++){const list=m.cellFlowers(i,j);if(list.length<4||list.some(f=>lit.has(f.id)||r.BIOMES[r.biomeOfPos(f.x,f.y)].id!=='lago'))continue;
      const f=list[0],a=Math.atan2(f.y-list[1].y,f.x-list[1].x);await __bot.walk(f.x+Math.cos(a)*90,f.y+Math.sin(a)*90);await __bot.on();return;}}""");n+=1;page.wait_for_timeout(1600)
-  page.evaluate('__bot.on()');n+=1;page.wait_for_function('__r.journeyChapter().done.lago',timeout=5000);actions['lago']=n;mark(f'Lago ({n} pulsos)')
+  n=close('lago',n);actions['lago']=n;mark(f'Lago ({n} pulsos)')
   portal('portal a Bosque')
   # 4 · Bosque «Rodea»: a loop around a group of fireflies, then a pulse on time.
   close_help();page.wait_for_function("__r.journeyLasso().active",timeout=10000);n=0
@@ -87,25 +94,20 @@ try:
    page.evaluate("""async()=>{const m=await import('./src/journey-lasso.js'),r=__r,cx=Math.floor(r.S.wx/m.LASSO_CELL),cy=Math.floor(r.S.wy/m.LASSO_CELL),caught=new Set(r.S.journey.lasso.caught);
     for(let d=0;d<10;d++)for(let i=cx-d;i<=cx+d;i++)for(let j=cy-d;j<=cy+d;j++){const list=m.cellFireflies(i,j).filter(f=>!caught.has(f.id)&&r.BIOMES[r.biomeOfPos(f.x,f.y)].id==='bosque');if(list.length<4)continue;
      const x=list.reduce((s,f)=>s+f.x,0)/list.length,y=list.reduce((s,f)=>s+f.y,0)/list.length;await __bot.circle(x,y,80);await __bot.on();return;}}""");n+=1;page.wait_for_timeout(200)
-  page.evaluate('__bot.on()');n+=1;page.wait_for_function('__r.journeyChapter().done.bosque',timeout=5000);actions['bosque']=n;mark(f'Bosque ({n} pulsos)')
+  n=close('bosque',n);actions['bosque']=n;mark(f'Bosque ({n} pulsos)')
   portal('portal a Tormenta')
   # 5 · Tormenta «Baila»: into the circle, a pulse on time when it is there.
   close_help();page.wait_for_function("__r.journeyDance().active",timeout=10000);n=0
   while not page.evaluate('__r.journeyDance().eye') and n<12:
    page.wait_for_function('!!__r.journeyDance().target||!!__r.journeyDance().eye',timeout=5000)
    page.evaluate("""async()=>{const t=__r.journeyDance().target;if(t)await __bot.walk(t.x,t.y,6);await __bot.on();}""");n+=1
-  page.evaluate('__bot.on()');n+=1;page.wait_for_function('__r.journeyChapter().done.tormenta',timeout=5000);actions['tormenta']=n;mark(f'Tormenta ({n} pulsos)')
+  n=close('tormenta',n);actions['tormenta']=n;mark(f'Tormenta ({n} pulsos)')
   portal('portal a Vacío')
   # 6 · Vacío «Suelta»: a pulse on the «1» lets one thing go; then your light.
   close_help();page.wait_for_function("__r.journeyRelease().active",timeout=10000);n=0
   while not page.evaluate('__r.journeyRelease().light') and n<30:
    page.evaluate("""async()=>{const p=__bot.pos();await __bot.walk(p.x+110,p.y);await __bot.on(true);}""");n+=1
-  # A slow machine can miss the «1» with the closing pulse: pulse again, a few times at most, until the chapter closes.
-  for attempt in range(4):
-   page.evaluate('__bot.on()');n+=1
-   try:page.wait_for_function('__r.journeyChapter().done.vacio',timeout=5000);break
-   except Exception:
-    if attempt==3:raise
+  n=close('vacio',n)
   actions['vacio']=n;mark(f'Vacío ({n} pulsos)')
   # 7 · The last portal opens the finale; it plays whole (nobody presses «Saltar») and leaves the free World.
   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=20000)
