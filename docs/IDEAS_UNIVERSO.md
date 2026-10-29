@@ -350,6 +350,9 @@ Construido en la rama `jay/descubrir` (desde `jay/ritmo`), a petición de Jay, f
 - **18 y 89 · Cápsulas y Disco de oro:** sin construir. La mezcla del álbum suena encima de la música, no cambia de familia.
 - **66 · Satélites de descanso cada 10 km:** siguen sin existir; por eso ningún rumor habla de ellos (solo de lo que hay).
 - **Premios (decisión 9):** lo pequeño y repetible (un sonido) da chispas por `universeReward`; lo único (su página) va al álbum; la serie completa, un premio grande y visible (el Aro de sonidos), sin chispas. Los rumores no pagan.
+#### Con Luca (alpha.239)
+
+Construido en la rama `jay/con-luca` (sobre `jay/ritmo`), a petición de Jay, para jugar con Luca. No es una fase de este catálogo ni una idea numerada: son el **Reto entre dos** (dos jugadores en el mismo teléfono, una marca de tiempo por lugar, el fantasma del rival) y el **Modo tranquilo para niños** (sin reloj, señales grandes, ★ sin ★★) ([El mundo](MUNDO.md#con-luca)). Sigue las reglas: el siguiente paso en blanco, salir sin perder nada, lo inacabado guardado, sin castigos, la música base intacta, el cubo pequeño, sin chispas. Relación con el catálogo: ninguna idea queda construida por esto; el universo sigue sin humanos (los jugadores son un apodo y un símbolo, no personajes).
 
 ### F3 · Instrumentos del cosmos (1–10, 70–79)
 

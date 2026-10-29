@@ -40,10 +40,12 @@ export function initialize(runtime){
   row++;const value=danceValue(row),before=s.points;s.points=Math.min(goal(),s.points+value);s.returned++;if(row>s.best)s.best=row;
   strikes.push({x:target.x,y:target.y,at:performance.now(),mine:true});toBar.push({value,from:before,at:performance.now()+200});thunder(target.x,target.y,true);
   target=null;wait=performance.now()+500;if(before<goal()&&s.points>=goal())arrive();runtime.save?.();return 'return';}
+ // Con Luca (alpha.239, tranquilo.js): in the calm mode the circle waits for you (no life of a bar and a half).
+ const life=()=>runtime.tranquiloValue?.('danceLife',DANCE_LIFE_BARS)??DANCE_LIFE_BARS;
  function tick(){const s=own(),now=performance.now();
   if(full()){if(!s.eye)arrive();}
   else if(!target&&now>=wait)spawn();
-  else if(target&&now-target.at>=barMs()*DANCE_LIFE_BARS){strikes.push({x:target.x,y:target.y,at:now,mine:false});thunder(target.x,target.y,false);fallen++;row=0;target=null;wait=now+600;}
+  else if(target&&now-target.at>=barMs()*life()){strikes.push({x:target.x,y:target.y,at:now,mine:false});thunder(target.x,target.y,false);fallen++;row=0;target=null;wait=now+600;}
   if(s.eye&&!s.closed){const dx=runtime.S.wx+DANCE_EYE_GAP-s.eye.x,dy=runtime.S.wy-DANCE_EYE_GAP*.5-s.eye.y;if(Math.hypot(dx,dy)>4){s.eye.x+=dx*.08;s.eye.y+=dy*.08;}}
   const MU=runtime.MU,p=danceProgress(s.points,goal());if(MU){MU.journeyOwnBolts=true;if(p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.3+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.5+.5*p);}}}
  // A discharge seen from above: branches out from where it falls.
@@ -52,7 +54,7 @@ export function initialize(runtime){
  function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Entra en el círculo y toca a tiempo: devuelves el rayo.','tormenta');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now();
   c.save();c.globalAlpha=.4;c.fillStyle='#000';c.fillRect(0,0,W,H);
-  if(target){const x=sx(target.x),y=sy(target.y),k=Math.min(1,(now-target.at)/(barMs()*DANCE_LIFE_BARS)),here=inside();
+  if(target){const x=sx(target.x),y=sy(target.y),k=Math.min(1,(now-target.at)/(barMs()*life())),here=inside();
    // The circle fills as the bolt comes; with the cube inside it lights up on every beat.
    c.globalAlpha=(here?.18+.22*glow:.08+.1*k);c.fillStyle='#ffffff';c.beginPath();c.arc(x,y,DANCE_RADIUS,0,6.283);c.fill();
    c.globalAlpha=here?.95:.6+.3*glow;c.strokeStyle=here?gold:'#ffffff';c.lineWidth=here?3:2;c.beginPath();c.arc(x,y,DANCE_RADIUS,0,6.283);c.stroke();

@@ -1,4 +1,5 @@
 import {openSurface,calmMotion} from './frame-state.js';
+import {CALM_LINE,CALM_RING_WIDTH} from './tranquilo-model.js';
 // The Journey, phase 1: playing on time. The pulse always sounds in the key; on the beat the pulse itself plays the
 // next note of the cube's theme, in the voice of the place (no separate synth: a bowed tone of its own sounded like a
 // honk over the music), vibrates and leaves a white mark on the Line that draws the bar.
@@ -135,7 +136,9 @@ export function initialize(runtime){
  // The Line: the bar drawn across the lower part of the screen, a cursor on the current step and a peak where you played.
  function draw(c,W,H,t){
   if(!(runtime.inWorld?.()||runtime.S.mode==='camino')||runtime.activityActive||openSurface('.modal:not([hidden])'))return;const y=Math.round(H*.8)+.5,x0=Math.max(24,W*.12),x1=W-x0,w=x1-x0,now=performance.now();
-  c.save();c.lineWidth=7;c.strokeStyle='#000000';c.globalAlpha=LINE_BACK;c.beginPath();c.moveTo(x0-4,y);c.lineTo(x1+4,y);c.stroke();c.lineWidth=1;c.strokeStyle='#ffffff';c.globalAlpha=LINE_ALPHA;c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();
+  // Con Luca (alpha.239, tranquilo.js): in the calm mode the Line is wider and brighter and its steps stand taller.
+  const big=!!runtime.tranquiloSignals?.();
+  c.save();c.lineWidth=big?14:7;c.strokeStyle='#000000';c.globalAlpha=LINE_BACK;c.beginPath();c.moveTo(x0-4,y);c.lineTo(x1+4,y);c.stroke();c.lineWidth=big?2:1;c.strokeStyle='#ffffff';c.globalAlpha=big?.6:LINE_ALPHA;c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();
   // One guide (plan H2): the steps the place counts stand up on the Line, the «1» in gold when it counts; the others
   // stay small. While the place sings its pattern (journey-rhythm.js) they glow on their beat.
   // Ritmo (alpha.237, ritmo.js): in an Eco round, once the place has sung its phrase, its steps are not drawn; in the
@@ -143,7 +146,7 @@ export function initialize(runtime){
   const counted=runtime.ritmoHideSignals?.()?[]:runtime.ritmoLineSteps?.()||runtime.journeyRhythmState?.()?.steps||[0,4,8,12],sing=runtime.rhythmSinging?.()||null;
   // Plan I3: the Line anticipates; a counted step grows and brightens over the four steps before the cursor reaches it.
   const now16=stepNow(),gold=runtime.GOLD||'#f0d27a';
-  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.6+.35*lit+.35*come:(i%4?.22:.36));c.fillStyle=one?gold:'#fff';const hgt=on?(one?9:6)+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,one?3:on?2:1,hgt);}
+  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?(big?.85:.6)+.35*lit+.35*come:(i%4?.22:.36));c.fillStyle=one?gold:'#fff';const hgt=(on?(one?9:6)+6*lit+8*come:(i%4?2:3))*(big&&on?CALM_LINE:1),wid=big&&on?(one?5:4):one?3:on?2:1;c.fillRect(Math.round(x0+(i+.5)/16*w)-Math.floor(wid/2),y-hgt/2,wid,hgt);}
   // Panel 10 (P4, Pope and Matsuura): during a round, one tick past the end of the Line lights gold while the share on
   // time reaches what the next star asks (runtime.roundTick, the card's own share). No number, no new word.
   const tick=runtime.roundTick?.();if(tick){const tx=Math.round(x1+LINE_TICK_GAP);c.globalAlpha=LINE_BACK;c.fillStyle='#000000';c.fillRect(tx-4,y-9,9,18);c.globalAlpha=tick.lit?.95:.4;c.fillStyle=tick.lit?gold:'#ffffff';const th=tick.lit?14:6;c.fillRect(tx-1,Math.round(y-th/2),2,th);}
@@ -151,13 +154,16 @@ export function initialize(runtime){
   for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.dropped?'#888888':'#ffffff';c.beginPath();
    // An open bracket means a good beat still waiting for the place's action.
    if(m.waiting){c.moveTo(px-5,y-5);c.lineTo(px-5,y-1);c.lineTo(px+5,y-1);c.lineTo(px+5,y-5);}else{c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);}c.stroke();}
-  c.restore();}
+  c.restore();
+  // The thing to reach next, marked in white while the calm mode acts (tranquilo.js).
+  runtime.drawTranquilo?.(c,W,H,t);}
  // The ring that closes on the cube before each counted step (cubeRing), with the Line's own clock and steps.
  const ringLive=()=>!!runtime.ac&&!!runtime.S.sound&&!!runtime.MU?.sq?.length&&!(runtime.ac.state&&runtime.ac.state!=='running');
  const ringNow=s=>ringLive()&&!runtime.ritmoHideSignals?.()?cubeRing(stepNow(),runtime.ritmoLineSteps?.()||runtime.journeyRhythmState?.()?.steps||[0,4,8,12],s,calm()):null;
  function drawRing(c,x,y,s){if(!(runtime.inWorld?.()||runtime.S.mode==='camino')||runtime.activityActive||openSurface('.modal:not([hidden])'))return;
   const ring=ringNow(s);if(!ring)return;
-  c.save();c.lineWidth=1;c.globalAlpha=ring.alpha;c.strokeStyle=ring.gold?runtime.GOLD||'#f0d27a':'#ffffff';c.beginPath();c.arc(x,y,ring.r,0,6.283);c.stroke();c.restore();}
+  // Con Luca (alpha.239): thicker and brighter in the calm mode; the cube keeps its size.
+  const big=!!runtime.tranquiloSignals?.();c.save();c.lineWidth=big?CALM_RING_WIDTH:1;c.globalAlpha=big?Math.min(1,ring.alpha*1.6):ring.alpha;c.strokeStyle=ring.gold?runtime.GOLD||'#f0d27a':'#ffffff';c.beginPath();c.arc(x,y,ring.r,0,6.283);c.stroke();c.restore();}
  // The cube's form around it: corners, then a diamond, then a gold double frame that turns. Drawn over the cube.
  function drawForm(c,x,y,s,t){runtime.drawRitmoCube?.(c,x,y,s,t);drawRing(c,x,y,s);if(!form.level||!(runtime.inWorld?.()||runtime.S.mode==='camino'))return;const gold=runtime.GOLD||'#f0d27a',still=calm(),fresh=Math.max(0,1-(performance.now()-formAt)/400),r=s/2+6;c.save();c.lineWidth=1.5;
   c.globalAlpha=.8;c.strokeStyle='#ffffff';for(const [dx,dy] of [[-1,-1],[1,-1],[1,1],[-1,1]]){c.beginPath();c.moveTo(x+dx*r,y+dy*(r-4));c.lineTo(x+dx*r,y+dy*r);c.lineTo(x+dx*(r-4),y+dy*r);c.stroke();}

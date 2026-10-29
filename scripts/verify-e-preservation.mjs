@@ -74,6 +74,12 @@ const rebasedV=new Set(['src/i18n-en.js','src/main.js']);
 // music's contracts are untouched (the duel sings on top with the voices the places already use for their phrase).
 const approvedR='5e27c4d2b071c107f5a54fad4cf0c7b39567741e';
 const rebasedR=new Set(['src/i18n-en.js']);
+// Con Luca (Jay, 29 Oct 2026, alpha.239): the challenge for two and the calm mode for children. Their English strings,
+// one line in each of four games (they ask runtime.tranquiloValue for their calm value; unchanged when it is off) and
+// the offline shell's four new modules are held to the merge of jay/ritmo into jay/con-luca; the music's contracts are
+// untouched (nothing new sounds).
+const approvedL5='128cb15eb7b172d3230056b7e78eeef68e83c143';
+const rebasedL5=new Set(['src/i18n-en.js','src/journey-dance.js','src/journey-guide.js','src/journey-resonance.js','src/journey-surf.js']);
 // Descubrir (Jay, 29 Oct 2026, alpha.240): rumors and the album of sounds. main starts descubrir.js, the frame gives it its
 // tick, its drawing and the ring of sounds round the cube, and the offline shell lists two new modules. Held to the merge
 // of main (with Ritmo) into jay/descubrir; the music's contracts are untouched (the sounds play on top, measured by render).
@@ -93,7 +99,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedD.has(file)?approvedD:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
