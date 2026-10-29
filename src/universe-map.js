@@ -52,12 +52,15 @@ export function initialize(runtime){
   if(usable())for(const e of book().live){const def=liveDefinition(e.k);if(!def)continue;out.push({kind:'live',id:'live:'+e.k+':'+e.x+','+e.y,x:e.x,y:e.y,name:def.name,color:colorOf(def.biome),won:e.w,live:e.k});}
   for(const p of runtime.favorites||[])if((p.layer||'superficie')==='superficie'&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&(!p.address||!runtime.worldIdentity||sameWorld(p.address,runtime.worldIdentity)))out.push({kind:'favorite',id:p.id,x:p.x,y:p.y,name:p.name||'Favorito',point:p});
   for(const [key,a] of Object.entries(S.anomalies||{})){const [rx,ry]=key.split(',').map(Number);if(Number.isFinite(rx)&&Number.isFinite(ry))out.push({kind:'rare',id:'rare:'+key,x:(rx+.5)*r,y:(ry+.5)*r,name:'Rareza'});}
+  // Descubrir (alpha.240): the rumors you were told, open (descubrir.js).
+  for(const e of runtime.rumorsForMap?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
   if(usable()&&q.mark)out.push({kind:'mark',id:'mark',x:q.mark.x,y:q.mark.y,name:q.mark.name});
   return {items:out,center,next:state?.next?portals.find(p=>p.id===state.next)||null:null};
  }
- // The points the universe zoom must fit: what is yours and every region visited (cached with the scene).
+ // The points the universe zoom must fit: what is yours and every region visited (cached with the scene); not what you
+ // only heard of (a landmark heard, a rumor), which may lie far away.
  let pts=[];
- function sceneNow(){const c=collect();items=c.items;pts=items.filter(i=>i.kind!=='heard').map(i=>({x:i.x,y:i.y})).concat(fogCells(runtime.S.places||{}).map(f=>({x:(f.rx+.5)*RP(),y:(f.ry+.5)*RP()})));const band=bandsNow();return {fog:fogNow(),RP:RP(),items,me:{...me(),heading},next:c.next?{x:c.next.x,y:c.next.y,name:c.next.name}:null,mark:usable()?book().mark:null,bands:band.map(b=>({km:b.km,complete:b.complete})),center:c.center};}
+ function sceneNow(){const c=collect();items=c.items;pts=items.filter(i=>i.kind!=='heard'&&i.kind!=='rumor').map(i=>({x:i.x,y:i.y})).concat(fogCells(runtime.S.places||{}).map(f=>({x:(f.rx+.5)*RP(),y:(f.ry+.5)*RP()})));const band=bandsNow();return {fog:fogNow(),RP:RP(),items,me:{...me(),heading},next:c.next?{x:c.next.x,y:c.next.y,name:c.next.name}:null,mark:usable()?book().mark:null,bands:band.map(b=>({km:b.km,complete:b.complete})),center:c.center};}
  const context=()=>({me:me(),ring:scene?.center||runtime.ringState?.()?.center||null,points:pts});
 
  // ---------- the screen ----------
@@ -81,7 +84,7 @@ export function initialize(runtime){
   case 'ringHome':return 'El centro de los once lugares';case 'refugio':return 'Donde está tu Refugio';case 'favorite':return 'Tu lugar guardado';
   case 'sky':return it.done?'Constelación · completa':`Constelación · ${it.lit} de ${it.total}`;
   case 'live':return it.won?'Encuentro vivo · logrado':'Encuentro vivo · visto';
-  case 'landmark':return 'Hito visitado';case 'heard':return 'Rumor · lo oíste, aún no llegaste';case 'rare':return 'Rareza encontrada';
+  case 'landmark':return 'Hito visitado';case 'heard':return 'Hito oído · aún no llegaste';case 'rumor':return 'Rumor · '+(it.text||'algo lejano');case 'rare':return 'Rareza encontrada';
   case 'mark':return 'Tu marca · la brújula te lleva';case 'me':return 'Tú';default:return it.visited?'Lugar explorado':'Sin explorar';}};
  function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canHome:(it.kind==='ringHome'||it.home)&&!!runtime.ringHomePoint?.(),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,mark:usable()?book().mark:null};}
  function showCard(it){card=it;const a=cardActions(it,flags(it)),d=Math.hypot(it.x-runtime.S.wx,it.y-runtime.S.wy);
@@ -104,7 +107,7 @@ export function initialize(runtime){
  // ---------- touch, mouse and keys ----------
  function tap(px,py){const [W,H]=size(),ring=drawnIcons.find(d=>d.kind==='ring');let it=hitTest(ring?items.filter(i=>i.kind!=='place'&&i.kind!=='ringHome'):items,view,W,H,px,py);
   // Far out the eleven places are one small ring: its card is the ring's centre («Volver al anillo»).
-  if(ring&&Math.hypot(ring.x-px,ring.y-py)<26&&(!it||['live','landmark','heard','rare','sky','favorite'].includes(it.kind))){const c=scene?.center;if(c)it={kind:'ringHome',id:'ring',x:c.x,y:c.y,name:'Los once lugares'};}const meAt=drawnIcons.find(d=>d.kind==='me');if(meAt&&Math.hypot(meAt.x-px,meAt.y-py)<16&&(!it||it.kind!=='mark'))it={kind:'me',x:runtime.S.wx,y:runtime.S.wy,name:'Tú'};
+  if(ring&&Math.hypot(ring.x-px,ring.y-py)<26&&(!it||['live','landmark','heard','rare','sky','favorite','rumor'].includes(it.kind))){const c=scene?.center;if(c)it={kind:'ringHome',id:'ring',x:c.x,y:c.y,name:'Los once lugares'};}const meAt=drawnIcons.find(d=>d.kind==='me');if(meAt&&Math.hypot(meAt.x-px,meAt.y-py)<16&&(!it||it.kind!=='mark'))it={kind:'me',x:runtime.S.wx,y:runtime.S.wy,name:'Tú'};
   if(!it){const [wx,wy]=toWorld(view,W,H,px,py),r=RP(),key=Math.floor(wx/r)+','+Math.floor(wy/r),visited=!!runtime.S.places?.[key];let name='Este punto';if(visited){const id=biomeId(wx,wy);name=runtime.BIOMES?.find(b=>b.id===id)?.name||name;}it={kind:'spot',id:'spot',x:Math.round(wx),y:Math.round(wy),name,visited};}
   showCard(it);}
  function onDown(e){cv.setPointerCapture?.(e.pointerId);pointers.set(e.pointerId,{x:e.offsetX,y:e.offsetY,x0:e.offsetX,y0:e.offsetY,t:performance.now()});
@@ -152,7 +155,7 @@ export function initialize(runtime){
  function noteSeen(s){if(!usable()||!s)return false;return noteLive(book(),{kind:s.kind,x:s.x,y:s.y,won:!!s.won,day:runtime.S.todayKey||''});}
  Object.defineProperties(runtime,{
   openUniverseMap:{get:()=>open},closeUniverseMap:{get:()=>close},universeMapLevel:{get:()=>setLevel},universeMapPreview:{get:()=>preview},
-  mapMarkRoute:{get:()=>route},clearMapMark:{get:()=>clearMark},mapNoteLive:{get:()=>s=>{const ok=noteSeen(s);if(box&&!box.hidden){scene=sceneNow();redraw();}return ok;}},
+  mapMarkRoute:{get:()=>route},setMapMark:{get:()=>it=>setMark(it)},clearMapMark:{get:()=>clearMark},mapNoteLive:{get:()=>s=>{const ok=noteSeen(s);if(box&&!box.hidden){scene=sceneNow();redraw();}return ok;}},
   universeMapState:{get:()=>state},universeMapTap:{get:()=>(px,py)=>{if(box.hidden)return null;tap(px,py);return card?{kind:card.kind,id:card.id,name:card.name}:null;}},
   universeMapShow:{get:()=>it=>{if(box.hidden||!it)return false;showCard(it);return true;}},universeMapTick:{get:()=>tick}
  });

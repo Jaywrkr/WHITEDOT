@@ -8,6 +8,8 @@ Catálogo de 119 ideas para que recorrer el universo sea más divertido. Más **
 
 **Fuera del catálogo (29 de octubre de 2026):** «Ganas de volver» (alpha.236, rama `jay/volver`), elegida por Jay aparte: racha suave en el cielo del Refugio y carta del universo al volver. Cumple las siete reglas: sin castigo, sin chispas, sin humanos. [El mundo](MUNDO.md#ganas-de-volver).
 
+**Fuera del orden de fases (29 de octubre de 2026):** «Descubrir» (alpha.240, rama `jay/descubrir`), elegida por Jay: rumores que apuntan a algo real y lejano, y un álbum de cinco sonidos raros por bioma con tu propia mezcla. Ver [Descubrir y el catálogo](#descubrir-alpha240) y [El mundo](MUNDO.md#descubrir).
+
 **Las dos direcciones son lentes simuladas.** Como el [panel](PANEL.md), son perfiles hechos a partir de obra pública. No son esas personas ni sus opiniones reales. Las decisiones de Jay mandan.
 
 [Traspaso](../HANDOFF.md) · [Universo](UNIVERSO.md) · [Encuentros vivos](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos) · [El mundo](MUNDO.md) · [Plan](PLAN_LANZAMIENTO.md#universo-vivo--encuentros)
@@ -338,6 +340,16 @@ Construido en la rama `jay/ritmo`, a petición de Jay. No es una fase de este ca
 - **10 · Duelo con un púlsar:** sin construir. El Duelo final es otra cosa: un nivel en el centro del anillo, con su ★, tras los once.
 - **103 · Confeti tras 100 aciertos:** sin construir. El combo de Ritmo es una estela desde 8 aciertos, solo dentro de una ronda.
 
+#### Descubrir (alpha.240)
+
+Construido en la rama `jay/descubrir` (desde `jay/ritmo`), a petición de Jay, fuera del orden de fases. Cumple las siete reglas: el siguiente paso en blanco (el «?» del mapa, el aro y la marca del borde), salir sin perder nada («Soltar», cerrar el álbum), lo inacabado guardado (rumores abiertos, álbum), sin castigos ni caducidad, la música base intacta (capas medidas por render, 28 dB por debajo). Respeta la densidad de la decisión 11: algo cada km, lo raro desde 20 km y las leyendas desde 50 km. Relación con el catálogo:
+
+- **62 · Mapas estelares del tesoro (parcial):** un rumor es una pista de un solo paso hacia algo real; «Marcar» la convierte en rumbo. Sin cadenas de varios pasos.
+- **83 · Viento que silba hacia un secreto, 17 y 80 · lo que se oye lejos:** los sonidos raros se oyen antes de verse, como los hitos; no son escenas.
+- **45 · Medusa coleccionista de sonidos y 69 · Álbum de cromos:** el álbum de sonidos es una colección de 55 con huecos «?»; sin medusa ni cromos.
+- **18 y 89 · Cápsulas y Disco de oro:** sin construir. La mezcla del álbum suena encima de la música, no cambia de familia.
+- **66 · Satélites de descanso cada 10 km:** siguen sin existir; por eso ningún rumor habla de ellos (solo de lo que hay).
+- **Premios (decisión 9):** lo pequeño y repetible (un sonido) da chispas por `universeReward`; lo único (su página) va al álbum; la serie completa, un premio grande y visible (el Aro de sonidos), sin chispas. Los rumores no pagan.
 #### Con Luca (alpha.239)
 
 Construido en la rama `jay/con-luca` (sobre `jay/ritmo`), a petición de Jay, para jugar con Luca. No es una fase de este catálogo ni una idea numerada: son el **Reto entre dos** (dos jugadores en el mismo teléfono, una marca de tiempo por lugar, el fantasma del rival) y el **Modo tranquilo para niños** (sin reloj, señales grandes, ★ sin ★★) ([El mundo](MUNDO.md#con-luca)). Sigue las reglas: el siguiente paso en blanco, salir sin perder nada, lo inacabado guardado, sin castigos, la música base intacta, el cubo pequeño, sin chispas. Relación con el catálogo: ninguna idea queda construida por esto; el universo sigue sin humanos (los jugadores son un apodo y un símbolo, no personajes).
