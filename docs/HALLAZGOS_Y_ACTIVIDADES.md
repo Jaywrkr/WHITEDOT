@@ -312,7 +312,7 @@ La dificultad de los encuentros vivos es medida: un bot a pie, sin pulsos, al mo
 
 Con el recorrido antiguo (sin más Mundo) queda en la mitad de eso (60 %: 67, 204 y 535 ✦). Solo explorando 20 min, sin rondas: 60 %, 773 → 645 ✦ (19 → 17 piezas); 75 %, 894 → 744; 90 %, 1.161 → 844; sin sonido, 634 → 544. Toda la tienda (81 piezas, 17.030 ✦) con la mitad del tiempo en lugares (`node scripts/spark-economy.mjs`): **6,9 → 20,7 h** (casual) y **5,2 → 17,2 h** (a tiempo).
 
-**Ritmo de la tienda: decisión pendiente de Jay.** Con estos importes la tienda va unas tres veces más lenta que en alpha.231. No se tocan los precios. Propuestas, para que Jay elija: (a) dividir los precios entre tres (17.030 → unas 5.700 ✦; vuelve a unas 7 y 6 h; el salto, 20 ✦, igual o a 10); (b) subir solo las bases de la regla (encuentro 5 → 15, figura 4 → 10, actividad 10 → 30, travesura 4 → 10), que deja la chispa suelta en 1; (c) dejarla lenta a propósito, como colección larga.
+**Ritmo de la tienda: lenta a propósito (Jay, 29 de octubre de 2026).** Con estos importes la tienda va unas tres veces más lenta que en alpha.231 (unas 20 h para completarla). Jay eligió dejarla así, como una colección larga: los precios no cambian. Se descartaron dividir los precios entre tres y subir las bases de la regla.
 
 La victoria (once lugares) llega unos 6 min más tarde en el modelo por el recorrido nuevo (60 %: 39,9 → 45,9 min); la regla de 12 min sin capa nueva se sigue cumpliendo con sonido.
 
