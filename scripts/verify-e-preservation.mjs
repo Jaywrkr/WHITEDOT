@@ -60,9 +60,9 @@ const rebasedH1=new Set(['src/crystal-play-model.js','src/crystal-sparks.js','sr
 const approvedH2='b8f103e711339f48b1a8cf2f2e8e0de47b3fd273';
 const rebasedH2=new Set(['src/house-audio.js','src/house-capsules.js','src/house-guide.js']);
 // Mapa del universo (Jay, 29 Oct 2026, alpha.235: «el mapa tiene que ser perfecto»): the map's English strings and the
-// offline shell's three new modules. These protected files and the shell are held to that commit; the music's contracts
+// offline shell's three new modules. Held to the merge of main (alpha.234, with the Refugio) into jay/mapa-universo; the music's contracts
 // are untouched (the map makes no sound).
-const approvedM='41cc0535cfbc52fa86ec6d718b651a766c6280fc';
+const approvedM='b79757387779417bf82ed1f988235130dd28b5bb';
 const rebasedM=new Set(['src/i18n-en.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
