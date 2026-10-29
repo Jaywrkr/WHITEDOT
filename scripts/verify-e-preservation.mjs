@@ -53,6 +53,12 @@ const rebasedG=new Set(['src/achievement-metadata.js','src/main.js']);
 // with G), so G's changes (main.js, the shell's new module) are in it; the music's contracts are untouched.
 const approvedH1='00cbf87dd7d25e0d2233c9f57aa2a4bd3c0f8122';
 const rebasedH1=new Set(['src/crystal-play-model.js','src/crystal-sparks.js','src/i18n-en.js','src/live-encounters-model.js','src/sky-map-model.js','src/spark-rules.js','src/sparks.js','src/universe-activities.js','src/universe-mischief.js','src/wild.js']);
+// H2 · Refugio simple (Jay, 28 Oct 2026, alpha.234): the house plays its objects only while you listen (house-audio.js,
+// same notes and rooms), the Prism and the Taller's disc leave Eco for «Más» (house-capsules.js) and one notice replaces
+// the ready-capsule line (house-guide.js); the offline shell lists one new module. Held to the merge of main (alpha.233,
+// with G and H1) into jay/h2-refugio, so the shell holds every module once.
+const approvedH2='b8f103e711339f48b1a8cf2f2e8e0de47b3fd273';
+const rebasedH2=new Set(['src/house-audio.js','src/house-capsules.js','src/house-guide.js']);
 // Mapa del universo (Jay, 29 Oct 2026, alpha.235: «el mapa tiene que ser perfecto»): the map's English strings and the
 // offline shell's three new modules. These protected files and the shell are held to that commit; the music's contracts
 // are untouched (the map makes no sound).
@@ -72,7 +78,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedM.has(file)?approvedM:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}

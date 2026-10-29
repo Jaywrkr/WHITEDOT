@@ -53,13 +53,15 @@ def task(browser,kind,shot=0,toast=False):
  path=None
  if shot:page.wait_for_timeout(shot);path=SHOTS/f"kubono-e3-{d['id']}-390.png";page.screenshot(path=str(path))
  # 1 · Pulses on time: done, more ✦; the first time, into the Bitácora (and one notice naming it).
+ # Every notice shown from here is kept: on a loaded runner the first-encounter notice can wait behind achievements and pass between two looks.
+ if toast:page.evaluate("()=>{const el=document.getElementById('toast');window.__notices=[];const keep=()=>{const t=el.innerText||'';if(t&&!el.hidden)window.__notices.push(t);};new MutationObserver(keep).observe(el,{childList:true,subtree:true,characterData:true,attributes:true});keep();}")
  before=page.evaluate(STATE,d['id'])
  got=page.evaluate(DRIVE,['pulse',25]);assert got and got['stage']=='done' and got['onTime'],(d['id'],got)
  page.wait_for_function("__r.liveEncounterState().scene?.paid",timeout=4000);after=page.evaluate(STATE,d['id']);exp=page.evaluate(EXPECT,True)
  assert after['reward']==exp and after['earned']==before['earned']+exp and after['sparks']>=before['sparks']+exp and after['caught']==1 and after['onTime']==1 and after['book'],(d['id'],before,after)
  assert {'title':d['name'],'text':f'Encuentro vivo · +{exp} chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
  # Achievements earned on the way (a landscape, the World) may show first: the notice waits its turn.
- if toast:page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Encuentro nuevo')",timeout=15000);t=page.locator('#toast').inner_text();assert d['name'] in t and 'Logro' not in t,t
+ if toast:page.wait_for_function("(window.__notices||[]).some(t=>t.includes('Encuentro nuevo'))",timeout=30000);t=next(t for t in page.evaluate('window.__notices') if 'Encuentro nuevo' in t);assert d['name'] in t and 'Logro' not in t,t
  page.wait_for_function(GONE,timeout=5000)
  # 2 · On foot, no pulse: done, its ✦.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])

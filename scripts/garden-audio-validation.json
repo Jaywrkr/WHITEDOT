@@ -1,6 +1,6 @@
 {
   "renders": 8,
-  "maxPeak": 0.8823530673980713,
+  "maxPeak": 0.882351279258728,
   "sampleRates": [
     44100,
     48000
@@ -10,6 +10,8 @@
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "graincloud",
@@ -4502,7 +4504,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8823504447937012,
+      "fullPeak": 0.8823503255844116,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -5409,14 +5411,16 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8823504447937012,
-      "rmsDb": -12.76496628444111,
+      "peak": 0.8823503255844116,
+      "rmsDb": -12.764989937913382,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "graincloud",
@@ -9909,7 +9913,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8823530673980713,
+      "fullPeak": 0.882351279258728,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -10870,14 +10874,16 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8823530673980713,
-      "rmsDb": -12.760946580717649,
+      "peak": 0.882351279258728,
+      "rmsDb": -12.760917839128705,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "bowed",
@@ -16148,13 +16154,15 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.5666728615760803,
-      "rmsDb": -26.069820674255638,
+      "rmsDb": -26.06982143905381,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "bowed",
@@ -21452,13 +21460,15 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.5666728615760803,
-      "rmsDb": -26.0653897800125,
+      "rmsDb": -26.065391646997313,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "graincloud",
@@ -26814,13 +26824,15 @@
       "glassRoles": [],
       "sampleRate": 48000,
       "peak": 0.8777995109558105,
-      "rmsDb": -11.448645692228803,
+      "rmsDb": -11.448676687876489,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "graincloud",
@@ -31313,7 +31325,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8777996897697449,
+      "fullPeak": 0.8777996301651001,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -32220,14 +32232,16 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8777996897697449,
-      "rmsDb": -11.444933674281703,
+      "peak": 0.8777996301651001,
+      "rmsDb": -11.44492992785323,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "graincloud",
@@ -36720,7 +36734,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.5672006607055664,
+      "fullPeak": 0.5672063827514648,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -37557,7 +37571,7 @@
         "wood": 320,
         "shaker": 40,
         "hat": 20,
-        "clap": 10,
+        "rim": 10,
         "organ": 12
       },
       "petNotes": [],
@@ -37583,14 +37597,16 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.5672006607055664,
-      "rmsDb": -19.96364446353047,
+      "peak": 0.5672063827514648,
+      "rmsDb": -19.713309626889664,
       "hotFraction": 0
     },
     {
       "shopNotes": [],
       "shopSounds": null,
       "mischiefNotes": [],
+      "liveNotes": [],
+      "skyNotes": [],
       "audioNotes": [
         {
           "instrument": "graincloud",
@@ -42083,7 +42099,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.567200779914856,
+      "fullPeak": 0.5672067403793335,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -42965,7 +42981,7 @@
         "wood": 320,
         "shaker": 40,
         "hat": 20,
-        "clap": 10,
+        "rim": 10,
         "organ": 12
       },
       "petNotes": [],
@@ -42991,8 +43007,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.567200779914856,
-      "rmsDb": -19.96265172524915,
+      "peak": 0.5672067403793335,
+      "rmsDb": -19.712385611676645,
       "hotFraction": 0
     }
   ]

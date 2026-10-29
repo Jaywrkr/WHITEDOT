@@ -19,7 +19,7 @@ for(const r of HOUSE_ROOMS.slice(1))for(let places=0;places<=11;places++)for(let
 assert.match(roomAsks(cielo),/^8 lugares o 15 ★$/,'the full rule still exists (D3)');
 // The Refugio draws the nearer condition, records what it draws for the overlap test, and keeps its labels at 4.5:1.
 const house=readFileSync(new URL('../src/house.js',import.meta.url),'utf8');
-assert.match(house,/roomNeedText\(r,progressNow\)/);assert.doesNotMatch(house,/'#ffffff4d'/,'closed labels no longer at 30 % white');assert.match(house,/houseLayout:/);
+assert.match(house,/roomOpensText\(r,progressNow\)/,"Refugio simple: the closed room says what opens it, the nearer condition");assert.doesNotMatch(house,/'#ffffff4d'/,'closed labels no longer at 30 % white');assert.match(house,/houseLayout:/);
 const caps=readFileSync(new URL('../src/house-capsules.js',import.meta.url),'utf8');assert.doesNotMatch(caps,/'#ffffff73'/);
 // Lugares: one action column, the cue upward; the Bitácora opens on Logros with unread achievements; the map fills its box.
 const lugares=readFileSync(new URL('../src/refugio-lugares.js',import.meta.url),'utf8');assert.match(lugares,/lugar-actions/);assert.match(lugares,/más arriba/);
