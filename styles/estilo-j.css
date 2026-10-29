@@ -859,3 +859,12 @@ body.world-mode.activity-open .dock>button#bUniverseMap:not([hidden]){display:no
 .house-panel .house-more-tools[open]>summary{margin-bottom:6px}
 #bStudio.has-new span::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;vertical-align:middle;background:var(--ink)}
 .house-panel .house-more .house-stars{min-height:44px;margin-right:0;padding:8px 4px;font-size:11px}
+/* Ritmo (alpha.237): the Duelo final's sheet on black, like the end of a round; one white button; its ★ gold once won. */
+#mDuel{background:#000}
+.duel-lines{display:grid;gap:4px;margin:4px 0 12px}
+.duel-lines p{margin:0;font-size:13px;line-height:1.55;color:var(--ink)}
+.sheet .row>#duelPlay{flex-basis:100%;order:-1}
+.journal-section .ritmo-star{color:var(--earned)}
+#duelStars{display:flex;gap:14px;line-height:1;font-family:system-ui,sans-serif;margin:6px 0 12px;color:var(--faint)}
+#duelStars span{font-size:34px!important;line-height:1}
+#duelStars .got{color:#f0d27a}

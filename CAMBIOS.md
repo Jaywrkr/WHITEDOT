@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 29 de octubre de 2026. Código **2.3.0-alpha.235** en la rama `jay/mapa-universo`. Las entradas describen su revisión, no certifican producción.
+Estado: 29 de octubre de 2026. Código **2.3.0-alpha.237** en la rama `jay/ritmo`. Las entradas describen su revisión, no certifican producción.
+
+
+## Ritmo · 2.3.0-alpha.237
+
+Rama `jay/ritmo`, desde `main` (`05b42e4`, alpha.235). En paralelo va `jay/volver` (alpha.236, «Ganas de volver»); esta rama se mezcla después. Aprobado por Jay: cuatro modos dentro de los once lugares, que dan ★ y hacen crecer Tu canción, **nunca chispas** (los niveles no pagan, `LEVEL_SPARKS=0`). Guía: [El mundo](docs/MUNDO.md#ritmo).
+
+- **Eco.** Un lugar ya completo, de memoria: canta su frase como siempre y después la Línea y el aro del cubo dejan de dibujar sus pasos. Desde Lugares («Eco» en cada fila completa), la hoja del portal y la hoja de resultado. No en la primera vez, no en la Cueva (ya es de memoria), solo con sonido (sin sonido vuelven las señales). Es una ronda normal: ★, ★★ y Tu canción como siempre. La hoja dice «Lago · Eco» y «De memoria, sin señales.». «Dejar la ronda» sale sin perder nada.
+- **Duelo final.** Tras los once, su final y su nota (`eleven-note.js`), un lugar secreto en el centro del anillo: rombo blanco con columna de luz (blanco = siguiente) y un aviso, una vez. Lugares lo lleva («Duelo final · en el centro del anillo ›»). Al entrar, una hoja negra: «Jugar» o «Ahora no». Canta los once ritmos en orden, un compás cada uno (la Cueva, cuatro corcheas fijas por `hashKey`), y respondes en el siguiente; la Línea muestra el ritmo en juego. Siempre se termina: su ★ (propia, fuera de las 33) llega al completarlo, sin umbral. La primera vez, la **Corona de los once** (once puntos dorados alrededor del cubo; se quita en Tu cubo) y su entrada en la Bitácora. Salir: «Dejar la ronda» o alejarse 1200 u; no se pierde nada. `?rapido=1` y `?rapido=2` cantan cuatro ritmos.
+- **Fantasma.** Cada ronda normal o Eco guarda su camino (una muestra cada 600 ms, como mucho 160; si no caben, se quedan la mitad y el paso se dobla). La siguiente ronda de ese lugar dibuja el contorno discontinuo del cubo por ese camino; se desvanece al pasar su tiempo. Solo una ronda más rápida lo sustituye: «Le ganaste a tu fantasma · 0:04.»; más lenta: «Tu fantasma · 0:02.». Maestro, Remezcla y Libre no lo usan.
+- **Combo.** Con 8 aciertos seguidos en una ronda (o en el duelo) el cubo deja una estela de cuadros blancos que crece hasta 40; un fallo la apaga en 0,8 s. Solo dibujo: no quita nada ni suena.
+- **Guardado nuevo** `S.ritmo` (versión 1): Eco por lugar, un fantasma por lugar, el duelo y el aviso. Se conservan campos desconocidos; una versión futura no se toca ni se escribe. Ningún otro formato cambia.
+- **Sonido:** solo el duelo canta, encima y suave, con el clic y la nota con que cada lugar ya canta su frase (`hatHit`, `pluck`). La música base no cambia.
+- Cableado sin tocar archivos protegidos salvo el inglés: `places-ring.js` carga `ritmo.js` y le pasa el compás; `journey-pulse.js` (Línea y aro), `canvas.js` (tocar en cualquier sitio durante el duelo), `places.js` (la hoja), `refugio-lugares.js`, `journal.js`, `index.html` (`portalEcho`, `placeEcho`, `mDuel`, `lugaresDuel`, `cubeRitmoSection`; ningún id quitado) y `estilo-j.css`.
+- Pruebas nuevas: `tests/ritmo.mjs`, `tests/ritmo_eco_smoke.py`, `tests/ritmo_fantasma_smoke.py` y `tests/ritmo_duelo_smoke.py` (390×844 y 1280×800, inglés).
+- Preservación: cambian a propósito `i18n-en.js` y la lista offline de `sw.js` (dos módulos nuevos), con su capa `approvedR`. Probado en local; sin CI remoto, sin teléfono ni personas.
+
 
 
 ## Mapa del universo · 2.3.0-alpha.235

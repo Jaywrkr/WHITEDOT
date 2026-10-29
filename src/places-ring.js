@@ -3,6 +3,7 @@ import {PLACES,placeOpen,starCount,nextGoal,previousPlace,complete} from './plac
 import {freeOpen} from './journey-mode.js';
 import {directionPan} from './spatial.js';
 import {formatDistance} from './player-profile-model.js';
+import {initialize as ritmo} from './ritmo.js';
 // The ring (plan F5, docs/MUNDO.md): the eleven places as portals around the Refugio, about half a minute's walk
 // from its door. Each portal sounds on the bar's «1», louder as you come near; a closed one shows the stars it asks for.
 // An arrow at the edge of the screen points to the next place on the path (plan H3: in order, like the tracks of a
@@ -61,7 +62,9 @@ export function initialize(runtime){
   d.seen[spot.id]=true;runtime.narrate?.('portal');if(stars(spot.id)[0]){choose(spot.id,from);return;}runtime.startPlace?.(spot.id,{from});}
  function choose(id,from){const box=$('mPortal');if(!box){runtime.startPlace?.(id,{from});return;}$('portalTitle').textContent=name(id);$('portalStars').innerHTML=stars(id).map(x=>`<span class="${x?'got':''}">★</span>`).join('');
   // A place already complete offers its round, the Maestro one once it has ★★, and Libre: its music with no bar or stars.
-  const go=opts=>{box.hidden=true;runtime.startPlace?.(id,{...opts,from});};$('portalPlay').onclick=()=>go({});$('portalMaestro').hidden=!stars(id)[1];$('portalMaestro').onclick=()=>go({maestro:true});if($('portalFree'))$('portalFree').onclick=()=>go({free:true});$('portalClose').onclick=()=>{box.hidden=true;};box.hidden=false;}
+  const go=opts=>{box.hidden=true;runtime.startPlace?.(id,{...opts,from});};$('portalPlay').onclick=()=>go({});$('portalMaestro').hidden=!stars(id)[1];$('portalMaestro').onclick=()=>go({maestro:true});if($('portalFree'))$('portalFree').onclick=()=>go({free:true});
+  // Ritmo (alpha.237): Eco, the place from memory, once it is complete (ritmo.js).
+  const echo=$('portalEcho');if(echo){echo.hidden=!runtime.ritmoEchoOffered?.(id);echo.onclick=()=>{box.hidden=true;runtime.ritmoStartEcho?.(id,{from});};}$('portalClose').onclick=()=>{box.hidden=true;};box.hidden=false;}
  // Straight to a portal and into its round: the card's «Siguiente».
  function go(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!placeOpen(data(),id,runtime.S.journey))return false;const from=besidePortal(s,center()||s);runtime.S.wx=from.x;runtime.S.wy=from.y;inside=id;data().seen[id]=true;runtime.enterFx=1;return runtime.startPlace?.(id,{from});}
  function tick(){if(!active()||openSurface('.modal:not([hidden])')){inside=null;return;}const S=runtime.S,near=spots().find(s=>Math.hypot(s.x-S.wx,s.y-S.wy)<PORTAL_REACH);
@@ -83,6 +86,7 @@ export function initialize(runtime){
    else{c.globalAlpha=.25;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.arc(x,y,r+7,0,6.283);c.stroke();c.globalAlpha=.6;c.fillStyle='#8a8a8f';star(c,x,y,6);}
    // With «Todo a la vista», its name and what it asks are written too.
    c.globalAlpha=1;c.textAlign='center';c.textBaseline='top';c.font='12px "Geist Mono", monospace';c.fillStyle=open?'#ffffff':'#8a8a8f';c.fillText(p.name,x,y+r+(open?24:14));}
+  runtime.drawRitmoRing?.(c,W,H,t);
   const next=!S.destination&&nextPortal(spots(),d,S.journey,{x:S.wx,y:S.wy});if(next){const x=W/2+next.x-cx,y=H/2+next.y-cy;
    // The next place on the path: a column of white light over its portal (a state, not something earned). Plan I2: seen from anywhere; off screen the
    // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
@@ -98,7 +102,7 @@ export function initialize(runtime){
  const sounds=[];
  function sound(spot,index,time,v){const S=runtime.S,emit=()=>runtime.pluck(60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],time,v,2),pan=directionPan(spot,S.wx,S.wy,900);
   sounds.push({id:spot.id,time,v,pan});if(sounds.length>16)sounds.shift();return runtime.withPan?runtime.withPan(pan,emit):emit();}
- function musicStep(step,time){if((step!==0&&step!==NEXT_STEP)||!runtime.S.sound||!active()||!runtime.pluck)return;const S=runtime.S;
+ function musicStep(step,time){runtime.ritmoMusicStep?.(step,time);if((step!==0&&step!==NEXT_STEP)||!runtime.S.sound||!active()||!runtime.pluck)return;const S=runtime.S;
   if(step===NEXT_STEP){const next=nextPortal(spots(),data(),S.journey);if(!next)return;const d=Math.hypot(next.x-S.wx,next.y-S.wy);if(d<PORTAL_HEAR*.5)return;const v=beaconGain(d);if(v>0)sound(next,spots().findIndex(q=>q.id===next.id),time,v);return;}
   let best=null,far=PORTAL_HEAR,index=0;spots().forEach((s,i)=>{const d=Math.hypot(s.x-S.wx,s.y-S.wy);if(d<far){far=d;best=s;index=i;}});if(!best)return;
   const near=1-far/PORTAL_HEAR,open=placeOpen(data(),best.id,S.journey);sound(best,index,time,(open?.09:.035)*near*near);}
@@ -119,9 +123,10 @@ export function initialize(runtime){
  function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]||stars(p.id)[0]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
   const row=box.querySelector('.row');for(const p of seen){const b=document.createElement('button');b.textContent=`${p.name} ${'★'.repeat(stars(p.id).filter(Boolean).length)}`.trim();b.onclick=()=>travel(p.id);row.appendChild(b);}}
  // Leaving a round from the menu: only shown while a round is being played.
- const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.();});}
+ const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);if(runtime.ritmoDuelActive?.())runtime.ritmoDuelQuit?.();else runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.()&&!runtime.ritmoDuelActive?.();});}
  // The portals for the map: where each is, and whether it is open, with its stars.
  function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>{const open=placeOpen(d,s.id,runtime.S.journey);return {...s,name:name(s.id),open,complete:complete(d,s.id),ink:portalInk(s.id,open,d),stars:stars(s.id).filter(Boolean).length};});}
+ ritmo(runtime);
  Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringCanTravel:{get:()=>canTravel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},ringHome:{get:()=>home},ringHomePoint:{get:()=>homePoint},ringAway:{get:()=>away},renderRingTravel:{get:()=>travelList},
   ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s,ink:portalInk(s.id,placeOpen(data(),s.id,runtime.S.journey))})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }
