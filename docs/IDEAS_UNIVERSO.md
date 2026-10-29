@@ -6,6 +6,8 @@ Catálogo de 119 ideas para que recorrer el universo sea más divertido. Más **
 
 **Estado (28 de octubre de 2026):** **F1 «Mapa del cielo» está hecha** en la rama `universo/f1-mapa-del-cielo` (alpha.231), sin PR, sin CI remoto, sin teléfono ni personas. Qué entró y qué quedó para después, en [F1](#f1--constelaciones) y en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Las demás fases siguen sin empezar. **El [Mapa del universo](MUNDO.md#mapa-del-universo)** (alpha.235, rama `jay/mapa-universo`, pedido por Jay aparte de las fases) cubre parte de F2: ver [Mapa del universo y F2](#mapa-del-universo-y-f2).
 
+**Fuera del catálogo (29 de octubre de 2026):** «Ganas de volver» (alpha.236, rama `jay/volver`), elegida por Jay aparte: racha suave en el cielo del Refugio y carta del universo al volver. Cumple las siete reglas: sin castigo, sin chispas, sin humanos. [El mundo](MUNDO.md#ganas-de-volver).
+
 **Las dos direcciones son lentes simuladas.** Como el [panel](PANEL.md), son perfiles hechos a partir de obra pública. No son esas personas ni sus opiniones reales. Las decisiones de Jay mandan.
 
 [Traspaso](../HANDOFF.md) · [Universo](UNIVERSO.md) · [Encuentros vivos](HALLAZGOS_Y_ACTIVIDADES.md#encuentros-vivos) · [El mundo](MUNDO.md) · [Plan](PLAN_LANZAMIENTO.md#universo-vivo--encuentros)

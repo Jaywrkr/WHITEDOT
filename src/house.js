@@ -117,7 +117,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  function toggleListen(){if(listening()){listen=null;palette();return;}if(runtime.S.sound)runtime.audio();listen={from:runtime.MU?.step??0};palette();}
  // A tap looks or listens: an object sounds, a trophy, card, star or visitor says its name, a closed room says what
  // opens it. Nothing walks. In Colocar, a tap on a wall places the chosen object.
- function tap(px,py){const h=current();if(h.readOnly)return;for(const r of HOUSE_ROOMS){const rect=roomRect(r.id),b=roomBox(r.id),top=toScreen(b.x,b.y),bottom=toScreen(b.x+b.w,b.y+b.h+12);if(px<top.x||py<top.y||px>bottom.x||py>bottom.y)continue;if(!h.unlocked.includes(r.id)){runtime.toast(r.name+': '+roomOpensText(r,progress())+'.');return;}const x=Math.max(0,Math.min(1,(px-rect.x)/rect.w)),y=Math.max(0,Math.min(1,(py-rect.y)/rect.h));const nearest=items(h).filter(o=>o.room===r.id&&(!o.gardenSeed||action==='walk')).sort((a,b)=>Math.hypot((a.x-x)*rect.w,(a.y-y)*rect.h)-Math.hypot((b.x-x)*rect.w,(b.y-y)*rect.h))[0],near=nearest&&Math.hypot((nearest.x-x)*rect.w,(nearest.y-y)*rect.h)<reach();
+ function tap(px,py){const h=current();if(h.readOnly)return;{const sky=action==='walk'&&runtime.refugioSkyLook?.(px,py);if(sky){runtime.toast(sky,{level:2,category:'refugio'});return;}}for(const r of HOUSE_ROOMS){const rect=roomRect(r.id),b=roomBox(r.id),top=toScreen(b.x,b.y),bottom=toScreen(b.x+b.w,b.y+b.h+12);if(px<top.x||py<top.y||px>bottom.x||py>bottom.y)continue;if(!h.unlocked.includes(r.id)){runtime.toast(r.name+': '+roomOpensText(r,progress())+'.');return;}const x=Math.max(0,Math.min(1,(px-rect.x)/rect.w)),y=Math.max(0,Math.min(1,(py-rect.y)/rect.h));const nearest=items(h).filter(o=>o.room===r.id&&(!o.gardenSeed||action==='walk')).sort((a,b)=>Math.hypot((a.x-x)*rect.w,(a.y-y)*rect.h)-Math.hypot((b.x-x)*rect.w,(b.y-y)*rect.h))[0],near=nearest&&Math.hypot((nearest.x-x)*rect.w,(nearest.y-y)*rect.h)<reach();
    if(!visit&&!h.readOnly&&action==='place'&&!near){const d=HOUSE_OBJECTS.find(p=>p.id===selected);if(!houseOwns(d,runtime.S))return;if(edit(()=>{if(!placeHouseObject(h,selected,r.id,x,y))return false;markMoved(h,selected);}))runtime.now(t=>runtime.playHouseObject(h.objects.find(p=>p.kind===selected),t,h));palette();return;}
    else if(!visit&&!h.readOnly&&action==='erase'){if(near)putAway(nearest.kind);return;}
    else if(near)runtime.now(t=>runtime.playHouseObject(nearest,t,h));
@@ -178,7 +178,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   // Frames, trophies, showcases, garden plants and visiting creatures.
   runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h,note:noteText});
   // Capsule decorations, the capsule machine and the Taller label.
-  runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night,note:noteText,simple:true});drawSky(c,h,k,t,calm());runtime.houseGuideTick?.();
+  runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night,note:noteText,simple:true});drawSky(c,h,k,t,calm());runtime.drawRefugioSky?.(c,{toScreen,k,t,calm:calm(),note:noteText,view:v,visit:!!visit});runtime.houseGuideTick?.();
   placeVoice(open<1?voiceTop:voiceSlot(h,roomTexts));layout.voice=voiceTop;
   c.restore();
   const here=roomAt(floor,fx)==='jardin'&&!visit&&!h.readOnly;if(here!==gardenRoom){gardenRoom=here;$('houseGardenTools').hidden=!here;}

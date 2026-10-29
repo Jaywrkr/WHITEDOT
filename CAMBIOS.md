@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 29 de octubre de 2026. Código **2.3.0-alpha.235** en la rama `jay/mapa-universo`. Las entradas describen su revisión, no certifican producción.
+Estado: 29 de octubre de 2026. Código **2.3.0-alpha.236** en la rama `jay/volver`. Las entradas describen su revisión, no certifican producción.
+
+
+## Ganas de volver · 2.3.0-alpha.236
+
+Rama `jay/volver`, desde `main` (`05b42e4`, alpha.235). En paralelo va `jay/ritmo` (alpha.237), que esta rama no toca. Aprobado por Jay: racha suave y carta del universo; sin castigos, sin chispas (lo especial no paga ✦). Guías: [El mundo](docs/MUNDO.md#ganas-de-volver) y [Casa viva](docs/CASA_VIVA.md#cielo-de-días).
+
+- **Racha suave** (`src/sky-streak.js`). Construida sobre el contador de días que ya había (`onFirstLight`: `S.lastDay`, `S.streak`, `S.totalDays`; decisión 5A), sin duplicarlo. Cada día jugado enciende una estrella blanca en el cielo del Refugio; los días seguidos se unen con un hilo. Faltar no quita nada: las estrellas y el hilo viejo se quedan y al volver empieza otro hilo. Ayer aún cuenta. El rótulo solo dice lo que hay («N estrellas · N días seguidos»; sin estrellas, «Juega hoy y se enciende una estrella.»). Tocar el cielo lo explica. Encima de la casa en teléfono; a la derecha del Cielo en pantalla ancha. Posiciones por `hashKey` del número de estrella: lo nuevo no mueve lo anterior.
+- **Hitos en la Bitácora:** 3, 7, 14, 30, 60, 100 y 365 días seguidos; 10, 30, 100 y 365 estrellas, con su fecha, en la tarjeta «Cielo del Refugio» (Mapa › Recuerdos y vínculos). El día del hito, el rótulo dice «Hito: …». Sin aviso extra (los logros «Racha de N» siguen como estaban).
+- **Carta del universo** (`src/universe-letter.js`). Tras cuatro horas o más fuera, un aviso pequeño: «Mientras no estabas · Una ola gigante pasó por el Lago.». Sale de los encuentros vivos de cada bioma (31 frases; «Tu reflejo» y «Tu eco» fuera) y de las figuras del Mapa del cielo unidas; primero lo que conoces. `hashKey` del día; una por apertura; cola de avisos (`#toast`, nivel 2, 7 s); un toque la cierra; no bloquea. Espera al saludo, a las hojas, al Viaje y la vista tranquila, a una ronda, actividad o encuentro vivo y a los finales; con los textos del universo apagados no sale. Sin humanos. La primera apertura no trae carta.
+- **Guardado nuevo:** `S.skyStreak` y `S.universeLetter` (versión 1 cada uno). Se migran sin perder campos: una partida anterior enciende todos sus días ya jugados; una versión futura solo se lee. Si escribir falla, la estrella o la carta no cuentan y se reintenta. Ningún otro formato cambia.
+- **Toques:** `house.js` llama al dibujo del cielo y a su toque (archivo ya abierto en preservación); `journal.js` añade la tarjeta; `main.js` inicia los dos módulos; `sw.js` los lista una vez; `estilo-j.css` deja tocar la carta. Inglés en `i18n-en.js`. Música y sonido sin cambios (nada nuevo suena).
+- Pruebas nuevas: `tests/sky-streak.mjs`, `tests/universe-letter.mjs` y `tests/volver_smoke.py` (390×844 y 1280×800). No se ajustó ninguna prueba existente.
+- Preservación: cambian a propósito `main.js`, `i18n-en.js` y la lista offline de `sw.js` (dos módulos nuevos), con su capa `approvedV`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Mapa del universo · 2.3.0-alpha.235
