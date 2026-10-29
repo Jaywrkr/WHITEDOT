@@ -70,9 +70,9 @@ const rebasedM=new Set(['src/i18n-en.js']);
 const approvedV='10fb6856f431c525b92146aa5ba086fd050ff8b9';
 const rebasedV=new Set(['src/i18n-en.js','src/main.js']);
 // Ritmo (Jay, 29 Oct 2026, alpha.237): Eco, the final duel, the ghost and the combo inside the eleven places. Their
-// English strings and the offline shell's two new modules (ritmo.js, ritmo-model.js) are held to that commit; the
+// English strings and the offline shell's two new modules (ritmo.js, ritmo-model.js) are held to the merge of main (alpha.236) into jay/ritmo; the
 // music's contracts are untouched (the duel sings on top with the voices the places already use for their phrase).
-const approvedR='2350a04eede3e5a554c0c321bf042962c1927a66';
+const approvedR='5e27c4d2b071c107f5a54fad4cf0c7b39567741e';
 const rebasedR=new Set(['src/i18n-en.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
