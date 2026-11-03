@@ -31,7 +31,8 @@ try:
   page,errors=page_for(browser,'?anillo=1');page.wait_for_timeout(500);page.evaluate(FREE)
   page.evaluate("async()=>{const r=__r,m=await import('/src/sky-map-model.js');r.skyMapTick(0);for(const f of m.skySeries('zodiaco').filter(f=>f.id!=='piscis'))r.S.skyMap.figures[f.id]={first:'2026-10-28',done:1,onTime:0};r.save();}")
   assert page.evaluate("__r.skyMapSpawn('piscis')");assert page.evaluate(JOIN)=='done'
-  page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Halo de estrellas')",timeout=5000);assert 'Zodiaco completo' in page.locator('#toast').inner_text()
+  # An achievement earned on arriving can hold the lane first (about 4 s here, longer on a slow runner).
+  page.wait_for_function("(document.getElementById('toast')?.innerText||'').includes('Halo de estrellas')",timeout=12000);assert 'Zodiaco completo' in page.locator('#toast').inner_text()
   assert 'Constelación nueva' not in page.locator('#toast').inner_text(),'one notice, naming one thing'
   st=page.evaluate("(()=>{const r=__r;return {halo:r.S.skyMap.halo,wear:r.S.skyMap.wear,on:r.skyMapState().halo}})()");assert st['halo'] and st['wear']['halo'] is True and st['on'],st
   page.wait_for_function("!__r.skyMapState().scene",timeout=6000);page.wait_for_timeout(3200)
