@@ -1,4 +1,4 @@
-"""Secretos (alpha.245) leave the music alone. The World's music rendered offline from this tree and from alpha.242
+"""Secretos (alpha.244) leave the music alone. The World's music rendered offline from this tree and from alpha.242
 (48fd03f, the commit before the secrets) is the same: the same peak and the same level in every half second. The only
 sound the secrets add is the arrow code's arpeggio (eight notes) and a place's short chord (three), in the place's scale
 and on the grid: six of each over the same music add far less than the music itself (measured against the same calls

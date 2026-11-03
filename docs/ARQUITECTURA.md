@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»); `universe-map-model.js`, `universe-map-art.js` y `universe-map.js` (Mapa del universo, alpha.235, cargados por `map.js`). P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»); `universe-map-model.js`, `universe-map-art.js` y `universe-map.js` (Mapa del universo, alpha.235, cargados por `map.js`). `scenes-model.js`, `scenes-audio.js` y `scenes.js` (Escenas musicales, alpha.243, cargados por `main.js`). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -51,7 +51,7 @@ Web Audio sintetiza localmente; no se usan Tone ni instrumentos de Arturia. El s
 
 `journey-pulse.js` comparte juicio, reloj audible (`audibleTime`, `cueDelay`: latencia de salida más calibración) y `scheduleAudibleCue`; ningún temporizador visual usa `ac.currentTime` crudo. Luz y sonido se programan por separado: flores/Estudio reciben una marca presente cuando llega su callback, no una marca futura que el dibujante interpretaría como activa. Se cancelan callbacks antiguos por partida, contexto, modo/capa, pausa o pantalla oculta.
 
-`journey-rhythm.js` conserva una cola acotada de notas demostradas y elige la actualmente audible. `song-stage.js` cuenta pasos del transporte, conserva golpes visuales y respeta la pausa sin pulsos inventados. `audio.js` tiene una compuerta para el silencio deliberado del final11; salir restaura la mezcla. No se cambia el control de volumen del jugador.
+`journey-rhythm.js` conserva una cola acotada de notas demostradas y elige la actualmente audible. `song-stage.js` cuenta pasos del transporte, conserva golpes visuales y respeta la pausa sin pulsos inventados. `audio.js` tiene una compuerta para el silencio deliberado del final11; salir restaura la mezcla. Desde alpha.243 llama a `runtime.sceneStep` en cada semicorchea, tras sus voces y bajo esa compuerta: las escenas suenan en un bus propio que entra después del compresor de la música ([Escenas](UNIVERSO.md#escenas-musicales)). No se cambia el control de volumen del jugador.
 
 El final5 usa voces suaves existentes, contexto actual y frases guardadas; todas sus salidas normales dejan en Mundo libre. El identificador interno `refugio` también nombra el cierre; no obliga a visitar la casa. Festival tiene guardado separado y termina en sus créditos.
 

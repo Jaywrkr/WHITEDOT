@@ -1,4 +1,4 @@
-// Secretos (Jay, 3 Nov 2026, alpha.245; docs/MUNDO.md#secretos): the first easter eggs of F5 (docs/IDEAS_UNIVERSO.md,
+// Secretos (Jay, 3 Nov 2026, alpha.244; docs/MUNDO.md#secretos): the first easter eggs of F5 (docs/IDEAS_UNIVERSO.md,
 // rows 33, 38, 42, 101 and 102; decisions 7, 9 and 10). The rules, with no page: what each secret is, how the arrow code
 // is read from keys and swipes, the special distances, the real dates (Christmas, New Year, the real full moon, the
 // first of August) and the save. Nothing here draws a random number: every place is fixed and nothing on the map moves.

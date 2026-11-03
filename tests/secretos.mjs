@@ -1,4 +1,4 @@
-// Secretos (alpha.245): the arrow code from keys and swipes, seven taps, the special places, the real dates (the full
+// Secretos (alpha.244): the arrow code from keys and swipes, seven taps, the special places, the real dates (the full
 // moon computed with no network), the save and its migration, no sparks, no random numbers, and the wiring.
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';

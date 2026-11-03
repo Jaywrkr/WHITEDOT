@@ -4721,7 +4721,7 @@ export const EN=Object.freeze({
  "Modo tranquilo: ★ ganada.":"Calm mode: ★ earned.",
  "★★ y ★★★, en el modo normal.":"★★ and ★★★ come in the normal mode.",
  "en el modo normal":"in the normal mode",
- // Secretos (alpha.245): the first easter eggs.
+ // Secretos (alpha.244): the first easter eggs.
  "Ocho flechas":"Eight arrows",
  "Un código clásico. Un destello y un arpegio.":"A classic code. A flash and an arpeggio.",
  "Siete toques":"Seven taps",
@@ -4752,4 +4752,10 @@ export const EN=Object.freeze({
  "Encontraste todos los de ahora.":"You found all of them, for now.",
  "Hay secretos en el universo. Ninguno se explica.":"There are secrets in the universe. None is explained.",
  "Secretos · {n}":"Secrets · {n}",
+ "Escenas: más variedad":"Scenes: more variety",
+ "Algunos lugares suenan como un club. Al irte, vuelve la música de siempre.":"Some places sound like a club. When you leave, the usual music comes back.",
+ "Escena · Almacén":"Scene · Warehouse",
+ "Almacén":"Warehouse",
+ "Patio latino":"Latin patio",
+ "Escena · Patio latino":"Scene · Latin patio",
 });

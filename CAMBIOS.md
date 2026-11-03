@@ -1,11 +1,11 @@
 # Cambios recientes de Kubono
 
-Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.245** en la rama `jay/secretos`. Las entradas describen su revisión, no certifican producción.
+Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.244** en la rama `jay/secretos`. Las entradas describen su revisión, no certifican producción.
 
 
-## Secretos · 2.3.0-alpha.245
+## Secretos · 2.3.0-alpha.244
 
-Rama `jay/secretos`, desde `main` `48fd03f` (alpha.242). alpha.243 es `jay/escenas` y alpha.244 `jay/boyas`, que esta rama no toca. Primera tanda de F5, aprobada por Jay tras una auditoría de media hora sin ningún easter egg. Guía: [El mundo](docs/MUNDO.md#secretos).
+Rama `jay/secretos`, desde `main` `48fd03f` (alpha.242). Mezclada después con `main` (Escenas, alpha.243, PR #382). Iba a ser alpha.245; pasa a alpha.244 porque entra antes que `jay/boyas`. Primera tanda de F5, aprobada por Jay tras una auditoría de media hora sin ningún easter egg. Guía: [El mundo](docs/MUNDO.md#secretos).
 
 - **Código de flechas** ↑↑↓↓←→←→ con teclado o deslizamientos: destello blanco, arpegio de ocho notas en la armonía y ocho cuadritos alrededor del cubo; vuelve solo en 20 s.
 - **Logo siete veces** (cabecera del menú): el cubo pone cara rara 10 s. Silencioso.
@@ -22,6 +22,17 @@ Rama `jay/secretos`, desde `main` `48fd03f` (alpha.242). alpha.243 es `jay/escen
 
 Estado anterior: 3 de noviembre de 2026. Código **2.3.0-alpha.242** en la rama `jay/arreglos-30`.
 
+## Escenas musicales, entrega 1 · 2.3.0-alpha.243
+
+Rama `jay/escenas`, desde `main` (`67f031b`, alpha.240), mezclada después con `main` (Arreglos de la media hora, alpha.242, PR #381). Iba a ser alpha.241; pasa a alpha.243. Aprobado por Jay: cada escenario se siente como un club o un festival concreto, con variación sin fin, sin quitar ni cambiar nada de la música que ya suena. Guía: [Universo](docs/UNIVERSO.md#escenas-musicales). La rama `jay/arreglos-30` (alpha.242) va en paralelo y no se toca.
+
+- **Ajuste «Escenas: más variedad»** en Sonido, apagado por defecto, guardado en `S.scenes` con migración segura (sin borrar nada; versión futura leída apagada). Apagado, el render es el de `main`.
+- **Escenarios** por `hashKey('scene:v1:'+zona)`: uno en cada diez zonas de 2×2 regiones cerca del origen, uno en cada seis más allá de 5 km, solo donde el género tiene escena. Se oyen desde 520 m y suben poco a poco; al irse, bajan en tres compases y el bus se suelta.
+- **Almacén** (techno, minimal, acid, EBM): bombo largo y rumble, hats de semicorchea, ride con aire, 303 resonante con envolvente que sube, golpes metálicos; breakdown, riser y caída. **Patio latino** (tech house, minimal, deep, afro): congas, bongós, timbal, cencerro en clave, shaker con swing, bajo rodante, chops vocales sintéticos de formantes y un paso alto que se abre.
+- **La mano** de cada escenario (hats, swing, kit, filtro, relleno cada 8/16, arco de 32/64 compases) y patrones nuevos en cada vuelta del arco. Todas las notas salen del acorde que suena; la armonía no cambia.
+- **Motor:** una línea en `audio.js` (`runtime.sceneStep?.(s,bar,t)`, tras `phenomenaStep`), autorizada por Jay. Bus propio hacia la etapa de salida tras el compresor de la música. Línea al entrar: «Escena · Almacén» / «Escena · Patio latino».
+- **Pruebas:** `tests/scenes.mjs`, `tests/scenes_mix.py` (apagado = `main` en tres géneros; encendido, en 64 compases: picos 0,93, 3,6–3,7 % de energía sobre 4 kHz frente a 0,01–0,02 %, rango 6,5–6,8 dB frente a 3,6–4,8, timbre a 8,7–9,4 dB de la base), `tests/scenes_smoke.py` (390×844 y 1280×800). `tests/audio_mix.mjs` admite renders de hasta 180 s y la opción `stageScene`. Verificador de preservación: capa `approvedS`.
+- **Límites:** sin escucha en teléfono ni auriculares, CPU móvil sin medir, sin CI remoto ni personas. En la caída la escena suma unos 5 dB y el limitador trabaja más. Sin marca en el Mapa ni la Bitácora.
 
 ## Arreglos de la media hora · 2.3.0-alpha.242
 
@@ -45,8 +56,6 @@ Rama `jay/arreglos-30`, desde `main` `67f031b` (alpha.240). alpha.241 es `jay/es
 - Guardado: `S.rumors.owed`, `S.liveEncounters.last` y `S.firstWorldSeconds`, solo cuando hay valor; las versiones no cambian; los campos desconocidos y las versiones futuras se conservan.
 - Pruebas nuevas: `tests/arreglos30.mjs`, `tests/arreglos30_mundo_smoke.py` y `tests/arreglos30_escenas_smoke.py` (390×844 y 1280×800). `tests/live-encounters-runtime.mjs` sigue la nueva tirada y la travesura que se despide.
 - Preservación: cambian a propósito `wild.js`, `universe-mischief.js` y `achievements.js`, con la capa `approvedA30`. Probado en local; sin CI remoto, sin teléfono ni personas.
-
-Estado: 29 de octubre de 2026. Código **2.3.0-alpha.240** en la rama `jay/descubrir`. Las entradas describen su revisión, no certifican producción.
 
 
 ## Descubrir · 2.3.0-alpha.240

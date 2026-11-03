@@ -1,4 +1,4 @@
-"""Secretos (alpha.245) · the free World on phone (touch swipes) and desktop (arrow keys). The arrow code flashes white,
+"""Secretos (alpha.244) · the free World on phone (touch swipes) and desktop (arrow keys). The arrow code flashes white,
 keeps its eight squares round the cube for 20 s and goes back by itself; seven taps on the menu's logo give the cube its
 strange face for 10 s; the origin, 42, 77 and 100 km and the secret asteroid are kept once; at 100 km the gold cube is
 worn and taken off in Tu cubo (kept on reload); the Bitácora lists what was found and only «?» for the rest. With the

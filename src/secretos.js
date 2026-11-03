@@ -1,4 +1,4 @@
-// Secretos (Jay, 3 Nov 2026, alpha.245; docs/MUNDO.md#secretos): the first easter eggs (F5). Nothing explains them and
+// Secretos (Jay, 3 Nov 2026, alpha.244; docs/MUNDO.md#secretos): the first easter eggs (F5). Nothing explains them and
 // each one goes back by itself.
 // · The arrow code (↑↑↓↓←→←→, keys or swipes): a white flash, an arpeggio on the harmony that sounds, and eight small
 //   white squares round the cube for 20 s.
