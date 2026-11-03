@@ -1,7 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.244** en la rama `jay/secretos`. Las entradas describen su revisión, no certifican producción.
+Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.245** en la rama `jay/boyas`. Las entradas describen su revisión, no certifican producción.
 
+
+## Recorrer lejos (F2, primera tanda) · 2.3.0-alpha.245
+
+Rama `jay/boyas`, desde `main` `48fd03f` (alpha.242). Mezclada después con `main` (Escenas, alpha.243, PR #382, y Secretos, alpha.244, PR #383). Aprobado por Jay: ideas 59 y 66 del [catálogo](docs/IDEAS_UNIVERSO.md#f2--recorrer-lejos-5966-115119-y-57) y la puerta de la decisión 11. Guía: [El mundo](docs/MUNDO.md#recorrer-lejos).
+
+- **Boyas de luz** (`recorrer.js`, `recorrer-model.js`). En cada km de distancia al origen, un anillo de boyas blancas a 1 km una de otra, cada una con su número. La siguiente hacia fuera se marca en el borde. Al pasar a 15 m, una nota suave del acorde que suena, en el pulso. Unas 100 en un cuadrado de 10 × 10 km; en pantalla, una a la vez. Se eligió la distancia al origen (decisión 5) y no el km caminado: así están fijas en el mapa y nada se mueve.
+- **Satélites de descanso.** En cada anillo de 10 km, uno cada ~10 km, con luz cálida. Desde 6 km, marca en el borde. Al entrar se guarda como punto de retorno («Satélite de descanso · 10 km · Punto de retorno guardado»). Dentro, la música baja 1,0–1,5 dB (medido por render).
+- **La puerta.** Desde dentro de un satélite visitado, «Ir por la puerta» lleva a otro visitado (tarjeta del Mapa del universo o Bitácora) y «Volver al anillo», al anillo. Nunca a un sitio no pisado: no es un salto libre.
+- **Mapa y Bitácora.** Los satélites visitados salen en el Mapa del universo (cuerpo con dos paneles). En la Bitácora, Mapa › «Recorrer lejos · N satélites», con la boya más lejana.
+- **Sin chispas.** Ni las boyas (señalan el camino; pagar cada km haría de caminar recto la mejor renta, contra H1) ni los satélites (lo especial no paga, decisión 9). La puerta no cuesta ni paga.
+- **Sonido.** La nota de la boya y las dos del satélite quedan 27,5 y 29,0 dB bajo la música (`tests/recorrer_mix.py`). La bajada usa el bus seco de la mezcla (`runtime.bus` a 0,5); `audio.js` no cambia. El compresor recupera parte y la sala y el eco no bajan, así que dentro suena algo más espacioso. Una bajada limpia de todo exigiría tocar `audio.js`.
+- **Guardado nuevo** `S.recorrer` (versión 1): satélites visitados (con su mundo y día), el último, la boya más lejana y cuántas pasaste. Una partida anterior empieza vacía; se conservan campos desconocidos; una versión futura solo se lee. Si guardar falla, todo vuelve como estaba.
+- Pruebas nuevas: `tests/recorrer.mjs`, `tests/recorrer_smoke.py` (390×844, 1280×800 e inglés) y `tests/recorrer_mix.py` (render). `tests/audio_mix.mjs` gana `recorrerBatch` y `recorrerDuck`.
+- Preservación: cambian `main.js`, `render.js`, `i18n-en.js` y la lista offline de `sw.js`, con la capa `approvedF2`. Probado en local; sin CI remoto, sin teléfono ni personas.
+
+Estado anterior: 3 de noviembre de 2026. Código **2.3.0-alpha.242** en la rama `jay/arreglos-30`.
 
 ## Secretos · 2.3.0-alpha.244
 

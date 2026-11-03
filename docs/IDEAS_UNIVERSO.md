@@ -6,6 +6,8 @@ Catálogo de 119 ideas para que recorrer el universo sea más divertido. Más **
 
 **Estado (28 de octubre de 2026):** **F1 «Mapa del cielo» está hecha** en la rama `universo/f1-mapa-del-cielo` (alpha.231), sin PR, sin CI remoto, sin teléfono ni personas. Qué entró y qué quedó para después, en [F1](#f1--constelaciones) y en [Mapa del cielo](HALLAZGOS_Y_ACTIVIDADES.md#mapa-del-cielo). Las demás fases siguen sin empezar. **El [Mapa del universo](MUNDO.md#mapa-del-universo)** (alpha.235, rama `jay/mapa-universo`, pedido por Jay aparte de las fases) cubre parte de F2: ver [Mapa del universo y F2](#mapa-del-universo-y-f2).
 
+**F2, primera tanda (3 de noviembre de 2026):** boyas de luz (59), satélites de descanso (66) y su puerta (decisión 11), en la rama `jay/boyas` (alpha.245), sin PR, sin CI remoto, sin teléfono ni personas. Ver [Recorrer lejos, primera tanda](#recorrer-lejos-primera-tanda-alpha245).
+
 **Fuera del catálogo (29 de octubre de 2026):** «Ganas de volver» (alpha.236, rama `jay/volver`), elegida por Jay aparte: racha suave en el cielo del Refugio y carta del universo al volver. Cumple las siete reglas: sin castigo, sin chispas, sin humanos. [El mundo](MUNDO.md#ganas-de-volver).
 
 **F5, primera tanda (3 de noviembre de 2026):** Secretos (alpha.244, rama `jay/secretos`): ideas 33, 42 (por el logo, decisión 10), 38, 101 y 102, más origen, 42, 77 y 100 km. Las demás de F5 siguen sin empezar. Ver [Secretos](MUNDO.md#secretos).
@@ -323,6 +325,16 @@ En curso en otra rama. No es parte de este catálogo. Las demás fases esperan a
 - **Riesgos:** que las puertas sean saltos libres (rompen la economía de saltos); que haya demasiadas boyas; rendimiento lejos del origen.
 - **Bien cuando:** a 10 km siempre hay algo a la vista; se vuelve de 77 km sin saltos libres; nada se mueve en el mapa.
 
+#### Recorrer lejos, primera tanda (alpha.245)
+
+Construida en la rama `jay/boyas`, a petición de Jay. Guía y decisiones en [El mundo](MUNDO.md#recorrer-lejos).
+
+- **59 · Boyas de luz:** hechas. Un anillo por km de distancia al origen (decisión 5, no el km caminado: así están fijas en el mapa), una cada ~1 km, con su número; la siguiente en el borde; un tic del acorde al pasar. Sin chispas.
+- **66 · Satélites de descanso:** hechos. Uno cada ~10 km en cada anillo de 10 km, luz cálida, punto de retorno al entrar. La música baja 1,0–1,5 dB dentro, por el bus seco de la mezcla: `audio.js` no tiene una vía limpia y no se tocó.
+- **118 y 57 · Puertas:** la puerta del satélite lleva a otro satélite visitado o al anillo. Solo a sitios pisados: no es un salto libre.
+- **Bien cuando:** a 10 km siempre hay una boya a la vista o en el borde; de 77 km se vuelve por un satélite (a unos 8 km como mucho) o con «Volver al anillo»; nada se mueve.
+- **Quedan:** bandas en la Bitácora (60, cubierta por el mapa), planetas de un solo timbre (61), mapas del tesoro (62), postales (63), cápsulas (64), balizas nuevas (65), el púlsar del fin (115) y las escenas 116, 117 y 119. Los rumores aún no hablan de satélites.
+
 #### Mapa del universo y F2
 
 Construido en alpha.235 (rama `jay/mapa-universo`), fuera del orden de fases, a petición de Jay. Qué cubre de este catálogo:
@@ -333,7 +345,7 @@ Construido en alpha.235 (rama `jay/mapa-universo`), fuera del orden de fases, a 
 - **62 · Mapas del tesoro (parcial):** «Marcar» deja una marca que la brújula sigue; no hay cadenas ni tesoros.
 - **La niebla** (lo no visitado en negro) no es una idea numerada de este catálogo: la idea 8 es el cristal que graba. Queda registrada como parte del mapa.
 - **F1, quedó para después:** las figuras a medias ya se ven en el mapa.
-- **No cubre:** boyas de luz (59), planetas de un solo timbre (61), postales (63), cápsulas (64), satélites (66), el púlsar del fin (115) ni las escenas 116, 117 y 119.
+- **No cubre:** boyas de luz (59), planetas de un solo timbre (61), postales (63), cápsulas (64), satélites (66), el púlsar del fin (115) ni las escenas 116, 117 y 119. Boyas y satélites llegaron en alpha.245 ([primera tanda](#recorrer-lejos-primera-tanda-alpha245)).
 
 #### Ritmo (alpha.237)
 

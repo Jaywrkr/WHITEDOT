@@ -54,6 +54,8 @@ export function initialize(runtime){
   for(const [key,a] of Object.entries(S.anomalies||{})){const [rx,ry]=key.split(',').map(Number);if(Number.isFinite(rx)&&Number.isFinite(ry))out.push({kind:'rare',id:'rare:'+key,x:(rx+.5)*r,y:(ry+.5)*r,name:'Rareza'});}
   // Descubrir (alpha.240): the rumors you were told, open (descubrir.js).
   for(const e of runtime.rumorsForMap?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
+  // Recorrer lejos (alpha.245): the rest satellites you visited (recorrer.js); from inside one, its door leads to the others.
+  for(const e of runtime.satellitesForMap?.()||[])out.push({kind:'satellite',id:e.id,x:e.x,y:e.y,name:e.name,here:e.here});
   if(usable()&&q.mark)out.push({kind:'mark',id:'mark',x:q.mark.x,y:q.mark.y,name:q.mark.name});
   return {items:out,center,next:state?.next?portals.find(p=>p.id===state.next)||null:null};
  }
@@ -84,13 +86,14 @@ export function initialize(runtime){
   case 'ringHome':return 'El centro de los once lugares';case 'refugio':return 'Donde está tu Refugio';case 'favorite':return 'Tu lugar guardado';
   case 'sky':return it.done?'Constelación · completa':`Constelación · ${it.lit} de ${it.total}`;
   case 'live':return it.won?'Encuentro vivo · logrado':'Encuentro vivo · visto';
+  case 'satellite':return it.here?'Satélite de descanso · estás aquí':'Satélite de descanso · visitado';
   case 'landmark':return 'Hito visitado';case 'heard':return 'Hito oído · aún no llegaste';case 'rumor':return 'Rumor · '+(it.text||'algo lejano');case 'rare':return 'Rareza encontrada';
   case 'mark':return 'Tu marca · la brújula te lleva';case 'me':return 'Tú';default:return it.visited?'Lugar explorado':'Sin explorar';}};
- function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canHome:(it.kind==='ringHome'||it.home)&&!!runtime.ringHomePoint?.(),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,mark:usable()?book().mark:null};}
+ function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canHome:(it.kind==='ringHome'||it.home)&&!!runtime.ringHomePoint?.(),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,canDoor:it.kind==='satellite'&&!!runtime.satelliteDoorOpen?.(it.id),mark:usable()?book().mark:null};}
  function showCard(it){card=it;const a=cardActions(it,flags(it)),d=Math.hypot(it.x-runtime.S.wx,it.y-runtime.S.wy);
   $('umapCardName').textContent=it.kind==='me'?'Tú':it.name;$('umapCardWhat').textContent=kindLine(it);
   $('umapCardDist').textContent=it.kind==='me'?`A ${formatDistance(Math.hypot(it.x,it.y))} del origen`:d<300?'Aquí':`A ${formatDistance(d)} de ti`;
-  const go=$('umapGo'),mark=$('umapMark');go.hidden=!a.go;go.textContent=a.go==='ring'?'Volver al anillo':'Ir';go.dataset.go=a.go||'';
+  const go=$('umapGo'),mark=$('umapMark');go.hidden=!a.go;go.textContent=a.go==='ring'?'Volver al anillo':a.go==='door'?'Ir por la puerta':'Ir';go.dataset.go=a.go||'';
   mark.hidden=!a.mark;mark.textContent=a.mark==='unmark'?'Quitar marca':'Marcar';mark.dataset.mark=a.mark||'';mark.classList.toggle('gold',a.mark==='mark'&&!a.go);go.classList.toggle('gold',!!a.go);
   $('umapCard').hidden=false;box.dataset.card=it.kind;}
  function hideCard(){card=null;const c=$('umapCard');if(c)c.hidden=true;if(box)delete box.dataset.card;}
@@ -100,7 +103,7 @@ export function initialize(runtime){
  // The compass's target while there is a mark (places-ring.js): reaching it clears it, with one quiet line.
  function route(){if(!usable())return null;const q=book();if(!q.mark)return null;const r=markRoute(q.mark,me());if(r.arrived){clearMark();runtime.toast?.('Llegaste a tu marca');return null;}return r;}
  function go(){const it=card;if(!it)return;const a=cardActions(it,flags(it));let ok=false;
-  if(a.go==='place')ok=!!runtime.ringTravel?.(it.id);else if(a.go==='ring')ok=!!runtime.ringHome?.();
+  if(a.go==='place')ok=!!runtime.ringTravel?.(it.id);else if(a.go==='ring')ok=!!runtime.ringHome?.();else if(a.go==='door')ok=!!runtime.satelliteDoor?.(it.id);
   else if(a.go==='favorite'){runtime.rememberFavoriteReturn?.(it.point);ok=!!runtime.visitWorldAddress?.(it.point.address);if(!ok)runtime.clearFavoriteReturn?.();}
   if(ok){close();const j=$('mJournal');if(j)j.hidden=true;}else showCard(it);}
  function markAction(){const it=card;if(!it)return;const a=cardActions(it,flags(it));if(a.mark==='unmark'){clearMark();hideCard();return;}if(a.mark==='mark'&&setMark(it)){runtime.toast?.('Marca puesta · la brújula te lleva');showCard({...it});}}

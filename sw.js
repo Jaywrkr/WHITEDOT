@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.244';
+const CACHE='whitedot-2.3.0-alpha.245';
 const SHELL=[
  "./src/account-entry.js", "./src/edition.js",
  "./recovery.html", "./src/cloud-recovery.js",
@@ -221,6 +221,8 @@ const SHELL=[
  "./src/scenes.js",
  "./src/secretos-model.js",
  "./src/secretos.js",
+ "./src/recorrer-model.js",
+ "./src/recorrer.js",
  "./src/adventure-achievements.js",
  "./src/music-families.js",
  "./src/musical-recipes.js",

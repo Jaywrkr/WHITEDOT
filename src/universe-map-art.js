@@ -49,6 +49,8 @@ function icon(c,it,x,y,view,{names=false,W,H}){c.save();c.lineWidth=1.5;
    else{c.beginPath();c.moveTo(x,y-z);c.lineTo(x+z*.8,y+z*.6);c.lineTo(x-z*.8,y+z*.6);c.closePath();c.stroke();}break;}
   // A rumor someone told you (Descubrir): a white «?» in a small square, white because it is somewhere to go.
   case 'rumor':{c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.fillRect(x-7,y-7,14,14);c.strokeRect(x-6.5,y-6.5,13,13);c.font=UMAP_FONT;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#ffffff';c.fillText('?',x,y+.5);break;}
+  // A rest satellite you visited (Recorrer lejos): a small body with its two panels; the one you are in, with its light.
+  case 'satellite':{c.fillStyle='#000';c.strokeStyle='#ffffff';c.fillRect(x-3.5,y-3.5,7,7);c.strokeRect(x-3.5,y-3.5,7,7);c.strokeRect(x-11,y-2.5,6,5);c.strokeRect(x+5,y-2.5,6,5);if(it.here){c.globalAlpha=.6;c.strokeStyle='#ffd2a0';c.beginPath();c.arc(x,y,13,0,TAU);c.stroke();}break;}
   case 'heard':{c.font=UMAP_FONT;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#8a8a8f';c.fillText('?',x,y);break;}
   case 'rare':{c.fillStyle='#ffffff';c.globalAlpha=.8;star(c,x,y,5,6);c.fill();break;}
   case 'mark':{c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(x,y,8,0,TAU);c.stroke();c.beginPath();c.moveTo(x-13,y);c.lineTo(x-4,y);c.moveTo(x+4,y);c.lineTo(x+13,y);c.moveTo(x,y-13);c.lineTo(x,y-4);c.moveTo(x,y+4);c.lineTo(x,y+13);c.stroke();break;}
