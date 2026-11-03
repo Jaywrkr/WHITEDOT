@@ -89,7 +89,7 @@ const rebasedD=new Set(['src/main.js','src/render.js']);
 // English, and the offline shell's three new modules. Held to the commit of jay/escenas. The audio engine gains one line
 // Jay authorised (runtime.sceneStep, after the music's own voices): the contract below holds audio.js to Q7 plus exactly
 // that line; the music is unchanged with the setting off (tests/scenes_mix.py).
-const approvedS='0ff4046bfaa9497f5d11771200aa83bee0b3f472';
+const approvedS='2f28f918de327ea84feaea0b2461e22ad7887fc8';
 const rebasedS=new Set(['src/i18n-en.js','src/main.js']);
 const SCENE_HOOK='    runtime.phenomenaStep?.(s,bar,t);\n',SCENE_LINE='    runtime.sceneStep?.(s,bar,t);   // Escenas (alpha.241): a stage\'s club on top, its own bus; nothing above changes\n';
 // Arreglos de la media hora (Jay, 3 Nov 2026, alpha.242): the wild spark caught by passing through it with the sound off,
