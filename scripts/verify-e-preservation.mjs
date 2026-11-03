@@ -101,7 +101,7 @@ const rebasedA30=new Set(['src/wild.js','src/universe-mischief.js','src/achievem
 // their door. main starts recorrer.js, the frame gives it its tick and its drawing, their English strings, and the
 // offline shell lists two new modules. Held to the commit of jay/boyas; the music's contracts are untouched (a soft
 // chord tone on top and, inside a satellite, the dry bus a little lower, measured by render; audio.js is not touched).
-const approvedF2='c7d3d1acf06c6281e654c54a65db861fda5432e8';
+const approvedF2='894223fd605239f6033fcc0df9909bc6a9e60806';
 const rebasedF2=new Set(['src/main.js','src/render.js','src/i18n-en.js']);
 // Secretos (Jay, 3 Nov 2026, alpha.244): the first easter eggs of F5. main starts secretos.js, the frame gives it its
 // tick, its drawing and the gold cube and strange face on the cube, and the offline shell lists two new modules. Held to
