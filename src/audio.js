@@ -339,6 +339,7 @@ export function initialize(runtime) {
     runtime.quietStep?.(s,bar,t);
     runtime.cajasStep?.(s,bar,t);
     runtime.phenomenaStep?.(s,bar,t);
+    runtime.sceneStep?.(s,bar,t);   // Escenas (alpha.241): a stage's club on top, its own bus; nothing above changes
     let n=0;while(MU.queue.length&&n<TOUCH_STEP_VOICES){MU.queue.shift()(t);n++;}
     // Voices this step already plays from the queue: a touch placed on it later keeps the same limit (touchSoon).
     if(n)stepVoices.set(MU.step,n);for(const k of stepVoices.keys())if(k<MU.step-16)stepVoices.delete(k);

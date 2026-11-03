@@ -85,6 +85,13 @@ const rebasedL5=new Set(['src/i18n-en.js','src/journey-dance.js','src/journey-gu
 // of main (with Ritmo) into jay/descubrir; the music's contracts are untouched (the sounds play on top, measured by render).
 const approvedD='68a4553a98bea171dbce9ea63fe78a70b5136b0a';
 const rebasedD=new Set(['src/main.js','src/render.js']);
+// Escenas musicales, entrega 1 (Jay, 3 Nov 2026, alpha.241): main starts scenes.js, the switch and the scene lines in
+// English, and the offline shell's three new modules. Held to the commit of jay/escenas. The audio engine gains one line
+// Jay authorised (runtime.sceneStep, after the music's own voices): the contract below holds audio.js to Q7 plus exactly
+// that line; the music is unchanged with the setting off (tests/scenes_mix.py).
+const approvedS='2f28f918de327ea84feaea0b2461e22ad7887fc8';
+const rebasedS=new Set(['src/i18n-en.js','src/main.js']);
+const SCENE_HOOK='    runtime.phenomenaStep?.(s,bar,t);\n',SCENE_LINE='    runtime.sceneStep?.(s,bar,t);   // Escenas (alpha.241): a stage\'s club on top, its own bus; nothing above changes\n';
 // Arreglos de la media hora (Jay, 3 Nov 2026, alpha.242): the wild spark caught by passing through it with the sound off,
 // an idle mischief scene that holds nothing back and says goodbye by itself, and fewer achievement notices in the first
 // half hour. The three files are held to the commit of those fixes; the music's contracts are untouched (nothing new sounds).
@@ -104,7 +111,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedS.has(file)?approvedS:rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
@@ -137,10 +144,14 @@ for(const [a,b]of replacements){if(audio.split(a).length!==2)throw Error('Ambigu
 if(audio!==before('src/audio.js',approved).toString())throw Error('Audio differs beyond the six authorized visual-only replacements');
 // Q5: a touch off the beat is scheduled on the next free sixteenth (touchSoon); no note, voice or mix changes.
 // Q7: the World's radio rests under the finale of eleven (songFinaleHush); no World note, voice or mix changes.
-if(source('src/audio.js')!==before('src/audio.js',approvedQ7).toString())throw Error('Audio differs from the engine approved in Q5 and Q7');
-contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling and the Q7 finale hush',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
+// Escenas (alpha.241): one line after the music's own voices calls the scenes on every scheduled sixteenth; nothing else.
+const audioQ7=before('src/audio.js',approvedQ7).toString();if(audioQ7.split(SCENE_HOOK).length!==2)throw Error('Ambiguous scene hook boundary');
+const audioS=audioQ7.replace(SCENE_HOOK,SCENE_HOOK+SCENE_LINE);
+if(before('src/audio.js',approvedS).toString()!==audioS)throw Error('The approved scenes commit changed audio beyond its one line');
+if(source('src/audio.js')!==audioS)throw Error('Audio differs from the engine approved in Q5 and Q7 plus the scene hook');
+contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling, the Q7 finale hush and the alpha.241 scene hook',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
 const shell=source('sw.js').replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'");
-if(shell!==before('sw.js',approvedD).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
+if(shell!==before('sw.js',approvedS).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
 const runtimeFiles=[...readdirSync('src').filter(n=>n.endsWith('.js')).sort().map(n=>'src/'+n),...readdirSync('styles').filter(n=>n.endsWith('.css')).sort().map(n=>'styles/'+n),'index.html','package.json','sw.js'],hash=createHash('sha256');
 for(const file of runtimeFiles)hash.update(file+'\0').update(readFileSync(file));
 const report={base,revision:git('rev-parse','HEAD').toString().trim(),version:JSON.parse(source('package.json')).version,runtimeDigest:hash.digest('hex'),runtimeDirty:spawnSync('git',['diff','--quiet','HEAD','--','src','styles','assets','index.html','package.json','sw.js']).status!==0,protectedFiles,contracts,scope:'Byte preservation and exact protected musical functions; no perceptual listening or human acceptance implied.'};
