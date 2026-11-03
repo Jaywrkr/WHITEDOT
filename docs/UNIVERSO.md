@@ -1,6 +1,6 @@
 # El universo
 
-Guía vigente del universo procedural en alpha.221 (sin cambios de generación desde alpha.207). Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
+Guía vigente del universo procedural en alpha.221 (sin cambios de generación desde alpha.207; escenas musicales en alpha.241). Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
 
 ## Reglas
 
@@ -87,6 +87,21 @@ Favoritos conserva esa identidad y puede volver a una dirección compatible. El 
 `audio.js` sintetiza con Web Audio nativo; géneros, familias, técnicas, instrumentos y territorio definen la base electrónica. Cada lugar puede tener distinto tempo/densidad. Las transiciones mantienen frases y armonía; ninguna tarea de UI autoriza sustituir esta música aprobada.
 
 `universe-layers.js` dibuja capas, `superbiome-fusion.js` relaciona familias y movimiento, `world-light-model.js` y `world-weather.js` gestionan luz/clima. Criaturas, flora y fenómenos tienen sistemas propios; [mapa técnico](ARQUITECTURA.md) y [catálogo de hallazgos](HALLAZGOS_Y_ACTIVIDADES.md).
+
+## Escenas musicales
+
+Entrega 1 (Jay, 3 de noviembre de 2026, alpha.241). Ajuste **«Escenas: más variedad»** en Sonido (`#scenesSetting`), apagado por defecto y guardado en `S.scenes` (`{version:1,on}`; campos desconocidos se conservan; una versión futura se lee apagada y no se reescribe). Apagado, no se crea ningún nodo ni se gasta azar: el render es el de `main` (`tests/scenes_mix.py`).
+
+- **Escenarios.** Zonas de 2×2 regiones; `hashKey('scene:v1:'+mundo+':'+zona)` pone uno en una de cada diez zonas cerca del origen y una de cada seis más allá de 5 km, cerca del centro de una región cuyo género tiene escena (`scenes-model.js`). Mar y géneros sin escena, ninguno. No mueve el mapa ni lee el azar antiguo. Se oye desde 520 m y está entera a 160 m (subida suave).
+- **Almacén** (como un almacén de techno de Berlín o Fráncfort), sobre techno, minimal, acid y EBM: bombo largo justo detrás del bombo de la música, rumble en la raíz dos octavas abajo, hats de semicorchea y ride con aire, una 303 resonante cuya envolvente sube durante la subida, golpes metálicos FM en notas del acorde, stab en el breakdown, riser y caída.
+- **Patio latino** (como un patio de Ibiza al aire libre), sobre tech house, minimal, deep y afro: congas y tumba afinadas al acorde (tumbao), bongós en martillo, timbal con cáscara y redobles, cencerro en clave (son o rumba), shaker con swing, bajo rodante en contratiempo, chops vocales sintéticos de formantes (ninguna voz grabada ni humana) y un filtro de paso alto que se abre en la caída.
+- **La mano de cada escenario** (`handFor`, por `hashKey`): patrón de hats, swing, kit, filtro, relleno cada 8 o 16 compases y arco de 32 o 64 compases: intro → subida → caída → breakdown → vuelta. Cada vuelta del arco saca patrones nuevos (303, metales, congas, bongós, bajo, chops): no se repite.
+- **Armonía y reloj.** Cada nota es una nota del acorde que suena (`chordTones`, `root`, con la afinación del lugar `runtime.hz`). El reloj es el de la música: `audio.js` llama a `runtime.sceneStep` en cada semicorchea que programa, después de sus propias voces y después de la pausa del final de los once (bajo el final, nada). Es la única línea añadida al motor, autorizada por Jay; el verificador la exige exacta (capa `approvedS`).
+- **Mezcla.** Bus propio: batería y sintes (estos por el paso bajo del Almacén), eco, paso alto (el del Patio), pegamento, recorte suave y techo, nivel de sección, sidechain en cada tiempo, acercamiento y recorte final, hacia la etapa de salida después del compresor de la música (`outputStage.makeup`): la dinámica de la música no la empuja la escena; limitador, protección de picos, volumen y compuerta del final siguen mandando. En Calma, la escena baja y se oscurece (5,5 kHz). La mesa de efectos del jugador no la toca.
+- **Se nota.** Al entrar, una línea: «Escena · Almacén» o «Escena · Patio latino» (no con los textos del paisaje apagados). Al irse, se apaga en unos compases y su bus se suelta: queda exactamente la música de antes.
+- **Dónde no.** Solo en el Mundo libre tras el Viaje, en la superficie; nunca en el Viaje, un nivel, una ronda, una actividad, el Refugio ni los finales.
+- **Medidas** (render offline en Chromium a 44,1 kHz, 64 compases unidos en cuatro tramos de 16; la auditoría musical previa medía en estos géneros menos de 0,6 % de energía sobre 4 kHz y 2–5 dB de rango p95−p10 en ventanas de 0,4 s). Almacén sobre minimal techno: picos 0,931, 3,7 % sobre 4 kHz (base 0,01 %), rango 6,8 dB (base 4,8), distancia tímbrica 9,4 dB, nivel medio +3,7 dB. Patio latino sobre tech house: picos 0,933, 3,6 % (base 0,02 %), rango 6,5 dB (base 3,6), distancia 8,7 dB, +3,7 dB. Con el ajuste apagado, mismo nivel por medio segundo que `main` en minimal techno, tech house y deep (deriva < 0,0004 dB). `tests/scenes_mix.py` comprueba lo mismo en 30 s del arco (caída, breakdown y vuelta): 7,6 y 6,1 dB de rango, 3,4 y 2,7 % sobre 4 kHz, picos 0,918 y 0,920.
+- **Límites.** Sin escuchar en teléfono ni con auriculares; CPU móvil sin medir (cada semicorchea crea pocos nodos y el bus se suelta al salir). En la caída la escena suma unos 5 dB: el limitador trabaja más y la música de base baja un poco en sus picos. Sin marca en el Mapa del universo ni en la Bitácora en esta entrega.
 
 El modelo de rareza y el censo no garantizan una probabilidad individual de encuentro en una hora. Depende de recorrido, mundo, región y condiciones. Las muestras forzadas de laboratorio no acreditan encuentros naturales.
 
