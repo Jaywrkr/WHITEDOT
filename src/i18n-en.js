@@ -4719,4 +4719,10 @@ export const EN=Object.freeze({
  "Modo tranquilo: ★ ganada.":"Calm mode: ★ earned.",
  "★★ y ★★★, en el modo normal.":"★★ and ★★★ come in the normal mode.",
  "en el modo normal":"in the normal mode",
+ "Escenas: más variedad":"Scenes: more variety",
+ "Algunos lugares suenan como un club. Al irte, vuelve la música de siempre.":"Some places sound like a club. When you leave, the usual music comes back.",
+ "Escena · Almacén":"Scene · Warehouse",
+ "Almacén":"Warehouse",
+ "Patio latino":"Latin patio",
+ "Escena · Patio latino":"Scene · Latin patio",
 });
