@@ -70,15 +70,16 @@ export const toWorld=(view,W,H,px,py)=>[view.x+(px-W/2)/view.scale,view.y+(py-H/
 
 // What a tap finds: the nearest point within reach, the more important first when two overlap.
 // A rumor (Descubrir, alpha.240) is something to go to: right after your favourites.
-export const UMAP_PRIORITY=Object.freeze({me:0,mark:1,place:2,ringHome:3,refugio:4,favorite:5,rumor:5.5,sky:6,live:7,landmark:8,heard:9,rare:10});
+export const UMAP_PRIORITY=Object.freeze({me:0,mark:1,place:2,ringHome:3,refugio:4,favorite:5,satellite:5.2,rumor:5.5,sky:6,live:7,landmark:8,heard:9,rare:10});
 export function hitTest(items,view,W,H,px,py,reach=UMAP_TOUCH){let best=null,bd=Infinity;for(const it of items||[]){const [sx,sy]=toScreen(view,W,H,it.x,it.y),d=Math.hypot(sx-px,sy-py);if(d>reach)continue;const score=d+(UMAP_PRIORITY[it.kind]??12)*2;if(score<bd){bd=score;best=it;}}return best;}
 
 // What a card offers. go: the move of today's rules (a place of the ring you can travel to, «Volver al anillo», a
 // favourite); otherwise «Marcar». A point that is the mark offers «Quitar marca». You yourself: nothing.
-export function cardActions(item,{canTravel=false,canHome=false,canFavorite=false,mark=null}={}){
+// A satellite you visited (Recorrer lejos, alpha.244) offers its door only from inside another one you visited.
+export function cardActions(item,{canTravel=false,canHome=false,canFavorite=false,canDoor=false,mark=null}={}){
  if(!item||item.kind==='me')return {go:null,mark:null};
  const marked=!!mark&&(item.kind==='mark'||Math.hypot(mark.x-item.x,mark.y-item.y)<1);
- const go=item.kind==='place'&&canTravel?'place':(item.kind==='ringHome'||item.home)&&canHome?'ring':item.kind==='favorite'&&canFavorite?'favorite':null;
+ const go=item.kind==='place'&&canTravel?'place':(item.kind==='ringHome'||item.home)&&canHome?'ring':item.kind==='favorite'&&canFavorite?'favorite':item.kind==='satellite'&&canDoor?'door':null;
  return {go,mark:marked?'unmark':go?null:'mark'};
 }
 // A mark from an item: where it is and its name, nothing else.
