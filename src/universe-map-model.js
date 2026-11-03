@@ -75,7 +75,7 @@ export function hitTest(items,view,W,H,px,py,reach=UMAP_TOUCH){let best=null,bd=
 
 // What a card offers. go: the move of today's rules (a place of the ring you can travel to, «Volver al anillo», a
 // favourite); otherwise «Marcar». A point that is the mark offers «Quitar marca». You yourself: nothing.
-// A satellite you visited (Recorrer lejos, alpha.244) offers its door only from inside another one you visited.
+// A satellite you visited (Recorrer lejos, alpha.245) offers its door only from inside another one you visited.
 export function cardActions(item,{canTravel=false,canHome=false,canFavorite=false,canDoor=false,mark=null}={}){
  if(!item||item.kind==='me')return {go:null,mark:null};
  const marked=!!mark&&(item.kind==='mark'||Math.hypot(mark.x-item.x,mark.y-item.y)<1);

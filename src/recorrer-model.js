@@ -1,4 +1,4 @@
-// Recorrer lejos (F2, first batch; Jay, 3 Nov 2026, alpha.244; docs/MUNDO.md#recorrer-lejos): the model, with no page,
+// Recorrer lejos (F2, first batch; Jay, 3 Nov 2026, alpha.245; docs/MUNDO.md#recorrer-lejos): the model, with no page,
 // canvas or sound. Measured from the origin (0,0), as decision 5 of the catalogue says (docs/IDEAS_UNIVERSO.md):
 // Boyas de luz (idea 59): on every whole km of distance from the origin, a ring of white buoys about 1 km apart, each
 // with its number (its km). The next one outward is marked at the screen's edge; passing one plays a soft tic.

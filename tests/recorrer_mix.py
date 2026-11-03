@@ -1,4 +1,4 @@
-"""Recorrer lejos (alpha.244) leaves the music alone. Its only sounds are a buoy's tic (one note of the chord that sounds,
+"""Recorrer lejos (alpha.245) leaves the music alone. Its only sounds are a buoy's tic (one note of the chord that sounds,
 an octave up) and a satellite's two notes, on the eighths of the bar: six tics and three satellites over the World's music
 add far less than the music itself (measured against the same calls made inaudible: more than 25 dB under it, its peak
 under a fifth of the music's). Inside a satellite the music goes a little lower: the mix's dry bus at 0.5, so the same render

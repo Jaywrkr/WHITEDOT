@@ -4721,7 +4721,7 @@ export const EN=Object.freeze({
  "Modo tranquilo: ★ ganada.":"Calm mode: ★ earned.",
  "★★ y ★★★, en el modo normal.":"★★ and ★★★ come in the normal mode.",
  "en el modo normal":"in the normal mode",
- // Recorrer lejos (alpha.244)
+ // Recorrer lejos (alpha.245)
  "Satélite":"Satellite",
  "Satélite de descanso":"Rest satellite",
  "Satélite de descanso · estás aquí":"Rest satellite · you are here",

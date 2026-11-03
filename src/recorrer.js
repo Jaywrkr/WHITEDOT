@@ -1,4 +1,4 @@
-// Recorrer lejos (F2, first batch; Jay, 3 Nov 2026, alpha.244; docs/MUNDO.md#recorrer-lejos): buoys of light every km,
+// Recorrer lejos (F2, first batch; Jay, 3 Nov 2026, alpha.245; docs/MUNDO.md#recorrer-lejos): buoys of light every km,
 // rest satellites every 10 km and their door, in the free World after the Journey, never in a chapter, a round, a
 // finale, an activity or the Refugio. The model is recorrer-model.js.
 // Boyas: a white buoy with its number on every km from the origin; the next one outward is marked at the screen's edge;

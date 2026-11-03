@@ -54,7 +54,7 @@ export function initialize(runtime){
   for(const [key,a] of Object.entries(S.anomalies||{})){const [rx,ry]=key.split(',').map(Number);if(Number.isFinite(rx)&&Number.isFinite(ry))out.push({kind:'rare',id:'rare:'+key,x:(rx+.5)*r,y:(ry+.5)*r,name:'Rareza'});}
   // Descubrir (alpha.240): the rumors you were told, open (descubrir.js).
   for(const e of runtime.rumorsForMap?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
-  // Recorrer lejos (alpha.244): the rest satellites you visited (recorrer.js); from inside one, its door leads to the others.
+  // Recorrer lejos (alpha.245): the rest satellites you visited (recorrer.js); from inside one, its door leads to the others.
   for(const e of runtime.satellitesForMap?.()||[])out.push({kind:'satellite',id:e.id,x:e.x,y:e.y,name:e.name,here:e.here});
   if(usable()&&q.mark)out.push({kind:'mark',id:'mark',x:q.mark.x,y:q.mark.y,name:q.mark.name});
   return {items:out,center,next:state?.next?portals.find(p=>p.id===state.next)||null:null};

@@ -109,7 +109,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    // every 1.2 s from the first second ('silent': the same calls far below hearing).
    if(soundBatch&&tick>=40&&(tick-40)%48===0&&tick<40+48*12){const {playSoundMotif}=await import('../src/descubrir.js'),{SOUNDS,SOUND_KEEP_GAIN,SOUND_MIX_GAIN}=await import('../src/descubrir-model.js');r.discoverAudioCue=n=>soundNotes.push({...n,six:r.SIX});const i=(tick-40)/48,at=Math.ceil((clock+.13)/(r.SIX*2))*(r.SIX*2),quiet=soundBatch==='silent'?1e-6:undefined,here={x:r.S.wx,y:r.S.wy};
     if(i<6)playSoundMotif(r,SOUNDS[i*10],at,here,quiet??SOUND_KEEP_GAIN);else for(const k of [1,12,23,34])playSoundMotif(r,SOUNDS[k],at,here,quiet??SOUND_MIX_GAIN);}
-   // Recorrer lejos (alpha.244): six buoy tics, then three satellites' two notes, one every 1.2 s from the first second
+   // Recorrer lejos (alpha.245): six buoy tics, then three satellites' two notes, one every 1.2 s from the first second
    // ('silent': the same calls far below hearing). recorrerDuck: inside a satellite from the first second (the bus at its level).
    if(recorrerBatch&&tick>=40&&(tick-40)%48===0&&tick<40+48*9){const {playRecorrerNotes}=await import('../src/recorrer.js');r.recorrerAudioCue=n=>recorrerNotes.push(n);const i=(tick-40)/48,at=Math.ceil((clock+.13)/(r.SIX*2))*(r.SIX*2),quiet=recorrerBatch==='silent'?1e-6:undefined,{BUOY_GAIN,SAT_GAIN}=await import('../src/recorrer-model.js');
     if(i<6)playRecorrerNotes(r,at,1,quiet??BUOY_GAIN,i);else playRecorrerNotes(r,at,2,quiet??SAT_GAIN,1);}

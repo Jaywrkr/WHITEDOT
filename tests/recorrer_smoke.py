@@ -1,4 +1,4 @@
-"""Recorrer lejos (alpha.244) · the free World on phone and desktop. A buoy of light stands on its km with its number;
+"""Recorrer lejos (alpha.245) · the free World on phone and desktop. A buoy of light stands on its km with its number;
 passing it counts once (the farthest kept) and the next one outward is marked at the screen's edge. A rest satellite at
 10 km: marked at the edge on the way, kept on entering («Punto de retorno guardado»), the music a little lower inside
 (the dry bus at 0.5, back to 1 outside). A second one at 20 km: from inside it the Mapa del universo shows both and its

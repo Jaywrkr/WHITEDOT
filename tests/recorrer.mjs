@@ -1,4 +1,4 @@
-// Recorrer lejos (F2, first batch; alpha.244): buoys of light every km, rest satellites every 10 km and their door.
+// Recorrer lejos (F2, first batch; alpha.245): buoys of light every km, rest satellites every 10 km and their door.
 // Placed with hashKey (no Math.random, nothing moved), measured from the origin; the next buoy outward; satellites about
 // 10 km apart; the save normalised and migrated (nothing lost, a later version untouched); entering a satellite keeps it
 // and lowers the music a little on the mix's bus; the door only from inside a visited satellite, only to another visited
