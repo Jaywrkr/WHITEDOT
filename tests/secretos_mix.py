@@ -9,7 +9,7 @@ from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import threading,os,shutil,subprocess,tempfile,json,io,tarfile
 ROOT=Path(__file__).resolve().parents[1]
-REFS={'alpha.242':'48fd03f'}
+REFS={'alpha.242':'48fd03f374f10a69a5a417e7a490b03547754888'}
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 def serve(directory):
