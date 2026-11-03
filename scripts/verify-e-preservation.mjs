@@ -85,6 +85,13 @@ const rebasedL5=new Set(['src/i18n-en.js','src/journey-dance.js','src/journey-gu
 // of main (with Ritmo) into jay/descubrir; the music's contracts are untouched (the sounds play on top, measured by render).
 const approvedD='68a4553a98bea171dbce9ea63fe78a70b5136b0a';
 const rebasedD=new Set(['src/main.js','src/render.js']);
+// Escenas musicales, entrega 1 (Jay, 3 Nov 2026, alpha.241): main starts scenes.js, the switch and the scene lines in
+// English, and the offline shell's three new modules. Held to the commit of jay/escenas. The audio engine gains one line
+// Jay authorised (runtime.sceneStep, after the music's own voices): the contract below holds audio.js to Q7 plus exactly
+// that line; the music is unchanged with the setting off (tests/scenes_mix.py).
+const approvedS='2f28f918de327ea84feaea0b2461e22ad7887fc8';
+const rebasedS=new Set(['src/i18n-en.js','src/main.js']);
+const SCENE_HOOK='    runtime.phenomenaStep?.(s,bar,t);\n',SCENE_LINE='    runtime.sceneStep?.(s,bar,t);   // Escenas (alpha.241): a stage\'s club on top, its own bus; nothing above changes\n';
 // Arreglos de la media hora (Jay, 3 Nov 2026, alpha.242): the wild spark caught by passing through it with the sound off,
 // an idle mischief scene that holds nothing back and says goodbye by itself, and fewer achievement notices in the first
 // half hour. The three files are held to the commit of those fixes; the music's contracts are untouched (nothing new sounds).
@@ -96,6 +103,11 @@ const rebasedA30=new Set(['src/wild.js','src/universe-mischief.js','src/achievem
 // chord tone on top and, inside a satellite, the dry bus a little lower, measured by render; audio.js is not touched).
 const approvedF2='c7d3d1acf06c6281e654c54a65db861fda5432e8';
 const rebasedF2=new Set(['src/main.js','src/render.js','src/i18n-en.js']);
+// Secretos (Jay, 3 Nov 2026, alpha.244): the first easter eggs of F5. main starts secretos.js, the frame gives it its
+// tick, its drawing and the gold cube and strange face on the cube, and the offline shell lists two new modules. Held to
+// the commit of jay/secretos; the music's contracts are untouched (the notes play on top, as the album of sounds does).
+const approvedF5='2f90e09b262079d767d83789ec348351460fd628';
+const rebasedF5=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -110,7 +122,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedF2.has(file)?approvedF2:rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedF2.has(file)?approvedF2:rebasedF5.has(file)?approvedF5:rebasedS.has(file)?approvedS:rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}
@@ -143,8 +155,12 @@ for(const [a,b]of replacements){if(audio.split(a).length!==2)throw Error('Ambigu
 if(audio!==before('src/audio.js',approved).toString())throw Error('Audio differs beyond the six authorized visual-only replacements');
 // Q5: a touch off the beat is scheduled on the next free sixteenth (touchSoon); no note, voice or mix changes.
 // Q7: the World's radio rests under the finale of eleven (songFinaleHush); no World note, voice or mix changes.
-if(source('src/audio.js')!==before('src/audio.js',approvedQ7).toString())throw Error('Audio differs from the engine approved in Q5 and Q7');
-contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling and the Q7 finale hush',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
+// Escenas (alpha.241): one line after the music's own voices calls the scenes on every scheduled sixteenth; nothing else.
+const audioQ7=before('src/audio.js',approvedQ7).toString();if(audioQ7.split(SCENE_HOOK).length!==2)throw Error('Ambiguous scene hook boundary');
+const audioS=audioQ7.replace(SCENE_HOOK,SCENE_HOOK+SCENE_LINE);
+if(before('src/audio.js',approvedS).toString()!==audioS)throw Error('The approved scenes commit changed audio beyond its one line');
+if(source('src/audio.js')!==audioS)throw Error('Audio differs from the engine approved in Q5 and Q7 plus the scene hook');
+contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling, the Q7 finale hush and the alpha.241 scene hook',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
 const shell=source('sw.js').replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'");
 if(shell!==before('sw.js',approvedF2).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
 const runtimeFiles=[...readdirSync('src').filter(n=>n.endsWith('.js')).sort().map(n=>'src/'+n),...readdirSync('styles').filter(n=>n.endsWith('.css')).sort().map(n=>'styles/'+n),'index.html','package.json','sw.js'],hash=createHash('sha256');

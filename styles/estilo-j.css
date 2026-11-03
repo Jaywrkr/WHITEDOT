@@ -468,7 +468,9 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 
 .music-destination span{flex:0 1 46%;min-width:0;line-height:1.6;overflow-wrap:anywhere}.music-destination button{line-height:1.6;overflow-wrap:anywhere}
 
-#universeTexts,#haptics,#colorSafe,#miniMapSetting{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
+/* Escenas (alpha.241): the switch in Sonido. */
+.scenes-setting{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;min-width:0}.scenes-setting p{font-size:11px;line-height:1.7;color:#aaa;margin:4px 0 8px}
+#scenesSetting,#universeTexts,#haptics,#colorSafe,#miniMapSetting{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
 
 /* Silent unread marker without changing button layout. */
 /* Panel 11 (Q1): notices are states, so white; gold is for what was earned. */
@@ -906,3 +908,9 @@ button.sound-chip[aria-pressed="true"]{background:#fff;color:#000;border-color:#
 #calmKids{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}
 .duo-live[hidden]{display:none}
 #mPlace .row>#placeDuo:not([hidden]){flex-basis:100%;order:-2}
+/* Secretos (alpha.245): the Bitácora lists what you found; of the rest, only quiet «?». The logo's strange face. */
+.secret-row{font-size:12px;line-height:1.5;margin:6px 0;overflow-wrap:anywhere}.secret-row .secret-name{color:#fff}.secret-row{color:#ffffffb0}
+.secret-missing{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.secret-missing span{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid #ffffff22;color:#ffffff66;font-size:11px}
+#menuAvatar.secret-face{position:relative}
+#menuAvatar.secret-face::before{content:"";position:absolute;left:22%;top:28%;width:56%;height:16%;background:linear-gradient(90deg,#000 0 26%,transparent 26% 68%,#000 68% 100%)}
+#menuAvatar.secret-face::after{content:"";position:absolute;left:26%;top:66%;width:48%;height:9%;background:#000;transform:rotate(-10deg)}
