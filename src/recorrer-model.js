@@ -12,11 +12,11 @@ export const RECORRER_VERSION=1,UNITS_PER_KM=10000;
 // Buoys: one ring per km (from 1 km), about 1 km apart along it. Passing within BUOY_PASS (15 m) plays its tic.
 export const BUOY_PASS=150;
 // Satellites: one ring every SAT_EVERY km, about SAT_EVERY km apart. Inside within SAT_INSIDE (16 m), the warm light
-// reaches SAT_GLOW; the next one is marked at the edge from SAT_EDGE (6 km). Inside, the mix's dry bus goes to SAT_DUCK:
-// measured by render, the music is 1.0–1.5 dB lower (the compressor takes part back; the room's return is not lowered).
+// reaches SAT_GLOW; the next one is marked at the edge from SAT_EDGE (6 km). Inside, the whole output goes to SAT_DUCK
+// (alpha.246, runtime.musicDuck in audio.js's musicVolume): evenly lower, dry, room and echo alike (tests/recorrer_mix.py).
 // The buoy's tic and a satellite's two notes: soft, far under the music (measured by render, tests/recorrer_mix.py).
 export const BUOY_GAIN=.003,SAT_GAIN=.0035;
-export const SAT_EVERY=10,SAT_INSIDE=160,SAT_GLOW=220,SAT_EDGE=60000,SAT_DUCK=.5,SAT_KEEP=200;
+export const SAT_EVERY=10,SAT_INSIDE=160,SAT_GLOW=220,SAT_EDGE=60000,SAT_DUCK=.84,SAT_KEEP=200;
 const TAU=Math.PI*2;
 const plain=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const finite=v=>Number.isFinite(v)&&Math.abs(v)<1e12;

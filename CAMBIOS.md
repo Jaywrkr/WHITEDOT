@@ -1,7 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.245** en la rama `jay/boyas`. Las entradas describen su revisión, no certifican producción.
+Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.246** en la rama `jay/satelite-limpio`. Las entradas describen su revisión, no certifican producción.
 
+
+## Satélite limpio · 2.3.0-alpha.246
+
+Rama `jay/satelite-limpio`, desde `main` `d4f62d2` (alpha.245). Pedido por Jay. Dentro de un satélite de descanso, la música baja por igual y ya no suena más espaciosa.
+
+- **Motor:** una línea de `audio.js`, autorizada por Jay. `musicVolume` multiplica por `runtime.musicDuck`, que vale 1 en todo lo demás. El contrato de preservación sujeta `audio.js` a Q7, más la línea de las escenas y esta.
+- **Recorrer lejos** (`recorrer.js`): ya no toca el bus seco. Pone `runtime.musicDuck` en `SAT_DUCK` (0,84 dentro y 1 fuera) y lleva la salida a su nivel en 0,6 s. `recorrerState()` informa `musicDuck`.
+- **Pruebas:** `tests/recorrer.mjs` y `tests/recorrer_smoke.py` siguen `musicDuck`. `tests/recorrer_mix.py` comprueba además que la bajada es estable de ventana en ventana. `tests/audio_mix.mjs` usa la misma vía.
 
 ## Recorrer lejos (F2, primera tanda) · 2.3.0-alpha.245
 

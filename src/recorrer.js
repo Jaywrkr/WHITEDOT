@@ -35,7 +35,8 @@ export function initialize(r){
  const today=()=>r.S.todayKey||'';
  const soon=fn=>{const state=r.S;if(state.sound&&r.ac?.state==='running'&&r.beatSoon)r.beatSoon(time=>{if(state===r.S)fn(time);},null,'player');};
  // The music a little lower inside a satellite: the mix's bus (where the voices meet before the room), eased in and out.
- function duck(on){const bus=r.bus,ac=r.ac;if(!bus?.gain||!ac||on===ducked)return;ducked=on;bus.gain.setTargetAtTime(on?SAT_DUCK:1,ac.currentTime,.6);}
+ // Alpha.246 (Jay): the whole output a little lower, evenly (dry, room and echo alike), through audio.js's musicVolume.
+ function duck(on){const ac=r.ac;if(!ac||on===ducked)return;ducked=on;r.musicDuck=on?SAT_DUCK:1;const m=r.master;if(m?.gain&&r.musicVolume)m.gain.setTargetAtTime(r.musicVolume(),ac.currentTime,.6);}
  // Entering a satellite: kept once, with its notice; each time, the last one you were in.
  function enter(s){const q=book();if(!ok()||q.readOnly)return false;const before=structuredClone(q),res=noteSatellite(q,world,s,today());if(!res)return false;
   if(r.save?.()===false){owner.recorrer=before;return false;}
@@ -116,6 +117,6 @@ export function initialize(r){
   recorrerTick:{get:()=>tick},drawRecorrer:{get:()=>draw},recorrerSection:{get:()=>section},satellitesForMap:{get:()=>forMap},
   satelliteDoorOpen:{get:()=>doorOpen},satelliteDoor:{get:()=>goDoor},satelliteRing:{get:()=>goRing},
   // Tests only (the runtime is never published): the state.
-  recorrerState:{get:()=>()=>{book();const p=me();return {allowed:allowed(),world,book:book(),inside:inside?{...inside}:null,ducked,busGain:r.bus?.gain?.value??null,tics,doors:doors().map(e=>e.id),next:nextBuoy(world,p,b=>passed.has(b.id)),sat:nearestSatellite(world,p),km:kmFromOrigin(p),drawn,summary:summary?.text||''};}}
+  recorrerState:{get:()=>()=>{book();const p=me();return {allowed:allowed(),world,book:book(),inside:inside?{...inside}:null,ducked,musicDuck:r.musicDuck??1,tics,doors:doors().map(e=>e.id),next:nextBuoy(world,p,b=>passed.has(b.id)),sat:nearestSatellite(world,p),km:kmFromOrigin(p),drawn,summary:summary?.text||''};}}
  });
 }

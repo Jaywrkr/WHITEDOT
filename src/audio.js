@@ -58,7 +58,7 @@ export function initialize(runtime) {
   let stageGate=null;
   let ac=null,fx=null,master,mixInput,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verbIn,drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
-  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1):0;
+  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1)*(runtime.musicDuck>0&&runtime.musicDuck<1?runtime.musicDuck:1):0;   // Satélite (alpha.246): runtime.musicDuck lowers everything evenly
   function applyComfort(time=ac?.currentTime||0){
     if(!ac)return;
     const soft=!!runtime.S.softMusic;

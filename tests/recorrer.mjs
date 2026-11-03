@@ -1,7 +1,7 @@
 // Recorrer lejos (F2, first batch; alpha.245): buoys of light every km, rest satellites every 10 km and their door.
 // Placed with hashKey (no Math.random, nothing moved), measured from the origin; the next buoy outward; satellites about
 // 10 km apart; the save normalised and migrated (nothing lost, a later version untouched); entering a satellite keeps it
-// and lowers the music a little on the mix's bus; the door only from inside a visited satellite, only to another visited
+// and lowers the music a little evenly; the door only from inside a visited satellite, only to another visited
 // one (or the ring); no sparks anywhere; English for every text; wiring.
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -56,7 +56,7 @@ const canvas=new Proxy({},{get:(t,k)=>k in t?t[k]:()=>({width:0}),set:(t,k,v)=>{
 function game(){const els={};const el=id=>els[id]||(els[id]={hidden:id==='mJournal'?false:true,addEventListener(){},});
  const targets=[],cues=[],toasts=[],moves=[];const identity={seed:'s1'};
  const r={S:{mode:'world',layer:'superficie',journey:{finished:true,free:true},todayKey:'2026-11-03',wx:0,wy:0,sparks:7,sound:true},worldIdentity:identity,$:el,inWorld:()=>true,save:()=>r.saveOk,saveOk:true,toast:t=>toasts.push(t),
-  ac:{state:'running',currentTime:1},bus:{gain:{value:1,setTargetAtTime(v){targets.push(v);this.value=v;}}},beatSoon:fn=>fn(2),chordTones:()=>[57,60,64,67,71],SIX:.125,vel:v=>v,hookInst:(...a)=>cues.push(a),
+  ac:{state:'running',currentTime:1},master:{gain:{value:1,setTargetAtTime(v){targets.push(v);this.value=v;}}},musicVolume(){return this.musicDuck??1;},beatSoon:fn=>fn(2),chordTones:()=>[57,60,64,67,71],SIX:.125,vel:v=>v,hookInst:(...a)=>cues.push(a),
   canPracticeTravel:()=>true,travelPracticePoint:p=>{moves.push(p);r.S.wx=p.x;r.S.wy=p.y;return true;},ringHome:()=>{moves.push('ring');return true;},ringHomePoint:()=>({x:0,y:0}),W:390,H:844,camX:0,camY:0,cx:canvas,targets,cues,toasts,moves};
  recorrer(r);return r;}
 {const r=game(),w=worldKey(r.worldIdentity);const step=(n=3)=>{for(let i=0;i<n;i++){r.camX=r.S.wx;r.camY=r.S.wy;r.recorrerTick(.05);r.drawRecorrer();}};
@@ -66,10 +66,10 @@ function game(){const els={};const el=id=>els[id]||(els[id]={hidden:id==='mJourn
  assert.match(st.summary,/^Boya · 3 km/);assert.equal(r.S.sparks,7,'buoys pay nothing');
  // The edge: the next buoy outward is marked while out of view.
  r.S.wx=3.3*U;r.S.wy=0;step();st=r.recorrerState();assert.equal(st.drawn.edge.buoy?.km,4);
- // A satellite: kept, its notice, the music a little lower (the bus only), its door closed while it is the only one.
- const s1=satelliteAt(w,1,0);r.S.wx=s1.x;r.S.wy=s1.y;step();st=r.recorrerState();assert.equal(st.inside?.id,s1.id);assert.equal(st.book.sats.length,1);assert.equal(r.bus.gain.value,SAT_DUCK);assert.ok(SAT_DUCK>=.4&&SAT_DUCK<1);
+ // A satellite: kept, its notice, the music a little lower (the whole output, evenly), its door closed while it is the only one.
+ const s1=satelliteAt(w,1,0);r.S.wx=s1.x;r.S.wy=s1.y;step();st=r.recorrerState();assert.equal(st.inside?.id,s1.id);assert.equal(st.book.sats.length,1);assert.equal(r.musicDuck,SAT_DUCK);assert.ok(SAT_DUCK>=.7&&SAT_DUCK<1);
  assert.match(r.toasts.at(-1),/Satélite de descanso<\/em> · 10 km · Punto de retorno guardado/);assert.deepEqual(st.doors,[]);assert.equal(r.S.sparks,7,'satellites pay nothing');
- r.S.wx=s1.x+SAT_INSIDE*2;step();assert.equal(r.bus.gain.value,1,'out of it, the music as it was');assert.equal(r.recorrerState().inside,null);
+ r.S.wx=s1.x+SAT_INSIDE*2;step();assert.equal(r.musicDuck,1,'out of it, the music as it was');assert.equal(r.recorrerState().inside,null);
  // Outside a satellite the door is closed, even to one visited.
  assert.equal(r.satelliteDoor(s1.id),false);
  // A second satellite: from inside it the door leads to the first; going there is a move to where you walked.
@@ -81,9 +81,9 @@ function game(){const els={};const el=id=>els[id]||(els[id]={hidden:id==='mJourn
  // A failed save leaves the satellite unkept.
  const r2=game();r2.saveOk=false;const s3=satelliteAt(worldKey(r2.worldIdentity),3,1);r2.S.wx=s3.x;r2.S.wy=s3.y;r2.recorrerTick(.05);assert.equal(r2.recorrerState().book.sats.length,0);
  // Outside the free World (a round, the Refugio): nothing, and the music as it was.
- const r3=game();r3.S.wx=s1.x;r3.S.wy=s1.y;r3.recorrerTick(.05);assert.equal(r3.bus.gain.value,SAT_DUCK);r3.placeRun=()=>({id:'lago'});r3.recorrerTick(.05);assert.equal(r3.bus.gain.value,1);assert.equal(r3.recorrerState().allowed,false);
+ const r3=game();r3.S.wx=s1.x;r3.S.wy=s1.y;r3.recorrerTick(.05);assert.equal(r3.musicDuck,SAT_DUCK);r3.placeRun=()=>({id:'lago'});r3.recorrerTick(.05);assert.equal(r3.musicDuck,1);assert.equal(r3.recorrerState().allowed,false);
  // With the sound off, no note and no duck.
- const r4=game();r4.S.sound=false;r4.S.wx=s1.x;r4.S.wy=s1.y;r4.recorrerTick(.05);assert.equal(r4.cues.length,0);assert.equal(r4.bus.gain.value,1);
+ const r4=game();r4.S.sound=false;r4.S.wx=s1.x;r4.S.wy=s1.y;r4.recorrerTick(.05);assert.equal(r4.cues.length,0);assert.equal((r4.musicDuck??1),1);
  assert.equal(playRecorrerNotes({S:{sound:false}},0),0);}
 assert.equal(satelliteName(20),'Satélite · 20 km');
 // ---------- no old random numbers, English, wiring ----------
