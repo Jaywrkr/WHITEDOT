@@ -20,6 +20,12 @@ const TAU=Math.PI*2,GOLD='#f0d27a';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // The colours of the fireworks and the balloons: the places' own (never gold, which is for what is earned).
 const PALETTE=['lago','bosque','jardin','cristales','tormenta','cueva','vacio'].map(id=>LIVE_COLORS[id]);
+// Notes of the place's scale (the harmony that sounds) from a time on the grid, one every `spacing` sixteenths (0: all
+// together), in the album of sounds' kalimba at its keeping level and measured trim. Returns how many were sent.
+export function playSecretNotes(r,degrees,start,{spacing=1,octave=0,gain=SECRET_GAIN}={}){if(!r.S?.sound||r.ac?.state!=='running')return 0;
+ const p={x:r.S.wx,y:r.S.wy},d=r.regionOfPos?.(p.x,p.y),scale=r.MU?.dnaA?.scale||d?.scale,tonic=57+(r.MU?.tr||0)+12*octave,step=(r.SIX||.125)*spacing;let n=0;
+ degrees.forEach((degree,k)=>{const note=scaleNote(scale,tonic,degree),at=start+k*step;const emit=()=>{r.hookInst(SECRET_INSTRUMENT,note,at,r.vel(gain*(SOUND_TRIM[SECRET_INSTRUMENT]??1)),d);r.secretAudioCue?.({note,time:at,degree,gain,six:r.SIX});};
+  if(r.withVoiceOrigin)r.withVoiceOrigin('player',emit);else emit();n++;});return n;}
 export function initialize(r){
  const $=id=>r.$?.(id)||globalThis.document?.getElementById(id)||null;
  let owner=null,clock=0,codeAt=-Infinity,faceUntil=-Infinity,dateId=null,dateChecked=-Infinity,cubeKey='',fx={snow:[],bursts:[],balloons:[],nextBurst:0},drawn={},notes=0;
@@ -41,9 +47,7 @@ export function initialize(r){
   cubeKey='';syncCube();if(!$('mJournal')?.hidden)r.refreshJournal?.();return true;}
  // ---------- sound: notes on the harmony, far under the music ----------
  function playNotes(degrees,spacing,octave=0){if(!r.S?.sound||r.ac?.state!=='running'||!r.beatSoon)return false;const state=r.S;
-  r.beatSoon(time=>{if(state!==r.S)return;const p={x:r.S.wx,y:r.S.wy},d=r.regionOfPos?.(p.x,p.y),scale=r.MU?.dnaA?.scale||d?.scale,tonic=57+(r.MU?.tr||0)+12*octave,step=(r.SIX||.125)*spacing;
-   degrees.forEach((degree,k)=>{const note=scaleNote(scale,tonic,degree),at=time+k*step;const emit=()=>{r.hookInst(SECRET_INSTRUMENT,note,at,r.vel(SECRET_GAIN*(SOUND_TRIM[SECRET_INSTRUMENT]??1)),d);notes++;r.secretAudioCue?.({note,time:at,degree});};
-    if(r.withVoiceOrigin)r.withVoiceOrigin('player',emit);else emit();});},null,'player');return true;}
+  r.beatSoon(time=>{if(state!==r.S)return;notes+=playSecretNotes(r,degrees,time,{spacing,octave});},null,'player');return true;}
  const arpeggio=()=>playNotes(ARPEGGIO_DEGREES,1);
  const chord=()=>playNotes(CHORD_DEGREES,0);
  // ---------- the arrow code: keys and swipes ----------
