@@ -1,7 +1,7 @@
 """Recorrer lejos (alpha.245) · the free World on phone and desktop. A buoy of light stands on its km with its number;
 passing it counts once (the farthest kept) and the next one outward is marked at the screen's edge. A rest satellite at
 10 km: marked at the edge on the way, kept on entering («Punto de retorno guardado»), the music a little lower inside
-(the dry bus at 0.5, back to 1 outside). A second one at 20 km: from inside it the Mapa del universo shows both and its
+(the whole output at 0.84, back to 1 outside). A second one at 20 km: from inside it the Mapa del universo shows both and its
 card offers «Ir por la puerta» to the first, which leaves you inside it, for no sparks; outside a satellite the card
 only marks. The Bitácora lists them and from inside one offers «Volver al anillo». Kept on reload; English at 390×844."""
 from pathlib import Path
@@ -44,14 +44,14 @@ try:
     e=st(page)['drawn']['edge']['buoy'];assert 0<=e['x']<=width and 90<=e['y']<=height-90,e
     # --- 2 · The first satellite: at the edge on the way, kept on entering, the music a little lower inside.
     page.evaluate("()=>{__r.S.sound=true;__r.audio?.();__r.ac?.resume?.();}")
-    page.wait_for_function("__r.ac?.state==='running'&&!!__r.bus",timeout=10000)
+    page.wait_for_function("__r.ac?.state==='running'&&!!__r.master",timeout=10000)
     go(page,s1['x']+3000,s1['y']);page.wait_for_function(f"__r.recorrerState().drawn.edge?.sat?.id==='{s1['id']}'",timeout=8000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/satelite-borde-{width}.png')
     go(page,s1['x'],s1['y']+40);page.wait_for_function(f"__r.recorrerState().inside?.id==='{s1['id']}'&&__r.recorrerState().book.sats.length===1",timeout=8000)
-    page.wait_for_function("Math.abs(__r.bus.gain.value-.5)<.02",timeout=10000)
+    page.wait_for_function("Math.abs((__r.musicDuck??1)-.84)<.001",timeout=10000)
     page.wait_for_function("document.getElementById('toast').textContent.includes('Punto de retorno guardado')",timeout=25000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/satelite-{width}.png')
-    go(page,s1['x']+inside*4,s1['y']);page.wait_for_function("Math.abs(__r.bus.gain.value-1)<.02&&!__r.recorrerState().inside",timeout=10000)
+    go(page,s1['x']+inside*4,s1['y']);page.wait_for_function("(__r.musicDuck??1)===1&&!__r.recorrerState().inside",timeout=10000)
     page.evaluate("()=>{__r.S.sound=false;}");go(page,s1['x']+6000,s1['y'])
     # Outside a satellite, its card only marks.
     page.evaluate(HIDE);assert page.evaluate("__r.openUniverseMap('region')")
@@ -93,5 +93,5 @@ try:
    assert not errors,errors;page.close()
   browser.close()
  elapsed=time.time()-started;assert elapsed<145,elapsed
- print(f'PASS recorrer lejos on phone and desktop in {elapsed:.0f} s: a buoy with its number counts once and the next one outward is at the edge; a satellite at the edge, kept on entering with the music lower inside (bus at 0.5); from a second one the map\'s door leads to the first for no sparks; the Bitácora lists them and goes back to the ring; kept on reload; English',flush=True)
+ print(f'PASS recorrer lejos on phone and desktop in {elapsed:.0f} s: a buoy with its number counts once and the next one outward is at the edge; a satellite at the edge, kept on entering with the music lower inside (output at 0.84); from a second one the map\'s door leads to the first for no sparks; the Bitácora lists them and goes back to the ring; kept on reload; English',flush=True)
 finally:server.shutdown()

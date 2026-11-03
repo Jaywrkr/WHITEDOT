@@ -1,10 +1,10 @@
 """Recorrer lejos (alpha.245) leaves the music alone. Its only sounds are a buoy's tic (one note of the chord that sounds,
 an octave up) and a satellite's two notes, on the eighths of the bar: six tics and three satellites over the World's music
 add far less than the music itself (measured against the same calls made inaudible: more than 25 dB under it, its peak
-under a fifth of the music's). Inside a satellite the music goes a little lower: the mix's dry bus at 0.5, so the same render
-is the same before the first second and between 0.5 and 2.2 dB lower once it has settled (the compressor takes part of
-it back, and the room's and the echo's returns are not lowered, so it also sounds a little roomier).
-The World's music without them is checked against older releases by descubrir_mix.py; audio.js is not touched."""
+under a fifth of the music's). Inside a satellite the music goes a little lower, evenly (alpha.246, Jay): the whole output
+at SAT_DUCK through audio.js's musicVolume (runtime.musicDuck), so the same render is the same before the first second
+and between 0.5 and 2.2 dB lower once it has settled, steady from window to window (dry, room and echo alike).
+The World's music without them is checked against older releases by descubrir_mix.py."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -35,10 +35,10 @@ try:
    for n in notes:k=n['time']/(n['six']*2);assert abs(k-round(k))<1e-3,n
    assert d['diffDb']<rp['rmsDb']-25 and d['diffPeak']<rp['peak']/5,(genre,rp['rmsDb'],d)
    assert rl['peak']<.96
-   # Inside a satellite: the same before it, a little lower once the bus has settled.
+   # Inside a satellite: the same before it, a little lower once the output has settled.
    plain=a.evaluate(RENDER,{'genre':genre,'rate':rate,'seconds':9});duck=a.evaluate(RENDER,{'genre':genre,'rate':rate,'seconds':9,'duck':True});a.close()
    before=max(abs(x-y) for x,y in zip(plain['windows'][:2],duck['windows'][:2]));drops=[x-y for x,y in zip(plain['windows'][7:],duck['windows'][7:])];drop=sum(drops)/len(drops)
-   assert before<.01,(genre,before);assert .5<=drop<=2.2,(genre,drops)
+   assert before<.01,(genre,before);assert .5<=drop<=2.2,(genre,drops);assert max(drops)-min(drops)<.6,('evenly lower',genre,drops)
    rows.append({'genre':genre,'rate':rate,'musicDb':round(rp['rmsDb'],1),'notesDiffDb':round(d['diffDb'],1),'notesDiffPeak':round(d['diffPeak'],4),'musicPeak':round(rp['peak'],4),'satelliteDropDb':round(drop,2)})
    print('PASS '+json.dumps(rows[-1]),flush=True)
   browser.close()

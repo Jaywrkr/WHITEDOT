@@ -92,6 +92,9 @@ const rebasedD=new Set(['src/main.js','src/render.js']);
 const approvedS='2f28f918de327ea84feaea0b2461e22ad7887fc8';
 const rebasedS=new Set(['src/i18n-en.js','src/main.js']);
 const SCENE_HOOK='    runtime.phenomenaStep?.(s,bar,t);\n',SCENE_LINE='    runtime.sceneStep?.(s,bar,t);   // Escenas (alpha.241): a stage\'s club on top, its own bus; nothing above changes\n';
+// Satélite limpio (Jay, 3 Nov 2026, alpha.246): inside a rest satellite the whole output goes a little lower, evenly,
+// through one line Jay authorised in audio.js (musicVolume times runtime.musicDuck, 1 everywhere else).
+const DUCK_FROM="  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1):0;\n",DUCK_TO="  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1)*(runtime.musicDuck>0&&runtime.musicDuck<1?runtime.musicDuck:1):0;   // Sat\u00e9lite (alpha.246): runtime.musicDuck lowers everything evenly\n";
 // Arreglos de la media hora (Jay, 3 Nov 2026, alpha.242): the wild spark caught by passing through it with the sound off,
 // an idle mischief scene that holds nothing back and says goodbye by itself, and fewer achievement notices in the first
 // half hour. The three files are held to the commit of those fixes; the music's contracts are untouched (nothing new sounds).
@@ -159,8 +162,9 @@ if(audio!==before('src/audio.js',approved).toString())throw Error('Audio differs
 const audioQ7=before('src/audio.js',approvedQ7).toString();if(audioQ7.split(SCENE_HOOK).length!==2)throw Error('Ambiguous scene hook boundary');
 const audioS=audioQ7.replace(SCENE_HOOK,SCENE_HOOK+SCENE_LINE);
 if(before('src/audio.js',approvedS).toString()!==audioS)throw Error('The approved scenes commit changed audio beyond its one line');
-if(source('src/audio.js')!==audioS)throw Error('Audio differs from the engine approved in Q5 and Q7 plus the scene hook');
-contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling, the Q7 finale hush and the alpha.241 scene hook',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
+if(audioS.split(DUCK_FROM).length!==2)throw Error('Ambiguous satellite duck line');const audioSat=audioS.replace(DUCK_FROM,DUCK_TO);
+if(source('src/audio.js')!==audioSat)throw Error('Audio differs from the engine approved in Q5 and Q7 plus the scene hook and the satellite duck');
+contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling, the Q7 finale hush, the alpha.241 scene hook and the alpha.246 satellite duck',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
 const shell=source('sw.js').replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'");
 if(shell!==before('sw.js',approvedF2).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
 const runtimeFiles=[...readdirSync('src').filter(n=>n.endsWith('.js')).sort().map(n=>'src/'+n),...readdirSync('styles').filter(n=>n.endsWith('.css')).sort().map(n=>'styles/'+n),'index.html','package.json','sw.js'],hash=createHash('sha256');
