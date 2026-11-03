@@ -1,7 +1,26 @@
 # Cambios recientes de Kubono
 
-Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.243** en la rama `jay/escenas`. Las entradas describen su revisión, no certifican producción.
+Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.244** en la rama `jay/secretos`. Las entradas describen su revisión, no certifican producción.
 
+
+## Secretos · 2.3.0-alpha.244
+
+Rama `jay/secretos`, desde `main` `48fd03f` (alpha.242). Mezclada después con `main` (Escenas, alpha.243, PR #382). Iba a ser alpha.245; pasa a alpha.244 porque entra antes que `jay/boyas`. Primera tanda de F5, aprobada por Jay tras una auditoría de media hora sin ningún easter egg. Guía: [El mundo](docs/MUNDO.md#secretos).
+
+- **Código de flechas** ↑↑↓↓←→←→ con teclado o deslizamientos: destello blanco, arpegio de ocho notas en la armonía y ocho cuadritos alrededor del cubo; vuelve solo en 20 s.
+- **Logo siete veces** (cabecera del menú): el cubo pone cara rara 10 s. Silencioso.
+- **Origen, 42, 77 y 100 km:** página en la Bitácora, aviso y acorde corto, una vez cada uno.
+- **Cubo dorado** a 100 km: marco dorado pegado al cubo, que no crece; se quita en Tu cubo (`#cubeSecretSection`, `#cubeSecretGold`).
+- **Asteroide secreto** con una nota breve y neutra, en un punto fijo a unos 4,2 km.
+- **Fechas reales** sin red: nieve de estrellas (24–25 dic), fuegos (31 dic–1 ene), luna llena real de noche (calculada) y globos de luz el 1 de agosto, sin nombrar a nadie ni guardar el año. Se apagan con movimiento reducido; no se añadió interruptor.
+- **Bitácora** › Mapa › «Secretos · N»: lo encontrado; lo demás, «?».
+- Ninguno paga chispas. Sin azar: puntos fijos, nada del mapa se mueve.
+- Guardado nuevo `S.secrets` (versión 1), normalizado y migrado; versiones futuras solo se leen.
+- Sonido medido por render (`tests/secretos_mix.py`): la música del Mundo, idéntica a alpha.242; los arpegios y acordes, 27–28 dB por debajo. `audio.js` no cambia; `tests/audio_mix.mjs` gana la opción `secretBatch`.
+- Pruebas nuevas: `tests/secretos.mjs`, `tests/secretos_smoke.py` (390×844 y 1280×800, reloj simulado) y `tests/secretos_mix.py`.
+- Preservación: cambian a propósito `main.js`, `render.js` y la lista offline de `sw.js` (dos módulos nuevos), con la capa `approvedF5`. Probado en local; sin CI remoto, sin teléfono ni personas.
+
+Estado anterior: 3 de noviembre de 2026. Código **2.3.0-alpha.242** en la rama `jay/arreglos-30`.
 
 ## Escenas musicales, entrega 1 · 2.3.0-alpha.243
 

@@ -8,6 +8,8 @@ Catálogo de 119 ideas para que recorrer el universo sea más divertido. Más **
 
 **Fuera del catálogo (29 de octubre de 2026):** «Ganas de volver» (alpha.236, rama `jay/volver`), elegida por Jay aparte: racha suave en el cielo del Refugio y carta del universo al volver. Cumple las siete reglas: sin castigo, sin chispas, sin humanos. [El mundo](MUNDO.md#ganas-de-volver).
 
+**F5, primera tanda (3 de noviembre de 2026):** Secretos (alpha.244, rama `jay/secretos`): ideas 33, 42 (por el logo, decisión 10), 38, 101 y 102, más origen, 42, 77 y 100 km. Las demás de F5 siguen sin empezar. Ver [Secretos](MUNDO.md#secretos).
+
 **Fuera del orden de fases (29 de octubre de 2026):** «Descubrir» (alpha.240, rama `jay/descubrir`), elegida por Jay: rumores que apuntan a algo real y lejano, y un álbum de cinco sonidos raros por bioma con tu propia mezcla. Ver [Descubrir y el catálogo](#descubrir-alpha240) y [El mundo](MUNDO.md#descubrir).
 
 **Las dos direcciones son lentes simuladas.** Como el [panel](PANEL.md), son perfiles hechos a partir de obra pública. No son esas personas ni sus opiniones reales. Las decisiones de Jay mandan.
