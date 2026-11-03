@@ -19,6 +19,14 @@ export const RUMOR_OPEN_MAX=3,RUMOR_DONE_MAX=24,RUMOR_CHANCE=.45,RUMOR_ARRIVE=12
 // How far from you a rumor speaks of, in km: nearer more often (decision 11: something every km, rare from 20, legends
 // from 50 km from the origin).
 export const RUMOR_DISTANCES=Object.freeze([2,3,4,5,6,8,10,12,15,20,25,30,40,50]);
+// Arreglos de la media hora (Jay, alpha.242). At least one open rumor points near, at 1 to 3 km: when none of the open ones
+// is that near, the next one is (rumorFor with near). They come spaced, at least RUMOR_GAP seconds of play apart, so the
+// three never arrive in the first three minutes; and each one fulfilled brings another, RUMOR_REFILL seconds later.
+export const RUMOR_NEAR_KM=Object.freeze([1,2,3]),RUMOR_NEAR_MIN=.8,RUMOR_NEAR_MAX=3.4,RUMOR_GAP=100,RUMOR_REFILL=75;
+// Whether an open rumor already points near (within the near band's reach, from where you are now).
+export const rumorNearOpen=(q,p)=>!!q&&Array.isArray(q.open)&&!!p&&q.open.some(e=>Math.hypot(e.x-p.x,e.y-p.y)/UNITS_PER_KM<=RUMOR_NEAR_MAX);
+// Whether a rumor may come now: never sooner than RUMOR_GAP after the last one (seconds of the same clock).
+export const rumorSpaced=(clock,lastAt)=>!Number.isFinite(lastAt)||clock-lastAt>=RUMOR_GAP;
 export const RUMOR_DIRECTIONS=Object.freeze(['al este','al sureste','al sur','al suroeste','al oeste','al noroeste','al norte','al noreste']);
 // What each kind of thing does in a rumor.
 export const RUMOR_FIGURE_SAY=Object.freeze({ballena:'canta una ballena',guitarra:'suena una guitarra de estrellas',cohete:'despega un cohete de estrellas',vinilo:'gira un vinilo de estrellas',auricular:'brilla un auricular de estrellas',mano:'hay estrellas que nadie ha unido'});
@@ -142,9 +150,11 @@ const safeKey=k=>typeof k==='string'&&k.length>0&&k.length<120&&!['__proto__','c
 const rumorRow=e=>plain(e)&&safeKey(e.id)&&finite(e.x)&&finite(e.y)&&typeof e.text==='string'?{...e,id:e.id,kind:text(e.kind,16)||'region',key:text(e.key,120),name:text(e.name,60),text:text(e.text,200),x:e.x,y:e.y,at:text(e.at,24),...(e.done!==undefined?{done:text(e.done,24)}:{})}:null;
 export function normalizeRumors(raw){
  if(plain(raw)&&Number.isInteger(raw.version)&&raw.version>RUMOR_VERSION)return raw;const q=plain(raw)?raw:{};
+ // owed (alpha.242): rumors owed for the ones fulfilled, at most three; only kept when there is one.
+ const {owed:rawOwed,...rest}=q,owed=Math.min(RUMOR_OPEN_MAX,count(rawOwed));
  const open=(Array.isArray(q.open)?q.open:[]).map(rumorRow).filter(Boolean).slice(-RUMOR_OPEN_MAX).map(e=>{const {done,...rest}=e;return rest;});
  const done=(Array.isArray(q.done)?q.done:[]).map(rumorRow).filter(Boolean).slice(-RUMOR_DONE_MAX);
- return {...q,version:RUMOR_VERSION,open,done,n:count(q.n),given:count(q.given)};
+ return {...rest,version:RUMOR_VERSION,open,done,n:count(q.n),given:count(q.given),...(owed?{owed}:{})};
 }
 // S.soundAlbum: per sound (first day, times kept, on time), the spots already kept (they stay silent), the biomes whose
 // series is complete (the day), your mix (up to four sounds), the Aro worn and the sparks earned. Unknown fields kept.
@@ -182,20 +192,23 @@ export function rumorDue(q,world){if(!plain(q)||q.version!==RUMOR_VERSION||q.ope
 // The rumor: where it points and what is there. from: where you are; world: a short key of the world; n: the count.
 // look: what the world has (functions, so the model needs no page): under(x,y) → {biome,region}, landmarkAt(rx,ry),
 // anomalyAt(rx,ry), RP (a region's size), and skip(key) for what you already have or a rumor already speaks of.
-export function rumorFor(from,world,n,look){
+// near (alpha.242): the rumor points at 1 to 3 km, drawn with its own keys (rumor:near:v1), so the far ones keep theirs.
+export function rumorFor(from,world,n,look,{near=false}={}){
  const skip=look.skip||(()=>false),RP=look.RP||3600,tries=[];
- for(let t=0;t<4;t++){const h=hashKey(`rumor:v1:${world}:${n}:${t}`),km=RUMOR_DISTANCES[Math.min(RUMOR_DISTANCES.length-1,Math.floor(Math.pow(h,1.4)*RUMOR_DISTANCES.length))],a=Math.floor(hashKey(`rumor:dir:v1:${world}:${n}:${t}`)*8)*Math.PI/4;
+ // Near, a thing counts only if it really is 1 to 3 km away (what the rumor says, rounded).
+ const ok=near?c=>{const km=kmBetween(from,c);return km>=RUMOR_NEAR_MIN&&km<=RUMOR_NEAR_MAX;}:()=>true;
+ for(let t=0;t<4;t++){const h=hashKey(`rumor:${near?'near:':''}v1:${world}:${n}:${t}`),km=near?RUMOR_NEAR_KM[Math.min(RUMOR_NEAR_KM.length-1,Math.floor(h*RUMOR_NEAR_KM.length))]:RUMOR_DISTANCES[Math.min(RUMOR_DISTANCES.length-1,Math.floor(Math.pow(h,1.4)*RUMOR_DISTANCES.length))],a=Math.floor(hashKey(`rumor:${near?'near:':''}dir:v1:${world}:${n}:${t}`)*8)*Math.PI/4;
   tries.push({x:from.x+Math.cos(a)*km*UNITS_PER_KM,y:from.y+Math.sin(a)*km*UNITS_PER_KM,t});}
  for(const T of tries){const far=Math.hypot(T.x,T.y)/UNITS_PER_KM,turn=Math.floor(hashKey(`rumor:kind:v1:${world}:${n}:${T.t}`)*4);
   let order=far>=50?['legend','rare','figure','sound','landmark']:far>=20?['rare','figure','sound','landmark']:['sound','landmark','figure','rare'];
   if(far<20)order=order.slice(turn).concat(order.slice(0,turn));
-  for(const kind of order){const c=find(kind,T,far,world,look,RP,skip);if(c)return build(c,from,n);}}
+  for(const kind of order){const c=find(kind,T,far,world,look,RP,skip,ok);if(c)return build(c,from,n);}}
  // Always something: the biome there.
  const T=tries[0],b=look.under?.(T.x,T.y)?.biome,biome=LETTER_PLACES[b]?b:'vacio';const rx=Math.floor(T.x/RP),ry=Math.floor(T.y/RP);
  return build({kind:'region',key:'region:'+rx+','+ry,name:SOUND_BIOME_NAMES[biome],what:RUMOR_REGION_SAY.replace('{}',LETTER_PLACES[biome]),x:(rx+.5)*RP,y:(ry+.5)*RP,biome},from,n);
 }
-function find(kind,T,far,world,look,RP,skip){
- const best=list=>list.filter(c=>c&&!skip(c.key)).sort((a,b)=>Math.hypot(a.x-T.x,a.y-T.y)-Math.hypot(b.x-T.x,b.y-T.y))[0]||null;
+function find(kind,T,far,world,look,RP,skip,ok=()=>true){
+ const best=list=>list.filter(c=>c&&!skip(c.key)&&ok(c)).sort((a,b)=>Math.hypot(a.x-T.x,a.y-T.y)-Math.hypot(b.x-T.x,b.y-T.y))[0]||null;
  if(kind==='figure'||kind==='legend'){const i0=Math.floor(T.x/SKY_CELL),j0=Math.floor(T.y/SKY_CELL),out=[];
   for(let i=i0-3;i<=i0+3;i++)for(let j=j0-3;j<=j0+3;j++){const s=skyCell(world,i,j,look.under,{night:false});if(!s)continue;const f=skyFigure(s.fig);if(!f)continue;
    if(kind==='legend'&&!f.legend)continue;if(kind==='figure'&&far>=20&&!(f.km>=20))continue;
@@ -220,6 +233,17 @@ function build(c,from,n){const km=Math.max(1,Math.round(kmBetween(from,c)));cons
 export function rumorArrived(r,p){return !!r&&!!p&&Math.hypot(r.x-p.x,r.y-p.y)<=(r.kind==='region'?RUMOR_ARRIVE_REGION:RUMOR_ARRIVE);}
 // The line of an open rumor in the Bitácora: what was said, and where it is now from you.
 export function rumorNow(r,p){const km=kmBetween(p,r);if(km<.2)return 'aquí';const d=directionWord(p,r);return km<1?`${d}, a ${Math.round(km*1000)} m`:`${d}, a ${Math.round(km)} km`;}
+// ---------- marks at the edge (alpha.242) ----------
+// Like a rare sound out of view, what you can do or find nearby leaves a small white mark at the screen's edge, toward
+// the nearest one within EDGE_REACH (300 m): an activity (a square), a find of the cube (a diamond), a magic box (a square
+// in a square). One per kind, the nearest; none for what is done or kept; none while a scene of its own plays.
+export const EDGE_REACH=3000,EDGE_KINDS=Object.freeze(['activity','wonder','box']);
+// The nearest one out of view and within reach: list of {x,y}; view: {x,y,w,h} of the screen in world units.
+export function edgeNearest(list,p,view,reach=EDGE_REACH){let best=null,bd=Infinity;for(const o of list||[]){if(!o||!Number.isFinite(o.x)||!Number.isFinite(o.y))continue;const d=Math.hypot(o.x-p.x,o.y-p.y);if(d>reach||d>=bd)continue;
+  if(view&&o.x>=view.x-12&&o.x<=view.x+view.w+12&&o.y>=view.y-12&&o.y<=view.y+view.h+12)continue;best=o;bd=d;}return best?{o:best,d:bd}:null;}
+// Where a mark sits on the screen's edge (W×H), in the direction (dx,dy) from its centre; side and top keep it off the
+// edges and the bars, as the sound's ring.
+export function edgeSpot(W,H,dx,dy,side=18,top=100){const a=Math.atan2(dy,dx),k=Math.min((W/2-side)/Math.abs(Math.cos(a)||1e-6),(H/2-top)/Math.abs(Math.sin(a)||1e-6));return {x:W/2+Math.cos(a)*k,y:H/2+Math.sin(a)*k,a};}
 // The world key, as the Mapa del cielo makes it (sky-map.js), so both read the same sites.
 export const worldKey=identity=>Math.floor(hashKey(JSON.stringify(identity))*4294967296).toString(36);
 export {skyDirection};

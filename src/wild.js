@@ -14,6 +14,10 @@ export const REMIX_SPARKS=30,REMIX_RECORD=20;
 // Plan H6: the spark is found by ear. It sings on every beat from its side, louder as you come near; the arrow at the
 // edge of the screen is only for playing without sound.
 export const WILD_HEAR=900;
+// Arreglos de la media hora (Jay, alpha.242): with the sound off there is no beat to hear, so five pulses on time are
+// not a fair ask. Then passing through the spark (the cube within WILD_TOUCH of it) catches it, for the same 15 ✦.
+export const WILD_TOUCH=40;
+export const wildTouched=(spark,player,sound)=>!sound&&!!spark&&!!player&&Math.hypot(spark.x-player.x,spark.y-player.y)<=WILD_TOUCH;
 export const wildGain=d=>.02+.07*Math.max(0,1-d/WILD_HEAR)**2;
 // Places whose game reads the beat in its own way keep their rhythm: the Jardín, Dunas, Vacío and Cueva are not remixed.
 export const REMIX_PLACES=Object.freeze(['llanura','lago','bosque','tormenta','cristales','faros','ruinas']);
@@ -38,14 +42,16 @@ export function initialize(runtime){
  // Out in the free World, on the surface, with no round or chapter game going on.
  function active(){const S=runtime.S;return !!(S&&runtime.inWorld?.()&&S.mode==='world'&&(S.layer||'superficie')==='superficie'&&freeOpen(S.journey)&&!runtime.placeRun?.()&&!runtime.journeyFinaleState?.().running&&!runtime.houseActive?.());}
  function spawn(){const S=runtime.S,a=prev&&(S.wx!==prev.x||S.wy!==prev.y)?Math.atan2(S.wy-prev.y,S.wx-prev.x):hashKey('wild:a:'+Date.now())*6.283,n=own().caught+own().today;
-  spark={x:Math.round(S.wx+Math.cos(a)*WILD_AHEAD),y:Math.round(S.wy+Math.sin(a)*WILD_AHEAD),hops:0,born:performance.now(),n,flash:0};runtime.toast?.('Una chispa salvaje.',{level:2,ttl:2500});}
+  spark={x:Math.round(S.wx+Math.cos(a)*WILD_AHEAD),y:Math.round(S.wy+Math.sin(a)*WILD_AHEAD),hops:0,born:performance.now(),n,flash:0};runtime.toast?.(S.sound?'Una chispa salvaje.':'Una chispa salvaje. Pasa por ella.',{level:2,ttl:2500});}
+ function catchSpark(){const s=own();runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());const got=creditSparks(runtime.S,WILD_SPARKS);s.caught++;s.today++;spark=null;last=performance.now();walked=0;roll=Math.random();runtime.save?.();runtime.hud?.();runtime.toast?.(`Atrapada · +${got} ✦`,{level:2,ttl:3000});return 'caught';}
  function tick(){if(!active()){prev=null;return;}const S=runtime.S,now=performance.now();if(prev)walked+=Math.min(200,Math.hypot(S.wx-prev.x,S.wy-prev.y));prev={x:S.wx,y:S.wy};
+  if(spark&&wildTouched(spark,{x:S.wx,y:S.wy},S.sound)){glows.push({x:spark.x,y:spark.y,at:now});catchSpark();return;}
   if(spark){if(now-spark.born>WILD_LIFE){spark=null;last=now;walked=0;roll=Math.random();runtime.toast?.('Se fue.',{level:2,ttl:2000});}return;}
   if(!openSurface('.modal:not([hidden])')&&wildDue(now-last,walked,roll))spawn();}
  // A pulse in the World: on time and beside the spark, it hops away; the fifth catches it.
  function pulse(on){if(!spark||!on||!active())return null;const S=runtime.S;if(Math.hypot(spark.x-S.wx,spark.y-S.wy)>WILD_REACH)return 'far';spark.hops++;spark.flash=1;glows.push({x:spark.x,y:spark.y,at:performance.now()});
   runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];runtime.pluck?.(ct[spark?.hops%3||0]+24,t,.08,2);},'player');
-  if(spark.hops>=WILD_HOPS){const s=own();runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());const got=creditSparks(runtime.S,WILD_SPARKS);s.caught++;s.today++;spark=null;last=performance.now();walked=0;roll=Math.random();runtime.save?.();runtime.hud?.();runtime.toast?.(`Atrapada · +${got} ✦`,{level:2,ttl:3000});return 'caught';}
+  if(spark.hops>=WILD_HOPS)return catchSpark();
   const a=hashKey(`wild:hop:${spark.n}:${spark.hops}`)*6.283;spark.x=Math.round(spark.x+Math.cos(a)*WILD_HOP);spark.y=Math.round(spark.y+Math.sin(a)*WILD_HOP);return 'hop';}
  function draw(c,W,H,t){tick();if(!spark||!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,x=W/2+spark.x-cx,y=H/2+spark.y-cy,gold=runtime.GOLD||'#f0d27a',still=calm(),now=performance.now(),left=1-(now-spark.born)/WILD_LIFE;c.save();
   if(x>-30&&x<W+30&&y>-30&&y<H+30){const r=10+(still?0:Math.sin(t/200)*2);c.globalAlpha=.3;c.fillStyle=gold;c.beginPath();c.arc(x,y,r*2.2,0,6.283);c.fill();

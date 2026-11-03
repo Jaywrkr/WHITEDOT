@@ -297,7 +297,7 @@ Jay elige la fase y el orden. Ninguna fase empieza sin su elección. Cada fase: 
 
 **Reglas comunes a todas.**
 
-- **Uno a la vez.** Una sola escena activa, también con los encuentros vivos y las travesuras.
+- **Uno a la vez.** Una sola escena activa, también con los encuentros vivos y las travesuras. Una travesura que no avanza deja de contar a los 10 s (alpha.242).
 - **Sitio.** Solo en el Mundo libre. Nunca en un capítulo, una ronda, un final, una actividad, el Refugio ni bajo tierra, salvo que la idea lo diga (la cripta de 71).
 - **Guardado.** Una clave nueva por sistema, con versión. Se migra sin borrar progreso y se conserva una versión futura.
 
@@ -353,6 +353,10 @@ Construido en la rama `jay/descubrir` (desde `jay/ritmo`), a petición de Jay, f
 #### Con Luca (alpha.239)
 
 Construido en la rama `jay/con-luca` (sobre `jay/ritmo`), a petición de Jay, para jugar con Luca. No es una fase de este catálogo ni una idea numerada: son el **Reto entre dos** (dos jugadores en el mismo teléfono, una marca de tiempo por lugar, el fantasma del rival) y el **Modo tranquilo para niños** (sin reloj, señales grandes, ★ sin ★★) ([El mundo](MUNDO.md#con-luca)). Sigue las reglas: el siguiente paso en blanco, salir sin perder nada, lo inacabado guardado, sin castigos, la música base intacta, el cubo pequeño, sin chispas. Relación con el catálogo: ninguna idea queda construida por esto; el universo sigue sin humanos (los jugadores son un apodo y un símbolo, no personajes).
+
+#### Arreglos de la media hora (alpha.242)
+
+No es una fase ni una idea numerada. Tras una sesión de bot de media hora en el Mundo libre, Jay aprobó seis arreglos de ritmo y visibilidad: la chispa salvaje se atrapa pasando por ella sin sonido, un rumor cerca y espaciados, sin repetir encuentro y con menos Vacío cerca del origen, travesuras que se despiden solas, marcas en el borde para actividades, hallazgos y cajas, y menos avisos de logro la primera media hora. Detalle en [El mundo](MUNDO.md#arreglos-de-la-media-hora).
 
 ### F3 · Instrumentos del cosmos (1–10, 70–79)
 

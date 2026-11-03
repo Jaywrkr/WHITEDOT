@@ -14,8 +14,11 @@ import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
 import {newRegionOf} from './universe-regions.js';
 import {LIVE_COLORS} from './live-encounters-model.js';
+import {ACTIVITY_CELL,activityCell} from './universe-activities-model.js';
+import {WONDER_CELL,wonderCell} from './musical-wonders-model.js';
+import {boxAt} from './expansion-music.js';
 import {RUMOR_VERSION,ALBUM_VERSION,RUMOR_OPEN_MAX,SOUNDS,SOUND_BIOMES,SOUND_BIOME_NAMES,SOUND_HEAR,SOUND_TOUCH,SOUND_PULSE,SOUND_NEAR,SOUND_CELL,SOUND_SING_GAIN,SOUND_KEEP_GAIN,SOUND_MIX_GAIN,SOUND_TRIM,MIX_MAX,
- soundById,biomeSounds,soundCell,soundNote,soundReward,normalizeRumors,normalizeAlbum,albumHas,albumCount,seriesProgress,keepSound,toggleMix,rumorDue,rumorFor,rumorArrived,rumorNow,worldKey} from './descubrir-model.js';
+ soundById,biomeSounds,soundCell,soundNote,soundReward,normalizeRumors,normalizeAlbum,albumHas,albumCount,seriesProgress,keepSound,toggleMix,rumorDue,rumorFor,rumorArrived,rumorNow,worldKey,rumorNearOpen,rumorSpaced,RUMOR_REFILL,EDGE_REACH,edgeNearest,edgeSpot} from './descubrir-model.js';
 const TAU=Math.PI*2,GOLD='#f0d27a';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // A sound's motif: its notes on its eighths from the start of a bar, in the place's scale, in its own instrument, far
@@ -30,16 +33,17 @@ export function playSoundMotif(r,sound,start,point,gain=SOUND_KEEP_GAIN){
 }
 export function initialize(r){
  const $=id=>r.$?.(id)||globalThis.document?.getElementById(id)||null;
- let drawn={hint:false};
- let owner=null,scope='',world='',cells=new Map(),extra=new Map(),baseline=null,clock=0,seen=new WeakSet(),summary=null,glows=[],sang=new Map(),lastBar=-1,mixOn=false,albumFromJournal=false,cubeKey='',heard=0,pending=false;
+ let drawn={hint:false,marks:{}};
+ let owner=null,scope='',world='',cells=new Map(),extra=new Map(),baseline=null,clock=0,seen=new WeakSet(),summary=null,glows=[],sang=new Map(),lastBar=-1,mixOn=false,albumFromJournal=false,cubeKey='',heard=0,pending=false,rumorAt=-Infinity,refillAt=null,edgeCells=new Map();
  const reduced=()=>!!(r.S.reducedMotion||prefersReducedMotion());
  // Where it lives: the free World's surface after the Journey, outside every level, activity, the Refugio and the finales.
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  // A scene of its own is playing (a living encounter, a figure, a mischief scene): the sounds wait quietly.
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!r.mischiefState?.scene;
+ // Alpha.242: a mischief scene that does not move on (mischiefBusy) no longer counts.
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene);
  // The saves (S.rumors, S.soundAlbum): normalised once per save; a later version is only read.
- function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.rumors=normalizeRumors(owner.rumors);owner.soundAlbum=normalizeAlbum(owner.soundAlbum);world=worldKey(r.worldIdentity);cells=new Map();extra=new Map();sang=new Map();if(fresh){baseline=null;pending=false;summary=null;glows=[];}}return owner;}
+ function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.rumors=normalizeRumors(owner.rumors);owner.soundAlbum=normalizeAlbum(owner.soundAlbum);world=worldKey(r.worldIdentity);cells=new Map();extra=new Map();sang=new Map();edgeCells=new Map();if(fresh){baseline=null;pending=false;summary=null;glows=[];rumorAt=-Infinity;refillAt=null;}}return owner;}
  const rumors=()=>book().rumors,album=()=>book().soundAlbum;
  const rumorsOk=()=>rumors().version===RUMOR_VERSION,albumOk=()=>album().version===ALBUM_VERSION;
  const today=()=>r.S.todayKey||'';
@@ -75,14 +79,17 @@ export function initialize(r){
   if(key.startsWith('sky:'))return !!S.skyMap?.sites?.[key]?.done;if(key.startsWith('rare:'))return !!S.anomalies?.[key.slice(5)];if(key.startsWith('lm:'))return !!S.landmarks?.[key];if(key.startsWith('sonido:'))return albumOk()&&album().spots.includes(key);return false;}
  const look=()=>({under,RP:RP(),landmarkAt:(rx,ry)=>r.landmarkAt?.(rx,ry),anomalyAt:(rx,ry)=>r.anomalyAt?.(rx,ry),skip:skipKey,known:id=>albumOk()&&albumHas(album(),id)});
  // A rumor now (force: without the roll, still never more than three open). Saved before it is told.
- function give(force=false){if(!rumorsOk())return null;const q=rumors();if(q.readOnly||q.open.length>=RUMOR_OPEN_MAX)return null;
+ // Alpha.242: when no open rumor points near (1 to 3 km), this one does; and the time of the last one spaces the next.
+ function give(force=false,owed=false){if(!rumorsOk())return null;const q=rumors();if(q.readOnly||q.open.length>=RUMOR_OPEN_MAX)return null;
   const due=force||rumorDue(q,world),n=q.n;q.n=n+1;if(!due){r.save?.();return null;}
-  const rumor={...rumorFor({x:r.S.wx,y:r.S.wy},world,n,look()),at:today()};q.open.push(rumor);q.given++;
-  if(r.save?.()===false){q.open.pop();q.given--;q.n=n;return null;}
+  const p={x:r.S.wx,y:r.S.wy},rumor={...rumorFor(p,world,n,look(),{near:!rumorNearOpen(q,p)}),at:today()};q.open.push(rumor);q.given++;const owedBefore=q.owed;if(owed){if(q.owed>1)q.owed--;else delete q.owed;}
+  if(r.save?.()===false){q.open.pop();q.given--;q.n=n;if(owedBefore)q.owed=owedBefore;return null;}rumorAt=clock;
   if(r.S.universeTexts!==false)r.toast?.(`Rumor · ${escape(rumor.text)}`,{level:2,category:'rumor'});
   return rumor;}
+ // Fulfilled: another one is owed, to come with time (RUMOR_REFILL seconds of play later).
  function fulfil(rumor){const q=rumors(),i=q.open.indexOf(rumor);if(i<0)return false;q.open.splice(i,1);const row={...rumor,done:today()};q.done.push(row);if(q.done.length>24)q.done.splice(0,q.done.length-24);
-  if(r.save?.()===false){q.done.pop();q.open.splice(i,0,rumor);return false;}
+  const owedBefore=q.owed;q.owed=Math.min(RUMOR_OPEN_MAX,(q.owed||0)+1);
+  if(r.save?.()===false){q.done.pop();q.open.splice(i,0,rumor);if(owedBefore)q.owed=owedBefore;else delete q.owed;return false;}refillAt=clock+RUMOR_REFILL;
   const mark=r.universeMapState?.()?.book?.mark;if(mark&&mark.id===rumor.id)r.clearMapMark?.();
   r.toast?.(`Rumor cumplido · ${escape(rumor.name)}`,{level:2,category:'rumor'});return true;}
  function drop(id){if(!rumorsOk())return false;const q=rumors(),i=q.open.findIndex(e=>e.id===id);if(i<0)return false;const [row]=q.open.splice(i,1);if(r.save?.()===false){q.open.splice(i,0,row);return false;}const mark=r.universeMapState?.()?.book?.mark;if(mark&&mark.id===id)r.clearMapMark?.();return true;}
@@ -92,8 +99,11 @@ export function initialize(r){
   if(!r.S)return;book();syncCube();
   // Something completed (an activity ends inside its portal): the roll waits until you are back in the open World.
   const c=completed();if(baseline===null||c<baseline)baseline=c;else if(c>baseline){baseline=c;pending=true;}
-  if(pending&&allowed()){pending=false;give();}
+  // Spaced (alpha.242): a roll waits until RUMOR_GAP seconds have passed since the last rumor.
+  if(pending&&allowed()&&rumorSpaced(clock,rumorAt)){pending=false;give();}
   if(!allowed()){summary=null;return;}
+  // A rumor owed for one fulfilled comes with time, spaced like the others.
+  if(rumorsOk()&&rumors().owed>0&&!rumors().readOnly){if(refillAt===null)refillAt=clock+RUMOR_REFILL;if(clock>=refillAt&&rumorSpaced(clock,rumorAt)&&rumors().open.length<RUMOR_OPEN_MAX&&!modal&&!paused()){if(give(true,true))refillAt=rumors().owed>0?clock+RUMOR_REFILL:null;else refillAt=clock+5;}}
   if(modal||paused())return;const step=Math.max(0,Math.min(.05,dt||0));clock+=step;
   if(summary&&clock>summary.until)summary=null;glows=glows.filter(g=>clock-g.at<1.2);
   const p={x:r.S.wx,y:r.S.wy};
@@ -111,12 +121,27 @@ export function initialize(r){
   const k=1-near.d/SOUND_HEAR,gain=SOUND_SING_GAIN*(.25+.75*k*k);if(playSoundMotif(r,near.spot.sound,t,near.spot,gain)){sang.set(near.spot.id,{t,clock});heard++;}}
  // The bars, read from the music's schedule (MU.sq keeps the latest sixteenths with their step in the bar).
  setInterval(()=>{try{const sq=r.MU?.sq,ac=r.ac;if(!ac||!sq?.length)return;for(const e of sq){if(e.s!==0||!(e.t>lastBar+1e-4))continue;lastBar=e.t;if(e.t>=ac.currentTime-.01)onBar(e.t,e.tick>>4);}}catch(_){}},50);
+ // ---------- marks at the edge (alpha.242) ----------
+ // What is around within 300 m, from each system's own cells (read, never moved): activities not done, finds of the cube
+ // not kept, magic boxes not opened (and the gift boxes the game left for you).
+ function edgeCell(kind,i,j){const k=kind+':'+i+','+j;if(!edgeCells.has(k)){let v=[];try{v=kind==='activity'?activityCell(i,j,r.seedOf,'superficie'):kind==='wonder'?wonderCell(i,j,r.seedOf,'superficie'):(()=>{const b=boxAt(i,j,r.WCH,r.seedOf,r.rng);return b&&!r.regionOfPos(b.x,b.y)?.sea?[b]:[];})();}catch(_){v=[];}edgeCells.set(k,v);while(edgeCells.size>600)edgeCells.delete(edgeCells.keys().next().value);}return edgeCells.get(k);}
+ function edgeAround(kind,p){const size=kind==='activity'?ACTIVITY_CELL:kind==='wonder'?WONDER_CELL:(r.WCH||900),n=Math.ceil(EDGE_REACH/size),i0=Math.floor(p.x/size),j0=Math.floor(p.y/size),out=[];
+  for(let i=i0-n;i<=i0+n;i++)for(let j=j0-n;j<=j0+n;j++)out.push(...edgeCell(kind,i,j));return out;}
+ function edgeTargets(p){const S=r.S,done=S.activities?.done||{},found=S.musicalWonders?.found||{},opened=S.boxes||{};
+  const gifts=(r.boxesNear?.(EDGE_REACH)||[]).filter(b=>b.gift);
+  return {activity:edgeAround('activity',p).filter(o=>!done[o.id]),wonder:edgeAround('wonder',p).filter(o=>found[o.kind]!==true),box:[...edgeAround('box',p).filter(b=>!opened[b.id]),...gifts]};}
+ function drawMarks(c,p){const marks={},view={x:r.camX-r.W/2,y:r.camY-r.H/2,w:r.W,h:r.H},all=edgeTargets(p);
+  for(const kind of ['activity','wonder','box']){const near=edgeNearest(all[kind],p,view);if(!near)continue;const q=edgeSpot(r.W,r.H,near.o.x-r.camX,near.o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);marks[kind]={x,y,d:Math.round(near.d)};
+   c.globalAlpha=.3+.4*(1-near.d/EDGE_REACH);c.strokeStyle='#ffffff';c.lineWidth=1.5;
+   if(kind==='activity')c.strokeRect(x-4,y-4,8,8);
+   else{c.beginPath();c.moveTo(x,y-5);c.lineTo(x+5,y);c.lineTo(x,y+5);c.lineTo(x-5,y);c.closePath();c.stroke();if(kind==='box')c.strokeRect(x-1.5,y-1.5,3,3);}}
+  return marks;}
  // ---------- drawing ----------
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  // A word centred on a point, kept inside the screen.
  const say=(c,t,x,y)=>{const w=c.measureText(t).width;c.fillText(t,Math.max(8+w/2,Math.min(r.W-8-w/2,x)),y);};
- function draw(){if(!allowed()||!albumOk())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?ac.currentTime:0;
-  let hint=null;c.save();
+ function draw(){if(!allowed())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?ac.currentTime:0;
+  let hint=null;c.save();const marks=scene()||paused()?{}:drawMarks(c,p);if(!albumOk()){c.restore();drawn={hint:false,marks};return;}
   for(const s of around(p,SOUND_HEAR)){if(kept(s))continue;const q=at(s.x,s.y),d=Math.hypot(s.x-p.x,s.y-p.y),off=q.x<-12||q.y<-12||q.x>r.W+12||q.y>r.H+12;
    if(off){if(!hint||d<hint.d)hint={...q,d};continue;}
    const near=d<SOUND_NEAR,col=colorOf(s.biome),song=sang.get(s.id),age=song?now-song.t:9;
@@ -130,7 +155,7 @@ export function initialize(r){
   if(hint&&!scene()){const cx=r.W/2,cy=r.H/2,a=Math.atan2(hint.y-cy,hint.x-cx),k=Math.min((r.W/2-18)/Math.abs(Math.cos(a)||1e-6),(r.H/2-100)/Math.abs(Math.sin(a)||1e-6));c.globalAlpha=.3+.4*(1-hint.d/SOUND_HEAR);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(cx+Math.cos(a)*k,cy+Math.sin(a)*k,4,0,TAU);c.stroke();}
   for(const g of glows){const q=at(g.x,g.y),k=(clock-g.at)/1.2;c.globalAlpha=.85*(1-k);c.strokeStyle=GOLD;c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,still?16:8+k*30,0,TAU);c.stroke();}
   if(summary&&words&&!scene()){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.textAlign='center';c.fillText(summary.text,r.W/2,Math.min(r.H-135,r.H/2+130),r.W-32);}
-  c.restore();drawn={hint:!!hint};}
+  c.restore();drawn={hint:!!hint,marks};}
  // The Aro de sonidos round the cube: one short gold arc per biome whose series is complete, turning slowly.
  const wearing=()=>albumOk()&&Object.keys(album().series).length>0&&album().wear?.ring!==false;
  function drawRing(c,x,y,size,t){if(!r.S||!r.inWorld?.()||!wearing())return;const done=SOUND_BIOMES.map((b,i)=>album().series[b]?i:-1).filter(i=>i>=0),rad=Math.max(30,size*2.8),turn=reduced()?0:t/12000;
@@ -181,6 +206,6 @@ export function initialize(r){
   openSoundAlbum:{get:()=>openAlbum},
   // Tests only (the runtime is never published): a rumor now, a sound placed ahead of the cube, the state.
   rumorGive:{get:()=>()=>allowed()?give(true):null},rumorDrop:{get:()=>drop},rumorMark:{get:()=>markRumor},soundSpawn:{get:()=>spawnSound},soundToggleRing:{get:()=>toggleRing},
-  discoverState:{get:()=>()=>{book();return {rumors:rumors(),album:album(),allowed:allowed(),baseline,completed:completed(),mixOn,heard,summary:summary?.text||'',near:nearest({x:r.S.wx,y:r.S.wy}),drawn,wearing:wearing(),albumOpen:!!box&&!box.hidden};}}
+  discoverState:{get:()=>()=>{book();return {rumorAt,refillAt,rumors:rumors(),album:album(),allowed:allowed(),baseline,completed:completed(),mixOn,heard,summary:summary?.text||'',near:nearest({x:r.S.wx,y:r.S.wy}),drawn,wearing:wearing(),albumOpen:!!box&&!box.hidden};}}
  });
 }
