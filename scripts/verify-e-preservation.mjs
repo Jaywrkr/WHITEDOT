@@ -100,7 +100,7 @@ const rebasedA30=new Set(['src/wild.js','src/universe-mischief.js','src/achievem
 // Secretos (Jay, 3 Nov 2026, alpha.244): the first easter eggs of F5. main starts secretos.js, the frame gives it its
 // tick, its drawing and the gold cube and strange face on the cube, and the offline shell lists two new modules. Held to
 // the commit of jay/secretos; the music's contracts are untouched (the notes play on top, as the album of sounds does).
-const approvedF5='570d89f654b49406d82b068f0e35823163cac59d';
+const approvedF5='2f90e09b262079d767d83789ec348351460fd628';
 const rebasedF5=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
