@@ -8,10 +8,9 @@
 // music; the music is untouched.
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {audibleTime} from './journey-pulse.js';
-import {hashKey} from './universe-regions.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
-import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,LIVE_NOTICE,LIVE_SUMMARY,LIVE_FAREWELL,liveDefinition,liveFor,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost,liveTitle,liveSummary} from './live-encounters-model.js';
+import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,LIVE_NOTICE,LIVE_SUMMARY,LIVE_FAREWELL,liveDefinition,liveFor,livePick,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost,liveTitle,liveSummary} from './live-encounters-model.js';
 import {drawLive} from './live-encounters-art.js';
 // The catch note: one note of the harmony that sounds, an octave up, in the place's own lead, far under the music.
 // A step of a task (batch 3: the prism's nodes as they sound and as you touch them) plays the same way, quieter, its
@@ -38,16 +37,20 @@ export function initialize(r){
  const wandering=()=>r.autopilotState?.mode==='wander'&&!r.autopilotState.paused;
  // One at a time: no encounter while a mischief scene plays (universe-mischief.js waits for us in the same way).
  // And none while a figure of the Mapa del cielo is being joined (sky-map.js); after one, the clock starts again.
- const mischiefBusy=()=>!!r.mischiefState?.scene||!!r.skyMapActive?.();
+ // Alpha.242: a mischief scene that does not move on (universe-mischief.js, mischiefBusy) no longer holds us back.
+ const mischiefBusy=()=>!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skyMapActive?.();
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.liveEncounters=normalizeLive(owner.liveEncounters);scene=null;line=null;notice=null;summary=null;queued=false;last=null;if(fresh)travel=0;}return owner.liveEncounters;}
  const need=()=>forced?3:liveInterval(scope,book().count);
  const biomeAt=(x,y)=>{const d=r.regionOfPos(x,y);return d?.sea?'vacio':r.BIOMES?.[d?.z]?.id||'vacio';};
+ // The nearest land biome around a point in the Vacío: eight directions, one to four regions out.
+ function landNear(p){const RP=(r.REG||4)*(r.WCH||900);for(let k=1;k<=4;k++)for(let i=0;i<8;i++){const a=i*Math.PI/4,b=biomeAt(p.x+Math.cos(a)*RP*k,p.y+Math.sin(a)*RP*k);if(b!=='vacio')return b;}return null;}
  const colorOf=s=>r.placeColor?.(s.biome,LIVE_COLORS[s.biome])||LIVE_COLORS[s.biome]||'#ffffff';
  function spawn(kind=null){
   const q=book();if(q.version!==LIVE_VERSION||scene)return false;const player={x:r.S.wx,y:r.S.wy},n=q.count;
   // Chase, flee or do: the same roll as batch 1, in thirds (below one third the chase it always had, then the biome's
   // «huir», from two thirds up its «hacer»).
-  const def=kind?liveDefinition(kind):liveFor(biomeAt(player.x,player.y),hashKey('live:pick:v1:'+scope+':'+n));if(!def)return false;
+  // Alpha.242: never the same twice in a row; near the origin the Vacío lends some of its turns to the nearest land.
+  const here=biomeAt(player.x,player.y),def=kind?liveDefinition(kind):livePick(here,scope,n,{last:q.last||'',km:Math.hypot(player.x,player.y)/10000,land:here==='vacio'?landNear(player):null});if(!def)return false;q.last=def.id;
   const point=liveSpawnPoint(player,heading??0,scope,n);scene=createLive(def,point,player,{now:clock});q.count=n+1;travel=0;
   // Pulses already in flight are not this encounter's.
   for(const w of r.waves||[])seen.add(w);

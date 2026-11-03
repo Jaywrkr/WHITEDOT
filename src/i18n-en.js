@@ -4053,6 +4053,8 @@ export const EN=Object.freeze({
  "Juega {n} días y encuentra {n} linajes.":"Play {n} days and find {n} lineages.",
  "Una chispa salvaje.":"A wild spark.",
  "Se fue.":"It's gone.",
+ "Una chispa salvaje. Pasa por ella.":"A wild spark. Pass through it.",
+ "Se despidió.":"It said goodbye.",
  "Atrapada · +{} ✦":"Caught · +{} ✦",
  "Atrapada":"Caught",
  "Arriba es abajo. Izquierda es derecha.":"Up is down. Left is right.",

@@ -96,6 +96,17 @@ export function liveSummary(s,reward=0){const w=LIVE_WORDS[s?.kind],outcome=live
 // had, from one third to two thirds the biome's «huir», from two thirds up its «hacer» (batch 2 split it in halves).
 // Timing and places do not move. New batches add rows, never a new engine.
 export const liveFor=(biome,roll=0)=>{const list=LIVE_ENCOUNTERS.filter(d=>d.biome===biome);return list.length?list[Math.min(list.length-1,Math.floor(Math.max(0,roll)*list.length))]:null;};
+// Arreglos de la media hora (Jay, alpha.242), without changing any encounter: never the same one twice in a row, and the
+// Vacío's three weigh less near the origin (under LIVE_VOID_KM), where the Vacío lies between every biome. There, about
+// half of them (LIVE_VOID_SHARE, its own hash) come from the nearest land biome instead. The first pick is the same hash
+// as ever (live:pick:v1); a repeat takes another of that biome by live:other:v1. land: the nearest land biome or null.
+export const LIVE_VOID_KM=5,LIVE_VOID_SHARE=.5;
+export function livePick(biome,scope,n,{last='',km=Infinity,land=null}={}){
+ const lend=biome==='vacio'&&km<LIVE_VOID_KM&&!!land&&land!=='vacio'&&hashKey('live:void:v1:'+scope+':'+n)<LIVE_VOID_SHARE,b=lend?land:biome;
+ let def=liveFor(b,hashKey('live:pick:v1:'+scope+':'+n))||liveFor(biome,hashKey('live:pick:v1:'+scope+':'+n));
+ if(def&&last&&def.id===last){const list=LIVE_ENCOUNTERS.filter(d=>d.biome===def.biome&&d.id!==last);if(list.length)def=list[Math.min(list.length-1,Math.floor(hashKey('live:other:v1:'+scope+':'+n)*list.length))];}
+ return def;
+}
 // Seconds of travel before the n-th encounter of a world: 60 to 90, from the hash, the same on every replay.
 export function liveInterval(scope,n){return LIVE_EVERY.min+(LIVE_EVERY.max-LIVE_EVERY.min)*hashKey('live:every:v1:'+scope+':'+n);}
 // A point near and ahead of the cube along its heading (radians), from the hash of the world and the count.
@@ -113,7 +124,8 @@ export function normalizeLive(raw){
  if(plain(raw)&&Number.isInteger(raw.version)&&raw.version>LIVE_VERSION)return raw;
  const q=plain(raw)?raw:{},kinds={};
  for(const [id,e] of Object.entries(plain(q.kinds)?q.kinds:{}).slice(0,256)){if(!safeKey(id)||!plain(e))continue;kinds[id]={...e,first:typeof e.first==='string'?e.first.slice(0,24):'',caught:count(e.caught),onTime:Math.min(count(e.onTime),count(e.caught)),escaped:count(e.escaped)};if('hit' in e)kinds[id].hit=count(e.hit);}
- return {...q,version:LIVE_VERSION,kinds,count:count(q.count),caught:count(q.caught),earned:count(q.earned)};
+ // last (alpha.242): the kind of the latest one, so the next is another; only kept when it is a name.
+ const {last,...rest}=q;return {...rest,version:LIVE_VERSION,kinds,count:count(q.count),caught:count(q.caught),earned:count(q.earned),...(safeKey(last)?{last}:{})};
 }
 const TAU=Math.PI*2,dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),wrap=a=>Math.atan2(Math.sin(a),Math.cos(a));
 const away=(s,p)=>{const dx=s.x-p.x,dy=s.y-p.y;return dx||dy?Math.atan2(dy,dx):s.heading;};

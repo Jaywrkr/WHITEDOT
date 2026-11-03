@@ -1,6 +1,6 @@
 # El universo
 
-Guía vigente del universo procedural en alpha.221 (sin cambios de generación desde alpha.207; escenas musicales en alpha.241). Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
+Guía vigente del universo procedural en alpha.221 (sin cambios de generación desde alpha.207; escenas musicales en alpha.243). Paisaje abstracto sobre negro, flora/fauna estilizadas y música electrónica. Los nombres internos permanecen para conservar mapas y partidas. [Estado](../HANDOFF.md) · [reglas del juego](MUNDO.md).
 
 ## Reglas
 
@@ -90,7 +90,7 @@ Favoritos conserva esa identidad y puede volver a una dirección compatible. El 
 
 ## Escenas musicales
 
-Entrega 1 (Jay, 3 de noviembre de 2026, alpha.241). Ajuste **«Escenas: más variedad»** en Sonido (`#scenesSetting`), apagado por defecto y guardado en `S.scenes` (`{version:1,on}`; campos desconocidos se conservan; una versión futura se lee apagada y no se reescribe). Apagado, no se crea ningún nodo ni se gasta azar: el render es el de `main` (`tests/scenes_mix.py`).
+Entrega 1 (Jay, 3 de noviembre de 2026, alpha.243). Ajuste **«Escenas: más variedad»** en Sonido (`#scenesSetting`), apagado por defecto y guardado en `S.scenes` (`{version:1,on}`; campos desconocidos se conservan; una versión futura se lee apagada y no se reescribe). Apagado, no se crea ningún nodo ni se gasta azar: el render es el de `main` (`tests/scenes_mix.py`).
 
 - **Escenarios.** Zonas de 2×2 regiones; `hashKey('scene:v1:'+mundo+':'+zona)` pone uno en una de cada diez zonas cerca del origen y una de cada seis más allá de 5 km, cerca del centro de una región cuyo género tiene escena (`scenes-model.js`). Mar y géneros sin escena, ninguno. No mueve el mapa ni lee el azar antiguo. Se oye desde 520 m y está entera a 160 m (subida suave).
 - **Almacén** (como un almacén de techno de Berlín o Fráncfort), sobre techno, minimal, acid y EBM: bombo largo justo detrás del bombo de la música, rumble en la raíz dos octavas abajo, hats de semicorchea y ride con aire, una 303 resonante cuya envolvente sube durante la subida, golpes metálicos FM en notas del acorde, stab en el breakdown, riser y caída.

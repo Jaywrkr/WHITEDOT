@@ -1,11 +1,11 @@
 # Cambios recientes de Kubono
 
-Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.241** en la rama `jay/escenas`. Las entradas describen su revisión, no certifican producción.
+Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.243** en la rama `jay/escenas`. Las entradas describen su revisión, no certifican producción.
 
 
-## Escenas musicales, entrega 1 · 2.3.0-alpha.241
+## Escenas musicales, entrega 1 · 2.3.0-alpha.243
 
-Rama `jay/escenas`, desde `main` (`67f031b`, alpha.240). Aprobado por Jay: cada escenario se siente como un club o un festival concreto, con variación sin fin, sin quitar ni cambiar nada de la música que ya suena. Guía: [Universo](docs/UNIVERSO.md#escenas-musicales). La rama `jay/arreglos-30` (alpha.242) va en paralelo y no se toca.
+Rama `jay/escenas`, desde `main` (`67f031b`, alpha.240), mezclada después con `main` (Arreglos de la media hora, alpha.242, PR #381). Iba a ser alpha.241; pasa a alpha.243. Aprobado por Jay: cada escenario se siente como un club o un festival concreto, con variación sin fin, sin quitar ni cambiar nada de la música que ya suena. Guía: [Universo](docs/UNIVERSO.md#escenas-musicales). La rama `jay/arreglos-30` (alpha.242) va en paralelo y no se toca.
 
 - **Ajuste «Escenas: más variedad»** en Sonido, apagado por defecto, guardado en `S.scenes` con migración segura (sin borrar nada; versión futura leída apagada). Apagado, el render es el de `main`.
 - **Escenarios** por `hashKey('scene:v1:'+zona)`: uno en cada diez zonas de 2×2 regiones cerca del origen, uno en cada seis más allá de 5 km, solo donde el género tiene escena. Se oyen desde 520 m y suben poco a poco; al irse, bajan en tres compases y el bus se suelta.
@@ -14,6 +14,30 @@ Rama `jay/escenas`, desde `main` (`67f031b`, alpha.240). Aprobado por Jay: cada 
 - **Motor:** una línea en `audio.js` (`runtime.sceneStep?.(s,bar,t)`, tras `phenomenaStep`), autorizada por Jay. Bus propio hacia la etapa de salida tras el compresor de la música. Línea al entrar: «Escena · Almacén» / «Escena · Patio latino».
 - **Pruebas:** `tests/scenes.mjs`, `tests/scenes_mix.py` (apagado = `main` en tres géneros; encendido, en 64 compases: picos 0,93, 3,6–3,7 % de energía sobre 4 kHz frente a 0,01–0,02 %, rango 6,5–6,8 dB frente a 3,6–4,8, timbre a 8,7–9,4 dB de la base), `tests/scenes_smoke.py` (390×844 y 1280×800). `tests/audio_mix.mjs` admite renders de hasta 180 s y la opción `stageScene`. Verificador de preservación: capa `approvedS`.
 - **Límites:** sin escucha en teléfono ni auriculares, CPU móvil sin medir, sin CI remoto ni personas. En la caída la escena suma unos 5 dB y el limitador trabaja más. Sin marca en el Mapa ni la Bitácora.
+
+## Arreglos de la media hora · 2.3.0-alpha.242
+
+Rama `jay/arreglos-30`, desde `main` `67f031b` (alpha.240). alpha.241 es `jay/escenas`, que esta rama no toca. Aprobado por Jay tras una sesión de bot de media hora en el Mundo libre sin sonido. Ningún encuentro, figura, actividad ni nota de música cambia. Guía: [El mundo](docs/MUNDO.md#arreglos-de-la-media-hora).
+
+- **Chispa salvaje sin sonido** (`wild.js`). Con el sonido apagado, pasar por ella (4 m) la atrapa, por los mismos 15 ✦; el aviso dice «Una chispa salvaje. Pasa por ella.». Con sonido, los cinco pulsos a tiempo de siempre. Se eligió atraparla y no ocultarla: sin sonido sigue habiendo algo que buscar con la flecha del borde.
+- **Rumores** (`descubrir-model.js`, `descubrir.js`). Si ninguno abierto queda a 3 km o menos, el siguiente apunta a 1–3 km (claves propias `rumor:near:v1`). Llegan espaciados, 100 s de juego como mínimo. Cada cumplido debe otro, que llega 75 s después (`S.rumors.owed`, hasta tres). Tras completar algo, la tirada espera 3 s (`RUMOR_AFTER`) para que primero salga su propio aviso (el halo, un encuentro nuevo).
+- **Encuentros vivos** (`live-encounters-model.js`, `livePick`). Nunca el mismo dos veces seguidas (`live:other:v1`, último en `S.liveEncounters.last`). A menos de 5 km del origen, la mitad de los turnos del Vacío los toma el bioma de tierra más cercano (`live:void:v1`). La tirada de siempre (`live:pick:v1`) decide primero.
+- **Travesuras** (`universe-mischief.js`). Sin avance, a los 10 s dejan de retener encuentros y figuras (`mischiefBusy`); a los 40 s se despiden solas («Se despidió.»), sin coste.
+- **Marcas en el borde** (`descubrir.js`). Actividades (cuadrado), hallazgos del cubo (rombo) y cajas mágicas (rombo con punto) a 300 m o menos dejan una marca blanca en el borde, como los sonidos raros.
+- **Logros en la primera media hora** (`achievements.js`). Durante los primeros 30 min del Mundo libre (`S.firstWorldSeconds`), los menores («· N») no avisan y los demás llegan de uno en uno cada 3 min, el más especial primero. Todos quedan sin leer en la Bitácora. Una partida con 40 logros o más cuenta como pasada.
+- **Medido con el bot de audit30** (12 min por recorrido, sin sonido, mismo nombre y semilla; antes = `main` alpha.240):
+
+| Recorrido | Avisos de logro | Rumores: km y segundo del tercero | Encuentros del Vacío | Travesura retenida |
+|---|---|---|---|---|
+| Cerca del origen | 30 → 4 (≈75 → 10 en 30 min) | 40, 15, 30 km · 167 s → 2, 15, 1 km · 274 s | 5 de 7 → 3 de 7 | — |
+| A 25 km | 32 → 4 | tercero a 276 s → 345 s | 2 de 6 → 5 de 8 (regla solo bajo 5 km) | — |
+| Cerca, sin escape del bot | 19 → 4 | tercero a 167 s → 306 s | 1 de 1 → 0 de 5 | ≈390 s («Escultura bailarina») → ≈85 s (dos «Paisaje contenido» de ~48 s) |
+
+  Modelo de 60 rutas de 30 min (`measure-live`): encuentros repetidos seguidos 113 de 1 404 → 0 (cerca) y 109 → 0 (a 25 km); parte del Vacío cerca del origen 48 % → 25 %; el rumor más cercano de los tres primeros a 3 km o menos, 50 % → 100 % de las rutas. Marcas del borde: alguna visible en el 60 % del tiempo cerca del origen y el 46 % a 25 km. Chispa salvaje: el bot no la persigue y sale «Se fue» igual (6 de 6); yendo hacia ella como haría quien ve la flecha, 7 atrapadas de 7 y ningún «Se fue» en 12 min. Antes, sin sonido, era imposible atraparla sin pulsar cinco veces.
+- Guardado: `S.rumors.owed`, `S.liveEncounters.last` y `S.firstWorldSeconds`, solo cuando hay valor; las versiones no cambian; los campos desconocidos y las versiones futuras se conservan.
+- Pruebas nuevas: `tests/arreglos30.mjs`, `tests/arreglos30_mundo_smoke.py` y `tests/arreglos30_escenas_smoke.py` (390×844 y 1280×800). `tests/live-encounters-runtime.mjs` sigue la nueva tirada y la travesura que se despide.
+- Preservación: cambian a propósito `wild.js`, `universe-mischief.js` y `achievements.js`, con la capa `approvedA30`. Probado en local; sin CI remoto, sin teléfono ni personas.
+
 
 ## Descubrir · 2.3.0-alpha.240
 
