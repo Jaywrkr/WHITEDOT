@@ -47,7 +47,7 @@ try:
    page.wait_for_function("__r.wildState().spark===null",timeout=4000);st=page.evaluate("__r.wildState()");assert st['caught']==1 and st['today']==1,st
    assert page.evaluate("__r.S.sparks")-sparks==15,page.evaluate("__r.S.sparks")-sparks
    # --- 2 · Rumors: the first one near; the next roll waits; one fulfilled owes another.
-   page.evaluate(HIDE);catch(page);page.wait_for_function("__r.discoverState().rumors.open.length===1",timeout=5000)
+   page.evaluate(HIDE);catch(page);page.wait_for_function("__r.discoverState().rumors.open.length===1",timeout=9000)
    r1=page.evaluate("__r.discoverState().rumors.open[0]");m=re.fullmatch(r'Dicen que (al [a-z]+), a (\d+) km, (.+)\.',r1['text']);assert m and 1<=int(m.group(2))<=3,r1['text']
    frm=page.evaluate("({x:__r.S.wx,y:__r.S.wy})");km=math.hypot(r1['x']-frm['x'],r1['y']-frm['y'])/10000;assert .6<=km<=3.6,km
    n=page.evaluate("__r.discoverState().rumors.n");page.evaluate(HIDE);catch(page);page.wait_for_timeout(600)
@@ -62,7 +62,7 @@ try:
    for kind in ['activity','wonder','box']:
     o=page.evaluate(FIND,[kind,page.evaluate("__r.S.wx"),page.evaluate("__r.S.wy")]);assert o,kind
     page.evaluate(f"()=>{{__r.S.wx={o['x']}-2400;__r.S.wy={o['y']};}}")
-    page.wait_for_function(f"!!__r.discoverState().drawn.marks?.{kind}",timeout=6000);mk=page.evaluate(f"__r.discoverState().drawn.marks.{kind}")
+    page.wait_for_function(f"(__r.discoverState().drawn.marks?.{kind}?.d??9e9)<=2500",timeout=6000);mk=page.evaluate(f"__r.discoverState().drawn.marks.{kind}")
     assert mk['x']>=width-40 and 90<=mk['y']<=height-90 and 2300<=mk['d']<=2500,(kind,mk)
     if SHOTS:page.screenshot(path=f'{SHOTS}/borde-{kind}-{width}.png')
     page.evaluate(f"()=>{{__r.S.wx={o['x']}-3800;__r.S.wy={o['y']};}}");page.wait_for_timeout(400)

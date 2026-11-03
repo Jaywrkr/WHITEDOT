@@ -26,6 +26,8 @@ export const RUMOR_NEAR_KM=Object.freeze([1,2,3]),RUMOR_NEAR_MIN=.8,RUMOR_NEAR_M
 // Whether an open rumor already points near (within the near band's reach, from where you are now).
 export const rumorNearOpen=(q,p)=>!!q&&Array.isArray(q.open)&&!!p&&q.open.some(e=>Math.hypot(e.x-p.x,e.y-p.y)/UNITS_PER_KM<=RUMOR_NEAR_MAX);
 // Whether a rumor may come now: never sooner than RUMOR_GAP after the last one (seconds of the same clock).
+// After a completion, the roll waits a moment so the completion's own notice is told first.
+export const RUMOR_AFTER=3;
 export const rumorSpaced=(clock,lastAt)=>!Number.isFinite(lastAt)||clock-lastAt>=RUMOR_GAP;
 export const RUMOR_DIRECTIONS=Object.freeze(['al este','al sureste','al sur','al suroeste','al oeste','al noroeste','al norte','al noreste']);
 // What each kind of thing does in a rumor.

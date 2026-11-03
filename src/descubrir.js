@@ -18,7 +18,7 @@ import {ACTIVITY_CELL,activityCell} from './universe-activities-model.js';
 import {WONDER_CELL,wonderCell} from './musical-wonders-model.js';
 import {boxAt} from './expansion-music.js';
 import {RUMOR_VERSION,ALBUM_VERSION,RUMOR_OPEN_MAX,SOUNDS,SOUND_BIOMES,SOUND_BIOME_NAMES,SOUND_HEAR,SOUND_TOUCH,SOUND_PULSE,SOUND_NEAR,SOUND_CELL,SOUND_SING_GAIN,SOUND_KEEP_GAIN,SOUND_MIX_GAIN,SOUND_TRIM,MIX_MAX,
- soundById,biomeSounds,soundCell,soundNote,soundReward,normalizeRumors,normalizeAlbum,albumHas,albumCount,seriesProgress,keepSound,toggleMix,rumorDue,rumorFor,rumorArrived,rumorNow,worldKey,rumorNearOpen,rumorSpaced,RUMOR_REFILL,EDGE_REACH,edgeNearest,edgeSpot} from './descubrir-model.js';
+ soundById,biomeSounds,soundCell,soundNote,soundReward,normalizeRumors,normalizeAlbum,albumHas,albumCount,seriesProgress,keepSound,toggleMix,rumorDue,rumorFor,rumorArrived,rumorNow,worldKey,rumorNearOpen,rumorSpaced,RUMOR_AFTER,RUMOR_REFILL,EDGE_REACH,edgeNearest,edgeSpot} from './descubrir-model.js';
 const TAU=Math.PI*2,GOLD='#f0d27a';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // A sound's motif: its notes on its eighths from the start of a bar, in the place's scale, in its own instrument, far
@@ -34,7 +34,7 @@ export function playSoundMotif(r,sound,start,point,gain=SOUND_KEEP_GAIN){
 export function initialize(r){
  const $=id=>r.$?.(id)||globalThis.document?.getElementById(id)||null;
  let drawn={hint:false,marks:{}};
- let owner=null,scope='',world='',cells=new Map(),extra=new Map(),baseline=null,clock=0,seen=new WeakSet(),summary=null,glows=[],sang=new Map(),lastBar=-1,mixOn=false,albumFromJournal=false,cubeKey='',heard=0,pending=false,rumorAt=-Infinity,refillAt=null,edgeCells=new Map();
+ let pendingAt=0,owner=null,scope='',world='',cells=new Map(),extra=new Map(),baseline=null,clock=0,seen=new WeakSet(),summary=null,glows=[],sang=new Map(),lastBar=-1,mixOn=false,albumFromJournal=false,cubeKey='',heard=0,pending=false,rumorAt=-Infinity,refillAt=null,edgeCells=new Map();
  const reduced=()=>!!(r.S.reducedMotion||prefersReducedMotion());
  // Where it lives: the free World's surface after the Journey, outside every level, activity, the Refugio and the finales.
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
@@ -98,9 +98,10 @@ export function initialize(r){
  function tick(dt,modal=false){
   if(!r.S)return;book();syncCube();
   // Something completed (an activity ends inside its portal): the roll waits until you are back in the open World.
-  const c=completed();if(baseline===null||c<baseline)baseline=c;else if(c>baseline){baseline=c;pending=true;}
+  const c=completed();if(baseline===null||c<baseline)baseline=c;else if(c>baseline){baseline=c;if(!pending)pendingAt=clock;pending=true;}
   // Spaced (alpha.242): a roll waits until RUMOR_GAP seconds have passed since the last rumor.
-  if(pending&&allowed()&&rumorSpaced(clock,rumorAt)){pending=false;give();}
+  // The completion's own notice goes first (a halo, a new encounter): the roll waits RUMOR_AFTER seconds of play.
+  if(pending&&allowed()&&clock-pendingAt>=RUMOR_AFTER&&rumorSpaced(clock,rumorAt)){pending=false;give();}
   if(!allowed()){summary=null;return;}
   // A rumor owed for one fulfilled comes with time, spaced like the others.
   if(rumorsOk()&&rumors().owed>0&&!rumors().readOnly){if(refillAt===null)refillAt=clock+RUMOR_REFILL;if(clock>=refillAt&&rumorSpaced(clock,rumorAt)&&rumors().open.length<RUMOR_OPEN_MAX&&!modal&&!paused()){if(give(true,true))refillAt=rumors().owed>0?clock+RUMOR_REFILL:null;else refillAt=clock+5;}}
