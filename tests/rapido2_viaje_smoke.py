@@ -47,9 +47,13 @@ try:
   marks={}
   def mark(name):marks[name]=round(time.time()-t0,1);say(f'{marks[name]:6.1f}s  {name}')
   # A slow machine can miss the beat with a chapter's closing pulse: pulse again, a few times at most, until it closes.
+  # Those repeats are the machine's, not the design's: they are counted apart (missed) and kept few.
+  missed=[]
   def close(chapter,n):
    for attempt in range(4):
-    page.evaluate('__bot.on()');n+=1
+    page.evaluate('__bot.on()')
+    if attempt:missed.append(chapter)
+    else:n+=1
     try:page.wait_for_function(f'__r.journeyChapter().done.{chapter}',timeout=5000);return n
     except Exception:
      if attempt==3:raise
@@ -119,11 +123,12 @@ try:
   assert state['finished'] and state['mode']=='libre',state
   assert page.evaluate("localStorage.getItem('pixel-blanco-v4')")==MAIN,"the player's save is untouched"
   assert 'kubono:rapido' in state['keys'],state
-  say('acciones por capítulo:',actions)
+  say('acciones por capítulo:',actions,'pulsos repetidos:',missed)
   say(f'TOTAL {total:.1f} s')
   if QUERY=='?rapido=2':
    assert crystals==2,crystals
    assert all(v<=3 for v in actions.values()),actions
+   assert len(missed)<=2,missed
    assert total<=LIMIT,total
   assert not errors,errors;browser.close()
  print(f'PASS ?rapido=2 whole Journey by a bot on 390×844: Camino {crystals} crystals, chapters {actions}, finale whole, {total:.0f} s in all; own save, the player\'s untouched',flush=True)

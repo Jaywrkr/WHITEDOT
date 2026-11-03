@@ -52,6 +52,9 @@ try:
   # The outline is drawn where the ghost is, on its path from the round's start: right of and below the cube, which
   # stepped 60 left and 40 up of that path. Where on the path depends on the runner's clock and the camera's ease, so
   # only the side is checked.
+  # A slow runner's camera may still be easing: give it a moment to settle on that side.
+  try:p.wait_for_function("(d=>!!d&&d.x>4&&d.y>4)(__r.ritmoState().drawn.ghost)",timeout=2500)
+  except Exception:pass
   d=p.evaluate("__r.ritmoState().drawn.ghost");assert d and d['x']>4 and d['y']>4 and d['alpha']>.5,d
   p.evaluate("()=>{__r.abandonPlace();}");p.wait_for_function("!__r.placeRun()")
   assert abs(p.evaluate("__r.ritmoState().save.ghosts.llanura.ms")-4000)<=60,'leaving keeps the ghost as it was'

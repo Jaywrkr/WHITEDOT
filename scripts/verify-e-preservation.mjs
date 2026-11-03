@@ -85,6 +85,11 @@ const rebasedL5=new Set(['src/i18n-en.js','src/journey-dance.js','src/journey-gu
 // of main (with Ritmo) into jay/descubrir; the music's contracts are untouched (the sounds play on top, measured by render).
 const approvedD='68a4553a98bea171dbce9ea63fe78a70b5136b0a';
 const rebasedD=new Set(['src/main.js','src/render.js']);
+// Arreglos de la media hora (Jay, 3 Nov 2026, alpha.242): the wild spark caught by passing through it with the sound off,
+// an idle mischief scene that holds nothing back and says goodbye by itself, and fewer achievement notices in the first
+// half hour. The three files are held to the commit of those fixes; the music's contracts are untouched (nothing new sounds).
+const approvedA30='c7b03d014673e9188f16b4843362b0b76d73da41';
+const rebasedA30=new Set(['src/wild.js','src/universe-mischief.js','src/achievements.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
@@ -99,7 +104,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}

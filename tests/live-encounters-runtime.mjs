@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {initialize} from '../src/live-encounters.js';
 import {initialize as mischief} from '../src/universe-mischief.js';
 import {mischiefCell} from '../src/universe-mischief-model.js';
-import {LIVE_ENCOUNTERS,LIVE_EVERY,LIVE_KNOCK_SPEED,liveInterval,liveFor} from '../src/live-encounters-model.js';
+import {LIVE_ENCOUNTERS,LIVE_EVERY,LIVE_KNOCK_SPEED,liveInterval,liveFor,livePick} from '../src/live-encounters-model.js';
 import {hashKey} from '../src/universe-regions.js';
 // The engine inside a small runtime: when it appears, what pauses it, where it never appears, one at a time with the
 // mischief scenes, what it pays (atomically) and what it leaves in the Bitácora.
@@ -47,12 +47,13 @@ for(const [key,value] of [['travelInLevel',()=>true],['placeRun',()=>({})],['son
 // One at a time with the mischief scenes, both ways.
 {const site=(()=>{for(let x=-40;x<40;x++)for(let y=-40;y<40;y++)for(const o of mischiefCell(x,y,seedOf))if(o.kind==='rain')return o;})();
  const g=game();g.S.wx=site.x-60;g.S.wy=site.y;assert(g.liveEncounterSpawn('polilla'));g.S.wx=site.x;g.mischiefTick(.05);assert(!g.mischiefState.scene,'no mischief while an encounter runs');
- const h=game();h.S.wx=site.x;h.S.wy=site.y;h.mischiefTick(.05);assert(h.mischiefState.scene,'mischief starts');assert(!h.liveEncounterSpawn('polilla'),'no encounter while a mischief scene plays');for(let i=0;i<1900;i++){h.S.wx=site.x+(i%2?10:-10);h.mischiefTick(.05);h.liveTick(.05);}assert(h.mischiefState.scene,'still playing');assert(!h.liveEncounterState().scene);assert.equal(h.liveEncounterState().travel,0,'travel waits while a mischief scene plays');}
+ const h=game();h.S.wx=site.x;h.S.wy=site.y;h.mischiefTick(.05);assert(h.mischiefState.scene,'mischief starts');assert(!h.liveEncounterSpawn('polilla'),'no encounter while a mischief scene plays');let gone=null,held=null;for(let i=0;i<1900;i++){h.S.wx=site.x+(i%2?10:-10);h.mischiefTick(.05);h.liveTick(.05);if(i===150)held=h.liveEncounterState().travel;if(gone===null&&!h.mischiefState.scene)gone=i*.05;}
+ assert.equal(held,0,'travel waits while a mischief scene moves on');assert(gone!==null&&gone>=39&&gone<=42,'a scene that does not move on says goodbye by itself after about 40 s (alpha.242): '+gone);assert(h.liveEncounterState().travel>0||h.liveEncounterState().scene,'and then holds nothing back');}
 // Another biome offers its own; the forced shortcut and a later save version.
 {const g=game(null,6);for(let i=0;i<2000&&!g.liveEncounterState().scene;i++)walk(g,.05);assert.equal(g.liveEncounterState().scene.kind,'reflejo');}
 {const future={version:3,opaque:1},g=game({mode:'world',todayKey:'2026-10-27',layer:'superficie',wx:0,wy:0,sparks:0,sparkEconomy:{version:1,earned:0,log:[]},liveEncounters:future});walk(g,100);assert(!g.liveEncounterState().scene);assert.equal(g.S.liveEncounters,future);}
 // Batch 2 · huir. The same timer picks chase or flight in the biome from the hash: both come, in the order of the hash.
-{const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=[];for(let n=0;n<12;n++){const want=liveFor('llanura',hashKey('live:pick:v1:'+scope+':'+n)).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want,'the hash picks it');kinds.push(sc.kind);g.liveEncounterState().scene.stage='escaped';g.liveEncounterState().scene.result='escaped';g.liveEncounterState().scene.over=9;g.liveTick(.05);}
+{const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=[];for(let n=0;n<12;n++){const want=livePick('llanura',scope,n,{last:kinds.at(-1)||''}).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want,'the hash picks it');assert.notEqual(sc.kind,kinds.at(-1),'never the same twice in a row (alpha.242)');kinds.push(sc.kind);g.liveEncounterState().scene.stage='escaped';g.liveEncounterState().scene.result='escaped';g.liveEncounterState().scene.over=9;g.liveTick(.05);}
  assert(kinds.includes('polilla')&&kinds.includes('remolino'),kinds.join());}
 // Escaping on foot: 5 ✦, its own Bitácora entry and one notice; with a pulse on time, 8 ✦; reached, nothing but a nudge.
 {const g=game();assert(g.liveEncounterSpawn('ola'));const s=g.liveEncounterState().scene;assert.equal(s.verb,'huir');assert.equal(g.liveEncounterState().line,'Una ola gigante. Llega al anillo.');
@@ -71,7 +72,7 @@ for(const [key,value] of [['travelInLevel',()=>true],['placeRun',()=>({})],['son
  // Never in a level: the threat just goes, and its pull stops.
  g.travelInLevel=()=>true;const x=g.S.wx;g.liveTick(.05);assert(!g.liveEncounterState().scene);g.liveTick(.05);assert.equal(g.S.wx,x);}
 // Batch 3 · hacer. The roll in thirds brings the three verbs of the biome over enough encounters, in the order of the hash.
-{const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=new Set();for(let n=0;n<24;n++){const want=liveFor('llanura',hashKey('live:pick:v1:'+scope+':'+n)).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want);kinds.add(sc.kind);sc.stage=sc.result='escaped';sc.over=9;g.liveTick(.05);}
+{const g=game(),scope=JSON.stringify(g.worldIdentity)+':superficie',kinds=new Set();let last='';for(let n=0;n<24;n++){const want=livePick('llanura',scope,n,{last}).id;for(let i=0;i<3000&&g.liveEncounterState().book.count===n;i++)walk(g,.05);const sc=g.liveEncounterState().scene;assert.equal(sc.kind,want);assert.notEqual(sc.kind,last);last=sc.kind;kinds.add(sc.kind);sc.stage=sc.result='escaped';sc.over=9;g.liveTick(.05);}
  assert(kinds.has('polilla')&&kinds.has('remolino')&&kinds.has('motas'),[...kinds].join());}
 // Done on foot: 5 ✦, its Bitácora entry and one notice; with a pulse on time, 8 ✦; walking away, nothing lost or given.
 {const g=game();assert(g.liveEncounterSpawn('motas'));const s=g.liveEncounterState().scene;assert.equal(s.verb,'hacer');assert.equal(g.liveEncounterState().line,'Siembra cinco motas en orden.');

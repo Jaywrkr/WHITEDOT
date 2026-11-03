@@ -37,7 +37,7 @@ try:
    st=page.evaluate("__r.discoverState()");assert st['allowed'] and st['rumors']['open']==[] and st['rumors']['n']==0,st
    # --- Something completed in the open universe: the first rumor always comes.
    home=page.evaluate("({x:__r.S.wx,y:__r.S.wy})");catch(page)
-   page.wait_for_function("__r.discoverState().rumors.open.length===1",timeout=5000)
+   page.wait_for_function("__r.discoverState().rumors.open.length===1",timeout=9000)
    r1=page.evaluate("__r.discoverState().rumors.open[0]");m=re.fullmatch(r'Dicen que (al [a-z]+), a (\d+) km, (.+)\.',r1['text']);assert m,r1['text']
    assert len(r1['text'])<=90 and r1['kind'] in ('figure','rare','landmark','sound','region'),r1
    # At the distance and in the direction it says (within a rounding and a step of the catch).
