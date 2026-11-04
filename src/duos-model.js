@@ -1,7 +1,7 @@
 // Reto entre dos (Jay, 29 Oct 2026, alpha.239, «Con Luca»; docs/MUNDO.md#con-luca): two people on the same phone, no
 // account, no network. One leaves a mark (a time) in a place already complete; the other tries to beat it. Two simple
 // players (a short name and a symbol; nothing personal), one mark per place with the path of its round, so the rival's
-// ghost can run with you. The end compares without punishing: «¡Nueva marca!» or «Casi: a 1,2 s». A challenge round is
+// ghost can run with you. The end compares without punishing: «Nueva marca.» or «Casi: a 1,2 s». A challenge round is
 // an ordinary round: the same ★, the same song, no sparks; only the mark is its own, and it can be erased.
 // No page or canvas here; duos.js wires it. Nothing uses the old random numbers.
 import {PLACE_IDS,complete,roundTime} from './places.js';
@@ -40,7 +40,7 @@ export const gapText=ms=>(Math.max(0,tenths(ms))/10).toFixed(1).replace('.',',')
 // What the mark says before a round: whose, its time, and the question.
 export const markLine=mark=>mark?{lead:'Marca de',time:roundTime(mark.ms),ask:'¿la superas?'}:null;
 // The end of a challenge round, without punishment: the mark beaten, a tie, close, or further.
-export function resultLine(cmp){if(!cmp)return null;switch(cmp.kind){case 'first':return 'Primera marca.';case 'record':return '¡Nueva marca!';case 'tie':return 'Empate con la marca.';
+export function resultLine(cmp){if(!cmp)return null;switch(cmp.kind){case 'first':return 'Primera marca.';case 'record':return 'Nueva marca.';case 'tie':return 'Empate con la marca.';
  case 'near':return `Casi: a ${gapText(cmp.gap)} s.`;default:return `A ${gapText(cmp.gap)} s de la marca.`;}}
 // The mark kept after a round: the new one when it is the first or better; the old one otherwise.
 export function duoKeep(marks,id,{by,ms,onTime=0,sound=true,calm=false,day='',ghost=null}){const old=marks?.[id]||null,cmp=duoCompare(old,ms);if(!cmp)return {mark:old,cmp:null,changed:false};

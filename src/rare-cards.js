@@ -56,7 +56,7 @@ export function initialize(runtime){
   runtime.sparkCardFound?.(card);if(repeated)return true;
   if(!runtime.boxCardCelebration?.(card)){
    const important=!repeated&&(card.forced||card.type==='fossil'||card.type.startsWith('relic:')||['singular','legendario','mitico'].includes(card.odds.tier));
-   if(!important){noticeTimes.set(card.type,performance.now());runtime.toast?.((repeated?'Otro ejemplar':'Nueva tarjeta')+' · '+card.name,{level:repeated?1:2,category:'hallazgo',coalesce:true});return true;}
+   if(!important){noticeTimes.set(card.type,performance.now());runtime.toast?.((repeated?'Otro ejemplar · '+card.name:'Nueva tarjeta · <em>'+card.name+'</em>'),{level:repeated?1:2,category:'hallazgo',earned:!repeated,coalesce:true});return true;}
    queueRareNotice(queue,{card,repeated});if(queue.length)lane.request('rare',{level:2});} // Every card is saved; the rarest pending finds get presentation priority.
   return true;
  }

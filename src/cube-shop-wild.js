@@ -1,5 +1,6 @@
 import {prefersReducedMotion,frameMemo} from './frame-state.js';
 import {wearing} from './cube-shop-model.js';
+import {TIER_INK} from './rare-card-model.js';
 import {livingGlyph} from './living-art.js';
 // Cube shop batch 6: the world reacts and wild pieces. Drawing only: nothing here moves the cube, sounds or changes play.
 export const SHOP_WORLD=Object.freeze(['world:lantern','world:grass','world:puddles','world:retinue','world:constellation']);
@@ -19,7 +20,6 @@ export function hash(text){let h=2166136261;for(const ch of String(text))h=Math.
 export const PUDDLE_CELL=150;
 export function puddleIn(i,j,seed=''){const h=hash('puddle:'+seed+':'+i+','+j);if(h%5)return null;return {x:(i+.2+(h>>>3)%60/100)*PUDDLE_CELL,y:(j+.2+(h>>>9)%60/100)*PUDDLE_CELL,rx:14+(h>>>15)%16,ry:6+(h>>>20)%5};}
 const TIER_RANK={mitico:4,legendario:3,singular:2,raro:1};
-const TIER_INK={raro:'#9fe8ff',singular:'#bda5f5',legendario:'#bda5f5',mitico:'#f0d27a'};
 export const recentCards=(book,n=3)=>(Array.isArray(book?.items)?book.items:[]).filter(c=>c&&typeof c==='object').slice(-n);
 export function rarestCard(book){let best=null;for(const c of Array.isArray(book?.items)?book.items:[]){const rank=TIER_RANK[c?.odds?.tier]||0;if(!best||rank>=best.rank)best={card:c,rank};}return best?.card||null;}
 export const COSTUMES=Object.freeze(['sphere','pyramid','dodeca']);
@@ -113,8 +113,8 @@ export function initialize(runtime){
   if(has('world:constellation')&&layer()!=='bajo'&&runtime.W>=240)constellation(c,t);
   if(has('wild:morse')){const units=morseOf(runtime.S.playerProfile?.name||'Kubono'),unit=Math.round((runtime.SIX||.125)*2*1000),on=still?1:units[Math.floor(t/unit)%units.length];c.save();c.fillStyle=on?'#fff':'#ffffff44';c.fillRect(Math.round(x+s/2+3),Math.round(y-s/2-7),4,4);c.restore();}
   if(has('wild:backpack')){const cards=recentCards(runtime.S.rareBook);c.save();for(let k=0;k<3;k++){const swing=still?0:Math.sin(t/420+k)*1.5,cx=Math.round(x-s/2-4-k*5+swing),cy=Math.round(y-2+k*3);c.globalAlpha=cards[k]?1:.4;c.strokeStyle='#ffffff66';c.beginPath();c.moveTo(x-s/2,y-s/2+2);c.lineTo(cx+2,cy);c.stroke();cardGlyph(c,cards[k]||null,cx,cy,5,7);}c.restore();}
-  if(has('wild:screen')){const rg=runtime.MU?.dnaA||runtime.MU?.dnaT,bpm=Math.round(rg?.bpm||runtime.MU?.bpm||120),genre=runtime.GEN?.[rg?.genre]?.name||'',show=still||!genre||Math.floor(t/3000)%2===0?bpm+' BPM':genre.slice(0,14);c.save();c.font='11px "Geist Mono", monospace';c.textAlign='center';const w=Math.ceil(c.measureText?.(show)?.width||show.length*5.5)+6,sx=Math.round(x-w/2),sy=Math.round(y+s/2+8);c.fillStyle='#000';c.fillRect(sx,sy,w,12);c.strokeStyle=lead;c.strokeRect(sx+.5,sy+.5,w-1,11);c.fillStyle=lead;c.fillText(show,Math.round(x),sy+9);c.restore();}
-  if(has('wild:hologram')){const card=rarestCard(runtime.S.rareBook),hx=Math.round(x),hy=Math.round(y-s/2-24);c.save();c.globalAlpha=.25;c.fillStyle=TIER_INK[card?.odds?.tier]||'#9fe8ff';c.beginPath();c.moveTo(x-s/4,y-s/2);c.lineTo(hx-9,hy+12);c.lineTo(hx+9,hy+12);c.lineTo(x+s/4,y-s/2);c.closePath();c.fill();c.globalAlpha=.85;cardGlyph(c,card,hx-7,hy-8,14,20);c.globalAlpha=.25;c.fillStyle='#000';for(let k=still?0:Math.floor(t/80)%3;k<20;k+=3)c.fillRect(hx-7,hy-8+k,14,1);c.restore();}
+  if(has('wild:screen')){const rg=runtime.MU?.dnaA||runtime.MU?.dnaT,bpm=Math.round(rg?.bpm||runtime.MU?.bpm||120),genre=runtime.GEN?.[rg?.genre]?.name||'',show=still||!genre||Math.floor(t/3000)%2===0?bpm+' BPM':genre.slice(0,14);c.save();c.font='12px "Geist Mono", monospace';c.textAlign='center';const w=Math.ceil(c.measureText?.(show)?.width||show.length*5.5)+6,sx=Math.round(x-w/2),sy=Math.round(y+s/2+8);c.fillStyle='#000';c.fillRect(sx,sy,w,12);c.strokeStyle=lead;c.strokeRect(sx+.5,sy+.5,w-1,11);c.fillStyle=lead;c.fillText(show,Math.round(x),sy+9);c.restore();}
+  if(has('wild:hologram')){const card=rarestCard(runtime.S.rareBook),hx=Math.round(x),hy=Math.round(y-s/2-24);c.save();c.globalAlpha=.25;c.fillStyle=TIER_INK[card?.odds?.tier]||'#ffffff';c.beginPath();c.moveTo(x-s/4,y-s/2);c.lineTo(hx-9,hy+12);c.lineTo(hx+9,hy+12);c.lineTo(x+s/4,y-s/2);c.closePath();c.fill();c.globalAlpha=.85;cardGlyph(c,card,hx-7,hy-8,14,20);c.globalAlpha=.25;c.fillStyle='#000';for(let k=still?0:Math.floor(t/80)%3;k<20;k+=3)c.fillRect(hx-7,hy-8+k,14,1);c.restore();}
  }
  Object.defineProperties(runtime,{drawCubeShopWildUnder:{get:()=>drawUnder},drawCubeShopWildOver:{get:()=>drawOver},drawCubeShopCostume:{get:()=>drawBody},drawCubeShopSkin:{get:()=>drawSkinOver},cubeShopWildTap:{get:()=>tap},cubeShopGrassWide:{get:()=>grassWide},
   cubeShopWild:{get:()=>()=>({costume:costumeNow(),costumes:counts.costumes,trail:trail.length})}});

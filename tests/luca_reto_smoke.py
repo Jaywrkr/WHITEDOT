@@ -2,7 +2,7 @@
 Two people on the same phone: Lugares opens the challenge sheet; the players get a short name and a symbol; the first
 round leaves the mark («Primera marca.»); the card hands the turn to the other player («Le toca a …», the white button);
 the rival's mark runs as the ghost; a slower round says «Casi: a 1,2 s.» and keeps the mark; a faster one makes a new
-mark («¡Nueva marca!»). Leaving a challenge round loses nothing; a mark can be erased (two taps); names and marks survive
+mark («Nueva marca.»). Leaving a challenge round loses nothing; a mark can be erased (two taps); names and marks survive
 a reload. The ★ are those of an ordinary round and there are no sparks. From the portal sheet: «Reto», place fixed."""
 from pathlib import Path
 from functools import partial
@@ -74,7 +74,7 @@ try:
   p.screenshot(path=str(SHOTS/'luca-reto-casi-390.png'))
   # Luca again, faster: a new mark.
   assert p.inner_text('#placeDuo')=='Le toca a ● Luca';p.locator('#placeDuo').click();p.wait_for_function("!!__r.placeRun()&&__r.duoState().active?.by===0",timeout=10000)
-  title,rows=finish(p,'llanura',3);assert '¡Nueva marca!' in rows,rows;assert abs(p.evaluate("__r.duoState().save.marks.llanura.ms")-3000)<=60
+  title,rows=finish(p,'llanura',3);assert 'Nueva marca.' in rows,rows;assert abs(p.evaluate("__r.duoState().save.marks.llanura.ms")-3000)<=60
   p.screenshot(path=str(SHOTS/'luca-reto-nueva-390.png'));p.evaluate(HIDE)
   # From the portal sheet: «Reto» with the place fixed; leaving the round loses nothing and leaves no card.
   p.evaluate("()=>{__r.ringGo('lago');}");p.wait_for_function("!!__r.placeRun()");p.evaluate("__r.abandonPlace()");p.wait_for_function("!__r.placeRun()");p.evaluate(HIDE)

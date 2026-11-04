@@ -135,7 +135,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
    skyHits.push({x:p.x-r,y:p.y-r,w:2*r,h:2*r,text:f.name+' · constelación'});}}
  function skyLook(px,py){return skyHits.find(s=>px>=s.x&&px<=s.x+s.w&&py>=s.y&&py<=s.y+s.h)?.text||null;}
  // What opens a closed room, in the middle of its silhouette: one line, or two when the room is narrow.
- function closedNote(c,text,cx,cy,maxW,v){if(!text)return;c.save();c.font='11px "Geist Mono", monospace';c.letterSpacing='1px';c.fillStyle='#ffffff8c';c.textAlign='left';const up=text.toLocaleUpperCase('es'),words=up.split(' ');
+ function closedNote(c,text,cx,cy,maxW,v){if(!text)return;c.save();c.font='12px "Geist Mono", monospace';c.letterSpacing='1px';c.fillStyle='#ffffff8c';c.textAlign='left';const up=text.toLocaleUpperCase('es'),words=up.split(' ');
   // Too wide for one line: «SE ABRE CON» above the number and what it counts («3 LUGARES MÁS»); narrower still, nothing.
   let rows=[up];if(c.measureText(up).width>maxW){const i=words.findIndex(w=>/\d/.test(w));rows=i>0?[words.slice(0,i).join(' '),words.slice(i).join(' ')]:[];if(rows.some(r=>c.measureText(r).width>maxW))rows=[];}
   const lh=16,top=cy-(rows.length-1)*lh/2;rows.forEach((row,i)=>{const w=c.measureText(row).width,x=cx-w/2,y=top+i*lh+4;if(y-12<v.top||y+3>v.bottom)return;c.fillText(row,x,y);noteText(c,row,x,y);});c.restore();}
@@ -161,7 +161,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   // The bar walks across each open room: a soft light on the current step.
   const now=runtime.ac?audibleTime(runtime.ac):0;while(cues.length>1&&cues[1].time<=now)cues.shift();const cue=cues[0]&&cues[0].time<=now&&now-cues[0].time<.6?cues[0]:null;
   layout={texts:[],lines:frameLines(h,k),voice:null};const roomTexts=[],progressNow=progress();
-  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),corner=toScreen(b.x,b.y),far=toScreen(b.x+b.w,b.y+b.h);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';
+  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),corner=toScreen(b.x,b.y),far=toScreen(b.x+b.w,b.y+b.h);c.font='12px "Geist Mono", monospace';c.letterSpacing='2px';
    // Panel 11 (Q4): labels are measured and sit clear of the drawing: after the corner bracket, under the room's top,
    // never on a tick, a light or the frame, at 4.5:1 or more. Too long for the screen, a label is not drawn (a tap still
    // names the room). Panel 10, Nesbitt #21. Refugio simple: a closed room is a silhouette with its name above and, in

@@ -109,7 +109,7 @@ const future={version:2,brood:[{x:1}],whatever:true};assert.equal(D.normalizeVia
  const q={x:0,y:0};assert.ok(D.coronaCaught(q,{x:40,y:0},[],[],false));assert.ok(!D.coronaCaught(q,{x:40,y:0},[],[],true),'with sound, a pulse or the trail');assert.ok(D.coronaCaught(q,{x:900,y:0},[],[{x:30,y:20}],true),'the trail catches');
  assert.equal(D.coronaReward(6,{x:950000,y:0}),15);const s=D.normalizeViajeD({});assert.deepEqual(D.noteCorona(s,site.id,6,day,15),{first:true});assert.ok(!D.coronaPaysToday(s,site.id,day));assert.deepEqual([s.corona.n,s.corona.caught,s.corona.full,s.earned],[1,6,1,15]);}
 // --- English
-for(const e of D.BAND_D){assert.ok(EN[e.name],e.name);assert.ok(EN[e.notice],e.notice);}
+for(const e of D.BAND_D){assert.ok(EN[e.name],e.name);assert.ok(e.notice.split(' · ').every(p=>EN[p]),e.notice);}
 for(const k of [...Object.values(D.RULE_NAMES),...Object.values(D.ROOMS).flatMap(r=>[r.name,r.text]),...Object.values(D.RARE_NAMES),'Otra regla','Recoge las seis luces.','Estación completa','Sala {n} de {n}','Elige la puerta','Tomar el sello','Ahora','Barrido',
  'Coloca las piezas. La línea borra los cuadrados de un solo tono.','Girar','Bajar','Izquierda','Derecha','Una cría','cría','Hereda color, nota y ritmo.','Combinación rara','Que viaje contigo','Vuelve tu mascota','Crías','Corona','Corona del eclipse','Atrapa sus luces. Tu pulso deja estela.'])assert.ok(EN[k]&&EN[k]!==k||k==='Corona',k);
 // --- no random numbers, sparks only by the universe's rule, quiet notes, audio.js and pet.js untouched

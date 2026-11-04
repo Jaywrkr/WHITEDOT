@@ -71,7 +71,7 @@ export function initialize(r){
  function endRadar(){const run=radar;radar=null;if(!run||!(run.best>0))return;let amount=0;
   const res=commit(q=>{const n=noteRadar(q,run.id,run.best,today());if(n?.pays){amount=pay('Radar de ritmo',radarReward({x:run.x,y:run.y}));q.earned+=amount;}return n;});
   if(!res)return;if(amount)r.showSparkPickup?.(amount,{x:r.S.wx,y:r.S.wy});
-  summary={text:`Radar de ritmo · racha ${run.best}`+(res.record?' · ¡récord!':` · récord ${res.before}`)+(amount?` · +${amount} ✦`:''),until:clock+3.4};}
+  summary={text:`Radar de ritmo · racha ${run.best}`+(res.record?' · récord nuevo':` · récord ${res.before}`)+(amount?` · +${amount} ✦`:''),until:clock+3.4};}
  function stepRadar(p,pulses){const site=radarsNear(world,p,RADAR_OUT).find(clear);
   if(radar&&(!site||site.id!==radar.id||site.d>RADAR_OUT)){endRadar();}
   if(!site||site.d>RADAR_ZONE||!r.S.sound)return;if(!radar)radar={id:site.id,x:site.x,y:site.y,cur:0,best:0,record:radarRecord(book(),site.id)};
@@ -81,7 +81,7 @@ export function initialize(r){
  function goal(b){b.party={at:clock,x:b.goal.x,y:b.goal.y};b.vx*=.3;b.vy*=.3;let amount=0;
   const res=commit(q=>{const n=noteGoal(q,b.id,today());if(n?.pays){amount=pay('Gol',goalReward({x:b.home.x,y:b.home.y,onTime:b.onTime}));q.earned+=amount;}return n;});
   if(res&&amount)r.showSparkPickup?.(amount,{x:r.S.wx,y:r.S.wy});sing('gol',GOAL_DEGREES,{instrument:BALL_INSTRUMENT,gain:GOAL_GAIN});
-  summary={text:`¡Gol!${amount?' · +'+amount+' ✦':''}`,until:clock+2.6};}
+  summary={text:`Gol${amount?' · +'+amount+' ✦':''}`,until:clock+2.6};}
  function stepBalls(p,pulses,dt){const quiet=scene();
   for(const s of ballsNear(world,p,2600))if(clear(s))ballFor(s);
   for(const [id,b] of balls){if(Math.hypot(b.home.x-p.x,b.home.y-p.y)>3600){balls.delete(id);continue;}

@@ -22,7 +22,8 @@ export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH
   const raw=owner.journal.achievementSeen;seen=raw&&typeof raw==='object'&&!Array.isArray(raw)?Object.keys(raw):Object.keys(owner.ach);owner.journal.achievementSeen=Object.fromEntries(seen.map(id=>[id,true]));pending=[];}const unread=runtime.ACH.some(a=>owner.ach[a[0]]&&!seen.includes(a[0]));const button=runtime.$?.('bAch');button?.classList?.toggle('has-unread',unread);button?.setAttribute?.('aria-label',unread?'Bitácora · logros nuevos':'Bitácora');}
  function earnedNotice(ids){sync();pending.push(...ids);}
  // Panel 10 (P4): what a round earns goes only to the Bitácora (its mark of unread stays); no card line and no toast.
- function quiet(){sync();pending=[];}
+ // T4 (Kubono coherente): quiet(ids) sends only those to the Bitácora (a box's own achievements: its card is the notice).
+ function quiet(ids){sync();pending=Array.isArray(ids)?pending.filter(id=>!ids.includes(id)):[];}
  function acknowledge(){sync();if(!Object.keys(owner.ach).some(id=>!seen.includes(id))){pending=[];return;}const before=seen;seen=Object.keys(owner.ach);owner.journal.achievementSeen=Object.fromEntries(seen.map(id=>[id,true]));if(runtime.save()===false){seen=before;owner.journal.achievementSeen=Object.fromEntries(seen.map(id=>[id,true]));}else pending=[];sync();}
  // In the Journey achievements are earned in silence; they are announced once back in the free World.
  // Plan H5: nor during a round of a place, nor while its card waits for the drop (quiet() sends them to the Bitácora).
@@ -32,7 +33,7 @@ export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH
  // Panel 10 (P8, D3): one achievement per notice, never a count; the rest wait, unread, in the Bitácora.
  function announce(){if(!pending.length||runtime.journeyQuiet?.()||runtime.placeRun?.()||runtime.placeCardDue?.())return;if(calm()){pending=[];return;}const state=runtime.S;let ids=[...new Set(pending)];
   if(firstWorld()){const pick=achievementPick(ids,metaOf);if(!pick){pending=[];return;}if(worldSeconds()-lastNotice<ACH_GAP)return;ids=[pick,...ids.filter(id=>id!==pick)];}
-  const a=runtime.ACH.find(a=>a[0]===ids[0]),escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const accepted=runtime.toast?.('Logro · '+escape(a?.[1]||'Nuevo descubrimiento'),{level:2,category:'logros',coalesce:true,ttl:120000,valid:()=>runtime.S===state&&ids.some(id=>!seen.includes(id))});if(accepted!==false){pending=[];lastNotice=worldSeconds();}}
+  const a=runtime.ACH.find(a=>a[0]===ids[0]),escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const accepted=runtime.toast?.('Logro · <em>'+escape(a?.[1]||'Nuevo descubrimiento')+'</em>',{level:2,category:'logros',earned:true,coalesce:true,ttl:120000,valid:()=>runtime.S===state&&ids.some(id=>!seen.includes(id))});if(accepted!==false){pending=[];lastNotice=worldSeconds();}}
  sync();
  function check(dt=2){if(owner!==runtime.S)sync();clock+=dt;
   // The first half hour counts only in the free World, after the Journey, with the game in view.

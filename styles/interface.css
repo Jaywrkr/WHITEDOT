@@ -138,7 +138,7 @@ body:has(.routehud:not([hidden])) .zone,body:has(.routehud:not([hidden])) .phras
 .fxhead small{font-size:11px}.fxhead span{font-size:11px;min-width:0;overflow-wrap:anywhere}
 .fxhead button{min-width:44px;height:44px;font-size:22px;border-color:transparent}
 .fxpad{height:clamp(96px,16dvh,150px);border-radius:var(--control-radius);border-color:var(--line);overflow:hidden;touch-action:none}
-.fxpad i{width:14px;height:14px;margin:-7px;border-width:1px;box-shadow:0 0 12px #f0d27a33}
+.fxpad i{width:14px;height:14px;margin:-7px;border-width:1px;box-shadow:none}
 .fxpad em{font-size:11px;letter-spacing:0;text-transform:none}
 .fxbtns{gap:6px}.fxbtns button{font-size:11px;min-height:44px;padding:8px 4px}
 .glasspanel input{height:44px}.glasspanel label,.glasspanel p{font-size:12px}

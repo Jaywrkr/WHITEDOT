@@ -20,10 +20,10 @@ const TAU=Math.PI*2;
 export const BAND_A=Object.freeze([
  registerBand({id:'bengala',km:0,name:'Bengala',hint:'Lánzala desde Menú › Más',batch:'A'}),
  registerBand({id:'interruptor',km:.5,name:'Interruptores de reto',batch:'A'}),
- registerBand({id:'radar',km:1,name:'Radares de ritmo',notice:'Aquí empiezan los radares de ritmo.',batch:'A'}),
- registerBand({id:'pelota',km:2,name:'Pelotas de luz',notice:'Aquí empiezan las pelotas de luz.',batch:'A'}),
- registerBand({id:'luces',km:5,name:'Retos de luces',notice:'Aquí empiezan los retos de luces.',batch:'A'}),
- registerBand({id:'tablon',km:10,name:'Tablones de encargos',notice:'Aquí empiezan los tablones de encargos.',batch:'A'}),
+ registerBand({id:'radar',km:1,name:'Radares de ritmo',notice:'Radares de ritmo · Empiezan aquí.',batch:'A'}),
+ registerBand({id:'pelota',km:2,name:'Pelotas de luz',notice:'Pelotas de luz · Empiezan aquí.',batch:'A'}),
+ registerBand({id:'luces',km:5,name:'Retos de luces',notice:'Retos de luces · Empiezan aquí.',batch:'A'}),
+ registerBand({id:'tablon',km:10,name:'Tablones de encargos',notice:'Tablones de encargos · Empiezan aquí.',batch:'A'}),
 ]);
 // ---------- sites (cells of hashKey; a site under its band does not exist) ----------
 // About one switch every 0,7 km², one radar every 1,3 km², one ball every 2 km²: walking with the marks at the edge

@@ -63,7 +63,7 @@ r.sparkCardFound?.(card);r.unlock?.('tarjeta1');celebrate(o,d,true);r.fxLayer?.p
    // Visual 1 (alpha.250): it grows in, breathes with the beat, glows in its colour and writes a ring as you come close.
    const k=appear.k(o.x+','+o.y,now,still);
    c.save();c.globalAlpha=fade*appearAlpha(k);drawWonder(c,d,o.x+ox,o.y+oy,clock,still,{scale:appearScale(k)*beat.scale,light:light?.18:beat.glow*.45,halo:!light,near:distance<150?1-distance/150:0});
-   if(distance<150){c.fillStyle=d.color;c.textAlign='center';c.font='11px "Geist Mono",monospace';c.fillText(d.name,o.x+ox,o.y+oy+48);c.fillText(book().found[o.kind]?'Recuerdo conservado':'Acércate o lanza un pulso',o.x+ox,o.y+oy+65);}c.restore();
+   if(distance<150){c.fillStyle=d.color;c.textAlign='center';c.font='12px "Geist Mono",monospace';c.fillText(d.name,o.x+ox,o.y+oy+48);c.fillText(book().found[o.kind]?'Recuerdo conservado':'Acércate o lanza un pulso',o.x+ox,o.y+oy+65);}c.restore();
   }
   if(show){const age=(clock-show.at)*(show.first?1:4),point={x:show.x+ox,y:show.y+oy};drawMagicShow(c,point,age,show.variant,show.d.color,reduced());
    c.save();c.globalAlpha=Math.min(1,Math.max(0,(show.first?4.8:1.2)-(clock-show.at)));c.fillStyle=show.d.color;c.textAlign='center';c.font='12px "Geist Mono",monospace';c.fillText(show.d.style+' · '+(show.id.startsWith('wonder:')?show.d.gift:'Encuentro mágico'),r.W/2,Math.min(r.H-130,r.H/2+120));c.restore();

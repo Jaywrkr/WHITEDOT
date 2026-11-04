@@ -1,6 +1,6 @@
 """Lo que hay más lejos, tanda D (alpha.252) · the free World from 60 km, on phone (390×844, without sound) and desktop
-(1280×800, with sound). Before 60 km the Bitácora names nothing of the band. Crossing 60 km tells once «Aquí empiezan
-los portales de otra regla.». A portal of another rule: an orbit on the phone (the cube turns round its point with no
+(1280×800, with sound). Before 60 km the Bitácora names nothing of the band. Crossing 60 km tells once «Portales
+de otra regla · Empiezan aquí.». A portal of another rule: an orbit on the phone (the cube turns round its point with no
 input), ice on the desktop (it slides on after the keys are let go), a scene of its own (no living encounter, no meteor
 shower), six lights gathered for 15 ✦ by the universe's rule; then the usual rule is back. The station of the day:
 its sheet with three doors, five rooms played (challenges won, a prize's seal), 15 ✦ once, closed and kept. The sweep on
@@ -73,7 +73,7 @@ try:
    print('step 2',round(time.time()-started,1),flush=True)
    # --- 2 · Crossing 60 km: its notice, once.
    go(page,601000,0);page.wait_for_function("!!__r.bandState().book.seen['portal-regla']",timeout=8000)
-   want='Aquí empiezan los portales de otra regla.'
+   want='Portales de otra regla · Empiezan aquí.'
    page.wait_for_function(f"window.__toasts.some(t=>t.includes({want!r}))",timeout=15000)
    go(page,598000,0);go(page,602000,0);page.wait_for_timeout(300);assert page.evaluate(f"window.__toasts.filter(t=>t.includes({want!r})).length")==1,'once'
    if sound:sound_on(page)
@@ -165,7 +165,7 @@ try:
    assert not errors,errors;page.close()
   # --- 10 · English at 390×844: the notice, the sheet and the young ones.
   print('viewport 390 en',flush=True);page,errors=page_for(browser,390,844,'?anillo=1&lang=en');P=page.evaluate(SITES,st(page)['world'])
-  go(page,601000,0);page.wait_for_function("window.__toasts.some(t=>t.includes('Portals of another rule start here.'))",timeout=15000)
+  go(page,601000,0);page.wait_for_function("window.__toasts.some(t=>t.includes('Portals of another rule · They start here.'))",timeout=15000)
   stn=P['station'];go(page,stn['x']+30,stn['y']);page.wait_for_function("__r.viajeDGames.mode()==='station'",timeout=8000);page.wait_for_timeout(200)
   assert page.inner_text('#viajeDTitle')=='Station of the day' and 'Choose the door' in page.inner_text('#viajeDStatus'),page.inner_text('#viajeDStatus')
   assert page.inner_text('#viajeDClose')=='Leave';page.click('#viajeDClose')

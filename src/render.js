@@ -239,7 +239,7 @@ export function initialize(runtime) {
     const soundR=(ev==="eclipse"?.6:1)*runtime.clamp(runtime.lightR()*1.1,170,360)*(1+Math.min(runtime.S.totalDays||0,30)/30*.7)*(id==="cueva"?.6:1)*(1+b*.05),R=(runtime.worldVisibility?.lightRadius??soundR/(1+b*.05))*(1+b*.05),ox=runtime.W/2-runtime.S.wx,oy=runtime.H/2-runtime.S.wy,ms=performance.now();
     // The pool of light round the cube, from a sprite (visual 1): white to clear white, as the gradient was.
     {const ga=runtime.cx.globalAlpha;glow(runtime.cx,runtime.W/2,runtime.H/2,R,'#ffffff',ga*(.05+b*.04+runtime.MU.E*.03),false,'rgba(255,255,255,0)');runtime.cx.globalAlpha=ga;}
-    if(ev==="eclipse"){runtime.cx.globalAlpha=.25+b*.35;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,R*.95,0,6.283);runtime.cx.stroke();}
+    if(ev==="eclipse"){runtime.cx.globalAlpha=.25+b*.35;runtime.cx.strokeStyle="#ffffff";runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,R*.95,0,6.283);runtime.cx.stroke();}
     if(ev==="lluvia"){if(!paused&&Math.random()<dt*7*(1+3*(runtime.MU.storm||0)))runtime.rain.push({x:runtime.S.wx+(Math.random()-.5)*R*2.4,y:runtime.S.wy-R*1.3,vy:110+Math.random()*60});
       // With a panel open the drops wait, so nothing plays behind a menu.
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];if(!paused)q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(!paused&&d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
@@ -402,7 +402,7 @@ export function initialize(runtime) {
         const vis=R*1.7;if(d>vis+400)continue;if(d<R*1.2)runtime.seen("caminante");
         runtime.cx.fillStyle="#fff";
         k.trail.forEach(([p,q],i)=>{const e=Math.hypot(p-runtime.S.wx,q-runtime.S.wy),al=(i/k.trail.length)*.25*Math.max(0,1-e/vis);if(al>.01){runtime.cx.globalAlpha=al;runtime.cx.fillRect(p+ox-1,q+oy-1,2,2);}});
-        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1)*(runtime.faunaDim?.()??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,calmMotion(runtime.S));if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='11px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
+        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1)*(runtime.faunaDim?.()??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,calmMotion(runtime.S));if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='12px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}
@@ -445,13 +445,13 @@ export function initialize(runtime) {
       if(runtime.visitRelic(rl,paused||runtime.scanning?0:dt))continue;
       if(d>R)continue;
       nd=nd?Math.min(nd,d):d;
-      const al=Math.max(0,1-d/R),progress=runtime.relicProgress(rl),need=rl.magical?5:3,ink=rl.magical?'#c9b9ff':'#c8e9ee';
+      const al=Math.max(0,1-d/R),progress=runtime.relicProgress(rl),need=rl.magical?5:3,ink=rl.magical?'#ffffff':'#ffffffcc';
       runtime.cx.globalAlpha=al;runtime.cx.strokeStyle=runtime.cx.fillStyle=ink;runtime.cx.lineWidth=1;
       const x=rl.x+ox,y=rl.y+oy,size=rl.magical?16:10;
       glyph(runtime.cx,rl.s,x,y,size*(1+b*.2));
       for(let i=0;i<need;i++){const a=i/need*6.283+t/6000;runtime.cx.globalAlpha=al*(i<progress.pulses ? .9 : .25);runtime.cx.beginPath();runtime.cx.arc(x+Math.cos(a)*28,y+Math.sin(a)*28,2,0,6.283);runtime.cx.stroke();}
       runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
-      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=ink;runtime.cx.font="11px 'Geist Mono', monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
+      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=ink;runtime.cx.font="12px 'Geist Mono', monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
     runtime.bodyTick?.(dt);runtime.quietTick?.(dt);runtime.cajasTick?.(dt);runtime.cultureTick?.(dt);   // el cubo primero: los objetos leen su contacto en este cuadro
     runtime.drawGlass?.(t,dt,ox,oy,R);

@@ -16,7 +16,7 @@ assert.deepEqual(bandEntries().map(e=>[e.id,e.km]),[['bengala',0],['interruptor'
 assert.deepEqual(bandGroups().map(g=>g.km),[0,.5,1,2,5,10]);
 assert.deepEqual(bandEntries().filter(e=>e.notice).map(e=>e.km),[1,2,5,10],'a notice at 1, 2, 5 and 10 km');
 assert.ok(bandEntries().every(e=>e.batch==='A'));
-assert.equal(registerBand({id:'radar',km:1,name:'Radares de ritmo',notice:'Aquí empiezan los radares de ritmo.',batch:'A'}).id,'radar','the same entry again is harmless');
+assert.equal(registerBand({id:'radar',km:1,name:'Radares de ritmo',notice:'Radares de ritmo · Empiezan aquí.',batch:'A'}).id,'radar','the same entry again is harmless');
 assert.throws(()=>registerBand({id:'radar',km:3,name:'Otro'}),/twice/);assert.throws(()=>registerBand({id:'Mal id',km:1,name:'x'}));assert.throws(()=>registerBand({id:'x',km:-1,name:'x'}));
 assert.equal(formatKm(0),'0 km');assert.equal(formatKm(.5),'500 m');assert.equal(formatKm(10),'10 km');assert.equal(formatKm(2.5),'2,5 km');
 // --- sites: fixed, one per cell at most, never under their band
@@ -87,8 +87,8 @@ const r0=A.normalizeViajeA({});A.noteReto(r0,'interruptor:2,2',5,5,'2026-11-04',
 // --- T0 (bug 10): the page does not count bands reached as things found, and says nothing false past the last band.
 {const b=read('src/bandas.js');assert.ok(!b.includes('Lo que hay más lejos · ${reached} de ${rows.length}'),'no count of bands reached');assert.ok(!b.includes('Más lejos hay más.'),'nothing promised past the last band');}
 // --- English
-for(const e of bandEntries()){assert.ok(EN[e.name],e.name);if(e.notice)assert.ok(EN[e.notice],e.notice);if(e.hint)assert.ok(EN[e.hint],e.hint);}
-for(const k of ['Lo que hay más lejos','Llegaste a todo.','Lo más lejos · {}','Lanzar bengala','Marca este sitio','Volviste a tu bengala','Tablón de encargos','Encargo cumplido','{} da las gracias','Reto · Pulsa a tiempo en cada aro.','Reto · Pasa por cada aro.','Reto · Recoge las luces.','Radar de ritmo · con sonido','¡Gol!',
+for(const e of bandEntries()){assert.ok(EN[e.name],e.name);if(e.notice)assert.ok(e.notice.split(' · ').every(p=>EN[p]),e.notice);if(e.hint)assert.ok(EN[e.hint],e.hint);}
+for(const k of ['Lo que hay más lejos','Llegaste a todo.','Lo más lejos · {}','Lanzar bengala','Marca este sitio','Volviste a tu bengala','Tablón de encargos','Encargo cumplido','{} da las gracias','Reto · Pulsa a tiempo en cada aro.','Reto · Pasa por cada aro.','Reto · Recoge las luces.','Radar de ritmo · con sonido','Gol',
  '{} quiere oír un sonido raro.','{} perdió algo en la boya del km {}.','{} quiere ver un encuentro vivo.','{} quiere ver un reto ganado.',...A.CREATURES,...Object.values(A.ORDER_DO)])assert.ok(EN[k],k);
 // --- no random numbers, sparks only by the universe's rule, quiet notes, audio.js untouched
 const src=read('src/viaje-a.js')+read('src/viaje-a-model.js')+read('src/bandas.js')+read('src/bandas-model.js');

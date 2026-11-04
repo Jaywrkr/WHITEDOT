@@ -65,7 +65,7 @@ assert.equal(duoPlaces(ten).length,10);assert.deepEqual(duoPlaces(places([false,
 assert.deepEqual(duoCompare(null,5000),{kind:'first',gap:0});assert.deepEqual(duoCompare({ms:42000},40800),{kind:'record',gap:1200});
 assert.deepEqual(duoCompare({ms:42000},42040),{kind:'tie',gap:0});assert.deepEqual(duoCompare({ms:42000},43200),{kind:'near',gap:1200});assert.equal(duoCompare({ms:42000},60000).kind,'far');assert.equal(duoCompare({ms:1},0),null);
 assert.equal(gapText(1200),'1,2');assert.equal(gapText(12340),'12,3');
-assert.equal(resultLine({kind:'near',gap:1200}),'Casi: a 1,2 s.');assert.equal(resultLine({kind:'record',gap:5}),'¡Nueva marca!');assert.equal(resultLine({kind:'far',gap:15000}),'A 15,0 s de la marca.');
+assert.equal(resultLine({kind:'near',gap:1200}),'Casi: a 1,2 s.');assert.equal(resultLine({kind:'record',gap:5}),'Nueva marca.');assert.equal(resultLine({kind:'far',gap:15000}),'A 15,0 s de la marca.');
 assert.ok(!/fall|perd|mal\b/i.test([resultLine({kind:'first'}),resultLine({kind:'tie'}),resultLine({kind:'near',gap:1}),resultLine({kind:'far',gap:20000})].join(' ')),'no word of failure');
 assert.deepEqual(markLine({ms:42000}),{lead:'Marca de',time:'0:42',ask:'¿la superas?'});assert.equal(markLine(null),null);
 // The mark kept: the first, a better time; a slower one or a tie keeps the old mark.

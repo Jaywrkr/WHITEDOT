@@ -1,5 +1,5 @@
 """Lo que hay más lejos, tanda C (alpha.251) · the free World from 30 to 60 km on phone and desktop. Crossing 30 km tells
-«Aquí empiezan los púlsares.» once. A pulsar: its six flashes are dodged by stepping aside without sound (phone) or sent
+«Púlsares · Empiezan aquí.» once. A pulsar: its six flashes are dodged by stepping aside without sound (phone) or sent
 back by a pulse on time at each strike with sound (desktop), a scene of its own (no living encounter meanwhile), and its
 run pays 15 ✦ by the universe's rule. A layered asteroid dug with pulses, layer by layer (kept half dug), to its core:
 a find and 12 ✦. A zip line laid by a pulse between two buoys of 41 km you stepped on, ridden back in a few seconds.
@@ -67,7 +67,7 @@ try:
    mark('1')
    go(page,290000,40000);page.wait_for_timeout(300);j=bandas(page);assert 'pulsar' not in j['rows'],j;assert ('Pulsars' if en else 'Púlsares') not in j['text'],'no spoiler';page.evaluate(HIDE)
    go(page,303000,40000);page.wait_for_function("!!__r.bandState().book.seen.pulsar",timeout=8000)
-   want='Pulsars start here.' if en else 'Aquí empiezan los púlsares.';wait_toast(page,want)
+   want='Pulsars · They start here.' if en else 'Púlsares · Empiezan aquí.';wait_toast(page,want)
    go(page,301000,40000);go(page,304000,40000);page.wait_for_timeout(300);assert page.evaluate(f"window.__toasts.filter(t=>t.includes({want!r})).length")==1,'once'
    # The notices of the farther bands of the batch are tested by the model (tests/viaje_c.mjs): given here, so they do not
    # hold the notice lane while the steps below teleport across them.

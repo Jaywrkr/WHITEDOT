@@ -18,7 +18,7 @@ assert.ok(Object.isFrozen(M.BAND_ITEMS)&&Object.isFrozen(M.BAND_ITEMS[0]));
 assert.deepEqual((await import('../src/lejos-b.js')).BAND_ITEMS,M.BAND_ITEMS,'the game module exposes the same list');
 // --- registered in the bands of tanda A (bandas-model.js): each with its notice (in English too), batch B, after A's bands
 const B=await import('../src/bandas-model.js');
-for(const b of M.BAND_ITEMS){const e=B.bandEntry(b.id);assert.ok(e&&e.km===b.km&&e.name===b.name&&e.batch==='B'&&e.notice===b.notice,b.id);assert.ok(EN[e.notice],e.notice);}
+for(const b of M.BAND_ITEMS){const e=B.bandEntry(b.id);assert.ok(e&&e.km===b.km&&e.name===b.name&&e.batch==='B'&&e.notice===b.notice,b.id);assert.ok(e.notice.split(' · ').every(p=>EN[p]),e.notice);}
 assert.deepEqual(B.bandGroups().filter(g=>g.km>=10).map(g=>g.km),[10,12,15,20,25],'B starts at 10 km, where tanda A ends');
 {const q=B.normalizeBandas(null);assert.deepEqual(B.noteFar(q,16).filter(e=>e.batch==='B').map(e=>e.id),['region-apagada','habitat','cancion-del-cielo'],'notices once, nearest first');assert.deepEqual(B.noteFar(q,16),[]);}
 // --- places: fixed, each from its band on and beyond, none near a rest satellite, none before 10 km

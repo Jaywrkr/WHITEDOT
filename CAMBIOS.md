@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.259** en la rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394), con `jay/coherencia-t0` (alpha.258, PR #395) fusionada: depende de T0. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.261** en la rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0 dentro): depende de T1. T2 (alpha.260) va en paralelo en `jay/coherencia-t2`. Las entradas describen su revisión, no certifican producción.
+
+
+## Avisos y oro (coherencia T4) · 2.3.0-alpha.261
+
+Rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0; dependencia explícita). Plan de coherencia, tanda T4, con las doce decisiones aprobadas por Jay. Un solo estilo de aviso y la regla del oro. Guía: [Luz común](docs/MUNDO.md#luz-común).
+
+- **Un aviso: «Nombre · una frase.»** Sin «¡» ni «!» en ningún texto del juego: la caja ya no dice «¡Zum! Eres cometa» sino «Cometa · Corre y suena.»; «récord nuevo», «Gol», «Nueva marca.», «Ya». «Poder renovado» pasa a «Cometa · Poder renovado.».
+- **Una caja, un aviso.** Mientras su tarjeta se ve, los HUD del poder y de la sorpresa esperan debajo; después, un solo reloj (el del poder). La sorpresa que te movió conserva su «Volver». Los logros de la caja (`caja1`, `caja5`, `poder_*`) se guardan sin leer en la Bitácora, sin aviso detrás de la tarjeta (`quietAchievements(ids)`).
+- **«Aquí empiezan…» se va.** Cada banda dice «Radares de ritmo · Empiezan aquí.». Un aviso por cruce: el de lo más lejano; lo demás espera, callado, en la Bitácora. Entre dos, 12 s de juego como mínimo (antes 4,5 s, y una cola). Límite: sale al cruzar el km, no al ver la cosa.
+- **El narrador se ríe con el niño, no de él.** Reescritas 24 líneas que se burlaban o guiñaban a adultos («dejaste atrás tu dignidad», «Tus vecinos te odian», «Muy inútil», alquiler, pasaporte, industria musical…). La voz juguetona se queda.
+- **Oro solo para lo ganado.** Una regla en el aviso: `.toast em` es blanco y `#toast[data-earned="true"] em` dorado. La cola marca `data-earned` con la categoría `ganado` u `options.earned` (logros, colores, compras, tarjetas nuevas, muestras únicas y lo ya marcado). En blanco: «✦ 0 chispas» (clase `empty`), el HUD del poder, `#routeAuto` pulsado, `.fxpad i`, la línea del narrador, la flecha y el nombre de la Brújula, el pincel, el brazo del Campo, la reliquia aún sin ganar (antes cian y lila), las casas apagadas de los campamentos, el festival de luces, el anillo del evento Eclipse, la pista de las travesuras, el destello devuelto del púlsar y el aro del bucle. Fuera la regla vacía `.place-narrator`.
+- **Luna blanca** (antes «Luna de oro»): la rareza mítica es blanca, con su regla y su rumor. El id `luna` y la muestra guardada no cambian.
+- **Sin cian ni lila.** `CARD_TIERS` es una sola tabla (`TIER_INK` para el Refugio y Tu cubo): una tarjeta del libro es ganada, en dorado; el nivel se dice con su nombre. El bucle (`jam.js`) y el resumen del Atlas, en blanco.
+- **Lienzo a 12 px como mínimo** (45 llamadas de 9–11 px), salvo en los archivos de borde de T2 (`viaje-a/c/d`, `lejos-b`, `recorrer`, `descubrir`, `vida`).
+- **Se queda:** el pop dorado al abrir una caja y su tarjeta (Visual 1, aprobado), ★, ✦ ganadas, el cubo dorado y lo completo. Sin cambios en `audio.js`, guardados, recompensas ni ids.
+- **Pruebas.** Nuevas `tests/avisos-oro.mjs` (sin «¡» en los textos legibles, la caja, el narrador, las bandas y la regla del oro en CSS y lienzo) y `tests/avisos_oro_smoke.py` (390×844: una caja, un aviso y un reloj; «✦ 0» blanco y «✦ 5» dorado; nombre cotidiano blanco y ganado dorado; un aviso de banda por cruce). Actualizadas las que leían los textos viejos (`viaje_a/c/d`, `lejos_b`, `luca`, `fewer-counters` y sus recorridos). Capturas antes y después en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Las marcas de borde y la flecha de la bandada son de T2. El resto de textos, nombres y biomas, de T5 y T6.
 
 
 ## El Escáner, núcleo (coherencia T1) · 2.3.0-alpha.259

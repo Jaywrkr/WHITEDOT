@@ -20,11 +20,11 @@ export const VIAJE_C_VERSION=1;
 const TAU=Math.PI*2;
 // ---------- the band: what starts where ----------
 export const BAND_C=Object.freeze([
- registerBand({id:'pulsar',km:30,name:'Púlsares',notice:'Aquí empiezan los púlsares.',batch:'C'}),
- registerBand({id:'asteroide',km:35,name:'Asteroides por capas',notice:'Aquí empiezan los asteroides por capas.',batch:'C'}),
- registerBand({id:'tirolina',km:40,name:'Tirolinas de luz',notice:'Aquí empiezan las tirolinas de luz.',batch:'C'}),
- registerBand({id:'polvo',km:45,name:'Mares de polvo',notice:'Aquí empiezan los mares de polvo.',batch:'C'}),
- registerBand({id:'kit',km:50,name:'Kit de herramientas',notice:'Aquí empiezan las herramientas.',batch:'C'}),
+ registerBand({id:'pulsar',km:30,name:'Púlsares',notice:'Púlsares · Empiezan aquí.',batch:'C'}),
+ registerBand({id:'asteroide',km:35,name:'Asteroides por capas',notice:'Asteroides por capas · Empiezan aquí.',batch:'C'}),
+ registerBand({id:'tirolina',km:40,name:'Tirolinas de luz',notice:'Tirolinas de luz · Empiezan aquí.',batch:'C'}),
+ registerBand({id:'polvo',km:45,name:'Mares de polvo',notice:'Mares de polvo · Empiezan aquí.',batch:'C'}),
+ registerBand({id:'kit',km:50,name:'Kit de herramientas',notice:'Kit de herramientas · Empieza aquí.',batch:'C'}),
 ]);
 // ---------- sites (cells of hashKey; a site under its band does not exist) ----------
 export const PULSAR=Object.freeze({cell:9000,share:.5,fromKm:30,margin:.25});

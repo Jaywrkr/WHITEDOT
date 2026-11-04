@@ -62,7 +62,7 @@ Object.assign(SHAPES,{
 // Batch 3 · hacer: what the task asks for shines in the biome's colour on a dark disc (as the chase prey since alpha.228);
 // numbers say the order; the next step has a white ring and the white arrow points to it; what is done turns white.
 function spot(c,x,y,color,r=9,lit=false){glow(c,x,y,r*2.6,color,lit?.5:.32);c.globalAlpha=.6;c.fillStyle='#000';c.beginPath();c.arc(x,y,r+2,0,TAU);c.fill();c.globalAlpha=lit?1:.8;c.strokeStyle=lit?'#ffffff':color;c.lineWidth=1.5;ring(c,x,y,r);c.lineWidth=1;c.strokeStyle=c.fillStyle=color;}
-function num(c,x,y,n,color='#ffffff'){c.save();c.globalAlpha=.95;c.fillStyle=color;c.font='10px "Geist Mono",monospace';c.textAlign='center';c.textBaseline='middle';c.fillText(String(n),x,y);c.restore();}
+function num(c,x,y,n,color='#ffffff'){c.save();c.globalAlpha=.95;c.fillStyle=color;c.font='12px "Geist Mono",monospace';c.textAlign='center';c.textBaseline='middle';c.fillText(String(n),x,y);c.restore();}
 // A dashed edge (a destination or an area), white when it is where to go.
 function dashed(c,x,y,r,t,color,alpha=.6){c.save();c.strokeStyle=color;c.globalAlpha=alpha;c.lineWidth=1.5;c.setLineDash([6,8]);c.lineDashOffset=-t*12;ring(c,x,y,r);c.restore();}
 // A partial ring: how far a step has gone (a mote taking root, a sprout drinking, a pulsar warming, a sprout drying).
@@ -139,8 +139,8 @@ export function drawLive(r,s,{color,reduced=false,line='',title='',hint='',summa
  // Words, one place under the cube: the notice (its name and what to do, then its line), the goodbye, the summary.
  // «Textos en el universo» hides them all (universe-texts.js); everything drawn above stays.
  const ty=Math.min(r.H-135,r.H/2+130),width=r.W-32;c.textAlign='center';
- if(title){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(title,r.W/2,ty,width);if(hint){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='11px "Geist Mono",monospace';c.fillText(hint,r.W/2,ty+18,width);}}
- else if(line){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='11px "Geist Mono",monospace';c.fillText(line,r.W/2,ty,width);}
+ if(title){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(title,r.W/2,ty,width);if(hint){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='12px "Geist Mono",monospace';c.fillText(hint,r.W/2,ty+18,width);}}
+ else if(line){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='12px "Geist Mono",monospace';c.fillText(line,r.W/2,ty,width);}
  else if(summary){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(summary,r.W/2,ty,width);}
  c.restore();
 }

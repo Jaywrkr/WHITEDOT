@@ -2,7 +2,7 @@
 // the free World after the Journey, never in a chapter, a round, a finale, an activity or the Refugio. The model and its
 // API are in bandas-model.js. Here:
 // · The farthest distance from the origin you reached (S.bandas.far), and a quiet notice the first time you cross where
-//   something new starts («Aquí empiezan los radares de ritmo.»), one at a time, never during a scene.
+//   something new starts («Radares de ritmo · Empiezan aquí.»), one per crossing, never during a scene.
 // · The Bitácora page «Lo que hay más lejos»: the bands reached with their things; the ones missing as «?» with their km.
 // · r.bandAttach(id, {busy, mapPoints, line}): each batch's runtime attaches what the rest of the game asks of it, so no
 //   other module has to learn each batch: r.bandBusy() (a scene of a batch plays: encounters, figures, sounds, buoys
@@ -12,7 +12,11 @@ import {openSurface} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {BANDAS_VERSION,normalizeBandas,bandasReadOnly,noteFar,bandRows,bandEntries,bandEntry,kmOf,formatKm} from './bandas-model.js';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export const NOTICE_GAP=4.5;
+// T4 (Kubono coherente): no flood of «Aquí empiezan…». One notice per crossing, for what starts where you are now (the
+// farthest new band; the others are silent and wait in the Bitácora), «Nombre · Empiezan aquí.», and at least
+// NOTICE_GAP s of play between two. A newer crossing replaces a notice still waiting.
+export const NOTICE_GAP=12;
+export function bandNoticePick(news){if(!news?.length)return null;const top=Math.max(...news.map(e=>e.km));return news.find(e=>e.km===top)||null;}
 export function initialize(r){
  const $=id=>r.$?.(id)||globalThis.document?.getElementById(id)||null;
  const attached=new Map();let owner=null,clock=0,queue=[],shownAt=-Infinity,notices=0,seeding=false;
@@ -33,7 +37,7 @@ export function initialize(r){
   // not get every notice at once). The next km you walk tells you as usual.
   if(seeding){seeding=false;if(km>q.far){noteFar(q,km,'');r.save?.();}return;}
   if(km>q.far+.005){const before={far:q.far,seen:{...q.seen}},news=noteFar(q,km,today());
-   if(news.length){if(r.save?.()===false){q.far=before.far;q.seen=before.seen;}else queue.push(...news);}}
+   if(news.length){if(r.save?.()===false){q.far=before.far;q.seen=before.seen;}else{const pick=bandNoticePick(news);if(pick)queue=[pick];}}}
   // One notice at a time, never over a scene; with «Textos del universo» off, nothing is said (the page still knows).
   // Its own category in the notice lane, so an everyday notice arriving after it does not take its place.
   if(queue.length&&clock-shownAt>=NOTICE_GAP&&!scene()){const e=queue.shift();shownAt=clock;if(r.S.universeTexts!==false){notices++;r.toast?.(e.notice,{level:2,ttl:30000,category:'lejos',coalesce:false});}}

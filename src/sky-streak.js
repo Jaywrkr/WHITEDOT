@@ -75,7 +75,7 @@ export function initialize(runtime){
   const a=toScreen(0,0),z=toScreen(1000,0),floor=toScreen(0,240).y,top=view.top+6;
   const above={x:Math.max(view.left+16,a.x+14),y:top,r:Math.min(view.right-16,z.x-14),b:a.y-12},side={x:z.x+24,y:Math.max(top,a.y),r:view.right-16,b:Math.min(view.bottom-8,floor)};
   const fits=(q,w,h)=>q.r-q.x>=w&&q.b-q.y>=h,box=fits(above,120,34)?above:fits(side,140,34)?side:fits(above,120,14)?above:null;if(!box)return;
-  c.save();c.font='10px "Geist Mono", monospace';c.letterSpacing='1px';c.textAlign='left';
+  c.save();c.font='12px "Geist Mono", monospace';c.letterSpacing='1px';c.textAlign='left';
   const text=skyCaption(s,runtime.S.todayKey),tw=c.measureText(text).width,left=box.x,right=box.r,bottom=box.b,btop=box.y;
   const voice=runtime.$?.('voice'),vr=voice&&!voice.hidden&&voice.classList.contains('on')?voice.getBoundingClientRect():null;
   const room=bottom-btop>=34,cap={x:left,y:btop+11,w:tw,h:12},clear=r=>!vr||!(r.x<vr.right&&vr.left<r.x+r.w&&r.y-r.h<vr.bottom&&vr.top<r.y+2);

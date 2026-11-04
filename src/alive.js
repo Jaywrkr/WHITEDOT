@@ -87,7 +87,7 @@ export function initialize(runtime){
  function drawMemory(cx,W,H,s,ox,oy){
   cx.fillStyle='#fff';
   for(const [x,y] of s.steps||[]){const px=x+ox,py=y+oy;if(px<-10||py<-10||px>W+10||py>H+10)continue;cx.globalAlpha=.1;cx.fillRect(px-1,py-1,2,2);}
-  for(const c of s.camps||[]){const px=c[0]+ox,py=c[1]+oy;if(px<-30||py<-30||px>W+30||py>H+30)continue;cx.globalAlpha=.35;cx.strokeStyle=runtime.GOLD;cx.lineWidth=1;cx.beginPath();cx.moveTo(px-8,py);cx.lineTo(px,py-8);cx.lineTo(px+8,py);cx.lineTo(px+8,py+8);cx.lineTo(px-8,py+8);cx.closePath();cx.stroke();}
+  for(const c of s.camps||[]){const px=c[0]+ox,py=c[1]+oy;if(px<-30||py<-30||px>W+30||py>H+30)continue;cx.globalAlpha=.35;cx.strokeStyle='#ffffff';cx.lineWidth=1;cx.beginPath();cx.moveTo(px-8,py);cx.lineTo(px,py-8);cx.lineTo(px+8,py);cx.lineTo(px+8,py+8);cx.lineTo(px-8,py+8);cx.closePath();cx.stroke();}
   cx.globalAlpha=1;
  }
  Object.defineProperties(runtime,{

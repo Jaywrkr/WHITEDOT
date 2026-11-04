@@ -176,12 +176,12 @@ Pedido de Jay (4 de noviembre de 2026): veinte ideas nuevas repartidas por dista
 |---|---|---|
 | 0 km | Bengala | — |
 | 500 m | Interruptores de reto (aros) | — |
-| 1 km | Radares de ritmo | «Aquí empiezan los radares de ritmo.» |
-| 2 km | Pelotas de luz | «Aquí empiezan las pelotas de luz.» |
-| 5 km | Retos de luces (interruptores de luces) | «Aquí empiezan los retos de luces.» |
-| 10 km | Tablones de encargos (junto a cada satélite) | «Aquí empiezan los tablones de encargos.» |
+| 1 km | Radares de ritmo | «Radares de ritmo · Empiezan aquí.» |
+| 2 km | Pelotas de luz | «Pelotas de luz · Empiezan aquí.» |
+| 5 km | Retos de luces (interruptores de luces) | «Retos de luces · Empiezan aquí.» |
+| 10 km | Tablones de encargos (junto a cada satélite) | «Tablones de encargos · Empiezan aquí.» |
 
-- **Bandas.** Se mide la distancia al origen, como las boyas (decisión 5). Lo más lejos que llegaste se guarda (`S.bandas.far`). La primera vez que cruzas el km donde empieza algo con aviso, sale una línea («Aquí empiezan los radares de ritmo.»), una cada 4,5 s como mucho, nunca durante una escena y nunca con «Textos del universo» apagados. Su categoría propia en la cola de avisos (`lejos`) evita que otro aviso cotidiano la sustituya. **Decisión:** a 5 km no empezaba nada de la lista, así que allí empiezan los interruptores de luces; a 500 m y 0 km no hay aviso: el interruptor y la bengala se encuentran solos.
+- **Bandas.** Se mide la distancia al origen, como las boyas (decisión 5). Lo más lejos que llegaste se guarda (`S.bandas.far`). La primera vez que cruzas el km donde empieza algo con aviso, sale una línea («Radares de ritmo · Empiezan aquí.»): una por cruce, la de lo más lejano (T4, alpha.261; lo demás espera, callado, en la Bitácora), con 12 s de juego como mínimo entre dos, nunca durante una escena y nunca con «Textos del universo» apagados. Su categoría propia en la cola de avisos (`lejos`) evita que otro aviso cotidiano la sustituya. **Decisión:** a 5 km no empezaba nada de la lista, así que allí empiezan los interruptores de luces; a 500 m y 0 km no hay aviso: el interruptor y la bengala se encuentran solos.
 - **Bitácora** (Mapa › «Lo que hay más lejos»; desde alpha.258 sin cifra: contaba bandas alcanzadas, no cosas encontradas). «Lo más lejos · 3 km». Cada banda alcanzada con sus cosas y una línea («2 km · Pelotas de luz · 1 gol»); las que faltan, solo su km y «?» («5 km · ?»), sin decir qué hay. Con todas alcanzadas: «Llegaste a todo.».
 - **Interruptor de reto** (Mario Kart World). Un cuadrado pequeño con un botón, fijo (`hashKey`, uno cada ~0,7 km², desde 500 m; ninguno a menos de 50 m de un portal ni del centro del anillo). Tocarlo (pasar a 10 m o un pulso a 30 m) empieza un reto de 30 s sin menú: arriba, «Reto · 0:24 · 2 de 5». **Aros:** cinco, en orden, a 16–28 m; el siguiente brilla y los demás se ven tenues. Con sonido, un pulso a tiempo dentro del aro; sin sonido, pasar por él (como la chispa salvaje y los meteoros). **Luces** (desde 5 km, la mitad de los interruptores): ocho luces a 12–42 m, en cualquier orden, pasando o con un pulso cerca. Alejarse 90 m o el reloj lo terminan y paga lo hecho. Se puede repetir; tras uno, el mismo interruptor espera a que te alejes.
 - **Radar de ritmo** (Forza Horizon). Un poste con una antena (uno cada ~1,3 km², desde 1 km) y su zona de 30 m en discontinua. Dentro, con sonido, cuenta tu racha de pulsos a tiempo: un pulso a destiempo la corta. Encima, la racha y «Récord · 9». Al salir: «Radar de ritmo · racha 7 · ¡récord!». Sin sonido no cuenta y lo dice: «Radar de ritmo · con sonido». El récord se guarda por radar.
@@ -212,11 +212,11 @@ Tanda C del mismo pedido (4 de noviembre de 2026, alpha.251, rama `jay/viaje-c`)
 
 | Desde | Qué | Aviso al cruzar |
 |---|---|---|
-| 30 km | Púlsares (devolver la nota) | «Aquí empiezan los púlsares.» |
-| 35 km | Asteroides por capas | «Aquí empiezan los asteroides por capas.» |
-| 40 km | Tirolinas de luz | «Aquí empiezan las tirolinas de luz.» |
-| 45 km | Mares de polvo | «Aquí empiezan los mares de polvo.» |
-| 50 km | Kit de herramientas | «Aquí empiezan las herramientas.» |
+| 30 km | Púlsares (devolver la nota) | «Púlsares · Empiezan aquí.» |
+| 35 km | Asteroides por capas | «Asteroides por capas · Empiezan aquí.» |
+| 40 km | Tirolinas de luz | «Tirolinas de luz · Empiezan aquí.» |
+| 45 km | Mares de polvo | «Mares de polvo · Empiezan aquí.» |
+| 50 km | Kit de herramientas | «Kit de herramientas · Empieza aquí.» |
 
 - **Púlsar** (Clair Obscur y Saros; idea 96 del catálogo). Una estrella pequeña con cuatro rayos y su zona de 35 m en discontinua (una cada ~1,6 km²). Al entrar empieza una tanda de seis destellos, una escena propia. Cada destello avisa: un punto de luz viaja del púlsar hacia el cubo y un aro se cierra donde va a dar. **Con sonido** se lanza en un compás de la música y da en el siguiente (`MU.sq`); un pulso a tiempo a 0,32 s del golpe lo devuelve: vuelve al púlsar como una línea dorada y suena una nota del acorde que sube con la racha. **Sin sonido** cada destello apunta a donde estabas al lanzarlo: apartarse 9 m antes del golpe lo esquiva y cuenta igual. Un destello que da no hace daño: solo corta la racha. Arriba, «Racha · 3 · 4 de 6». Alejarse 60 m la termina. **Decisión:** sin violencia; no hay vida, golpe ni derrota, solo una racha de ritmo.
 - **Asteroide por capas** (Donkey Kong Bananza). Una roca de 3 a 5 capas, cada una de su color (gris, ocre, óxido, hielo, musgo o violeta; el anillo interior deja ver la siguiente). Cada pulso a 28 m es un golpe (a tiempo, dos), con sus grietas; las capas hondas piden tres golpes. Al romper una capa suena una nota más grave; en el núcleo, tres notas y un hallazgo: uno de siete núcleos («Núcleo de hielo · nuevo»). Las capas rotas se guardan: un asteroide a medias sigue a medias. Uno excavado queda como un hueco con un punto de su color.
@@ -239,11 +239,11 @@ Pedido de Jay (4 de noviembre de 2026, alpha.252, rama `jay/viaje-d`, desde `jay
 
 | Desde | Qué | Aviso al cruzar |
 |---|---|---|
-| 60 km | Portales de otra regla | «Aquí empiezan los portales de otra regla.» |
-| 65 km | Estación del día | «Aquí empieza la estación del día.» |
-| 70 km | Barrido a tempo (dentro de cada satélite) | «Aquí los satélites tienen un barrido a tempo.» |
-| 80 km | Nidos de crías | «Aquí empiezan los nidos de crías.» |
-| 90 km | Eclipses que cambian | «Aquí los eclipses cambian las reglas.» |
+| 60 km | Portales de otra regla | «Portales de otra regla · Empiezan aquí.» |
+| 65 km | Estación del día | «Estación del día · Empieza aquí.» |
+| 70 km | Barrido a tempo (dentro de cada satélite) | «Barrido a tempo · Empieza aquí.» |
+| 80 km | Nidos de crías | «Nidos de crías · Empiezan aquí.» |
+| 90 km | Eclipses que cambian | «Eclipses que cambian · Empiezan aquí.» |
 
 - **Portal de otra regla** (Split Fiction). Una puerta pequeña, fija (`bandSiteAt`, una cada ~4 km², nunca a menos de 70 m de un satélite). Tocarla (12 m) cambia durante 2 min cómo se mueve el cubo, según su regla: **Órbita** (el cubo gira solo alrededor de un punto; el mando hacia fuera o hacia dentro cambia el radio), **Rebote** (el cubo conserva su impulso y rebota más rápido en cinco postes) o **Hielo** (acelera despacio y sigue deslizando al soltar). Dentro esperan seis luces, que se recogen pasando o con un pulso cerca. Un marco fino rodea la pantalla mientras dura. Termina con las seis, con el reloj o al alejarse 70 m; entonces todo se mueve como antes. El cubo no cambia de tamaño. **Cómo:** `render.js` (`worldStep`) pregunta `runtime.motionRule(dx, dy, dt, velocidad)` antes de mover el cubo; fuera de un portal devuelve `null` y el movimiento es el de siempre. La órbita sigue desde donde está el cubo, así que un salto del mundo se respeta.
 - **Estación del día** (Blue Prince). Una estación orbital fija (una cada ~7 km²). Tocarla abre su hoja (`#mViajeD`). Cinco salas: en cada una eliges la siguiente entre tres puertas, siempre con al menos un reto y un premio. Retos: **Sala del compás** (tocar «Ahora» con la cuarta luz, que va al pulso de la música, tres veces), **Sala de memoria** (repetir el orden de tres o cuatro luces) y **Sala de luces** (tocar tres de cinco luces antes de que se apaguen). Premios: **Mirador**, **Jardín orbital** y **Archivo**, cada uno un sello. **Se rehace cada día real:** las puertas salen de `hashKey` del mundo, la fecha, la sala y lo ya elegido, así que cada elección cambia lo que viene. La estación de hoy es la misma en todas las estaciones; lo jugado se guarda y se sigue en otra. Fallar un reto no castiga: se sigue. «Salir» (o Escape) siempre. Los botones no suenan.
@@ -265,7 +265,7 @@ Pruebas: `tests/viaje_d.mjs` (registro y avisos, sitios desde su km y sin fin, l
 Pedido de Jay (4 de noviembre de 2026, alpha.249, rama `jay/viaje-b`, desde `jay/secretos-2` `e16d9f7`, alpha.247, PR #386 sin fusionar: dependencia explícita), con `jay/viaje-a` unida (alpha.248, PR #387 sin fusionar: sus [bandas](#lo-que-hay-más-lejos)). Veinte ideas repartidas por distancia al origen, para que llegar más lejos sea en sí un premio; esta es la tanda B, la banda de 10 a 30 km. Cada cosa aparece desde su km y sigue apareciendo más allá. Solo en el Mundo libre tras el Viaje, en la superficie (la fusión, en el Refugio). Código: `src/lejos-b-model.js` (reglas, sin página) y `src/lejos-b.js` (juego, dibujo, sonido, Refugio, mapa y Bitácora).
 
 - **Dónde.** El mundo en celdas de 800 m; tres de cada cinco tienen una cosa (`hashKey` del mundo y la celda), de un tipo cuya banda alcanza ese punto, lejos del borde de la celda y a 120 m o más de un satélite de descanso. Nada del mapa se mueve. Desde 800 m, la más cercana de cada tipo sin hacer deja una marca blanca en el borde.
-- **En las bandas.** `BAND_ITEMS` (exportado por los dos módulos) lista cada cosa con su km de inicio: `region-apagada` 10, `habitat` 12, `cancion-del-cielo` 15, `fusion-de-sonidos` 20 y `postal` 25, con su nombre. `lejos-b-model.js` las registra con `registerBand` (tanda `B`), cada una con su aviso: 10 km «Aquí empiezan las regiones apagadas.», 12 «Aquí empiezan los hábitats.», 15 «Aquí empiezan las canciones del cielo.», 20 «La fusión de sonidos te espera en el Refugio.» y 25 «Aquí empiezan las postales de buscar.». En Bitácora › «Lo que hay más lejos», cada una tiene su línea («2 revividas», «1 criatura», «3 cantadas», «1 fusión», «1 postal»; sin nada, una pista). `lejos-b.js` engancha su escena y sus líneas con `r.bandAttach`. Sus puntos del mapa siguen siendo suyos (anillos y hábitats, no «?»). A 10 km salen dos avisos seguidos: tablones y regiones apagadas.
+- **En las bandas.** `BAND_ITEMS` (exportado por los dos módulos) lista cada cosa con su km de inicio: `region-apagada` 10, `habitat` 12, `cancion-del-cielo` 15, `fusion-de-sonidos` 20 y `postal` 25, con su nombre. `lejos-b-model.js` las registra con `registerBand` (tanda `B`), cada una con su aviso: 10 km «Región apagada · Empieza aquí.», 12 «Hábitat · Empieza aquí.», 15 «Canción del cielo · Empieza aquí.», 20 «Fusión de sonidos · Te espera en el Refugio.» y 25 «Postal de buscar · Empieza aquí.» (T4, alpha.261). En Bitácora › «Lo que hay más lejos», cada una tiene su línea («2 revividas», «1 criatura», «3 cantadas», «1 fusión», «1 postal»; sin nada, una pista). `lejos-b.js` engancha su escena y sus líneas con `r.bandAttach`. Sus puntos del mapa siguen siendo suyos (anillos y hábitats, no «?»). A 10 km salen dos avisos seguidos: tablones y regiones apagadas.
 - **Región apagada (10 km, Sword of the Sea).** Un círculo de 60 m gris y quieto: lo de debajo pierde el color (mezcla `saturation` del lienzo), un borde discontinuo y la música baja unos 10 dB. Cuatro brasas grises. **Con sonido**, pasar junto a una y pulsar a tiempo la enciende; **sin sonido**, basta pasar. Las cuatro la reviven para siempre: vuelven su color, unos peces de luz que la recorren y la música; un acorde suave al revivir y una nota cada cuatro compases dentro. Queda en el [Mapa del universo](#mapa-del-universo) como un anillo de su color. Las brasas encendidas se guardan.
 - **Cómo se apaga la música.** Por `runtime.musicDuck`, la línea de `audio.js` que Jay autorizó en alpha.246 para los satélites: toda la salida a `DEAD_DUCK` (0,3), por igual, en 0,8 s; al revivir (o al salir) vuelve a 1. `audio.js` no cambia. Ninguna región apagada toca un satélite, así que nunca se pisan.
 - **Hábitat (12 km, Pokopia).** Un nido vacío con dos o tres huecos y, a 18–38 m, sus elementos del espacio: roca, agua o luz. Pasar por uno lo manda al nido. Juntos traen una criatura según la mezcla: Tortuga de cometa (roca y agua), Luciérnaga de piedra (roca y luz), Medusa de luz (agua y luz) o Ballena de bolsillo (las tres). Vive allí. Al volver (tras alejarte 250 m o en otra sesión) **te reconoce**: viene hacia el cubo, canta dos notas y cuenta la visita («Te reconoce · Medusa de luz · 3 visitas»).
@@ -391,6 +391,22 @@ La ronda que completa los once desemboca sola en el final (D5): la escena se abr
 Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. Después, la pantalla pasa a negro opaco y la hoja sale encima (Jay, alpha.232, G1): sus ★ (dorado solo lo ganado) y un solo botón blanco, el que sigue: «Seguir hacia …» o, sin siguiente lugar en el camino, «Otra vez». Tocar el negro no la cierra ni mueve el cubo; los avisos esperan. Los capítulos del Viaje no usan esta hoja y la ronda Libre no tiene. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final (la versión maestra llega así). Efectos de UI silenciosos.
 
 ## Luz común
+
+### Avisos y oro (coherencia T4, alpha.261)
+
+Rama `jay/coherencia-t4`, desde `jay/coherencia-t1` (alpha.259, con T0). Un solo estilo de aviso y una sola regla del oro.
+
+- **El aviso.** «Nombre · una frase.», en blanco, por la cola única (`notice-lane.js`). Sin «¡» ni «!» en ningún texto legible. La caja nombra su poder: «Cometa · Corre y suena.» (`BOX_LINES`, `boxLine`). Las bandas dicen «Nombre · Empiezan aquí.», una por cruce.
+- **Una caja, un aviso.** Su tarjeta tapa los HUD del poder y de la sorpresa; después se ve un reloj, el del poder (la sorpresa que te movió conserva «Volver»). Sus logros esperan sin leer en la Bitácora (`quietAchievements(ids)`).
+- **El narrador** se ríe con el niño, nunca de él, y sin guiños de adulto. Habla en la Bitácora, en blanco tenue.
+- **El oro.** Solo lo ganado y que se queda: ★, ✦ ganadas, colores, compras, tarjetas del libro, logros, páginas y lo completo. En el aviso, una regla: el nombre (`<em>`) es blanco y `#toast[data-earned="true"] em` dorado; la cola marca `data-earned` con la categoría `ganado` u `options.earned`. «✦ 0» va en blanco tenue (`.spark-count.empty`).
+- **En blanco:** estados (`#routeAuto` pulsado, `.fxpad i`), punteros (Brújula, pista de las travesuras), poderes de una caja (pincel, Campo, HUD del poder), la reliquia aún sin ganar, las casas apagadas de los campamentos, el festival de luces, el anillo del evento Eclipse, el destello devuelto del púlsar y el bucle. La rareza mítica es la **Luna blanca** (id `luna`).
+- **Sin cian ni lila.** `CARD_TIERS` es la única tabla de tinta de tarjetas (`TIER_INK`), en dorado: el nivel se lee en su nombre.
+- **Lienzo:** 12 px como mínimo. Quedan en 10–11 px las etiquetas de los archivos de borde (`viaje-a/c/d`, `lejos-b`, `recorrer`, `descubrir`, `vida`), para T2.
+- **Se queda dorado:** el pop al abrir una caja y su tarjeta (Visual 1), el golpe a tiempo y lo ganado de cada tanda.
+- **Límites:** el aviso de banda sale al cruzar el km, no al ver la cosa. La flecha dorada de la bandada y las marcas de borde son de T2. Pruebas: `tests/avisos-oro.mjs` y `tests/avisos_oro_smoke.py`.
+
+### Visual 1
 
 Visual 1, aprobado por Jay (4 de noviembre de 2026, alpha.253, rama `jay/visual-1`, desde `main` `c8842cd`; une `jay/viaje-d`, alpha.252, con las tandas A–D): tandas 0 y 1 de la auditoría visual. Que el mundo se vea más acabado sin subir el peso ni el trabajo por fotograma. Nada cambia de mecánica, posición, guardado ni sonido; el cubo no crece.
 

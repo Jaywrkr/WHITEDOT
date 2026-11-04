@@ -34,8 +34,8 @@ try:
    def gold(label):
     page.wait_for_timeout(600);page.evaluate('document.fonts.ready');bad=page.evaluate(GOLD,[base64.b64encode(page.screenshot()).decode(),STARS])
     assert not bad,(label,width,'gold outside ★ and ✦',bad[:6])
-   page.evaluate("()=>{"+hide+";__r.S.lugares.stars.lago=[true,true,false];__r.S.lugares.seen.lago=true;if(__r.journeyMode()!=='libre')__r.setJourneyMode('libre');__r.hud?.();}")
-   # The HUD: ★ of 33, ✦ and places of 11, one size and weight, ending on the same x when the delta is empty.
+   page.evaluate("()=>{"+hide+";__r.S.lugares.stars.lago=[true,true,false];__r.S.lugares.seen.lago=true;__r.S.sparks=Math.max(5,__r.S.sparks||0);if(__r.S.sparkEconomy)__r.S.sparkEconomy.sparks=Math.max(5,__r.S.sparkEconomy.sparks||0);if(__r.journeyMode()!=='libre')__r.setJourneyMode('libre');__r.hud?.();}")
+   # The HUD: ★ of 33, ✦ (gold once earned; «✦ 0» is white since T4) and places of 11, one size and weight, ending on the same x when the delta is empty.
    page.wait_for_function("['hudStars','sparkCount','hudPlaces'].every(id=>document.getElementById(id).getClientRects().length)&&document.getElementById('sparkGain').textContent===''",timeout=10000)
    hud=page.evaluate("""()=>['hudStars','sparkCount','hudPlaces'].map(id=>{const e=document.getElementById(id),t=id==='sparkCount'?document.getElementById('sparkTotal'):e,r=t.getBoundingClientRect(),s=getComputedStyle(t);return {id,right:r.right,height:r.height,size:s.fontSize,weight:s.fontWeight,color:s.color};})""")
    assert max(h['right'] for h in hud)-min(h['right'] for h in hud)<=1,hud
