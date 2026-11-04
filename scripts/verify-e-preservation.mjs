@@ -150,7 +150,7 @@ const rebasedVD=new Set(['src/main.js','src/render.js']);
 // the offline shell lists one new module. Held to the code commit of jay/visual-1; no mechanics, positions, saves or
 // sound change (audio.js keeps its own contract below). Held now to the commit that merges jay/viaje-d (alpha.252, batches
 // A to D) into jay/visual-1 (alpha.253), so the frame, its kit and the shell carry the light and the five batches.
-const approvedV1='2549064675eb817bda79d4da1bafe18f4322ccd2';
+const approvedV1='4f8359b09dd281575faa48e45bd29687b3e338c3';
 const rebasedV1=new Set(['src/cajas.js','src/crystal-sparks.js','src/discovery.js','src/distant-colors.js','src/interactions.js','src/musical-wonders-art.js','src/musical-wonders.js','src/pixel-life.js','src/quietud.js','src/render.js','src/universe-layers.js','src/visual.js','src/wild.js','src/world-visibility.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
