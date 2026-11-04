@@ -56,7 +56,7 @@ try:
    page.evaluate("__r.openMap()");page.wait_for_function("!document.getElementById('mJournal').hidden",timeout=3000)
    note=page.inner_text('#mapNote');assert 'portales abiertos' in note and 'lugares abiertos' not in note and 'Estudio' not in note,note
    gold('mapa');page.evaluate(hide)
-   # «Vista tranquila» says what it hides, in the same mode as its title.
+   # «Mostrar todo» (before «Vista tranquila») says what it hides, in the same mode as its title.
    page.locator('#bMenu').click();page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
    sub=page.inner_text('#bJourneyMode small');assert 'Tu cubo' in sub and 'cifras' in sub,sub
    assert not errors,errors;page.close()

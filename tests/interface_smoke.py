@@ -43,7 +43,8 @@ try:
     page.locator('#bMenu').click()
     if control in ['bSky','bSession']:(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click()
     if control=='bSaveTools':
-     assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bSaveTools').is_hidden();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()")
+     # alpha.257: while the cloud is paused the web offers «Guardar copia» in «Más», as the sale edition does.
+     assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bSaveTools').is_visible();page.locator('#bSaveTools').click()
     else:
      page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
      if control=='bMusicSettings':page.locator('#bSettings').click()
@@ -63,7 +64,7 @@ try:
      assert page.evaluate('__testRuntime.S.style')==before['style'], 'opening settings cannot alter music'
      assert page.evaluate('__testRuntime.waves.length')<=before['waves']
      assert page.evaluate('__testRuntime.MU.queue.length')<=before['queue']
-     page.locator('#rStyle').focus();page.keyboard.press('ArrowRight');assert page.evaluate('__testRuntime.S.style')>before['style']
+     page.locator('#musicAdvanced > summary').click();page.locator('#rStyle').focus();page.keyboard.press('ArrowRight');assert page.evaluate('__testRuntime.S.style')>before['style']
     if width==390:
      page.locator('#'+modal+' .sheet').evaluate('e=>e.scrollTop=0')
      page.screenshot(path=f'/tmp/whitedot-interface-{modal}-mobile.png')

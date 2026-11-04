@@ -20,8 +20,9 @@ try:
    assert page.locator('#menuTitle').inner_text() and page.locator('#menuSummary').inner_text(),'the menu opens on who and where';assert ('✦' in page.locator('#menuSummary').inner_text())==(page.evaluate('Math.floor(__testRuntime.S.sparks||0)')>0),'panel 10 (P8): no counter at zero'
    assert page.locator('#bWorldHint').text_content() in ('Explorar el Mundo','Volver al Camino')
    assert page.locator('#mMenu #bSoft').count()==0 and page.locator('#mMenu #bSession').count()==0
-   page.locator('#bSettings').click();page.locator('#bMusicSettings').click();before=page.evaluate('({waves:window.__testRuntime.waves.length,context:!!window.__testRuntime.ac})')
-   page.locator('#rVolume').fill('25');page.locator('#rVolume').dispatch_event('change');assert page.evaluate('window.__testRuntime.S.outputVolume')==.25
+   page.locator('#bSettings').click();before=page.evaluate('({waves:window.__testRuntime.waves.length,context:!!window.__testRuntime.ac})')
+   page.locator('#rMenuVolume').fill('25');page.locator('#rMenuVolume').dispatch_event('change');assert page.evaluate('window.__testRuntime.S.outputVolume')==.25
+   page.locator('#bMusicSettings').click();page.locator('#musicAdvanced > summary').click()
    assert page.evaluate('window.__testRuntime.musicVolume()')==.25
    assert page.evaluate('!!window.__testRuntime.ac')==before['context'];assert page.evaluate('window.__testRuntime.waves.length')<=before['waves']
    page.locator('#voiceMode').select_option('guia');page.locator('#muClose').click();assert page.locator('#mSettings').is_visible(),'Sound returns to Ajustes (panel 10, P2)';page.locator('#autoIntent').select_option('vida')

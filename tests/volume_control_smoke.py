@@ -1,5 +1,5 @@
-"""Volume is silent, synchronized and durable; no automatic organ bank. Since panel 10 (P2) Ajustes opens with the
-same volume as the Sound sheet; the main menu itself has no slider."""
+"""Volume is silent, synchronized and durable; no automatic organ bank. Since alpha.257 the volume lives only in Ajustes; the
+Sound sheet keeps its old slider hidden and in step; the main menu itself has no slider."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -18,14 +18,15 @@ try:
   initial=page.evaluate('''()=>{const r=__testRuntime;if(r.ac)throw Error('Unexpected early context');const AC=window.AudioContext,oscillators=[],gains=[];window.AudioContext=function(){const ac=new AC(),osc=ac.createOscillator.bind(ac),gain=ac.createGain.bind(ac);ac.createOscillator=()=>{const o=osc();oscillators.push(o);return o;};ac.createGain=()=>{const g=gain();gains.push(g);return g;};return ac;};r.audio();const state={musicalDrones:oscillators.filter(o=>o.frequency.value>=130).length,boost:gains.some(g=>Math.abs(g.gain.value-8.4)<.0001)};document.getElementById('returnContinue').click();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);return state;}''')
   assert initial['musicalDrones']==0,initial
   assert initial['boost'],initial
-  # One volume, shown in Ajustes and in the Sound sheet; none in the main menu.
-  page.locator('#bMenu').click();before=page.evaluate('__testRuntime.waves.length');assert page.locator('#mMenu #rMenuVolume').count()==0;page.locator('#bSettings').click();page.locator('#bMusicSettings').click();page.locator('#rVolume').fill('25');page.locator('#rVolume').dispatch_event('change')
-  assert page.locator('#volumeNow').inner_text()=='25%'
-  assert page.locator('#rVolume').input_value()=='25'
+  # One volume, in Ajustes (alpha.257): the Sound sheet keeps its old slider hidden and in step; none in the main menu.
+  page.locator('#bMenu').click();before=page.evaluate('__testRuntime.waves.length');assert page.locator('#mMenu #rMenuVolume').count()==0;page.locator('#bSettings').click();page.locator('#rMenuVolume').fill('25');page.locator('#rMenuVolume').dispatch_event('change')
+  assert page.locator('#menuVolumeNow').inner_text()=='25%'
+  assert page.locator('#rVolume').input_value()=='25' and page.locator('#volumeNow').text_content()=='25%','the hidden slider follows'
   assert page.evaluate('__testRuntime.musicVolume()')==.25
   assert page.evaluate('__testRuntime.waves.length')==before
-  assert page.locator('#volumeNow').inner_text()=='25%';page.locator('#rVolume').fill('0');page.locator('#rVolume').dispatch_event('change');assert page.evaluate('__testRuntime.musicVolume()')==0
-  page.locator('#muClose').click();assert page.locator('#rMenuVolume').input_value()=='0' and page.locator('#menuVolumeNow').inner_text()=='0%','Ajustes shows the same volume';page.reload();page.wait_for_function('!!window.__testRuntime?.styleUI');assert page.evaluate('__testRuntime.S.outputVolume')==0
-  page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)');page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();assert page.locator('#rVolume').input_value()=='0'
+  page.locator('#bMusicSettings').click();assert page.locator('#rVolume').is_hidden(),'the Sound sheet shows no second volume';page.locator('#muClose').click()
+  page.locator('#rMenuVolume').fill('0');page.locator('#rMenuVolume').dispatch_event('change');assert page.evaluate('__testRuntime.musicVolume()')==0
+  assert page.locator('#rVolume').input_value()=='0' and page.locator('#menuVolumeNow').inner_text()=='0%','both show the same volume';page.reload();page.wait_for_function('!!window.__testRuntime?.styleUI');assert page.evaluate('__testRuntime.S.outputVolume')==0
+  page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)');page.locator('#bMenu').click();page.locator('#bSettings').click();assert page.locator('#rMenuVolume').input_value()=='0' and page.locator('#rVolume').input_value()=='0'
   assert not errors,errors;print('PASS silent single-place volume, persisted zero, protected 1.5x makeup gain and no automatic organ oscillator bank');b.close()
 finally:server.shutdown()

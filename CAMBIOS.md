@@ -1,6 +1,25 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.256** en la rama `jay/portal-close`, desde `main` (alpha.255). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.257** en la rama `jay/menus`, desde `main` `c5b796f` (alpha.256). Las entradas describen su revisión, no certifican producción.
+
+
+## Menús para jugadores · 2.3.0-alpha.257
+
+Rama `jay/menus`, desde `main` `c5b796f` (alpha.256). Pedido de Jay («haz lo de los menús»), tras la auditoría de menús: un juego en producción no enseña herramientas de prueba, y Luca entiende los menús. Misma función; sin cambio de progreso ni de formato de guardado. Guía: [Arquitectura](docs/ARQUITECTURA.md#interfaz-y-guía).
+
+- **Fuera de la vista del jugador**, solo con `body.dev` (localhost, `?dev=1`, navegador automatizado): ajuste de tiempo (la calibración automática y `S.latencyNudge` siguen), línea del deploy, diagnóstico, «Datos del mundo» (salvo encendido, para poder apagarlo), campo libre de semilla y semillas de prueba. La versión queda, pequeña. Fuera el «Simple.» del pie del menú. Nada se borra.
+- **Cuenta en pausa.** Con la nube en pausa el jugador no ve «Cuenta»; «Guardar copia» aparece en «Más» › Tú, como en la edición de venta. Supabase y su configuración, sin tocar.
+- **Un volumen**, en Ajustes. El de «Más sonido» sigue en la página, oculto y sincronizado.
+- **«Más sonido»:** Música y Calma a la vista; Energía, Repetir, Escenas y Estilo de La Voz, plegados en «Avanzado».
+- **Tres nombres claros:** «Mostrar todo: sí / no» (antes «Vista completa / tranquila»), «Modo niños» (antes «Modo tranquilo para niños», con la línea «Más fácil y sin prisa. Solo da ★.» y la hoja «Modo niños: ★ ganada.») y «Crear libre: sí / no» (antes «Modo crear»). Mismos modos y claves. Hallazgo: `S.relaxedCreate` no lo lee ningún sistema; el botón no cambia nada del juego.
+- **Paseo automático:** tres opciones, Paisaje, Criaturas y Hallazgos. «Afinidad» y «contraste» guardados siguen funcionando y no se reescriben; la lista los enseña como «Hallazgos».
+- **Ajustes en orden:** Volumen, Idioma, Modo niños, Vibración, Daltonismo y Calidad («Lo básico»); luego «Más opciones»; «Partida» con la versión y, al final y aparte, «Empezar de cero», que ya pedía «¿Seguro?».
+- **«Volver al Camino»** sale de «Más»: en el Mundo cierra «Jugar», a la vista.
+- **Mapa:** el menú ya enseñaba un solo botón de mapa (`#bMap`); `#bUniverseMap` vive en el dock. Sin cambio.
+- **Bitácora › Tú:** primero ★ de 33, lugares de 11, días con luz y logros; Regiones, Continentes y Récord, al final.
+- **ID de HTML conservados.** Inglés al día en `src/i18n-en.js`. Preservación: capa `approvedMN` (`living-discoveries.js`).
+- **Pruebas.** Nueva `tests/menus_produccion_smoke.py`: sin `body.dev`, a 390×844 y 1280×800, nada de lo anterior a la vista, y con `body.dev` las herramientas siguen. Actualizadas las que leían los nombres viejos, el volumen de «Más sonido», el lugar de `#bPrimary` o «Guardar copia» oculto en la web. Capturas antes y después en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y recorridos de navegador en Chromium sin interfaz). Sin CI remoto, sin teléfono y sin Luca.
 
 
 ## Cerrar el portal · 2.3.0-alpha.256

@@ -27,13 +27,13 @@ const map=read('src/map.js');assert.match(map,/portales abiertos \(○\)/);asser
  assert.equal(texts.length,1);assert.equal(texts[0].t,'★ 3 / 33');assert.equal(texts[0].fill,'#ffffff','the wall is white');
  assert.equal(els.houseStars.textContent,'Lugares','one number per concept: the HUD counts the places');assert.equal(els.houseStars.hidden,false);
  assert.match(html,/id="houseStars"/,'the id stays');}
-// «Vista tranquila» says what it does: title and subtitle both name the current state, and the subtitle names Tu cubo and the numbers.
+// «Mostrar todo» (alpha.257, before «Vista tranquila») says what it does: title and subtitle both name the current state, and the subtitle names Tu cubo and the numbers.
 {globalThis.document={body:{classList:{toggle(){}}}};const {initialize}=await import('../src/journey-mode.js');
  const small={textContent:''},label={firstChild:{textContent:''}},b={hidden:true,querySelector:k=>k==='span'?label:small,setAttribute(){}},menu={hidden:true};
  const runtime={$:id=>id==='bJourneyMode'?b:menu,S:{journey:{version:1,mode:'libre',free:true,colors:{}},help:{}},save:()=>true,hud(){}};initialize(runtime);
  const seen=[];for(const mode of ['libre','viaje']){if(runtime.journeyMode()!==mode)runtime.setJourneyMode(mode);seen.push([label.firstChild.textContent,small.textContent]);}
  for(const [title,sub] of seen){assert.match(sub,/Tu cubo/,title);assert.match(sub,/cifras/,title);assert.doesNotMatch(sub,/^(Ocultar|Mostrar)/,'a state, not an action');}
- assert.equal(seen[0][0],'Vista completa');assert.equal(seen[1][0],'Vista tranquila');assert.notEqual(seen[0][1],seen[1][1]);
+ assert.equal(seen[0][0],'Mostrar todo: sí');assert.equal(seen[1][0],'Mostrar todo: no');assert.notEqual(seen[0][1],seen[1][1]);
  assert.match(html,/<small>Tu cubo, cifras y herramientas a la vista<\/small>/,'the page starts with the same words');}
 // One message on leaving the Journey: no «Se abre el Mundo libre.»; «Prólogo» goes to the Bitácora unannounced.
 {const finale=read('src/journey-finale.js');assert.doesNotMatch(finale,/Se abre el Mundo libre/);assert.match(finale,/narrate\?\.\('journeyDone'\);runtime\.quietAchievements\?\.\(\)/);}

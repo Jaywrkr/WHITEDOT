@@ -14,6 +14,8 @@ export function initialize(runtime){
   if(intent==='hallazgos')candidates=candidates.filter(o=>o.rare||o.group==='architecture');else if(intent==='vida')candidates=candidates.filter(o=>o.group==='fauna'||o.relation);else candidates=candidates.filter(o=>o.group==='flora');
   route=candidates.sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0]||null;return route?{...route,layer:runtime.S.layer||'superficie'}:null;
  }
- const select=runtime.$('autoIntent');select.value=runtime.S.autoIntent||'paisaje';select.onchange=()=>{runtime.S.autoIntent=select.value;route=null;runtime.save();};
+ // Menús (alpha.257): three choices in view. A saved «afinidad» or «contraste» keeps working and is kept as it is; the
+ // list only shows it as «Hallazgos» until the player picks another.
+ const select=runtime.$('autoIntent'),listed=v=>[...select.options].some(o=>o.value===v);select.value=listed(runtime.S.autoIntent||'paisaje')?runtime.S.autoIntent||'paisaje':'hallazgos';select.onchange=()=>{runtime.S.autoIntent=select.value;route=null;runtime.save();};
  Object.defineProperties(runtime,{livingFound:{get:()=>found},livingRelationFound:{get:()=>relation},livingBuildingFound:{get:()=>building},autopilotAim:{get:()=>aim}});
 }
