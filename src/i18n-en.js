@@ -5011,7 +5011,6 @@ export const EN=Object.freeze({
  "Núcleo de ópalo":"Opal core",
  "Núcleo de estrella":"Star core",
  "Fósil de estrella":"Star fossil",
- "Campana de polvo":"Dust bell",
  "Llave de cometa":"Comet key",
  "Semilla de luz":"Seed of light",
  "Caracola de polvo":"Dust shell",

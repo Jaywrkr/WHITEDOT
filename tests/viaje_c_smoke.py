@@ -60,8 +60,9 @@ try:
   for width,height,lang in [(390,844,'es'),(1280,800,'es'),(390,844,'en')]:
    print('viewport',width,lang,f'{time.time()-started:.0f} s',flush=True);en=lang=='en';page,errors=page_for(browser,width,height,'?anillo=1'+('&lang=en' if en else ''))
    P=page.evaluate(SITES,st(page)['world']);sound=width>500
-   # Batch A's bands already reached (their notices given), so the crossing below tells only what starts at 30 km.
-   page.evaluate("()=>{const q=__r.S.bandas||{};__r.bandState();const b=__r.S.bandas;b.far=29.9;for(const id of ['radar','pelota','luces','tablon'])b.seen[id]='';__r.save();}")
+   # The bands of the batches before (A, B) already reached (their notices given), so the crossing below tells only what
+   # starts at 30 km.
+   page.evaluate("()=>{const st=__r.bandState(),b=__r.S.bandas;b.far=29.9;for(const e of st.entries)if(e.km<30)b.seen[e.id]='';__r.save();}")
    # --- 1 · Crossing 30 km: its notice, once; nothing of the band in the Bitácora before.
    mark('1')
    go(page,290000,40000);page.wait_for_timeout(300);j=bandas(page);assert 'pulsar' not in j['rows'],j;assert ('Pulsars' if en else 'Púlsares') not in j['text'],'no spoiler';page.evaluate(HIDE)
