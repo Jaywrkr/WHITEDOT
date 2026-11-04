@@ -247,7 +247,7 @@ const SHELL=[
  "./src/relics.js",
  "./src/render.js", "./src/fx-kit.js", "./src/ambient-art.js", "./src/frame-state.js", "./src/world-light-model.js", "./src/world-light.js", "./src/world-weather.js", "./src/world-fauna.js", "./src/world-music.js", "./src/world-camera.js", "./src/world-happenings.js",
  "./src/rhythms.js",
- "./src/scanner.js", "./src/scanner-model.js", "./src/scanner-art.js",
+ "./src/scanner.js", "./src/scanner-model.js", "./src/scanner-art.js", "./src/scanner-arrows.js", "./src/scanner-arrows-model.js",
  "./src/seeds.js",
  "./src/session.js",
  "./src/sharing.js",

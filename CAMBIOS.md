@@ -1,6 +1,6 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.261** en la rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0 dentro): depende de T1. T2 (alpha.260) va en paralelo en `jay/coherencia-t2`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.261** en la rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0 dentro): depende de T1. Lleva fusionadas `jay/coherencia-t0` (`8984a1d`) y `jay/coherencia-t2` (`d438120`, alpha.260). Las entradas describen su revisión, no certifican producción.
 
 
 ## Avisos y oro (coherencia T4) · 2.3.0-alpha.261
@@ -17,7 +17,24 @@ Rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0
 - **Lienzo a 12 px como mínimo** (45 llamadas de 9–11 px), salvo en los archivos de borde de T2 (`viaje-a/c/d`, `lejos-b`, `recorrer`, `descubrir`, `vida`).
 - **Se queda:** el pop dorado al abrir una caja y su tarjeta (Visual 1, aprobado), ★, ✦ ganadas, el cubo dorado y lo completo. Sin cambios en `audio.js`, guardados, recompensas ni ids.
 - **Pruebas.** Nuevas `tests/avisos-oro.mjs` (sin «¡» en los textos legibles, la caja, el narrador, las bandas y la regla del oro en CSS y lienzo) y `tests/avisos_oro_smoke.py` (390×844: una caja, un aviso y un reloj; «✦ 0» blanco y «✦ 5» dorado; nombre cotidiano blanco y ganado dorado; un aviso de banda por cruce). Actualizadas las que leían los textos viejos (`viaje_a/c/d`, `lejos_b`, `luca`, `fewer-counters` y sus recorridos). Capturas antes y después en el scratchpad de la sesión (no en Git).
+- **Con T2 fusionada.** Las flechas de borde y el panel «Cerca» de T2 siguen esta regla: blancos, sin oro, avisos «Nombre · frase». Ninguna flecha de borde es dorada. Al fusionar, los archivos de borde de T2 (`viaje-a/c/d`, `lejos-b`, `recorrer`, `descubrir`, `vida`) pasan también a 12 px (17 llamadas de 10–11 px), y el rótulo de la bandada (`vida.js`) pasa de dorado a blanco.
 - **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Las marcas de borde y la flecha de la bandada son de T2. El resto de textos, nombres y biomas, de T5 y T6.
+
+
+## Una capa de flechas (coherencia T2) · 2.3.0-alpha.260
+
+Rama `jay/coherencia-t2`, desde `jay/coherencia-t1` `fa47285` (alpha.259; dependencia explícita, con T0 dentro). Plan de coherencia, tanda T2, con las doce decisiones aprobadas por Jay. Guía: [Una capa de flechas](docs/MUNDO.md#una-capa-de-flechas).
+
+- **Un solo lenguaje para «hay algo allí»:** una flecha blanca pequeña en el borde, con el icono del Escáner o «?» (secreto o solo oído). Tres como mucho: primero lo tuyo (reto, bengala), luego lo raro, luego lo que se hace, luego el camino; dentro, lo más cercano. Una flecha por cosa; ninguna encima de otra.
+- **Las marcas viejas pasan a la capa:** Descubrir (juego, hallazgo, caja, sonido raro), Recorrer (boya con su km, satélite), Secretos del cielo (eclipse, cristal, sonda), tandas A, B, C y D, pistas de hallazgo (eran puntos cian), chispa salvaje sin sonido (era dorada), la bandada que enseña una caja (era dorada), los hitos (eran brillo y rayos de color) y la región vecina (era una luz de color; ahora solo si no hay nada más). Ninguna marca dorada ni cian.
+- **La tanda B deja una sola marca** (antes, una por tipo). **La sonda tiene su «?» también con sonido.** Las cosas de B, C y D son «?» hasta el nivel 4 del Escáner.
+- **Nivel 3 del Escáner, con los once lugares** (`S.lugares.won`): 300 m, el registro también señala (rumores, cristales de cometa y asteroide secreto nuevos en el registro, como «?»). Al soltar, «Cerca» se queda 4 s y **una fila pone la marca en el Mapa del universo** (la marca única). `SCAN_OPEN = 3`.
+- **Movimiento reducido:** sin aparecer poco a poco. **Calidad ligera:** sin halo. Flecha e iconos horneados; sin degradados ni `shadowBlur`.
+- **Coste** (`?anillo=1`, llamadas al lienzo por fotograma, mediana de tres, a 3/15/35/65 km): 758/477/3778/1058 → 753/459/3771/1046 a 390×844 y 1481/761/7377/1948 → 1476/742/7375/1932 a 1280×800; con el nivel 3 abierto, igual o menos en los ocho.
+- **Sin cambios** en qué son las cosas, premios, sonidos, `audio.js`, azar antiguo, ids de HTML ni guardados (la marca usa `S.universeMap.mark`). La Brújula sigue igual hasta T3.
+- **Preservación:** capa `approvedT2`.
+- **Pruebas.** Nuevas `tests/scanner-arrows.mjs` y `tests/flechas_smoke.py` (390×844 y 1280×800: solo blanco, tres como mucho, nivel 2 frente a 3, «?» del secreto y del rumor, una fila marca el mapa y una marca nueva sustituye a la anterior, movimiento reducido, calidad ligera y coste). Al día: `scanner-model.mjs` (nivel 3), `secretos_cielo_smoke.py` (la sonda con sonido lleva «?»), y `recorrer`, `viaje_a`, `descubrir_sonidos`, `arreglos30_mundo` y `journey_ui` comprueban que su marca entra en la capa. Capturas en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Sin carga (T3) ni nivel 4.
 
 
 ## El Escáner, núcleo (coherencia T1) · 2.3.0-alpha.259

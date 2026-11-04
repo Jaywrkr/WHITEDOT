@@ -5,8 +5,8 @@
 //   it or any pulse near it). A whole shower pays like a living encounter, by universeReward.
 // · Cristales de cometa: fifty at fixed points; the Bitácora counts them, never says where. All fifty: an ornament of
 //   three small gold crystals round the cube (worn at once, taken off in Tu cubo › Secretos). No sparks.
-// · Sondas perdidas: small empty probes that beep on the bars, louder as you come near; with the sound off, a mark at
-//   the screen's edge. One found gives a secret coordinate, a white «?» on the Mapa del universo.
+// · Sondas perdidas: small empty probes that beep on the bars, louder as you come near; out of view, a «?» at the
+//   screen's edge (the one layer of arrows, coherencia T2), with the sound on or off. One found gives a secret coordinate, a white «?» on the Mapa del universo.
 // · Eclipse: a planet crosses a star on the device's clock; there at that moment, the music darkens for a few seconds
 //   (audio.js's own comfort filter, which the engine exposes as runtime.comfortLowpass) and comes back by itself.
 // One scene at a time: no shower and no eclipse while a living encounter, a figure or a mischief scene plays; while a
@@ -143,10 +143,8 @@ export function initialize(r){
   if(onScreen(pl,30)){c.fillStyle='#000';c.beginPath();c.arc(pl.x,pl.y,14,0,TAU);c.fill();c.globalAlpha=.6;c.strokeStyle='#8a8a92';c.lineWidth=1;c.beginPath();c.arc(pl.x,pl.y,14,0,TAU);c.stroke();}
   if(cover>.7){c.globalAlpha=.5*cover;c.strokeStyle='#ffffff';c.beginPath();c.arc(star.x,star.y,15.5,0,TAU);c.stroke();
    if(!light()){const d=Math.hypot(star.x-pl.x,star.y-pl.y)||1,dx=(star.x-pl.x)/d,dy=(star.y-pl.y)/d;glow(c,star.x+dx*15,star.y+dy*15,11,'#ffffff',Math.min(1,(cover-.7)/.3)*.9,true);}}return cover;}
- function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.65;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='cometa'){c.beginPath();c.moveTo(x,y-4);c.lineTo(x+3,y);c.lineTo(x,y+4);c.lineTo(x-3,y);c.closePath();c.fill();}
-  else if(kind==='sonda'){c.strokeRect(x-3,y-2,6,4);c.beginPath();c.moveTo(x,y-2);c.lineTo(x+2,y-6);c.stroke();}
-  else{c.beginPath();c.arc(x,y,4,0,TAU);c.stroke();c.fillRect(x-1,y-1,2,2);}return {x,y};}
+ // Coherencia T2: an offer to the one layer of arrows (scanner-arrows.js). A crystal and a probe are «?» (secret, heard).
+ function edge(c,kind,o){const q=r.edgeOffer?.({key:kind+':'+(o.id??o.i),kind,x:o.x,y:o.y,shape:'estrella',ask:kind!=='eclipse'})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);return {x:Math.round(q.x),y:Math.round(q.y)};}
  function draw(){const out={comet:null,probe:null,edge:{},meteors:0,eclipse:null,dark:!!eclipse,shower:!!shower};if(!allowed()||!r.cx){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused();c.save();
   // The eclipse site: a star and its planet, and the darkness while it lasts.
@@ -157,8 +155,8 @@ export function initialize(r){
    let glint=null,gd=Infinity;for(const cr of COMETS){if(cometFound(q,cr.i))continue;const d=Math.hypot(cr.x-p.x,cr.y-p.y);if(d>COMET_GLINT)continue;const s=at(cr.x,cr.y);if(onScreen(s)){crystal(c,s,t);out.comet={i:cr.i,x:Math.round(s.x),y:Math.round(s.y)};}else if(d<gd){gd=d;glint=cr;}}
    if(glint&&!out.comet&&!scene()&&!still&&!busy())out.edge.cometa={...edge(c,'cometa',glint),i:glint.i};
    const near=nearestProbe(p,PROBE_HEAR);if(near){const s=at(near.probe.x,near.probe.y);if(onScreen(s)){probe(c,s,t);out.probe={i:near.probe.i,x:Math.round(s.x),y:Math.round(s.y)};}
-    // Heard before seen; with the sound off there is nothing to hear, so its mark waits at the screen's edge.
-    else if(!r.S.sound&&!scene()&&!still&&!busy())out.edge.sonda=edge(c,'sonda',near.probe);}}
+    // Heard before seen: a «?» at the screen's edge, with the sound on too (coherencia T2: one mark for it).
+    else if(!scene()&&!still&&!busy())out.edge.sonda=edge(c,'sonda',near.probe);}}
   if(shower){const age=clock-shower.start;for(const m of shower.meteors){const a=age-m.born;if(m.caught||a<0||a>METEOR_LIFE)continue;const hd=meteorHead(m,a),h=at(hd.x,hd.y),fade=Math.min(1,a/.3,(METEOR_LIFE-a)/.5);
     // A meteor: a head of light and a tail that fades back (one sprite, rotated); light quality: the two lines of before.
     if(light()){c.globalAlpha=.9*fade;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.moveTo(h.x,h.y);c.lineTo(h.x-m.dx*46,h.y-m.dy*46);c.stroke();c.globalAlpha=.35*fade;c.lineWidth=1;c.beginPath();c.moveTo(h.x-m.dx*46,h.y-m.dy*46);c.lineTo(h.x-m.dx*90,h.y-m.dy*90);c.stroke();}

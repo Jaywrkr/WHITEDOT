@@ -176,10 +176,9 @@ export function initialize(r){
   if(s.kind==='banco'){c.fillStyle='#ffffff';for(let k=0;k<7;k++){const a=k/7*TAU+(reduced()?0:clock*.8),rr=5+3*Math.sin(k*1.9);c.fillRect(Math.round(q.x+Math.cos(a)*rr)-1,Math.round(q.y+Math.sin(a)*rr*.6)-1,2,2);}}
   else if(s.kind==='chatarra'){c.fillStyle='#9a9aa2';c.fillRect(q.x-5,q.y-2,6,4);c.fillRect(q.x+1,q.y+1,5,3);c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x-6,q.y-4);c.lineTo(q.x-1,q.y-7);c.stroke();}
   else{c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.beginPath();c.arc(q.x,q.y,7,0,TAU);c.fill();c.stroke();c.fillStyle='#ffffff';for(const [dx,dy] of [[-2,-1],[2,1],[0,3]])c.fillRect(Math.round(q.x+dx),Math.round(q.y+dy),1,1);}}
- function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='pulsar'){c.beginPath();for(let i=0;i<4;i++){const a=i/4*TAU;c.moveTo(x,y);c.lineTo(x+Math.cos(a)*4,y+Math.sin(a)*4);}c.stroke();}else if(kind==='asteroide'){c.beginPath();c.arc(x,y,3.5,0,TAU);c.stroke();}
-  else if(kind==='kit'){c.strokeRect(x-4,y-3,8,6);}else{c.fillRect(x-1,y-1,2,2);c.beginPath();c.arc(x,y,4,0,TAU);c.stroke();}
-  return {x,y,id:o.id};}
+ // Coherencia T2: the band's one mark is an offer to the one layer of arrows (scanner-arrows.js); a «?» until the
+ // scanner's level 4 names the things past 10 km.
+ function edge(c,kind,o){const q=r.edgeOffer?.({key:'C:'+kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:'banda',x:o.x,y:o.y,shape:'portal',far:true})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);return {x:Math.round(q.x),y:Math.round(q.y),id:o.id};}
  function draw(){const out={pulsar:null,rocks:[],dust:null,caches:[],points:[],lines:0,edge:{},volley:null,ride:!!ride,sunk:!!sunk,hint:''};if(!allowed()||!r.cx||!ok()||!sites){drawn=out;return;}
   const c=r.cx,p=me(),q=book(),still=paused(),quiet=others()&&!mine();c.save();c.textAlign='center';const mark=[];
   for(const s of sites.dust){const d=drawDust(c,s);if(d&&!out.dust)out.dust={id:s.id,hidden:d==='hidden'};}
@@ -191,7 +190,7 @@ export function initialize(r){
   for(const s of sites.rocks){const sp=at(s.x,s.y),dug=Object.hasOwn(q.cores,s.id);if(onScreen(sp)){const plan=C.rockLayers(s);if(dug)drawHollow(c,sp,C.CORE_COLORS[q.cores[s.id]]);else drawRock(c,s,sp,plan,q.rocks[s.id]?.l|0,hits.get(s.id)||0);out.rocks.push({id:s.id,dug,l:q.rocks[s.id]?.l|0,x:Math.round(sp.x),y:Math.round(sp.y)});}else if(!dug)mark.push({kind:'asteroide',o:s,d:s.d});}
   for(const s of sites.caches){if(Object.hasOwn(q.caches,s.id))continue;const sp=at(s.x,s.y);if(onScreen(sp)){drawCache(c,sp);out.caches.push({id:s.id,x:Math.round(sp.x),y:Math.round(sp.y)});}else mark.push({kind:'kit',o:s,d:s.d});}
   for(const s of sites.points){const def=C.POINT_DEFS[s.kind],has=!!q.tools[def.tool],open=has&&C.pointPaysToday(q,s.id,today()),sp=at(s.x,s.y);if(onScreen(sp)){drawPoint(c,s,sp,open);out.points.push({id:s.id,kind:s.kind,open,x:Math.round(sp.x),y:Math.round(sp.y)});
-    if(s.d<=C.POINT_READ&&words()&&!quiet&&!summary){c.globalAlpha=.75;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';const t=has?def.name:`${def.name} · ${def.need}`;say(c,t,sp.x,sp.y-14);out.hint=t;}}else if(open)mark.push({kind:'punto',o:s,d:s.d});}
+    if(s.d<=C.POINT_READ&&words()&&!quiet&&!summary){c.globalAlpha=.75;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';const t=has?def.name:`${def.name} · ${def.need}`;say(c,t,sp.x,sp.y-14);out.hint=t;}}else if(open)mark.push({kind:'punto',o:s,d:s.d});}
   // The volley: the flash on its way to you (or to the spot it aims at), the ring that closes at its strike, the run.
   if(volley){const v=volley,ps=at(v.x,v.y);out.volley={thrown:v.thrown,returned:v.returned,run:v.run.cur,best:v.run.best,sound:v.sound,flash:v.flash?{strike:v.flash.strike,left:v.flash.strike-clock}:null};
    if(v.flash){const f=v.flash,aim=v.sound?p:f.aim,ta=at(aim.x,aim.y),k=Math.max(0,Math.min(1,(clock-f.thrown)/Math.max(.2,f.strike-f.thrown)));c.globalAlpha=.25;c.strokeStyle='#ffffff';c.lineWidth=1;c.setLineDash([2,5]);c.beginPath();c.moveTo(ps.x,ps.y);c.lineTo(ta.x,ta.y);c.stroke();c.setLineDash([]);
@@ -200,7 +199,7 @@ export function initialize(r){
   for(const g of streaks){const k=(clock-g.at)/.7,a=at(g.from.x,g.from.y),b=at(g.to.x,g.to.y);c.globalAlpha=.9*(1-k);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(a.x+(b.x-a.x)*Math.max(0,k-.3),a.y+(b.y-a.y)*Math.max(0,k-.3));c.lineTo(a.x+(b.x-a.x)*k,a.y+(b.y-a.y)*k);c.stroke();}
   // At a buoy of 40 km or more: what a pulse does there.
   if(zipHere&&!ride&&!volley&&!sunk&&words()&&!quiet&&!summary){const b=zipHere,line=zipRest?.id===b.id?null:linesHere(b.id)[0],lay=zipPrev&&C.canLay(q,world,zipPrev,b),sp=at(b.x,b.y);
-   const t=lay?`Pulsa · tirolina al km ${zipPrev.km}`:line?`Pulsa · tirolina al km ${C.zipOther(line,b.id).km}`:'';if(t){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';say(c,t,sp.x,sp.y+26);out.hint=t;}}
+   const t=lay?`Pulsa · tirolina al km ${zipPrev.km}`:line?`Pulsa · tirolina al km ${C.zipOther(line,b.id).km}`:'';if(t){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,t,sp.x,sp.y+26);out.hint=t;}}
   if(ride&&!reduced()){for(let k=1;k<5;k++){c.globalAlpha=.5/k;c.fillStyle='#ffffff';const back=C.zipPoint(ride.from,ride.to,(clock-ride.start)/ride.secs-k*.04),sp=at(back.x,back.y);c.fillRect(Math.round(sp.x)-1,Math.round(sp.y)-1,2,2);}}
   if(!quiet&&!still&&!mine()&&!r.skySecretBusy?.()){mark.sort((a,b)=>a.d-b.d);const m=mark[0];if(m)out.edge[m.kind]=edge(c,m.kind,m.o);}
   for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;if(!g.popped){g.popped=true;if(!g.dim)r.fxLayer?.pop(g.x,g.y,g.color||'#ffffff',{gold:g.color===GOLD,size:.8,sparks:6});}c.globalAlpha=(g.dim?.4:.8)*(1-k);c.strokeStyle=g.color||'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}

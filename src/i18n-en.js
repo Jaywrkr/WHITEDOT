@@ -4385,6 +4385,7 @@ export const EN=Object.freeze({
  "Este punto":"This point",
  "Tu marca · {}":"Your mark · {}",
  "Marca puesta · la brújula te lleva":"Mark set · the compass leads you",
+ "Marcar en el mapa":"Mark on the map",
  "Llegaste a tu marca":"You reached your mark",
  "No se pudo guardar la marca.":"The mark could not be saved.",
  // Refugio simple (alpha.234).

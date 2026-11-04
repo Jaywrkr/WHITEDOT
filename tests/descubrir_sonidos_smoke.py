@@ -41,7 +41,9 @@ try:
    if SHOTS:page.screenshot(path=f'{SHOTS}/sonidos-cerca-{width}.png')
    # Off screen it leaves a white mark at the edge (the next step stays visible).
    page.evaluate(f"(()=>{{__r.S.wx={spot['x']}-1500;__r.S.wy={spot['y']};}})()");page.wait_for_timeout(250)
-   if width<600:assert page.evaluate("__r.discoverState().drawn.hint"),'a mark at the edge'
+   if width<600:
+    assert page.evaluate("__r.discoverState().drawn.hint"),'a mark at the edge'
+    page.wait_for_function("__r.edgeState().kinds.includes('sonido')",timeout=4000)   # T2: a «?» in the one layer of arrows
    # --- Passing through keeps it: 8 ✦, the album, a summary; the same spot does not pay twice.
    page.evaluate(f"(()=>{{__r.S.wx={spot['x']};__r.S.wy={spot['y']};}})()");page.wait_for_function("!!__r.discoverState().album.sounds['lago:pez']",timeout=4000)
    st=page.evaluate("__r.discoverState()");assert page.evaluate("__r.S.sparks")==sparks0+8,(sparks0,page.evaluate("__r.S.sparks"))

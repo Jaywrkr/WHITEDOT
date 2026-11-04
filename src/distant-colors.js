@@ -54,10 +54,10 @@ const x=(i-1)*radius*.32,h=(q.hue+i*q.spread)%360;
    const cell=[Math.floor(runtime.S.wx/runtime.WCH),Math.floor(runtime.S.wy/runtime.WCH),w,h].join(':');
    if(cell!==hintCell){hintCell=cell;const targets=distantDirections(runtime.S.wx,runtime.S.wy,runtime.REG*runtime.WCH,w,h,runtime.regionOfPos,runtime.seedOf);for(const s of signals.values())s.wanted=false;for(const s of targets)signals.set(s.key,{...s,opacity:signals.get(s.key)?.opacity||0,wanted:true});}
    const ease=1-Math.exp(-Math.min(.05,runtime.activeFrameSeconds||0)*1.4);
-   for(const [key,q]of signals){q.opacity+=((q.wanted?1:0)-q.opacity)*ease;if(!q.wanted&&q.opacity<.005){signals.delete(key);continue;}
-    const vx=q.target.x-runtime.S.wx,vy=q.target.y-runtime.S.wy,edge=Math.min((w/2+q.radius*.12)/Math.max(.001,Math.abs(vx)),(h/2+q.radius*.12)/Math.max(.001,Math.abs(vy))),sx=w/2+vx*edge,sy=h/2+vy*edge,rgb=q.ink.slice(1).match(/../g).map(h=>parseInt(h,16)).join(',');
-radial(c,sx,sy,q.radius,'signal:'+rgb,[[0,'rgba('+rgb+',1)'],[.48,'rgba('+rgb+','+(.075/.2)+')'],[1,'rgba('+rgb+',0)']],q.opacity*.2);
-   }
+   // Coherencia T2: the neighbouring region is no longer a coloured light at the edge. The strongest one is offered to
+   // the one layer of arrows (scanner-arrows.js), which points at a region only when nothing else is there.
+   let best=null;for(const [key,q]of signals){q.opacity+=((q.wanted?1:0)-q.opacity)*ease;if(!q.wanted&&q.opacity<.005){signals.delete(key);continue;}if(q.wanted&&(!best||q.score>best.score))best=q;}
+   if(best)runtime.edgeOffer?.({key:'region:'+best.key,kind:'region',x:best.target.x,y:best.target.y});
   }c.restore();
  }
  Object.defineProperties(runtime,{drawDistantColors:{get:()=>draw},distantSignals:{get:()=>[...signals.values()].map(({key,target,ink,opacity})=>({key,target,ink,opacity}))}});

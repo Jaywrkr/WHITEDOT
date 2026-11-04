@@ -155,19 +155,19 @@ export function initialize(r){
  function drawCria(c,x,y,cria,t,size=3){const col=criaInk(cria);c.save();c.translate(x,y);if(!light())glow(c,0,0,size*3.4,col,.2,true);c.strokeStyle=c.fillStyle=col;c.lineWidth=1;c.globalAlpha=.85;
   if(cria.species==='luciernaga'){c.beginPath();c.ellipse(0,0,size*.55,size,0,0,TAU);c.stroke();}else{const flap=.4+Math.sin(t/(cria.species==='grulla'?320:140))*.25;c.beginPath();c.moveTo(-size*1.4,-size*flap);c.quadraticCurveTo(0,0,0,0);c.lineTo(size*1.4,-size*flap);c.stroke();}
   if(cria.rare){c.globalAlpha=.6;c.fillRect(-1,size+1,2,2);}c.restore();}
- function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='portal'){c.strokeRect(x-3,y-5,6,10);}else if(kind==='estacion'){c.beginPath();c.arc(x,y,4,0,TAU);c.stroke();c.fillRect(x-1,y-1,2,2);}else if(kind==='nido'){for(let k=0;k<5;k++){const a=k/5*TAU;c.fillRect(Math.round(x+Math.cos(a)*4)-1,Math.round(y+Math.sin(a)*3)-1,2,2);}}
-  return {x,y,id:o.id||kind};}
+ // Coherencia T2: the band's one mark is an offer to the one layer of arrows (scanner-arrows.js); a «?» until the
+ // scanner's level 4 names the things past 10 km.
+ function edge(c,kind,o){const q=r.edgeOffer?.({key:'D:'+kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:'banda',x:o.x,y:o.y,shape:'portal',far:true})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);return {x:Math.round(q.x),y:Math.round(q.y),id:o.id||kind};}
  function draw(){const out={portal:null,station:null,console:null,nest:null,edge:{},rule:null,corona:null,trail:0};if(!allowed()||!r.cx||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused(),quiet=scene()&&!rule;c.save();c.textAlign='center';const mark=[];
   for(const s of portalsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y),spent=!portalPaysToday(q,s.id,today());if(onScreen(sp)){drawPortal(c,sp,portalRule(s),spent,s.id);out.portal=out.portal||{id:s.id,kind:portalRule(s),x:Math.round(sp.x),y:Math.round(sp.y)};}else if(!spent&&!rule)mark.push({kind:'portal',o:s,d:s.d});}
   const done=q.station?.day===today()&&q.station.done;
   for(const s of stationsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y);if(onScreen(sp)){drawStation(c,sp,s.d<=STATION_TOUCH*3);out.station=out.station||{id:s.id,x:Math.round(sp.x),y:Math.round(sp.y)};
-    if(s.d<=STATION_TOUCH*3&&words()&&!quiet&&!rule){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';say(c,done?'Estación del día · Vuelve mañana':'Estación del día',sp.x,sp.y-22);}}else if(!done&&!rule)mark.push({kind:'estacion',o:s,d:s.d});}
+    if(s.d<=STATION_TOUCH*3&&words()&&!quiet&&!rule){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,done?'Estación del día · Vuelve mañana':'Estación del día',sp.x,sp.y-22);}}else if(!done&&!rule)mark.push({kind:'estacion',o:s,d:s.d});}
   const con=consoleNow(p);if(con){const sp=at(con.x,con.y),near=Math.hypot(con.x-p.x,con.y-p.y)<=CONSOLE_TOUCH*4;if(onScreen(sp)){drawConsole(c,sp,near);out.console={id:con.id,x:Math.round(sp.x),y:Math.round(sp.y)};
-    if(near&&words()&&!quiet){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';say(c,q.sweep.best?`Barrido a tempo · Récord · ${q.sweep.best}`:'Barrido a tempo',sp.x,sp.y-16);}}}
+    if(near&&words()&&!quiet){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,q.sweep.best?`Barrido a tempo · Récord · ${q.sweep.best}`:'Barrido a tempo',sp.x,sp.y-16);}}}
   for(const s of nestsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y),ready=nestReady(q,s.id,today());if(onScreen(sp)){drawNest(c,sp,ready);out.nest=out.nest||{id:s.id,x:Math.round(sp.x),y:Math.round(sp.y),ready};
-    if(s.d<=NEST_READ&&words()&&!quiet&&!rule){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';const line=!ready?'Nido · Vuelve mañana':r.S.pet?'Nido · Acércate con tu mascota':'Nido · Hace falta una mascota';say(c,line,sp.x,sp.y-16);out.nest.text=line;}}
+    if(s.d<=NEST_READ&&words()&&!quiet&&!rule){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';const line=!ready?'Nido · Vuelve mañana':r.S.pet?'Nido · Acércate con tu mascota':'Nido · Hace falta una mascota';say(c,line,sp.x,sp.y-16);out.nest.text=line;}}
    else if(ready&&r.S.pet&&!rule)mark.push({kind:'nido',o:s,d:s.d});}
   // The rule: a thin frame round the screen (another rule), its lights, its bumpers or its centre, and its clock.
   if(rule){const g=rule;c.globalAlpha=.28;c.strokeStyle='#ffffff';c.lineWidth=1;c.strokeRect(6.5,6.5,r.W-13,r.H-13);
@@ -179,7 +179,7 @@ export function initialize(r){
   // The corona: its lights turning round the star, and the trails the pulse leaves.
   if(corona){const age=clock-corona.start;for(const t0 of trails)for(const pt of t0.pts){const sp=at(pt.x,pt.y);c.globalAlpha=Math.max(0,.7*(1-(clock-pt.at)/TRAIL_LIFE));c.fillStyle='#ffffff';c.fillRect(Math.round(sp.x)-1.5,Math.round(sp.y)-1.5,3,3);out.trail++;}
    let shown=0;for(const k of corona.pieces){if(k.done)continue;const cq=coronaAt(corona,k,age),sp=at(cq.x,cq.y);if(!onScreen(sp,10))continue;shown++;const s=reduced()?4:4+Math.sin(clock*6+k.k);if(!light())glow(c,sp.x,sp.y,13,'#fff2d8',.45,true);c.globalAlpha=.95;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(sp.x-s,sp.y);c.lineTo(sp.x+s,sp.y);c.moveTo(sp.x,sp.y-s);c.lineTo(sp.x,sp.y+s);c.stroke();}
-   out.corona={caught:corona.caught,total:corona.pieces.length,shown};if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Corona · ${corona.caught} de ${CORONA}`,r.W/2,Math.max(196,r.H/2-152));c.globalAlpha=.75;c.font='10px "Geist Mono", monospace';say(c,'Atrapa sus luces. Tu pulso deja estela.',r.W/2,Math.max(196,r.H/2-152)+16);out.corona.hint=true;}}
+   out.corona={caught:corona.caught,total:corona.pieces.length,shown};if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Corona · ${corona.caught} de ${CORONA}`,r.W/2,Math.max(196,r.H/2-152));c.globalAlpha=.75;c.font='12px "Geist Mono", monospace';say(c,'Atrapa sus luces. Tu pulso deja estela.',r.W/2,Math.max(196,r.H/2-152)+16);out.corona.hint=true;}}
   if(!quiet&&!still&&!rule&&!corona){mark.sort((a,b)=>a.d-b.d);const m=mark[0];if(m)out.edge[m.kind]=edge(c,m.kind,m.o);}
   for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;if(!g.popped){g.popped=true;r.fxLayer?.pop(g.x,g.y,'#ffffff',{size:.8,sparks:6});}c.globalAlpha=.8*(1-k);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
   if(summary&&words()&&(!quiet||rule)){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}

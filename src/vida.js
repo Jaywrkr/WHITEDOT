@@ -119,7 +119,7 @@ export function initialize(runtime){
  }
  function sources(){return [...nearbyFlocks(260).map(f=>({object:f,kind:`vida:${f.species}:0`,name:SPECIES[f.species].name,distance:dist(f)})),...nearbyPlants(200).map(p=>({object:p,kind:'vida:plant:0',name:'Flora que crece',distance:dist(p)}))];}
  // ---------- dibujo ----------
- function label(ctx,text,x,y){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='11px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(text,Math.max(120,Math.min(runtime.W-120,x)),y,runtime.W-24);}
+ function label(ctx,text,x,y){ctx.globalAlpha=.8;ctx.fillStyle='#ffffff';ctx.font='12px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(text,Math.max(120,Math.min(runtime.W-120,x)),y,runtime.W-24);}
  function draw(t,dt,ox,oy,radius){
   tick(dt);if(!surface())return;const ctx=runtime.cx;
   for(const pl of nearbyPlants(radius+120)){const fade=runtime.worldOpacity?.(dist(pl),radius+120)??1;
@@ -154,7 +154,8 @@ export function initialize(runtime){
      if(m.flash>.2||f.copying>0){ctx.fillStyle=elementInk('air',f.hue,true);for(let k=0;k<4;k++){ctx.globalAlpha=(.6)*fade;ctx.fillRect(-s*(1+k*.7)+Math.sin(t/90+k)*3,Math.cos(t/70+k)*s,2,2);}}}
     ctx.restore();}
    f.copying=Math.max(0,(f.copying||0)-dt*.25);f.waiting=Math.max(0,(f.waiting||0)-dt*.05);
-   if(f.hintBox){const a=Math.atan2(f.hintBox.y-f.y,f.hintBox.x-f.x);ctx.save();ctx.translate(f.x+ox,f.y+oy);ctx.rotate(a);ctx.strokeStyle=runtime.GOLD;ctx.globalAlpha=(.5)*fade;ctx.beginPath();ctx.moveTo(30,-4);ctx.lineTo(38,0);ctx.lineTo(30,4);ctx.stroke();ctx.restore();}
+   // The flock that trusts you shows a box: an offer to the one layer of arrows (coherencia T2; it was a gold arrow).
+   if(f.hintBox)runtime.edgeOffer?.({key:'caja:'+(f.hintBox.id??Math.round(f.hintBox.x)+','+Math.round(f.hintBox.y)),kind:'caja',x:f.hintBox.x,y:f.hintBox.y,shape:'caja'});
    if(dist(f)<220){
     const text=f.copying>0?'Quásar imitador · copia lo que tocaste':f.answerBar>=0?'Te contestan en dos compases…':f.follow>0?`${spec.name} · viajan contigo${f.species==='golondrina'?' · '+Math.min(120,Math.floor(f.formation||0))+'/120 s':''}`:f.trust>=.6?`${spec.name} · confían en ti · muévete y te siguen`:f.species==='luciernaga'?`Quieto: se sincronizan · ${Math.round(f.sync*100)} %`:'Pasa el cubo por el enjambre · quieto, se acercan';
     label(ctx,text,f.x+ox,f.y+oy+64);}
