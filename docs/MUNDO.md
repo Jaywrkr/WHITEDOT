@@ -46,6 +46,8 @@ Qué cuenta la ronda (panel 11, Q2): mientras el lugar canta su patrón (desde e
 
 Maestro sube tempo10%, objetivo×1,5 y estrecha la ventana. Las once★ completan la canción;33★ abren su versión maestra. Sin sonido se puede ganar★. Reglas canónicas en `src/places.js`.
 
+Un lugar ya completo pregunta antes de entrar (Jugar, Maestro, Libre, Eco, Reto). «Cerrar» deja la hoja cerrada mientras el cubo sigue sobre el portal: vuelve a preguntar al salir y entrar otra vez (alpha.256; antes se reabría sola y solo se salía entrando en la ronda).
+
 ## Ritmo
 
 Desde alpha.237 (Jay, rama `jay/ritmo`). Cuatro modos dentro de los once lugares. Dan ★ y hacen crecer Tu canción como cualquier ronda; **nunca chispas** (`LEVEL_SPARKS`). Siempre puedes salir sin perder nada, y nada castiga un fallo. Reglas en `src/ritmo-model.js`; el juego, en `src/ritmo.js`, que carga el anillo (`places-ring.js`).

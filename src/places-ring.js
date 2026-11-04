@@ -73,7 +73,9 @@ export function initialize(runtime){
   const duo=$('portalDuo');if(duo){duo.hidden=!runtime.duoOffered?.(id);duo.onclick=()=>{box.hidden=true;runtime.duoOpen?.({id,from});};}$('portalClose').onclick=()=>{box.hidden=true;};box.hidden=false;}
  // Straight to a portal and into its round: the card's «Siguiente».
  function go(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!placeOpen(data(),id,runtime.S.journey))return false;const from=besidePortal(s,center()||s);runtime.S.wx=from.x;runtime.S.wy=from.y;inside=id;data().seen[id]=true;runtime.enterFx=1;return runtime.startPlace?.(id,{from});}
- function tick(){if(!active()||openSurface('.modal:not([hidden])')){inside=null;return;}const S=runtime.S,near=spots().find(s=>Math.hypot(s.x-S.wx,s.y-S.wy)<PORTAL_REACH);
+ function tick(){if(!active()){inside=null;return;}
+  // A sheet open keeps the portal you stand in: closing its card must not open it again (alpha.256).
+  if(openSurface('.modal:not([hidden])'))return;const S=runtime.S,near=spots().find(s=>Math.hypot(s.x-S.wx,s.y-S.wy)<PORTAL_REACH);
   // A portal acts once each time you walk into it.
   if(near&&inside!==near.id){inside=near.id;enter(near);}else if(!near){inside=null;said=null;}}
  // The colour of a portal: its place's once complete, white while open, grey while closed.

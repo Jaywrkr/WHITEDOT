@@ -1,7 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.255** en la rama `jay/visual-3`, desde `jay/visual-2` (alpha.254, PR #391 abierto). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.256** en la rama `jay/portal-close`, desde `main` (alpha.255). Las entradas describen su revisión, no certifican producción.
 
+
+## Cerrar el portal · 2.3.0-alpha.256
+
+Rama `jay/portal-close`, desde `main` (alpha.255). Nota de Jay: al volver al Jardín ya completo, la hoja del portal no se cerraba; solo se salía entrando en el nivel. Guía: [El mundo](docs/MUNDO.md#lugares-y-avance).
+
+- **Causa.** Con una hoja abierta, el anillo olvidaba en qué portal estaba el cubo. Al cerrarla, el cubo seguía dentro y la hoja se abría otra vez en el siguiente fotograma.
+- **Arreglo** (`src/places-ring.js`, `tick`). Con una hoja abierta el anillo recuerda el portal. «Cerrar» (o Escape) la deja cerrada; salir y entrar de nuevo vuelve a preguntar. Rondas, estrellas y guardado no cambian.
+- **Prueba.** `tests/ring_smoke.py` camina con las flechas hasta la Llanura, cierra la hoja y comprueba que sigue cerrada y sin ronda. Falla con alpha.255 y pasa con el arreglo.
 
 ## Visual 3 · el ambiente · 2.3.0-alpha.255
 
