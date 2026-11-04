@@ -36,8 +36,9 @@ export function initialize(r){
  const reduced=()=>!!(r.S?.reducedMotion||prefersReducedMotion());
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- // Another scene plays (a living encounter, a figure, a mischief scene that moves on, a sky's secret).
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.();
+ // Another scene plays (a living encounter, a figure, a mischief scene that moves on, a sky's secret, or a scene of another
+ // batch of the bands: while the challenge plays, the bands are busy with it, so they are asked only when it does not).
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||(!reto&&!!r.bandBusy?.());
  const words=()=>r.S.universeTexts!==false;
  // The save (S.viajeA), normalised once per save; a later version is only read.
  function book(){if(owner!==r.S){owner=r.S;owner.viajeA=normalizeViajeA(owner.viajeA);reto=null;rest=null;radar=null;balls=new Map();glows=[];summary=null;}world=worldKey(r.worldIdentity);return owner.viajeA;}

@@ -130,7 +130,8 @@ try:
     assert paid_log(page,'Encargo')==[15] and sparks(page)-before>=15 and len(st(page)['book']['orders'])==2,(paid_log(page,'Encargo'),st(page)['book']['orders'])
     page.wait_for_function("window.__toasts.some(t=>t.startsWith('Encargo cumplido · '))",timeout=15000)
     # --- 9 · The Bitácora: every band reached, with its line.
-    j=bandas(page);assert j['missing']==[] and j['summary']=='Lo que hay más lejos · 6 de 6',j
+    # Every band of batch A reached; later batches (C from 30 km) are still «?» with their km only.
+    j=bandas(page);assert all(float(k)>10 for k in j['missing']) and j['summary'].startswith('Lo que hay más lejos · 6 de '),j
     assert set(j['rows'])=={'bengala','interruptor','radar','pelota','luces','tablon'},j['rows'];assert '1 gol' in j['text'] and '1 encargo cumplido' in j['text'],j['text']
     if sound:assert 'Mejor racha · 5' in j['text'],j['text']
     if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{width}.png')
