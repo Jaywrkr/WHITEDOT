@@ -156,7 +156,7 @@ const rebasedV1=new Set(['src/cajas.js','src/crystal-sparks.js','src/discovery.j
 // kit, and the gradients per frame they still built turned into cached images. Drawing only: no mechanics, positions,
 // saves or sound change; the offline shell lists no new module. Held to the code commit of jay/visual-2 (from
 // jay/visual-1, 1d51eab, alpha.253).
-const approvedV2='8d5fb47c29a6a1dc03169ea3b9e32d930607f672';
+const approvedV2='43490c3d29bde2704c233d3c9de4606c61d6c8af';
 const rebasedV2=new Set(['src/alive.js','src/landmarks.js','src/layers.js','src/micro-instruments.js','src/percussion.js','src/pet.js','src/render.js','src/sculpture-totems-art.js','src/sculpture-totems.js','src/universe-activities-art.js','src/world-light.js','src/world-sheet.js','src/world-visibility.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
