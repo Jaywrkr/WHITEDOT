@@ -24,7 +24,8 @@ export function initialize(runtime){
   if(change(q)===false){Object.assign(owner,before);return false;}
   if(runtime.save()===false){Object.assign(owner,before);return false;}return true;
  }
- function changeNotice(amount){if(!amount)return;delta=clock<deltaUntil&&Math.sign(delta)===Math.sign(amount)?delta+amount:amount;deltaUntil=clock+1.5;if(amount>0&&!jumpAvailable&&book().earned>=SPARK_JUMP_COST){jumpAvailable=true;jumpUntil=clock+3;notice('Ya puedes saltar');}}
+ function changeNotice(amount){if(!amount)return;delta=clock<deltaUntil&&Math.sign(delta)===Math.sign(amount)?delta+amount:amount;deltaUntil=clock+1.5;// T0 (bug 5): only once the jump exists (the eleven places complete, ring()); until then enough sparks say nothing.
+ if(amount>0&&!jumpAvailable&&ring()&&book().earned>=SPARK_JUMP_COST){jumpAvailable=true;jumpUntil=clock+3;notice('Ya puedes saltar');}}
  function notice(title,text=''){runtime.toast?.(title+(text?' · '+text:''),{level:2,category:'spark-result',detail:'sparks',ttl:120000});}
  // The free World's rhythm (plan F3): each player pulse, judged by journey-pulse.js, updates the streak; the wave it
  // sends carries the multiplier for what it breaks: off time ×1 (K2), on time ×2 (H1: the ×3 from the eighth in a row is gone).
@@ -80,11 +81,11 @@ export function initialize(runtime){
   if(!q.claims['universe:complete']&&universeProgress(owner).complete)earned.push({id:'universe:complete',value:0,title:SPARK_UNIVERSE.title,text:SPARK_UNIVERSE.name});
   const checks={inspector:inspector.count>=5,resident:homeTime>=120,expedition:sessionDistance>=5000&&anchor.layer===point.layer&&Math.hypot(anchor.x-point.x,anchor.y-point.y)<80,errand:newCards.size>=3,neighbors:neighbors.size>=3,last:worldBroken>=10,taxi:q.stats.sinceJump>=10000};
   for(const b of SPARK_BADGES)if(checks[b.id]&&!q.claims['badge:'+b.id])earned.push({id:'badge:'+b.id,value:b.reward,title:b.name,text:b.text});
-  if(earned.length){let amount=0;const ok=commit(()=>{for(const e of earned){const before=owner.sparks;claimSparkReward(owner,e.id,e.value,e.title,e.text);amount+=owner.sparks-before;}});if(ok){changeNotice(amount);notice(earned.length===1?earned[0].title:earned.length+' objetivos completados',amount?'+'+amount+' chispas':'Consúltalos en Tu cubo · Viaje');}}
+  if(earned.length){let amount=0;const ok=commit(()=>{for(const e of earned){const before=owner.sparks;claimSparkReward(owner,e.id,e.value,e.title,e.text);amount+=owner.sparks-before;}});if(ok){changeNotice(amount);notice(earned.length===1?earned[0].title:earned.length+' objetivos completados',amount?'+'+amount+' chispas':'Consúltalos en Tu cubo · Chispas');}}
  }
  function buy(id){const p=SPARK_SHOP.find(p=>p.id===id),q=book();if(!p||q.version!==1||q.purchases[id])return false;
   if(sparkNumber(owner.sparks)<p.cost){$('cubeHint').textContent='Te faltan '+(p.cost-sparkNumber(owner.sparks))+' ✦ para '+p.name+'.';return false;}
-  if(!commit(next=>{if(!debitSparks(owner,p.cost))return false;next.purchases[id]=owner.todayKey||true;next.log.push({title:p.name,text:'Compra permanente · '+p.cost+' chispas',at:owner.todayKey});next.log=next.log.slice(-80);})){ $('cubeHint').textContent='No se guardó. Conservamos tus chispas.';return false;}
+  if(!commit(next=>{if(!debitSparks(owner,p.cost))return false;next.purchases[id]=owner.todayKey||true;next.log.push({title:p.name,text:'Compra permanente · '+p.cost+' chispas',at:owner.todayKey});next.log=next.log.slice(-80);})){ $('cubeHint').textContent='No se guardó. Conservas tus chispas.';return false;}
   changeNotice(-p.cost);equip(id);if(p.slot==='trail'&&runtime.cubeSettings?.()?.trail!=='none')runtime.chooseCubeStyle?.('trail','none');if(SHOP_PULSES.includes(id)&&(runtime.cubeSettings?.()?.pulse||'ring-0')!=='ring-0')runtime.chooseCubeStyle?.('pulse','ring-0');if(p.slot==='pulseVoice'&&(runtime.cubeSettings?.()?.voice||'natural')!=='natural')runtime.chooseCubeStyle?.('voice','natural');render();runtime.renderCube?.();$('cubeHint').textContent='Ya llevas '+p.name+'. Está en Llevar.';notice('Compraste '+p.name,'Ya lo llevas');return true;
  }
  // Each slot holds one piece (or several where the slot allows many); '' takes everything off.

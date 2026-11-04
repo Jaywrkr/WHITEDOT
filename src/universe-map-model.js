@@ -43,8 +43,9 @@ export function fogCells(places){const out=[];for(const key of Object.keys(plain
 export function bandCells(RP,km){const R=km*UNITS_PER_KM,n=Math.ceil(R/RP)+1,out=[];for(let rx=-n;rx<=n;rx++)for(let ry=-n;ry<=n;ry++)if(Math.hypot((rx+.5)*RP,(ry+.5)*RP)<=R)out.push(rx+','+ry);return out;}
 // How much of a disc is discovered. pct is whole (floor); a single region already reads «1 %», never «0 %» once begun.
 export function bandProgress(places,RP,km,cells=bandCells(RP,km)){const set=plain(places)?places:{};let done=0;for(const k of cells)if(set[k])done++;const total=cells.length;return {km,done,total,complete:total>0&&done>=total,pct:done?Math.max(1,Math.floor(done/total*100)):0};}
-// The band to show: the first ring not yet complete beyond where you stand (or the last one).
-export function currentBand(progress,distanceKm=0){return progress.find(p=>!p.complete&&p.km>=distanceKm)||progress.find(p=>!p.complete)||progress.at(-1)||null;}
+// The band to show: the first ring not yet complete beyond where you stand, else the first ring beyond you, else the
+// last one. T0 (bug 13): past the last ring it no longer falls back to the first ring left incomplete behind you.
+export function currentBand(progress,distanceKm=0){return progress.find(p=>!p.complete&&p.km>=distanceKm)||progress.find(p=>p.km>=distanceKm)||progress.at(-1)||null;}
 
 // The camera: its centre in world units and its scale in screen pixels per unit.
 const room=(W,H,inset={x:0,y:0})=>Math.max(60,Math.min(W-2*(inset?.x||0),H-2*(inset?.y||0)));

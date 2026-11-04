@@ -84,9 +84,11 @@ assert.equal(old.flare,null);assert.equal(old.orders.length,1);assert.deepEqual(
 const future={version:2,retos:{n:1},whatever:true};assert.equal(A.normalizeViajeA(future),future);assert.equal(A.setFlare(future,{x:0,y:0},'w',''),null);assert.equal(A.noteGoal(future,'x','d'),null);assert.deepEqual(A.takeOrders(future,list,look),[]);
 assert.equal(A.switchPaysToday(old,'interruptor:1,1','2026-11-04'),false);assert.equal(A.switchPaysToday(old,'interruptor:1,1','2026-11-05'),true);
 const r0=A.normalizeViajeA({});A.noteReto(r0,'interruptor:2,2',5,5,'2026-11-04',10);assert.deepEqual([r0.retos.n,r0.retos.won,r0.retos.earned,r0.earned,r0.switches['interruptor:2,2']],[1,1,10,10,'2026-11-04']);
+// --- T0 (bug 10): the page does not count bands reached as things found, and says nothing false past the last band.
+{const b=read('src/bandas.js');assert.ok(!b.includes('Lo que hay más lejos · ${reached} de ${rows.length}'),'no count of bands reached');assert.ok(!b.includes('Más lejos hay más.'),'nothing promised past the last band');}
 // --- English
 for(const e of bandEntries()){assert.ok(EN[e.name],e.name);if(e.notice)assert.ok(EN[e.notice],e.notice);if(e.hint)assert.ok(EN[e.hint],e.hint);}
-for(const k of ['Lo que hay más lejos · {n} de {n}','Lo más lejos · {}','Lanzar bengala','Marca este sitio','Volviste a tu bengala','Tablón de encargos','Encargo cumplido','{} da las gracias','Reto · Pulsa a tiempo en cada aro.','Reto · Pasa por cada aro.','Reto · Recoge las luces.','Radar de ritmo · con sonido','¡Gol!',
+for(const k of ['Lo que hay más lejos','Llegaste a todo.','Lo más lejos · {}','Lanzar bengala','Marca este sitio','Volviste a tu bengala','Tablón de encargos','Encargo cumplido','{} da las gracias','Reto · Pulsa a tiempo en cada aro.','Reto · Pasa por cada aro.','Reto · Recoge las luces.','Radar de ritmo · con sonido','¡Gol!',
  '{} quiere oír un sonido raro.','{} perdió algo en la boya del km {}.','{} quiere ver un encuentro vivo.','{} quiere ver un reto ganado.',...A.CREATURES,...Object.values(A.ORDER_DO)])assert.ok(EN[k],k);
 // --- no random numbers, sparks only by the universe's rule, quiet notes, audio.js untouched
 const src=read('src/viaje-a.js')+read('src/viaje-a-model.js')+read('src/bandas.js')+read('src/bandas-model.js');

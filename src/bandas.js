@@ -45,8 +45,10 @@ export function initialize(r){
    return b.entries.map(e=>{let line='';try{line=attached.get(e.id)?.line?.()||'';}catch(_){line='';}line=line||e.hint||'';
     return `<p class="banda-row" data-banda-km="${b.km}" data-banda="${escape(e.id)}"><span class="secret-name">${formatKm(b.km)}</span> · ${escape(e.name)}${line?` · ${escape(line)}`:''}</p>`;}).join('');}).join('');
   const lead=far>=.05?`<p>Lo más lejos · ${formatKm(far<1?Math.floor(far*10)/10:Math.floor(far))}</p>`:'<p>Cuanto más lejos llegas, más cosas encuentras.</p>';
-  const rest=reached===rows.length?'<p>Más lejos hay más.</p>':'';
-  return `<details class="journal-section" data-journal-detail="Lo que hay más lejos" id="journalBandas"><summary>Lo que hay más lejos · ${reached} de ${rows.length}</summary>${lead}${body}${rest}</details>`;}
+  // T0 (Kubono coherente, bug 10): the summary no longer counts the bands reached as if they were things found («20 de 20»
+  // with nothing seen), and past the last band it says what is true instead of promising more farther on.
+  const rest=reached===rows.length?'<p>Llegaste a todo.</p>':'';
+  return `<details class="journal-section" data-journal-detail="Lo que hay más lejos" id="journalBandas"><summary>Lo que hay más lejos</summary>${lead}${body}${rest}</details>`;}
  // ---------- what each batch attaches ----------
  function attach(id,hooks){if(typeof id!=='string'||!hooks||typeof hooks!=='object')return false;attached.set(id,hooks);return true;}
  const mapPoints=()=>{const out=[];for(const a of attached.values())try{for(const e of a.mapPoints?.()||[])if(e&&Number.isFinite(e.x)&&Number.isFinite(e.y))out.push(e);}catch(_){}return out;};

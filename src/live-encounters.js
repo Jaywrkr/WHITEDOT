@@ -10,7 +10,7 @@ import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {audibleTime} from './journey-pulse.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
-import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,LIVE_NOTICE,LIVE_SUMMARY,LIVE_FAREWELL,liveDefinition,liveFor,livePick,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost,liveTitle,liveSummary} from './live-encounters-model.js';
+import {LIVE_VERSION,LIVE_ENCOUNTERS,LIVE_COLORS,LIVE_NOTICE,LIVE_SUMMARY,LIVE_FAREWELL,liveDefinition,liveFor,livePick,liveInterval,liveSpawnPoint,normalizeLive,createLive,stepLive,liveFinished,liveReward,liveForced,liveWon,liveLost,liveTitle,liveHint,liveSummary} from './live-encounters-model.js';
 import {drawLive} from './live-encounters-art.js';
 // The catch note: one note of the harmony that sounds, an octave up, in the place's own lead, far under the music.
 // A step of a task (batch 3: the prism's nodes as they sound and as you touch them) plays the same way, quieter, its
@@ -54,7 +54,7 @@ export function initialize(r){
   const point=liveSpawnPoint(player,heading??0,scope,n);scene=createLive(def,point,player,{now:clock});q.count=n+1;travel=0;
   // Pulses already in flight are not this encounter's.
   for(const w of r.waves||[])seen.add(w);
-  notice={title:liveTitle(def.id),text:def.line,until:clock+LIVE_NOTICE};line=null;summary=null;return true;
+  notice={title:liveTitle(def.id),text:def.line,hint:liveHint(def.id),until:clock+LIVE_NOTICE};line=null;summary=null;return true;
  }
  function phase(){const ac=r.ac,bq=r.MU?.bq,six=r.SIX;if(!ac||!r.S.sound||ac.state!=='running'||!bq?.length||!(six>0))return undefined;const now=audibleTime(ac),beat=bq.findLast(t=>t<=now);return beat===undefined?undefined:((now-beat)/(six*4))%1;}
  function pay(){
@@ -92,12 +92,12 @@ export function initialize(r){
   // Mapa del universo (alpha.235): the encounter stays on the map where you met it.
   if(liveFinished(scene)&&(liveLost(scene)||scene.paid)){r.mapNoteLive?.({kind:scene.kind,x:scene.x,y:scene.y,won:liveWon(scene)});summary={text:liveSummary(scene,scene.reward||0),won:liveWon(scene),until:clock+LIVE_SUMMARY};line=null;scene=null;travel=0;}
  }
- function draw(){if(!allowed()||!scene&&!line&&!notice&&!summary)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:scene?'':summary?.text||'',clock});}
+ function draw(){if(!allowed()||!scene&&!line&&!notice&&!summary)return;drawLive(r,scene,{color:scene?colorOf(scene):'#ffffff',reduced:reduced(),line:line?.text||'',title:notice?.title||'',hint:notice?notice.hint??notice.text:'',summary:scene?'':summary?.text||'',clock});}
  Object.defineProperties(r,{
   liveTick:{get:()=>tick},drawLive:{get:()=>draw},
   liveEncounterActive:{get:()=>()=>!!scene},liveEncounterRest:{get:()=>()=>{if(!scene)travel=0;}},
   // Tests only (the runtime is never published): start one now, read the state.
   liveEncounterSpawn:{get:()=>kind=>allowed()&&!mischiefBusy()&&!!liveDefinition(kind)&&spawn(kind)},
-  liveEncounterState:{get:()=>()=>({book:book(),scene,travel,need:need(),clock,line:line?.text||notice?.text||'',title:notice?.title||'',hint:notice?.text||'',summary:summary?.text||'',forced,allowed:allowed()})}
+  liveEncounterState:{get:()=>()=>({book:book(),scene,travel,need:need(),clock,line:line?.text||notice?.text||'',title:notice?.title||'',hint:notice?notice.hint??notice.text:'',summary:summary?.text||'',forced,allowed:allowed()})}
  });book();
 }

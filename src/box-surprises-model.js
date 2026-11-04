@@ -18,6 +18,10 @@ export const BOX_SURPRISES=Object.freeze({
  prisma:{name:'Halo prisma',seconds:20,text:'Un halo de colores acompaña tus pasos.',prism:true}
 });
 export const SURPRISE_IDS=Object.keys(BOX_SURPRISES);
-export function surpriseFor(box,seedOf){const h=seedOf('box:surprise:v1:'+box.id)>>>0;return h%100<45?SURPRISE_IDS[(h>>>8)%SURPRISE_IDS.length]:null;}
+// T0 (Kubono coherente, decision 4 of Jay): the cube is small and never grows. «Expansión» stays in the list, so every
+// other box keeps the surprise its seed gave it, but a box that drew it now gives none, it cannot be given, and one
+// saved while active grows nothing.
+export const RETIRED_SURPRISES=new Set(['grande']);
+export function surpriseFor(box,seedOf){const h=seedOf('box:surprise:v1:'+box.id)>>>0,id=h%100<45?SURPRISE_IDS[(h>>>8)%SURPRISE_IDS.length]:null;return RETIRED_SURPRISES.has(id)?null:id;}
 export function normalizeSurprise(raw){if(Number.isInteger(raw?.version)&&raw.version>1)return raw;return {...raw,version:1,remaining:{...raw?.remaining},elapsed:{...raw?.elapsed}};}
-export function surpriseStyle(ids){const defs=ids.map(id=>BOX_SURPRISES[id]).filter(Boolean);return {speed:defs.reduce((v,d)=>v*(d.speed||1),1),scale:defs.reduce((v,d)=>v*(d.scale||1),1),shape:defs.find(d=>d.shape)?.shape||'cube'};}
+export function surpriseStyle(ids){const defs=ids.filter(id=>!RETIRED_SURPRISES.has(id)).map(id=>BOX_SURPRISES[id]).filter(Boolean);return {speed:defs.reduce((v,d)=>v*(d.speed||1),1),scale:defs.reduce((v,d)=>v*(d.scale||1),1),shape:defs.find(d=>d.shape)?.shape||'cube'};}

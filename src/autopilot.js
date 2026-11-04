@@ -35,9 +35,9 @@ export function initialize(runtime){
  function ui(){const s=engine.state;$('autoPulse').textContent=runtime.S.autoPulse===true?'Pulsos: sí':'Pulsos: no';$('autoPulse').setAttribute('aria-pressed',String(runtime.S.autoPulse===true));$('autopilotHud').hidden=!runtime.inWorld()||s.mode!=='wander';$('autoStatus').textContent=s.paused?'Paseo en pausa':'Paseo musical';$('bAuto')?.setAttribute('aria-pressed',String(s.mode==='wander'));$('bAuto')?.setAttribute('aria-label',s.mode==='wander'?'Detener paseo musical':'Iniciar paseo musical');$('routeAuto').setAttribute('aria-pressed',String(s.mode==='destination'));$('routeAuto').setAttribute('aria-label',s.mode==='destination'?'Detener viaje automático':'Viajar automáticamente');}
  function stop(){engine.stop();ui();}
  function start(mode){
-  if(!runtime.inWorld()){runtime.toast('<em>Autopilot</em> · Entra al Mundo para iniciar.');return false;}
+  if(!runtime.inWorld()){runtime.toast('<em>Ir solo</em> · Entra al Mundo para iniciar.');return false;}
   if(runtime.S.sound)runtime.audio();runtime.navigationTick();const layer=runtime.S.layer||'superficie';
-  if(mode==='destination'&&(!runtime.navigationState?.sameLayer||runtime.navigationState.arrived)){runtime.toast('<em>Autopilot</em> · Elige un destino en esta capa.');return false;}
+  if(mode==='destination'&&(!runtime.navigationState?.sameLayer||runtime.navigationState.arrived)){runtime.toast('<em>Ir solo</em> · Elige un destino en esta capa.');return false;}
   if(mode==='wander')runtime.cancelDestination();
   pulses.reset();engine.start(mode,layer,runtime.seedOf(`paseo:${runtime.MU.dnaT?.key}`)/4294967296*Math.PI*2);$('mJournal').hidden=true;ui();return true;
  }

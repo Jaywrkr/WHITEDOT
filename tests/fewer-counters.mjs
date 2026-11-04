@@ -27,5 +27,5 @@ assert.match(html,/id="hudStars"/);assert.match(html,/id="hudPlaces"/);assert.ma
 const css=readFileSync(new URL('../styles/estilo-j.css',import.meta.url),'utf8');assert.match(css,/\.hud :is\(#day,#walkDistance,#elementCount,\.stats,#sparkGoal\)\{display:none!important\}/);
 for(const id of ['day','era','walkDistance','elementCount','streak','starsN','size','sparkGoal','mRegions','mConts','mRecord','oStars','kStars','houseCount'])assert.match(html,new RegExp(`id="${id}"`),id+' keeps its id');
 // At most one achievement per notice.
-const ach=readFileSync(new URL('../src/achievements.js',import.meta.url),'utf8');assert.doesNotMatch(ach,/\.length\+' logros/,'never a count of achievements in a notice');assert.match(ach,/'✦ Logro · '\+escape/);
+const ach=readFileSync(new URL('../src/achievements.js',import.meta.url),'utf8');assert.doesNotMatch(ach,/\.length\+' logros/,'never a count of achievements in a notice');assert.match(ach,/'Logro · '\+escape/);assert.doesNotMatch(ach,/✦ Logro/,'T0 (bug 6): achievements pay no ✦, so their notice shows none');
 console.log('PASS fewer counters: old houses keep their rooms, rooms by places or ★, one ★ (relics are Reliquias), three numbers in the HUD, one achievement per notice');

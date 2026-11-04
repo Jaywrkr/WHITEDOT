@@ -9,6 +9,7 @@
 // or pulse on time near it, and it is yours: sparks by the universe's rule, its page in the album, and a complete series
 // lights a segment of the Aro de sonidos round the cube (gold: earned). In the album you choose up to four and they play
 // together, in a soft loop on the music's own bars, on top of it, until you stop or close the album. The music is untouched.
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
@@ -144,7 +145,7 @@ if(amount)r.showSparkPickup?.(amount,{x:spot.x,y:spot.y});glows.push({x:spot.x,y
 const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  // A word centred on a point, kept inside the screen.
  const say=(c,t,x,y)=>{const w=c.measureText(t).width;c.fillText(t,Math.max(8+w/2,Math.min(r.W-8-w/2,x)),y);};
-function draw(){if(!allowed())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?ac.currentTime:0,light=!!r.lightQuality?.(),beat=breath(r.beat?.()||0,still);
+function draw(){if(!allowed())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?audibleTime(ac):0,light=!!r.lightQuality?.(),beat=breath(r.beat?.()||0,still);
   let hint=null;c.save();const marks=scene()||paused()?{}:drawMarks(c,p);if(!albumOk()){c.restore();drawn={hint:false,marks};return;}
   for(const s of around(p,SOUND_HEAR)){if(kept(s))continue;const q=at(s.x,s.y),d=Math.hypot(s.x-p.x,s.y-p.y),off=q.x<-12||q.y<-12||q.x>r.W+12||q.y>r.H+12;
    if(off){if(!hint||d<hint.d)hint={...q,d};continue;}

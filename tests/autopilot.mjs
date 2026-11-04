@@ -19,3 +19,5 @@ for(let i=0;i<100;i++){
  if(v&&Math.hypot(v.dx,v.dy)>0)assert(Math.cos(avoid.state.angle)<=.8,'wander entered the sea during its turn');
 }
 assert(avoid.state.angle>.5,'wander failed to turn away from the sea');
+// T0 (bug 17): the game speaks Spanish: no «Autopilot» in its notices.
+{const {readFileSync}=await import('node:fs');const src=readFileSync(new URL('../src/autopilot.js',import.meta.url),'utf8');assert(!/'<em>Autopilot<\/em>/.test(src),'no Autopilot in the notices');assert(src.includes("'<em>Ir solo</em> · Entra al Mundo para iniciar.'"));}

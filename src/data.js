@@ -5,7 +5,7 @@ import {RHYTHM_GENRES} from './rhythms.js';
 // Tablas y constantes del juego.
 export function initialize(runtime) {
   const CAP=120, PER_LEVEL=40, CHUNK=320, SPEED=190, WCH=900, REG=4, GOLD="#f0d27a";
-  const PHRASES=["Volviste. El universo sigue sonando.","Otro lugar para escuchar.","Explora a tu ritmo.","Lo que tocas deja huella.","Escucha antes de tocar.","Pequeño también suena.","El cubo crece contigo.","Crea cuando quieras. Tu música te espera.","Nada de lo que hiciste se pierde.","Hoy escuchaste."];
+  const PHRASES=["Volviste. El universo sigue sonando.","Otro lugar para escuchar.","Explora a tu ritmo.","Lo que tocas deja huella.","Escucha antes de tocar.","Pequeño también suena.","Tu luz se queda contigo.","Crea cuando quieras. Tu música te espera.","Nada de lo que hiciste se pierde.","Hoy escuchaste."];
   const ECOS=["Escucha cómo cambia el lugar cuando te quedas.","Cada lugar tiene su pulso.","Hay música en lo que parece quieto.","Lo que suena cerca también cuenta.","Un sonido nuevo abre otro camino.","Volver a un lugar es oírlo distinto.","Tu pulso dejó una huella aquí.","Tu regreso abre otra posibilidad.","Lo lejano también responde.","Esta estrella guarda lo que tocaste.","Una pequeña escucha puede abrir otro camino.","Lo que tocas, se queda.","Escucha el detalle que antes pasaste por alto.","El silencio también es parte del tema.","Nota pequeña. Nota real.","Aquí el compás va más lento.","Cada encuentro deja un eco.","Este lugar te conoce un poco más.","Tu manera de crear tiene un lugar.","La música se acumula como la luz.","Hay una nota que todavía no oíste.","Primero escucha. Luego toca.","Tus encuentros dejan memoria.","Llegar despacio también es llegar.","Hazlo simple. Escucha.","Un compás a la vez.","Lo pequeño suena.","Cualquier momento es bueno para tocar.","Lo que oíste es suficiente.","Sigue el sonido, aunque sea lento.","Un paso abre otra escucha.","Hoy eliges qué oír.","Cada lugar canta a su manera.","Llegaste. El universo sigue sonando."];
   const ERAS=[[30,"I · Pixel"],[90,"II · Línea"],[180,"III · Forma"],[270,"IV · Luz"],[365,"V · Constelación"],[1e9,"∞ · Sin final"]];
   // Cada zona: escala, ritmo, timbre y una forma propia de tocar música.
@@ -125,7 +125,7 @@ export function initialize(runtime) {
    ["escuchaViva","El lugar te responde","Escuchaste un minuto quieto y dejaste que el ambiente tomara la iniciativa."],
    ["dia1","Día 1","Empezaste. Eso ya es más que la mayoría."],
    ["dorada","Luz dorada","Encontraste tu primera luz dorada."],
-   ["tope","Luz compartida","Compartiste 120 luces en un día."],
+   ["tope","Luz compartida","Completaste el Camino de hoy."],
    ["tiempo","En tiempo","8 luces seguidas justo en el beat."],
    ["mundo","El Mundo","Entraste al Mundo por primera vez."],
    ["estrella1","Primera reliquia","Encontraste tu primera reliquia."],

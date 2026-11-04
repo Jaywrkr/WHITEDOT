@@ -11,6 +11,10 @@ assert.deepEqual(raw,[],'raw audio-clock timers left');
 // Every module that lights a source when its note sounds goes through cueDelay.
 for(const f of ['glass','mirrors','materia','vida','initiative','landmarks','quietud','cajas','render','feedback','patches','journey-echo','journey-victory','cube-shop-sound','jam'])assert.match(readFileSync(new URL(`../src/${f}.js`,import.meta.url),'utf8'),/cueDelay\(/,f);
 
+// T0 (bug 9): the sky's song (lejos-b), the album's ring (descubrir) and the pulsar's flash (viaje-c) light by the heard
+// clock, never by the raw audio clock (with Bluetooth the light came first).
+for(const [f,re] of [['lejos-b',/function drawSong[^\n]*now=r\.ac\?r\.ac\.currentTime/],['descubrir',/function draw\(\)[^\n]*now=ac\?ac\.currentTime/],['viaje-c',/16\*\(r\.SIX\|\|\.125\)-r\.ac\.currentTime/]])assert.doesNotMatch(readFileSync(new URL(`../src/${f}.js`,import.meta.url),'utf8'),re,f+' lights before its sound');
+for(const f of ['lejos-b','descubrir','viaje-c'])assert.match(readFileSync(new URL(`../src/${f}.js`,import.meta.url),'utf8'),/audibleTime\(/,f);
 // 2. With outputLatency 0.25 every glow lands when its note is heard (≤ 20 ms after it, never before).
 const realNow=performance.now.bind(performance),realTimer=setTimeout,realClear=clearTimeout;let clock=0;const timers=new Map();let id=0;
 performance.now=()=>clock;globalThis.setTimeout=(f,ms=0)=>{const k=++id;timers.set(k,{f,at:clock+ms});return k;};globalThis.clearTimeout=k=>timers.delete(k);

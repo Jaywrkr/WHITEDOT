@@ -128,8 +128,11 @@ export function initialize(runtime){
   const keys=['lugares','journey','sparkEconomy','sparks','wild','rewards'],before=Object.fromEntries(keys.map(k=>[k,structuredClone(runtime.S[k])])),tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;
   function rollback(){if(runtime.S.journey&&game){if(playing===undefined)delete runtime.S.journey[game];else runtime.S.journey[game]=playing;}for(const k of keys){if(before[k]===undefined)delete runtime.S[k];else if(object(before[k])&&object(runtime.S[k]))restoreTree(runtime.S[k],before[k]);else runtime.S[k]=before[k];}if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}return false;}
   function commit(){return runtime.save?.()!==false;}
+  // T0 (Kubono coherente, bug 7): a round played today lights the day's star in the Refugio («Juega hoy…»), as a Camino
+  // crystal does. Once the round is saved; the lit day is saved too.
+  function played(){const before=runtime.S.lastDay;runtime.onFirstLight?.();if(runtime.S.lastDay!==before)runtime.save?.();}
   // Libre (plan H3): only the music of the place; no stars, no sparks, no card. Back to its portal.
-  if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}shown=null;runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
+  if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}played();shown=null;runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
   if(s.rounds.day!==today()){s.rounds.day=today();s.rounds.counts={};}const roundsToday=s.rounds.counts[id]||0;s.rounds.counts[id]=roundsToday+1;
   const stars=roundStars({onTime,maestro:r.maestro,sound}),fresh=grant(id,stars);
   const sparks=LEVEL_SPARKS;
@@ -140,7 +143,7 @@ export function initialize(runtime){
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const all=(r.notes||[]).map((n,i)=>[n,r.noteSteps?.[i],r.noteTicks?.[i]]).filter(([n])=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];s.noteTicks||={};if(all.every((a,i)=>Number.isSafeInteger(a[2])&&a[2]>=0&&(!i||a[2]>=all[i-1][2])))s.noteTicks[id]=all.map(a=>a[2]);else delete s.noteTicks[id];}}
   const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id],s.noteTicks?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id],before.lugares.noteTicks?.[id]])?'changed':'kept':null;
-  const grew=layerGrew(before.lugares,s,id),result={id,personal,grew,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();afterDrop(result);return true;}
+  const grew=layerGrew(before.lugares,s,id),result={id,personal,grew,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();played();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();afterDrop(result);return true;}
  // Panel 10 (P4, Simogo): the card waits for the end of the round's two-bar drop, as heard (audio clock minus the
  // output latency); never before journeyVictoryState().end. Without sound or drop, after 1,2 s as before.
  // Panel 10 (P6, D5-A, Simogo): the round that completes the eleven flows into the finale by itself, without the card in
@@ -160,8 +163,9 @@ export function initialize(runtime){
  function abandon(){const s=own(),r=s.run;if(!r||s.readOnly)return false;const key=gameKey(r.id),playing=runtime.S.journey?.[key],position={wx:runtime.S.wx,wy:runtime.S.wy},tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;restore(r);s.run=null;back(r.from);
   if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
   runtime.narrate?.('abandon');runtime.hud?.();return true;}
- // The round's card: the three stars, what each asks, and the time. No sparks (H1). Silent buttons.
- function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime),near=!r.maestro&&r.sound&&!own().stars[r.id][1]?nearMiss(r.onTime):null;box.toggleAttribute?.('data-near',!!near);
+ // The round's card: the three stars, what each asks, and the time. No sparks (H1). Silent buttons. T0 (bug 11): it waits,
+ // as for another sheet, while the Refugio is open, so it never opens on top of it.
+ function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')||runtime.houseActive?.()){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime),near=!r.maestro&&r.sound&&!own().stars[r.id][1]?nearMiss(r.onTime):null;box.toggleAttribute?.('data-near',!!near);
   // Ritmo (alpha.237, ritmo.js): an Eco round says so, and the card says how the ghost went.
   const ritmo=runtime.ritmoCard?.(r)||null;
   // Con Luca (alpha.239): a challenge for two (duos.js) says who played and how the mark went; a calm round
