@@ -164,7 +164,7 @@ const rebasedV2=new Set(['src/alive.js','src/landmarks.js','src/layers.js','src/
 // the aurora, the ground and the print from the new module, the layers' aurora curtains take a cached strip away from
 // the cube, and the offline shell lists one new module. No mechanics, positions, saves or sound change. Held to the code
 // commit of jay/visual-3 (from jay/visual-2, a5f253f, alpha.254).
-const approvedV3='73e062552ad4e3683b880d795e4a15de7f7df1b9';
+const approvedV3='d6f786c149b2e54763c013710ad09e2521cc6e1f';
 const rebasedV3=new Set(['src/render.js','src/universe-layers.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
