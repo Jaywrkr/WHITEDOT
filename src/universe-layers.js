@@ -5,6 +5,7 @@ import {hash} from './world-sheet.js';
 import {newRegionById} from './universe-regions.js';
 import {snapAxis,createClock,createBorder} from './superbiome-fusion.js';
 import {familyOf} from './superbiomes.js';
+import {drawCurtainCell,CURTAIN_AMP} from './ambient-art.js';
 // A hash with full avalanche: keys that differ in one character land far apart (no clumps of points).
 export function rand(key){let h=hash(key);h^=h>>>16;h=Math.imul(h,0x85ebca6b);h^=h>>>13;h=Math.imul(h,0xc2b2ae35);h^=h>>>16;return (h>>>0)/4294967296;}
 // Visual 1 (alpha.250): the layers asked rand(key+':x'+i) for every point of every cell on every frame, building a new
@@ -131,7 +132,11 @@ export const STYLES={
   // Aurora: a faint veil of colour far away; curtains of light that ripple with the music and part when you pass;
   // a few sparks in the second colour.
   far:{draw(c,x,y,s,key,f){c.fillStyle=rgba(rk(key,'c')<.5?f.ink:f.accent,.05);c.beginPath();c.ellipse(x+rk(key,'x')*s,y+rk(key,'y')*s,50+rk(key,'r')*40,16,rk(key,'a')*3.14,0,6.283);c.fill();}},
+  // Visual 3 (alpha.255): away from the cube a cell takes its slice of one baked strip per ink (ambient-art.js), sliding
+  // with the time as the columns did; the cells within reach of the cube, where the curtains part, keep the columns.
   mid:{draw(c,x,y,s,key,f){if(rk(key,'on')<.3)return;const base=y+rk(key,'y')*s,amp=10+6*f.beat,ph=rk(key,'p')*6,ink=rk(key,'c')<.7?f.ink:f.accent;c.lineWidth=1;
+   const clear=f.cubeX<x-100||f.cubeX>x+s+100||f.cubeY<base-CURTAIN_AMP-100||f.cubeY>base+CURTAIN_AMP+130;
+   if(clear&&drawCurtainCell(c,x,base,s,f.ux+(f.still?0:f.t/1500*110),ph,ink))return;
    for(let u=0;u<=s;u+=5){const px=x+u,wave=Math.sin((f.ux+u)/110+(f.still?0:f.t/1500)+ph)*amp,py=base+wave,away=Math.max(0,1-Math.hypot(px-f.cubeX,py-f.cubeY)/90),len=14+8*Math.sin((f.ux+u)/40+ph);
     c.strokeStyle=rgba(ink,.28*(1-away*.8));c.beginPath();c.moveTo(px,py+away*16*Math.sign(py-f.cubeY||1));c.lineTo(px,py+len+away*16*Math.sign(py-f.cubeY||1));c.stroke();}}},
   near:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.accent,.5+.4*f.beat);for(let i=0;i<2;i++)c.fillRect(Math.round(x+rk(key,'x',i)*s),Math.round(y+rk(key,'y',i)*s),1,1);}},

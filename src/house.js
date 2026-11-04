@@ -12,6 +12,8 @@ import {galleryCards,showcasePieces,visitors} from './house-collection.js';
 import {nextLine} from './refugio-lugares.js';
 import {SKY_FIGURES,skyLines} from './sky-map-model.js';
 import {CAPSULE_PRICE} from './house-capsules.js';
+import {glow,contactShadow} from './fx-kit.js';
+import {refugioRoomLight,stepLight} from './ambient-art.js';
 export function initialize(runtime){const $=runtime.$,signals=new Map();let owner=null,knownDays=null,visit=null,active=false,action='walk',selected='obj:origen',drag=null,selectedObject=null;
  // Refugio simple (Jay, 28 Oct 2026, alpha.234): one screen, the house seen from the front with every open room at a
  // glance; no camera or stairs to travel. Three buttons: Escuchar, Colocar and Salir; the rest waits under «Más».
@@ -127,6 +129,8 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  function skyCells(h){if(!h.unlocked.includes('azotea')||visit)return [];const b=roomBox('azotea'),w=(b.w-36)/14;return skyDone().slice(0,28).map((id,i)=>({id,x:b.x+18+(i%14+.5)*w,y:b.y+(i<14?70:122),r:w*.36}));}
  function drawSky(c,h,k,t,still){skyHits=[];const gold='#f0d27a';for(const cell of skyCells(h)){const f=SKY_FIGURES.find(q=>q.id===cell.id),p=toScreen(cell.x,cell.y),r=cell.r*k;if(!f)continue;const at=([x,y])=>[p.x+x*r,p.y+y*r];
    c.save();c.strokeStyle='#ffffff';c.globalAlpha=.35;c.lineWidth=1;for(const [a,b] of skyLines(f)){const [x0,y0]=at(f.stars[a]),[x1,y1]=at(f.stars[b]);c.beginPath();c.moveTo(x0,y0);c.lineTo(x1,y1);c.stroke();}
+   // Visual 3: what was earned shines, a soft gold light under each star (added; not in light quality).
+   if(!runtime.lightQuality?.())f.stars.forEach(s=>{const [x,y]=at(s);glow(c,x,y,Math.max(4,5*k*1.4),gold,.32,true);});
    c.fillStyle=gold;f.stars.forEach((s,i)=>{const [x,y]=at(s);c.globalAlpha=still?.9:.7+.3*Math.sin(t/900+i);const z=Math.max(1.5,2*k*1.4);c.fillRect(Math.round(x-z/2),Math.round(y-z/2),Math.round(z),Math.round(z));});c.restore();
    skyHits.push({x:p.x-r,y:p.y-r,w:2*r,h:2*r,text:f.name+' · constelación'});}}
  function skyLook(px,py){return skyHits.find(s=>px>=s.x&&px<=s.x+s.w&&py>=s.y&&py<=s.y+s.h)?.text||null;}
@@ -148,6 +152,9 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   const v=view();c.save();c.beginPath();c.rect(0,v.top,v.right,v.bottom-v.top+8);c.clip();
   // Unfolding: everything grows out of the cube and fades in.
   const open=unfold(),at0=cubeAt(),o=toScreen(at0.x,at0.y-15);c.save();if(open<1){c.translate(o.x,o.y);c.scale(open,open);c.translate(-o.x,-o.y);c.globalAlpha=Math.min(1,open*1.4);}const fade=c.globalAlpha;
+  // Visual 3 (alpha.255): each open room under a warm lamp, with a pool of light on its floor (added: black stays black).
+  // Not in light quality.
+  const lite=!!runtime.lightQuality?.();if(!lite)for(const id of h.unlocked){const b=roomBox(id);if(!b)continue;const a=toScreen(b.x,b.y),z=toScreen(b.x+b.w,b.y+b.h);refugioRoomLight(c,a.x,a.y,z.x-a.x,z.y-a.y,z.y,night);}
   if(cache)c.drawImage(cache,o0.x-cache.pad*k,o0.y-(ROOF+cache.pad)*k,cache.width/dpr,cache.height/dpr);
   // A gold point travels each open thread between chambers.
   for(const th of THREADS)if(th.rooms.every(r=>h.unlocked.includes(r))){const d=toScreen(th.x,th.y0+(calm()?.5:(t/3200)%1)*(th.y1-th.y0));c.fillStyle=ink;c.fillRect(Math.round(d.x-1.5),Math.round(d.y-1.5),3,3);}
@@ -165,7 +172,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
    if(!ok){closedNote(c,roomOpensText(r,progressNow),(corner.x+far.x)/2,(Math.max(corner.y,base+4)+far.y)/2,far.x-corner.x-36*k,v);continue;}
    // The light and the bar stay inside their chamber, above its floor.
    const floorY=far.y,tickY=Math.round(Math.min(rect.y+rect.h+30,floorY-7));
-   if(cue&&runtime.S.sound&&!calm()){const x=rect.x+(cue.s+.5)/16*rect.w,y0=Math.max(corner.y,rect.y-20),y1=Math.min(floorY-1,rect.y+rect.h+26),grad=c.createLinearGradient(0,rect.y,0,rect.y+rect.h);grad.addColorStop(0,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(255,255,255,.10)');c.fillStyle=grad;c.fillRect(x-rect.w/40,y0,rect.w/20,Math.max(0,y1-y0));}
+   if(cue&&runtime.S.sound&&!calm()){const x=rect.x+(cue.s+.5)/16*rect.w,y0=Math.max(corner.y,rect.y-20),y1=Math.min(floorY-1,rect.y+rect.h+26);if(!stepLight(c,x-rect.w/40,y0,rect.w/20,Math.max(0,y1-y0))){const grad=c.createLinearGradient(0,rect.y,0,rect.y+rect.h);grad.addColorStop(0,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(255,255,255,.10)');c.fillStyle=grad;c.fillRect(x-rect.w/40,y0,rect.w/20,Math.max(0,y1-y0));}}
    // The bar under each chamber: sixteen ticks, the current one in gold.
    for(let i=0;i<16;i++){c.fillStyle=cue&&cue.s===i?ink:'#ffffff40';c.fillRect(Math.round(rect.x+(i+.5)/16*rect.w),tickY,i%4?1:2,i%4?2:4);}
    layout.lines.push({x0:rect.x,y0:tickY,x1:rect.x+rect.w,y1:tickY+4,kind:'ticks'});
@@ -188,6 +195,8 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   lastCube={x:p.x,y:p.y,size};
   const ring=(performance.now()-pulseAt)/600;if(ring>=0&&ring<1&&!calm()){c.strokeStyle='#ffffff';c.globalAlpha=(1-ring)*.6;c.lineWidth=1.5;c.beginPath();c.arc(p.x,p.y,size*(.8+ring*5),0,6.283);c.stroke();c.lineWidth=1;c.globalAlpha=1;}
   if(open<1&&!calm()){c.strokeStyle='#ffffff';c.globalAlpha=.6*(1-open);c.beginPath();c.arc(p.x,p.y,size*(1+open*6),0,6.283);c.stroke();c.globalAlpha=1;}
+  // Visual 3: a soft contact shadow where the cube stands, over the floor's warm pool.
+  {const fl=toScreen(at.x,at.y);contactShadow(c,p.x,fl.y+1,size*.85,Math.max(2,size*.16),.6);c.globalAlpha=1;}
   cubeHalo(c,settings,p.x,p.y,size,t,beat);cubeAura(c,settings,p.x,p.y,t,beat);c.globalAlpha=1;drawStage(stage,c,p.x,p.y,size,color,{pulseLook:false});cubeSurface(c,settings,p.x,p.y,size,t,beat);
   c.restore();c.restore();return 0;}
  function pointerPoint(e){for(const r of HOUSE_ROOMS){const rect=roomRect(r.id);if(e.clientX>=rect.x-12&&e.clientX<=rect.x+rect.w+12&&e.clientY>=rect.y-12&&e.clientY<=rect.y+rect.h+12&&current().unlocked.includes(r.id))return {room:r.id,x:Math.max(0,Math.min(1,(e.clientX-rect.x)/rect.w)),y:Math.max(0,Math.min(1,(e.clientY-rect.y)/rect.h))};}return null;}

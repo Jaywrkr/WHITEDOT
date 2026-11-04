@@ -1,6 +1,7 @@
 import {PLACES,TOTAL_STARS,starCount,placeOpen,previousPlace,allComplete,nextOnPath,gameObjective,roundPercent} from './places.js';
 import {PORTAL_NOTES} from './places-ring.js';
 import {roomBox} from './house-view.js';
+import {glow} from './fx-kit.js';
 // The Refugio as the centre (plan F6, docs/MUNDO.md): it says what you have, what is missing and where to go.
 // In the Sala, a shelf of eleven trophies: each place's gold thing once it has its ★, an empty socket before. Above it,
 // the wall of stars (★ N / 33, white since panel 11: the stars under the trophies are the gold). In the house bar,
@@ -44,6 +45,8 @@ export function initialize(runtime){
    // Panel 10 (P7, D4): the trophy of a complete place has that place's colour; its stars below stay gold.
    if(won){c.globalAlpha=.55+.15*shine;c.fillStyle=c.strokeStyle=runtime.earnedColor?.(p.id)||'#ffffff';if(shine===3&&!calm){c.save();c.globalAlpha=.18+.1*Math.sin(t/600+i);c.beginPath();c.arc(q.x,q.y,r*2,0,6.283);c.fill();c.restore();}trophy(c,p.game,q.x,q.y,r);}
    else{c.globalAlpha=.3;c.setLineDash?.([2,2]);c.strokeStyle='#ffffff';c.strokeRect(Math.round(q.x-r*.7)+.5,Math.round(q.y-r*.7)+.5,Math.round(r*1.4),Math.round(r*1.4));c.setLineDash?.([]);}
+   // Visual 3 (alpha.255): an earned star shines, a small gold light under it (added; not in light quality).
+   if(!runtime.lightQuality?.())for(let s=0;s<3;s++)if(got[s])glow(c,q.x-r+s*r*.8+r*.2,q.y+r*2.3,Math.max(3,r*.9),gold,.3,true);
    for(let s=0;s<3;s++){c.globalAlpha=got[s]?.95:.25;c.fillStyle=got[s]?gold:'#ffffff';c.fillRect(Math.round(q.x-r+s*r*.8),Math.round(q.y+r*2.1),Math.max(1,Math.round(r*.4)),Math.max(1,Math.round(r*.4)));}
    hits.push({x:q.x-r*1.6,y:q.y-r*1.6,w:r*3.2,h:r*4.4,id:p.id,index:i});});
   c.restore();}

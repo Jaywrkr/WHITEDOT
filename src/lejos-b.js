@@ -14,6 +14,7 @@
 // One scene at a time: none of this answers while a living encounter, a figure, a mischief scene or a sky secret plays;
 // while a postcard, a sky song or a grey region lasts, the encounters and the figures wait (lejosBBusy).
 import {glow,radial,contactShadow} from './fx-kit.js';
+import {drawAuroraSky} from './ambient-art.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
@@ -184,7 +185,8 @@ export function initialize(r){
   const style=effect.kind==='aurora'?STYLES.aurora:effect.kind==='nebulosa'?STYLES.nebulosa:STYLES.cometas,ox=r.camX-r.W/2,oy=r.camY-r.H/2;c.save();c.globalAlpha=k;
   // The nebula's two clouds from sprites (they were two screen-sized gradients per frame).
   if(effect.kind==='nebulosa'){for(const [dx,dy,col] of [[-.2,-.25,'rgba(255,122,217,.10)'],[.25,.1,'rgba(143,208,255,.08)']])radial(c,r.W*(.5+dx),r.H*(.5+dy),Math.max(r.W,r.H)*.5,'nebula:'+col,[[0,col],[1,'rgba(0,0,0,0)']]);}
-  if(effect.kind==='aurora'){c.lineWidth=6;for(let i=0;i<3;i++){c.strokeStyle=`hsl(${(150+i*35)%360},80%,65%)`;c.globalAlpha=k*.18;c.beginPath();for(let x=0;x<=r.W;x+=10){const y=70+i*20+Math.sin(x/130+f.t/1500+i)*16;x?c.lineTo(x,y):c.moveTo(x,y);}c.stroke();}c.globalAlpha=k;c.lineWidth=1;}
+  // Visual 3 (alpha.255): the band from the baked aurora strip (ambient-art.js); light quality keeps the three lines.
+  if(effect.kind==='aurora'&&!drawAuroraSky(c,r.W,f.t,150,k*.18,{still:reduced(),light:!!r.lightQuality?.()})){c.lineWidth=6;for(let i=0;i<3;i++){c.strokeStyle=`hsl(${(150+i*35)%360},80%,65%)`;c.globalAlpha=k*.18;c.beginPath();for(let x=0;x<=r.W;x+=10){const y=70+i*20+Math.sin(x/130+f.t/1500+i)*16;x?c.lineTo(x,y):c.moveTo(x,y);}c.stroke();}c.globalAlpha=k;c.lineWidth=1;}
   for(let i=Math.floor(ox/size);i*size<ox+r.W;i++)for(let j=Math.floor(oy/size);j*size<oy+r.H;j++){const key='lejos-cielo:'+i+','+j;f.ux=i*size;f.uy=j*size;try{style.mid.draw(c,i*size-ox,j*size-oy,size,key,f);if(effect.kind==='estrellas')style.far.draw(c,i*size-ox,j*size-oy,size,key,f);}catch(_){}}
   c.restore();return {kind:effect.kind,alpha:Math.round(k*100)/100};}
  function lostThing(c,name,x,y,a){c.globalAlpha=a;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1;

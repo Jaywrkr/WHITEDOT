@@ -6,6 +6,7 @@ import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
 import {glow,sparkSprite,streak,createFxLayer,FX_POOL} from './fx-kit.js';
+import {createAmbient,ambientState} from './ambient-art.js';
 
 // Loop, simulación y dibujo del juego.
 // Consecutive failing frames (about two seconds) before the loop stops and asks for a reload.
@@ -14,6 +15,10 @@ export function initialize(runtime) {
   // Visual 1 (alpha.250): the shared layer of pops and sparks (fx-kit.js), drawn after the grey sheet with the particles.
   const fx=createFxLayer({capacity:FX_POOL.full,light:()=>!!runtime.lightQuality?.(),reduced:()=>!!(runtime.S?.reducedMotion||prefersReducedMotion())});
   Object.defineProperty(runtime,'fxLayer',{configurable:true,get:()=>fx});
+  // Visual 3 (alpha.255): the ambience from cached images (ambient-art.js): stars in three layers, the aurora, the ground of
+  // the Bosque and the Jardín, and the print of a scene that sounds. Each piece falls back to the old drawing without one.
+  const scenery=createAmbient(runtime);
+  Object.defineProperty(runtime,'ambientState',{configurable:true,get:()=>ambientState});
   // Particles: the same objects in runtime.parts (anyone may push {x,y,vx,vy,l,g}), compacted in place instead of a new
   // array every frame; dead ones wait in `spare` for runtime.newPart. Each takes its colour once (musicInk looks up the
   // region) and is drawn as a small added spark; in light quality, the plain 2 px square.
@@ -181,7 +186,7 @@ export function initialize(runtime) {
   function ambientStars(t,dt,b){const dn=runtime.inWorld()?runtime.MU.dnaT:null,air=dn?dn.air:"claro";
     const id=runtime.BIOMES[runtime.S.mode==="studio"?(runtime.S.studio.biome||0):Math.max(0,runtime.curZone)].id,starA=(id==="vacio"?2.5:id==="cueva"?.2:1)*(air==="niebla"?.3:1)*(runtime.inWorld()?runtime.worldLight?.()?.stars??1:1);
     runtime.cx.fillStyle="#fff";
-    for(const s of runtime.STARS){const x=((s.x*runtime.W*2-runtime.camX*.03)%runtime.W+runtime.W)%runtime.W,y=((s.y*runtime.H*2-runtime.camY*.03)%runtime.H+runtime.H)%runtime.H;runtime.cx.globalAlpha=Math.min(1,s.a*starA*(.7+.3*Math.sin(t/900+s.x*50)));runtime.cx.fillRect(x,y,s.s,s.s);}
+    if(!scenery.stars(t,starA))for(const s of runtime.STARS){const x=((s.x*runtime.W*2-runtime.camX*.03)%runtime.W+runtime.W)%runtime.W,y=((s.y*runtime.H*2-runtime.camY*.03)%runtime.H+runtime.H)%runtime.H;runtime.cx.globalAlpha=Math.min(1,s.a*starA*(.7+.3*Math.sin(t/900+s.x*50)));runtime.cx.fillRect(x,y,s.s,s.s);}
     const wind=id==="dunas"?40+runtime.MU.speed*120:id==="tormenta"?25:5;
     for(const d of runtime.DUST){d.x+=dt*wind;d.y+=Math.sin(t/2000+d.ph)*dt*4;const x=((d.x-runtime.camX*d.z)%runtime.W+runtime.W)%runtime.W,y=((d.y-runtime.camY*d.z)%runtime.H+runtime.H)%runtime.H;runtime.cx.globalAlpha=Math.min(1,(id==="dunas"?.18:.07)+.08*d.z+b*.05);runtime.cx.fillRect(x,y,id==="dunas"?2:1,1);}
   }
@@ -229,7 +234,7 @@ export function initialize(runtime) {
     if(runtime.MU.confNb&&runtime.MU.confNb!==runtime.MU.dnaT){runtime.MU.nb=runtime.MU.confNb;runtime.MU.nbW=Math.max(runtime.MU.nbW,.45);}   // confluencia de ríos
     const evt=runtime.eventOf(rg),ev=(runtime.MU.storm||0)>.15?'lluvia':evt?evt[0]:null;runtime.rainingNow=ev==='lluvia';   // dentro de una tormenta llueven notasif(runtime.RP&&runtime.RP.type==="quieto"&&runtime.MU.still>0)runtime.retoSet("quieto",runtime.MU.still);
     const id=runtime.BIOMES[z].id;
-    if(ev==="aurora"){runtime.cx.lineWidth=6;for(let i=0;i<3;i++){runtime.cx.strokeStyle=`hsl(${(rg.hue+i*35)%360},80%,65%)`;runtime.cx.globalAlpha=.16+b*.06;runtime.cx.beginPath();for(let x=0;x<=runtime.W;x+=10){const y=70+i*20+Math.sin(x/130+t/1500+i)*16;x?runtime.cx.lineTo(x,y):runtime.cx.moveTo(x,y);}runtime.cx.stroke();}}
+    if(ev==="aurora"&&!scenery.aurora(t,rg.hue,.16+b*.06)){runtime.cx.lineWidth=6;for(let i=0;i<3;i++){runtime.cx.strokeStyle=`hsl(${(rg.hue+i*35)%360},80%,65%)`;runtime.cx.globalAlpha=.16+b*.06;runtime.cx.beginPath();for(let x=0;x<=runtime.W;x+=10){const y=70+i*20+Math.sin(x/130+t/1500+i)*16;x?runtime.cx.lineTo(x,y):runtime.cx.moveTo(x,y);}runtime.cx.stroke();}}
     const soundR=(ev==="eclipse"?.6:1)*runtime.clamp(runtime.lightR()*1.1,170,360)*(1+Math.min(runtime.S.totalDays||0,30)/30*.7)*(id==="cueva"?.6:1)*(1+b*.05),R=(runtime.worldVisibility?.lightRadius??soundR/(1+b*.05))*(1+b*.05),ox=runtime.W/2-runtime.S.wx,oy=runtime.H/2-runtime.S.wy,ms=performance.now();
     // The pool of light round the cube, from a sprite (visual 1): white to clear white, as the gradient was.
     {const ga=runtime.cx.globalAlpha;glow(runtime.cx,runtime.W/2,runtime.H/2,R,'#ffffff',ga*(.05+b*.04+runtime.MU.E*.03),false,'rgba(255,255,255,0)');runtime.cx.globalAlpha=ga;}
@@ -239,7 +244,7 @@ export function initialize(runtime) {
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];if(!paused)q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(!paused&&d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
         if(q.y>runtime.S.wy+R*1.4){runtime.rain.splice(i,1);continue;}runtime.cx.globalAlpha=Math.min(1,Math.max(.15,1-d/(R*1.3)))*(runtime.worldOpacity?.(d,R*1.4)??1);runtime.cx.fillStyle=runtime.musicInk?.(q,'perc')||'#fff';runtime.cx.fillRect(q.x+ox-1,q.y+oy-6,2,7);}}else if(runtime.rain.length)runtime.rain=[];
     runtime.drawVJWorld?.(t,dt,ox,oy,paused);
-    runtime.drawDepthGround?.(t);runtime.drawWorldFamilyGround?.(t);runtime.drawGround(ox,oy,R,t);runtime.drawUniverseLayers?.(t,b);
+    runtime.drawDepthGround?.(t);runtime.drawWorldFamilyGround?.(t);runtime.drawGround(ox,oy,R,t);runtime.drawUniverseLayers?.(t,b);scenery.ground(t,b);scenery.scene(t);
     runtime.drawRivers?.(t,ox,oy);runtime.drawAlive?.(t,dt,ox,oy,'ground');
     runtime.updWaves(dt,ox,oy);
     const span=Math.max(R*1.8+60,(runtime.worldVisibility?.radius||0)+100);

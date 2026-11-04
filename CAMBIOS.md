@@ -1,6 +1,43 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.254** en la rama `jay/visual-2`, desde `jay/visual-1` (alpha.253, que une `jay/viaje-d` con las tandas C, B y A). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.255** en la rama `jay/visual-3`, desde `jay/visual-2` (alpha.254, PR #391 abierto). Las entradas describen su revisión, no certifican producción.
+
+
+## Visual 3 · el ambiente · 2.3.0-alpha.255
+
+Rama `jay/visual-3`, desde `jay/visual-2` `a5f253f` (alpha.254, PR #391 abierto: dependencia explícita). Pedido de Jay: que todo se vea más profesional y «wow», igual de jugable y sin subir el coste. Es la tanda 4 de la auditoría visual, el ambiente, con el kit existente. Guía: [El mundo](docs/MUNDO.md#visual-3-el-ambiente).
+
+- **Módulo nuevo** `src/ambient-art.js`, una vez en `SHELL`. Lo cargan `render.js`, `universe-layers.js`, `lejos-b.js`, `house.js` y `refugio-lugares.js`. Expone `runtime.ambientState` para las pruebas. Posiciones por `hashKey`; nada del azar antiguo.
+- **Estrellas de fondo en tres capas de paralaje** (0,03, 0,07 y 0,14 de la cámara). Cada capa repite el dibujo de una tesela, puesto una vez. Lejanas y medias van en unas pocas rutas por color y brillo; las cercanas, en un sprite con halo, y alguna destella. Respetan bioma, niebla y hora. Antes eran 110 `fillRect` por fotograma. Se probaron teselas enteras como imagen: en el navegador costaban más que los puntos, así que se descartaron.
+- **Aurora.** La banda del cielo (evento de región y Canción del cielo) es una tira pintada una vez que se desliza con el tiempo, con brillo, cresta y cortinas. Las cortinas de la región Aurora y de la Canción son otra tira por tinta; cerca del cubo siguen las columnas que se apartan. En la escena de la Canción, los `stroke` bajan de 701 a 173 por fotograma.
+- **Bosque y Jardín.** Suelo propio y quieto, cacheado por celda (cinco variantes por bioma). Bosque: nubes de polvo, cúmulos y filamentos. Jardín: zarcillos, hojas, esporas y motas. Se apaga lejos del cubo.
+- **Huella de las escenas.** Solo con «Escenas» encendido y un escenario sonando. Haces de luz desde su lado, que barren despacio y brillan en el tiempo. Un suelo de 5 × 5 baldosas que late; en el Patio, un anillo de luces en la clave. Colores por escena y género, nunca dorado. Apagado el ajuste, nada. `audio.js` y `scenes-audio.js` no cambian: solo se lee `sceneState`.
+- **Refugio.** Luz cálida en cada sala abierta, con su charco en el suelo. Sombra suave bajo el cubo. Brillo dorado en lo ganado: estrellas del cielo del Refugio y ★ de la estantería. La luz del paso del compás sale de una tira (antes, un degradado por sala y fotograma con sonido). El fondo conserva su degradado: como sprite escalado costaba más. Disposición, controles e ID, iguales.
+- **Movimiento reducido:** las estrellas, en una sola profundidad y sin destello; aurora, haces y suelo de escena, quietos. **Calidad ligera:** dos capas de estrellas, sin suelo nuevo, sin haces, la aurora de antes y sin luz sumada en el Refugio.
+- **Sin cambios.** Mecánicas, posiciones, colisiones, guardado, sonido, RNG e ID de HTML se mantienen. El cubo no crece.
+- **Medido** (Chromium sin interfaz, 390×844, DPR 1, frente a `a5f253f`). La CPU es la media de tres pasadas alternas por árbol. Las llamadas (`fillRect`, `stroke`, `fill` y `drawImage`) y los degradados son por fotograma, de una pasada con contadores:
+
+  | Escena | CPU del navegador por fotograma (ms) | Fotogramas/s | JS p50 (ms) | Llamadas · degradados |
+  |---|---|---|---|---|
+  | Inicio | 37,8 → 38,4 | 40 → 38 | 6,8 → 7,5 | 1 101 → 1 018 · 0 → 0 |
+  | Bosque | 27,0 → 28,5 | 50 → 48 | 6,8 → 7,1 | 1 123 → 1 046 · 0 → 0 |
+  | Jardín | 28,0 → 29,6 | 51 → 49 | 8,0 → 7,9 | 1 122 → 1 044 · 0 → 0 |
+  | Vacío | 31,7 → 32,9 | 45 → 43 | 6,3 → 6,3 | 453 → 368 · 0 → 0 |
+  | Jardín, movimiento reducido | 28,2 → 27,2 | 49 → 50 | 7,6 → 6,8 | 1 097 → 1 009 · 0 → 0 |
+  | Jardín, calidad ligera | 27,5 → 26,4 | 52 → 54 | 7,0 → 6,8 | 729 → 627 · 0 → 0 |
+  | Aurora (evento y región) | 33,6 → 31,1 | 41 → 46 | 8,5 → 6,9 | 1 529 → 729 · 0 → 0 |
+  | Canción del cielo, aurora | 31,1 → 29,6 | 45 → 46 | 7,3 → 7,1 | 2 099 → 1 510 · 0 → 0 |
+  | Escenario, «Escenas» apagado | 36,8 → 35,1 | 41 → 43 | 8,7 → 8,4 | 3 933 → 3 840 · 0 → 0 |
+  | Almacén sonando | 29,4 → 29,7 | 48 → 48 | 7,1 → 7,1 | 3 426 → 3 432 · 0 → 0 |
+  | Patio latino sonando | 30,7 → 37,8 | 46 → 40 | 7,5 → 9,3 | 1 038 → 914 · 0 → 0 |
+  | Refugio | 15,9 → 16,3 | 60 → 60 | 4,8 → 5,1 | 367 → 281 · 1 → 1 |
+
+  Media de CPU en las doce escenas: 29,8 → 30,2 ms, dentro del ruido del servidor (4 núcleos compartidos, rasterizado por software; la misma escena varía hasta 15 ms entre pasadas). En el Refugio, tres pasadas tras devolver el fondo a su degradado. El Patio sube en las pasadas entre árboles, pero no al encender y apagar el ambiente en la misma página: +1,2 y +3,4 ms en dos series de seis. Esa prueba, en la misma página, da de −2,9 a +3,4 ms por escena, con media de +0,4 ms. El suelo de Bosque y Jardín es lo que más pesa (+1,5 a +3 ms) y por eso se dibuja solo cerca del cubo. Se probaron teselas enteras de estrellas como imagen: costaban 3–4 ms más y se descartaron. No se midió en teléfono: hay que hacerlo con `?medir=1`.
+
+- **Pruebas nuevas.** `tests/visual3.mjs`: posiciones sin azar, tiras periódicas con la onda de antes, rutas por color y brillo, una profundidad con movimiento reducido, escenas sin dorado, huella solo con el ajuste y un escenario sonando, y el dibujo de antes sin lienzo. `tests/visual3_smoke.py`: 390×844 y 1280×800 en Bosque, Jardín, Vacío, aurora, escena apagada, Almacén, Patio, movimiento reducido, calidad ligera y Refugio. Comprueba que no hay errores, degradados por fotograma ni `shadowBlur`, que las cachés se asientan y que las llamadas quedan bajo las de `a5f253f`.
+- **Capturas** antes (`a5f253f`) y después, con el mismo nombre, en el scratchpad de la sesión (`visual3-shots/antes` y `despues`). No están en Git.
+- **Preservación.** Capa `approvedV3` (`73e0625`, el commit de código), primera en la cadena, para `render.js` y `universe-layers.js`. La lista offline de `sw.js` se compara con ella: un módulo nuevo. `house.js` y `refugio-lugares.js` ya estaban permitidos; `lejos-b.js` no está en la base protegida.
+- **Límites.** Probado en local: lógica, recorridos de navegador de los sistemas tocados, `audio_mix.py` y `scenes_mix.py`. `visual2_smoke.py` falló una vez en el eclipse, que depende del reloj; repetido, pasa en `a5f253f` y aquí. Sin CI remoto, sin teléfono y sin personas.
 
 
 ## Visual 2 · el cielo y los objetos grandes · 2.3.0-alpha.254
