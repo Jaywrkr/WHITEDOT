@@ -1,6 +1,27 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.248** en la rama `jay/viaje-a`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.249** en la rama `jay/viaje-b`. Las entradas describen su revisión, no certifican producción.
+
+
+## Lejos del origen, tanda B · 2.3.0-alpha.249
+
+Rama `jay/viaje-b`, desde `jay/secretos-2` `e16d9f7` (alpha.247, PR #386 sin fusionar: dependencia explícita), con `jay/viaje-a` unida por un merge (alpha.248, PR #387 sin fusionar: la tanda A de 0–10 km y el módulo de bandas; segunda dependencia explícita). Pedido de Jay: repartir ideas por distancia al origen para que llegar lejos sea un premio. Esta tanda, de 10 a 30 km. Guía: [El mundo](docs/MUNDO.md#lejos-del-origen-tanda-b). Código: `src/lejos-b-model.js` (reglas) y `src/lejos-b.js` (juego).
+
+- **Dónde.** Celdas de 800 m con `hashKey`; tres de cada cinco tienen una cosa de un tipo cuya banda alcanza ese punto, lejos de los satélites. Cada cosa sigue apareciendo más allá de su banda. Desde 800 m, una marca en el borde.
+- **Región apagada (10 km).** Gris, con la música unos 10 dB más baja. Cuatro brasas: pasar y pulsar a tiempo (sin sonido, pasar). Revivida para siempre: color, peces de luz y música; en el Mapa del universo.
+- **Hábitat (12 km).** Un nido y dos o tres elementos (roca, agua, luz). Pasar por ellos los junta y llega una de cuatro criaturas, que te reconoce al volver.
+- **Canción del cielo (15 km).** Cuatro piedras que insinúan su frase. Cuatro notas en orden y a tiempo cambian el cielo un minuto: aurora, lluvia de estrellas o nebulosa, con los dibujos de `universe-layers.js`.
+- **Fusión de sonidos (20 km).** Se abre al llegar a 20 km. En el Refugio, «Más › Fusión de sonidos»: dos sonidos del álbum dan uno nuevo, fijo por el par y en la escala. Entra en el álbum («Fusiones») y en la mezcla.
+- **Postal de buscar (25 km).** Una criatura perdió cinco cosas entre muchas estrellas. Un pulso las ilumina; pasar las encuentra. Las cinco dan su postal.
+- **Premios.** Por `universeReward`, como un encuentro vivo fácil: región revivida 8–15 ✦, hábitat 8–11, primera canción de un sitio 8–15. Postal y fusión, sin chispas: su página y su sonido.
+- **La música de la región apagada.** Por `runtime.musicDuck`, la línea de `audio.js` autorizada en alpha.246. `audio.js` no cambia.
+- **Una escena a la vez.** Nada responde con otra escena. Postal, cielo cercano o región apagada hacen esperar a encuentros, figuras, lluvias y eclipses (`lejosBBusy`, leído por `live-encounters.js`, `sky-map.js`, `descubrir.js`, `recorrer.js` y `secretos-cielo.js`, y por las bandas en `r.bandBusy()`). Un reto de la tanda A espera a estas escenas, y estas al reto (`r.bandBusy('A')`, `r.bandBusy('B')`).
+- **En las bandas de la tanda A.** `lejos-b-model.js` registra las cinco con `registerBand`: un aviso al cruzar 10, 12, 15, 20 y 25 km («Aquí empiezan las regiones apagadas.») y su fila en Bitácora › «Lo que hay más lejos», con su línea («2 revividas»). `lejos-b.js` engancha su escena y sus líneas con `r.bandAttach`. A 10 km salen dos avisos seguidos: tablones y regiones apagadas.
+- **Bitácora** › «Lejos del origen · N», solo con lo encontrado. **Mapa del universo:** regiones revividas y hábitats.
+- **Guardado nuevo** `S.lejosB` (versión 1). La fusión escribe además su sonido en `S.soundAlbum.sounds`. Una partida anterior empieza vacía; se conservan campos desconocidos; una versión futura solo se lee. Si guardar falla, todo vuelve, álbum y chispas incluidos.
+- **Sonido medido por render** (`tests/lejos_b_mix.py`). La música del Mundo es idéntica a alpha.247. Los sonidos nuevos quedan 29,9 y 30,9 dB por debajo. En una región apagada la salida baja 10,4 dB y al revivir vuelve a menos de 0,02 dB.
+- Pruebas nuevas: `tests/lejos_b.mjs`, `tests/lejos_b_smoke.py` (390×844, 1280×800 e inglés) y `tests/lejos_b_mix.py`. `tests/audio_mix.mjs` gana `lejosBatch` y `deadRegion`.
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js`, con la capa `approvedVB` (el commit que une la tanda A; `approvedVA` debajo). Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Lo que hay más lejos, tanda A · 2.3.0-alpha.248
