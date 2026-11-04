@@ -77,7 +77,7 @@ try:
      else:go(page,e['x'],e['y'])
      page.wait_for_function(f"__r.lejosBState().song.next==={k+1}||!!__r.lejosBState().effect",timeout=8000);page.wait_for_timeout(120)
     page.wait_for_function("!!__r.lejosBState().effect&&!!__r.lejosBState().drawn.effect",timeout=6000);s=st(page)
-    assert s['effect']['until']-s['effect']['start']==60 and s['busy'],s['effect'];assert s['book']['songs'][g['id']]['n']==1
+    assert abs(s['effect']['until']-s['effect']['start']-60)<1e-6 and s['busy'],s['effect'];assert s['book']['songs'][g['id']]['n']==1
     assert page.evaluate("__r.liveEncounterSpawn?.('polilla')") is not True,'one scene at a time'
     if SHOTS:page.screenshot(path=f'{SHOTS}/cancion-{s["effect"]["kind"]}-{width}.png')
     # --- 4 · A search postcard: five lost things in the stars give the postcard, no sparks.
