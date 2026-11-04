@@ -59,6 +59,8 @@ try:
   assert page.locator('#bJump').is_hidden() and page.evaluate('__r.jumpPracticePlace()')==False and page.evaluate('__r.S.journey.freeJumpUsed')!=True
   ids=menu_ids(page);assert 'bJump' not in ids and 'bWorlds' not in ids,ids
   page.evaluate("(()=>{const d=__r.placesData();for(const k of Object.keys(d.stars))d.stars[k][0]=true;__r.save();})()");page.evaluate(HIDE)
+  # The menu follows the ring on the game's own tick: on a slow runner, wait for it to show the button.
+  page.wait_for_function("!document.getElementById('bWorlds').hidden",timeout=10000)
   ids=menu_ids(page);assert 'bWorlds' in ids,'with the eleven, «Viajar a otra tierra» is there'
   page.wait_for_function("!document.getElementById('bJump').hidden&&!document.getElementById('bJump').disabled",timeout=3000)
   assert page.locator('#bJump').inner_text()=='Otro paisaje · gratis' and page.locator('#bJump').is_visible()

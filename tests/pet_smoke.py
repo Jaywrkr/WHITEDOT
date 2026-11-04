@@ -59,7 +59,12 @@ try:
    page.wait_for_timeout(400);assert page.evaluate('__testRuntime.S.pet.seconds')==seconds
    page.screenshot(path=f'/tmp/whitedot-cube-{species}.png');page.locator('#cubeClose').click();page.wait_for_timeout(100)
    page.evaluate('__testRuntime.save()');phrase=page.evaluate('__testRuntime.S.pet.phrase');page.reload();page.wait_for_function('__testRuntime?.labMode')
-   assert page.evaluate('__testRuntime.S.pet.species')==species;assert page.evaluate('__testRuntime.S.pet.phrase')==phrase;assert page.evaluate('__testRuntime.cubeColor()')=='#f0d27a'
+   assert page.evaluate('__testRuntime.S.pet.species')==species
+   # The phrase is kept. A note heard right after the reload (at some hours a nearby voice plays at once) may teach it one
+   # more, legitimately: then the kept phrase is the start of the new one shifted by what it learned since.
+   now=[n['degree'] for n in page.evaluate('__testRuntime.S.pet.phrase')];was=[n['degree'] for n in phrase]
+   assert any(was[k:]==now[:len(was)-k] and 0<=len(now)-(len(was)-k)<=2 for k in range(0,3)),(was,now)
+   assert page.evaluate('__testRuntime.cubeColor()')=='#f0d27a'
    # Replacement/reset cannot leak a companion or appearance from the previous save.
    page.evaluate('()=>{const r=__testRuntime;r.S={...r.S,pet:null,cube:undefined,color:"#ffffff"};if(r.petCard()!=="")throw Error("stale companion");if(r.cubeColor()!=="#ffffff")throw Error("stale cube");}')
    # A genuinely rare natural-box seed uses the same opening/contact route, without a species menu.
