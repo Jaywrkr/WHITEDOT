@@ -165,6 +165,8 @@ export function initialize(r){
  Object.defineProperties(r,{
   skySecretTick:{get:()=>tick},drawSkySecrets:{get:()=>draw},drawSkySecretCube:{get:()=>drawCube},skySecretRows:{get:()=>rows},skySecretCubeOption:{get:()=>cubeOption},
   skySecretCoordsForMap:{get:()=>forMap},skySecretBusy:{get:()=>busy},
+  // alpha.252 (tanda D, viaje-d.js): the eclipse now, where and which pass of the planet (its key), or null; nothing else.
+  skyEclipse:{get:()=>()=>eclipse?{id:eclipse.id,x:eclipse.x,y:eclipse.y,key:lastCycle,left:Math.max(0,eclipse.until-clock)}:null},
   // Tests only (the runtime is never published): start a shower now, move the device's clock for the eclipses, the state.
   skySecretShower:{get:()=>()=>allowed()&&!scene()&&!shower&&ok()&&startShower()},
   skySecretSkip:{get:()=>seconds=>{offset+=Number(seconds)||0;return sec();}},

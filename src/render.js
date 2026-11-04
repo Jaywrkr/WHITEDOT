@@ -98,11 +98,11 @@ export function initialize(runtime) {
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     runtime.drawWorldSheet?.(t,b);
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b,dx,dy):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED*boost):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
-    runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.mischiefTick?.(dt,modal);runtime.liveTick?.(dt,modal);runtime.skyMapTick?.(dt,modal);runtime.discoverTick?.(dt,modal);runtime.recorrerTick?.(dt,modal);runtime.secretTick?.(dt,modal);runtime.skySecretTick?.(dt,modal);runtime.bandTick?.(dt,modal);runtime.viajeTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
+    runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.mischiefTick?.(dt,modal);runtime.liveTick?.(dt,modal);runtime.skyMapTick?.(dt,modal);runtime.discoverTick?.(dt,modal);runtime.recorrerTick?.(dt,modal);runtime.secretTick?.(dt,modal);runtime.skySecretTick?.(dt,modal);runtime.bandTick?.(dt,modal);runtime.viajeTick?.(dt,modal);runtime.viajeDTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWeather?.(t,dt);runtime.drawFauna?.(t,dt);runtime.drawWorldMusic?.(t,dt);runtime.drawHappenings?.(t,dt);runtime.drawWorldLight?.(t);runtime.weatherBeds?.();runtime.drawDistantColors?.(true);runtime.drawSkyMap?.();runtime.drawRecorrer?.();runtime.drawDiscover?.();runtime.drawSecrets?.();runtime.drawSkySecrets?.();runtime.drawViaje?.();runtime.drawLive?.();   // living encounters shine over the light of the World (live-encounters.js)
+    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWeather?.(t,dt);runtime.drawFauna?.(t,dt);runtime.drawWorldMusic?.(t,dt);runtime.drawHappenings?.(t,dt);runtime.drawWorldLight?.(t);runtime.weatherBeds?.();runtime.drawDistantColors?.(true);runtime.drawSkyMap?.();runtime.drawRecorrer?.();runtime.drawDiscover?.();runtime.drawSecrets?.();runtime.drawSkySecrets?.();runtime.drawViaje?.();runtime.drawViajeD?.();runtime.drawLive?.();   // living encounters shine over the light of the World (live-encounters.js)
     runtime.drawWorldSheetGrey?.();
     runtime.drawJourneyGamesUnder?.(runtime.cx,runtime.W,runtime.H,t);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
@@ -193,7 +193,10 @@ export function initialize(runtime) {
   function worldStep(t,dt,dx,dy,b,paused=false,movementSpeed=runtime.SPEED){
     const sz=runtime.pxSize(),ds=Math.min(sz,22);
     if(runtime.MU.anomaly==='invertida'){dx=-dx;dy=-dy;}   // rareza: arriba es abajo
-    if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*movementSpeed*dt);}
+    // alpha.252: inside a portal of another rule (viaje-d.js) the cube moves by that rule for a while; otherwise as always.
+    const ruled=!paused&&runtime.motionRule?.(dx,dy,dt,movementSpeed);
+    if(ruled){runtime.S.wx+=ruled.x;runtime.S.wy+=ruled.y;runtime.recordWalk?.(Math.hypot(ruled.x,ruled.y));}
+    else if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*movementSpeed*dt);}
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);

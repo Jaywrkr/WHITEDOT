@@ -176,7 +176,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   c.globalAlpha=fade;if(drag?.point){const rr=roomRect(drag.point.room),def=HOUSE_OBJECTS.find(p=>p.id===drag.kind);c.save();c.globalAlpha=.55;c.translate(rr.x+drag.point.x*rr.w,rr.y+drag.point.y*rr.h);c.strokeStyle='#fff';livingGlyph(c,{shape:def?.shape||'seed',size:9,phase:0},t);c.strokeRect(-14,-14,28,28);c.restore();}
   runtime.cubeShopSoundTick?.(t);
   // Frames, trophies, showcases, garden plants and visiting creatures.
-  runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h,note:noteText});
+  runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h,note:noteText});runtime.drawHouseBrood?.(c,{toScreen,k,t,calm:calm(),cube:{floor,x:cubeAt().x}});
   // Capsule decorations, the capsule machine and the Taller label.
   runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night,note:noteText,simple:true});drawSky(c,h,k,t,calm());runtime.drawRefugioSky?.(c,{toScreen,k,t,calm:calm(),note:noteText,view:v,visit:!!visit});runtime.houseGuideTick?.();
   placeVoice(open<1?voiceTop:voiceSlot(h,roomTexts));layout.voice=voiceTop;
