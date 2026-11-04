@@ -131,6 +131,21 @@ body:not(.dev) #mSettings .settings-diagnostic{display:block;margin-top:0;paddin
 @media(max-height:440px){body.lab .rare-notice{left:16px;right:auto}}
 .scanner{background:var(--void);border-color:var(--line)}
 .scanner h2{font:400 14px/1.4 var(--display);color:var(--ink)}
+/* El Escáner (coherencia T1): «Cerca», one line per thing, a small icon, new in white and found dim. While it is open
+   the power and surprise HUDs step aside so nothing covers its last line. */
+.scanner ul{list-style:none;padding:0;margin:8px 0}
+.scanner li{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:12px;margin:4px 0}
+.scanner li.found{color:var(--dim)}
+.scanner li.scan-shapes{gap:10px;color:var(--dim)}
+.scanner p[hidden],.scanner small[hidden]{display:none}
+.scan-ico{flex:none;width:10px;height:10px;box-sizing:border-box;border:1.25px solid var(--ink)}
+.scanner li.found .scan-ico,.scan-shapes .scan-ico{opacity:.6}
+.scan-ico[data-shape="hallazgo"]{transform:rotate(45deg) scale(.82)}
+.scan-ico[data-shape="portal"],.scan-ico[data-shape="voz"]{border-radius:50%}
+.scan-ico[data-shape="sonda"]{width:8px;height:8px;margin:1px}
+.scan-ico[data-shape="forma"]{border:0;background:var(--ink);clip-path:polygon(50% 8%,94% 92%,6% 92%)}
+.scan-ico[data-shape="estrella"]{border:0;background:var(--ink);transform:rotate(45deg) scale(.6)}
+body:has(#scanner:not([hidden])) #sparkPowerHud,body:has(#scanner:not([hidden])) #surpriseHud{visibility:hidden}
 .fxpanel,.glasspanel,.lab-bar,.routehud{background:var(--void)}
 .fxpad i{box-shadow:none;border-color:var(--ink)}
 .studio{background:linear-gradient(transparent,#000 24%)}

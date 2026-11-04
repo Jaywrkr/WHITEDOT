@@ -130,7 +130,7 @@ body.world-focus .voice:not(.expanded) span{-webkit-line-clamp:1}
 .routehud button{width:44px;min-width:44px;height:44px;border-color:transparent}
 body:has(.toast.on) .routehud{bottom:calc(var(--safe-bottom) + 150px)}
 body:has(.routehud:not([hidden])) .zone,body:has(.routehud:not([hidden])) .phrase{visibility:hidden}
-.scanner{max-height:28dvh;border-radius:var(--radius);border-color:#f0d27a44;bottom:calc(var(--safe-bottom) + 84px);padding:12px 14px;background:#080a0dee}
+.scanner{max-height:28dvh;border-radius:var(--radius);bottom:calc(var(--safe-bottom) + 84px);padding:12px 14px;background:#080a0dee}
 .scanner h2{font:500 13px/1.5 var(--mono);margin-bottom:6px}
 .scanner p,.scanner li{font-size:11px;line-height:1.5;margin:4px 0}.scanner small{font-size:11px;line-height:1.4}
 .fxpanel,.glasspanel{border-radius:var(--radius);border-color:#ffffff26;background:var(--surface);padding:14px;gap:10px;z-index:30}
