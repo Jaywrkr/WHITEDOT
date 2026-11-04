@@ -6,9 +6,11 @@
 //   random sequence. done(S, site, ctx): already found (drawn dim). page(S, ctx): its line for the Bitácora (later).
 // · scanLevel(S, {charged}): the level the save has opened. 1 from the start (short wave, shapes without names); 2 after
 //   the Journey (names and distance). 3 (the eleven places, S.lugares.won) and 4a/4b/4c (S.bandas.far ≥ 10/30/60 km)
-//   are written here so later batches only add; SCAN_OPEN keeps them closed until then. charged = 4c (the boxes, T3).
-// · scanReach(level) in units (10 per metre), scanNear(p, S, {level, ctx, max}) in order: rarity, then distance, then
-//   not found first; scanPage(S, ctx) lists what is registered for the Bitácora.
+//   are written here so later batches only add; SCAN_OPEN keeps the rest closed until then. charged = 4c (the boxes, T3).
+//   T2 opens level 3: arrows at the screen's edge (scanner-arrows.js), secrets and rumours as «?», a row marks the map.
+// · scanReach(level) in units (10 per metre), scanNear(p, S, {level, ctx, max, minRarity}) in order: rarity, then
+//   distance, then not found first (a secret entry is named «?»); scanPage(S, ctx) lists what is registered for the
+//   Bitácora.
 // · scanBandEntry(band, opts): the hook for registerBand (bandas-model.js): a band's thing registered at level 4 by its
 //   km. Not called yet (FINAL.md T2/T4).
 import {hashKey} from './universe-regions.js';
@@ -22,10 +24,10 @@ export const SCAN_LEVELS=Object.freeze([
  Object.freeze({id:'4b',rank:5,level:4,reach:900,names:true,arrows:3,km:30,wave:1.8}),
  Object.freeze({id:'4c',rank:6,level:4,reach:1200,names:true,arrows:3,km:60,wave:2})
 ]);
-// The highest rank a save can reach today: 2 (levels 1 and 2). Later batches raise it.
-export const SCAN_OPEN=2;
+// The highest rank a save can reach today: 3 (levels 1 to 3, coherencia T2). Later batches raise it.
+export const SCAN_OPEN=3;
 export const SCAN_ROWS=3;
-export const SCAN_SHAPES=Object.freeze(['voz','caja','hallazgo','portal','sonda','forma','estrella']);
+export const SCAN_SHAPES=Object.freeze(['voz','caja','hallazgo','portal','sonda','forma','estrella','boya','pregunta']);
 const ID=/^[a-z][a-z0-9-]{0,31}$/;
 const plain=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const registry=new Map();
@@ -66,17 +68,17 @@ const finite=v=>Number.isFinite(v);
 export function scanDistance(units){const m=Math.max(0,Number(units)||0)/UNITS_PER_M;
  if(m<100)return `${Math.max(1,Math.round(m))} m`;if(m<1000)return `${Math.round(m/10)*10} m`;
  return `${String(Math.round(m/100)/10).replace('.',',')} km`;}
-export function scanNear(p,S,{level=scanLevel(S),ctx=null,max=SCAN_ROWS,reach=null}={}){
+export function scanNear(p,S,{level=scanLevel(S),ctx=null,max=SCAN_ROWS,reach=null,minRarity=0}={}){
  const L=levelOf(level),R=finite(reach)?reach:scanReach(L),out=[],seen=new Set();
  if(!p||!finite(p.x)||!finite(p.y))return out;
  for(const e of registry.values()){
-  if(!scanVisible(e,L))continue;let sites;
+  if(!scanVisible(e,L)||e.rarity<minRarity)continue;let sites;
   try{sites=e.sites(p,R,S,ctx)||[];}catch(_){continue;}
   for(const s of sites){
    if(!s||!finite(s.x)||!finite(s.y))continue;const d=Math.hypot(s.x-p.x,s.y-p.y);if(d>R)continue;
    const key=e.id+':'+(s.key??`${Math.round(s.x)},${Math.round(s.y)}`);if(seen.has(key))continue;seen.add(key);
    let done=false;try{done=!!e.done?.(S,s,ctx);}catch(_){done=false;}
-   out.push({id:e.id,key,shape:s.shape&&SCAN_SHAPES.includes(s.shape)?s.shape:e.shape,name:L.names?(s.name||e.name):null,
+   out.push({id:e.id,key,shape:s.shape&&SCAN_SHAPES.includes(s.shape)?s.shape:e.shape,name:L.names?(e.secret?'?':s.name||e.name):null,
     x:s.x,y:s.y,d,rarity:finite(s.rarity)?s.rarity:e.rarity,done,secret:e.secret,kind:s.kind||null,hint:s.hint||null,site:s});
   }
  }

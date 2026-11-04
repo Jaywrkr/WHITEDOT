@@ -155,9 +155,9 @@ export function initialize(r){
  function drawCria(c,x,y,cria,t,size=3){const col=criaInk(cria);c.save();c.translate(x,y);if(!light())glow(c,0,0,size*3.4,col,.2,true);c.strokeStyle=c.fillStyle=col;c.lineWidth=1;c.globalAlpha=.85;
   if(cria.species==='luciernaga'){c.beginPath();c.ellipse(0,0,size*.55,size,0,0,TAU);c.stroke();}else{const flap=.4+Math.sin(t/(cria.species==='grulla'?320:140))*.25;c.beginPath();c.moveTo(-size*1.4,-size*flap);c.quadraticCurveTo(0,0,0,0);c.lineTo(size*1.4,-size*flap);c.stroke();}
   if(cria.rare){c.globalAlpha=.6;c.fillRect(-1,size+1,2,2);}c.restore();}
- function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='portal'){c.strokeRect(x-3,y-5,6,10);}else if(kind==='estacion'){c.beginPath();c.arc(x,y,4,0,TAU);c.stroke();c.fillRect(x-1,y-1,2,2);}else if(kind==='nido'){for(let k=0;k<5;k++){const a=k/5*TAU;c.fillRect(Math.round(x+Math.cos(a)*4)-1,Math.round(y+Math.sin(a)*3)-1,2,2);}}
-  return {x,y,id:o.id||kind};}
+ // Coherencia T2: the band's one mark is an offer to the one layer of arrows (scanner-arrows.js); a «?» until the
+ // scanner's level 4 names the things past 10 km.
+ function edge(c,kind,o){const q=r.edgeOffer?.({key:'D:'+kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:'banda',x:o.x,y:o.y,shape:'portal',far:true})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);return {x:Math.round(q.x),y:Math.round(q.y),id:o.id||kind};}
  function draw(){const out={portal:null,station:null,console:null,nest:null,edge:{},rule:null,corona:null,trail:0};if(!allowed()||!r.cx||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused(),quiet=scene()&&!rule;c.save();c.textAlign='center';const mark=[];
   for(const s of portalsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y),spent=!portalPaysToday(q,s.id,today());if(onScreen(sp)){drawPortal(c,sp,portalRule(s),spent,s.id);out.portal=out.portal||{id:s.id,kind:portalRule(s),x:Math.round(sp.x),y:Math.round(sp.y)};}else if(!spent&&!rule)mark.push({kind:'portal',o:s,d:s.d});}

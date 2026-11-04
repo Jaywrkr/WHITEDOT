@@ -165,12 +165,11 @@ export function initialize(r){
   glow(c,top.x,top.y,22,'#ffffff',.55*pulse,!light(),'rgba(255,255,255,0)');if(!light())glow(c,top.x,top.y,42,'#fff2d8',.18*pulse,true);
   c.globalAlpha=1;c.fillStyle='#ffffff';c.beginPath();c.arc(top.x,top.y,3,0,TAU);c.fill();c.globalAlpha=.5*pulse;c.fillRect(Math.round(top.x)-7,Math.round(top.y),14,1);c.fillRect(Math.round(top.x),Math.round(top.y)-7,1,14);
   c.globalAlpha=.6;c.fillRect(Math.round(q.x)-1.5,Math.round(q.y)-1.5,3,3);return {x:Math.round(top.x),y:Math.round(top.y)};}
- function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='interruptor'){c.strokeRect(x-3,y-3,6,6);c.fillRect(x-1,y-1,2,2);}else if(kind==='radar'){c.beginPath();c.moveTo(x,y+4);c.lineTo(x,y-2);c.stroke();c.beginPath();c.arc(x,y-2,4,-Math.PI*.8,-Math.PI*.2);c.stroke();}
-  else if(kind==='pelota'){c.beginPath();c.arc(x,y,3.5,0,TAU);c.fill();}else if(kind==='tablon'){c.strokeRect(x-4,y-3,8,6);}
-  // The flare: a small burst (a buoy's mark is a post and a dot), with how far it is.
-  else{c.beginPath();c.arc(x,y,2.5,0,TAU);c.fill();c.lineWidth=1;c.beginPath();for(const [dx,dy] of [[0,-1],[1,0],[0,1],[-1,0]]){c.moveTo(x+dx*4.5,y+dy*4.5);c.lineTo(x+dx*7.5,y+dy*7.5);}c.stroke();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';const d=Math.hypot(o.x-p.x,o.y-p.y)/10000;c.fillText(d<1?`${Math.round(d*1000)} m`:`${Math.round(d)} km`,x+(q.x>r.W/2?-22:22),y+3);}
-  return {x,y,id:o.id||kind};}
+ // Coherencia T2: an offer to the one layer of arrows (scanner-arrows.js). The next ring of a challenge and your flare
+ // (with how far it is) come first; a thing of the band is a game.
+ function edge(c,kind,o,p){const flare=kind==='bengala',ring=kind==='reto',d=Math.hypot(o.x-p.x,o.y-p.y)/10000;
+  const q=r.edgeOffer?.({key:kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:flare?'bengala':ring?'reto':'banda',x:o.x,y:o.y,shape:flare?'estrella':'portal',label:flare?(d<1?`${Math.round(d*1000)} m`:`${Math.round(d)} km`):null})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);
+  return {x:Math.round(q.x),y:Math.round(q.y),id:o.id||kind};}
  function draw(){const out={switch:null,radar:null,balls:[],board:null,flare:null,edge:{},reto:null,targets:0};if(!allowed()||!r.cx||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused(),quiet=scene();c.save();c.textAlign='center';
   const mark=[];
@@ -187,7 +186,7 @@ export function initialize(r){
     list.forEach((o,k)=>{const done=q.taken.includes(o.id)&&!openIds.has(o.id),open=openIds.has(o.id);c.globalAlpha=done?.5:open?.95:.6;say(c,done?`Hecho · ${o.text}`:o.text,r.W/2,y0+18+k*30);if(open){c.globalAlpha=.6;say(c,ORDER_DO[o.kind],r.W/2,y0+32+k*30);}});out.boardText=list.length;}}
   // The challenge: its targets on the world and its clock above.
   if(reto){const next=reto.kind==='aros'?reto.targets.find(x=>!x.done):null;for(const g of reto.targets){if(g.done)continue;const sp=at(g.x,g.y);out.targets++;
-    if(reto.kind==='aros'){const first=g===next;c.globalAlpha=first?.95:.25;c.strokeStyle='#ffffff';c.lineWidth=first?2:1;c.beginPath();c.arc(sp.x,sp.y,first&&!reduced()?28+2*Math.sin(clock*6):28,0,TAU);c.stroke();if(first&&!onScreen(sp,-8))edge(c,'interruptor',g,p);}
+    if(reto.kind==='aros'){const first=g===next;c.globalAlpha=first?.95:.25;c.strokeStyle='#ffffff';c.lineWidth=first?2:1;c.beginPath();c.arc(sp.x,sp.y,first&&!reduced()?28+2*Math.sin(clock*6):28,0,TAU);c.stroke();if(first&&!onScreen(sp,-8))edge(c,'reto',g,p);}
     else{c.globalAlpha=.95;c.fillStyle='#ffffff';c.beginPath();c.arc(sp.x,sp.y,3.5,0,TAU);c.fill();c.globalAlpha=.3;c.beginPath();c.arc(sp.x,sp.y,8,0,TAU);c.fill();}}
    out.reto={kind:reto.kind,done:reto.done,total:reto.targets.length,left:Math.max(0,RETO_SECONDS-(clock-reto.start))};
    if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Reto · ${clockText(RETO_SECONDS-(clock-reto.start))} · ${reto.done} de ${reto.targets.length}`,r.W/2,Math.max(196,r.H/2-152));}}

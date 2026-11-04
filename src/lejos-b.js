@@ -204,11 +204,9 @@ export function initialize(r){
   creature(c,who,q.x,q.y,t);
   let shown=0;for(const th of lostAt(site)){if(found.has(th.k)){lostThing(c,th.name,q.x-20+th.k*10,q.y+18,.9);continue;}if(done)continue;const p=at(th.x,th.y);if(!onScreen(p))continue;const lit=clock-(lights.get(site.id+':'+th.k)??-9)<1.5;if(lit&&!light())glow(c,p.x,p.y,14,'#ffffff',.4,true);lostThing(c,th.name,p.x,p.y,lit?1:.42);shown++;}
   out.postal={id:site.id,creature:who,found:found.size,done,x:Math.round(q.x),y:Math.round(q.y),shown};}
- function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.6;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='apagada'){c.setLineDash([2,2]);c.beginPath();c.arc(x,y,4.5,0,TAU);c.stroke();c.setLineDash([]);}
-  else if(kind==='habitat'){c.beginPath();c.moveTo(x,y-4);c.lineTo(x+4,y+3);c.lineTo(x-4,y+3);c.closePath();c.stroke();}
-  else if(kind==='cancion'){for(const [dx,dy] of [[0,-4],[4,0],[0,4],[-4,0]])c.fillRect(x+dx-1,y+dy-1,2,2);}
-  else{c.strokeRect(x-4,y-3,8,6);c.beginPath();c.moveTo(x-4,y-3);c.lineTo(x,y);c.lineTo(x+4,y-3);c.stroke();}return {x,y,id:o.id};}
+ // Coherencia T2: the band's one mark is an offer to the one layer of arrows (scanner-arrows.js); a «?» until the
+ // scanner's level 4 names the things past 10 km.
+ function edge(c,kind,o){const q=r.edgeOffer?.({key:'B:'+kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:'banda',x:o.x,y:o.y,shape:'portal',far:true})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);return {x:Math.round(q.x),y:Math.round(q.y),id:o.id};}
  const pending=(q,s)=>s.kind==='apagada'?!revived(q,s.id):s.kind==='habitat'?!habitatDone(q,s.id):s.kind==='postal'?!postalDone(q,s.id):!(q.songs[s.id]?.n>0);
  function draw(){const out={edge:{},dead:null,habitat:null,song:null,postal:null,effect:null,busy:busy()};if(!allowed()||!r.cx){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book();c.save();
@@ -220,8 +218,8 @@ export function initialize(r){
     else if(s.kind==='postal'&&s.d<=POSTAL_R*2.4)drawPostal(c,s,sp,out,t);}
    for(const f of flights){const k=Math.min(1,(clock-f.at)/.8),s=at(f.from.x+(f.to.x-f.from.x)*k,f.from.y+(f.to.y-f.from.y)*k);element(c,f.el,s.x,s.y,1-k*.3);}
    out.effect=drawEffect(c,p,t);
-   // The nearest of each kind not done, at the screen's edge while out of view (quiet while a scene plays).
-   if(!scene()&&!paused()&&!busy()){const view=s=>onScreen(at(s.x,s.y),-8);const seenKinds=new Set();for(const s of list){if(s.d>EDGE_REACH||seenKinds.has(s.kind)||!pending(q,s))continue;seenKinds.add(s.kind);if(!view(s))out.edge[s.kind]=edge(c,s.kind,s);}}
+   // One mark for the batch (coherencia T2): the nearest thing not done, out of view (quiet while a scene plays).
+   if(!scene()&&!paused()&&!busy()){const view=s=>onScreen(at(s.x,s.y),-8);let best=null;for(const s of list){if(s.d>EDGE_REACH||!pending(q,s))continue;if(!best||s.d<best.d)best=s;}if(best&&!view(best))out.edge[best.kind]=edge(c,best.kind,best);}
    // Its words, short: what to do next, near it.
    if(words()&&!scene()){c.globalAlpha=1;c.fillStyle='#ffffff';c.textAlign='center';c.font='12px "Geist Mono", monospace';const top=Math.max(196,r.H/2-152);
     if(out.dead?.grey){say(c,'Región apagada',r.W/2,top);c.globalAlpha=.75;c.font='11px "Geist Mono", monospace';say(c,r.S.sound?'Pasa por sus brasas y pulsa a tiempo':'Pasa por sus brasas',r.W/2,top+18);}

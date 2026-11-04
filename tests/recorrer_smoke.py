@@ -42,6 +42,9 @@ try:
     assert s['summary'].startswith('Boya · 3 km'),s['summary'];page.wait_for_timeout(400);assert st(page)['tics']==1,'once while you stay'
     go(page,b['x']*1.08,b['y']*1.08);page.wait_for_function("__r.recorrerState().drawn.edge?.buoy?.km===4",timeout=8000)
     e=st(page)['drawn']['edge']['buoy'];assert 0<=e['x']<=width and 90<=e['y']<=height-90,e
+    # Coherencia T2: the buoy is offered to the one layer of white arrows, with its km when it is shown.
+    page.wait_for_function("__r.edgeState().kinds.includes('boya')",timeout=4000)
+    shown=[a for a in page.evaluate("__r.edgeState().shown") if a['kind']=='boya'];assert all(a['label']=='4 km' and a['shape']=='boya' for a in shown),shown
     # --- 2 · The first satellite: at the edge on the way, kept on entering, the music a little lower inside.
     page.evaluate("()=>{__r.S.sound=true;__r.audio?.();__r.ac?.resume?.();}")
     page.wait_for_function("__r.ac?.state==='running'&&!!__r.master",timeout=10000)

@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.259** en la rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394), con `jay/coherencia-t0` (alpha.258, PR #395) fusionada: depende de T0. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.260** en la rama `jay/coherencia-t2`, desde `jay/coherencia-t1` `fa47285` (alpha.259, que ya contiene T0): depende de T1. Las entradas describen su revisión, no certifican producción.
+
+
+## Una capa de flechas (coherencia T2) · 2.3.0-alpha.260
+
+Rama `jay/coherencia-t2`, desde `jay/coherencia-t1` `fa47285` (alpha.259; dependencia explícita, con T0 dentro). Plan de coherencia, tanda T2, con las doce decisiones aprobadas por Jay. Guía: [Una capa de flechas](docs/MUNDO.md#una-capa-de-flechas).
+
+- **Un solo lenguaje para «hay algo allí»:** una flecha blanca pequeña en el borde, con el icono del Escáner o «?» (secreto o solo oído). Tres como mucho: primero lo tuyo (reto, bengala), luego lo raro, luego lo que se hace, luego el camino; dentro, lo más cercano. Una flecha por cosa; ninguna encima de otra.
+- **Las marcas viejas pasan a la capa:** Descubrir (juego, hallazgo, caja, sonido raro), Recorrer (boya con su km, satélite), Secretos del cielo (eclipse, cristal, sonda), tandas A, B, C y D, pistas de hallazgo (eran puntos cian), chispa salvaje sin sonido (era dorada), la bandada que enseña una caja (era dorada), los hitos (eran brillo y rayos de color) y la región vecina (era una luz de color; ahora solo si no hay nada más). Ninguna marca dorada ni cian.
+- **La tanda B deja una sola marca** (antes, una por tipo). **La sonda tiene su «?» también con sonido.** Las cosas de B, C y D son «?» hasta el nivel 4 del Escáner.
+- **Nivel 3 del Escáner, con los once lugares** (`S.lugares.won`): 300 m, el registro también señala (rumores, cristales de cometa y asteroide secreto nuevos en el registro, como «?»). Al soltar, «Cerca» se queda 4 s y **una fila pone la marca en el Mapa del universo** (la marca única). `SCAN_OPEN = 3`.
+- **Movimiento reducido:** sin aparecer poco a poco. **Calidad ligera:** sin halo. Flecha e iconos horneados; sin degradados ni `shadowBlur`.
+- **Coste** (`?anillo=1`, llamadas al lienzo por fotograma, mediana de tres, a 3/15/35/65 km): 758/477/3778/1058 → 753/459/3771/1046 a 390×844 y 1481/761/7377/1948 → 1476/742/7375/1932 a 1280×800; con el nivel 3 abierto, igual o menos en los ocho.
+- **Sin cambios** en qué son las cosas, premios, sonidos, `audio.js`, azar antiguo, ids de HTML ni guardados (la marca usa `S.universeMap.mark`). La Brújula sigue igual hasta T3.
+- **Preservación:** capa `approvedT2`.
+- **Pruebas.** Nuevas `tests/scanner-arrows.mjs` y `tests/flechas_smoke.py` (390×844 y 1280×800: solo blanco, tres como mucho, nivel 2 frente a 3, «?» del secreto y del rumor, una fila marca el mapa y una marca nueva sustituye a la anterior, movimiento reducido, calidad ligera y coste). Al día: `scanner-model.mjs` (nivel 3), `secretos_cielo_smoke.py` (la sonda con sonido lleva «?»), y `recorrer`, `viaje_a`, `descubrir_sonidos`, `arreglos30_mundo` y `journey_ui` comprueban que su marca entra en la capa. Capturas en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Sin carga (T3) ni nivel 4.
 
 
 ## El Escáner, núcleo (coherencia T1) · 2.3.0-alpha.259

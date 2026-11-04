@@ -7,10 +7,12 @@ export function clueDirection(x,y,sites){
 export function initialize(runtime){
  let direction=null,lastBar=-Infinity;
  function tick(){direction=runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'?clueDirection(runtime.S.wx,runtime.S.wy,runtime.nearbyRelics()):null;}
+ // Coherencia T2: the nearest find not kept, out of view, is an offer to the one layer of arrows (scanner-arrows.js);
+ // it was three cyan dots round the cube.
  function draw(){
-  if(!direction||direction.distance<100||direction.distance>900||runtime.scanning||openSurface('.modal:not([hidden])'))return;
-  const c=runtime.cx;c.save();c.globalAlpha=.16;c.fillStyle='#9fe8ff';
-  for(let i=0;i<3;i++){const r=85+i*9;c.beginPath();c.arc(runtime.W/2+Math.cos(direction.angle)*r,runtime.H/2+Math.sin(direction.angle)*r,1.4,0,Math.PI*2);c.fill();}c.restore();
+  if(!direction||direction.distance<100||direction.distance>900||openSurface('.modal:not([hidden])'))return;
+  const s=direction.site,W=runtime.W,H=runtime.H,sx=s.x-(runtime.camX??runtime.S.wx)+W/2,sy=s.y-(runtime.camY??runtime.S.wy)+H/2;
+  if(sx<-8||sy<-8||sx>W+8||sy>H+8)runtime.edgeOffer?.({key:'hallazgo:'+(s.id??Math.round(s.x)+','+Math.round(s.y)),kind:'hallazgo',x:s.x,y:s.y,shape:'hallazgo'});
  }
  function bar(time,bar){
   if(!direction||direction.distance>900||bar-lastBar<8||document.hidden||!runtime.S.sound||runtime.ac?.state!=='running'||openSurface('.modal:not([hidden])')||!claimInstallationBar(runtime,bar))return;

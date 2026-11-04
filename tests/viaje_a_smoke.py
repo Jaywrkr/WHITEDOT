@@ -110,6 +110,8 @@ try:
    if SHOTS:page.wait_for_timeout(1500);page.screenshot(path=f'{SHOTS}/bengala-{lang}-{width}.png')
    go(page,home['x']+4500,home['y']+2000);page.wait_for_function("!!__r.viajeState().drawn.edge?.bengala",timeout=6000)
    e=st(page)['drawn']['edge']['bengala'];assert 0<=e['x']<=width and 0<=e['y']<=height,e
+   # Coherencia T2: your flare comes first in the one layer of white arrows, with how far it is.
+   page.wait_for_function("__r.edgeState().shown.some(a=>a.kind==='bengala'&&/ (m|km)$/.test(a.label||''))",timeout=4000)
    if SHOTS:page.screenshot(path=f'{SHOTS}/bengala-borde-{lang}-{width}.png')
    if sound:page.wait_for_function("__r.viajeState().flareBeeps>=1",timeout=25000);assert any(n for n in [st(page)['notes']])
    if not en:

@@ -176,10 +176,9 @@ export function initialize(r){
   if(s.kind==='banco'){c.fillStyle='#ffffff';for(let k=0;k<7;k++){const a=k/7*TAU+(reduced()?0:clock*.8),rr=5+3*Math.sin(k*1.9);c.fillRect(Math.round(q.x+Math.cos(a)*rr)-1,Math.round(q.y+Math.sin(a)*rr*.6)-1,2,2);}}
   else if(s.kind==='chatarra'){c.fillStyle='#9a9aa2';c.fillRect(q.x-5,q.y-2,6,4);c.fillRect(q.x+1,q.y+1,5,3);c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x-6,q.y-4);c.lineTo(q.x-1,q.y-7);c.stroke();}
   else{c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.beginPath();c.arc(q.x,q.y,7,0,TAU);c.fill();c.stroke();c.fillStyle='#ffffff';for(const [dx,dy] of [[-2,-1],[2,1],[0,3]])c.fillRect(Math.round(q.x+dx),Math.round(q.y+dy),1,1);}}
- function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='pulsar'){c.beginPath();for(let i=0;i<4;i++){const a=i/4*TAU;c.moveTo(x,y);c.lineTo(x+Math.cos(a)*4,y+Math.sin(a)*4);}c.stroke();}else if(kind==='asteroide'){c.beginPath();c.arc(x,y,3.5,0,TAU);c.stroke();}
-  else if(kind==='kit'){c.strokeRect(x-4,y-3,8,6);}else{c.fillRect(x-1,y-1,2,2);c.beginPath();c.arc(x,y,4,0,TAU);c.stroke();}
-  return {x,y,id:o.id};}
+ // Coherencia T2: the band's one mark is an offer to the one layer of arrows (scanner-arrows.js); a «?» until the
+ // scanner's level 4 names the things past 10 km.
+ function edge(c,kind,o){const q=r.edgeOffer?.({key:'C:'+kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:'banda',x:o.x,y:o.y,shape:'portal',far:true})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);return {x:Math.round(q.x),y:Math.round(q.y),id:o.id};}
  function draw(){const out={pulsar:null,rocks:[],dust:null,caches:[],points:[],lines:0,edge:{},volley:null,ride:!!ride,sunk:!!sunk,hint:''};if(!allowed()||!r.cx||!ok()||!sites){drawn=out;return;}
   const c=r.cx,p=me(),q=book(),still=paused(),quiet=others()&&!mine();c.save();c.textAlign='center';const mark=[];
   for(const s of sites.dust){const d=drawDust(c,s);if(d&&!out.dust)out.dust={id:s.id,hidden:d==='hidden'};}

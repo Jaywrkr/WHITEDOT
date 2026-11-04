@@ -87,10 +87,9 @@ export function initialize(r){
   c.globalAlpha=.5;c.beginPath();for(const side of [-1,1]){c.moveTo(q.x+side*19,q.y-5);c.lineTo(q.x+side*19,q.y+5);}c.stroke();c.globalAlpha=1;
   if(!light())glow(c,q.x,q.y,9,WARM,.5,true);c.globalAlpha=1;c.fillStyle=WARM;c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();
   if(mine){c.globalAlpha=.8;c.strokeStyle='#ffffff';c.setLineDash([2,3]);c.beginPath();c.arc(q.x,q.y,26,0,TAU);c.stroke();c.setLineDash([]);}}
- function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,24,108),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.75;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='buoy'){c.beginPath();c.moveTo(x,y+5);c.lineTo(x,y-1);c.stroke();c.beginPath();c.arc(x,y-3,2.5,0,TAU);c.fill();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText(String(o.km),x+(q.x>r.W/2?-12:12),y-1);}
-  else{c.strokeRect(x-2.5,y-2.5,5,5);c.beginPath();c.moveTo(x-8,y);c.lineTo(x-3,y);c.moveTo(x+3,y);c.lineTo(x+8,y);c.stroke();}
-  return {x,y,d:Math.round(Math.hypot(o.x-p.x,o.y-p.y)),id:o.id,km:o.km};}
+ // Coherencia T2: the next buoy (with its km) and a satellite are offers to the one layer of arrows (scanner-arrows.js).
+ function edge(c,kind,o,p){const q=r.edgeOffer?.({key:kind+':'+o.id,kind:kind==='buoy'?'boya':'satelite',x:o.x,y:o.y,shape:kind==='buoy'?'boya':'portal',label:kind==='buoy'?`${o.km} km`:null})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,24,108);
+  return {x:Math.round(q.x),y:Math.round(q.y),d:Math.round(Math.hypot(o.x-p.x,o.y-p.y)),id:o.id,km:o.km};}
  function draw(){const out={buoy:null,sat:null,next:null,edge:{},inside:inside?.id||null};if(!allowed()||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),words=r.S.universeTexts!==false,q=book();c.save();
   // Buoys near you: the nearest of your km and of the ones on either side.

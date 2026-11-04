@@ -43,12 +43,14 @@ try:
    # --- 1 · A comet crystal: a glint at the edge, then on screen, kept by passing through it; no sparks.
    go(page,c0['x']+1100,c0['y']);page.wait_for_function("!!__r.skySecretState().drawn.edge?.cometa",timeout=8000)
    e=st(page)['drawn']['edge']['cometa'];assert e['i']==0 and 0<=e['x']<=width and 0<=e['y']<=height,e
+   # Coherencia T2: the glint is a «?» in the one layer of white arrows.
+   page.wait_for_function("__r.edgeState().shown.some(a=>a.kind==='cometa'&&a.ask&&a.shape==='pregunta')",timeout=4000)
    go(page,c0['x']+120*0+150,c0['y']+60);page.wait_for_function("__r.skySecretState().drawn.comet?.i===0",timeout=8000)
    if SHOTS:page.screenshot(path=f'{SHOTS}/cristal-{lang}-{width}.png')
    go(page,c0['x'],c0['y']);page.wait_for_function("__r.skySecretState().comets===1",timeout=8000)
    s=st(page);assert s['summary']=='Cristal de cometa · 1 de 50',s['summary'];assert 'cometas' in s['pages']
    assert page.evaluate("__r.S.sparks")==sparks,'a crystal pays nothing'
-   # --- 2 · A lost probe: a mark at the edge without sound; found, a coordinate on the map.
+   # --- 2 · A lost probe: a «?» at the edge; found, a coordinate on the map.
    go(page,p0['x']+2500,p0['y']);page.wait_for_function("!!__r.skySecretState().drawn.edge?.sonda",timeout=8000)
    go(page,p0['x'],p0['y']);page.wait_for_function("__r.skySecretState().probes===1&&__r.skySecretState().book.coords.length===1",timeout=8000)
    coord=st(page)['book']['coords'][0];assert coord['id']=='coord:0' and coord['kind'] in ('cometa','asteroide','satelite'),coord
@@ -66,7 +68,9 @@ try:
     # --- 3 · With sound, a probe beeps on the bars when you come near (heard before seen).
     if width>500:
      sound_on(page);go(page,p1['x']+2000,p1['y']);page.wait_for_function("__r.skySecretState().beeps>=2",timeout=20000)
-     assert st(page)['drawn'].get('probe') is None and not st(page)['drawn']['edge'].get('sonda'),'heard before seen'
+     # Heard before seen: not on screen, and since T2 its mark at the edge is a «?» with the sound on too.
+     assert st(page)['drawn'].get('probe') is None and st(page)['drawn']['edge'].get('sonda'),'heard before seen, marked as «?»'
+     page.wait_for_function("__r.edgeState().shown.some(a=>a.kind==='sonda'&&a.ask)",timeout=4000)
     # --- 4 · A meteor shower: no living encounter meanwhile; caught by passing (phone, no sound) or on time (desktop).
     go(page,c0['x']+20000,c0['y']+20000);sparks=page.evaluate("__r.S.sparks")
     assert page.evaluate("__r.skySecretShower()") is True;assert page.evaluate("__r.skySecretBusy()") is True
