@@ -1,6 +1,6 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.262** en la rama `jay/coherencia-t3`, desde `jay/coherencia-t4` `fbec1b7` (alpha.261, con T0, T1 y T2 fusionadas): depende de T4. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.262** en la rama `jay/coherencia-t3`, desde `main` `d5a4f27` (con T0 y T1, PR #395 y #396) fusionada sobre T4 y T2: depende de T4. Las entradas describen su revisión, no certifican producción.
 
 
 ## La carga (coherencia T3) · 2.3.0-alpha.262
