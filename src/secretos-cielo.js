@@ -128,14 +128,14 @@ export function initialize(r){
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused();c.save();
   // The eclipse site: a star and its planet, and the darkness while it lasts.
   const site=eclipseNear(p,ECLIPSE_SEE);if(site){const s=at(site.x,site.y),f=eclipsePhase(site,sec());if(onScreen(s,60)){const cover=planetStar(c,site,s,f);out.eclipse={id:site.id,x:Math.round(s.x),y:Math.round(s.y),cover:Math.round(cover*100)/100,total:f.total};}
-   else if(!scene()&&!still&&!shower)out.edge.eclipse=edge(c,'eclipse',site);}
+   else if(!scene()&&!still&&!busy())out.edge.eclipse=edge(c,'eclipse',site);}
   if(ok()){
    // A crystal glints at the screen's edge from COMET_GLINT (the nearest one), as the album's sounds do.
    let glint=null,gd=Infinity;for(const cr of COMETS){if(cometFound(q,cr.i))continue;const d=Math.hypot(cr.x-p.x,cr.y-p.y);if(d>COMET_GLINT)continue;const s=at(cr.x,cr.y);if(onScreen(s)){crystal(c,s,t);out.comet={i:cr.i,x:Math.round(s.x),y:Math.round(s.y)};}else if(d<gd){gd=d;glint=cr;}}
-   if(glint&&!out.comet&&!scene()&&!still&&!shower)out.edge.cometa={...edge(c,'cometa',glint),i:glint.i};
+   if(glint&&!out.comet&&!scene()&&!still&&!busy())out.edge.cometa={...edge(c,'cometa',glint),i:glint.i};
    const near=nearestProbe(p,PROBE_HEAR);if(near){const s=at(near.probe.x,near.probe.y);if(onScreen(s)){probe(c,s,t);out.probe={i:near.probe.i,x:Math.round(s.x),y:Math.round(s.y)};}
     // Heard before seen; with the sound off there is nothing to hear, so its mark waits at the screen's edge.
-    else if(!r.S.sound&&!scene()&&!still&&!shower)out.edge.sonda=edge(c,'sonda',near.probe);}}
+    else if(!r.S.sound&&!scene()&&!still&&!busy())out.edge.sonda=edge(c,'sonda',near.probe);}}
   if(shower){const age=clock-shower.start;for(const m of shower.meteors){const a=age-m.born;if(m.caught||a<0||a>METEOR_LIFE)continue;const hd=meteorHead(m,a),h=at(hd.x,hd.y),fade=Math.min(1,a/.3,(METEOR_LIFE-a)/.5);
     c.globalAlpha=.9*fade;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.moveTo(h.x,h.y);c.lineTo(h.x-m.dx*46,h.y-m.dy*46);c.stroke();c.globalAlpha=.35*fade;c.lineWidth=1;c.beginPath();c.moveTo(h.x-m.dx*46,h.y-m.dy*46);c.lineTo(h.x-m.dx*90,h.y-m.dy*90);c.stroke();
     c.globalAlpha=fade;c.fillStyle='#ffffff';c.fillRect(Math.round(h.x)-2,Math.round(h.y)-2,4,4);out.meteors++;}}
