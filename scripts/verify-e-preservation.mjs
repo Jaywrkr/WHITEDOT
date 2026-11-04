@@ -174,7 +174,7 @@ const rebasedMN=new Set(['src/living-discoveries.js']);
 // El Escáner, núcleo (coherencia T1, Jay, 4 Nov 2026, alpha.259): the frame draws the scanner's ring under the cube
 // (render.js) and scanner.js becomes the «Cerca» panel over the new registry; the offline shell lists two new modules.
 // No save or audio.js change. Held to the merge of jay/coherencia-t0 into jay/coherencia-t1 (from jay/menus 7acb2b2).
-const approvedT1='cf0eee961adb89864081b1c8ab0e3a1883c865c9';
+const approvedT1='839813cf7404e39c881956e6623e1512a50e6fa9';
 const rebasedT1=new Set(['src/render.js','src/scanner.js']);
 // Coherencia T0 (Jay, 4 Nov 2026, alpha.258): the loose bugs of the coherence audit (wild spark guard, Expansión retired,
 // no real people on screen, Ámbar winnable, notices, rounds light the day, lights by the heard clock, far bands page,
