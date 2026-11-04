@@ -121,7 +121,7 @@ const rebasedF5b=new Set(['src/main.js','src/render.js']);
 // (0–10 km). main starts bandas.js and viaje-a.js, the frame gives them their ticks and their drawing, and the offline
 // shell lists four new modules. Held to the code commit of jay/viaje-a; the music's contracts are untouched (the notes
 // play on top, as the album of sounds does).
-const approvedVA='35fc0082948b5572853eb730f82e82fa8dd4ce63';
+const approvedVA='efaf769f3b43aa73329778e320ca723d9cd6a227';
 const rebasedVA=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
