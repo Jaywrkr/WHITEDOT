@@ -154,7 +154,8 @@ export function initialize(r){
  function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
   if(kind==='interruptor'){c.strokeRect(x-3,y-3,6,6);c.fillRect(x-1,y-1,2,2);}else if(kind==='radar'){c.beginPath();c.moveTo(x,y+4);c.lineTo(x,y-2);c.stroke();c.beginPath();c.arc(x,y-2,4,-Math.PI*.8,-Math.PI*.2);c.stroke();}
   else if(kind==='pelota'){c.beginPath();c.arc(x,y,3.5,0,TAU);c.fill();}else if(kind==='tablon'){c.strokeRect(x-4,y-3,8,6);}
-  else{c.beginPath();c.moveTo(x,y+5);c.lineTo(x,y-3);c.stroke();c.beginPath();c.arc(x,y-4,2.5,0,TAU);c.fill();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';const d=Math.hypot(o.x-p.x,o.y-p.y)/10000;c.fillText(d<1?`${Math.round(d*1000)} m`:`${Math.round(d)} km`,x+(q.x>r.W/2?-22:22),y+3);}
+  // The flare: a small burst (a buoy's mark is a post and a dot), with how far it is.
+  else{c.beginPath();c.arc(x,y,2.5,0,TAU);c.fill();c.lineWidth=1;c.beginPath();for(const [dx,dy] of [[0,-1],[1,0],[0,1],[-1,0]]){c.moveTo(x+dx*4.5,y+dy*4.5);c.lineTo(x+dx*7.5,y+dy*7.5);}c.stroke();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';const d=Math.hypot(o.x-p.x,o.y-p.y)/10000;c.fillText(d<1?`${Math.round(d*1000)} m`:`${Math.round(d)} km`,x+(q.x>r.W/2?-22:22),y+3);}
   return {x,y,id:o.id||kind};}
  function draw(){const out={switch:null,radar:null,balls:[],board:null,flare:null,edge:{},reto:null,targets:0};if(!allowed()||!r.cx||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused(),quiet=scene();c.save();c.textAlign='center';
