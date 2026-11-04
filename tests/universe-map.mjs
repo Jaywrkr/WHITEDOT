@@ -30,6 +30,8 @@ const p0=bandProgress({},RP,5,five);assert.deepEqual([p0.done,p0.pct,p0.complete
 const p1=bandProgress({'0,0':1},RP,5,five);assert.equal(p1.pct,1,'one region already reads 1 %');
 const all=Object.fromEntries(five.map(k=>[k,1]));const p2=bandProgress(all,RP,5,five);assert.ok(p2.complete&&p2.pct===100);
 const list=UMAP_BANDS.map(km=>bandProgress({'0,0':1},RP,km));assert.equal(currentBand(list,0).km,5);assert.equal(currentBand(list,8).km,20,'beyond 5 km the next ring');
+// T0 (bug 13): past the last ring the header speaks of the last one, never of «Hasta 5 km» behind you.
+assert.equal(currentBand(list,60).km,UMAP_BANDS.at(-1));assert.equal(currentBand(list,25).km,50);
 assert.equal(currentBand([{...p2,km:5},{km:20,complete:false}],0).km,20,'a full ring gives way to the next');
 assert.deepEqual(UMAP_BANDS,[5,20,50]);
 

@@ -57,7 +57,7 @@ try:
    assert not page.evaluate("document.getElementById('toast').textContent.includes('{}')".replace('{}',page.evaluate(f"__r.ACH.find(a=>a[0]==='{v2}')[1]"))),'a minor one waits in silence'
    ids=page.evaluate("__r.ACH.filter(a=>!a[0].startsWith('v2:')&&!__r.S.ach[a[0]]&&!__r.achievementRetired(a[0])).slice(0,2).map(a=>[a[0],a[1]])")
    page.evaluate(f"()=>{{for(const id of {[i for i,_ in ids]})__r.S.ach[id]=__r.S.todayKey;__r.achievementEarned({[i for i,_ in ids]});}}")
-   page.wait_for_function("document.getElementById('toast').textContent.startsWith('✦ Logro · ')",timeout=8000)
+   page.wait_for_function("document.getElementById('toast').textContent.startsWith('Logro · ')",timeout=8000)
    shown=page.evaluate("document.getElementById('toast').textContent");page.wait_for_timeout(2600)
    names=[n for _,n in ids];assert sum(1 for n in names if n in shown)==1,(shown,names)
    fw=page.evaluate("__r.achievementsFirstWorld()");assert fw['lastNotice']>=0,fw

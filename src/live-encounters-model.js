@@ -84,6 +84,10 @@ export const LIVE_WORDS=Object.freeze(Object.fromEntries(Object.entries({
 }).map(([id,[short,cue,g]])=>[id,Object.freeze({short,cue,...(g?{g}:{})})])));
 // How long the notice and the summary stay, in seconds.
 export const LIVE_NOTICE=3,LIVE_SUMMARY=3;
+// T0 (Kubono coherente, bug 22): the line under the title, only when it says more than the title. «Polilla de luz ·
+// atrápala» over «Una polilla de luz. Atrápala.» said the same thing twice; then there is no line.
+const words=t=>String(t).toLocaleLowerCase('es').replace(/[.·,¡!¿?]/g,' ').split(/\s+/).filter(w=>w&&!['un','una','unos','unas','el','la','los','las'].includes(w)).join(' ');
+export function liveHint(kind){const d=liveDefinition(kind);if(!d)return '';const title=liveTitle(kind);return title&&words(title)===words(d.line)?'':d.line;}
 export function liveTitle(kind){const d=liveDefinition(kind),w=LIVE_WORDS[kind];return d&&w?d.name+' · '+w.cue:d?.name||'';}
 // What happened, in one or two words: caught (by gender), safe, done; reached you, got away or the task left undone.
 export function liveOutcome(s){const d=liveDefinition(s?.kind),w=LIVE_WORDS[s?.kind];if(!d||!w)return '';const r=s.result;

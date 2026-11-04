@@ -12,6 +12,7 @@
 // One scene at a time: a volley, a ride and the time under the dust are scenes (r.bandAttach busy); none starts while an
 // encounter, a figure, a mischief scene, a sky's secret or another batch's scene plays. Sparks only by universeReward.
 // The music is untouched: the notes play on top, on the grid, far under it.
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
@@ -68,10 +69,10 @@ export function initialize(r){
  function throwFlash(strike){const p=me();volley.flash={k:volley.thrown,thrown:clock,strike,aim:{x:p.x,y:p.y}};volley.thrown++;volley.idle=clock;}
  // With sound, a flash is thrown on a bar of the music and strikes on the next one (MU.sq, as the flare listens).
  // A bar that comes while the last flash is still striking throws the next one as soon as that one is done (one a bar).
- function onBar(t){const v=volley;if(!v||!v.sound||v.thrown>=C.VOLLEY||paused()||!r.ac)return;if(v.flash){v.bar=t;return;}throwFlash(clock+(t+16*(r.SIX||.125)-r.ac.currentTime));}
+ function onBar(t){const v=volley;if(!v||!v.sound||v.thrown>=C.VOLLEY||paused()||!r.ac)return;if(v.flash){v.bar=t;return;}throwFlash(clock+(t+16*(r.SIX||.125)-audibleTime(r.ac)));}
  setInterval(()=>{try{const sq=r.MU?.sq,ac=r.ac;if(!ac||!sq?.length)return;for(const e of sq){if(e.s!==0||!(e.t>lastBar+1e-4))continue;lastBar=e.t;if(e.t>=ac.currentTime-.01)onBar(e.t);}}catch(_){}},50);
  function resolve(okay){const v=volley,f=v.flash;v.flash=null;v.run=C.runStep(v.run,okay);v.next=clock+C.QUIET_REST;
-  if(v.sound&&v.bar!=null&&v.thrown<C.VOLLEY&&r.ac){const strike=clock+(v.bar+16*(r.SIX||.125)-r.ac.currentTime);v.bar=null;if(strike-clock>.6){throwFlash(strike);v.flash.thrown=clock;}}
+  if(v.sound&&v.bar!=null&&v.thrown<C.VOLLEY&&r.ac){const strike=clock+(v.bar+16*(r.SIX||.125)-audibleTime(r.ac));v.bar=null;if(strike-clock>.6){throwFlash(strike);v.flash.thrown=clock;}}
   if(okay){v.returned++;streaks.push({from:me(),to:{x:v.x,y:v.y},at:clock});sing('pulsar',[Math.min(8,v.run.cur-1)],{instrument:C.PULSAR_INSTRUMENT,gain:C.PULSAR_GAIN,chord:true});}
   else glows.push({x:f.aim.x,y:f.aim.y,at:clock,dim:true});}
  function endVolley(){const v=volley;volley=null;if(!v)return;pulsarRest=v.id;if(!v.thrown)return;let amount=0;

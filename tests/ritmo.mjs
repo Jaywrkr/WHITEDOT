@@ -7,7 +7,8 @@ import {PLACE_IDS,normalizePlaces} from '../src/places.js';
 import {RHYTHMS,PLACE_RHYTHMS} from '../src/journey-rhythm.js';
 import {LEVEL_SPARKS} from '../src/spark-rules.js';
 import {RITMO_VERSION,ECHO_PLACES,GHOST_EVERY,GHOST_MAX,GHOST_ALPHA,COMBO_AT,TRAIL_MAX,DUEL_RAPID,normalizeRitmo,normalizeGhost,echoOffered,duelOpen,ghostRecorder,ghostSample,ghostAt,ghostAlpha,ghostBetter,ghostFrom,
- comboStep,trailLength,duelPattern,duelList,duelJudge,duelClose,duelShare,duelKeep} from '../src/ritmo-model.js';
+ comboStep,trailLength,duelPattern,duelList,duelJudge,duelClose,duelShare,duelKeep,DUEL_WINDOW} from '../src/ritmo-model.js';
+import {ON_TIME} from '../src/journey-pulse.js';
 const places=(stars=[true,false,false],extra={})=>({...normalizePlaces({version:2,stars:Object.fromEntries(PLACE_IDS.map(id=>[id,[...stars]]))}),...extra});
 // ---------- the save ----------
 const blank=normalizeRitmo(undefined);
@@ -41,7 +42,9 @@ const cave=duelPattern('cueva');assert.equal(cave.length,4);assert.equal(cave[0]
 assert.deepEqual(duelList(true).map(x=>x.id),[...DUEL_RAPID]);
 // A touch: the nearest eighth, on time within 90 ms; outside the bar, nothing.
 const six=.15;assert.deepEqual(duelJudge([0,4,6],4.2,six),{step:4,ok:true});assert.deepEqual(duelJudge([0,4,6],4.7,six),{step:4,ok:false},'0,7 of a sixteenth is 105 ms');
-assert.deepEqual(duelJudge([0,4,6],2,six),{step:2,ok:false},'not a step of the pattern');assert.equal(duelJudge([0],15.5,six),null);assert.equal(duelJudge([0],-1.2,six),null);
+assert.deepEqual(duelJudge([0,4,6],2,six),{step:2,ok:false},'not a step of the pattern');
+// T0 (bug 19): one window for the whole game, the duel included (±80 ms): 0,57 of a sixteenth (85 ms) is off time.
+assert.equal(DUEL_WINDOW,ON_TIME);assert.deepEqual(duelJudge([0,4,6],4.57,six),{step:4,ok:false});assert.deepEqual(duelJudge([0,4,6],4.5,six),{step:4,ok:true});assert.equal(duelJudge([0],15.5,six),null);assert.equal(duelJudge([0],-1.2,six),null);
 // The answer closes: right steps, extras, the echo (all and nothing else); the share counts the extras against.
 let score={right:0,total:0,wrong:0,echoes:0};
 let r=duelClose(score,[0,4,6],[0,4,6]);assert.equal(r.echo,true);score=r;r=duelClose(score,[2,6,10,14],[2,6],1);assert.equal(r.echo,false);score=r;r=duelClose(score,[0],[]);assert.equal(r.answered,false);score=r;

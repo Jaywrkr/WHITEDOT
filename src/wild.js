@@ -35,17 +35,22 @@ export const remixSparks=(onTime,best)=>REMIX_SPARKS+(onTime>best?REMIX_RECORD:0
 // Should a wild spark turn up now: far enough walked and long enough since the last. `draw` (0–1, drawn once after
 // each spark) places the moment between one and two minutes.
 export function wildDue(sinceMs,walked,draw){return walked>=WILD_WALK&&sinceMs>=WILD_AFTER+Math.max(0,Math.min(1,draw))*(WILD_SURE-WILD_AFTER);}
+// T0 (Kubono coherente, bug 1): the wild spark pays like every other source of the open universe. Only a save of version
+// 1 pays (a future one is left as it is), never in the lab nor on another land (a preview seed without real travel), and
+// each catch leaves its line in the log. Returns what it paid.
+export function wildPay(S,{labMode=false,realTravel=false}={}){const q=S?.sparkEconomy;if(!q||q.version!==1||labMode||S.previewSeed&&!realTravel)return 0;
+ const got=creditSparks(S,WILD_SPARKS);if(!Array.isArray(q.log))q.log=[];q.log.push({title:'Chispa salvaje',text:`Chispa salvaje · +${got} chispas`,at:S.todayKey||''});q.log=q.log.slice(-80);return got;}
 export function initialize(runtime){
  let owner=null,state=null,spark=null,heard=0,last=performance.now(),walked=0,prev=null,roll=Math.random();const glows=[];
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const today=()=>runtime.S.todayKey||'';
  function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.wild=normalizeWild(runtime.S.wild);state=runtime.S.wild;spark=null;}if(state.day!==today()){state.day=today();state.today=0;}return state;}
  // Out in the free World, on the surface, with no round or chapter game going on.
- function active(){const S=runtime.S;return !!(S&&runtime.inWorld?.()&&S.mode==='world'&&(S.layer||'superficie')==='superficie'&&freeOpen(S.journey)&&!runtime.placeRun?.()&&!runtime.journeyFinaleState?.().running&&!runtime.houseActive?.());}
+ function active(){const S=runtime.S;return !!(S&&runtime.inWorld?.()&&S.mode==='world'&&(S.layer||'superficie')==='superficie'&&freeOpen(S.journey)&&!runtime.labMode&&!(S.previewSeed&&!runtime.realTravel)&&!runtime.placeRun?.()&&!runtime.journeyFinaleState?.().running&&!runtime.houseActive?.());}
  function spawn(){const S=runtime.S,a=prev&&(S.wx!==prev.x||S.wy!==prev.y)?Math.atan2(S.wy-prev.y,S.wx-prev.x):hashKey('wild:a:'+Date.now())*6.283,n=own().caught+own().today;
   spark={x:Math.round(S.wx+Math.cos(a)*WILD_AHEAD),y:Math.round(S.wy+Math.sin(a)*WILD_AHEAD),hops:0,born:performance.now(),n,flash:0};runtime.toast?.(S.sound?'Una chispa salvaje.':'Una chispa salvaje. Pasa por ella.',{level:2,ttl:2500});}
  // Visual 1 (alpha.250): catching it pops in gold on the shared layer; each hop pops small where it was.
- function catchSpark(){if(spark)runtime.fxLayer?.pop(spark.x,spark.y,runtime.GOLD||'#f0d27a',{gold:true,size:1.5,sparks:12});const s=own();runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());const got=creditSparks(runtime.S,WILD_SPARKS);s.caught++;s.today++;spark=null;last=performance.now();walked=0;roll=Math.random();runtime.save?.();runtime.hud?.();runtime.toast?.(`Atrapada · +${got} ✦`,{level:2,ttl:3000});return 'caught';}
+ function catchSpark(){if(spark)runtime.fxLayer?.pop(spark.x,spark.y,runtime.GOLD||'#f0d27a',{gold:true,size:1.5,sparks:12});const s=own();runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());const got=wildPay(runtime.S,{labMode:!!runtime.labMode,realTravel:!!runtime.realTravel});s.caught++;s.today++;spark=null;last=performance.now();walked=0;roll=Math.random();runtime.save?.();runtime.hud?.();runtime.toast?.(got?`Atrapada · +${got} ✦`:'Atrapada.',{level:2,ttl:3000});return 'caught';}
  function tick(){if(!active()){prev=null;return;}const S=runtime.S,now=performance.now();if(prev)walked+=Math.min(200,Math.hypot(S.wx-prev.x,S.wy-prev.y));prev={x:S.wx,y:S.wy};
   if(spark&&wildTouched(spark,{x:S.wx,y:S.wy},S.sound)){glows.push({x:spark.x,y:spark.y,at:now});catchSpark();return;}
   if(spark){if(now-spark.born>WILD_LIFE){spark=null;last=now;walked=0;roll=Math.random();runtime.toast?.('Se fue.',{level:2,ttl:2000});}return;}

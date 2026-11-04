@@ -1,11 +1,11 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.259** en la rama `jay/coherencia-t1`, desde `jay/menus` (alpha.257, PR #394). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.259** en la rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394), con `jay/coherencia-t0` (alpha.258, PR #395) fusionada: depende de T0. Las entradas describen su revisión, no certifican producción.
 
 
 ## El Escáner, núcleo (coherencia T1) · 2.3.0-alpha.259
 
-Rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394; dependencia explícita). Plan de coherencia, tanda T1, con las doce decisiones aprobadas por Jay. En paralelo, T0 (`jay/coherencia-t0`). Guía: [El Escáner](docs/MUNDO.md#el-escáner).
+Rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394; dependencia explícita). Plan de coherencia, tanda T1, con las doce decisiones aprobadas por Jay. Lleva dentro T0 (`jay/coherencia-t0`, alpha.258, PR #395), fusionada sobre esta rama. Guía: [El Escáner](docs/MUNDO.md#el-escáner).
 
 - **Siempre está** (dedo quieto 500 ms o la tecla E) y crece con el avance. Nivel 1 desde el inicio: onda corta (40 m) y formas sin nombre. Nivel 2 tras el Viaje: 120 m, «Nombre · distancia» («Sonda · 80 m»).
 - **La onda.** Un anillo blanco sale del cubo; lo que toca se enciende con un icono pequeño. Lo nuevo, blanco; lo encontrado, tenue. El cubo no crece. Sin sonido nuevo.
@@ -18,6 +18,29 @@ Rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394; depen
 - **Preservación:** capa `approvedT1` (`render.js`, `scanner.js` y la concha).
 - **Pruebas.** Nuevas `tests/scanner-model.mjs` y `tests/escaner_smoke.py` (390×844 y 1280×800: nivel 1 frente a nivel 2, onda, nombres solo en el 2, HUD apartados, sonda y eclipse mientras escaneas, movimiento reducido, calidad ligera y coste). Capturas antes y después en el scratchpad de la sesión (no en Git).
 - **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Sin flechas de borde ni nivel 3 (T2), sin carga (T3). Las voces conservan su radio corto de antes (25 m).
+
+
+## Coherencia, tanda 0 · los bugs sueltos · 2.3.0-alpha.258
+
+Rama `jay/coherencia-t0`, desde `jay/menus` `c56a632` (alpha.257, PR #394: dependencia explícita). Tanda T0 del plan «Kubono coherente», con las doce decisiones aprobadas por Jay el 4 de noviembre. Solo arreglos: mismas mecánicas, sin tocar `audio.js` ni el azar antiguo, y ningún guardado pierde nada. Guía: [El mundo](docs/MUNDO.md#coherencia-tanda-0-alpha258).
+
+- **El cubo no crece** (bug 2, decisión 4). «Expansión» queda retirada (`RETIRED_SURPRISES` en `box-surprises-model.js`). Sigue en la lista, así que las demás cajas conservan la sorpresa de su semilla; la que la sacaba no da ninguna, `giveSurprise('grande')` no hace nada y una guardada activa no agranda. «El cubo crece contigo» pasa a «Tu luz se queda contigo».
+- **Sin personas en pantalla** (bug 3). Los estudios «Campo del canon», «Molino de memoria» y «Cámara modal» y el recuerdo «constancia» del Camino ya no nombran a Bach, Leonardo, Hildegard ni a Jay. Los créditos del final se quedan.
+- **Chispa salvaje** (bug 1). `wildPay` en `wild.js`: paga solo con `sparkEconomy.version===1` (una versión futura queda intacta), nunca en el laboratorio ni en otra tierra, y deja su línea en el registro. Tampoco aparece en esos dos casos. El importe sigue en 15 ✦ hasta la tanda de economía.
+- **Ámbar se gana** (bug 4). El décimo cristal del Camino da `tope` («Completaste el Camino de hoy.»), el logro que pide Ámbar. `dorada` y `s10` quedan en `RETIRED_ACHIEVEMENTS`: quien los ganó los conserva.
+- **«Ya puedes saltar»** solo cuando el salto existe, con los once completos (bug 5).
+- **Logros sin ✦** en su aviso: «Logro · …» (bug 6).
+- **El día cuenta jugando** (bug 7). Al guardar una ronda de un lugar (Reto entre dos y Libre incluidos) o el Duelo, `onFirstLight` marca el día: se enciende su estrella.
+- **Luz con su sonido** (bug 9). La canción del cielo (`lejos-b.js`), el aro del álbum (`descubrir.js`) y el destello del púlsar (`viaje-c.js`) usan `audibleTime`.
+- **«Lo que hay más lejos»** sin «20 de 20»: el resumen ya no cuenta bandas alcanzadas como cosas encontradas; con todas alcanzadas dice «Llegaste a todo.» (bug 10).
+- **La hoja de la ronda** (bug 11). Mientras espera su caída, la ruta no salta al lugar siguiente; con el Refugio abierto espera a que se cierre. La espera de la caída no cambia.
+- **Mapa del universo** (bug 13): pasados 50 km, la cabecera habla del último anillo.
+- **Textos** (bugs 14, 15, 17, 18, 21, 22): sin verbo repetido en los rumores («suena una estrella que zumba»); la fusión de sonidos se anuncia una vez; «Ir solo» por «Autopilot»; «Tu cubo · Chispas» y «Conservas tus chispas»; plurales y «4 nov» en Bitácora › Hoy y Logros; el encuentro vivo no repite su título (polilla, ola y polen).
+- **Una ventana a tiempo** (bug 19): el Duelo usa `ON_TIME` (±80 ms), no ±90.
+- **`?rapido`** no hace nada en la edición de venta (bug 20).
+- **Fuera de esta tanda.** Bug 8 (el escáner calla balizas), 12 (avisos que se tapan) y 16 (BPM del escáner) van con el escáner (T1) y la carga (T3): no se tocan `scanner.js` ni el panel.
+- **Inglés** al día en `src/i18n-en.js`. ID de HTML conservados. Preservación: capa `approvedT0`.
+- **Pruebas.** Una comprobación nueva por bug en las pruebas de modelo (`wild`, `box-surprises`, `living-buildings`, `crystal-play`, `fewer-counters`, `places-durability`, `one-clock`, `viaje_a`, `places-ring`, `universe-map`, `descubrir`, `lejos_b`, `autopilot`, `sparks-economy`, `ritmo`, `rapido-2`, `journal`, `live-encounters-clear`); cada una falla con alpha.257 y pasa con el arreglo, salvo la de textos de `sparks-economy`, escrita después. `crystal_path_smoke.py` comprueba Ámbar en el navegador.
 
 
 ## Menús para jugadores · 2.3.0-alpha.257

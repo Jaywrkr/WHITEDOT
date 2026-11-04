@@ -4,12 +4,14 @@ import {commitJourneyClose} from '../src/journey-games.js';
 const timers=[],oldTimer=globalThis.setTimeout;globalThis.setTimeout=f=>{timers.push(f);return timers.length;};
 try{
  for(const {id,game} of PLACES){
-  let failed=false,disk,calls=0;
+  let failed=false,disk,calls=0,lit=0;
   const r={S:{wx:0,wy:0,sound:true,sparks:7,todayKey:'2026-10-25',journey:{finished:true,done:Object.fromEntries(PLACES.map(p=>[p.id,true])),[game]:{points:91}},lugares:{version:2,kept:Object.fromEntries(PLACES.map(p=>[p.id,true]))},wild:{remix:{best:0}}},BIOMES:[{id}],biomeOfPos:()=>0,regionOfPos:()=>({}),MU:{},$:()=>null,hud(){},narrateRound(){calls++;},journeyVictory(){calls++;},journeyPulseState:()=>({notes:[90,91],noteSteps:[7,15]}),save(){if(failed)return false;disk=structuredClone(this.S);return true;}};
+  // T0 (bug 7): a played round lights the day's star (onFirstLight marks the day as played), once it is saved.
+  r.onFirstLight=function(){lit++;this.S.lastDay=this.S.todayKey;};
   initialize(r);assert(r.startPlace(id));for(let n=0;n<10;n++)r.placeHear(id,true,n<2?{midi:[60,64][n],step:[0,6][n]}:{});
   const previous=structuredClone(r.S),placesRef=r.S.lugares,journeyRef=r.S.journey;
-  failed=true;assert.equal(r.placeFinish(id),false);assert.deepEqual(r.S,previous,'failed finish rolls back every affected field');assert.equal(r.S.lugares,placesRef);assert.equal(r.S.journey,journeyRef);assert.equal(calls,0,'never celebrate unsaved rewards');assert.equal(r.places().last,null);assert.equal(disk.sparks,7);
-  failed=false;assert(r.placeFinish(id));assert.equal(r.S.sparks,7,'H1: a round pays no sparks; the wallet is kept');assert.deepEqual(disk,r.S);assert.equal(r.placeFinish(id),false,'retry cannot pay twice');assert.equal(calls,2);assert.deepEqual(r.S.lugares.notes[id],[60,64]);
+  failed=true;assert.equal(r.placeFinish(id),false);assert.deepEqual(r.S,previous,'failed finish rolls back every affected field');assert.equal(r.S.lugares,placesRef);assert.equal(r.S.journey,journeyRef);assert.equal(calls,0,'never celebrate unsaved rewards');assert.equal(lit,0,'an unsaved round does not light the day');assert.equal(r.places().last,null);assert.equal(disk.sparks,7);
+  failed=false;assert(r.placeFinish(id));assert.equal(r.S.sparks,7,'H1: a round pays no sparks; the wallet is kept');assert.deepEqual(disk,r.S);assert.equal(lit,1,'the round lights the day');assert.equal(disk.lastDay,'2026-10-25','and the lit day is saved');assert.equal(r.placeFinish(id),false,'retry cannot pay twice');assert.equal(calls,2);assert.deepEqual(r.S.lugares.notes[id],[60,64]);
  }
  const raw={version:PLACES_VERSION+1,run:{id:'lago',stash:{untouched:true}},unknown:{x:[1,2]}};
  const r={S:{wx:23,wy:45,journey:{finished:true},lugares:raw},MU:{},save(){throw Error('read-only');}};

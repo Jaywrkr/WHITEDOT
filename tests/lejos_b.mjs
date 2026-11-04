@@ -122,4 +122,6 @@ for(const f of ['src/live-encounters.js','src/sky-map.js','src/descubrir.js','sr
 assert.ok(read('src/universe-map.js').includes('runtime.lejosBForMap?.()')&&read('src/journal.js').includes('runtime.lejosBSection?.()'));
 assert.ok(read('src/descubrir.js').includes('r.fusedSound?.(sound)')&&read('src/descubrir.js').includes('r.fusedAlbum?.()'));
 const html=read('index.html');for(const id of ['houseFusion','mSoundFusion','soundFusionList','soundFusionMake','soundFusionClose','soundFusionNote','soundFusionCount'])assert.equal(html.split(`id="${id}"`).length-1,1,id);
+// T0 (bug 15): the fusion is told once, by its band notice; no second toast when it opens.
+assert.ok(!read('src/lejos-b.js').includes('r.toast?.(\'<em>Fusión de sonidos</em>'),'one notice for the fusion');
 console.log('PASS lejos del origen (tanda B): faded regions from 10 km, habitats from 12, sky songs from 15, the fusion at 20 and postcards from 25, fixed by hashKey and beyond their band; embers on time or passing, creatures that know you, four notes in order, fusions fixed by the pair and in the scale, five lost things; rewards by the universe rule, none for the special; save and migration; English; no random numbers; wiring');
