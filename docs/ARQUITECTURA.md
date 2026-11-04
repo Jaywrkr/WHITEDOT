@@ -1,6 +1,6 @@
 # Arquitectura vigente · alpha.222
 
-Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»); `universe-map-model.js`, `universe-map-art.js` y `universe-map.js` (Mapa del universo, alpha.235, cargados por `map.js`). `scenes-model.js`, `scenes-audio.js` y `scenes.js` (Escenas musicales, alpha.243, cargados por `main.js`). P1–P8 y Q1–Q7 cambiaron módulos existentes.
+Módulos nuevos desde alpha.207: `eleven-note.js` (la hoja tras los once, alpha.232), `edition.js` (L1), `i18n.js` e `i18n-en.js` (L2), `live-encounters-model.js`, `live-encounters.js` y `live-encounters-art.js` (encuentros vivos, alpha.227); `sky-map-model.js`, `sky-map.js` y `sky-map-art.js` (Mapa del cielo, alpha.231); `house-auto.js` (Refugio simple, alpha.234: lo ganado se coloca solo y el aviso «nuevo»); `universe-map-model.js`, `universe-map-art.js` y `universe-map.js` (Mapa del universo, alpha.235, cargados por `map.js`). `scenes-model.js`, `scenes-audio.js` y `scenes.js` (Escenas musicales, alpha.243, cargados por `main.js`). `fx-kit.js` (luz común del mundo, alpha.253, cargado por `render.js`, que crea `runtime.fxLayer`). P1–P8 y Q1–Q7 cambiaron módulos existentes.
 
 Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseño](MUNDO.md). Las decisiones y resultados históricos están en las entregas, no constituyen implementación pendiente.
 
@@ -21,7 +21,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Sistema | Fuentes principales |
 |---|---|
 | Inicialización y estado | `main.js`, `data.js`, `progress.js` |
-| Render, cámara y calidad | `render.js`, `frame-state.js`, `frame-quality.js`, `world-sheet.js` |
+| Render, cámara y calidad | `render.js`, `frame-state.js`, `frame-quality.js`, `world-sheet.js`, `fx-kit.js` ([luz común](MUNDO.md#luz-común)) |
 | Entrada del cubo | `canvas.js`, `interactions.js`, `wow-feel.js` |
 | Música y voces | `audio.js`, `voices.js`, `instruments.js`, `music-families.js`, `musical-conductor.js` |
 | Territorios y transiciones | `world.js`, `continents.js`, `neighborhoods.js`, `territory-journey.js`, `territory-transition.js` |

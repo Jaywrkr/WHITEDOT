@@ -5,11 +5,27 @@ import {AMBIENCE_LEVEL} from './ambience.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
+import {glow,sparkSprite,createFxLayer,FX_POOL} from './fx-kit.js';
 
 // Loop, simulación y dibujo del juego.
 // Consecutive failing frames (about two seconds) before the loop stops and asks for a reload.
 export const FRAME_FAILURE_LIMIT=120;
 export function initialize(runtime) {
+  // Visual 1 (alpha.250): the shared layer of pops and sparks (fx-kit.js), drawn after the grey sheet with the particles.
+  const fx=createFxLayer({capacity:FX_POOL.full,light:()=>!!runtime.lightQuality?.(),reduced:()=>!!(runtime.S?.reducedMotion||prefersReducedMotion())});
+  Object.defineProperty(runtime,'fxLayer',{configurable:true,get:()=>fx});
+  // Particles: the same objects in runtime.parts (anyone may push {x,y,vx,vy,l,g}), compacted in place instead of a new
+  // array every frame; dead ones wait in `spare` for runtime.newPart. Each takes its colour once (musicInk looks up the
+  // region) and is drawn as a small added spark; in light quality, the plain 2 px square.
+  const spare=[];
+  function newPart(x,y,vx,vy,l,g){const p=spare.pop();if(!p)return {x,y,vx,vy,l,g};p.x=x;p.y=y;p.vx=vx;p.vy=vy;p.l=l;p.g=g;p.ink=undefined;return p;}
+  Object.defineProperty(runtime,'newPart',{configurable:true,get:()=>newPart});
+  function stepParts(dt,ox,oy){const P=runtime.parts;let w=0;for(let i=0;i<P.length;i++){const p=P[i];if((p.l-=dt*1.6)>0)P[w++]=p;else if(spare.length<FX_POOL.full)spare.push(p);}P.length=w;
+    const cap=runtime.lightQuality?.()?150:400;if(P.length>cap)P.splice(0,P.length-cap);
+    const c=runtime.cx,light=!!runtime.lightQuality?.();const op=c.globalCompositeOperation;if(!light&&P.length)c.globalCompositeOperation='lighter';
+    for(const p of P){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;c.globalAlpha=p.l;const col=p.g?(p.ink??=runtime.musicInk?.(p)||'#fff'):runtime.S.color,sp=light?null:sparkSprite(col);
+      if(sp)c.drawImage(sp,p.x+ox-3,p.y+oy-3,6,6);else{c.fillStyle=col;c.fillRect(p.x+ox-1,p.y+oy-1,2,2);}}
+    c.globalCompositeOperation=op;}
   /* ---------- glifos ---------- */
   function glyph(x,i,px,py,s){
     x.save();x.translate(px,py);x.strokeStyle=x.fillStyle;x.lineWidth=Math.max(1.5,s/6);x.beginPath();
@@ -106,8 +122,7 @@ export function initialize(runtime) {
     runtime.drawWorldSheetGrey?.();
     runtime.drawJourneyGamesUnder?.(runtime.cx,runtime.W,runtime.H,t);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
-    runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);const cap=runtime.lightQuality?.()?150:400;if(runtime.parts.length>cap)runtime.parts.splice(0,runtime.parts.length-cap);
-    for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
+    stepParts(dt,ox,oy);fx.update(dt);if(runtime.inWorld()||runtime.S.mode==='camino')fx.draw(runtime.cx,ox,oy);else fx.clear();
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
     const big=runtime.inWorld()||runtime.S.mode==='camino',base=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0),s=base*(big?cubeView(base):1)*(1+runtime.pulse*.6+b*.08+(runtime.cubeKick||0)*.18)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1)*(runtime.cubeGrowth?.()||1);
     runtime.drawCubeStyle?.(t,dt,b,s);runtime.drawSurprises?.(t,ox,oy);
@@ -124,7 +139,7 @@ export function initialize(runtime) {
     if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);
     runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawSkyMapHalo?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawSoundRing?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawSecretCube?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawSkySecretCube?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawViajeCCube?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopCompanion?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopGestures?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopSoundOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopWildOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopSkills?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
-    if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
+    if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,ga=c.globalAlpha;glow(c,hx,hy,s*2.6,'#ffffff',ga*.22,false,'rgba(255,255,255,0)');
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}
     runtime.drawSparkCosmetics?.(t);runtime.cameraEnd?.();
     // Joystick visible mientras arrastras.
@@ -216,9 +231,8 @@ export function initialize(runtime) {
     const id=runtime.BIOMES[z].id;
     if(ev==="aurora"){runtime.cx.lineWidth=6;for(let i=0;i<3;i++){runtime.cx.strokeStyle=`hsl(${(rg.hue+i*35)%360},80%,65%)`;runtime.cx.globalAlpha=.16+b*.06;runtime.cx.beginPath();for(let x=0;x<=runtime.W;x+=10){const y=70+i*20+Math.sin(x/130+t/1500+i)*16;x?runtime.cx.lineTo(x,y):runtime.cx.moveTo(x,y);}runtime.cx.stroke();}}
     const soundR=(ev==="eclipse"?.6:1)*runtime.clamp(runtime.lightR()*1.1,170,360)*(1+Math.min(runtime.S.totalDays||0,30)/30*.7)*(id==="cueva"?.6:1)*(1+b*.05),R=(runtime.worldVisibility?.lightRadius??soundR/(1+b*.05))*(1+b*.05),ox=runtime.W/2-runtime.S.wx,oy=runtime.H/2-runtime.S.wy,ms=performance.now();
-    const g=runtime.cx.createRadialGradient(runtime.W/2,runtime.H/2,0,runtime.W/2,runtime.H/2,R);
-    g.addColorStop(0,"rgba(255,255,255,"+(.05+b*.04+runtime.MU.E*.03)+")");g.addColorStop(1,"rgba(255,255,255,0)");
-    runtime.cx.fillStyle=g;runtime.cx.fillRect(runtime.W/2-R,runtime.H/2-R,R*2,R*2);
+    // The pool of light round the cube, from a sprite (visual 1): white to clear white, as the gradient was.
+    {const ga=runtime.cx.globalAlpha;glow(runtime.cx,runtime.W/2,runtime.H/2,R,'#ffffff',ga*(.05+b*.04+runtime.MU.E*.03),false,'rgba(255,255,255,0)');runtime.cx.globalAlpha=ga;}
     if(ev==="eclipse"){runtime.cx.globalAlpha=.25+b*.35;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,R*.95,0,6.283);runtime.cx.stroke();}
     if(ev==="lluvia"){if(!paused&&Math.random()<dt*7*(1+3*(runtime.MU.storm||0)))runtime.rain.push({x:runtime.S.wx+(Math.random()-.5)*R*2.4,y:runtime.S.wy-R*1.3,vy:110+Math.random()*60});
       // With a panel open the drops wait, so nothing plays behind a menu.

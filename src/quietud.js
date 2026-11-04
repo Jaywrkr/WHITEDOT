@@ -8,6 +8,7 @@ import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js
 // La atmósfera pinta nubes de color del lugar detrás de todo (más vivas con la quietud y con los logros).
 import {QUIET_STAGES,quietStage,quietStart} from './expansion-music.js';
 import {swatchOf} from './visual.js';
+import {glow} from './fx-kit.js';
 const TAU=Math.PI*2;
 
 export function initialize(runtime){
@@ -57,10 +58,11 @@ export function initialize(runtime){
  function drawAtmosphere(t){
   if(!surface())return;const d=runtime.MU.dnaT;if(!d)return;const c=runtime.cx,W=runtime.W,H=runtime.H;
   const base=.02+state.bloom*.06,hues=[d.hue,(d.hue+40)%360,(d.hue+200)%360];
-  c.save();
+  c.save();const ga=c.globalAlpha;
   hues.forEach((h,i)=>{const [H0,S0,L0]=swatchOf(h),x=((Math.sin(t/23000+i*2.1)*.5+.5)*W*1.4-W*.2-(runtime.camX*.02*(i+1))%W),y=((Math.cos(t/31000+i*1.3)*.5+.5)*H*1.2-H*.1),R=Math.min(W,H)*(.3+i*.05);
-   const g=c.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,`hsla(${H0},${S0}%,${Math.min(70,L0)}%,${base*(i===2?.5:1)})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);});
-  if(state.pulse>0){const [H1,S1,L1]=swatchOf(state.pulseHue),g=c.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.min(W,H)*.32);g.addColorStop(0,`hsla(${H1},${S1}%,${Math.min(70,L1)}%,${state.pulse*.22})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);}
+// Visual 1 (alpha.250): the same light from a cached sprite over its own square, not three full-screen gradients.
+   glow(c,x,y,R,`hsl(${H0},${S0}%,${Math.min(70,L0)}%)`,ga*base*(i===2?.5:1));});c.globalAlpha=ga;
+  if(state.pulse>0){const [H1,S1,L1]=swatchOf(state.pulseHue),R=Math.min(W,H)*.32;glow(c,W/2,H/2,R,`hsl(${H1},${S1}%,${Math.min(70,L1)}%)`,ga*state.pulse*.22);c.globalAlpha=ga;}
   // Zonas experimentales: interferencias de color muy sutiles.
   const x=runtime.experimentalLevel?.()||0;if(x>.3){for(let i=0;i<Math.round(x*6);i++){if(Math.random()>.35)continue;const [H2,S2]=swatchOf(d.hue+i*60);c.globalAlpha=.05+x*.08;c.fillStyle=`hsl(${H2},${S2}%,60%)`;c.fillRect(Math.random()*W,Math.random()*H,20+Math.random()*120,1+Math.random()*2);}}
   c.restore();

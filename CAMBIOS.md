@@ -1,6 +1,46 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.252** en la rama `jay/viaje-d`, que une `jay/viaje-c` (alpha.251, con B y A). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.253** en la rama `jay/visual-1`, que une `jay/viaje-d` (alpha.252, con las tandas C, B y A). Las entradas describen su revisión, no certifican producción.
+
+
+## Visual 1 · luz común · 2.3.0-alpha.253
+
+Rama `jay/visual-1`, desde `main` `c8842cd` (alpha.247); antes alpha.250.
+
+- **Mezclada sobre las tandas C y D.** Un merge une `jay/viaje-d` (alpha.252, PR #389, con C, B y A); la versión pasa a alpha.253. Tras la unión pasan en local `release-audit`, `npm test` (295 suites), `verify-e-preservation`, los recorridos de navegador de visual 1, de las tandas A–D y de los sistemas tocados, y `audio_mix.py` y `viaje_d_mix.py`. Los umbrales de `visual1_smoke.py` no cambian: con las tandas siguen por debajo (inicio en el teléfono, 7 degradados y unos 1 008 `fillRect` por fotograma; Cristales, unos 240 `stroke`).
+
+El resto de la entrada describe la tanda gráfica. Tandas 0 y 1 de la auditoría visual, aprobadas por Jay: el mundo más acabado, sin subir el peso ni el trabajo por fotograma. Guía: [El mundo](docs/MUNDO.md#luz-común).
+
+- **Kit nuevo** `src/fx-kit.js`. Brillo desde sprites cacheados por color (encima o sumado con `lighter`), doble contorno fino, aparición con *ease out back*, pop común y pool fijo de chispas (256; 96 en ligera). También respiración al compás, sombra de contacto falsa y tono del bioma. Dorado solo para lo ganado. `render.js` crea la capa común `runtime.fxLayer` y la dibuja tras `drawWorldSheetGrey`, con las partículas.
+- **Familias.**
+  - Encuentros vivos: brillo sumado, estela, aparición y pop al ganar.
+  - Cajas: brillo que respira, sombra, doble contorno, aparición y pop dorado al abrir.
+  - Chispa salvaje: halo dorado, tres motas y pops al saltar y al atraparla.
+  - Maravillas: aparición, respiración, brillo, doble contorno, anillo que se escribe al acercarte y pop dorado.
+  - Cristales de chispa: luz del bioma, aparición, brillo en la arista con el pulso, golpe sin `shadowBlur` y pops.
+  - Sonidos raros: aparición, luz del bioma, tres ondas y pop dorado al guardarlo.
+  - Partículas: chispas sumadas.
+  - Ondas de pulso: se apagan con *ease out*, llevan un eco fino y la onda a tiempo brilla.
+- **Tanda 0, el coste.** Habitantes píxel en un sprite por glifo. La retícula de Cristales, en una ruta por color, y las bandas de Dunas, en una por celda. `rk()` cachea por celda el mismo número que `rand()`. Pasan a sprites los degradados por fotograma de la niebla, la caja, los `glow()`, el halo del cubo, el charco de luz, la quietud y los colores lejanos. La sombra de contacto ya no usa `shadowBlur`. La paleta viva tiene caché en dos generaciones y no usa regex con alfa variable. `runtime.parts` se compacta en su sitio, reutiliza objetos (`runtime.newPart`) y toma el color una vez.
+- **Sin cambios.** Mecánicas, posiciones, colisiones, guardado, sonido (`audio.js` intacto), RNG e ID de HTML se mantienen. El cubo no crece. Con movimiento reducido no hay pop, aparición, estela, eco ni ondas nuevas. En calidad ligera, la mitad de chispas, sin doble contorno ni brillo sumado, y partículas en cuadrados.
+- **Medido** (Chromium sin interfaz, 390×844, DPR 1, mismos escenarios que la auditoría). Mediana de tres pasadas alternas, antes (`c8842cd`) → después:
+
+  | Escena | CPU del navegador por fotograma (ms) | Fotogramas/s | JS p50 / p95 (ms) | Llamadas por fotograma: `fillRect` · `stroke` · degradados |
+  |---|---|---|---|---|
+  | Inicio (Jardín) | 23,9 → 21,4 | 46 → 52 | 5,3 / 6,6 → 4,9 / 7,1 | 1 771 → 1 008 · 14 → 13 · 31 → 7 |
+  | Cristales | 27,7 → 21,9 | 41 → 51 | 6,1 / 9,6 → 5,5 / 7,4 | 2 639 → 452 · 1 561 → 243 · 39 → 7 |
+  | Dunas | 19,0 → 16,2 | 58 → 60 | 5,2 / 7,6 → 5,0 / 7,4 | 1 492 → 830 · 1 313 → 140 · 21 → 5 |
+  | Tormenta | 22,2 → 19,6 | 52 → 58 | 5,1 / 7,1 → 5,2 / 6,9 | 1 197 → 396 · 123 → 123 · 37 → 5 |
+  | Lago | 26,9 → 24,9 | 42 → 46 | 5,1 / 6,4 → 5,1 / 7,8 | 1 070 → 392 · 324 → 325 · 16 → 6 |
+  | Vacío | 18,8 → 17,4 | 59 → 60 | 4,8 / 7,2 → 5,0 / 7,1 | 448 → 316 · 31 → 34 · 24 → 8 |
+  | Lago, 3 ondas y unas 400 partículas | 30,8 → 26,7 | 41 → 45 | 6,5 / 8,4 → 6,1 / 7,8 | 1 235 → 420 · 348 → 354 · 16 → 6 |
+  | Encuentro vivo | 27,6 → 24,3 | 44 → 49 | 5,1 / 8,6 → 4,9 / 8,3 | 1 057 → 377 · 320 → 322 · 15 → 6 |
+
+  La CPU suma todos los procesos del navegador, leída de `/proc`, en un servidor de 4 núcleos con rasterizado por software. `drawImage` sube de 0–19 a 42–203 por los sprites. La CPU baja entre un 7 y un 21 % con los efectos nuevos dibujados. El JS por fotograma queda igual dentro del ruido. No se midió en teléfono: hay que hacerlo con `?medir=1`.
+- **Pruebas nuevas.** `tests/fx-kit.mjs` cubre el kit, la caché de la paleta, `rk` y la retícula, que dibuja las mismas aristas que antes. `tests/visual1_smoke.py` recorre 390×844 y 1280×800: sin errores, pop dorado al abrir una caja, nada nuevo con movimiento reducido, la mitad de chispas en ligera y llamadas por fotograma bajo las de `main`, sin `shadowBlur`.
+- **Capturas** antes y después en el scratchpad de la sesión (`visual1-shots/antes` y `despues`, mismos nombres). No están en Git.
+- **Preservación.** Capa `approvedV1` para los catorce archivos protegidos que cambian y la lista offline de `sw.js` (un módulo nuevo). Tras la unión, `approvedV1` apunta al commit de merge con `jay/viaje-d`; debajo, `approvedVD`, `approvedVC`, `approvedVB` y `approvedVA`.
+- **Límites.** Probado en local (lógica, recorridos de navegador y `audio_mix.py`). Sin CI remoto, sin teléfono y sin personas.
 
 
 ## Lo que hay más lejos, tanda D · 2.3.0-alpha.252

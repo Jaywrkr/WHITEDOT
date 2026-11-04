@@ -1,6 +1,7 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {PIXEL_CELL,pixelColony,pixelGeometry,moveInhabitant,migratingBeings} from './pixel-life-model.js';
 import {contactEntry} from './contact.js';
+import {vividColor} from './visual.js';
 export function initialize(runtime){
  const cache=new Map(),travellers=new Map(),geometry=new WeakMap();let owner=null,scope='',seconds=0,travelSeconds=0,items=[],lastCell='',queued=0,barKey='',pointer=null,tap=null,nextInvitation=10;
  const reduced=()=>!!(runtime.S.reducedMotion||prefersReducedMotion()),
@@ -52,14 +53,22 @@ export function initialize(runtime){
  }
  // In light quality only the twelve nearest are drawn (phase 4 of the plan); touch still reaches the usual ones.
  function nearby(reach=500,limit=24){return [...items,...travellers.values()].filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<reach).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy)).slice(0,limit);}
+ // Visual 1 (alpha.250): each glyph is painted once per ink and pixel ratio into a small canvas, then drawn with one
+ // drawImage (it was one fillRect per pixel, every frame). The same rects at the same place; without a document, the rects.
+ const sprites=new WeakMap();
+ function sprite(g,pixels,cell,ink,dpr){if(typeof document==='undefined'||!document.createElement)return null;let byInk=sprites.get(g);if(!byInk){byInk=new Map();sprites.set(g,byInk);}const key=ink+'@'+dpr;let out=byInk.get(key);if(out!==undefined)return out;
+  let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;for(const [x,y]of pixels){const px=Math.round(x*cell),py=Math.round(y*cell);x0=Math.min(x0,px);y0=Math.min(y0,py);x1=Math.max(x1,px+cell);y1=Math.max(y1,py+cell);}
+  out=null;if(Number.isFinite(x0)){const left=Math.floor(x0)-1,top=Math.floor(y0)-1,w=Math.ceil(x1)-left+1,h=Math.ceil(y1)-top+1,cv=document.createElement('canvas');cv.width=w*dpr;cv.height=h*dpr;const q=cv.getContext('2d');
+   if(q){q.scale(dpr,dpr);q.fillStyle=vividColor(ink);for(const [x,y]of pixels)q.fillRect(Math.round(x*cell)-left,Math.round(y*cell)-top,cell,cell);out={canvas:cv,x:left,y:top,w,h};}}
+  if(byInk.size>6)byInk.delete(byInk.keys().next().value);byInk.set(key,out);return out;}
  function draw(){
-  if(!surface()||owner!==runtime.S)return;const c=runtime.cx,s=runtime.S,still=reduced(),ox=runtime.W/2-s.wx,oy=runtime.H/2-s.wy;
+  if(!surface()||owner!==runtime.S)return;const c=runtime.cx,s=runtime.S,still=reduced(),ox=runtime.W/2-s.wx,oy=runtime.H/2-s.wy,dpr=Math.max(1,Math.min(3,Math.round((c.canvas?.width||runtime.W)/(runtime.W||1)))||1);
   for(const o of nearby(Math.min(700,runtime.worldVisibility?.radius||500),runtime.lightQuality?.()?12:24)){const d=Math.hypot(o.x-s.wx,o.y-s.wy),fade=runtime.worldOpacity?.(d)??Math.max(0,1-d/500);if(fade<.005)continue;
    const phaseTime=(runtime.mischiefTime?.(o,seconds*1000)??seconds*1000)/1000,g=o.genome,p=still?0:phaseTime/g.period+g.phase,age=seconds-(o.responseAt??-10),response=age>=0&&age<1?Math.sin(age*Math.PI):0;
    let pixels=geometry.get(g);if(!pixels){pixels=pixelGeometry(g);geometry.set(g,pixels);}
    const lift=runtime.faunaBob?.(o,runtime.beat?.()||0,d)||0;c.save();c.translate(o.x+ox,o.y+oy+(still?0:o.pose||0)-lift);runtime.wowObjectTransform?.(c,o);if(!still){c.rotate((o.rotation||0)+Math.sin(p*2)*response*.25);c.scale(1+response*.16,1-response*.1);}
-   c.globalAlpha=fade*(.65+o.lit*.35)*(runtime.faunaDim?.()??1);c.fillStyle=runtime.musicInk?.(o,g.role)||'#bddbe0';
-   const cell=1.5+(g.variant%3)*.2;for(const [x,y]of pixels)c.fillRect(Math.round(x*cell),Math.round(y*cell),cell,cell);
+   c.globalAlpha=fade*(.65+o.lit*.35)*(runtime.faunaDim?.()??1);const ink=runtime.musicInk?.(o,g.role)||'#bddbe0';c.fillStyle=ink;
+   const cell=1.5+(g.variant%3)*.2,glyph=sprite(g,pixels,cell,ink,dpr);if(glyph)c.drawImage(glyph.canvas,glyph.x,glyph.y,glyph.w,glyph.h);else for(const [x,y]of pixels)c.fillRect(Math.round(x*cell),Math.round(y*cell),cell,cell);
    runtime.wowEyes?.(o,c);
    if(o.kind==='viajero'&&!still){c.globalAlpha=fade*.2;for(let i=1;i<=3;i++)c.fillRect(-o.vx*.22*i,-o.vy*.22*i,2,2);}
    if(response){c.strokeStyle=c.fillStyle;c.lineWidth=1;c.globalAlpha=fade*response;c.beginPath();c.arc(0,0,still?15:12+age*12,0,Math.PI*1.7);c.stroke();}c.restore();

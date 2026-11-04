@@ -1,10 +1,16 @@
 import {wonderDefinition} from './musical-wonders-model.js';
+import {glow as fxGlow,halo,easeOutCubic} from './fx-kit.js';
 const shapes=new Map();
 export function wonderPortrait(id){const d=wonderDefinition(id);return d?'<svg viewBox="-40 -40 80 80" aria-hidden="true"><circle class="rare-orbit" r="34"/><path class="rare-glyph" d="'+d.path+'" stroke="'+d.color+'" fill="none" stroke-width="1.5"/></svg>':'';}
-export function drawWonder(c,d,x,y,seconds,still=false){
- c.save();c.translate(x,y);c.strokeStyle=d.color;c.fillStyle=d.color;c.lineWidth=1.4;
- if(!shapes.has(d.id))shapes.set(d.id,new Path2D(d.path));c.stroke(shapes.get(d.id));
- for(let i=0;i<3;i++){const a=i*2.1+(still?0:seconds*.35);c.globalAlpha=.5;c.fillRect(Math.cos(a)*36,Math.sin(a)*27,2,2);}c.restore();
+// Visual 1 (alpha.250), all optional: `fx.scale` (breath and growing in, never the cube), `fx.light` an added glow in its
+// colour, `fx.halo` the fine double contour under the icon, `fx.near` (0..1) a thin dashed ring that writes itself round
+// it as you come close. Without fx it draws as before.
+export function drawWonder(c,d,x,y,seconds,still=false,fx=null){
+ c.save();c.translate(x,y);if(fx?.light>0){const a=c.globalAlpha;fxGlow(c,0,0,44,d.color,a*fx.light,true);c.globalAlpha=a;}if(fx?.scale&&fx.scale!==1)c.scale(fx.scale,fx.scale);c.strokeStyle=d.color;c.fillStyle=d.color;c.lineWidth=1.4;
+ if(!shapes.has(d.id))shapes.set(d.id,new Path2D(d.path));if(fx?.halo)halo(c,shapes.get(d.id));c.stroke(shapes.get(d.id));
+ for(let i=0;i<3;i++){const a=i*2.1+(still?0:seconds*.35);c.globalAlpha=.5;c.fillRect(Math.cos(a)*36,Math.sin(a)*27,2,2);}
+ if(fx?.near>0){const k=easeOutCubic(Math.min(1,fx.near));c.globalAlpha=.55*k;c.lineWidth=1;c.setLineDash?.([3,5]);c.lineDashOffset=still?0:-seconds*6;c.beginPath();c.arc(0,0,42,-Math.PI/2,-Math.PI/2+Math.PI*2*k);c.stroke();c.setLineDash?.([]);}
+ c.restore();
 }
 export function drawWonderGift(c,d,x,y,size,seconds,still=false){
  if(!d)return;c.save();c.translate(x,y);c.strokeStyle=c.fillStyle=d.color;c.lineWidth=1;const r=size/2+7,t=still?0:seconds;

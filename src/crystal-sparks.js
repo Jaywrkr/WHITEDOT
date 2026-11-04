@@ -3,6 +3,7 @@ import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT,DIM_FRAGMENT_SPARKS} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
 import {fillRapidCamino} from './chapter-test.js';
+import {glow as fxGlow,biomeTone,createAppear,appearAlpha,appearScale} from './fx-kit.js';
 const CELL=200,MAX_SITES=8192;
 export const normalizeSparks=value=>Number.isFinite(value)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value))):0;
 // Regional abundance and an independent lattice keep clear gaps between crystals.
@@ -25,8 +26,8 @@ export function pathCrystalField(px,pathY,day){
  for(let i=cell-4;i<=cell+4;i++){const x=i*160+90;out.push({id:'path:'+day+':'+i,x,y:pathY(x)+(i%2?18:-18),size:1,value:1});}return out;
 }
 export function initialize(runtime){
- let owner=null,scope='',sites=new Map(),seen=new WeakMap(),stale=new WeakSet(),near=[],seconds=0,shownUntil=0,gain=0,lastGain=0,cell='',chains=[],feedback=[];
- const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
+ let owner=null,scope='',sites=new Map(),seen=new WeakMap(),stale=new WeakSet(),near=[],seconds=0,shownUntil=0,gain=0,lastGain=0,cell='',chains=[],feedback=[];const appear=createAppear();
+const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
  // Sparks belong to the free World (decision of 23 October): in the Journey the Camino's crystals give light but no
  // sparks, and the World's crystals are not there, so a pulse in a chapter only touches what the chapter asks for.
  const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!runtime.journeyQuiet?.()&&!runtime.placeRun?.())&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
@@ -78,7 +79,8 @@ export function initialize(runtime){
   if(path&&runtime.rapidLevel===2&&fillRapidCamino(S())){runtime.save?.();runtime.hud?.();completed=true;}
   if(completed&&door){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';feedback=[];}
  }
- function impact(o,site,point=o){if(reduced())return;feedback.push({x:point.x,y:point.y,at:seconds,broken:site.broken,size:o.size});feedback=feedback.slice(-48);}
+// Visual 1 (alpha.250): a hit sparks a little on the shared layer; the break pops (no pop with reduced motion).
+ function impact(o,site,point=o){if(reduced())return;runtime.fxLayer?.pop(point.x,point.y-4,'#d3eef2',site.broken?{size:.9,sparks:8}:{size:.45,sparks:4});feedback.push({x:point.x,y:point.y,at:seconds,broken:site.broken,size:o.size});feedback=feedback.slice(-48);}
  function particles(o,site){return crystalFragments(o,site.rare===true).map(p=>({...p,x:(site.drop?.x??o.x)+Math.cos(p.index*2.399)*14,y:(site.drop?.y??o.y)+Math.sin(p.index*2.399)*14,home:site.drop||o,age:0,trail:[]}));}
  function hit(o,path,source=null,mult=1){
   const prior=sites.get(o.id)||runtime.savedCrystal(o.id);if(prior?.broken)return false;
@@ -132,8 +134,8 @@ export function initialize(runtime){
  function earn(value){if(runtime.journeyQuiet?.())return;S().sparks=normalizeSparks(S().sparks+value);gain=seconds-lastGain<1?gain+value:value;lastGain=seconds;shownUntil=seconds+3;runtime.save?.();}
  function draw(){
   ensure();if(!active())return;
-  const c=runtime.cx,pos=position(),ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
-  c.save();c.lineWidth=1.2;
+   const c=runtime.cx,pos=position(),ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY,now=performance.now(),light=!!runtime.lightQuality?.();
+   c.save();c.lineWidth=1.2;
   for(const o of near){
    if(S().mode==='camino'&&S().pathCrystals.includes(o.id)&&!sites.has(o.id))continue;
    const site=sites.get(o.id),d=Math.hypot(o.x-pos.x,o.y-pos.y),opacity=runtime.worldOpacity?.(d)??Math.max(0,1-d/500);
@@ -151,15 +153,21 @@ export function initialize(runtime){
     continue;
    }
    const flash=Math.max(site?.flash||0,missed.get(o.id)||0),recoil=!reduced()&&flash>seconds?Math.sin((flash-seconds)*55)*(flash-seconds)/.25:0,glow=beatGlow();
-   const x=(site?.run?.x??o.x)+ox+recoil*1.8,y=(site?.run?.y??o.y)+oy+Math.abs(recoil)*.6;
+const x=(site?.run?.x??o.x)+ox+recoil*1.8,y=(site?.run?.y??o.y)+oy+Math.abs(recoil)*.6;
+   // Visual 1 (alpha.250): a soft light in the biome's tone under the prisms that rises with the beat, the prisms grow in,
+   // and on the beat a 1 px glint runs up one edge. The hit's glow is an added sprite, no shadowBlur.
+   const k=appear.k(o.id,now,reduced()),grow=appearScale(k),seen=appearAlpha(k);fxGlow(c,x,y-4,10+o.size*5,runtime.inWorld()?biomeTone(runtime,o.x,o.y):'#d3eef2',opacity*seen*(light?.08:.1+.2*glow),true);
+   c.globalAlpha=opacity;c.save();c.translate(x,y+4);c.scale(grow,grow);c.translate(-x,-y-4);
    if(site?.run){if(!reduced()){c.fillStyle='#d3eef2';for(const p of site.run.trail){c.globalAlpha=opacity*.2;c.fillRect(p.x+ox,p.y+oy+6,1,1);}c.globalAlpha=opacity;}const leg=reduced()?0:Math.sin(seconds*24)*3;c.strokeStyle='#d3eef2';c.lineWidth=1.3;c.beginPath();c.moveTo(x-3,y+4);c.lineTo(x-6-leg,y+10);c.moveTo(x+3,y+4);c.lineTo(x+6+leg,y+10);c.stroke();}
    if(flash>seconds){c.strokeStyle='#fff';c.lineWidth=2;}else c.lineWidth=1.2;
    for(let i=0;i<o.size;i++){
     const px=x+(i-(o.size-1)/2)*6,h=9+(i%2)*4;
     c.beginPath();c.moveTo(px-3,y+4);c.lineTo(px-4,y-h+4);c.lineTo(px,y-h);c.lineTo(px+4,y-h+4);c.lineTo(px+3,y+4);c.closePath();c.globalAlpha=opacity*(.28+.45*glow);c.fill();c.globalAlpha=opacity;c.stroke();
-    c.globalAlpha=opacity*.5;c.beginPath();c.moveTo(px,y-h);c.lineTo(px+1,y-h+5);c.lineTo(px,y+4);c.moveTo(px-4,y-h+4);c.lineTo(px+1,y-h+5);c.lineTo(px+4,y-h+4);c.stroke();c.globalAlpha=opacity;
-   }
-   if(site?.hits){c.strokeStyle='#fff';c.lineWidth=site.hits===o.size-1?2:1;c.shadowColor='#fff';c.shadowBlur=site.flash>seconds?8:0;c.beginPath();c.moveTo(x-4,y-5);c.lineTo(x+2,y-2);c.lineTo(x-1,y+2);if(site.hits>1)c.lineTo(x+5,y+3);c.stroke();c.shadowBlur=0;}
+c.globalAlpha=opacity*.5;c.beginPath();c.moveTo(px,y-h);c.lineTo(px+1,y-h+5);c.lineTo(px,y+4);c.moveTo(px-4,y-h+4);c.lineTo(px+1,y-h+5);c.lineTo(px+4,y-h+4);c.stroke();c.globalAlpha=opacity;
+     if(glow>.05&&!light){const lw=c.lineWidth,ss=c.strokeStyle;c.globalAlpha=opacity*glow*.9;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(px-4,y-h+4);c.lineTo(px,y-h);c.stroke();c.lineWidth=lw;c.strokeStyle=ss;c.globalAlpha=opacity;}
+    }
+    c.restore();c.globalAlpha=opacity;
+   if(site?.hits){c.strokeStyle='#fff';c.lineWidth=site.hits===o.size-1?2:1;if(site.flash>seconds){const a=c.globalAlpha;fxGlow(c,x,y-1,12,'#ffffff',a*.6,true);c.globalAlpha=a;}c.beginPath();c.moveTo(x-4,y-5);c.lineTo(x+2,y-2);c.lineTo(x-1,y+2);if(site.hits>1)c.lineTo(x+5,y+3);c.stroke();}
    // Panel 10 (P7, Mizuguchi, Roset): the Journey writes no words, not even on its Path; the near crystal blinks on
    // the beat instead, a thin ring that opens with each pulse of the music.
    if(d<85){if(runtime.journeyQuiet?.()){if(!reduced()&&glow>.05){c.globalAlpha=opacity*.5*glow;c.strokeStyle='#d3eef2';c.lineWidth=1;c.beginPath();c.arc(x,y-4,12+glow*5,0,Math.PI*2);c.stroke();}}

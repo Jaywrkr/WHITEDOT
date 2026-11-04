@@ -4,9 +4,11 @@
 // star in one beat; a complete figure shines a moment and then stays as a faint drawing. Gold only for what is won:
 // the star halo round the cube. The cube never grows.
 import {skyFigure,skyLines,skyStar,SKY_GLOW,SKY_TOUCH} from './sky-map-model.js';
+import {glow as fxGlow} from './fx-kit.js';
 const TAU=Math.PI*2;
 export const SKY_GOLD='#f0d27a';
-function glow(c,x,y,r,color,alpha){const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=alpha;c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2);}
+// Visual 1 (alpha.250): the same light from a sprite drawn once per colour (fx-kit.js), not a gradient per call.
+function glow(c,x,y,r,color,alpha){fxGlow(c,x,y,r,color,alpha);}
 function ring(c,x,y,r){c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();}
 // A star: a dark disc for contrast, then the point (2 px faint, 3 px lit) and, when lit, a small cross of light.
 function star(c,x,y,{lit=false,alpha=1,twinkle=0}={}){

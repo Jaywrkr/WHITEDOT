@@ -25,13 +25,29 @@ export function vividHSL(h,s,l){
  return [H,clamp(Math.round(s*S/48),0,100),clamp(Math.round(l+(L-62)*.6),18,90)];
 }
 const HSL=/^hsla?\(\s*(-?[\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*(?:,\s*([\d.]+)\s*)?\)$/;
-const cache=new Map();
+// Visual 1 (alpha.250): two caches in generations (no deletion per miss), and for hsla with a changing alpha the
+// hue-saturation-lightness part is converted once and the alpha appended, without the regex. Same output as before.
+const HEAD=/^hsla?\(\s*(-?[\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*$/,DIGITS=/^[\d.]+$/,CACHE_SIZE=4000;
+let cache=new Map(),older=new Map(),heads=new Map(),olderHeads=new Map();
+function convert(value){
+ const comma=value.lastIndexOf(',');
+ if(comma>0&&value.charCodeAt(value.length-1)===41){const head=value.slice(0,comma);let pre=heads.get(head);
+  if(pre===undefined){pre=olderHeads.get(head);if(pre===undefined){const m=HEAD.exec(head);pre=m?vividHSL(+m[1],+m[2],+m[3]):null;}heads.set(head,pre);if(heads.size>CACHE_SIZE){olderHeads=heads;heads=new Map();}}
+  if(pre){const alpha=value.slice(comma+1,-1).trim();if(DIGITS.test(alpha))return `hsla(${pre[0]},${pre[1]}%,${pre[2]}%,${alpha})`;}}
+ const m=HSL.exec(value);if(!m)return value;
+ const [H,S,L]=vividHSL(+m[1],+m[2],+m[3]);return m[4]===undefined?`hsl(${H},${S}%,${L}%)`:`hsla(${H},${S}%,${L}%,${m[4]})`;
+}
 export function vividColor(value){
  if(typeof value!=='string'||value.charCodeAt(0)!==104)return value;     // solo cadenas hsl/hsla
- let out=cache.get(value);if(out)return out;
+ let out=cache.get(value);if(out!==undefined)return out;
+ out=older.get(value);if(out===undefined)out=convert(value);
+ cache.set(value,out);if(cache.size>CACHE_SIZE){older=cache;cache=new Map();}return out;
+}
+// The conversion before the caches, for the tests.
+export function vividColorPlain(value){
+ if(typeof value!=='string'||value.charCodeAt(0)!==104)return value;
  const m=HSL.exec(value);if(!m)return value;
- const [H,S,L]=vividHSL(+m[1],+m[2],+m[3]);out=m[4]===undefined?`hsl(${H},${S}%,${L}%)`:`hsla(${H},${S}%,${L}%,${m[4]})`;
- cache.set(value,out);if(cache.size>4000)cache.delete(cache.keys().next().value);return out;
+ const [H,S,L]=vividHSL(+m[1],+m[2],+m[3]);return m[4]===undefined?`hsl(${H},${S}%,${L}%)`:`hsla(${H},${S}%,${L}%,${m[4]})`;
 }
 // Aplica la paleta viva a un contexto 2D: colores de trazo, relleno y degradados pasan por vividColor.
 export function installVivid(ctx){

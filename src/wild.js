@@ -5,6 +5,7 @@ import {PLACES,placeOpen} from './places.js';
 import {RHYTHMS,PLACE_RHYTHMS} from './journey-rhythm.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
 import {directionPan} from './spatial.js';
+import {glow,sparkSprite} from './fx-kit.js';
 // The wild World (plan F18, docs/MUNDO.md): exploring far gives something every one or two minutes. A wild spark
 // turns up ahead of the cube, singing on the beat from its side (plan H6); five pulses on time beside it within 30 s catch it (15 ✦: a
 // spark you chase is worth more than a loose one). And every day one place is remixed: its game with another place's rhythm. Until H1 it paid 30 ✦
@@ -43,18 +44,23 @@ export function initialize(runtime){
  function active(){const S=runtime.S;return !!(S&&runtime.inWorld?.()&&S.mode==='world'&&(S.layer||'superficie')==='superficie'&&freeOpen(S.journey)&&!runtime.placeRun?.()&&!runtime.journeyFinaleState?.().running&&!runtime.houseActive?.());}
  function spawn(){const S=runtime.S,a=prev&&(S.wx!==prev.x||S.wy!==prev.y)?Math.atan2(S.wy-prev.y,S.wx-prev.x):hashKey('wild:a:'+Date.now())*6.283,n=own().caught+own().today;
   spark={x:Math.round(S.wx+Math.cos(a)*WILD_AHEAD),y:Math.round(S.wy+Math.sin(a)*WILD_AHEAD),hops:0,born:performance.now(),n,flash:0};runtime.toast?.(S.sound?'Una chispa salvaje.':'Una chispa salvaje. Pasa por ella.',{level:2,ttl:2500});}
- function catchSpark(){const s=own();runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());const got=creditSparks(runtime.S,WILD_SPARKS);s.caught++;s.today++;spark=null;last=performance.now();walked=0;roll=Math.random();runtime.save?.();runtime.hud?.();runtime.toast?.(`Atrapada · +${got} ✦`,{level:2,ttl:3000});return 'caught';}
+ // Visual 1 (alpha.250): catching it pops in gold on the shared layer; each hop pops small where it was.
+ function catchSpark(){if(spark)runtime.fxLayer?.pop(spark.x,spark.y,runtime.GOLD||'#f0d27a',{gold:true,size:1.5,sparks:12});const s=own();runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());const got=creditSparks(runtime.S,WILD_SPARKS);s.caught++;s.today++;spark=null;last=performance.now();walked=0;roll=Math.random();runtime.save?.();runtime.hud?.();runtime.toast?.(`Atrapada · +${got} ✦`,{level:2,ttl:3000});return 'caught';}
  function tick(){if(!active()){prev=null;return;}const S=runtime.S,now=performance.now();if(prev)walked+=Math.min(200,Math.hypot(S.wx-prev.x,S.wy-prev.y));prev={x:S.wx,y:S.wy};
   if(spark&&wildTouched(spark,{x:S.wx,y:S.wy},S.sound)){glows.push({x:spark.x,y:spark.y,at:now});catchSpark();return;}
   if(spark){if(now-spark.born>WILD_LIFE){spark=null;last=now;walked=0;roll=Math.random();runtime.toast?.('Se fue.',{level:2,ttl:2000});}return;}
   if(!openSurface('.modal:not([hidden])')&&wildDue(now-last,walked,roll))spawn();}
  // A pulse in the World: on time and beside the spark, it hops away; the fifth catches it.
- function pulse(on){if(!spark||!on||!active())return null;const S=runtime.S;if(Math.hypot(spark.x-S.wx,spark.y-S.wy)>WILD_REACH)return 'far';spark.hops++;spark.flash=1;glows.push({x:spark.x,y:spark.y,at:performance.now()});
+ function pulse(on){if(!spark||!on||!active())return null;const S=runtime.S;if(Math.hypot(spark.x-S.wx,spark.y-S.wy)>WILD_REACH)return 'far';spark.hops++;spark.flash=1;glows.push({x:spark.x,y:spark.y,at:performance.now()});if(spark.hops<WILD_HOPS)runtime.fxLayer?.pop(spark.x,spark.y,runtime.GOLD||'#f0d27a',{gold:true,size:.7,sparks:6});
   runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];runtime.pluck?.(ct[spark?.hops%3||0]+24,t,.08,2);},'player');
   if(spark.hops>=WILD_HOPS)return catchSpark();
   const a=hashKey(`wild:hop:${spark.n}:${spark.hops}`)*6.283;spark.x=Math.round(spark.x+Math.cos(a)*WILD_HOP);spark.y=Math.round(spark.y+Math.sin(a)*WILD_HOP);return 'hop';}
  function draw(c,W,H,t){tick();if(!spark||!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,x=W/2+spark.x-cx,y=H/2+spark.y-cy,gold=runtime.GOLD||'#f0d27a',still=calm(),now=performance.now(),left=1-(now-spark.born)/WILD_LIFE;c.save();
-  if(x>-30&&x<W+30&&y>-30&&y<H+30){const r=10+(still?0:Math.sin(t/200)*2);c.globalAlpha=.3;c.fillStyle=gold;c.beginPath();c.arc(x,y,r*2.2,0,6.283);c.fill();
+  // Visual 1 (alpha.250): an added gold halo that breathes with it and three motes in orbit (still with reduced motion,
+  // none in light quality).
+  if(x>-30&&x<W+30&&y>-30&&y<H+30){const r=10+(still?0:Math.sin(t/200)*2);glow(c,x,y,r*3.4,gold,.32,true);
+    if(!runtime.lightQuality?.()){c.globalCompositeOperation='lighter';const mote=sparkSprite(gold);for(let i=0;i<3;i++){const a=i*2.094+(still?0:t/700),q=r+13+(still?0:Math.sin(t/450+i)*2);c.globalAlpha=.75;if(mote)c.drawImage(mote,x+Math.cos(a)*q-3,y+Math.sin(a)*q-3,6,6);else{c.fillStyle=gold;c.fillRect(x+Math.cos(a)*q-1,y+Math.sin(a)*q-1,2,2);}}c.globalCompositeOperation='source-over';}
+    c.globalAlpha=.3;c.fillStyle=gold;c.beginPath();c.arc(x,y,r*2.2,0,6.283);c.fill();
    c.globalAlpha=1;c.strokeStyle=gold;c.lineWidth=2;c.beginPath();for(let i=0;i<=30;i++){const a=i/30*9.4+(still?0:t/300),q=2+i/30*r;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.stroke();
    c.globalAlpha=.8;c.beginPath();c.arc(x,y,r+8,-Math.PI/2,-Math.PI/2+Math.max(0,left)*6.283);c.stroke();
    for(let k=0;k<WILD_HOPS;k++){c.globalAlpha=k<spark.hops?1:.3;c.fillStyle=k<spark.hops?gold:'#ffffff';c.fillRect(Math.round(x-WILD_HOPS*4+k*8+2),Math.round(y+r+12),4,4);}}

@@ -8,8 +8,13 @@
 // the next step (white is what to do next); the start says its name and verb; a win bursts in the biome's light, a loss
 // drifts away and fades (about a second), never a cut; then one summary line.
 import {liveDefinition,liveGoal,LIVE_COLORS,LIVE_FAREWELL,LIVE_TOUCH,LIVE_BURN} from './live-encounters-model.js';
+import {glow as fxGlow} from './fx-kit.js';
 const TAU=Math.PI*2;
-function glow(c,x,y,r,color,alpha){const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=alpha;c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2);}
+// Visual 1 (alpha.250): every light here is the shared added sprite (fx-kit.js), not a new gradient per call; on black it
+// only adds. A prey grows in its first 0.28 s and leaves a short trail of light behind it; a win also pops on the
+// shared layer (a double ring and sparks, drawn after the grey sheet). Reduced motion: no trail, no growing in, no pop.
+function glow(c,x,y,r,color,alpha){fxGlow(c,x,y,r,color,alpha,true);}
+const popped=new WeakSet();
 function ring(c,x,y,r){c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();}
 const line=(c,ax,ay,bx,by)=>{c.beginPath();c.moveTo(ax,ay);c.lineTo(bx,by);c.stroke();};
 // Batch 2: a mark that grows towards the beat it lands on (the falling stones, the flares).
@@ -156,14 +161,16 @@ function drawScene(r,s,color,reduced){
   else{
   // Batch 1, brighter (Jay asked whether they read too small): a wider glow, a dark disc and a thin ring in its colour keep
   // the prey clear on any light without making it bigger.
-  if(!s.hidden){glow(c,x,y,30,color,.42);c.save();c.globalAlpha=.55;c.fillStyle='#000';c.beginPath();c.arc(x,y,12,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=color;ring(c,x,y,12.5);c.restore();}c.globalAlpha=1;c.strokeStyle=c.fillStyle=color;SHAPES[s.kind]?.(c,x,y,s.heading||0,t,s,ox,oy);
+  const seen=reduced?1:Math.min(1,(s.age||0)/.28),light=!!r.lightQuality?.();
+  if(!s.hidden&&!reduced&&!light){const h=s.heading||0;for(let k=1;k<=5;k++)glow(c,x-Math.cos(h)*k*6,y-Math.sin(h)*k*6,7-k,color,.22*(1-k/6)*seen);}
+  if(!s.hidden){glow(c,x,y,30*(.85+.15*seen),color,.42*seen);c.save();c.globalAlpha=.55*seen;c.fillStyle='#000';c.beginPath();c.arc(x,y,12,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=color;ring(c,x,y,12.5);c.restore();}c.globalAlpha=1;c.strokeStyle=c.fillStyle=color;SHAPES[s.kind]?.(c,x,y,s.heading||0,t,s,ox,oy);
   if(s.hold>0){c.globalAlpha=.6*Math.min(1,s.hold);ring(c,x,y,13);}
   // The prey's way: white, like every next step (it was in the biome's colour until alpha.229).
   pointer(r,s,x,y,'#ffffff',reduced);}
   timeRing(r,s,def);
  }else{
   const k=Math.min(1,s.over/LIVE_FAREWELL),won=s.stage==='caught'||s.stage==='safe'||s.stage==='done',bx=atCube?r.W/2:x,by=atCube?r.H/2:y;
-  if(won){burst(c,bx,by,s.over,color,reduced);c.strokeStyle=c.fillStyle=color;}
+  if(won){burst(c,bx,by,s.over,color,reduced);c.strokeStyle=c.fillStyle=color;if(!popped.has(s)){popped.add(s);r.fxLayer?.pop(bx-ox,by-oy,color,{size:1.6,sparks:10});}}
   // What is left goes away slowly, fading: a prey keeps flying on its way (the model moves it); a threat or a task
   // drifts away from the cube. Never a cut.
   if(!won||atCube){const ax=x-r.W/2,ay=y-r.H/2,l=Math.hypot(ax,ay),u=l>1?{x:ax/l,y:ay/l}:{x:Math.cos(s.heading||0),y:Math.sin(s.heading||0)},drift=won||s.verb==='perseguir'||reduced?0:70*(1-(1-k)*(1-k)),dx=u.x*drift,dy=u.y*drift;
