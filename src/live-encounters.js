@@ -38,7 +38,7 @@ export function initialize(r){
  // One at a time: no encounter while a mischief scene plays (universe-mischief.js waits for us in the same way).
  // And none while a figure of the Mapa del cielo is being joined (sky-map.js); after one, the clock starts again.
  // Alpha.242: a mischief scene that does not move on (universe-mischief.js, mischiefBusy) no longer holds us back.
- const mischiefBusy=()=>!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skyMapActive?.();
+ const mischiefBusy=()=>!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skyMapActive?.()||!!r.skySecretBusy?.();   // alpha.247: a meteor shower or an eclipse (secretos-cielo.js)
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.liveEncounters=normalizeLive(owner.liveEncounters);scene=null;line=null;notice=null;summary=null;queued=false;last=null;if(fresh)travel=0;}return owner.liveEncounters;}
  const need=()=>forced?3:liveInterval(scope,book().count);
  const biomeAt=(x,y)=>{const d=r.regionOfPos(x,y);return d?.sea?'vacio':r.BIOMES?.[d?.z]?.id||'vacio';};

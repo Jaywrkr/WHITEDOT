@@ -79,7 +79,7 @@ try:
    page.evaluate(HIDE);page.evaluate("__r.openJournal('places')");page.wait_for_selector('#journalSecrets',state='attached',timeout=5000)
    page.evaluate("document.getElementById('journalSecrets').open=true;document.getElementById('journalSecrets').scrollIntoView()")
    j=page.evaluate("(()=>{const e=document.getElementById('journalSecrets');return {summary:e.querySelector('summary').textContent,rows:e.querySelectorAll('.secret-row').length,missing:e.querySelectorAll('.secret-missing span').length,text:e.textContent}})()")
-   n=page.evaluate("__r.secretState().count");assert n==7 and j['summary']=='Secretos · 7' and j['rows']==7 and j['missing']==4,j
+   n=page.evaluate("__r.secretState().count");assert n==7 and j['summary']=='Secretos · 7' and j['rows']==7 and j['missing']==8,j   # alpha.247: eleven secrets and the sky's four, seven found
    for hidden in ['Nieve de estrellas','Fuegos','Luna llena','Un día especial']:assert hidden not in j['text'],('no spoiler',hidden)
    assert 'Estuvimos aquí' in j['text']
    if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{width}.png')
