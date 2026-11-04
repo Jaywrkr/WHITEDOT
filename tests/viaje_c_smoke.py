@@ -68,6 +68,9 @@ try:
    go(page,303000,40000);page.wait_for_function("!!__r.bandState().book.seen.pulsar",timeout=8000)
    want='Pulsars start here.' if en else 'Aquí empiezan los púlsares.';wait_toast(page,want)
    go(page,301000,40000);go(page,304000,40000);page.wait_for_timeout(300);assert page.evaluate(f"window.__toasts.filter(t=>t.includes({want!r})).length")==1,'once'
+   # The notices of the farther bands of the batch are tested by the model (tests/viaje_c.mjs): given here, so they do not
+   # hold the notice lane while the steps below teleport across them.
+   page.evaluate("()=>{const b=__r.S.bandas;for(const id of ['asteroide','tirolina','polvo','kit'])b.seen[id]='';__r.save();}")
    if not en:
     # --- 2 · A pulsar: a volley of six flashes, a scene of its own; dodged by stepping aside (phone), sent back on time (desktop).
     mark('2')
@@ -94,12 +97,11 @@ try:
     mark('3')
     ro,plan=P['ro'],P['plan'];go(page,ro['x']+150,ro['y']);page.wait_for_function(f"__r.viajeCState().drawn.rocks?.some(r=>r.id==={ro['id']!r})",timeout=6000);before=sparks(page)
     first=plan['layers'][0]['hits']
-    for k in range(first):pulse(page,ro['x']+150,ro['y'],False);page.wait_for_timeout(60)
+    for k in range(first):pulse(page,ro['x']+150,ro['y'],False);page.wait_for_timeout(40)
     page.wait_for_function(f"__r.viajeCState().book.rocks[{ro['id']!r}]?.l===1",timeout=5000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/asteroide-{width}.png')
-    for k in range(30):
-     if page.evaluate(f"Object.hasOwn(__r.viajeCState().book.cores,{ro['id']!r})"):break
-     pulse(page,ro['x']+150,ro['y'],False);page.wait_for_timeout(60)
+    # The rest of the blows from inside the page, one every two frames (no round trip per blow on a slow machine).
+    page.evaluate(f"""async()=>{{const id={ro['id']!r};for(let k=0;k<120&&!Object.hasOwn(__r.S.viajeC.cores,id);k++){{if(k%2===0)__r.waves.push({{x:{ro['x']+150},y:{ro['y']},r:0,prev:0,max:340,n:0,origin:'player',beat:false}});await new Promise(f=>requestAnimationFrame(f));}}}}""")
     page.wait_for_function(f"Object.hasOwn(__r.viajeCState().book.cores,{ro['id']!r})",timeout=5000);s=st(page)
     assert paid_log(page,'Asteroide')==[12] and sparks(page)-before>=12 and s['summary'].startswith(plan['name']+' · nuevo · +12'),(paid_log(page,'Asteroide'),s['summary'])
     # --- 4 · A zip line between two buoys of 41 km stepped on; ridden back in a few seconds, a scene of its own.

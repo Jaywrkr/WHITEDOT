@@ -210,7 +210,7 @@ Tanda C del mismo pedido (4 de noviembre de 2026, alpha.251, rama `jay/viaje-c`)
 - **Guardado nuevo** `S.viajeC` (versión 1, `normalizeViajeC`): `pulsars` (día pagado), `volleys`, `rocks` (capas rotas), `cores`, `buoys` (boyas de 40 km o más pisadas, las últimas 400), `lines` (las últimas 80), `rides`, `dust`, `sinks`, `tools`, `caches`, `points`, `gathered` y `earned`. Una partida anterior empieza vacía; se conservan campos desconocidos; una versión futura no se toca ni se escribe. Si guardar falla, todo vuelve como estaba, chispas incluidas.
 - **Sin azar:** todo sale de `hashKey`; nada usa el RNG del mapa ni `Math.random`; nada del mapa se mueve. Ningún sitio de la tanda cae dentro de un mar de polvo.
 
-Pruebas: `tests/viaje_c.mjs` (bandas y avisos, sitios que empiezan en su km y no se acaban, destellos devueltos o esquivados, capas y núcleos, tirolinas solo entre boyas pisadas, el muro de rocas, herramientas y puntos, premios por `universeReward`, guardado y migración, inglés, sin azar, cableado), `tests/viaje_c_smoke.py` (390×844 sin sonido y 1280×800 con sonido, en español; 390×844 en inglés) y `tests/viaje_c_mix.py` (render). No probado en teléfono ni con personas.
+Pruebas: `tests/viaje_c.mjs` (bandas y avisos, sitios que empiezan en su km y no se acaban, destellos devueltos o esquivados, capas y núcleos, tirolinas solo entre boyas pisadas, el muro de rocas, herramientas y puntos, premios por `universeReward`, guardado y migración, inglés, sin azar, cableado), `tests/viaje_c_smoke.py` (390×844 sin sonido y 1280×800 con sonido, en español; 390×844 en inglés; 114 s) y `tests/viaje_c_mix.py` (render). No probado en teléfono ni con personas.
 
 ## Con Luca
 

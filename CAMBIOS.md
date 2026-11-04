@@ -16,7 +16,7 @@ Rama `jay/viaje-c`, desde `jay/viaje-a` `1ea7e84` (alpha.248, PR #387 sin fusion
 - **Una escena a la vez:** tanda de púlsar, viaje en tirolina y tiempo bajo el polvo, con `r.bandAttach` (`busy`). Arreglo en `viaje-a.js`: un interruptor de la tanda A no empieza mientras otra tanda tiene escena.
 - **Guardado nuevo** `S.viajeC` (versión 1). Se conservan campos desconocidos; una versión futura no se toca. Si guardar falla, todo vuelve, chispas incluidas.
 - **Sonido medido por render** (`tests/viaje_c_mix.py`). La música del Mundo es idéntica a alpha.248; los sonidos nuevos quedan 31,2 y 32,3 dB por debajo; bajo el polvo los agudos bajan 18–26 dB sin cambiar el nivel y vuelven solos. `audio.js` no cambia.
-- Pruebas nuevas: `tests/viaje_c.mjs`, `tests/viaje_c_smoke.py` (390×844 y 1280×800, e inglés) y `tests/viaje_c_mix.py`. `tests/audio_mix.mjs` gana `viajeCBatch` y `dust`. `tests/viaje_a_smoke.py` ya no supone que la tanda A es la última banda.
+- Pruebas nuevas: `tests/viaje_c.mjs`, `tests/viaje_c_smoke.py` (390×844 y 1280×800, e inglés; 114 s) y `tests/viaje_c_mix.py`. `tests/audio_mix.mjs` gana `viajeCBatch` y `dust`. `tests/viaje_a_smoke.py` ya no supone que la tanda A es la última banda.
 - Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js` (dos módulos), con la capa `approvedVC`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
