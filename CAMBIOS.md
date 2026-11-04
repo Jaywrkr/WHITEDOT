@@ -1,7 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.248** en la rama `jay/viaje-a`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.252** en la rama `jay/viaje-d`. Las entradas describen su revisión, no certifican producción.
 
+
+## Lo que hay más lejos, tanda D · 2.3.0-alpha.252
+
+Rama `jay/viaje-d`, desde `jay/viaje-a` `1ea7e84` (alpha.248, PR #387 sin fusionar: dependencia explícita, trae la API de bandas). En paralelo `jay/viaje-b` (alpha.249), `jay/visual-1` (alpha.250) y `jay/viaje-c` (alpha.251), sin tocar. Tanda D del pedido de Jay: lo que hay a 60 km o más. Guía: [El mundo](docs/MUNDO.md#tanda-d-60-km-o-más).
+
+- **Portal de otra regla** (desde 60 km). Durante 2 min el cubo se mueve por otra regla: órbita alrededor de un punto, rebote en postes o hielo. Seis luces dentro. Al salir, todo como antes. Una consulta nueva en `render.js` (`runtime.motionRule`), nula fuera de un portal.
+- **Estación del día** (desde 65 km). Cinco salas; en cada una eliges la siguiente entre tres puertas (un reto o un premio). Tres retos (compás, memoria, luces) y tres premios con sello. Se rehace cada día (`hashKey` de la fecha y del camino elegido).
+- **Barrido a tempo** (desde 70 km, dentro de cada satélite). Cuadrícula de 10 × 8 en dos tonos; la línea pasa al compás y borra los cuadrados de 2 × 2 de un tono. 90 s, puntuación y récord.
+- **Herencia de la mascota** (desde 80 km). Un nido da una cría a tu mascota: hereda color, notas y ritmo; «Cruce» y «Eco doble» son raros. Se ve en Bitácora › «Crías» y en el Refugio. Solo viaja si la eliges; tu mascota espera entera. `pet.js` no cambia.
+- **Eclipse que cambia** (desde 90 km). Mientras dura un eclipse de Secretos del cielo, aparece la corona (seis luces) y el pulso deja estela, que también atrapa. `secretos-cielo.js` solo gana la lectura `r.skyEclipse()`.
+- **Premios:** por `universeReward`, fácil, una vez al día por cosa: 15 ✦ a esta distancia (portal, estación con tres retos, barrido desde 16 casillas, corona). Las crías no pagan.
+- **Una escena a la vez:** portal y hoja (`#mViajeD`) son escenas por `r.bandAttach`. Los botones de la hoja no suenan.
+- **Guardado nuevo** `S.viajeD` (versión 1). Campos desconocidos y versiones futuras se conservan. Si guardar falla, todo vuelve, mascota y chispas incluidas.
+- Enganches: `main.js` (inicia `viaje-d.js`), `render.js` (tick, dibujo y `motionRule`), `journal.js` (sección «Crías»), `house.js` (las crías en el Refugio), `index.html` (la hoja `#mViajeD`), `estilo-j.css`, `i18n-en.js`, `sw.js` (tres módulos).
+- **Sonido medido por render** (`tests/viaje_d_mix.py`): la música del Mundo es idéntica a alpha.248; los sonidos nuevos quedan 33,8 y 34,8 dB por debajo. `audio.js` y `pet.js` no cambian.
+- Pruebas nuevas: `tests/viaje_d.mjs`, `tests/viaje_d_smoke.py` (390×844 y 1280×800, y paso en inglés; 106 s) y `tests/viaje_d_mix.py`. `tests/audio_mix.mjs` gana `viajeDBatch`. `tests/viaje_a_smoke.py` acepta bandas lejanas sin alcanzar.
+- Preservación: `main.js`, `render.js` y la lista offline de `sw.js`, con la capa `approvedVD`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 ## Lo que hay más lejos, tanda A · 2.3.0-alpha.248
 
