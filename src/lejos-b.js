@@ -226,8 +226,9 @@ export function initialize(r){
  function busy(){if(!r.S||!allowed())return false;if(postal||reviving)return true;const p=me();if(effect&&Math.hypot(effect.x-p.x,effect.y-p.y)<SONG_LOCAL)return true;return ducked||(ok()&&near(p,DEAD_R).some(s=>s.kind==='apagada'&&!revived(book(),s.id)));}
  // ---------- the Refugio: Más › Fusión de sonidos ----------
  const box=$('mSoundFusion'),list=$('soundFusionList'),make=$('soundFusionMake'),note=$('soundFusionNote');let picked=[];
- function syncHouse(force=false){const row=globalThis.document?.querySelector?.('#houseMore .house-more');if(!row)return;const open=ok()&&fusionOpen(book()),key=String(open);if(!force&&key===houseKey&&$('houseFusion'))return;houseKey=key;
-  let b=$('houseFusion');if(!b){b=document.createElement('button');b.type='button';b.id='houseFusion';b.textContent='Fusión de sonidos';b.onclick=()=>{const more=$('houseMore');if(more)more.open=false;openFusion_();};row.appendChild(b);}b.hidden=!open;}
+ // The button waits hidden under «Más» (index.html) until the first time at 20 km.
+ function syncHouse(force=false){const b=$('houseFusion');if(!b)return;const open=ok()&&fusionOpen(book()),key=String(open);if(!force&&key===houseKey)return;houseKey=key;
+  if(!b.onclick)b.onclick=()=>{const more=$('houseMore');if(more)more.open=false;openFusion_();};b.hidden=!open;}
  const album=()=>r.S.soundAlbum&&typeof r.S.soundAlbum==='object'?r.S.soundAlbum:null;
  function renderFusion(){if(!box||!list)return;const a=album(),mine=SOUNDS.filter(s=>albumHas(a,s.id)),fused=fusedIn(a);$('soundFusionCount').textContent=fused.length?`${fused.length} ${fused.length===1?'fusión':'fusiones'}`:'';
   list.innerHTML=`<div class="sound-chips">${mine.map(s=>`<button type="button" class="sound-chip" data-fuse-id="${s.id}" aria-pressed="${picked.includes(s.id)}">${escape(s.name)}</button>`).join('')||'<span class="sound-chip">?</span>'}</div>`+
