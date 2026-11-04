@@ -121,7 +121,7 @@ assert.ok(D.PORTAL_GAIN<=.02&&D.LIGHT_GAIN<=.02&&D.BOUNCE_GAIN<=.012&&D.SWEEP_GA
 assert.ok(!/viaje|motionRule/.test(read('src/audio.js')),'audio.js untouched');assert.ok(!/viajeD|criaPet|travelWith/.test(read('src/pet.js')+read('src/pet-model.js')),'pet.js untouched');
 // --- wiring
 const shell=read('sw.js');for(const m of ['viaje-d-model.js','viaje-d-juegos.js','viaje-d.js'])assert.equal(shell.split(`"./src/${m}"`).length-1,1,m);
-const main=read('src/main.js');assert.ok(main.includes("import {initialize as viajeD} from './viaje-d.js';"));assert.ok(main.includes('bandas(runtime);viajeA(runtime);viajeD(runtime);'),'after the bands it attaches to');
+const main=read('src/main.js');assert.ok(main.includes("import {initialize as viajeD} from './viaje-d.js';"));assert.ok(main.includes('bandas(runtime);viajeA(runtime);lejosB(runtime);viajeC(runtime);viajeD(runtime);'),'after the bands it attaches to and the batches before it');assert.ok(read('src/viaje-d.js').includes("r.bandBusy?.('D')"),'waits for the other batches');
 const render=read('src/render.js');for(const h of ['runtime.viajeDTick?.(dt,modal)','runtime.drawViajeD?.()','runtime.motionRule?.(dx,dy,dt,movementSpeed)'])assert.ok(render.includes(h),h);
 assert.ok(read('src/journal.js').includes("(runtime.viajeDSection?.()||'')"));assert.ok(read('src/house.js').includes('runtime.drawHouseBrood?.('));assert.ok(read('src/secretos-cielo.js').includes('skyEclipse:{get:'));
 const html=read('index.html');for(const id of ['mViajeD','viajeDTitle','viajeDStatus','viajeDCanvas','viajeDBody','viajeDPad','viajeDLeft','viajeDTurn','viajeDRight','viajeDDrop','viajeDClose'])assert.equal(html.split(`id="${id}"`).length-1,1,id);

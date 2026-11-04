@@ -62,7 +62,7 @@ try:
   p.evaluate("([x,y])=>{__r.S.wx=x;__r.S.wy=y;}",[spot['x'],spot['y']]);p.wait_for_function("!document.getElementById('mPortal').hidden",timeout=5000)
   assert p.locator('#portalEcho').is_visible() and p.locator('#portalEcho').inner_text()=='Eco'
   p.screenshot(path=str(SHOTS/'ritmo-eco-portal-390.png'))
-  p.locator('#portalEcho').click();p.wait_for_function("__r.placeRun()?.id==='bosque'",timeout=5000);assert p.evaluate("__r.ritmoState().round.echo")
+  p.locator('#portalEcho').click();p.wait_for_function("__r.placeRun()?.id==='bosque'&&!!__r.ritmoState().round",timeout=5000);assert p.evaluate("__r.ritmoState().round.echo")
   finish(p,'bosque')
   assert p.inner_text('#placeTitle')=='Bosque · Eco',p.inner_text('#placeTitle')
   rows=p.inner_text('#placeRows');assert 'De memoria, sin señales.' in rows and 'Ritmo · 80 % / 75 % a tiempo' in rows,rows
@@ -75,10 +75,10 @@ try:
   assert p.locator('#mPlace .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
   p.screenshot(path=str(SHOTS/'ritmo-eco-hoja-390.png'))
   # From the card, Eco again; then an ordinary round says «Completo».
-  p.locator('#placeEcho').click();p.wait_for_function("__r.placeRun()?.id==='bosque'",timeout=5000);assert p.evaluate("__r.ritmoState().round.echo")
+  p.locator('#placeEcho').click();p.wait_for_function("__r.placeRun()?.id==='bosque'&&!!__r.ritmoState().round",timeout=5000);assert p.evaluate("__r.ritmoState().round.echo")
   finish(p,'bosque',60);assert p.inner_text('#placeTitle')=='Bosque · Eco'
   assert p.evaluate("__r.ritmoState().save.echo.bosque")=={'best':.8,'rounds':2},'the best share stays'
-  p.locator('#placeAgain').click();p.wait_for_function("__r.placeRun()?.id==='bosque'",timeout=5000);assert not p.evaluate("__r.ritmoState().round.echo")
+  p.locator('#placeAgain').click();p.wait_for_function("__r.placeRun()?.id==='bosque'&&!!__r.ritmoState().round",timeout=5000);assert not p.evaluate("__r.ritmoState().round.echo")
   finish(p,'bosque');assert p.inner_text('#placeTitle')=='Bosque · Completo' and 'De memoria' not in p.inner_text('#placeRows')
   # Kept after a reload; the Bitácora says which places were played from memory.
   p.evaluate(HIDE);p.reload();p.wait_for_function('!!window.__r?.ringState&&__r.inWorld()',timeout=20000);p.evaluate(HIDE)

@@ -22,7 +22,8 @@ SHOWN="id=>{const e=document.getElementById(id);if(!e)return false;const r=e.get
 # Whatever a menu button may change: an open sheet or panel, the place you are in, the view, a recording, a route.
 STATE="""()=>{const r=__r;return JSON.stringify({open:[...document.querySelectorAll('.modal,#studioPanel,#housePanel,#seedEncounter,#recBadge')].filter(m=>!m.hidden&&m.id!=='mMenu').map(m=>m.id),
  mode:r.S.mode,view:r.journeyMode?.(),tools:document.body.classList.contains('tools-open'),house:!!r.houseActive?.(),round:!!r.placeRun?.(),
- target:JSON.stringify(r.navigationState?.target||null),guide:JSON.stringify(r.S.places?.guide||r.placesData?.()?.guide||null),wx:Math.round(r.S.wx||0),wy:Math.round(r.S.wy||0)})}"""
+ target:JSON.stringify(r.navigationState?.target||null),guide:JSON.stringify(r.S.places?.guide||r.placesData?.()?.guide||null),wx:Math.round(r.S.wx||0),wy:Math.round(r.S.wy||0),
+ flare:JSON.stringify(r.S.viajeA?.flare||null)})}"""
 VISIBLE_MENU="""()=>[...document.querySelectorAll('#mMenu button')].filter(b=>{if(b.closest('.devbox')||b.id==='mnClose')return false;const r=b.getBoundingClientRect();return !b.hidden&&getComputedStyle(b).display!=='none'&&r.width>0&&r.height>0}).map(b=>b.id)"""
 def page(b,w,h,view='libre',where='world'):
  p=b.new_page(viewport={'width':w,'height':h});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))

@@ -54,7 +54,7 @@ export function initialize(r){
   const sat=satelliteHere(world,s,700);return !sat;};
  // This batch's own scene (a rule, the sheet) and every other scene of the world.
  const mine=()=>!!rule||!!games?.visible();
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||(!mine()&&!!r.bandBusy?.());
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.bandBusy?.('D');   // another batch's scene (the bands leave D's own out)
  // A change kept or nothing: a failed save puts the save (the pet and the sparks too) back as they were.
  function commit(change){const S=r.S,before={v:structuredClone(book()),pet:S.pet===undefined?undefined:structuredClone(S.pet),sparks:S.sparks,economy:S.sparkEconomy?structuredClone(S.sparkEconomy):undefined};const out=change(book());if(!out)return null;
   if(r.save?.()===false){S.viajeD=before.v;if(before.pet!==undefined)S.pet=before.pet;S.sparks=before.sparks;if(before.economy!==undefined)S.sparkEconomy=before.economy;owner=null;const sheet=games?.visible();book();if(sheet)games.close();return null;}
