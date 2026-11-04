@@ -65,7 +65,7 @@ Arreglos sueltos de la auditoría de coherencia, aprobados por Jay el 4 de novie
 - **Mapa del universo.** Pasados los 50 km la cabecera habla del último anillo, no de «Hasta 5 km».
 - **Bitácora.** «1 lugar», no «1 lugares», y el día como «4 nov» en Hoy y en Logros.
 - **`?rapido`** no hace nada en la edición de venta.
-- **Pendiente en otras tandas.** El escáner que calla las balizas, el BPM del escáner y los avisos que se tapan con el escáner abierto van con el escáner (T1) y la carga (T3).
+- **Pendiente en otras tandas.** El escáner que calla las balizas, el BPM del escáner y los avisos que se tapan con el escáner abierto van con el escáner (T1) y la carga (T3). T1 ya arregla el 8, el 16 y la parte del 12 que toca al escáner: ver [El Escáner](#el-escáner).
 
 ## Ritmo
 
@@ -305,6 +305,23 @@ Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; sa
 **Saltar a otro lugar (Jay, alpha.226 y alpha.230).** Dentro de un nivel no hay salto: ni en un capítulo del Viaje sin terminar, ni en una ronda de un lugar, ni bajo el final del Viaje. Se ocultan «Otro paisaje», «Volver al punto anterior» y «Viajar a otra tierra», y el código también los rechaza (y las sorpresas que teletransportan). **Desde alpha.230, «Otro paisaje» y «Viajar a otra tierra» solo existen con los once lugares del anillo completos:** antes no están en el dock, en «Más» ni en Tu cubo (tampoco su meta «Ahorrar para un salto») y el código rechaza el salto. El primer salto tras los once es gratis (`S.journey.freeJumpUsed`); los siguientes cuestan 20 ✦. «Volver al punto anterior» sigue gratis y como estaba. Quien ya está en otra semilla conserva el camino de vuelta, y `?dev=1` (o un servidor local) sus herramientas. Lejos del anillo (más allá de donde se oye su siguiente portal, 9600 px), Lugares ofrece **Ir** al siguiente lugar del camino, gratis, junto a su portal: solo a ese, no es un salto libre.
 
 **Volver al anillo (Jay, alpha.230).** Tras el Viaje, Lugares tiene siempre «Volver al anillo», gratis: lleva al centro del anillo, un paso hacia el siguiente portal; nunca a un lugar nuevo ni a otra tierra. Lejos del anillo (más de 7800 px de su centro) es la primera acción de la hoja; dentro, va bajo «Seguir hacia …». Usa el mismo viaje que los demás, así que «Volver al punto anterior» devuelve al sitio de antes. La brújula junto al cubo y la columna de luz apuntan al siguiente lugar. `places-ring.js` (`ringHome`) y `refugio-lugares.js`.
+
+## El Escáner
+
+Coherencia T1 (Jay, 4 de noviembre de 2026, alpha.259, rama `jay/coherencia-t1`). El Escáner dice qué hay cerca y crece con el avance. Siempre está: dedo quieto 500 ms (fuera del cubo) o la tecla E. Al soltar se cierra.
+
+- **La onda.** Un anillo de luz blanca sale del cubo y cruza lo que muestra la pantalla. Lo que toca se enciende un momento con un icono pequeño: caja (cuadrado), hallazgo (rombo), juego (doble anillo), sonda (cruz), forma (triángulo), voz (anillo con punto). Lo nuevo va en blanco y lo ya encontrado, tenue. **El cubo no crece.** Sin sonido nuevo.
+- **Nivel 1, desde el inicio:** alcance 40 m, onda corta, formas sin nombre. El panel dice cuántas («5 cerca») y «Termina el Viaje para ver qué es.».
+- **Nivel 2, con el Viaje terminado** (`S.journey.finished` o el Mundo abierto): alcance 120 m. Bajo cada icono y en el panel, «Nombre · distancia» («Sonda · 80 m»), hasta cinco nombres en el lienzo sin pisarse. Los nombres salen aunque «Mostrar todo» esté en «no», porque se pidieron; con «Textos del universo» apagados, no.
+- **Panel «Cerca»** (`#scanner`; ids `#scannerRegion`, `#scannerSources` y `#scannerHint` conservados). Tres filas como mucho, en el orden del registro: rareza, distancia y lo no encontrado antes. La región va solo con nombre y carácter, sin género ni BPM. La pista final es el gesto de la voz más cercana («Toca para responder») o «Sin sonido.». «Nada cerca. Sigue.» si no hay nada. El reto de región ya no sale aquí. El detalle técnico de cada voz (papel, instrumento, patch, efecto) queda en la Bitácora › Música y, para desarrollo, en `data-detail` de la fila.
+- **Mientras está abierto**, el HUD de poder (`#sparkPowerHud`) y el de sorpresa (`#surpriseHud`) se apartan. El cubo no se mueve, como antes.
+- **Escanear no calla nada** (bug 8). Las sondas siguen pitando, los sonidos raros y la bengala siguen sonando, y el eclipse y el polvo siguen oscuros: `paused()` ya no mira `r.scanning` en `descubrir.js`, `viaje-a.js`, `lejos-b.js`, `recorrer.js`, `secretos-cielo.js` y `viaje-c.js`. Los gestos y contactos que ya se detenían al escanear siguen igual.
+- **Registro** (`src/scanner-model.js`, puro). `registerScan({id, name, shape, level, km, rarity, secret, batch, sites, done, page})`, una vez por tipo; el mismo id dos veces lanza un error. `sites` sale del generador propio de cada cosa o de `hashKey` (`scanSiteAt`), nunca del RNG antiguo. `scanLevel`, `scanReach`, `scanNear` y `scanPage`. Proveedores de T1 (`scanner.js`): voces (las fuentes musicales del escáner viejo), cajas, hallazgos, juegos del universo y sondas perdidas (nivel 2).
+- **Niveles escritos, cerrados hasta su tanda.** 3 (los once lugares, `S.lugares.won`, 300 m, flechas) y 4a/4b/4c (`S.bandas.far` ≥ 10/30/60 km, 600/900/1200 m). `SCAN_OPEN = 2` los cierra; la carga de una caja (T3) será el 4c. `scanBandEntry` deja listo el enganche con `registerBand`; ninguna tanda lo llama aún.
+- **Guardado.** Ninguno nuevo. «Encontrado» se lee de lo que ya se guarda: la colección de elementos (`S.elementBook`), el catálogo de formas (`S.cat`), las reliquias, los juegos hechos y las sondas.
+- **Dibujo.** Iconos horneados una vez (`fx-kit` `bake`), el anillo es un trazo; ningún degradado por fotograma ni `shadowBlur`. Con movimiento reducido el anillo no viaja: aparece a su alcance y se apaga, sin destellos. Con calidad ligera, sin halo, sin segundo anillo y sin destello. Medido en `?anillo=1` (llamadas al lienzo por fotograma, media de tres): con el escáner abierto, 994–999 antes y 1012–1022 ahora a 390×844; 1708–1714 antes y 1729–1740 a 1280×800. Sin escanear no cambia (1006 antes y 1008 ahora, a 390×844).
+
+Pruebas: `tests/scanner-model.mjs` (registro, niveles, orden, distancias, `hashKey`, enganche de bandas, ids y bug 8) y `tests/escaner_smoke.py` (390×844 y 1280×800). No probado en teléfono ni con personas.
 
 ## Ganas de volver
 

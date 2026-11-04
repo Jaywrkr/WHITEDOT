@@ -46,7 +46,7 @@ export function initialize(r){
  let owner=null,world='',clock=0,seen=new WeakSet(),cells=new Map(),glows=[],flights=[],summary=null,drawn={},notes=0,lastBar=-1,ducked=false,reviving=null,song={site:null,next:0,at:0},hint=null,effect=null,postal=null,lights=new Map(),away=new Map(),greeting=null,houseKey='',told=new Set(),memo=new Map();
  const reduced=()=>!!(r.S?.reducedMotion||prefersReducedMotion());
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
- const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const paused=()=>globalThis.document?.hidden||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  // Another scene plays (a living encounter, a figure, a mischief scene that moves on, a meteor shower or an eclipse, a
  // scene of another batch of the bands: a challenge of tanda A).
  const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.bandBusy?.('B');

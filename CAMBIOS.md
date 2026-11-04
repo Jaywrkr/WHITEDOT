@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.258** en la rama `jay/coherencia-t0`, desde `jay/menus` `c56a632` (alpha.257, PR #394 sin fusionar: dependencia explícita). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.259** en la rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394), con `jay/coherencia-t0` (alpha.258, PR #395) fusionada: depende de T0. Las entradas describen su revisión, no certifican producción.
+
+
+## El Escáner, núcleo (coherencia T1) · 2.3.0-alpha.259
+
+Rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394; dependencia explícita). Plan de coherencia, tanda T1, con las doce decisiones aprobadas por Jay. Lleva dentro T0 (`jay/coherencia-t0`, alpha.258, PR #395), fusionada sobre esta rama. Guía: [El Escáner](docs/MUNDO.md#el-escáner).
+
+- **Siempre está** (dedo quieto 500 ms o la tecla E) y crece con el avance. Nivel 1 desde el inicio: onda corta (40 m) y formas sin nombre. Nivel 2 tras el Viaje: 120 m, «Nombre · distancia» («Sonda · 80 m»).
+- **La onda.** Un anillo blanco sale del cubo; lo que toca se enciende con un icono pequeño. Lo nuevo, blanco; lo encontrado, tenue. El cubo no crece. Sin sonido nuevo.
+- **Panel «Cerca»** (antes «Escuchar»): tres filas, una por cosa, sin BPM (bug 16), sin ids ni «Blob», sin el reto de región. El detalle técnico de las voces sale de la vista (Bitácora › Música; `data-detail` para desarrollo). Ids `#scanner*` conservados.
+- **Con el escáner abierto**, los HUD de poder y de sorpresa se apartan (bug 12, la parte del escáner).
+- **Escanear no calla nada** (bug 8): `paused()` deja de mirar `r.scanning` en seis módulos. Las sondas pitan y el eclipse sigue oscuro mientras escaneas. Sin cambios en `audio.js`.
+- **Registro** `src/scanner-model.js` (puro): `registerScan`, `scanLevel`, `scanNear`, `scanPage`, `scanSiteAt` (`hashKey`). Niveles 3 y 4a–4c escritos y cerrados (`SCAN_OPEN = 2`); `scanBandEntry`, enganche listo para `registerBand`. Dibujo en `src/scanner-art.js`. Ambos, una vez en el `SHELL` de `sw.js`.
+- **Guardado:** sin campos nuevos. Lo encontrado se lee de lo ya guardado (colección de elementos, formas, reliquias, juegos, sondas).
+- **Coste:** iconos horneados, sin degradados ni `shadowBlur` por fotograma. Escaneando, unas 20 llamadas más al lienzo por fotograma (994–999 → 1012–1022 a 390×844; 1708–1714 → 1729–1740 a 1280×800). Movimiento reducido y calidad ligera, con sus variantes.
+- **Preservación:** capa `approvedT1` (`render.js`, `scanner.js` y la concha).
+- **Pruebas.** Nuevas `tests/scanner-model.mjs` y `tests/escaner_smoke.py` (390×844 y 1280×800: nivel 1 frente a nivel 2, onda, nombres solo en el 2, HUD apartados, sonda y eclipse mientras escaneas, movimiento reducido, calidad ligera y coste). Capturas antes y después en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Sin flechas de borde ni nivel 3 (T2), sin carga (T3). Las voces conservan su radio corto de antes (25 m).
 
 
 ## Coherencia, tanda 0 · los bugs sueltos · 2.3.0-alpha.258

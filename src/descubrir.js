@@ -41,7 +41,7 @@ export function initialize(r){
  const reduced=()=>!!(r.S.reducedMotion||prefersReducedMotion());
  // Where it lives: the free World's surface after the Journey, outside every level, activity, the Refugio and the finales.
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
- const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const paused=()=>globalThis.document?.hidden||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  // A scene of its own is playing (a living encounter, a figure, a mischief scene): the sounds wait quietly.
  // Alpha.242: a mischief scene that does not move on (mischiefBusy) no longer counts.
  const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.bandBusy?.()||!!r.lejosBBusy?.();   // alpha.249: a postcard, a sky song or a grey region (lejos-b.js)

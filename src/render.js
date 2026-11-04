@@ -126,6 +126,7 @@ export function initialize(runtime) {
     runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWeather?.(t,dt);runtime.drawFauna?.(t,dt);runtime.drawWorldMusic?.(t,dt);runtime.drawHappenings?.(t,dt);runtime.drawWorldLight?.(t);runtime.weatherBeds?.();runtime.drawDistantColors?.(true);runtime.drawSkyMap?.();runtime.drawRecorrer?.();runtime.drawDiscover?.();runtime.drawSecrets?.();runtime.drawSkySecrets?.();runtime.drawViaje?.();runtime.drawLejosB?.();runtime.drawViajeC?.();runtime.drawViajeD?.();runtime.drawLive?.();   // living encounters shine over the light of the World (live-encounters.js)
     runtime.drawWorldSheetGrey?.();
     runtime.drawJourneyGamesUnder?.(runtime.cx,runtime.W,runtime.H,t);
+    runtime.drawScan?.();   // the scanner's ring and what it touched, under the cube (scanner.js)
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     stepParts(dt,ox,oy);fx.update(dt);if(runtime.inWorld()||runtime.S.mode==='camino')fx.draw(runtime.cx,ox,oy);else fx.clear();
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
