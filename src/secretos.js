@@ -114,14 +114,20 @@ export function initialize(r){
    for(let i=0;i<8;i++){const a=turn+i/8*TAU;c.globalAlpha=.85*fade;c.fillRect(Math.round(x+Math.cos(a)*rad)-1.5,Math.round(y+Math.sin(a)*rad)-1.5,3,3);}}
   c.restore();}
  // ---------- Tu cubo: the gold cube, put on or taken off ----------
- function syncCube(){const box=$('cubeSecretSection'),list=$('cubeSecretOptions');if(!box||!list)return;const q=book(),earned=ok()&&goldEarned(q),on=earned&&goldOn(q),key=(earned?1:0)+':'+(on?1:0);if(key===cubeKey)return;cubeKey=key;box.hidden=!earned;if(!earned){list.replaceChildren();return;}
-  let b=globalThis.document.getElementById('cubeSecretGold');if(!b){b=globalThis.document.createElement('button');b.type='button';b.id='cubeSecretGold';b.className='cube-option';b.dataset.earned='true';b.textContent='Cubo dorado';b.title='Llegaste a 100 km';b.onclick=toggleGold;list.replaceChildren(b);}b.setAttribute('aria-pressed',String(on));}
+ // Alpha.247: beside it, the ornament of the fifty comet crystals (secretos-cielo.js, skySecretCubeOption).
+ function syncCube(){const box=$('cubeSecretSection'),list=$('cubeSecretOptions');if(!box||!list)return;const q=book(),earned=ok()&&goldEarned(q),options=[];
+  if(earned)options.push({id:'cubeSecretGold',label:'Cubo dorado',title:'Llegaste a 100 km',on:goldOn(q),toggle:toggleGold});const sky=r.skySecretCubeOption?.();if(sky)options.push(sky);
+  const key=options.map(o=>o.id+':'+(o.on?1:0)).join(',');if(key===cubeKey)return;cubeKey=key;box.hidden=!options.length;if(!options.length){list.replaceChildren();return;}
+  const buttons=options.map(o=>{let b=globalThis.document.getElementById(o.id);if(!b){b=globalThis.document.createElement('button');b.type='button';b.id=o.id;b.className='cube-option';b.dataset.earned='true';b.textContent=o.label;b.title=o.title;}b.onclick=()=>{o.toggle();cubeKey='';syncCube();};b.setAttribute('aria-pressed',String(!!o.on));return b;});
+  if(buttons.some((b,i)=>list.children[i]!==b)||list.children.length!==buttons.length)list.replaceChildren(...buttons);}
  function toggleGold(){const q=book();if(!ok()||!goldEarned(q))return false;const before=q.wear.gold;if(before===false)delete q.wear.gold;else q.wear.gold=false;
   if(r.save?.()===false){if(before===false)q.wear.gold=false;else delete q.wear.gold;const h=$('cubeHint');if(h)h.textContent='No se guardó. Intenta otra vez.';}cubeKey='';syncCube();return goldOn(q);}
+ // The sky's secrets (alpha.247) can change the cube's options at any time: their key is read each frame.
  const cube=$('mCube');if(cube&&globalThis.MutationObserver)new MutationObserver(()=>{if(!cube.hidden){cubeKey='';syncCube();}}).observe(cube,{attributes:true,attributeFilter:['hidden']});
  // ---------- the Bitácora: what you found; of the rest, only that there is more ----------
- function section(){if(!r.S)return '';const q=book(),n=secretCount(q),left=SECRETS.length-n;
-  const rows=SECRETS.filter(s=>secretFound(q,s.id)).map(s=>`<p class="secret-row" data-secret="${s.id}"><span class="secret-name">${escape(s.name)}</span> · ${escape(s.line)}${s.id==='asteroide'?` «${escape(ASTEROID_NOTE)}»`:''}${s.id==='km100'?' <em class="sky-earned">Cubo dorado</em>':''}</p>`).join('');
+ // Alpha.247: the sky's secrets (secretos-cielo.js) add their pages, found or not, in the same way.
+ function section(){if(!r.S)return '';const q=book(),sky=r.skySecretRows?.()||{html:'',found:0,total:0},n=secretCount(q)+sky.found,left=SECRETS.length+sky.total-n;
+  const rows=SECRETS.filter(s=>secretFound(q,s.id)).map(s=>`<p class="secret-row" data-secret="${s.id}"><span class="secret-name">${escape(s.name)}</span> · ${escape(s.line)}${s.id==='asteroide'?` «${escape(ASTEROID_NOTE)}»`:''}${s.id==='km100'?' <em class="sky-earned">Cubo dorado</em>':''}</p>`).join('')+sky.html;
   const rest=left?`<p class="secret-missing" aria-label="Secretos sin encontrar">${'<span aria-hidden="true">?</span>'.repeat(left)}</p>`:'<p>Encontraste todos los de ahora.</p>';
   return `<details class="journal-section" data-journal-detail="Secretos" id="journalSecrets"><summary>Secretos · ${n}</summary>${n?'':'<p>Hay secretos en el universo. Ninguno se explica.</p>'}${rows}${rest}</details>`;}
  // ---------- tests (the runtime is never published) ----------

@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 3 de noviembre de 2026. Código **2.3.0-alpha.246** en la rama `jay/satelite-limpio`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.247** en la rama `jay/secretos-2`. Las entradas describen su revisión, no certifican producción.
+
+
+## Secretos del cielo · 2.3.0-alpha.247
+
+Rama `jay/secretos-2`, desde `main` `783a704` (alpha.246). Segunda tanda de secretos, aprobada por Jay: cuatro cosas, todas del espacio. Guía: [El mundo](docs/MUNDO.md#secretos). Código: `src/secretos-cielo-model.js` (reglas) y `src/secretos-cielo.js` (juego).
+
+- **Meteoros que se cazan.** Una lluvia de siete estrellas fugaces pasa junto al cubo cada 5–9 min de juego en el Mundo libre (`hashKey` del número de lluvia). Con sonido, un pulso a tiempo cuando una pasa cerca la caza. Sin sonido, pasar por ella o cualquier pulso cerca (como la chispa salvaje desde alpha.242). Paga como un encuentro vivo, por `universeReward`: base 5 × difícil 2 × distancia, por la parte cazada. Una lluvia entera cerca del origen da 10 ✦; a tiempo, 15.
+- **50 cristales de cometa** en puntos fijos (`hashKey`), de 1,7 a 89 km; cuatro a menos de 3 km. Se ven en pantalla y brillan en el borde desde 150 m. Se recogen pasando o con un pulso. Sin chispas. Los 50 dan la **Órbita de cometa**: tres cristales dorados que giran junto al cubo, que no crece. Se quita en Tu cubo › Secretos, junto al Cubo dorado.
+- **Sondas perdidas.** Doce, fijas (`hashKey`), de 2 a 46 km. Con sonido pitan en los compases, más fuerte al acercarse (dos notas en la quinta). Sin sonido, una marca en el borde. Encontrar una da una coordenada secreta hacia un cristal, el asteroide secreto o un satélite de descanso: un «?» blanco en el Mapa del universo, con «Marcar». Se cumple al llegar.
+- **Eclipse.** Uno de cada tres cuadros de 4 × 4 km tiene una estrella y un planeta. El planeta la tapa 12 s en cada vuelta de 4–6 min, según el reloj del dispositivo. Si el cubo está a 70 m en ese momento, la pantalla se oscurece y la música se apaga en agudos durante 8 s. Luego vuelve sola.
+- **Cómo cambia la música.** Por el filtro de confort que ya expone `audio.js` (`runtime.comfortLowpass`). Mientras dura, se mantiene a 650 Hz; al acabar, `applyComfort` lo devuelve. `audio.js` no cambia.
+- **Una escena a la vez.** No empieza lluvia ni eclipse con un encuentro vivo, una figura o una travesura. Mientras duran, encuentros y figuras esperan y las marcas del borde callan (`skySecretBusy`).
+- **Bitácora** › Secretos: cada página solo cuando se encuentra («Cristales de cometa · N de 50», sondas con sus coordenadas, estrellas cazadas, eclipse). Lo demás, «?».
+- **Guardado nuevo** `S.skySecrets` (versión 1): cristales, sondas, coordenadas, lluvias, eclipses y la órbita puesta. Una partida anterior empieza vacía; se conservan campos desconocidos; una versión futura solo se lee. Si guardar falla, todo vuelve, chispas incluidas.
+- **Sonido medido por render** (`tests/secretos_cielo_mix.py`). La música del Mundo es idéntica a alpha.246. Pitidos, meteoros y cristales quedan 31–33 dB por debajo. El eclipse baja los agudos 23–32 dB, deja el nivel igual y vuelve en 2–3 s.
+- Pruebas nuevas: `tests/secretos_cielo.mjs`, `tests/secretos_cielo_smoke.py` (390×844, 1280×800 e inglés) y `tests/secretos_cielo_mix.py`. `tests/audio_mix.mjs` gana `skySecretBatch` y `eclipse`. `tests/secretos_smoke.py` cuenta ahora ocho «?».
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js`, con la capa `approvedF5b`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Satélite limpio · 2.3.0-alpha.246
