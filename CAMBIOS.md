@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.248** en la rama `jay/viaje-a`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.251** en la rama `jay/viaje-c`. Las entradas describen su revisión, no certifican producción.
+
+
+## Lo que hay más lejos, tanda C · 2.3.0-alpha.251
+
+Rama `jay/viaje-c`, desde `jay/viaje-a` `1ea7e84` (alpha.248, PR #387 sin fusionar: dependencia explícita, trae la API de bandas). Pedido de Jay: veinte ideas por distancia; esta tanda, 30–60 km. En paralelo `jay/viaje-b` (alpha.249), `jay/visual-1` (alpha.250) y `jay/viaje-d` (alpha.252), que esta rama no toca. Guía: [El mundo](docs/MUNDO.md#lo-que-hay-más-lejos-tanda-c).
+
+- **Púlsares** (desde 30 km; Clair Obscur y Saros). Seis destellos avisados por tanda. Con sonido, un pulso a tiempo en su golpe los devuelve como nota del acorde y suma a la racha; sin sonido, apartarse los esquiva y cuenta igual. Sin daño ni derrota.
+- **Asteroides por capas** (desde 35 km; Donkey Kong Bananza). De 3 a 5 capas de colores que se rompen a pulsos, hasta uno de siete núcleos. Las capas rotas se guardan.
+- **Tirolinas de luz** (desde 40 km; Death Stranding 2). Un pulso en una boya pisada tiende una línea hacia la boya de la que vienes; otro pulso te lleva por ella en pocos segundos. Solo entre boyas pisadas, como la puerta de los satélites.
+- **Mares de polvo** (desde 45 km; Mina the Hollower). Un anillo de rocas hace de muro en la superficie; un pulso hunde el cubo, que pasa por debajo y sale por el otro lado. En el centro, a veces, un hallazgo que solo se ve hundido. Bajo el polvo la música suena apagada (filtro de confort, como el eclipse).
+- **Kit de herramientas** (desde 50 km; Hades II). Red, imán y caña, para siempre, en cajas. Abren bancos de luz, chatarra de satélite y pozos de estrellas; se recogen pasando o pulsando cerca, sin botón nuevo.
+- **Premios** por `universeReward`: tanda de púlsar 15 ✦ a 30 km (una vez al día por púlsar, racha de 4 o más), núcleo 12 (una vez por asteroide), hallazgo bajo el polvo 12 (una vez por mar), punto 12 desde 50 km (una vez al día). Herramientas y tirolinas, sin chispas.
+- **Una escena a la vez:** tanda de púlsar, viaje en tirolina y tiempo bajo el polvo, con `r.bandAttach` (`busy`). Arreglo en `viaje-a.js`: un interruptor de la tanda A no empieza mientras otra tanda tiene escena.
+- **Guardado nuevo** `S.viajeC` (versión 1). Se conservan campos desconocidos; una versión futura no se toca. Si guardar falla, todo vuelve, chispas incluidas.
+- **Sonido medido por render** (`tests/viaje_c_mix.py`). La música del Mundo es idéntica a alpha.248; los sonidos nuevos quedan 31,2 y 32,3 dB por debajo; bajo el polvo los agudos bajan 18–26 dB sin cambiar el nivel y vuelven solos. `audio.js` no cambia.
+- Pruebas nuevas: `tests/viaje_c.mjs`, `tests/viaje_c_smoke.py` (390×844 y 1280×800, e inglés) y `tests/viaje_c_mix.py`. `tests/audio_mix.mjs` gana `viajeCBatch` y `dust`. `tests/viaje_a_smoke.py` ya no supone que la tanda A es la última banda.
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js` (dos módulos), con la capa `approvedVC`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Lo que hay más lejos, tanda A · 2.3.0-alpha.248
