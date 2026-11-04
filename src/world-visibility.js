@@ -1,6 +1,6 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {territoryInk} from './territory-transition.js';
-import {shadePuff,contactShadow} from './fx-kit.js';
+import {shadePuff,contactShadow,radial} from './fx-kit.js';
 import {deviceDetail,fogTarget,blendFog,distanceOpacity,preloadCells,visualHash,DEPTH_PLANES,planePoint} from './world-visibility-model.js';
 export function initialize(runtime){
  let fog=null,owner=null,lastCell='',pending=[],frames=0,averageMs=16.7,slow=0,quality=deviceDetail({memory:navigator.deviceMemory||4,cores:navigator.hardwareConcurrency||4}),hardware=quality,detailQuality=quality,lastPos=null,footprints=[];
@@ -51,12 +51,15 @@ export function initialize(runtime){
   c.restore();
  }
  function cover(t){if(!runtime.inWorld()||!fog)return;const x=runtime.W/2,y=runtime.H/2,reach=fog.radius,flicker=fog.lamp<.12?1-Math.pow(1-fog.lamp/.12,2)*(.018+.012*Math.sin(t/57)*Math.sin(t/113)):1;
-  c.save();c.globalAlpha=1;for(const window of runtime.reactiveMistWindows?.()||[]){if(window.radius<.5)continue;c.beginPath();c.rect(0,0,runtime.W,runtime.H);c.moveTo(window.x+window.radius,window.y);c.arc(window.x,window.y,window.radius,0,Math.PI*2);c.clip('evenodd');}const g=c.createRadialGradient(x,y,0,x,y,reach*flicker);
-  g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.18,'rgba(0,0,0,0)');g.addColorStop(.52,'rgba(0,0,0,'+fog.density*.42+')');g.addColorStop(.82,'rgba(0,0,0,.66)');g.addColorStop(1,'#000');c.fillStyle=g;c.fillRect(0,0,runtime.W,runtime.H);
+  c.save();c.globalAlpha=1;for(const window of runtime.reactiveMistWindows?.()||[]){if(window.radius<.5)continue;c.beginPath();c.rect(0,0,runtime.W,runtime.H);c.moveTo(window.x+window.radius,window.y);c.arc(window.x,window.y,window.radius,0,Math.PI*2);c.clip('evenodd');}
+  // Visual 2 (alpha.254): the fog's cover from a sprite per step of density (forty steps), black beyond its square, as
+  // the gradient padded; the mist from a sprite of its colour (eight levels a channel) with its strength as alpha.
+  const R=reach*flicker,dq=Math.round(fog.density*40)/40,cv=radial(c,x,y,R,'fog:'+dq,[[0,'rgba(0,0,0,0)'],[.18,'rgba(0,0,0,0)'],[.52,'rgba(0,0,0,'+dq*.42+')'],[.82,'rgba(0,0,0,.66)'],[1,'#000']]);
+  c.fillStyle='#000';c.fillRect(0,0,runtime.W,Math.max(0,y-R));c.fillRect(0,y+R,runtime.W,Math.max(0,runtime.H-y-R));c.fillRect(0,y-R,Math.max(0,x-R),R*2);c.fillRect(x+R,y-R,Math.max(0,runtime.W-x-R),R*2);
   // Noise darkens existing light; it never paints a grey panel over black space.
   // Visual 1 (alpha.250): the sixteen puffs come from one black sprite (fx-kit.js) instead of sixteen gradients a frame.
   if(detailQuality>.01){c.fillStyle='#000';const dark=fog.density*.13*Math.min(1,detailQuality);for(let i=0;i<16;i++){const a=i*Math.PI*2/16+t/180000,rr=reach*(.42+visualHash(i,0,groundSeed)*.35),px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;shadePuff(c,px,py,reach*.17,dark);}c.globalAlpha=1;}
-  const mist=c.createRadialGradient(x,y,reach*.2,x,y,reach*.8),rgb=[fog.red,fog.green,fog.blue].map(Math.round).join(',');mist.addColorStop(0,'rgba('+rgb+',0)');mist.addColorStop(.55,'rgba('+rgb+','+fog.density*.065+')');mist.addColorStop(1,'rgba('+rgb+',0)');c.fillStyle=mist;c.fillRect(x-reach,y-reach,reach*2,reach*2);
+  const rgb=[fog.red,fog.green,fog.blue].map(v=>Math.min(255,Math.round(v/8)*8)).join(','),M=reach*.8;c.globalAlpha=1;radial(c,x,y,M,'mist:'+rgb,[[0,'rgba('+rgb+',0)'],[.25,'rgba('+rgb+',0)'],[(.2+.6*.55)/.8,'rgba('+rgb+',1)'],[1,'rgba('+rgb+',0)']],fog.density*.065);
   // Emitters at night stay local and underneath the darkness.
   c.restore();
  }

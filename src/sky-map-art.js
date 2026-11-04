@@ -4,14 +4,20 @@
 // star in one beat; a complete figure shines a moment and then stays as a faint drawing. Gold only for what is won:
 // the star halo round the cube. The cube never grows.
 import {skyFigure,skyLines,skyStar,SKY_GLOW,SKY_TOUCH} from './sky-map-model.js';
-import {glow as fxGlow} from './fx-kit.js';
-const TAU=Math.PI*2;
+import {glow as fxGlow,bake} from './fx-kit.js';
+const TAU=Math.PI*2,popped=new WeakMap();
 export const SKY_GOLD='#f0d27a';
 // Visual 1 (alpha.250): the same light from a sprite drawn once per colour (fx-kit.js), not a gradient per call.
 function glow(c,x,y,r,color,alpha){fxGlow(c,x,y,r,color,alpha);}
 function ring(c,x,y,r){c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();}
 // A star: a dark disc for contrast, then the point (2 px faint, 3 px lit) and, when lit, a small cross of light.
-function star(c,x,y,{lit=false,alpha=1,twinkle=0}={}){
+// Visual 2 (alpha.254): the same star drawn once per kind (bake) with four fine tapered points instead of the cross of
+// rectangles; a lit one twinkles by a second, added cross. Without a canvas, the drawing of before.
+function starArt(lit){return (c)=>{c.translate(13,13);c.globalAlpha=.5;c.fillStyle='#000';c.beginPath();c.arc(0,0,lit?6:5,0,TAU);c.fill();
+ fxGlow(c,0,0,lit?12:9,'#ffffff',lit?.35:.22);c.globalAlpha=lit?1:.75;c.fillStyle='#ffffff';const h=lit?1.5:1;c.fillRect(-h,-h,h*2,h*2);
+ c.globalAlpha=lit?.75:.35;const k=lit?6:3.5,w=lit?.9:.7;c.beginPath();for(let i=0;i<4;i++){c.save();c.rotate(i*Math.PI/2);c.moveTo(0,-w);c.lineTo(k,0);c.lineTo(0,w);c.restore();}c.fill();};}
+function star(c,x,y,{lit=false,alpha=1,twinkle=0}={}){const s=bake(lit?'sky-star-lit':'sky-star',26,26,starArt(lit));
+ if(s){c.globalAlpha=alpha;c.drawImage(s,x-13,y-13,26,26);if(lit&&twinkle>0){const k=5+twinkle*3,op=c.globalCompositeOperation;c.globalCompositeOperation='lighter';c.globalAlpha=.35*alpha*twinkle;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-k,Math.round(y)-.5,k*2,1);c.fillRect(Math.round(x)-.5,Math.round(y)-k,1,k*2);c.globalCompositeOperation=op;}return;}
  c.globalAlpha=.5*alpha;c.fillStyle='#000';c.beginPath();c.arc(x,y,lit?6:5,0,TAU);c.fill();
  if(lit){glow(c,x,y,12,'#ffffff',.35*alpha);c.globalAlpha=alpha;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-1.5,Math.round(y)-1.5,3,3);const k=4+twinkle*2;c.globalAlpha=.7*alpha;c.fillRect(Math.round(x)-k,Math.round(y)-.5,k*2,1);c.fillRect(Math.round(x)-.5,Math.round(y)-k,1,k*2);}
  else{glow(c,x,y,9,'#ffffff',.22*alpha);c.globalAlpha=.75*alpha;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-1,Math.round(y)-1,2,2);c.globalAlpha=.3*alpha;c.fillRect(Math.round(x)-3,Math.round(y)-.5,6,1);c.fillRect(Math.round(x)-.5,Math.round(y)-3,1,6);}
@@ -30,13 +36,17 @@ export function drawSkySite(r,site,{appear=1,reduced=false,t=0}={}){
 // The figure being joined: lit stars, lines growing in one beat, the next star ringed in white with the arrow; when
 // complete it shines SKY_GLOW seconds, brightest at first.
 export function drawSkyScene(r,scene,{reduced=false,clock=0,beat=.5}={}){
- const site=scene.site,f=skyFigure(site.fig);if(!f)return;const c=r.cx,p=points(r,site,1),lit=site.lit,shine=scene.stage==='done'?Math.max(0,1-scene.over/SKY_GLOW):0;
+ const site=scene.site,f=skyFigure(site.fig);if(!f)return;const c=r.cx,p=points(r,site,1),lit=site.lit,shine=scene.stage==='done'?Math.max(0,1-scene.over/SKY_GLOW):0,light=!!r.lightQuality?.();
+ // Visual 2: complete, each star pops in the shared layer, one after another (60 ms apart); none with reduced motion.
+ if(shine>0&&r.fxLayer){let n=popped.get(scene)||0;const ox=r.W/2-r.camX,oy=r.H/2-r.camY;while(n<p.length&&scene.over>=n*.06){r.fxLayer.pop(p[n].x-ox,p[n].y-oy,'#ffffff',{size:.6,sparks:5});n++;}popped.set(scene,n);}
  c.save();c.strokeStyle='#ffffff';
  for(const [a,b] of skyLines(f)){if(!(a<lit&&b<lit))continue;
   // A new line grows from the star it comes from, in one beat, from when its note is heard.
   const at=scene.litAt?.[Math.max(a,b)],grow=reduced||at===undefined?1:at===null?0:Math.max(0,Math.min(1,(clock-at)/Math.max(.2,beat))),from=p[a],to=p[b];
-  if(grow<=0)continue;c.globalAlpha=.75+.25*shine;c.lineWidth=1+shine*.8;c.beginPath();c.moveTo(from.x,from.y);c.lineTo(from.x+(to.x-from.x)*grow,from.y+(to.y-from.y)*grow);c.stroke();
-  if(shine>0){c.globalAlpha=.18*shine;c.lineWidth=5;c.stroke();}}
+  if(grow<=0)continue;const tx=from.x+(to.x-from.x)*grow,ty=from.y+(to.y-from.y)*grow;c.globalAlpha=.75+.25*shine;c.lineWidth=1+shine*.8;c.beginPath();c.moveTo(from.x,from.y);c.lineTo(tx,ty);c.stroke();
+  if(shine>0){c.globalAlpha=.18*shine;c.lineWidth=5;c.stroke();}
+  // Visual 2: the tip of a line being drawn carries a small added light (the trace writes itself).
+  if(grow<1&&!light)fxGlow(c,tx,ty,9,'#ffffff',.8,true);}
  c.lineWidth=1;
  p.forEach((q,i)=>{const on=i<lit;if(on&&shine>0)glow(c,q.x,q.y,26,'#ffffff',.4*shine);star(c,q.x,q.y,{lit:on,alpha:1,twinkle:on&&!reduced?Math.max(0,Math.sin(clock*4+i*1.7)):0});});
  // The next star: a white ring that breathes (still with reduced motion) and the arrow by the cube.

@@ -13,6 +13,7 @@
 // · Postal de buscar: a dense patch of stars where a creature lost five things; finding them gives its postcard.
 // One scene at a time: none of this answers while a living encounter, a figure, a mischief scene or a sky secret plays;
 // while a postcard, a sky song or a grey region lasts, the encounters and the figures wait (lejosBBusy).
+import {glow,radial,contactShadow} from './fx-kit.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
@@ -137,11 +138,14 @@ export function initialize(r){
  const onScreen=(q,m=30)=>q.x>-m&&q.y>-m&&q.x<r.W+m&&q.y<r.H+m;
  const say=(c,t,x,y)=>{const w=c.measureText(t).width;c.fillText(t,Math.max(8+w/2,Math.min(r.W-8-w/2,x)),y);};
  const pulse=k=>reduced()?.8:.6+.4*Math.sin(clock*3+k);
+ // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): embers, elements, stones and lost things carry a small added light
+ // (none in light quality); what you complete pops in the shared layer.
+ const light=()=>!!r.lightQuality?.();
  function grey(c,q){c.save();c.beginPath();c.arc(q.x,q.y,DEAD_R,0,TAU);c.clip();c.globalCompositeOperation='saturation';c.globalAlpha=1;c.fillStyle='#808080';c.fillRect(q.x-DEAD_R,q.y-DEAD_R,DEAD_R*2,DEAD_R*2);
   c.globalCompositeOperation='source-over';c.fillStyle='rgba(0,0,0,.22)';c.fillRect(q.x-DEAD_R,q.y-DEAD_R,DEAD_R*2,DEAD_R*2);c.restore();
   c.globalAlpha=.35;c.strokeStyle='#8a8a8f';c.lineWidth=1;c.setLineDash([3,5]);c.beginPath();c.arc(q.x,q.y,DEAD_R,0,TAU);c.stroke();c.setLineDash([]);}
  function drawDead(c,site,q,out){const b=book(),e=b.dead[site.id],done=!!e?.done,col=colorOf(e?.b||under(site.x,site.y));
-  if(!done){grey(c,q);const lit=new Set(e?.lit||[]);for(const em of embersAt(site)){const s=at(em.x,em.y);if(!onScreen(s))continue;const on=lit.has(em.k);
+  if(!done){grey(c,q);const lit=new Set(e?.lit||[]);for(const em of embersAt(site)){const s=at(em.x,em.y);if(!onScreen(s))continue;const on=lit.has(em.k);if(!light())glow(c,s.x,s.y,on?18:11,on?col:'#ffe0b0',on?.5:.2*pulse(em.k),true);
     c.globalAlpha=on?1:.55*pulse(em.k);c.fillStyle=on?col:'#9a9aa0';c.beginPath();c.arc(s.x,s.y,on?4:3,0,TAU);c.fill();c.globalAlpha=on?.6:.4;c.strokeStyle=on?col:'#ffffff';c.lineWidth=1;c.beginPath();c.arc(s.x,s.y,on?9:7+(reduced()?0:Math.sin(clock*2+em.k)),0,TAU);c.stroke();}
    out.dead={id:site.id,lit:lit.size,x:Math.round(q.x),y:Math.round(q.y),grey:true};return;}
   // Revived: its colour in a soft ring and a few small fish of light going round.
@@ -149,7 +153,7 @@ export function initialize(r){
   for(let k=0;k<6;k++){const a=(reduced()?0:clock*.25)+k*TAU/6+rand(site.id+':pez'+k),rr=DEAD_R*(.35+.45*rand(site.id+':pr'+k)),x=q.x+Math.cos(a)*rr,y=q.y+Math.sin(a)*rr;if(!onScreen({x,y}))continue;c.globalAlpha=.85*fade;c.fillStyle=col;c.fillRect(Math.round(x)-1.5,Math.round(y)-1.5,3,3);
    c.globalAlpha=.35*fade;c.strokeStyle=col;c.beginPath();c.moveTo(x,y);c.lineTo(x-Math.cos(a+Math.PI/2)*8,y-Math.sin(a+Math.PI/2)*8);c.stroke();}
   out.dead={id:site.id,x:Math.round(q.x),y:Math.round(q.y),grey:false};}
- function element(c,el,x,y,a=1){c.globalAlpha=a;if(el==='roca'){c.fillStyle='#8a8a8f';c.beginPath();c.moveTo(x-4,y+2);c.lineTo(x-2,y-3);c.lineTo(x+3,y-3);c.lineTo(x+4,y+2);c.lineTo(x,y+4);c.closePath();c.fill();}
+ function element(c,el,x,y,a=1){if(!light())glow(c,x,y,11,el==='agua'?'#8fd0ff':el==='roca'?'#c8c8d0':'#ffffff',.22*a,true);c.globalAlpha=a;if(el==='roca'){c.fillStyle='#8a8a8f';c.beginPath();c.moveTo(x-4,y+2);c.lineTo(x-2,y-3);c.lineTo(x+3,y-3);c.lineTo(x+4,y+2);c.lineTo(x,y+4);c.closePath();c.fill();}
   else if(el==='agua'){c.fillStyle='#8fd0ff';c.beginPath();c.moveTo(x,y-5);c.quadraticCurveTo(x+4,y+1,x,y+4);c.quadraticCurveTo(x-4,y+1,x,y-5);c.fill();}
   else{c.fillStyle='#ffffff';c.fillRect(Math.round(x)-1,Math.round(y)-4,2,8);c.fillRect(Math.round(x)-4,Math.round(y)-1,8,2);c.globalAlpha=a*.3;c.beginPath();c.arc(x,y,7,0,TAU);c.fill();}}
  function creature(c,name,x,y,t){c.globalAlpha=.95;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.2;const bob=reduced()?0:Math.sin(t*3)*1.5;y+=bob;
@@ -171,14 +175,15 @@ export function initialize(r){
   out.habitat={id:site.id,x:Math.round(q.x),y:Math.round(q.y),placed:placed.size,total:recipe.length};}
  function drawSong(c,site,q,out){const stones=stonesAt(site),now=r.ac?r.ac.currentTime:0,beat=(r.SIX||.125)*4;let lit=-1;
   if(r.S.sound&&hint&&hint.id===site.id){const k=Math.floor((now-hint.t)/beat);if(k>=0&&k<4)lit=k;}else if(!r.S.sound){const k=Math.floor((clock%5)/.5);if(k<4)lit=k;}
-  for(const s of stones){const p=at(s.x,s.y),done=song.site===site.id&&s.k<song.next,next=song.site===site.id?song.next===s.k:s.k===0;c.globalAlpha=done||lit===s.k?1:.5;c.fillStyle=done?'#ffffff':lit===s.k?'#ffffff':'#55555c';c.fillRect(p.x-4,p.y-4,8,8);
+  for(const s of stones){const p=at(s.x,s.y),done=song.site===site.id&&s.k<song.next,next=song.site===site.id?song.next===s.k:s.k===0;if((done||lit===s.k)&&!light())glow(c,p.x,p.y,16,'#ffffff',lit===s.k?.45:.2,true);contactShadow(c,p.x,p.y+6,7,2,.4);c.globalAlpha=done||lit===s.k?1:.5;c.fillStyle=done?'#ffffff':lit===s.k?'#ffffff':'#55555c';c.fillRect(p.x-4,p.y-4,8,8);
    c.globalAlpha=.6;c.strokeStyle='#ffffff';c.lineWidth=1;c.strokeRect(p.x-4.5,p.y-4.5,9,9);if(next&&!(effect&&effect.id===site.id)){c.globalAlpha=.45*pulse(s.k);c.beginPath();c.arc(p.x,p.y,11,0,TAU);c.stroke();}}
   out.song={id:site.id,x:Math.round(q.x),y:Math.round(q.y),next:song.site===site.id?song.next:0,lit};}
  // The sky changed: the universe's own layer drawings (universe-layers.js) over the screen, in cells of the World.
  function drawEffect(c,p,t){if(!effect)return null;const d=Math.hypot(effect.x-p.x,effect.y-p.y),k=Math.max(0,Math.min(1,(clock-effect.start)/2,(effect.until-clock)/2))*Math.max(0,1-d/SONG_LOCAL);if(k<=0)return null;
   const size=120,f={ink:effect.kind==='aurora'?'#7dffc8':effect.kind==='nebulosa'?'#ff7ad9':'#ffffff',accent:effect.kind==='aurora'?'#ff7ad9':'#8fd0ff',beat:r.beat?.()||0,t:performance.now(),still:reduced(),cubeX:r.W/2,cubeY:r.H/2,part:()=>[0,0],done:false,beatIndex:0};
   const style=effect.kind==='aurora'?STYLES.aurora:effect.kind==='nebulosa'?STYLES.nebulosa:STYLES.cometas,ox=r.camX-r.W/2,oy=r.camY-r.H/2;c.save();c.globalAlpha=k;
-  if(effect.kind==='nebulosa'){for(const [dx,dy,col] of [[-.2,-.25,'rgba(255,122,217,.10)'],[.25,.1,'rgba(143,208,255,.08)']]){const g=c.createRadialGradient(r.W*(.5+dx),r.H*(.5+dy),0,r.W*(.5+dx),r.H*(.5+dy),Math.max(r.W,r.H)*.5);g.addColorStop(0,col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,r.W,r.H);}}
+  // The nebula's two clouds from sprites (they were two screen-sized gradients per frame).
+  if(effect.kind==='nebulosa'){for(const [dx,dy,col] of [[-.2,-.25,'rgba(255,122,217,.10)'],[.25,.1,'rgba(143,208,255,.08)']])radial(c,r.W*(.5+dx),r.H*(.5+dy),Math.max(r.W,r.H)*.5,'nebula:'+col,[[0,col],[1,'rgba(0,0,0,0)']]);}
   if(effect.kind==='aurora'){c.lineWidth=6;for(let i=0;i<3;i++){c.strokeStyle=`hsl(${(150+i*35)%360},80%,65%)`;c.globalAlpha=k*.18;c.beginPath();for(let x=0;x<=r.W;x+=10){const y=70+i*20+Math.sin(x/130+f.t/1500+i)*16;x?c.lineTo(x,y):c.moveTo(x,y);}c.stroke();}c.globalAlpha=k;c.lineWidth=1;}
   for(let i=Math.floor(ox/size);i*size<ox+r.W;i++)for(let j=Math.floor(oy/size);j*size<oy+r.H;j++){const key='lejos-cielo:'+i+','+j;f.ux=i*size;f.uy=j*size;try{style.mid.draw(c,i*size-ox,j*size-oy,size,key,f);if(effect.kind==='estrellas')style.far.draw(c,i*size-ox,j*size-oy,size,key,f);}catch(_){}}
   c.restore();return {kind:effect.kind,alpha:Math.round(k*100)/100};}
@@ -193,7 +198,7 @@ export function initialize(r){
   const stars=starsAt(site);let prev=null;for(const [k,s] of stars.entries()){const p=at(s.x,s.y);if(!onScreen(p,4)){prev=null;continue;}c.globalAlpha=.18+.5*s.b;c.fillStyle='#ffffff';const sz=s.b>.85?2:1;c.fillRect(Math.round(p.x),Math.round(p.y),sz,sz);
    if(k%11<3&&prev){c.globalAlpha=.1;c.strokeStyle='#ffffff';c.beginPath();c.moveTo(prev.x,prev.y);c.lineTo(p.x,p.y);c.stroke();}prev=p;}
   creature(c,who,q.x,q.y,t);
-  let shown=0;for(const th of lostAt(site)){if(found.has(th.k)){lostThing(c,th.name,q.x-20+th.k*10,q.y+18,.9);continue;}if(done)continue;const p=at(th.x,th.y);if(!onScreen(p))continue;const lit=clock-(lights.get(site.id+':'+th.k)??-9)<1.5;lostThing(c,th.name,p.x,p.y,lit?1:.42);shown++;}
+  let shown=0;for(const th of lostAt(site)){if(found.has(th.k)){lostThing(c,th.name,q.x-20+th.k*10,q.y+18,.9);continue;}if(done)continue;const p=at(th.x,th.y);if(!onScreen(p))continue;const lit=clock-(lights.get(site.id+':'+th.k)??-9)<1.5;if(lit&&!light())glow(c,p.x,p.y,14,'#ffffff',.4,true);lostThing(c,th.name,p.x,p.y,lit?1:.42);shown++;}
   out.postal={id:site.id,creature:who,found:found.size,done,x:Math.round(q.x),y:Math.round(q.y),shown};}
  function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.6;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
   if(kind==='apagada'){c.setLineDash([2,2]);c.beginPath();c.arc(x,y,4.5,0,TAU);c.stroke();c.setLineDash([]);}
@@ -220,7 +225,7 @@ export function initialize(r){
     else if(out.song&&!effect&&list.some(s=>s.id===out.song.id&&s.d<=SONG_HINT/2)){say(c,'Cuatro piedras',r.W/2,top);c.globalAlpha=.75;c.font='11px "Geist Mono", monospace';say(c,r.S.sound?'Tócalas en orden, a tiempo':'Pásalas en orden',r.W/2,top+18);}
     else if(out.habitat&&out.habitat.total&&list.some(s=>s.id===out.habitat.id&&s.d<=600)){say(c,'Un nido vacío',r.W/2,top);c.globalAlpha=.75;c.font='11px "Geist Mono", monospace';say(c,'Trae lo que falta. Pasa por ello.',r.W/2,top+18);}
     if(summary){c.globalAlpha=.92;c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}}
-   for(const g of glows){const s=at(g.x,g.y),k=(clock-g.at)/1.4;c.globalAlpha=.8*(1-k);c.strokeStyle=g.color||'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(s.x,s.y,reduced()?14:6+k*30,0,TAU);c.stroke();}}
+   for(const g of glows){const s=at(g.x,g.y),k=(clock-g.at)/1.4;if(!g.popped){g.popped=true;r.fxLayer?.pop(g.x,g.y,g.color||'#ffffff',{size:.8,sparks:6});}c.globalAlpha=.8*(1-k);c.strokeStyle=g.color||'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(s.x,s.y,reduced()?14:6+k*30,0,TAU);c.stroke();}}
   c.restore();drawn=out;}
  // ---------- one scene at a time ----------
  // A postcard being searched, the sky changed near you, a grey region you are in, a region coming back to life.

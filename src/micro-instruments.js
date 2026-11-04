@@ -1,4 +1,5 @@
 import {audibleTime} from './journey-pulse.js';
+import {glow,breath} from './fx-kit.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {MICRO_INSTRUMENTS,microChunk,microVoice,microPath,microPattern} from './micro-instruments-model.js';
 import {contactEntry} from './contact.js';
@@ -50,11 +51,18 @@ export function initialize(runtime){
   if(distance>=30&&distance<100&&s===0&&bar!==lastAmbient&&runtime.currentPocket?.()?.kind!=='quiet'&&claimInstallationBar(runtime,bar)){lastAmbient=bar;emit(o,time,'ambient');}
  }
  function pulse(origin='player'){if(!active())return false;let changed=false;for(const o of nearby(170).slice(0,2))changed=touch(o,origin)||changed;return changed;}
+ const paths=new Map(),popped=new WeakMap();
  function draw(t,ox,oy,radius){
   if(!surface())return;const c=runtime.cx,now=runtime.ac?audibleTime(runtime.ac):-100,still=runtime.S.reducedMotion||prefersReducedMotion();
+  // Visual 2 (alpha.254): the seed's inside breathes with the beat (an added glow, still with reduced motion), a heard
+  // note lights it and pops once, small, in the shared layer; its shape is kept as one Path2D per kind (it was a new one
+  // per object and frame). Light quality: no added glow.
+  const light=!!runtime.lightQuality?.(),beat=breath(runtime.beat?.()||0,still);
   for(const o of nearby(Math.min(radius+40,1200))){const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),elapsed=now-(o.onset??-1000),lit=runtime.S.sound&&elapsed>=0?Math.max(0,1-elapsed/.65):0,fade=runtime.worldOpacity?.(distance)??Math.max(0,1-distance/radius);if(fade<=.001)continue;
-   c.save();c.translate(o.x+ox,o.y+oy);const response=runtime.reactivePose?.(o.id);if(response){c.translate(response.x,response.y);c.rotate(response.rotation);c.scale(response.sx,response.sy);}c.globalAlpha=fade*(.45+lit*.55);c.strokeStyle=runtime.musicInk?.(o,MICRO_INSTRUMENTS[o.kind].role)||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=lit?1.4:1;
-   const scale=1+(still?0:lit*.15);c.scale(scale,scale);c.stroke(new Path2D(microPath(o.kind)));
+   const ink=runtime.musicInk?.(o,MICRO_INSTRUMENTS[o.kind].role)||'#fff';if(lit>.7&&popped.get(o)!==o.onset){popped.set(o,o.onset);runtime.fxLayer?.pop(o.x,o.y,ink,{size:.5,sparks:4});}
+   c.save();c.translate(o.x+ox,o.y+oy);const response=runtime.reactivePose?.(o.id);if(response){c.translate(response.x,response.y);c.rotate(response.rotation);c.scale(response.sx,response.sy);}
+   if(!light)glow(c,0,0,20+lit*8,ink,fade*(.1*beat.glow+lit*.4),true);c.globalAlpha=fade*(.45+lit*.55);c.strokeStyle=ink;c.fillStyle=c.strokeStyle;c.lineWidth=lit?1.4:1;
+   const scale=1+(still?0:lit*.15);c.scale(scale,scale);let path=paths.get(o.kind);if(!path){path=new Path2D(microPath(o.kind));paths.set(o.kind,path);}c.stroke(path);
    if(distance<100){c.globalAlpha=fade*(.25+lit*.55);c.beginPath();c.arc(0,0,27,-Math.PI/2,-Math.PI/2+(o.parameter||.35)*Math.PI*1.8);c.stroke();}
    if(lit){for(let i=0;i<3;i++){const a=o.phase+i*2.094+(still?0:elapsed*2),r=25+(still?0:elapsed*18);c.fillRect(Math.cos(a)*r-1,Math.sin(a)*r-1,2,2);}}
    c.restore();

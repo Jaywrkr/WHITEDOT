@@ -1,5 +1,6 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {LANDSCAPES} from './house-view.js';
+import {radial} from './fx-kit.js';
 // The Journey, phase 3: the World's light. The World is always seen from above and has no horizon (only the Refugio
 // is seen from the side), so each biome gets a light around the cube that breathes with the beat. In the Journey the
 // colour is earned: a biome stays pale until you complete the cube's theme on time there, then its colour comes back.
@@ -56,7 +57,9 @@ export function initialize(runtime){
   c.save();
   // The biome's light around the cube, breathing with the beat: seen from above, centred, with no horizon. Panel 10
   // (P7): a small pool of light, so the ground around stays black; the colour of a recovered biome is in its shapes.
-  const g=c.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.42);g.addColorStop(0,rgba(ink,pale()?.04+.05*beat:.1+.08*beat));g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(0,0,W,H);
+  // Visual 2 (alpha.254): the same pool from a sprite of the biome's colour, its strength as alpha (it was a gradient
+  // per frame).
+  c.globalAlpha=1;radial(c,W*.5,H*.5,Math.max(W,H)*.42,'sheet:'+ink,[[0,rgba(ink,1)],[1,'rgba(0,0,0,0)']],pale()?.04+.05*beat:.1+.08*beat);
   c.restore();last=id;}
  Object.defineProperties(runtime,{groundTexture:{get:()=>()=>textureWeight(biomeId())},drawWorldSheet:{get:()=>draw},drawWorldSheetGrey:{get:()=>drawGrey},journeyColors:{get:()=>()=>({...colors()})},recoverJourneyColor:{get:()=>recover},worldSheetState:{get:()=>()=>({biome:biomeId(),pale:!!pale(),filter,grey,opening:opening(),front:front&&{...front},pigment:!pale()&&!!colors()[biomeId()],reencuentro:{...reencuentro}})}});
 }

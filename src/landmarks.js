@@ -1,4 +1,5 @@
 import {cueDelay} from './journey-pulse.js';
+import {glow as fxGlow,streak} from './fx-kit.js';
 import {musicalCharacter,inRegister} from './musical-character.js';
 import {elementInk,WORLD_VISUAL,localGlowRadius} from './visual.js';
 // Hitos y horizonte sonoro. Un hito grande primero se OYE (apagado y desde su dirección),
@@ -75,10 +76,12 @@ export function initialize(runtime){
   for(const lm of nearby(S.wx,S.wy,SENSE)){
    const ref=lm.ref;ref.lit=Math.max(0,(ref.lit||0)-dt*1.6);
    const sx=lm.x+ox,sy=lm.y+oy,on=sx>-260&&sx<W+260&&sy>-120&&sy<H+420,col=elementInk(lm.type==='arbol'?'wood':'glass',lm.hue),near=1-lm.d/SENSE;
-   if(on)shape(cx,lm,sx,sy,t,Math.min(1,.25+near*.9),col,ref.lit);
+   if(on){if(!runtime.lightQuality?.())fxGlow(cx,sx,sy,30,col,Math.min(1,.25+near*.9)*(.22+ref.lit*.4),true);shape(cx,lm,sx,sy,t,Math.min(1,.25+near*.9),col,ref.lit);}
    else{const a=Math.atan2(lm.y-S.wy,lm.x-S.wx),ex=W/2+Math.cos(a)*W*.48,ey=H/2+Math.sin(a)*H*.48;
-    const glow=localGlowRadius(W,H,60),g=cx.createRadialGradient(ex,ey,0,ex,ey,glow);g.addColorStop(0,`hsla(${lm.hue},70%,70%,${(.16+ref.lit*.22)*(.35+.65*near)})`);g.addColorStop(1,'rgba(0,0,0,0)');
-    cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(ex-glow,ey-glow,glow*2,glow*2);}
+    // Visual 2 (alpha.254): the edge light from a sprite (it was a gradient per landmark and frame) and, but in light
+    // quality, three faint rays from it toward the cube, like a lighthouse seen from far.
+    const R=localGlowRadius(W,H,60),k=(.35+.65*near);fxGlow(cx,ex,ey,R,`hsl(${lm.hue},70%,70%)`,(.16+ref.lit*.22)*k);
+    if(!runtime.lightQuality?.())for(const d of [-.22,0,.22])streak(cx,ex,ey,a+d,R*1.3,3,`hsl(${lm.hue},70%,70%)`,(d?.1:.16)*k);}
    if(lm.d<170&&!S.landmarks?.[lm.id])reach(lm);
   }
   cx.globalAlpha=1;

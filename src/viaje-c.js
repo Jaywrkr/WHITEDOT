@@ -20,6 +20,7 @@ import {buoyHere} from './recorrer-model.js';
 import {scaleNote,sequence} from './secretos-model.js';
 import {hashKey} from './universe-regions.js';
 import * as C from './viaje-c-model.js';
+import {glow,halo,contactShadow,streak} from './fx-kit.js';
 const TAU=Math.PI*2,GOLD='#f0d27a',DUSTY='#b8a88a',ROCKY='#6a6a72';
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 // Notes on the grid, far under the music, in an instrument of the album of sounds at its measured trim. chord: the
@@ -145,12 +146,21 @@ export function initialize(r){
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  const onScreen=(q,m=30)=>q.x>-m&&q.y>-m&&q.x<r.W+m&&q.y<r.H+m;
  const say=(c,t,x,y,max=r.W-32)=>{const w=Math.min(max,c.measureText(t).width);c.fillText(t,Math.max(16+w/2,Math.min(r.W-16-w/2,x)),y,max);};
- function drawPulsar(c,q,lit){const k=reduced()?1:.75+.25*Math.sin(clock*5);c.globalAlpha=.95;c.fillStyle='#ffffff';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.beginPath();c.arc(q.x,q.y,3,0,TAU);c.fill();
+ // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): the batch with the shared kit. Light quality: no added light and no
+ // double contour; reduced motion: nothing new turns.
+ const light=()=>!!r.lightQuality?.();
+ // A pulsar: an added core of light and four beams that fade out (one sprite each), turning with the old cross.
+ function drawPulsar(c,q,lit){const k=reduced()?1:.75+.25*Math.sin(clock*5);
+  if(!light()){glow(c,q.x,q.y,lit?26:18,'#cfe8ff',(lit?.5:.32)*k,true);for(let i=0;i<4;i++){const a=i/4*TAU+(reduced()?0:clock*.6);streak(c,q.x+Math.cos(a)*(16+5*k),q.y+Math.sin(a)*(16+5*k),a,14+5*k,3,'#ffffff',.5*k);}}
+  c.globalAlpha=.95;c.fillStyle='#ffffff';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.beginPath();c.arc(q.x,q.y,3,0,TAU);c.fill();
   c.beginPath();for(let i=0;i<4;i++){const a=i/4*TAU+(reduced()?0:clock*.6);c.moveTo(q.x+Math.cos(a)*5,q.y+Math.sin(a)*5);c.lineTo(q.x+Math.cos(a)*(8+3*k),q.y+Math.sin(a)*(8+3*k));}c.stroke();
   c.globalAlpha=lit?.3:.12;c.setLineDash([3,6]);c.beginPath();c.arc(q.x,q.y,C.PULSAR_ZONE,0,TAU);c.stroke();c.setLineDash([]);}
- function drawRock(c,s,q,plan,l,h){const left=plan.layers.length-l,rad=6+4*left,jolt=reduced()?0:Math.max(0,.18-(clock-(shake.get(s.id)??-9)))*12,ox=q.x+Math.sin(clock*60)*jolt,layer=plan.layers[l];
+ // A layered asteroid: a soft shadow, a rim lit from above on the left, and a flash of its layer's colour when struck.
+ function drawRock(c,s,q,plan,l,h){const left=plan.layers.length-l,rad=6+4*left,hit=Math.max(0,.4-(clock-(shake.get(s.id)??-9)))/.4,jolt=reduced()?0:Math.max(0,.18-(clock-(shake.get(s.id)??-9)))*12,ox=q.x+Math.sin(clock*60)*jolt,layer=plan.layers[l];
+  contactShadow(c,q.x+2,q.y+rad*.8,rad*1.1,rad*.35,.5);if(hit>0&&!light())glow(c,ox,q.y,rad*2.6,layer.color,.45*hit,true);
   c.globalAlpha=.95;c.fillStyle=layer.color;c.beginPath();for(let k=0;k<9;k++){const a=k/9*TAU,rr=rad*(.82+.18*hashKey(`capas:p:${s.id}:${k}`));c.lineTo(ox+Math.cos(a)*rr,q.y+Math.sin(a)*rr);}c.closePath();c.fill();
   const inner=plan.layers[l+1]?.color||plan.color;c.globalAlpha=.8;c.strokeStyle=inner;c.lineWidth=1.5;c.beginPath();c.arc(ox,q.y,Math.max(2,rad-4),0,TAU);c.stroke();
+  c.globalAlpha=.4;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(ox,q.y,rad*.85,Math.PI*1.05,Math.PI*1.5);c.stroke();
   c.globalAlpha=.7;c.strokeStyle='#000';c.lineWidth=1;for(let k=0;k<h;k++){const a=hashKey(`capas:g:${s.id}:${l}:${k}`)*TAU;c.beginPath();c.moveTo(ox+Math.cos(a)*rad,q.y+Math.sin(a)*rad);c.lineTo(ox+Math.cos(a)*(rad-5),q.y+Math.sin(a)*(rad-5));c.stroke();}}
  function drawHollow(c,q,color){c.globalAlpha=.5;c.strokeStyle=ROCKY;c.lineWidth=2;c.beginPath();c.arc(q.x,q.y,6,0,TAU);c.stroke();c.globalAlpha=.6;c.fillStyle=color;c.fillRect(Math.round(q.x)-1,Math.round(q.y)-1,2,2);}
  function grainsOf(s){let g=grains.get(s.id);if(!g){const next=sequence(Math.floor(hashKey('polvo:g:'+s.id)*4294967296));g=[];for(let k=0;k<170;k++){const a=next()*TAU,rr=Math.sqrt(next())*C.DUST_R;g.push({x:s.x+Math.cos(a)*rr,y:s.y+Math.sin(a)*rr,big:next()<.2});}grains.set(s.id,g);if(grains.size>24)grains.delete(grains.keys().next().value);}return g;}
@@ -160,7 +170,7 @@ export function initialize(r){
   for(const k of C.dustRocks(s)){const q=at(k.x,k.y);if(!onScreen(q,C.DUST_ROCK_R))continue;c.globalAlpha=sunk&&sunk.id===s.id?.4:.95;c.fillStyle=ROCKY;c.beginPath();for(let i=0;i<7;i++){const a=i/7*TAU,rr=C.DUST_ROCK_R*(.85+.15*Math.sin(k.k*2.3+i*1.7));c.lineTo(q.x+Math.cos(a)*rr,q.y+Math.sin(a)*rr);}c.closePath();c.fill();}
   const h=C.dustHidden(s);if(h&&sunk&&sunk.id===s.id&&!Object.hasOwn(book().dust,s.id)){const q=at(h.x,h.y),k=reduced()?1:.6+.4*Math.sin(clock*4);c.globalAlpha=.9*k;c.fillStyle='#ffffff';c.beginPath();c.moveTo(q.x,q.y-4);c.lineTo(q.x+3,q.y);c.lineTo(q.x,q.y+4);c.lineTo(q.x-3,q.y);c.closePath();c.fill();return 'hidden';}
   return true;}
- function drawCache(c,q){c.globalAlpha=.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-7,q.y-5,14,10);c.strokeRect(q.x-7,q.y-5,14,10);c.beginPath();c.moveTo(q.x-3,q.y-5);c.lineTo(q.x-3,q.y-8);c.lineTo(q.x+3,q.y-8);c.lineTo(q.x+3,q.y-5);c.stroke();c.fillStyle='#ffffff';c.fillRect(Math.round(q.x)-1,Math.round(q.y)-1,2,2);}
+ function drawCache(c,q){contactShadow(c,q.x,q.y+7,10,2.5,.45);c.globalAlpha=.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-7,q.y-5,14,10);c.beginPath();c.rect(q.x-7,q.y-5,14,10);if(!light())halo(c);c.stroke();c.beginPath();c.moveTo(q.x-3,q.y-5);c.lineTo(q.x-3,q.y-8);c.lineTo(q.x+3,q.y-8);c.lineTo(q.x+3,q.y-5);c.stroke();c.fillStyle='#ffffff';c.fillRect(Math.round(q.x)-1,Math.round(q.y)-1,2,2);}
  function drawPoint(c,s,q,open){c.globalAlpha=open?.95:.45;
   if(s.kind==='banco'){c.fillStyle='#ffffff';for(let k=0;k<7;k++){const a=k/7*TAU+(reduced()?0:clock*.8),rr=5+3*Math.sin(k*1.9);c.fillRect(Math.round(q.x+Math.cos(a)*rr)-1,Math.round(q.y+Math.sin(a)*rr*.6)-1,2,2);}}
   else if(s.kind==='chatarra'){c.fillStyle='#9a9aa2';c.fillRect(q.x-5,q.y-2,6,4);c.fillRect(q.x+1,q.y+1,5,3);c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x-6,q.y-4);c.lineTo(q.x-1,q.y-7);c.stroke();}
@@ -174,8 +184,8 @@ export function initialize(r){
   for(const s of sites.dust){const d=drawDust(c,s);if(d&&!out.dust)out.dust={id:s.id,hidden:d==='hidden'};}
   // Zip lines of this world near you: a thin line of light with a light that runs along it.
   for(const l of q.lines){if(l.w!==world)continue;const a=at(l.a.x,l.a.y),b=at(l.b.x,l.b.y);if(Math.max(a.x,b.x)<-20||Math.min(a.x,b.x)>r.W+20||Math.max(a.y,b.y)<-20||Math.min(a.y,b.y)>r.H+20)continue;out.lines++;
-   c.globalAlpha=ride&&ride.line===l?.85:.45;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke();
-   const k=reduced()?.5:(clock*.35+hashKey('zip:'+l.id))%1;c.globalAlpha=.8;c.fillStyle='#ffffff';c.fillRect(Math.round(a.x+(b.x-a.x)*k)-1,Math.round(a.y+(b.y-a.y)*k)-1,2,2);}
+   c.globalAlpha=ride&&ride.line===l?.85:.45;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);if(!light())halo(c,null,{width:4,alpha:.18});c.stroke();
+   const k=reduced()?.5:(clock*.35+hashKey('zip:'+l.id))%1,zx=a.x+(b.x-a.x)*k,zy=a.y+(b.y-a.y)*k;if(!light())glow(c,zx,zy,9,'#ffffff',.6,true);c.globalAlpha=.8;c.fillStyle='#ffffff';c.fillRect(Math.round(zx)-1,Math.round(zy)-1,2,2);}
   for(const s of sites.pulsars){const sp=at(s.x,s.y);if(onScreen(sp)){drawPulsar(c,sp,!!volley&&volley.id===s.id);out.pulsar=out.pulsar||{id:s.id,x:Math.round(sp.x),y:Math.round(sp.y)};}else if(q.pulsars[s.id]!==today()&&s.id!==pulsarRest)mark.push({kind:'pulsar',o:s,d:s.d});}
   for(const s of sites.rocks){const sp=at(s.x,s.y),dug=Object.hasOwn(q.cores,s.id);if(onScreen(sp)){const plan=C.rockLayers(s);if(dug)drawHollow(c,sp,C.CORE_COLORS[q.cores[s.id]]);else drawRock(c,s,sp,plan,q.rocks[s.id]?.l|0,hits.get(s.id)||0);out.rocks.push({id:s.id,dug,l:q.rocks[s.id]?.l|0,x:Math.round(sp.x),y:Math.round(sp.y)});}else if(!dug)mark.push({kind:'asteroide',o:s,d:s.d});}
   for(const s of sites.caches){if(Object.hasOwn(q.caches,s.id))continue;const sp=at(s.x,s.y);if(onScreen(sp)){drawCache(c,sp);out.caches.push({id:s.id,x:Math.round(sp.x),y:Math.round(sp.y)});}else mark.push({kind:'kit',o:s,d:s.d});}
@@ -184,7 +194,7 @@ export function initialize(r){
   // The volley: the flash on its way to you (or to the spot it aims at), the ring that closes at its strike, the run.
   if(volley){const v=volley,ps=at(v.x,v.y);out.volley={thrown:v.thrown,returned:v.returned,run:v.run.cur,best:v.run.best,sound:v.sound,flash:v.flash?{strike:v.flash.strike,left:v.flash.strike-clock}:null};
    if(v.flash){const f=v.flash,aim=v.sound?p:f.aim,ta=at(aim.x,aim.y),k=Math.max(0,Math.min(1,(clock-f.thrown)/Math.max(.2,f.strike-f.thrown)));c.globalAlpha=.25;c.strokeStyle='#ffffff';c.lineWidth=1;c.setLineDash([2,5]);c.beginPath();c.moveTo(ps.x,ps.y);c.lineTo(ta.x,ta.y);c.stroke();c.setLineDash([]);
-    const hx=ps.x+(ta.x-ps.x)*k,hy=ps.y+(ta.y-ps.y)*k;c.globalAlpha=.95;c.fillStyle='#ffffff';c.beginPath();c.arc(hx,hy,3,0,TAU);c.fill();c.globalAlpha=.4+.5*k;c.lineWidth=1.5;c.beginPath();c.arc(ta.x,ta.y,8+30*(1-k),0,TAU);c.stroke();}
+    const hx=ps.x+(ta.x-ps.x)*k,hy=ps.y+(ta.y-ps.y)*k;if(!light())glow(c,hx,hy,12,'#cfe8ff',.7,true);c.globalAlpha=.95;c.fillStyle='#ffffff';c.beginPath();c.arc(hx,hy,3,0,TAU);c.fill();c.globalAlpha=.4+.5*k;c.lineWidth=1.5;c.beginPath();c.arc(ta.x,ta.y,8+30*(1-k),0,TAU);c.stroke();}
    if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Racha · ${v.run.cur} · ${v.thrown} de ${C.VOLLEY}`,r.W/2,Math.max(196,r.H/2-152));}}
   for(const g of streaks){const k=(clock-g.at)/.7,a=at(g.from.x,g.from.y),b=at(g.to.x,g.to.y);c.globalAlpha=.9*(1-k);c.strokeStyle=g.tool?'#ffffff':GOLD;c.lineWidth=1.5;c.beginPath();c.moveTo(a.x+(b.x-a.x)*Math.max(0,k-.3),a.y+(b.y-a.y)*Math.max(0,k-.3));c.lineTo(a.x+(b.x-a.x)*k,a.y+(b.y-a.y)*k);c.stroke();}
   // At a buoy of 40 km or more: what a pulse does there.
@@ -192,7 +202,7 @@ export function initialize(r){
    const t=lay?`Pulsa · tirolina al km ${zipPrev.km}`:line?`Pulsa · tirolina al km ${C.zipOther(line,b.id).km}`:'';if(t){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';say(c,t,sp.x,sp.y+26);out.hint=t;}}
   if(ride&&!reduced()){for(let k=1;k<5;k++){c.globalAlpha=.5/k;c.fillStyle='#ffffff';const back=C.zipPoint(ride.from,ride.to,(clock-ride.start)/ride.secs-k*.04),sp=at(back.x,back.y);c.fillRect(Math.round(sp.x)-1,Math.round(sp.y)-1,2,2);}}
   if(!quiet&&!still&&!mine()&&!r.skySecretBusy?.()){mark.sort((a,b)=>a.d-b.d);const m=mark[0];if(m)out.edge[m.kind]=edge(c,m.kind,m.o);}
-  for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;c.globalAlpha=(g.dim?.4:.8)*(1-k);c.strokeStyle=g.color||'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
+  for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;if(!g.popped){g.popped=true;if(!g.dim)r.fxLayer?.pop(g.x,g.y,g.color||'#ffffff',{gold:g.color===GOLD,size:.8,sparks:6});}c.globalAlpha=(g.dim?.4:.8)*(1-k);c.strokeStyle=g.color||'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
   if(summary&&words()&&!quiet){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}
   c.restore();drawn=out;}
  // Under the dust the cube is covered by it: grains over the cube (the cube itself stays as it is).

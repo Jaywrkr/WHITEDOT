@@ -1,6 +1,7 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {TOTEMS,TOTEM_CELL,totemCell} from './sculpture-totems-model.js';
 import {drawTotem} from './sculpture-totems-art.js';
+import {glow,contactShadow,biomeTone} from './fx-kit.js';
 import {pulseCrossed} from './pulse-forms.js';
 import {crystalField} from './crystal-sparks.js';
 // Reuse quiet native voices and the existing harmonic frame and per-bar budgets.
@@ -70,7 +71,9 @@ export function initialize(runtime){
    if(runtime.mischiefDancing?.(o.id))continue;
    const distance=Math.hypot(o.x-s.wx,o.y-s.wy),fade=runtime.worldOpacity?.(distance)??Math.max(0,1-distance/650);if(fade<.01)continue;
    const lit=Math.min(1,Math.max(0,(o.lit||0)-clock)),b=o.ball,amount=b?Math.min(1,b.age/.7):0,ball=b?(b.phase==='out'?amount:1-amount)*55*b.direction:0;
-   c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=fade*.9;
+   // Visual 2 (alpha.254): a soft shadow under it and, behind, the biome's light, added, that rises when it wakes (none in
+   // light quality). The pieces come from cached images (sculpture-totems-art.js).
+   c.save();c.translate(o.x+ox,o.y+oy);contactShadow(c,0,1,22,5,.55*fade);if(!runtime.lightQuality?.())glow(c,0,-44,62,biomeTone(runtime,o.x,o.y),(.09+lit*.24)*fade,true);c.globalAlpha=fade*.9;
    const lean=o.target&&o.done>clock?(o.target.x>o.x?.12:-.12):0;
    drawTotem(c,o,{light:lit,progress:o.progress||0,ball:still?(b?.phase==='out'?55*b.direction:0):ball,lean,dance:clock*8,still});
    if(b){const tx=b.direction*55,ty=-10;c.strokeStyle='#ffffff66';c.lineWidth=1;c.setLineDash([2,5]);c.beginPath();c.arc(tx,ty,18,0,Math.PI*2);c.stroke();c.setLineDash([]);}

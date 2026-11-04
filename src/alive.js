@@ -2,6 +2,7 @@
 // estaciones semanales por continente y huellas que el mundo recuerda.
 // Todo depende del reloj real y de la semilla: es igual para todos los jugadores.
 import {valueNoise} from './continents.js';
+import {radial} from './fx-kit.js';
 
 // ---------- tormentas ----------
 const STORM_CELL=12,STORM_SLOT=40*60*1000,STORM_P=.38,STORM_TRAVEL=18;   // regiones, ms, prob., regiones recorridas por ventana
@@ -63,7 +64,8 @@ export function initialize(runtime){
   // Tormenta cerca pero fuera: masa oscura en el borde, en su dirección, con relámpagos.
   const n=weather.near;
   if(n&&weather.i<.05){const a=Math.atan2(n.y*RP()-s.wy,n.x*RP()-s.wx),ex=W/2+Math.cos(a)*W*.5,ey=H/2+Math.sin(a)*H*.5,k=Math.max(0,1-Math.max(0,n.d-n.r)/2.5);
-   const g=cx.createRadialGradient(ex,ey,0,ex,ey,260);g.addColorStop(0,`rgba(120,130,160,${.18*k+(weather.flash||0)*.25})`);g.addColorStop(1,'rgba(0,0,0,0)');cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(ex-260,ey-260,520,520);}
+   // Visual 2 (alpha.254): from a sprite, its strength as alpha (it was a gradient per frame).
+   cx.globalAlpha=1;radial(cx,ex,ey,260,'storm-edge',[[0,'rgba(120,130,160,1)'],[1,'rgba(0,0,0,0)']],Math.min(1,.18*k+(weather.flash||0)*.25));}
   // Dentro: cielo más oscuro y relámpagos.
   if(weather.i>.05){cx.globalAlpha=weather.i*.28;cx.fillStyle='#05060a';cx.fillRect(0,0,W,H);
    // Vista desde arriba: polvo estelar que cae sobre el plano; cada mota destella y deja un anillo pequeño.

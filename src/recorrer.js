@@ -10,6 +10,7 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {edgeSpot,worldKey,rumorNow} from './descubrir-model.js';
+import {glow,radial,halo,breath} from './fx-kit.js';
 import {RECORRER_VERSION,BUOY_GAIN,SAT_GAIN,SAT_INSIDE,SAT_GLOW,SAT_EDGE,SAT_DUCK,normalizeRecorrer,nextBuoy,buoyHere,nearestBuoy,nearestSatellite,satelliteHere,kmFromOrigin,noteSatellite,noteBuoy,visited,doorFrom,doorPoint} from './recorrer-model.js';
 const TAU=Math.PI*2,WARM='#ffd2a0';
 export const satelliteName=km=>`Satélite · ${km} km`;
@@ -65,17 +66,26 @@ export function initialize(r){
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  const onScreen=(q,m=40)=>q.x>-m&&q.y>-m&&q.x<r.W+m&&q.y<r.H+m;
  const say=(c,t,x,y)=>{const w=c.measureText(t).width;c.fillText(t,Math.max(8+w/2,Math.min(r.W-8-w/2,x)),y);};
- function drawBuoy(c,b,q,dim){c.globalAlpha=dim?.5:.95;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(q.x,q.y+12);c.lineTo(q.x,q.y+3);c.stroke();
+ // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»). A buoy: its reflection, two flat rings under it, and its light,
+ // added, that breathes with the beat. Light quality: no added light; reduced motion: nothing new moves.
+ const light=()=>!!r.lightQuality?.();
+ function drawBuoy(c,b,q,dim){const k=dim?.5:1;c.globalAlpha=.22*k;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.ellipse(q.x,q.y+14,6,1.6,0,0,TAU);c.stroke();c.globalAlpha=.1*k;c.beginPath();c.ellipse(q.x,q.y+14,11,3,0,0,TAU);c.stroke();
+  if(!light())glow(c,q.x,q.y,10,'#ffffff',(dim?.18:.4)*breath(r.beat?.()||0,reduced()).glow,true);
+  c.globalAlpha=dim?.5:.95;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(q.x,q.y+12);c.lineTo(q.x,q.y+3);c.stroke();
   c.fillStyle='#000';c.beginPath();c.arc(q.x,q.y,5,0,TAU);c.fill();c.fillStyle='#ffffff';c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();
   if(!reduced()){c.globalAlpha=(dim?.2:.4)*(.6+.4*Math.sin(clock*2));c.beginPath();c.arc(q.x,q.y,9,0,TAU);c.stroke();}
   c.globalAlpha=dim?.6:1;c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillText(String(b.km),q.x,q.y-12);}
+ // A rest satellite: its warm light falls off softly from a sprite (it was a flat disc), a light goes round the inside
+ // ring (still with reduced motion), and the body and panels carry a fine double contour.
  function drawSatellite(c,s,q,mine){
-  // Its warm light: a still disc and a soft ring at the edge of the inside.
-  c.globalAlpha=.07;c.fillStyle=WARM;c.beginPath();c.arc(q.x,q.y,SAT_GLOW,0,TAU);c.fill();c.globalAlpha=.25;c.strokeStyle=WARM;c.lineWidth=1;c.beginPath();c.arc(q.x,q.y,SAT_INSIDE,0,TAU);c.stroke();
+  c.globalAlpha=1;radial(c,q.x,q.y,SAT_GLOW,'sat-glow',[[0,'rgba(255,210,160,.17)'],[.5,'rgba(255,210,160,.1)'],[.8,'rgba(255,210,160,.045)'],[1,'rgba(255,210,160,0)']]);
+  c.globalAlpha=.25;c.strokeStyle=WARM;c.lineWidth=1;c.beginPath();c.arc(q.x,q.y,SAT_INSIDE,0,TAU);c.stroke();
+  const a=reduced()?-Math.PI/4:clock*.35-Math.PI/4,lx=q.x+Math.cos(a)*SAT_INSIDE,ly=q.y+Math.sin(a)*SAT_INSIDE;if(!light())glow(c,lx,ly,12,WARM,.55,true);c.globalAlpha=.8;c.fillStyle=WARM;c.fillRect(Math.round(lx)-1,Math.round(ly)-1,2,2);
   // The body and its two panels.
-  c.globalAlpha=1;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-6,q.y-6,12,12);c.strokeRect(q.x-6,q.y-6,12,12);
-  for(const side of [-1,1]){c.beginPath();c.moveTo(q.x+side*6,q.y);c.lineTo(q.x+side*10,q.y);c.stroke();c.strokeRect(q.x+side*10-(side<0?18:0),q.y-5,18,10);c.globalAlpha=.5;c.beginPath();c.moveTo(q.x+side*19,q.y-5);c.lineTo(q.x+side*19,q.y+5);c.stroke();c.globalAlpha=1;}
-  c.fillStyle=WARM;c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();
+  c.globalAlpha=1;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-6,q.y-6,12,12);c.fillRect(q.x-28,q.y-5,18,10);c.fillRect(q.x+10,q.y-5,18,10);
+  c.beginPath();c.rect(q.x-6,q.y-6,12,12);for(const side of [-1,1]){c.moveTo(q.x+side*6,q.y);c.lineTo(q.x+side*10,q.y);c.rect(q.x+side*10-(side<0?18:0),q.y-5,18,10);}if(!light())halo(c);c.stroke();
+  c.globalAlpha=.5;c.beginPath();for(const side of [-1,1]){c.moveTo(q.x+side*19,q.y-5);c.lineTo(q.x+side*19,q.y+5);}c.stroke();c.globalAlpha=1;
+  if(!light())glow(c,q.x,q.y,9,WARM,.5,true);c.globalAlpha=1;c.fillStyle=WARM;c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();
   if(mine){c.globalAlpha=.8;c.strokeStyle='#ffffff';c.setLineDash([2,3]);c.beginPath();c.arc(q.x,q.y,26,0,TAU);c.stroke();c.setLineDash([]);}}
  function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,24,108),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.75;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
   if(kind==='buoy'){c.beginPath();c.moveTo(x,y+5);c.lineTo(x,y-1);c.stroke();c.beginPath();c.arc(x,y-3,2.5,0,TAU);c.fill();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText(String(o.km),x+(q.x>r.W/2?-12:12),y-1);}
@@ -87,7 +97,7 @@ export function initialize(r){
   const k=Math.round(kmFromOrigin(p));for(const ring of [k-1,k,k+1]){const b=nearestBuoy(world,ring,p);if(!b)continue;const s=at(b.x,b.y);if(!onScreen(s))continue;drawBuoy(c,b,s,passed.has(b.id));out.buoy={id:b.id,km:b.km,x:Math.round(s.x),y:Math.round(s.y)};}
   const sat=nearestSatellite(world,p);let satShown=false;
   if(sat){const s=at(sat.x,sat.y);if(onScreen(s,SAT_GLOW)){drawSatellite(c,sat,s,visited(q,world,sat.id));satShown=onScreen(s,12);out.sat={id:sat.id,km:sat.km,x:Math.round(s.x),y:Math.round(s.y)};}}
-  for(const g of glows){const s=at(g.x,g.y),t=(clock-g.at)/1.4;c.globalAlpha=.8*(1-t);c.strokeStyle=g.warm?WARM:'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(s.x,s.y,reduced()?16:8+t*34,0,TAU);c.stroke();}
+  for(const g of glows){const s=at(g.x,g.y),t=(clock-g.at)/1.4;if(!g.popped){g.popped=true;r.fxLayer?.pop(g.x,g.y,g.warm?WARM:'#ffffff',{size:.8,sparks:6});}c.globalAlpha=.8*(1-t);c.strokeStyle=g.warm?WARM:'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(s.x,s.y,reduced()?16:8+t*34,0,TAU);c.stroke();}
   // The next buoy outward and the nearest satellite, at the screen's edge while out of view (none while a scene plays).
   if(!scene()&&!paused()){const nb=nextBuoy(world,p,b=>passed.has(b.id));out.next=nb?{id:nb.id,km:nb.km}:null;
    if(nb&&!onScreen(at(nb.x,nb.y),-8))out.edge.buoy=edge(c,'buoy',nb,p);
