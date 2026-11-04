@@ -24,7 +24,8 @@ const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 // A sound's motif: its notes on its eighths from the start of a bar, in the place's scale, in its own instrument, far
 // under the music. Returns how many notes were sent (none with sound off).
 export function playSoundMotif(r,sound,start,point,gain=SOUND_KEEP_GAIN){
- const s=typeof sound==='string'?soundById(sound):sound;if(!s||!r.S.sound||r.ac?.state!=='running')return 0;
+ // Alpha.249: a sound made in the Refugio's fusion (lejos-b.js) plays as any other.
+ const s=typeof sound==='string'?soundById(sound)||r.fusedSound?.(sound):sound;if(!s||!r.S.sound||r.ac?.state!=='running')return 0;
  const d=r.regionOfPos(point.x,point.y),scale=r.MU?.dnaA?.scale||d?.scale,tonic=57+(r.MU?.tr||0),eighth=(r.SIX||.125)*2;let n=0;
  s.motif.forEach((degree,k)=>{const note=soundNote(scale,tonic,degree,s.oct),time=start+s.steps[k]*eighth;
   const emit=()=>{r.hookInst(s.inst,note,time,r.vel(gain*(SOUND_TRIM[s.inst]??1)),d);r.discoverAudioCue?.({sound:s.id,instrument:s.inst,note,time,gain});};
@@ -41,7 +42,7 @@ export function initialize(r){
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  // A scene of its own is playing (a living encounter, a figure, a mischief scene): the sounds wait quietly.
  // Alpha.242: a mischief scene that does not move on (mischiefBusy) no longer counts.
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.();
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.lejosBBusy?.();   // alpha.249: a postcard, a sky song or a grey region (lejos-b.js)
  // The saves (S.rumors, S.soundAlbum): normalised once per save; a later version is only read.
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.rumors=normalizeRumors(owner.rumors);owner.soundAlbum=normalizeAlbum(owner.soundAlbum);world=worldKey(r.worldIdentity);cells=new Map();extra=new Map();sang=new Map();edgeCells=new Map();if(fresh){baseline=null;pending=false;summary=null;glows=[];rumorAt=-Infinity;refillAt=null;}}return owner;}
  const rumors=()=>book().rumors,album=()=>book().soundAlbum;
@@ -170,8 +171,11 @@ export function initialize(r){
  function renderAlbum(){if(!box||!list)return;const q=album(),ok=albumOk();$('soundAlbumCount').textContent=`${ok?albumCount(q):0} de ${SOUNDS.length}`;
   list.innerHTML=SOUND_BIOMES.map(b=>{const p=seriesProgress(q,b),done=ok&&!!q.series[b];
    return `<section class="sound-biome" data-sound-biome="${b}"><h3>${escape(SOUND_BIOME_NAMES[b])} · ${p.done} de ${p.total}${done?' <em class="sky-earned">Aro</em>':''}</h3><div class="sound-chips">`+biomeSounds(b).map(s=>{const has=ok&&albumHas(q,s.id),on=has&&q.mix.includes(s.id);
-    return has?`<button type="button" class="sound-chip" data-sound-id="${s.id}" aria-pressed="${on}">${escape(s.name)}</button>`:`<span class="sound-chip" data-sound-missing="${s.id}">?</span>`;}).join('')+'</div></section>';}).join('');
+    return has?`<button type="button" class="sound-chip" data-sound-id="${s.id}" aria-pressed="${on}">${escape(s.name)}</button>`:`<span class="sound-chip" data-sound-missing="${s.id}">?</span>`;}).join('')+'</div></section>';}).join('')+fusedSection(q,ok);
   playUI();}
+ // Alpha.249: the sounds you made in the Refugio's fusion (lejos-b.js), in the album and in your mix like the others.
+ function fusedSection(q,ok){const list=ok?(r.fusedAlbum?.()||[]):[];if(!list.length)return '';
+  return `<section class="sound-biome" data-sound-biome="fusion"><h3>Fusiones · ${list.length}</h3><div class="sound-chips">`+list.map(s=>`<button type="button" class="sound-chip" data-sound-id="${s.id}" aria-pressed="${q.mix.includes(s.id)}">${escape(s.name)}</button>`).join('')+'</div></section>';}
  function playUI(){if(!play||!note)return;const q=album(),n=albumOk()?q.mix.length:0,sound=!!r.S.sound;
   play.disabled=!n||!sound;play.textContent=mixOn?'Parar':'Escuchar mezcla';play.classList.toggle('gold',!mixOn&&n>0&&sound);
   note.textContent=!albumCount(q)?'Busca sonidos raros en el universo. Se oyen antes de verse.':!sound?'Activa el sonido para escuchar tu mezcla.':mixOn?(n===1?'Suena tu mezcla · 1 sonido':`Suena tu mezcla · ${n} sonidos`):n?`Tu mezcla · ${n} de ${MIX_MAX}`:`Elige hasta ${MIX_MAX} sonidos para tu mezcla.`;}

@@ -42,7 +42,7 @@ export function initialize(r){
  // The free World's surface after the Journey, outside every level, activity, the Refugio and the finales.
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene);
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.lejosBBusy?.();   // alpha.249: a postcard, a sky song or a grey region (lejos-b.js)
  const words=()=>r.S.universeTexts!==false;
  // The save (S.skySecrets), normalised once per save; a later version is only read.
  function book(){if(owner!==r.S){owner=r.S;owner.skySecrets=normalizeSkySecrets(owner.skySecrets);shower=null;glows=[];summary=null;cubeKey='';}world=worldKey(r.worldIdentity);return owner.skySecrets;}
