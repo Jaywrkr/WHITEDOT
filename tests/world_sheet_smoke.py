@@ -22,7 +22,7 @@ try:
    st=page.evaluate('__r.worldSheetState()');assert st['pale'] and 'saturate' in st['filter'] and not page.evaluate("document.getElementById('w').style.filter"),st
    # The grey is painted on the ground only (plan H1), fading in; the screen itself is never filtered.
    page.wait_for_function("__r.worldSheetState().grey>.9",timeout=5000)
-   assert page.evaluate("()=>{const c=__r.cx,seen=[];const keep={};for(const k of ['beginPath','fillRect','stroke','fill']){keep[k]=c[k];c[k]=function(...a){seen.push(k);return keep[k].apply(this,a);};}__r.drawWorldSheet(performance.now(),.5);Object.assign(c,keep);return seen;}")==['fillRect'],'seen from above: only the light, no horizon shapes'
+   assert page.evaluate("()=>{const c=__r.cx,seen=[];const keep={};for(const k of ['beginPath','fillRect','stroke','fill','drawImage']){keep[k]=c[k];c[k]=function(...a){seen.push(k);return keep[k].apply(this,a);};}__r.drawWorldSheet(performance.now(),.5);Object.assign(c,keep);return seen;}") in (['fillRect'],['drawImage']),'seen from above: only the light (one sprite since visual 2), no horizon shapes'
    # Six on-time pulses: the theme is complete and the colour of this biome comes back.
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
    page.wait_for_function("!__r.worldSheetState().pale");biome=page.evaluate('__r.worldSheetState().biome');assert page.evaluate('__r.journeyColors()')[biome] and page.evaluate("document.getElementById('w').style.filter")==''

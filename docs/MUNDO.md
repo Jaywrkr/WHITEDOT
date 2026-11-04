@@ -358,7 +358,7 @@ Visual 1, aprobado por Jay (4 de noviembre de 2026, alpha.253, rama `jay/visual-
 
 **El kit** (`src/fx-kit.js`, sin dependencias ni RNG). Solo dibuja:
 
-- **Brillo.** Un degradado pintado una vez por color en un lienzo pequeño (LRU de 40). Se dibuja con `drawImage`, encima o sumado (`lighter`). Sobre negro, lo sumado deja el negro negro. Sin documento (Node), cae al degradado de antes.
+- **Brillo.** Un degradado pintado una vez por color en un lienzo pequeño (LRU de 96 desde visual 2; antes, 40). Se dibuja con `drawImage`, encima o sumado (`lighter`). Sobre negro, lo sumado deja el negro negro. Sin documento (Node), cae al degradado de antes.
 - **Doble contorno.** La misma línea tres veces más ancha, al 15 % y sumada, bajo el trazo fino.
 - **Aparición.** Al verse un objeto por primera vez, crece de 0,85 a 1 con un pequeño rebote (280 ms) y aparece en opacidad. Si deja de verse medio segundo, vuelve a aparecer.
 - **Pop.** Un anillo con *ease out*, otro más fino, chispas sumadas y un destello breve. Dorado solo para lo ganado: caja abierta, maravilla encontrada, chispa salvaje, sonido raro guardado.
@@ -393,6 +393,54 @@ Visual 1, aprobado por Jay (4 de noviembre de 2026, alpha.253, rama `jay/visual-
 - **Teléfono.** No se midió. Hay que medirlo con `?medir=1`.
 
 Pruebas: `tests/fx-kit.mjs` (kit, caché de la paleta, `rk` y la retícula, que dibuja las mismas aristas) y `tests/visual1_smoke.py` (390×844 y 1280×800: sin errores, pop dorado al abrir una caja, nada con movimiento reducido, mitad de chispas en ligera y llamadas por fotograma bajo las de `main`).
+
+### Visual 2: el cielo y los objetos grandes
+
+Visual 2, pedido por Jay (4 de noviembre de 2026, alpha.254, rama `jay/visual-2`, desde `jay/visual-1` `1d51eab`, alpha.253, PR #390: dependencia explícita). Tandas 2 y 3 de la auditoría visual con el mismo kit. Lo del mundo, más acabado y sin subir el coste. Nada cambia de mecánica, posición, guardado ni sonido; el cubo no crece; ningún módulo nuevo.
+
+**El kit gana dos piezas:**
+
+- **`bake(clave,ancho,alto,pintar)`.** Un dibujo hecho una vez en un lienzo aparte, al doble de resolución para que se vea nítido en el teléfono. Tiene su propia LRU de 64. Sin lienzo devuelve `null` y se dibuja como antes.
+- **`streak(...)`.** Una estela de luz: brillante en un punto y apagándose hacia atrás. Es un sprite por color, girado y sumado.
+
+**El cielo:**
+
+- **Meteoros.** Cabeza de luz sumada y cola que se apaga.
+- **Cristales de cometa.** Coma de luz y dos colas, la iónica azulada y la de polvo blanca, siempre opuestas al cubo.
+- **Eclipse.** Una corona de luz suave con ocho rayos finos, que se ve al cubrirse la estrella y gira despacio. Pasado el 70 %, un diamante de luz brilla en el borde del planeta.
+- **Sonda perdida.** Ahora se lee: disco oscuro detrás, contorno claro, dos paneles con celdas y una antena. Se dibuja una sola vez y su luz parpadea sumada.
+- **Mapa del cielo.** Cada estrella tiene cuatro puntas finas y se dibuja una sola vez. La punta de una línea que se traza lleva una luz. Al completar la figura, cada estrella hace un pop blanco, una tras otra (60 ms).
+- **Satélite de descanso.** El disco plano pasa a una luz cálida que cae suave. Una luz recorre el anillo interior y el icono lleva doble contorno.
+- **Boyas.** Su reflejo, dos anillos planos debajo, y una luz que respira con el compás.
+- **Bengala, púlsares y corona de la tanda D.** La bengala sube con una estela; el púlsar tiene un núcleo de luz y cuatro haces. Las luces de la corona, del portal y de la estación brillan.
+- **Asteroide secreto y luna.** El asteroide lleva luz y un borde iluminado; el halo de la luna sale de un sprite.
+
+**Los objetos grandes:**
+
+- **Tótems.** Cada pieza se pinta una vez, con su degradado, un borde de luz fino y algo menos de saturación. Debajo, una sombra de contacto; detrás, la luz del bioma, que sube al despertarlo. Antes eran dos degradados por pieza en cada fotograma.
+- **Portales de actividades.** Aparecen al verse, con un anillo de guiones que gira despacio. El símbolo lleva doble contorno. Mientras esperas dentro, el interior se ilumina y el arco de progreso lleva una luz en la punta.
+- **Portales de otra regla.** Aparecen al verse, con sombra, puerta con luz y doble contorno.
+- **Hitos y balizas.** Luz en su centro. Desde el borde, el brillo sale de un sprite y lanza tres rayos tenues hacia el cubo.
+- **Percusión y micro-instrumentos.** Lo que suena se ilumina y hace un pop pequeño en su tinta. La semilla respira con el compás. Su forma es un solo `Path2D` por tipo, en vez de uno por objeto y fotograma.
+- **Mascota, crías y bandadas.** La estela de la mascota son chispas sumadas, con una luz bajo las alas que sube al cantar; las crías del Refugio llevan un halo. Cada luz de la bandada es una chispa, con una estela corta compartida.
+- **Tandas A–D.** Interruptor de reto, radar, rocas y pelota de luz (su gol, un pop dorado). También tablón de encargos, cofre de herramientas, estación y consola de barrido, con sombra de contacto, luz y doble contorno. Brillan las brasas de la región apagada, los elementos del hábitat, las piedras de la canción y las cosas perdidas. El asteroide por capas tiene sombra, borde de luz y un destello de su capa al golpearlo. La tirolina lleva doble contorno y una luz que corre. Cada aro, luz o hallazgo cumplido hace un pop en la capa común; dorado si se gana.
+
+**El coste pagado:** los degradados que aún se creaban en cada fotograma pasan a sprites:
+
+- El charco de luz del bioma (`world-sheet`).
+- El alba, el ocaso y la noche (`world-light`). La noche conserva su color plano fuera del farol.
+- La niebla (`world-visibility`): su cubierta en cuarenta pasos de densidad, negra fuera de su cuadrado, y la bruma en ocho niveles por canal.
+- El borde de la tormenta (`alive`) y la luz del borde hacia el siguiente lugar (`places-ring`).
+- La columna y el brillo de las salidas bajo tierra (`layers`).
+- Los de `viaje-a`, `lejos-b`, `secretos` y `secretos-cielo`.
+
+La caché de sprites pasa de 40 a 96 para que el cielo y los objetos no la vacíen. `fxSpritesMade()` cuenta los sprites pintados.
+
+**Movimiento reducido:** nada nuevo gira ni se mueve (corona, luz del satélite, anillo del portal y respiración quietos) y no hay pops. **Calidad ligera:** sin luz sumada ni doble contorno; los meteoros y el cristal de cometa vuelven a sus líneas.
+
+**Medido** (Chromium sin interfaz, 390×844, DPR 1, frente a `1d51eab`). En los 19 escenarios del cielo y de los objetos, los degradados por fotograma pasan de 4–11 a 0, salvo uno en el portal de actividad. La CPU del navegador por fotograma queda igual dentro del ruido: media de 24,0 a 23,0 ms, de −5,6 a +1,7 ms según la escena. Tabla en [CAMBIOS](../CAMBIOS.md). No se midió en teléfono.
+
+Pruebas: `tests/visual2.mjs` (tótems en piezas cacheadas, con los degradados de antes sin lienzo; la estela; la caché de `bake`) y `tests/visual2_smoke.py`. Esta recorre 390×844 y 1280×800 en 16 escenas: cristal de cometa, sonda, eclipse con corona, meteoros, boya, satélite, figura, tótems, portal, hito en el borde, pelota, púlsar, asteroide, portal de otra regla, región apagada, y bandada con mascota. Comprueba que no hay errores ni degradados por fotograma ni `shadowBlur`, que las cachés se asientan y que las llamadas quedan bajo las de `1d51eab`. Comprueba también que un tambor golpeado hace pop, que no hay pop con movimiento reducido y que la calidad ligera no suma luz.
 
 ## Ayuda
 

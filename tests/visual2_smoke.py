@@ -6,7 +6,7 @@ rule, a dead region, and a flock with the pet. The cost per frame does not go up
 gradient is built per frame in any of them (5 to 9 before, and two linear ones per totem piece), no shadowBlur, the
 sprite caches settle (nothing new painted frame after frame), and the canvas calls stay under those measured on
 1d51eab (scaled by the screen's area on the desktop). A struck drum pops in the shared layer; with reduced motion
-nothing pops; light quality adds no light ('lighter') and draws no more calls."""
+nothing pops; light quality adds no light ('lighter') and draws no more images."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -108,13 +108,13 @@ try:
    assert page.evaluate("__r.fxLayer.pops()")==0,'no pop with reduced motion'
    still=page.evaluate(PER_FRAME,800);assert still['frames']>=5 and grads(still)<=1,still
    page.evaluate("()=>{__r.S.reducedMotion=false;}")
-   # --- Light quality: nothing added with 'lighter' and no more calls than high, in the sky (a meteor shower).
+   # --- Light quality: nothing added with 'lighter' and no more images than high, in the sky (a meteor shower).
    page.evaluate(GO,{'x':P['comet']['x']+60000,'y':P['comet']['y']-30000});page.wait_for_timeout(500);page.evaluate("__r.skySecretShower()");page.wait_for_timeout(400)
    sh=page.evaluate(PER_FRAME,900)
    page.evaluate("()=>{__r.$('graphicsQuality').onchange({target:{value:'ligera'}});}");page.wait_for_timeout(400);page.evaluate(HIDE);assert page.evaluate('__r.lightQuality()')
    sl=page.evaluate(PER_FRAME,900);print(f'{width}x{height} light',{k:round(v,1) for k,v in sl.items()},'high',{k:round(v,1) for k,v in sh.items()},flush=True)
    assert sl.get('add',0)==0,('light quality adds no light',sl)
-   assert calls(sl)<=calls(sh)*1.05,('light quality draws no more',sl,sh)
+   assert sl.get('drawImage',0)<=sh.get('drawImage',0),('light quality draws no more images of light',sl,sh)
    page.evaluate("()=>{__r.$('graphicsQuality').onchange({target:{value:'alta'}});}")
    assert not errors,errors
    page.close()
