@@ -57,7 +57,8 @@ try:
   page.evaluate(WATCH)
   page.evaluate("()=>{const r=__r;"+HIDE+";r.spawnBox(r.S.wx,r.S.wy,'cometa');}")
   page.wait_for_function("__r.hasPower('cometa')",timeout=8000)
-  page.evaluate("()=>{if(!__r.surpriseState.ids.length)__r.giveSurprise('pequeno');}")
+  # T3: a box gives one power and no surprise (decision 4); none can be given.
+  assert page.evaluate("()=>__r.giveSurprise('pequeno')===false&&!__r.surpriseState.ids.length"),'no surprise'
   page.wait_for_function("!document.getElementById('celebration').hidden",timeout=8000)
   line=page.inner_text('#celebrationLine');assert line.startswith('Cometa · Corre y suena.') and '¡' not in line and '!' not in line,line
   assert page.evaluate("getComputedStyle(document.getElementById('sparkPowerHud')).visibility")=='hidden' and page.evaluate("getComputedStyle(document.getElementById('surpriseHud')).visibility")=='hidden','the HUDs wait under the card'

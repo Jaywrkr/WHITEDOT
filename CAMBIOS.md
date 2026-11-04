@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.261** en la rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0 dentro): depende de T1. Lleva fusionadas `jay/coherencia-t0` (`8984a1d`) y `jay/coherencia-t2` (`d438120`, alpha.260). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.262** en la rama `jay/coherencia-t3`, desde `jay/coherencia-t4` `fbec1b7` (alpha.261, con T0, T1 y T2 fusionadas): depende de T4. Las entradas describen su revisión, no certifican producción.
+
+
+## La carga (coherencia T3) · 2.3.0-alpha.262
+
+Rama `jay/coherencia-t3`, desde `jay/coherencia-t4` `fbec1b7` (alpha.261, que ya contiene T0, T1 y T2; dependencia explícita). Plan de coherencia, tanda T3, con la decisión 4 de Jay aprobada (una caja, un poder, sin sorpresas). Guía: [La carga](docs/MUNDO.md#la-carga).
+
+- **El radar siempre está.** El Escáner no necesita cajas; la carga es un extra.
+- **La Brújula pasa a ser la Carga.** Su caja pone el Escáner en el nivel más alto (4c, 1200 m) durante 20 s de juego, y una sola flecha blanca, en la capa de flechas de T2, señala lo más raro sin encontrar, con su distancia. La caja ya no dibuja sus cuatro flechas ni guarda su propia lista de lo raro.
+- **El Compañero usa el mismo registro:** una flecha de la capa hacia lo más raro, al alcance de la partida.
+- **Una caja, un poder, un aviso.** Las 16 sorpresas se retiran: ninguna caja las da, no se pueden dar, no se dibujan ni suenan. `#surpriseHud` conserva su id, siempre oculto. La tarjeta de la caja no nombra sorpresa.
+- **Guardados.** Sin migración: `brujula` y `poder_brujula` se quedan (el logro se llama «Carga»). `S.boxSurprises` se conserva; una sorpresa guardada activa termina sin más y sus datos siguen en el guardado. Ningún logro dependía de una sorpresa.
+- **Sin cambios** en `audio.js`, azar antiguo, posiciones y probabilidades de las cajas, ids de HTML ni premios. Se van las notas de las cinco estelas de sorpresa.
+- **Preservación:** capa `approvedT3`.
+- **Pruebas.** Nuevas `tests/carga.mjs` y `tests/carga_smoke.py` (390×844 y 1280×800: sin caja, nivel 2 y ninguna flecha a 900 m; con la Carga, su aviso, nivel 4c, una flecha blanca a lo más raro y el escáner que llega a 900 m; a los 20 s, vuelta al nivel 2). `tests/box-surprises.mjs` y `tests/box_surprises_smoke.py` comprueban ahora que no hay sorpresas y que un guardado con una activa carga bien. Ajustadas a la regla nueva, sin desactivar nada: `avisos_oro_smoke`, `power_cards_smoke`, `sparks_economy_smoke`, `visual_closure_smoke` y `micro_mix.py`.
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Las otras flechas del nivel 4c dependen de lo que registren las tandas futuras (hoy ninguna cosa es de nivel 4).
 
 
 ## Avisos y oro (coherencia T4) · 2.3.0-alpha.261

@@ -35,7 +35,7 @@ Cada módulo/asset de ejecución figura una vez en SHELL de `sw.js`. Scripts, pr
 | Colección musical | `garden-model.js`, `collection-garden.js`, `journal.js` |
 | Refugio | `house-model.js`, `house-auto.js`, `house.js`, `house-view.js`, `house-audio.js`, `house-collection.js` |
 | Actividades y encuentros | `universe-activities.js`, `universe-mischief.js`, `live-encounters.js`, `sky-map.js` y sus modelos/arte |
-| Mapa y orientación | `scanner.js` y su modelo/arte ([El Escáner](MUNDO.md#el-escáner)), `scanner-arrows.js` ([capa de flechas](MUNDO.md#una-capa-de-flechas)), `map.js` (Bitácora), `universe-map.js` y su modelo/arte (pantalla del mapa, marca, mini-mapa), `places-ring.js` (brújula y columna), `navigation.js` (rumbo a favoritos) |
+| Mapa y orientación | `scanner.js` y su modelo/arte ([El Escáner](MUNDO.md#el-escáner)), `scanner-arrows.js` ([capa de flechas](MUNDO.md#una-capa-de-flechas)); la carga de una caja (`cajas.js`, poder `brujula`) lo sube a su nivel más alto ([la carga](MUNDO.md#la-carga)), `map.js` (Bitácora), `universe-map.js` y su modelo/arte (pantalla del mapa, marca, mini-mapa), `places-ring.js` (brújula y columna), `navigation.js` (rumbo a favoritos) |
 | Guía y avisos | `voice-guide.js`, `onboarding.js`, `notice-lane.js`, `celebration.js` |
 | UI y accesibilidad | `styles/estilo-j.css`, `accessibility.js`, `journal.js`, `favorites.js` |
 | Idiomas | `i18n.js`, `i18n-en.js` |

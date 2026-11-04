@@ -104,7 +104,7 @@ export function initialize(runtime) {
    ["caja5","Coleccionista","Abriste cinco cajas misteriosas."],
    ["poder_campo","Campo de escucha","Usaste el campo que toca solo lo que está dentro."],
    ["poder_cometa","Cometa","Fuiste más rápido que nunca."],
-   ["poder_brujula","Brújula","Seguiste las flechas hacia lo raro."],
+   ["poder_brujula","Carga","Cargaste el Escáner."],
    ["poder_iman","Imán","Lo pequeño te siguió."],
    ["poder_pincel","Pincel sonoro","Tu camino dejó notas."],
    ["poder_companero","Compañero","Una luz te acompañó."],

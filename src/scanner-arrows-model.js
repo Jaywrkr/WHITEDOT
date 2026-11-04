@@ -12,8 +12,9 @@ export const EDGE_MERGE=300;       // units (30 m)
 export const EDGE_APART=26;        // px between two arrows on the edge
 export const EDGE_SIDE=22,EDGE_TOP=104;   // px kept off the sides and the bars (as the old marks)
 export const EDGE_SCENE_RANK=4;
-// What matters most first. The player's own; then what is rare or secret; then what can be done; then the way.
-export const EDGE_RANK=Object.freeze({reto:5,bengala:4,secreto:3,rumor:3,sonda:3,chispa:3,eclipse:3,caja:2,cometa:2,
+// What matters most first. The player's own (the Carga's arrow, T3, is one of them); then what is rare or secret; then
+// what can be done; then the way.
+export const EDGE_RANK=Object.freeze({reto:5,carga:4.5,bengala:4,secreto:3,rumor:3,sonda:3,chispa:3,eclipse:3,caja:2,cometa:2,
  banda:2,hallazgo:2,juego:1.5,sonido:1.5,satelite:1.5,hito:1,boya:1,cosa:1,region:0});
 export const EDGE_SHAPES=Object.freeze(['voz','caja','hallazgo','portal','sonda','forma','estrella','boya','pregunta']);
 const finite=v=>Number.isFinite(v);

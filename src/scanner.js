@@ -20,6 +20,7 @@ import {prefersReducedMotion} from './frame-state.js';
 // Scanning silences nothing: the beacons keep sounding and the eclipse and the dust stay dark (bug 8).
 // Level 3 (the eleven places, coherencia T2): the arrows at the screen's edge (scanner-arrows.js) also point at what the
 // registry reaches; secrets and rumours show as «?»; on release the panel stays a moment and a row marks the map.
+// T3 «la carga»: the radar is always there without boxes; a Carga from a box raises it to the top level for 20 s.
 const NAMES={props:null,lotus:'Fuente de ondas',crystals:'Cristal',pillars:'Órbita rota',flies:'Chispa',grass:'Estrella de luz',flowers:'Destello',stal:'Gota de luz',motes:'Luz',walkers:'Caminante',beacons:'Púlsar'};
 const KINDS={lotus:'loto',crystals:'cristal',pillars:'pilar',flies:'luciernaga',grass:'arbol',flowers:'planta:flor',stal:'gota',motes:'luz',walkers:'caminante',beacons:'faro'};
 export function nearbySources(chunks,x,y,radius=250) {
@@ -86,6 +87,8 @@ export function initialize(runtime) {
   let scanning=false,lastUpdate=-Infinity,level=scanLevel(runtime.S),items=[],wave=null,lit=new Map(),closing=0,drawn={ring:false,icons:0,labels:0,radius:0},keep=null;
   const panel=document.getElementById('scanner'),list=document.getElementById('scannerSources');
   arrows(runtime);
+  // T3 «la carga»: while a Carga lasts (cajas.js, power brujula) the scanner is at its top level (4c: 1200 m, names).
+  const charged=()=>!!runtime.scanCharged?.(),levelNow=()=>scanLevel(runtime.S,{charged:charged()});
   const still=()=>!!runtime.S.reducedMotion||prefersReducedMotion();
   const dev=()=>!!document.body?.classList.contains('dev');
   // Released at level 3 with something listed: the panel stays SCAN_KEEP ms so a row can be tapped. A tap elsewhere,
@@ -112,7 +115,7 @@ export function initialize(runtime) {
     if(!scanning){keepTick();return;}
     if(!runtime.inWorld()||[...document.querySelectorAll('.modal')].some(m=>!m.hidden)){stopScanner();return;}
     const now=performance.now();if(!force&&now-lastUpdate<200)return;lastUpdate=now;
-    const S=runtime.S,p={x:S.wx,y:S.wy};level=scanLevel(S);panel.dataset.level=level.id;
+    const S=runtime.S,p={x:S.wx,y:S.wy};level=levelNow();panel.dataset.level=level.id;panel.dataset.charged=String(charged());
     const all=scanNear(p,S,{level,ctx:runtime,max:0});items=all;
     // The panel: the first three in the registry's order (rarity, then distance, then not found first).
     const rows=all.slice(0,SCAN_ROWS);
@@ -143,7 +146,7 @@ export function initialize(runtime) {
     while(panel.scrollHeight>panel.clientHeight+2&&list.childElementCount>1)list.lastElementChild.remove();
   }
   function startScanner(){if(!runtime.inWorld())return;closeKeep();const was=scanning;scanning=true;runtime.ptr=null;panel.hidden=false;
-    if(!was){lit=new Map();closing=0;level=scanLevel(runtime.S);wave={t0:performance.now(),dur:level.wave,reach:scanReach(level)};}
+    if(!was){lit=new Map();closing=0;level=levelNow();wave={t0:performance.now(),dur:level.wave,reach:scanReach(level)};}
     updateScanner(true);}
   // The light, every frame while held and a short fade after: under the cube, over the World.
   // The names are asked for (the finger is held), so they are written even in the quiet view, which keeps the World's
@@ -162,6 +165,6 @@ export function initialize(runtime) {
     drawn=drawScanWave(runtime.cx,runtime.S.wx+ox,runtime.S.wy+oy,W,H,{age:(now-wave.t0)/1000,dur:wave.dur,reach:wave.reach,still:still(),light:!!runtime.lightQuality?.(),fade,names:level.names&&runtime.S.universeTexts!==false,items:shown,lit,write});
   }
   // Tests only (the runtime is never published): the level, what is near and what the last frame drew.
-  function state(){return {scanning,level:level.id,names:level.names,reach:scanReach(level),items:items.map(({id,key,name,shape,d,done})=>({id,key,name,shape,m:Math.round(d/10),done})),wave:wave?{age:(performance.now()-wave.t0)/1000,dur:wave.dur,reach:wave.reach}:null,drawn:{...drawn},still:still()};}
+  function state(){return {scanning,charged:charged(),level:level.id,names:level.names,reach:scanReach(level),items:items.map(({id,key,name,shape,d,done})=>({id,key,name,shape,m:Math.round(d/10),done})),wave:wave?{age:(performance.now()-wave.t0)/1000,dur:wave.dur,reach:wave.reach}:null,drawn:{...drawn},still:still()};}
   Object.defineProperties(runtime,{scanning:{get:()=>scanning},startScanner:{get:()=>startScanner},stopScanner:{get:()=>stopScanner},updateScanner:{get:()=>updateScanner},drawScan:{get:()=>draw},scanState:{get:()=>state}});
 }

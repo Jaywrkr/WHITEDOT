@@ -1,22 +1,40 @@
+// T3 «la carga» (Kubono coherente, decision 4 of Jay): a box gives one power and no surprise. The sixteen surprises are
+// retired: none is drawn from a box, none can be given, none is drawn, heard or shown, and a save with one active loads
+// fine (it simply ends) and keeps its data. The six powers and their seeded odds are untouched.
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {BOX_SURPRISES,SURPRISE_IDS,RETIRED_SURPRISES,surpriseFor,surpriseStyle,normalizeSurprise} from '../src/box-surprises-model.js';
 import {initialize} from '../src/box-surprises.js';
 import {boxAt,POWER_IDS,NATURAL_BOX_RATE} from '../src/expansion-music.js';
+const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 const seed=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
-assert.equal(POWER_IDS.length,6);assert.equal(NATURAL_BOX_RATE,.04);assert.equal(SURPRISE_IDS.length,16);let count=0;const outcomes=new Set();for(let i=0;i<1000;i++){const q=surpriseFor({id:'caja:'+i},seed);assert.equal(q,surpriseFor({id:'caja:'+i},seed));if(q){count++;outcomes.add(q);}}assert(count>370&&count<500);assert.equal(outcomes.size,15);assert(!outcomes.has('grande'),'T0: the cube never grows');
-assert.equal(surpriseStyle(['lento']).speed,.55);assert.equal(surpriseStyle(['pequeno']).scale,.55);assert.equal(surpriseStyle(['redondo']).shape,'round');for(const p of Object.values(BOX_SURPRISES)){assert(p.seconds>0&&p.seconds<=90);assert(p.text.split(' ').length<=12);}
-const future={version:9,secret:{x:7}};assert.equal(normalizeSurprise(future),future);
-const elements={};const $=id=>elements[id]||=( {} );globalThis.document={hidden:false,querySelector:()=>null};const r={S:{wx:0,wy:0,bag:{luz:17},boxes:{earned:1}},$,W:390,H:844,inWorld:()=>true,seedOf:seed,rng:n=>()=>((n=Math.imul(n,1664525)+1013904223>>>0)/4294967296),regionOfPos:()=>({sea:false}),canPracticeTravel:()=>true,travelPracticePoint:p=>{r.S.wx=p.x;r.S.wy=p.y;return true;},save:()=>true};initialize(r);
-assert(r.giveSurprise('lento'));r.surpriseTick(.05);assert.equal(r.surpriseStyle.speed,.55);const time=r.snapshotBoxSurprises().remaining.lento;for(let i=0;i<30;i++)r.surpriseTick(.05,true);assert.equal(r.snapshotBoxSurprises().remaining.lento,time);document.hidden=true;r.surpriseTick(1);assert.equal(r.snapshotBoxSurprises().remaining.lento,time);document.hidden=false;
-assert(r.giveSurprise('semillas'));for(let i=0;i<30;i++){r.S.wx+=12;r.surpriseTick(.05);}assert(r.surpriseState.marks>0&&r.surpriseState.marks<=24);r.giveSurprise('borrador');assert(r.surpriseState.marks>0);r.surpriseTick(.05);assert(r.surpriseState.marks<24);assert.equal(r.S.bag.luz,17);assert.deepEqual(r.S.boxes,{earned:1});
-r.giveSurprise('salto');assert(r.surpriseState.returnPoint);const prev={...r.surpriseState.returnPoint};assert.notEqual(r.S.wx,prev.x);assert(r.clearSurprise(true));assert.equal(r.S.wx,prev.x);assert.deepEqual(r.surpriseState.ids,[]);
-// T0 (decision 4, Jay): «Expansión» is retired. No box gives it, it cannot be given, and one saved while active grows nothing.
-assert(RETIRED_SURPRISES.has('grande'));assert.equal(r.giveSurprise('grande'),false);assert(surpriseStyle(['grande']).scale<=1);for(const ids of [['grande'],['grande','pequeno'],['resorte']])assert(surpriseStyle(ids).scale<=1);
-{const box=[...Array(1000).keys()].map(i=>({id:'caja:'+i})).find(b=>((seed('box:surprise:v1:'+b.id)>>>0)%100<45)&&SURPRISE_IDS[((seed('box:surprise:v1:'+b.id)>>>0)>>>8)%SURPRISE_IDS.length]==='grande');assert(box);assert.equal(surpriseFor(box,seed),null);}
-r.giveSurprise('pequeno');const saved=r.snapshotBoxSurprises();r.S={wx:9,wy:9,boxSurprises:{...saved,unknown:'keep',remaining:{...saved.remaining,alien:9}}};assert.equal(r.surpriseStyle.scale,.55);assert.equal(r.snapshotBoxSurprises().unknown,'keep');assert.equal(r.snapshotBoxSurprises().remaining.alien,9);for(let i=0;i<76;i++)r.surpriseTick(1);assert.equal(r.surpriseStyle.scale,1);assert(elements.surpriseHud.hidden);
-r.S={wx:0,wy:0,boxSurprises:future};assert(!r.giveSurprise('redondo'));assert.equal(r.snapshotBoxSurprises(),future);assert(!r.clearSurprise());
-// Moving trails emit through playVoice, never through buttons or paused UI.
-r.S={wx:0,wy:0,sound:true};r.body={speed:120};r.ac={state:'running'};const notes=[];r.playVoice=(...args)=>{notes.push(args);return true;};
-for(const id of ['arcos','cintas','diamantes','puntos','duplicador']){r.giveSurprise(id);r.surpriseTick(.05);r.S.wx+=12;r.surpriseTick(.05);const before=notes.length;r.surpriseStep(0,12,1);r.surpriseStep(0,12,1);r.surpriseStep(8,12,2);assert.equal(notes.length,before+2);assert(notes.at(-1)[0].startsWith('micro:'));assert.equal(notes.at(-1).at(-1),'player');r.S.sound=false;r.surpriseStep(0,13,3);assert.equal(notes.length,before+2);r.S.sound=true;document.hidden=true;r.surpriseStep(0,13,3);document.hidden=false;assert.equal(notes.length,before+2);r.noticeLane={inspecting:true};r.surpriseStep(0,13,3);assert.equal(notes.length,before+2);r.noticeLane=null;r.clearSurprise();r.surpriseStep(0,13,3);assert.equal(notes.length,before+2);}
-console.log('PASS five moving musical trails: shared voice path, two hits per bar, deduplication, mute, inspection, hidden and undo guards');
-console.log('PASS fifteen temporary reversible surprises (Expansión retired: the cube never grows), original six powers/odds intact, paused clocks, bounded traces, safe teleport return and future saves');
+const rng=n=>()=>((n=Math.imul(n,1664525)+1013904223>>>0)/4294967296);
+// The powers and the boxes stay as they were (same seeds, same odds, same places).
+assert.equal(POWER_IDS.length,6);assert.equal(NATURAL_BOX_RATE,.04);
+{const a=[],b=[];for(let i=0;i<400;i++){const x=boxAt(i,-i,1000,seed,rng);a.push(x&&x.power+':'+x.x.toFixed(2));b.push(boxAt(i,-i,1000,seed,rng)?.power??null);}assert.ok(a.filter(Boolean).length>5);assert.deepEqual(a.map(v=>v&&v.split(':')[0]),b);}
+// The names stay (a save or a card can still read one); every one is retired.
+assert.equal(SURPRISE_IDS.length,16);for(const id of SURPRISE_IDS){assert.ok(RETIRED_SURPRISES.has(id),id);assert.ok(BOX_SURPRISES[id].name);}
+for(let i=0;i<1000;i++)assert.equal(surpriseFor({id:'caja:'+i},seed),null,'no box gives a surprise');
+assert.deepEqual(surpriseStyle(SURPRISE_IDS),{speed:1,scale:1,shape:'cube'},'the cube stays a small cube');
+assert.deepEqual(surpriseStyle(['pequeno','grande','lento','redondo']),{speed:1,scale:1,shape:'cube'});
+const future={version:9,secret:{x:7}};assert.equal(normalizeSurprise(future),future,'a future format is kept as it is');
+// The runtime: nothing can be given, the HUD (its id kept) stays hidden, nothing sounds or draws.
+const elements={};const $=id=>elements[id]||=({dataset:{},hidden:false});globalThis.document={hidden:false,querySelector:()=>null};
+const r={S:{wx:0,wy:0,bag:{luz:17},boxes:{earned:1}},$,W:390,H:844,inWorld:()=>true,seedOf:seed,rng,regionOfPos:()=>({sea:false}),canPracticeTravel:()=>true,travelPracticePoint:()=>{throw Error('no surprise moves the cube');},save:()=>true};
+initialize(r);assert.equal(elements.surpriseHud.hidden,true);
+for(const id of SURPRISE_IDS)assert.equal(r.giveSurprise(id),false,id);
+assert.equal(r.giveBoxSurprise({id:'caja:1'}),null);assert.deepEqual(r.surpriseState.ids,[]);assert.equal(r.surpriseStyle.shape,'cube');assert.equal(r.surpriseStyle.scale,1);assert.equal(r.surpriseStyle.speed,1);
+r.surpriseTick(.05);assert.equal(r.drawSurpriseBody({},0,0,10,0),false);assert.equal(r.drawSurprises(0,0,0),undefined);
+r.S.sound=true;r.body={speed:120};r.ac={state:'running'};let notes=0;r.playVoice=()=>{notes++;return true;};for(const s of [0,8])r.surpriseStep(s,12,1);assert.equal(notes,0,'no trail sounds');
+assert.deepEqual(r.S.bag,{luz:17});assert.deepEqual(r.S.boxes,{earned:1});
+// A save with a surprise active (and a return point from the old jump) loads fine: it simply ends, and its data stays.
+const old={version:1,remaining:{pequeno:12000,salto:8000,alien:9},elapsed:{pequeno:400},returnPoint:{x:5,y:6,layer:'superficie'},unknown:'keep'};
+r.S={wx:9,wy:9,boxSurprises:structuredClone(old)};elements.surpriseHud.hidden=false;r.surpriseTick(.05);
+assert.equal(elements.surpriseHud.hidden,true,'no HUD for an old surprise');assert.equal(r.surpriseStyle.scale,1);assert.deepEqual(r.surpriseState.ids,[]);
+assert.deepEqual(r.snapshotBoxSurprises(),old,'the saved surprise stays in the save, unread');assert.equal(r.S.wx,9,'nothing moves the cube');
+r.S={wx:0,wy:0,boxSurprises:future};assert.equal(r.giveSurprise('redondo'),false);assert.equal(r.snapshotBoxSurprises(),future);assert.equal(r.clearSurprise(),false);
+r.S={wx:0,wy:0};assert.deepEqual(r.snapshotBoxSurprises(),{version:1,remaining:{},elapsed:{}},'a save without one gets the empty shape');
+// The box asks for no surprise; the card says none.
+assert.doesNotMatch(read('src/cajas.js'),/giveBoxSurprise/,'opening a box gives its power only');
+assert.doesNotMatch(read('src/celebration.js'),/BOX_SURPRISES/,'the card names no surprise');
+console.log('PASS box surprises retired (T3, decision 4): sixteen names kept, none given or drawn, no trail note, the HUD hidden, an active saved surprise ends and stays in the save, future format kept; six powers and their odds intact');

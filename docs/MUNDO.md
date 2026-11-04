@@ -53,7 +53,7 @@ Un lugar ya completo pregunta antes de entrar (Jugar, Maestro, Libre, Eco, Reto)
 
 Arreglos sueltos de la auditoría de coherencia, aprobados por Jay el 4 de noviembre de 2026. Mismas mecánicas; ningún guardado pierde nada.
 
-- **El cubo no crece.** La sorpresa «Expansión» (`grande`) queda retirada (`RETIRED_SURPRISES`): sigue en la lista para que cada caja conserve la sorpresa de su semilla, pero la caja que la sacaba no da sorpresa, no se puede dar y una guardada activa no agranda nada. La frase «El cubo crece contigo» pasa a «Tu luz se queda contigo».
+- **El cubo no crece.** La sorpresa «Expansión» (`grande`) queda retirada (`RETIRED_SURPRISES`): sigue en la lista para que cada caja conserve la sorpresa de su semilla, pero la caja que la sacaba no da sorpresa, no se puede dar y una guardada activa no agranda nada (desde T3, todas las sorpresas se retiran: [la carga](#la-carga)). La frase «El cubo crece contigo» pasa a «Tu luz se queda contigo».
 - **Sin personas en pantalla.** Los estudios de los edificios vivos y el recuerdo del Camino no nombran a nadie (fuera Jay, Bach, Leonardo y Hildegard). Los créditos del final siguen.
 - **Chispa salvaje.** Paga como las demás fuentes: solo con la economía en versión 1, nunca en el laboratorio ni en otra tierra, y deja su línea en el registro («Chispa salvaje · +15 chispas»). El importe (15 ✦) se revisa con la regla de premio (tanda de economía).
 - **Ámbar se gana.** El décimo cristal del Camino del día da el logro `tope` («Completaste el Camino de hoy.»), el que pide Ámbar. `dorada` y `s10`, que nada podía dar, quedan retirados: quien los tiene los conserva.
@@ -314,7 +314,7 @@ Coherencia T1 (Jay, 4 de noviembre de 2026, alpha.259, rama `jay/coherencia-t1`)
 - **Nivel 1, desde el inicio:** alcance 40 m, onda corta, formas sin nombre. El panel dice cuántas («5 cerca») y «Termina el Viaje para ver qué es.».
 - **Nivel 2, con el Viaje terminado** (`S.journey.finished` o el Mundo abierto): alcance 120 m. Bajo cada icono y en el panel, «Nombre · distancia» («Sonda · 80 m»), hasta cinco nombres en el lienzo sin pisarse. Los nombres salen aunque «Mostrar todo» esté en «no», porque se pidieron; con «Textos del universo» apagados, no.
 - **Panel «Cerca»** (`#scanner`; ids `#scannerRegion`, `#scannerSources` y `#scannerHint` conservados). Tres filas como mucho, en el orden del registro: rareza, distancia y lo no encontrado antes. La región va solo con nombre y carácter, sin género ni BPM. La pista final es el gesto de la voz más cercana («Toca para responder») o «Sin sonido.». «Nada cerca. Sigue.» si no hay nada. El reto de región ya no sale aquí. El detalle técnico de cada voz (papel, instrumento, patch, efecto) queda en la Bitácora › Música y, para desarrollo, en `data-detail` de la fila.
-- **Mientras está abierto**, el HUD de poder (`#sparkPowerHud`) y el de sorpresa (`#surpriseHud`) se apartan. El cubo no se mueve, como antes.
+- **Mientras está abierto**, el HUD de poder (`#sparkPowerHud`) y el de sorpresa (`#surpriseHud`, oculto siempre desde [la carga](#la-carga)) se apartan. El cubo no se mueve, como antes.
 - **Escanear no calla nada** (bug 8). Las sondas siguen pitando, los sonidos raros y la bengala siguen sonando, y el eclipse y el polvo siguen oscuros: `paused()` ya no mira `r.scanning` en `descubrir.js`, `viaje-a.js`, `lejos-b.js`, `recorrer.js`, `secretos-cielo.js` y `viaje-c.js`. Los gestos y contactos que ya se detenían al escanear siguen igual.
 - **Registro** (`src/scanner-model.js`, puro). `registerScan({id, name, shape, level, km, rarity, secret, batch, sites, done, page})`, una vez por tipo; el mismo id dos veces lanza un error. `sites` sale del generador propio de cada cosa o de `hashKey` (`scanSiteAt`), nunca del RNG antiguo. `scanLevel`, `scanReach`, `scanNear` y `scanPage`. Proveedores de T1 (`scanner.js`): voces (las fuentes musicales del escáner viejo), cajas, hallazgos, juegos del universo y sondas perdidas (nivel 2).
 - **Nivel 3, desde T2** (los once lugares, `S.lugares.won`, 300 m): ver [Una capa de flechas](#una-capa-de-flechas). **Niveles 4a/4b/4c escritos, cerrados hasta su tanda** (`S.bandas.far` ≥ 10/30/60 km, 600/900/1200 m). `SCAN_OPEN = 3` los cierra; la carga de una caja (T3) será el 4c. `scanBandEntry` deja listo el enganche con `registerBand`; ninguna tanda lo llama aún.
@@ -335,9 +335,23 @@ Coherencia T2 (Jay, 4 de noviembre de 2026, alpha.260, rama `jay/coherencia-t2`)
 - **Movimiento reducido:** la flecha está desde el primer fotograma, sin aparecer poco a poco. **Calidad ligera:** sin halo. La flecha y los iconos se hornean una vez (`fx-kit` `bake`); ningún degradado ni `shadowBlur`.
 - **Coste.** En `?anillo=1`, llamadas al lienzo por fotograma (mediana de tres) en cuatro sitios (3, 15, 35 y 65 km), antes y después: 758→753, 477→459, 3778→3771 y 1058→1046 a 390×844; 1481→1476, 761→742, 7377→7375 y 1948→1932 a 1280×800. Con el nivel 3 abierto, 755, 460, 3777 y 1049; 1476, 742, 7376 y 1932: menos o igual en los ocho. Tres flechas cuestan unas pocas llamadas (`flechas_smoke.py`).
 - **Guardado.** Ninguno nuevo. La marca usa `S.universeMap.mark`, como «Marcar» en el mapa.
-- **Fuera de T2.** La Brújula (poder de caja) sigue igual hasta la carga (T3). La columna y la brújula del anillo, el mini-mapa y las marcas del Viaje no son esta capa.
+- **Fuera de T2.** La Brújula (poder de caja) pasa a ser la [carga](#la-carga) en T3. La columna y la brújula del anillo, el mini-mapa y las marcas del Viaje no son esta capa.
 
 Pruebas: `tests/scanner-arrows.mjs` (elección, tope, una por cosa, separación, región sola, escena, blanco, «?», km de la boya, movimiento reducido, calidad ligera y que cada marca vieja ofrece a la capa), `tests/scanner-model.mjs` (nivel 3) y `tests/flechas_smoke.py` (390×844 y 1280×800). Los recorridos de Recorrer, Secretos del cielo, tanda A, sonidos raros, arreglos de la media hora y el Viaje comprueban que su marca entra en la capa. No probado en teléfono ni con personas.
+
+## La carga
+
+Coherencia, tanda T3 (alpha.262), con la decisión 4 de Jay aprobada: una caja, un poder, sin sorpresas.
+
+- **El radar siempre está.** El Escáner no necesita cajas: su nivel es el de la partida (1 al empezar, 2 tras el Viaje, 3 con los once lugares). La carga suma, no abre nada.
+- **La Brújula pasa a ser la Carga.** Abrir su caja pone el Escáner en su nivel más alto (4c: 1200 m, con nombres) durante 20 s de juego. El reloj es el del poder (`power-clock.js`): se para con un menú, una hoja o el escáner abierto. Al acabar vuelve el nivel de la partida.
+- **Una flecha, la de la capa.** Mientras dura, la [capa de flechas](#una-capa-de-flechas) lee el registro en 4c y da una flecha propia, blanca, con su distancia («900 m»), a lo más raro que no has encontrado (el primero del registro: rareza, luego distancia). Es de las tuyas (`EDGE_RANK.carga` 4,5: sigue en una escena, bajo el reto). Las otras flechas del nivel siguen; ninguna es dorada. La caja ya no dibuja flechas propias ni lleva su lista de lo raro.
+- **El Compañero señala igual.** Con el mismo registro, al alcance de la partida: una flecha a lo más raro no encontrado.
+- **Una caja, un poder, un aviso.** Las 16 sorpresas se retiran (`RETIRED_SURPRISES` las tiene todas; `surpriseFor` no da ninguna). Ninguna caja, natural o regalada, da sorpresa; ninguna se puede dar; no se dibujan ni suenan (fuera las cinco estelas). `#surpriseHud` conserva su id y queda oculto. El aviso de la caja es el de T4: «Carga · El Escáner ve lejos.», con su reloj.
+- **Guardados.** Sin migración: los ids `brujula` y `poder_brujula` se quedan (el logro pasa a llamarse «Carga»). `S.boxSurprises` se conserva tal cual (normalizado; un formato futuro, intacto): una sorpresa guardada activa simplemente termina y su tiempo y su punto de vuelta quedan en el guardado, sin leer. Ningún logro dependía de una sorpresa.
+- **Sonido.** `audio.js` sin tocar (sigue llamando a `surpriseStep`, que ya no toca nada). Se van las notas de las estelas de las sorpresas; nada más cambia.
+
+Pruebas: `tests/carga.mjs` (nombres e ids, nivel 4c desde cualquier partida, una flecha blanca a lo más raro, el Compañero, 20 s y vuelta), `tests/box-surprises.mjs` (sorpresas retiradas, guardado con una activa, formato futuro, poderes y probabilidades intactos), `tests/carga_smoke.py` y `tests/box_surprises_smoke.py` (390×844 y 1280×800; también 844×390). `micro_mix.py` comprueba que las estelas retiradas no suenan.
 
 ## Ganas de volver
 
@@ -413,7 +427,7 @@ Los resultados nombran lugar, colección y ronda; muestran umbrales reales y sig
 Rama `jay/coherencia-t4`, desde `jay/coherencia-t1` (alpha.259, con T0). Un solo estilo de aviso y una sola regla del oro.
 
 - **El aviso.** «Nombre · una frase.», en blanco, por la cola única (`notice-lane.js`). Sin «¡» ni «!» en ningún texto legible. La caja nombra su poder: «Cometa · Corre y suena.» (`BOX_LINES`, `boxLine`). Las bandas dicen «Nombre · Empiezan aquí.», una por cruce.
-- **Una caja, un aviso.** Su tarjeta tapa los HUD del poder y de la sorpresa; después se ve un reloj, el del poder (la sorpresa que te movió conserva «Volver»). Sus logros esperan sin leer en la Bitácora (`quietAchievements(ids)`).
+- **Una caja, un aviso.** Su tarjeta tapa los HUD del poder y de la sorpresa; después se ve un reloj, el del poder. Desde T3 no hay sorpresas ([la carga](#la-carga)). Sus logros esperan sin leer en la Bitácora (`quietAchievements(ids)`).
 - **El narrador** se ríe con el niño, nunca de él, y sin guiños de adulto. Habla en la Bitácora, en blanco tenue.
 - **El oro.** Solo lo ganado y que se queda: ★, ✦ ganadas, colores, compras, tarjetas del libro, logros, páginas y lo completo. En el aviso, una regla: el nombre (`<em>`) es blanco y `#toast[data-earned="true"] em` dorado; la cola marca `data-earned` con la categoría `ganado` u `options.earned`. «✦ 0» va en blanco tenue (`.spark-count.empty`).
 - **En blanco:** estados (`#routeAuto` pulsado, `.fxpad i`), punteros (Brújula, pista de las travesuras), poderes de una caja (pincel, Campo, HUD del poder), la reliquia aún sin ganar, las casas apagadas de los campamentos, el festival de luces, el anillo del evento Eclipse, el destello devuelto del púlsar y el bucle. La rareza mítica es la **Luna blanca** (id `luna`).

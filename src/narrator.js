@@ -16,7 +16,7 @@ export const NARRATOR_LINES=Object.freeze({
  silencio:'Un minuto quieto en plena fiesta. Muy misterioso. Muy raro.',
  poder_cometa:'Fuiste tan rápido que tu sombra llegó tarde.',
  poder_iman:'Las cosas pequeñas te siguen. No te lo creas mucho.',
- poder_brujula:'Seguiste unas flechas. Las flechas están orgullosas.',
+ poder_brujula:'El Escáner vio lejos por ti.',
  fx_freeze:'Congelaste la música. Nadie te lo pidió. Bien hecho.',
  fx_chorus:'Chorus. Ahora todo suena dos veces. Hasta los aplausos.',
  robot:'Voz de robot. Los robots del universo te saludan.',
