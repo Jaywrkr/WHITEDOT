@@ -139,9 +139,10 @@ const approvedVC='f98df70705008a893bad88ed39e31f11039f9dca';
 const rebasedVC=new Set(['src/main.js','src/render.js']);
 // Lo que hay más lejos, tanda D (Jay, 4 Nov 2026, alpha.252): 60 km and more. main starts viaje-d.js, the frame gives it
 // its tick, its drawing and asks it how the cube moves inside a portal of another rule (runtime.motionRule, null
-// elsewhere), and the offline shell lists three new modules. Held to the code commit of jay/viaje-d; the music's
-// contracts are untouched (the notes play on top, as the album of sounds does).
-const approvedVD='fbd69212089e7d8e3f27cfefdf7b4f7ca055c314';
+// elsewhere), and the offline shell lists three new modules. Held to the commit that merges tanda C (jay/viaje-c, with
+// B and A) into jay/viaje-d, so main, the frame and the shell carry the four batches; the music's contracts are
+// untouched (the notes play on top, as the album of sounds does).
+const approvedVD='0d60090c096f9267f02b3a6571a737c8d65f1fc8';
 const rebasedVD=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
