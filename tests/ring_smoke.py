@@ -57,6 +57,12 @@ try:
    walk_in(page,'llanura');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000);page.locator('#portalFree').click()
    page.wait_for_function("__r.places().run?.free===true",timeout=5000);page.wait_for_timeout(300);assert not page.evaluate("document.body.classList.contains('place-round')"),'no bar in Libre'
    page.locator('#bMenu').click();page.locator('#bLeavePlace').click();page.wait_for_function("!__r.places().run",timeout=3000)
+   # Cerrar on a complete place's card keeps it closed while you stand in the portal (alpha.256: walking in with the keys,
+   # it reopened at once and only entering the round got you out).
+   s=spot(page,'llanura');page.evaluate(f"()=>{{__r.S.wx={s['x']+100};__r.S.wy={s['y']};}}");page.wait_for_timeout(300)
+   page.keyboard.down('ArrowLeft');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=5000);page.keyboard.up('ArrowLeft');page.wait_for_timeout(400)
+   page.locator('#portalClose').click();page.wait_for_timeout(900)
+   assert page.evaluate("document.getElementById('mPortal').hidden") and not page.evaluate('__r.places().run'),'closing the portal card leaves it closed'
    # With ★★, a portal asks Jugar or Maestro.
    page.evaluate("()=>{__r.S.lugares.stars.bosque[1]=true;}");walk_in(page,'bosque');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000)
    assert page.locator('#portalStars .got').count()==2;page.locator('#portalMaestro').click();page.wait_for_function("__r.places().run?.maestro===true&&__r.places().run.id==='bosque'",timeout=5000)
