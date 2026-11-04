@@ -175,9 +175,9 @@ const rebasedMN=new Set(['src/living-discoveries.js']);
 // top level for 20 s and one white arrow of the arrow layer to the rarest unfound thing; the companion points with the
 // same registry) and a box gives one power: the sixteen surprises are retired (saves kept, a saved active one ends).
 // Power ids kept; no audio.js change; the offline shell changes only its release key. Held to the code commit of
-// jay/coherencia-t3 (from jay/coherencia-t4 fbec1b7).
-const approvedT3='f5f8f9aa3fcc673e67bb8714c66bb75b8a821c83';
-const rebasedT3=new Set(['src/box-surprises-model.js','src/box-surprises.js','src/cajas.js','src/celebration.js','src/data.js','src/expansion-music.js','src/i18n-en.js','src/narrator.js','src/scanner-arrows-model.js','src/scanner-arrows.js','src/scanner.js']);
+// jay/coherencia-t3 (from jay/coherencia-t4 fbec1b7); world-sheet.js gives the place's colour in full (pigment 1).
+const approvedT3='01a5d392c970d9add5fa26b7ed4625848d80497b';
+const rebasedT3=new Set(['src/box-surprises-model.js','src/box-surprises.js','src/cajas.js','src/celebration.js','src/data.js','src/expansion-music.js','src/i18n-en.js','src/narrator.js','src/scanner-arrows-model.js','src/scanner-arrows.js','src/scanner.js','src/world-sheet.js']);
 // Avisos y oro (coherencia T4, Jay, 4 Nov 2026, alpha.261): one notice style («Nombre · una frase.», no exclamations),
 // one box one notice, one band notice per crossing, a kind narrator, gold only for what is earned (one rule in the
 // notice lane, white states and pointers, Luna blanca, one card ink table) and canvas text at 12 px. No save or
