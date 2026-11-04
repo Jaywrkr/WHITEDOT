@@ -142,7 +142,7 @@ const rebasedVC=new Set(['src/main.js','src/render.js']);
 // elsewhere), and the offline shell lists three new modules. Held to the commit that merges tanda C (jay/viaje-c, with
 // B and A) into jay/viaje-d, so main, the frame and the shell carry the four batches; the music's contracts are
 // untouched (the notes play on top, as the album of sounds does).
-const approvedVD='0d60090c096f9267f02b3a6571a737c8d65f1fc8';
+const approvedVD='1dc4b4acfb900792c249124d3de58d8286eff586';
 const rebasedVD=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
