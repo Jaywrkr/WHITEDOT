@@ -128,7 +128,7 @@ const rebasedVA=new Set(['src/main.js','src/render.js']);
 // offline shell lists two new modules. Held to the commit that merges tanda A (jay/viaje-a) into jay/viaje-b, so main,
 // the frame and the shell carry both batches; the music's contracts are untouched (the notes play on top, and a faded
 // region lowers the whole output through runtime.musicDuck, the alpha.246 line).
-const approvedVB='f3c8414e7b1a504d58682fcbaa6880e06073bf23';
+const approvedVB='5ccbd53b4dc7ae9ae00a947260bbd77e81ca030c';
 const rebasedVB=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
