@@ -30,7 +30,9 @@ try:
    spot=page.evaluate(FIND,biome);assert spot,biome
    page.evaluate("p=>{const r=__r;r.S.wx=p.x;r.S.wy=p.y;}",spot);page.wait_for_timeout(250);page.evaluate(HIDE)
    assert page.evaluate(f"__r.liveEncounterSpawn('{kind}')"),kind;page.wait_for_timeout(350)
-   st=page.evaluate("__r.liveEncounterState()");assert st['title']==title and st['hint'],st['title']
+   st=page.evaluate("__r.liveEncounterState()");assert st['title']==title,st['title']
+   # T0 (alpha.258): the hint is the encounter's line, left out only when it would repeat the title word for word.
+   assert st['line'] and st['hint'] in (st['line'],''),(title,st['hint'],st['line'])
    f=page.evaluate(FRAME);t=[x for x in f['texts'] if x['t']==title]
    # The notice: white, 12 px, whole on the phone; the ring of the time left and the white arrow by the cube.
    assert t and t[0]['fill']=='#ffffff' and '12px' in t[0]['font'] and t[0]['w']<=358,(kind,f['texts'])

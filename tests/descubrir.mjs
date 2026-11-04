@@ -99,4 +99,6 @@ assert.ok(read('src/journal.js').includes("runtime.discoverSection?.()"));
 const umap=read('src/universe-map.js');assert.ok(umap.includes('runtime.rumorsForMap?.()')&&umap.includes("case 'rumor':")&&umap.includes('setMapMark'));assert.ok(read('src/universe-map-art.js').includes("case 'rumor':"));
 const code=read('src/descubrir.js')+read('src/descubrir-model.js');assert.ok(!/Math\.random|runtime\.rng|\brnd\(/.test(code),'hashKey only');
 Math.random=random;
+// T0 (bug 14): a rumor never says the verb twice («zumba una estrella que zumba»).
+for(const d of SOUNDS){const t=soundSay(d),w=t.split(' ');assert.notEqual(w[0],w.at(-1),t);}assert.equal(soundSay(soundById('vacio:zumba')),'suena una estrella que zumba');
 console.log('PASS Descubrir: 55 sounds (5 per biome) placed with hashKey in their biome, rarer far ones, notes in the scale far under the music; rewards by the universe rule (8 ✦ a new sound, 1 a repeat, none in a level); album and rumor saves migrate and keep a future version; rumors point at a real figure, sound, landmark, rarity or biome at the distance and direction they say, rare far away, three at most, arriving fulfils; English for all; wired once');

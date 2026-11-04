@@ -10,6 +10,7 @@
 import {PLACE_IDS,complete,allComplete} from './places.js';
 import {RHYTHMS,PLACE_RHYTHMS} from './journey-rhythm.js';
 import {hashKey} from './universe-regions.js';
+import {ON_TIME} from './journey-pulse.js';
 export const RITMO_VERSION=1;
 // The Cueva already plays from memory (its game sings a new phrase each bar and asks for it back): no Eco there.
 export const ECHO_PLACES=Object.freeze(PLACE_IDS.filter(id=>id!=='cueva'));
@@ -19,8 +20,9 @@ export const GHOST_EVERY=600,GHOST_MAX=160,GHOST_FADE=1500,GHOST_COORD=1e6;
 // The combo: from the eighth hit in a row; the trail grows by two points a hit, up to 40, and fades in 0,8 s.
 export const COMBO_AT=8,TRAIL_BASE=6,TRAIL_STEP=2,TRAIL_MAX=40,TRAIL_FADE=800;
 // The duel: its portal sits in the centre of the ring; it opens within 40 units, and walking 1200 away ends it, losing
-// nothing. A step of the answer is on time within 90 ms of its eighth.
-export const DUEL_REACH=40,DUEL_LEAVE=1200,DUEL_WINDOW=.09;
+// nothing. A step of the answer is on time within the game's one window of its eighth (T0, bug 19: it was ±90 ms, the
+// rest of the game ±80).
+export const DUEL_REACH=40,DUEL_LEAVE=1200,DUEL_WINDOW=ON_TIME;
 // ?rapido=1 and ?rapido=2 play four of the eleven: the first, the Vacío, the Faros and the Cueva.
 export const DUEL_RAPID=Object.freeze(['llanura','vacio','faros','cueva']);
 const plain=v=>!!v&&typeof v==='object'&&!Array.isArray(v);

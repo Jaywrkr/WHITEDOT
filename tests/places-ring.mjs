@@ -44,5 +44,7 @@ r.S.mode='camino';r.enterWorld=()=>{r.S.mode='world';};const pos=[r.S.wx,r.S.wy]
 
 const {routeCompass}=await import('../src/places-ring.js');for(const [W,H] of [[320,568],[390,844],[844,390],[1280,800]])for(let i=0;i<8;i++){const a=i*Math.PI/4,e=routeCompass(Math.cos(a)*6000,Math.sin(a)*6000,W,H);assert(Math.abs(Math.hypot(e.x-W/2,e.y-H/2)-48)<1e-6);assert(Math.cos(e.angle-a)>.999);}
 r.S.destination='studio';assert.equal(r.ringRoute(),null,'a chosen destination takes priority over the suggested ring');r.cancelDestination=()=>{r.S.destination=null;};assert(r.ringGuide('jardin'));assert.equal(r.ringRoute().id,'jardin','following the ring replaces the old destination');
+// T0 (bug 11): while a round's card waits for its drop, the route does not move on to the next place yet.
+{const due=r.placeCardDue;r.placeCardDue=()=>true;assert.equal(r.ringRoute(),null,'no new route before the card');r.placeCardDue=due;assert.notEqual(r.ringRoute(),null);}
 
 assert.deepEqual(routeCompass(300,400,390,844,{x:18,y:-12}),{...routeCompass(300,400,390,844),x:routeCompass(300,400,390,844).x+18,y:routeCompass(300,400,390,844).y-12});

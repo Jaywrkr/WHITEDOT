@@ -1,16 +1,16 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
-import {BOX_SURPRISES,SURPRISE_IDS,surpriseFor,normalizeSurprise,surpriseStyle} from './box-surprises-model.js';
+import {BOX_SURPRISES,SURPRISE_IDS,RETIRED_SURPRISES,surpriseFor,normalizeSurprise,surpriseStyle} from './box-surprises-model.js';
 import {createPowerClock} from './power-clock.js';
 export function initialize(runtime){
  const clock=createPowerClock(BOX_SURPRISES,{stack:1}),$=runtime.$,path=[],marks=[];let owner=null,last=null,prior=null,returnPoint=null,lastNote=null;
  const reduced=()=>runtime.S.reducedMotion||prefersReducedMotion();
  const surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie';
  function ensure(){if(owner===runtime.S)return;owner=runtime.S;const raw=normalizeSurprise(owner.boxSurprises);owner.boxSurprises=raw;clock.restore(raw);path.length=marks.length=0;last=null;lastNote=null;returnPoint=raw.returnPoint&&Number.isFinite(raw.returnPoint.x)&&Number.isFinite(raw.returnPoint.y)?{...raw.returnPoint}:null;prior=null;}
- const ids=()=>{ensure();return SURPRISE_IDS.filter(id=>clock.powers[id]>clock.now());};
+ const ids=()=>{ensure();return SURPRISE_IDS.filter(id=>!RETIRED_SURPRISES.has(id)&&clock.powers[id]>clock.now());};
  function snapshot(){ensure();const raw=runtime.S.boxSurprises;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw.remaining,...data.remaining},elapsed:{...raw.elapsed,...data.elapsed},returnPoint};}
  function ui(){const current=ids()[0],panel=$('surpriseHud');if(!panel)return;panel.hidden=!current||!surface()||document.hidden||!!runtime.noticeLane?.inspecting||!!openSurface('.modal:not([hidden])');if(current){$('surpriseName').textContent=BOX_SURPRISES[current].name;$('surpriseTime').textContent=Math.ceil((clock.powers[current]-clock.now())/1000)+' s';$('surpriseUndo').textContent=returnPoint?'Volver':'Deshacer';}}
  function clear(returning=false){ensure();if(owner.boxSurprises?.version>1)return false;if(returning&&returnPoint){if(!runtime.travelPracticePoint?.(returnPoint))return false;returnPoint=null;}clock.clear();path.length=marks.length=0;last=null;owner.boxSurprises=snapshot();ui();runtime.save?.();return true;}
- function give(id){ensure();if(!Object.hasOwn(BOX_SURPRISES,id)||owner.boxSurprises?.version>1)return false;const def=BOX_SURPRISES[id];if(def.teleport){if(!runtime.canPracticeTravel?.())return false;const old={x:owner.wx,y:owner.wy,layer:owner.layer||'superficie'};let point=null;const rng=runtime.rng(runtime.seedOf('box:surprise:trip:v1:'+old.x+','+old.y));for(let i=0;i<12;i++){const a=rng()*Math.PI*2,d=900+rng()*1500,x=old.x+Math.cos(a)*d,y=old.y+Math.sin(a)*d;if(Math.abs(x)>1e12-1e6||Math.abs(y)>1e12-1e6||runtime.regionOfPos(x,y).sea)continue;point={x,y,layer:'superficie'};break;}if(!point||!runtime.travelPracticePoint(point))return false;returnPoint=old;}
+ function give(id){ensure();if(!Object.hasOwn(BOX_SURPRISES,id)||RETIRED_SURPRISES.has(id)||owner.boxSurprises?.version>1)return false;const def=BOX_SURPRISES[id];if(def.teleport){if(!runtime.canPracticeTravel?.())return false;const old={x:owner.wx,y:owner.wy,layer:owner.layer||'superficie'};let point=null;const rng=runtime.rng(runtime.seedOf('box:surprise:trip:v1:'+old.x+','+old.y));for(let i=0;i<12;i++){const a=rng()*Math.PI*2,d=900+rng()*1500,x=old.x+Math.cos(a)*d,y=old.y+Math.sin(a)*d;if(Math.abs(x)>1e12-1e6||Math.abs(y)>1e12-1e6||runtime.regionOfPos(x,y).sea)continue;point={x,y,layer:'superficie'};break;}if(!point||!runtime.travelPracticePoint(point))return false;returnPoint=old;}
   else returnPoint=null;
   clock.clear();clock.give(id);path.length=0;last=null;owner.boxSurprises=snapshot();ui();return true;
  }

@@ -41,6 +41,7 @@ try:
    n=page.evaluate('__r.S.pathCrystals.length')
    assert page.evaluate('__r.inWorld()')==(n==10)
   assert page.evaluate('__r.inWorld()')
+  assert page.evaluate('!!__r.S.ach.tope'),'T0 (bug 4): the tenth crystal of the Camino earns «tope», so Ámbar can be worn'
   assert page.locator('#mHelpW').is_hidden()
   assert page.locator('#mCap').is_hidden()
   assert page.evaluate('__r.S.sparks')==0,'H1 (alpha.233): the Camino gives light, never ✦'
@@ -56,6 +57,6 @@ try:
   assert page.locator('#returnEntrance .return-signature').inner_text()=='.simple'
   assert not errors,errors
   browser.close()
- print('PASS real Camino pulses, partial reload, automatic tenth-crystal entry, no prompts, responsive wallet and .simple signature')
+ print('PASS real Camino pulses, partial reload, automatic tenth-crystal entry (it earns Ámbar), no prompts, responsive wallet and .simple signature')
 finally:
  server.shutdown();server.server_close()

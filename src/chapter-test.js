@@ -1,5 +1,6 @@
 import {CHAPTERS} from './journey-chapters.js';
 import {PLACES} from './places.js';
+import {EDITION} from './edition.js';
 // A chapter on its own, to test it (plan F0, docs/MUNDO.md): «?capitulo=lago» opens the Journey right in that chapter,
 // with the ones before it kept, on a save of its own and without an account, so it never touches the player's game
 // or the cloud. Every load starts the chapter again from an empty bar.
@@ -19,9 +20,10 @@ export function placeTest(search=globalThis.location?.search){try{const q=new UR
 // twentieth, the Camino asks for two crystals instead of ten and a kept chapter opens its portal after one second
 // instead of waiting for its close to sound (journey-chapters.js), and the Vacío keeps its short sky after a reload. «?rapido=1» and the normal game keep both.
 export const RAPID_KEY='kubono:rapido',RAPID_SCALE=.2,RAPID_SCALE_2=.05,RAPID_CAMINO=2;
-export function rapidLevel(search=globalThis.location?.search){try{const v=new URLSearchParams(search||'').get('rapido');return v==='2'?2:v==='1'?1:0;}catch(_){return 0;}}
-export function rapidTest(search=globalThis.location?.search){return rapidLevel(search)>0;}
-export function rapidScale(search=globalThis.location?.search){const v=rapidLevel(search);return v===2?RAPID_SCALE_2:v===1?RAPID_SCALE:1;}
+// T0 (Kubono coherente, bug 20): a test tool, so the sale edition ('store', stamped by its packager) ignores it.
+export function rapidLevel(search=globalThis.location?.search,edition=EDITION){if(edition!=='web')return 0;try{const v=new URLSearchParams(search||'').get('rapido');return v==='2'?2:v==='1'?1:0;}catch(_){return 0;}}
+export function rapidTest(search=globalThis.location?.search,edition=EDITION){return rapidLevel(search,edition)>0;}
+export function rapidScale(search=globalThis.location?.search,edition=EDITION){const v=rapidLevel(search,edition);return v===2?RAPID_SCALE_2:v===1?RAPID_SCALE:1;}
 // The Camino's door with «?rapido=2»: once two crystals are kept, the other eight count as kept too (marked «rapido:»),
 // so everything that reads ten crystals (the World's door, the Journey's bar) sees the Camino done.
 export function fillRapidCamino(S){const list=S?.pathCrystals;if(!Array.isArray(list)||list.length<RAPID_CAMINO||list.length>=10)return false;for(let i=list.length;i<10;i++)list.push('rapido:'+i);return true;}

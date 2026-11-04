@@ -84,6 +84,8 @@ export function initialize(runtime){
  function win(d){if(!duel||duel!==d)return;const score=duel.score;let fresh=false,shareNow=duelShare(score);
   const ok=commit(s=>{const k=duelKeep(s.duel,score,runtime.S.todayKey||'');s.duel=k.kept;fresh=k.fresh;});duel=null;fadeOut();combo={streak:0};
   if(!ok){runtime.toast?.('No se pudo guardar el duelo. Inténtalo otra vez.',{level:2,force:true});return;}
+  // T0 (bug 7): the duel played today lights the day's star too.
+  {const before=runtime.S.lastDay;runtime.onFirstLight?.();if(runtime.S.lastDay!==before)runtime.save?.();}
   result({score,share:shareNow,fresh});runtime.hud?.();}
  // ---------- the sheets ----------
  function sheet(kind){const box=$('mDuel');if(!box)return false;const d=own().duel,lines=$('duelLines'),add=t=>{const p=doc.createElement('p');p.textContent=t;lines.appendChild(p);};lines.replaceChildren();box.dataset.kind=kind;

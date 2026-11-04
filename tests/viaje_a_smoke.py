@@ -134,12 +134,12 @@ try:
     # --- 9 · The Bitácora: every band reached, with its line.
     # A's six bands reached at 11 km; later batches (tanda B from 12 km, C from 30 km, D from 60 km) are still «?» with
     # their km only.
-    j=bandas(page);assert {'12','15','20','25','30','60'}<=set(j['missing']) and all(float(k)>10 for k in j['missing']) and j['summary'].startswith('Lo que hay más lejos · 6 de '),j
+    j=bandas(page);assert {'12','15','20','25','30','60'}<=set(j['missing']) and all(float(k)>10 for k in j['missing']) and j['summary']=='Lo que hay más lejos',j
     assert set(j['rows'])-{'region-apagada'}=={'bengala','interruptor','radar','pelota','luces','tablon'},j['rows'];assert '1 gol' in j['text'] and '1 encargo cumplido' in j['text'],j['text']
     if sound:assert 'Mejor racha · 5' in j['text'],j['text']
     if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{width}.png')
    else:
-    j=bandas(page);assert j['summary'].startswith('What lies farther · ') and 'Balls of light' in j['text'],j
+    j=bandas(page);assert j['summary']=='What lies farther' and 'Balls of light' in j['text'],j
    # --- 10 · Kept on reload.
    page.evaluate("__r.save()");page.reload();page.wait_for_function("!!window.__r?.viajeState",timeout=30000);page.evaluate(FREE)
    s=st(page)['book'];assert s['goals']==1 and s['retos']['won']==(1 if en else 2) and s['flare'] is None and s['flares']==1,s

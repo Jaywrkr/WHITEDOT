@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import {initialize} from '../src/live-encounters.js';
 import {drawLive,liveTimeLeft} from '../src/live-encounters-art.js';
-import {LIVE_ENCOUNTERS,LIVE_WORDS,LIVE_REWARD,LIVE_FAREWELL,LIVE_NOTICE,LIVE_SUMMARY,LIVE_EVERY,liveTitle,liveSummary,liveOutcome,liveDefinition,createLive,liveInterval} from '../src/live-encounters-model.js';
+import {LIVE_ENCOUNTERS,LIVE_WORDS,LIVE_REWARD,LIVE_FAREWELL,LIVE_NOTICE,LIVE_SUMMARY,LIVE_EVERY,liveTitle,liveHint,liveSummary,liveOutcome,liveDefinition,createLive,liveInterval} from '../src/live-encounters-model.js';
 globalThis.document={hidden:false,querySelector:()=>null};
 // Words: every encounter has a short name and its verb as an order; the summary for every ending.
 assert.equal(Object.keys(LIVE_WORDS).length,33);
@@ -27,8 +27,10 @@ const BIOMES=LIVE_ENCOUNTERS.filter(d=>d.verb==='perseguir').map(d=>({id:d.biome
 function game(){const r={S:{mode:'world',todayKey:'2026-10-28',layer:'superficie',wx:0,wy:0,sparks:0,sound:false,sparkEconomy:{version:1,earned:0,spent:0,log:[]}},
  worldIdentity:{seed:'clear',generation:2},BIOMES,seedOf,waves:[],regionOfPos:()=>({z:0,sea:false,genre:'deep'}),inWorld(){return true;},save(){return true;},
  get sparkEconomy(){return this.S.sparkEconomy;},toast(){},recordElement(){return true;},showSparkPickup(){},chordTones:()=>[57,60,64,67],vel:n=>n,hookInst(){},beatSoon(){},MU:{step:0},ac:{state:'running'}};initialize(r);return r;}
+// T0 (bug 22): a hint is shown only when it says something the title does not.
+{assert.equal(liveHint('polilla'),'');assert.equal(liveHint('cometa'),liveDefinition('cometa').line);for(const d of LIVE_ENCOUNTERS){const h=liveHint(d.id);assert(h===''||h===d.line,d.id);}}
 const tick=(r,seconds)=>{for(let i=0;i<Math.round(seconds/.05);i++)r.liveTick(.05);};
-{const r=game();assert(r.liveEncounterSpawn('polilla'));let st=r.liveEncounterState();assert.equal(st.title,'Polilla de luz · atrápala');assert.equal(st.hint,liveDefinition('polilla').line);assert.equal(st.summary,'');
+{const r=game();assert(r.liveEncounterSpawn('polilla'));let st=r.liveEncounterState();assert.equal(st.title,'Polilla de luz · atrápala');assert.equal(st.hint,'','T0 (bug 22): the line only repeats the title, so it is not said twice');assert.equal(st.line,liveDefinition('polilla').line);assert.equal(st.summary,'');
  // Caught with a pulse on time: a summary with its sparks, once the burst is over; the notice goes as soon as it ends.
  const s=st.scene;r.waves.push({x:s.x,y:s.y,origin:'player',beat:true});r.liveTick(.05);st=r.liveEncounterState();assert.equal(st.scene.stage,'caught');assert.equal(st.title,'');
  tick(r,LIVE_FAREWELL+.1);st=r.liveEncounterState();assert(!st.scene);assert.equal(st.summary,'Polilla · atrapada · +8 ✦');assert.equal(r.S.sparks,8);

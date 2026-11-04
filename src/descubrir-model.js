@@ -115,8 +115,9 @@ export const SOUNDS=Object.freeze(RAW.map((s,i)=>Object.freeze({...s,id:s.biome+
 const SOUND_BY_ID=new Map(SOUNDS.map(s=>[s.id,s]));
 export const soundById=id=>SOUND_BY_ID.get(id)||null;
 export const biomeSounds=biome=>SOUNDS.filter(s=>s.biome===biome);
-// How a rumor says a sound: «canta un grillo de cristal».
-export const soundSay=s=>s.say+' '+s.a;
+// How a rumor says a sound: «canta un grillo de cristal». T0 (bug 14): when the name already ends in its verb («una
+// estrella que zumba») it says «suena» first («se oye» for one that already «suena»), never the verb twice.
+export const soundSay=s=>s.a.endsWith(' '+s.say)?(s.say==='suena'?'se oye ':'suena ')+s.a:s.say+' '+s.a;
 // The weight of each place in the series by distance from the origin: the fourth rarer before 5 km; the fifth much rarer
 // before 20 km (decision 11: rare things from 20 km).
 export function soundWeight(n,km=0){if(n===4)return km>=20?1.2:.12;if(n===3)return km>=5?1:.35;return 1;}

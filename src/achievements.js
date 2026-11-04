@@ -32,7 +32,7 @@ export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH
  // Panel 10 (P8, D3): one achievement per notice, never a count; the rest wait, unread, in the Bitácora.
  function announce(){if(!pending.length||runtime.journeyQuiet?.()||runtime.placeRun?.()||runtime.placeCardDue?.())return;if(calm()){pending=[];return;}const state=runtime.S;let ids=[...new Set(pending)];
   if(firstWorld()){const pick=achievementPick(ids,metaOf);if(!pick){pending=[];return;}if(worldSeconds()-lastNotice<ACH_GAP)return;ids=[pick,...ids.filter(id=>id!==pick)];}
-  const a=runtime.ACH.find(a=>a[0]===ids[0]),escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const accepted=runtime.toast?.('✦ Logro · '+escape(a?.[1]||'Nuevo descubrimiento'),{level:2,category:'logros',coalesce:true,ttl:120000,valid:()=>runtime.S===state&&ids.some(id=>!seen.includes(id))});if(accepted!==false){pending=[];lastNotice=worldSeconds();}}
+  const a=runtime.ACH.find(a=>a[0]===ids[0]),escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const accepted=runtime.toast?.('Logro · '+escape(a?.[1]||'Nuevo descubrimiento'),{level:2,category:'logros',coalesce:true,ttl:120000,valid:()=>runtime.S===state&&ids.some(id=>!seen.includes(id))});if(accepted!==false){pending=[];lastNotice=worldSeconds();}}
  sync();
  function check(dt=2){if(owner!==runtime.S)sync();clock+=dt;
   // The first half hour counts only in the free World, after the Journey, with the game in view.

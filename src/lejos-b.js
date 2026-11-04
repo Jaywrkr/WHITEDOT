@@ -15,6 +15,7 @@
 // while a postcard, a sky song or a grey region lasts, the encounters and the figures wait (lejosBBusy).
 import {glow,radial,contactShadow} from './fx-kit.js';
 import {drawAuroraSky} from './ambient-art.js';
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
@@ -117,8 +118,9 @@ export function initialize(r){
   if(summary&&clock>summary.until)summary=null;glows=glows.filter(g=>clock-g.at<1.4);flights=flights.filter(f=>clock-f.at<1);if(reviving&&clock>reviving.until)reviving=null;if(greeting&&clock>greeting.until)greeting=null;if(effect&&clock>=effect.until)effect=null;
   const p=me(),pulses=[];for(const w of r.waves||[])if(!seen.has(w)){seen.add(w);if(w.origin==='player')pulses.push({x:w.x,y:w.y,beat:!!w.beat});}
   if(!ok()){if(ducked){ducked=false;deadDuck(r,false);}return;}
-  // The fusion opens the first time you reach 20 km.
-  const q=book();if(!fusionOpen(q)&&kmOf(p)>=20){const res=commit(q=>openFusion(q,kmOf(p),today()));if(res){if(words())r.toast?.('<em>Fusión de sonidos</em> · En tu Refugio, en «Más»',{level:2,category:'ganado'});syncHouse(true);}}
+  // The fusion opens the first time you reach 20 km. T0 (bug 15): its band notice tells it («La fusión de sonidos te espera
+  // en el Refugio.»); no second toast.
+  const q=book();if(!fusionOpen(q)&&kmOf(p)>=20){const res=commit(q=>openFusion(q,kmOf(p),today()));if(res)syncHouse(true);}
   const list=near(p,HAB_LEAVE+400),other=scene();
   const dead=list.find(s=>s.kind==='apagada'&&s.d<=DEAD_R&&!revived(q,s.id));
   if(dead&&!other)stepDead(dead,p,pulses);
@@ -174,7 +176,7 @@ export function initialize(r){
   if(h?.done){const g=greeting&&greeting.id===site.id,p=me(),s=g?at((site.x*2+p.x)/3,(site.y*2+p.y)/3):{x:q.x+Math.cos(t*.6)*NEST_R*.4,y:q.y+Math.sin(t*.6)*NEST_R*.25};creature(c,h.c,s.x,s.y,t);out.habitat={id:site.id,creature:h.c,x:Math.round(s.x),y:Math.round(s.y),greet:!!g};return;}
   for(const el of elementsAt(site)){if(placed.has(el.el))continue;const s=at(el.x,el.y);if(onScreen(s))element(c,el.el,s.x,s.y,.6+.35*pulse(el.k));}
   out.habitat={id:site.id,x:Math.round(q.x),y:Math.round(q.y),placed:placed.size,total:recipe.length};}
- function drawSong(c,site,q,out){const stones=stonesAt(site),now=r.ac?r.ac.currentTime:0,beat=(r.SIX||.125)*4;let lit=-1;
+ function drawSong(c,site,q,out){const stones=stonesAt(site),now=r.ac?audibleTime(r.ac):0,beat=(r.SIX||.125)*4;let lit=-1;
   if(r.S.sound&&hint&&hint.id===site.id){const k=Math.floor((now-hint.t)/beat);if(k>=0&&k<4)lit=k;}else if(!r.S.sound){const k=Math.floor((clock%5)/.5);if(k<4)lit=k;}
   for(const s of stones){const p=at(s.x,s.y),done=song.site===site.id&&s.k<song.next,next=song.site===site.id?song.next===s.k:s.k===0;if((done||lit===s.k)&&!light())glow(c,p.x,p.y,16,'#ffffff',lit===s.k?.45:.2,true);contactShadow(c,p.x,p.y+6,7,2,.4);c.globalAlpha=done||lit===s.k?1:.5;c.fillStyle=done?'#ffffff':lit===s.k?'#ffffff':'#55555c';c.fillRect(p.x-4,p.y-4,8,8);
    c.globalAlpha=.6;c.strokeStyle='#ffffff';c.lineWidth=1;c.strokeRect(p.x-4.5,p.y-4.5,9,9);if(next&&!(effect&&effect.id===site.id)){c.globalAlpha=.45*pulse(s.k);c.beginPath();c.arc(p.x,p.y,11,0,TAU);c.stroke();}}

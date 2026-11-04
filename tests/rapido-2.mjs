@@ -19,3 +19,7 @@ assert.equal(normalizeRelease({total:1,released:0}).total,1);assert.equal(normal
 assert.equal(normalizeRelease({total:RELEASE_MIN}).total,RELEASE_MIN);assert.equal(normalizeRelease({total:99}).total,24);
 assert.equal(normalizeRelease({total:0}).total,0);assert.equal(normalizeRelease({total:-3}).total,0);assert.equal(normalizeRelease({total:1.5}).total,0);
 console.log('PASS ?rapido=2: two Camino crystals, the portal after one second, the short Vacío kept after a reload; ?rapido=1 and the normal game unchanged');
+// T0 (bug 20): «?rapido» is a test tool. In the sale edition it does nothing: the whole game, at full length.
+assert.equal(rapidLevel('?rapido=2','store'),0);assert.equal(rapidLevel('?rapido=1','store'),0);assert.equal(rapidTest('?rapido=1','store'),false);assert.equal(rapidScale('?rapido=2','store'),1);
+assert.equal(rapidLevel('?rapido=2','web'),2);assert.equal(rapidLevel('?rapido=1'),1);
+console.log('PASS rapido: off in the sale edition');

@@ -77,6 +77,9 @@ const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().
   if(!path&&runtime.crystalTransaction)tickChains();
   // «?rapido=2» (alpha.230): two crystals open the Camino's door.
   if(path&&runtime.rapidLevel===2&&fillRapidCamino(S())){runtime.save?.();runtime.hud?.();completed=true;}
+  // T0 (Kubono coherente, bug 4): the tenth crystal of the day's Camino earns «tope», the achievement Ámbar asks for
+  // (its hint: «Completa el Camino de hoy»). Before, only the dead light code gave it.
+  if(completed)runtime.unlock?.('tope');
   if(completed&&door){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';feedback=[];}
  }
 // Visual 1 (alpha.250): a hit sparks a little on the shared layer; the break pops (no pop with reduced motion).

@@ -149,7 +149,7 @@ try:
     go(page,ca['x']+3000,ca['y']);j=bandas(page)
     if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{lang}-{width}.png')
     assert {'pulsar','asteroide','tirolina','polvo','kit'}<=set(j['rows']),j['rows']
-    if en:assert j['summary'].startswith('What lies farther · ') and 'Tool kit' in j['text'] and 'Net' in j['text'],j
+    if en:assert j['summary']=='What lies farther' and 'Tool kit' in j['text'] and 'Net' in j['text'],j
     else:
      for line in ['Mejor racha · ','1 núcleo · 1 de 7 clases','1 tirolina tendida · 1 viaje','1 hallazgo bajo el polvo','Red · 1 recogida']:assert line in j['text'],(line,j['text'])
    # --- 8 · Kept on reload (once, on the phone).
