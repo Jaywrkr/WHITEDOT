@@ -58,6 +58,10 @@ export function initialize(runtime){
   for(const e of runtime.skySecretCoordsForMap?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
   // Recorrer lejos (alpha.245): the rest satellites you visited (recorrer.js); from inside one, its door leads to the others.
   for(const e of runtime.satellitesForMap?.()||[])out.push({kind:'satellite',id:e.id,x:e.x,y:e.y,name:e.name,here:e.here});
+  // Lo que hay más lejos (alpha.248): what each batch of the bands shows, as rumors are (your flare, an order's buoy).
+  for(const e of runtime.bandMapPoints?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
+  // Lejos del origen (alpha.249): the regions you revived and the habitats where a creature lives (lejos-b.js).
+  for(const e of runtime.lejosBForMap?.()||[])out.push({...e});
   if(usable()&&q.mark)out.push({kind:'mark',id:'mark',x:q.mark.x,y:q.mark.y,name:q.mark.name});
   return {items:out,center,next:state?.next?portals.find(p=>p.id===state.next)||null:null};
  }
@@ -89,6 +93,7 @@ export function initialize(runtime){
   case 'sky':return it.done?'Constelación · completa':`Constelación · ${it.lit} de ${it.total}`;
   case 'live':return it.won?'Encuentro vivo · logrado':'Encuentro vivo · visto';
   case 'satellite':return it.here?'Satélite de descanso · estás aquí':'Satélite de descanso · visitado';
+  case 'revived':return 'Región revivida · con su color y su música';case 'habitat':return it.name?'Hábitat · '+it.name+' vive aquí':'Hábitat';
   case 'landmark':return 'Hito visitado';case 'heard':return 'Hito oído · aún no llegaste';case 'rumor':return 'Rumor · '+(it.text||'algo lejano');case 'rare':return 'Rareza encontrada';
   case 'mark':return 'Tu marca · la brújula te lleva';case 'me':return 'Tú';default:return it.visited?'Lugar explorado':'Sin explorar';}};
  function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canHome:(it.kind==='ringHome'||it.home)&&!!runtime.ringHomePoint?.(),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,canDoor:it.kind==='satellite'&&!!runtime.satelliteDoorOpen?.(it.id),mark:usable()?book().mark:null};}

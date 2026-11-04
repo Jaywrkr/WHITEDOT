@@ -42,7 +42,7 @@ export function initialize(r){
  // The free World's surface after the Journey, outside every level, activity, the Refugio and the finales.
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene);
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.bandBusy?.()||!!r.lejosBBusy?.();   // alpha.248: a scene of the bands   // alpha.249: a postcard, a sky song or a grey region (lejos-b.js)
  const words=()=>r.S.universeTexts!==false;
  // The save (S.skySecrets), normalised once per save; a later version is only read.
  function book(){if(owner!==r.S){owner=r.S;owner.skySecrets=normalizeSkySecrets(owner.skySecrets);shower=null;glows=[];summary=null;cubeKey='';}world=worldKey(r.worldIdentity);return owner.skySecrets;}
@@ -165,6 +165,8 @@ export function initialize(r){
  Object.defineProperties(r,{
   skySecretTick:{get:()=>tick},drawSkySecrets:{get:()=>draw},drawSkySecretCube:{get:()=>drawCube},skySecretRows:{get:()=>rows},skySecretCubeOption:{get:()=>cubeOption},
   skySecretCoordsForMap:{get:()=>forMap},skySecretBusy:{get:()=>busy},
+  // alpha.252 (tanda D, viaje-d.js): the eclipse now, where and which pass of the planet (its key), or null; nothing else.
+  skyEclipse:{get:()=>()=>eclipse?{id:eclipse.id,x:eclipse.x,y:eclipse.y,key:lastCycle,left:Math.max(0,eclipse.until-clock)}:null},
   // Tests only (the runtime is never published): start a shower now, move the device's clock for the eclipses, the state.
   skySecretShower:{get:()=>()=>allowed()&&!scene()&&!shower&&ok()&&startShower()},
   skySecretSkip:{get:()=>seconds=>{offset+=Number(seconds)||0;return sec();}},
