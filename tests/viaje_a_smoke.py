@@ -120,7 +120,9 @@ try:
    if not en:
     # --- 8 · The first rest satellite: its notice, its board with three orders; the buoy's order fulfilled.
     bd,orders=P['bd'],P['orders'];go(page,0,101000);page.wait_for_function("!!__r.bandState().book.seen.tablon",timeout=6000)
-    page.wait_for_function(f"window.__toasts.some(t=>t.includes('Aquí empiezan los tablones de encargos.'))",timeout=20000)
+    # At 10 km the board's notice shares the queue with the dead regions' (tanda B), 4.5 s of game time apart; a slow
+    # runner's game clock runs behind the wall clock, so give the queue room.
+    page.wait_for_function(f"window.__toasts.some(t=>t.includes('Aquí empiezan los tablones de encargos.'))",timeout=60000)
     go(page,bd['x']+80,bd['y']);page.wait_for_function("__r.viajeState().book.orders.length===3",timeout=8000)
     page.wait_for_function("__r.viajeState().drawn.boardText===3",timeout=6000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/tablon-{width}.png')
