@@ -12,6 +12,7 @@
 // One scene at a time: a portal and the sheet are scenes (r.bandAttach busy); nothing starts while an encounter, a figure,
 // a mischief scene, a sky's secret or another batch's scene plays. Sparks only by universeReward, once a day per thing.
 // The music is untouched: the notes play on top, on the grid, far under it (playViajeNotes of viaje-a.js).
+import {glow,halo,contactShadow,createAppear,appearAlpha,appearScale} from './fx-kit.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {creditSparks} from './sparks-model.js';
@@ -133,18 +134,25 @@ export function initialize(r){
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  const onScreen=(q,m=30)=>q.x>-m&&q.y>-m&&q.x<r.W+m&&q.y<r.H+m;
  const say=(c,t,x,y,max=r.W-32)=>{c.fillText(t,Math.max(16+Math.min(max,c.measureText(t).width)/2,Math.min(r.W-16-Math.min(max,c.measureText(t).width)/2,x)),y,max);};
- function drawPortal(c,q,kind,spent){const pulse=reduced()?1:.75+.25*Math.sin(clock*2.4);c.globalAlpha=spent?.45:.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-7,q.y-12,14,22);c.strokeRect(q.x-7,q.y-12,14,22);
+ // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): the band's objects with the shared kit, soft shadows under what
+ // stands, added light where something shines, fine double contours, and a portal that grows in when first seen. Light
+ // quality: no added light and no double contour; reduced motion: nothing new moves.
+ const light=()=>!!r.lightQuality?.(),seenAt=createAppear();
+ function drawPortal(c,q,kind,spent,id=''){const pulse=reduced()?1:.75+.25*Math.sin(clock*2.4),k=seenAt.k(id,performance.now(),reduced()),grow=appearScale(k);c.save();c.translate(q.x,q.y);c.scale(grow,grow);c.translate(-q.x,-q.y);c.globalAlpha=appearAlpha(k);
+  contactShadow(c,q.x,q.y+12,10,2.5,(spent?.25:.5)*appearAlpha(k));if(!spent&&!light())glow(c,q.x,q.y-1,30,'#dfe9ff',.22*pulse*appearAlpha(k),true);
+  const a0=appearAlpha(k);c.globalAlpha=(spent?.45:.95)*a0;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-7,q.y-12,14,22);c.beginPath();c.rect(q.x-7,q.y-12,14,22);if(!spent&&!light())halo(c);c.stroke();
+  if(!spent&&!light())glow(c,q.x,q.y-1,9,'#ffffff',.35*pulse*a0,true);
   c.globalAlpha=(spent?.4:.9)*pulse;c.lineWidth=1;c.beginPath();
   if(kind==='orbita'){c.arc(q.x,q.y-1,4,0,TAU);c.moveTo(q.x+6,q.y-1);c.arc(q.x,q.y-1,6,0,TAU);}
   else if(kind==='rebote'){c.moveTo(q.x-4,q.y+5);c.lineTo(q.x-1,q.y-6);c.lineTo(q.x+1,q.y+4);c.lineTo(q.x+4,q.y-6);}
-  else{for(const a of [0,Math.PI/3,2*Math.PI/3]){c.moveTo(q.x-Math.cos(a)*5,q.y-1-Math.sin(a)*5);c.lineTo(q.x+Math.cos(a)*5,q.y-1+Math.sin(a)*5);}}c.stroke();}
- function drawStation(c,q,lit){const spin=reduced()?0:clock*.4;c.globalAlpha=.9;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,13,0,TAU);c.stroke();c.fillStyle='#000';
+  else{for(const a of [0,Math.PI/3,2*Math.PI/3]){c.moveTo(q.x-Math.cos(a)*5,q.y-1-Math.sin(a)*5);c.lineTo(q.x+Math.cos(a)*5,q.y-1+Math.sin(a)*5);}}c.globalAlpha*=a0;c.stroke();c.restore();}
+ function drawStation(c,q,lit){const spin=reduced()?0:clock*.4;if(!light())glow(c,q.x,q.y,lit?30:22,'#ffffff',lit?.26:.16,true);c.globalAlpha=.9;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,13,0,TAU);if(!light())halo(c);c.stroke();c.fillStyle='#000';
   for(let k=0;k<4;k++){const a=spin+k*TAU/4,x=q.x+Math.cos(a)*13,y=q.y+Math.sin(a)*13;c.fillRect(x-3,y-3,6,6);c.strokeRect(x-3,y-3,6,6);}c.globalAlpha=lit?1:.7;c.fillStyle='#ffffff';c.fillRect(Math.round(q.x)-2,Math.round(q.y)-2,4,4);}
- function drawConsole(c,q,lit){c.globalAlpha=.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-7,q.y-6,14,11);c.strokeRect(q.x-7,q.y-6,14,11);c.globalAlpha=lit?.95:.6;c.fillStyle='#ffffff';
+ function drawConsole(c,q,lit){contactShadow(c,q.x,q.y+8,10,2.5,.45);if(!light())glow(c,q.x,q.y-1,lit?20:14,'#dfe9ff',lit?.28:.14,true);c.globalAlpha=.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-7,q.y-6,14,11);c.beginPath();c.rect(q.x-7,q.y-6,14,11);if(!light())halo(c);c.stroke();c.globalAlpha=lit?.95:.6;c.fillStyle='#ffffff';
   c.fillRect(Math.round(q.x-5),Math.round(q.y+1),4,2);c.fillStyle='#7c7c86';c.fillRect(Math.round(q.x-1),Math.round(q.y+1),4,2);c.fillStyle='#ffffff';const line=reduced()?0:Math.floor((clock*4)%5);c.fillRect(Math.round(q.x-5+line*2),Math.round(q.y-4),1,7);}
- function drawNest(c,q,ready){c.globalAlpha=ready?.9:.45;c.fillStyle='#ffffff';for(let k=0;k<7;k++){const a=k/7*TAU+(reduced()?0:clock*.2);c.fillRect(Math.round(q.x+Math.cos(a)*9)-1,Math.round(q.y+Math.sin(a)*5)-1,2,2);}
+ function drawNest(c,q,ready){if(ready&&!light())glow(c,q.x,q.y-2,16,'#fff2d8',.22,true);c.globalAlpha=ready?.9:.45;c.fillStyle='#ffffff';for(let k=0;k<7;k++){const a=k/7*TAU+(reduced()?0:clock*.2);c.fillRect(Math.round(q.x+Math.cos(a)*9)-1,Math.round(q.y+Math.sin(a)*5)-1,2,2);}
   c.globalAlpha=ready?.8:.35;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.ellipse(q.x,q.y-2,2.6,3.4,0,0,TAU);c.stroke();}
- function drawCria(c,x,y,cria,t,size=3){const col=criaInk(cria);c.save();c.translate(x,y);c.strokeStyle=c.fillStyle=col;c.lineWidth=1;c.globalAlpha=.85;
+ function drawCria(c,x,y,cria,t,size=3){const col=criaInk(cria);c.save();c.translate(x,y);if(!light())glow(c,0,0,size*3.4,col,.2,true);c.strokeStyle=c.fillStyle=col;c.lineWidth=1;c.globalAlpha=.85;
   if(cria.species==='luciernaga'){c.beginPath();c.ellipse(0,0,size*.55,size,0,0,TAU);c.stroke();}else{const flap=.4+Math.sin(t/(cria.species==='grulla'?320:140))*.25;c.beginPath();c.moveTo(-size*1.4,-size*flap);c.quadraticCurveTo(0,0,0,0);c.lineTo(size*1.4,-size*flap);c.stroke();}
   if(cria.rare){c.globalAlpha=.6;c.fillRect(-1,size+1,2,2);}c.restore();}
  function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
@@ -152,7 +160,7 @@ export function initialize(r){
   return {x,y,id:o.id||kind};}
  function draw(){const out={portal:null,station:null,console:null,nest:null,edge:{},rule:null,corona:null,trail:0};if(!allowed()||!r.cx||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused(),quiet=scene()&&!rule;c.save();c.textAlign='center';const mark=[];
-  for(const s of portalsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y),spent=!portalPaysToday(q,s.id,today());if(onScreen(sp)){drawPortal(c,sp,portalRule(s),spent);out.portal=out.portal||{id:s.id,kind:portalRule(s),x:Math.round(sp.x),y:Math.round(sp.y)};}else if(!spent&&!rule)mark.push({kind:'portal',o:s,d:s.d});}
+  for(const s of portalsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y),spent=!portalPaysToday(q,s.id,today());if(onScreen(sp)){drawPortal(c,sp,portalRule(s),spent,s.id);out.portal=out.portal||{id:s.id,kind:portalRule(s),x:Math.round(sp.x),y:Math.round(sp.y)};}else if(!spent&&!rule)mark.push({kind:'portal',o:s,d:s.d});}
   const done=q.station?.day===today()&&q.station.done;
   for(const s of stationsNear(world,p,EDGE_REACH)){if(!clear(s))continue;const sp=at(s.x,s.y);if(onScreen(sp)){drawStation(c,sp,s.d<=STATION_TOUCH*3);out.station=out.station||{id:s.id,x:Math.round(sp.x),y:Math.round(sp.y)};
     if(s.d<=STATION_TOUCH*3&&words()&&!quiet&&!rule){c.globalAlpha=.8;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';say(c,done?'Estación del día · Vuelve mañana':'Estación del día',sp.x,sp.y-22);}}else if(!done&&!rule)mark.push({kind:'estacion',o:s,d:s.d});}
@@ -165,15 +173,15 @@ export function initialize(r){
   if(rule){const g=rule;c.globalAlpha=.28;c.strokeStyle='#ffffff';c.lineWidth=1;c.strokeRect(6.5,6.5,r.W-13,r.H-13);
    if(g.kind==='orbita'){const sp=at(g.x,g.y);c.globalAlpha=.25;c.setLineDash([2,6]);c.beginPath();c.arc(sp.x,sp.y,g.motion.rad,0,TAU);c.stroke();c.setLineDash([]);c.globalAlpha=.8;c.fillStyle='#ffffff';c.fillRect(Math.round(sp.x)-2,Math.round(sp.y)-2,4,4);}
    for(const b of g.motion.bumpers){const sp=at(b.x,b.y);if(!onScreen(sp))continue;c.globalAlpha=.9;c.fillStyle='#55555c';c.beginPath();c.arc(sp.x,sp.y,BUMPER_R,0,TAU);c.fill();c.strokeStyle='#ffffff';c.globalAlpha=.6;c.beginPath();c.arc(sp.x,sp.y,BUMPER_R,0,TAU);c.stroke();}
-   let shown=0;for(const l of g.lights){if(l.done)continue;const sp=at(l.x,l.y);shown++;c.globalAlpha=.95;c.fillStyle='#ffffff';c.beginPath();c.arc(sp.x,sp.y,3.5,0,TAU);c.fill();c.globalAlpha=.3*(reduced()?1:.7+.3*Math.sin(clock*5+l.k));c.beginPath();c.arc(sp.x,sp.y,9,0,TAU);c.fill();}
+   let shown=0;for(const l of g.lights){if(l.done)continue;const sp=at(l.x,l.y);shown++;if(!light())glow(c,sp.x,sp.y,14,'#ffffff',.35,true);c.globalAlpha=.95;c.fillStyle='#ffffff';c.beginPath();c.arc(sp.x,sp.y,3.5,0,TAU);c.fill();c.globalAlpha=.3*(reduced()?1:.7+.3*Math.sin(clock*5+l.k));c.beginPath();c.arc(sp.x,sp.y,9,0,TAU);c.fill();}
    const left=PORTAL_SECONDS-(clock-g.start);out.rule={kind:g.kind,done:g.done,total:g.lights.length,left,shown};
    if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Otra regla · ${RULE_NAMES[g.kind]} · ${clockText(left)} · ${g.done} de ${LIGHTS}`,r.W/2,Math.max(196,r.H/2-152));}}
   // The corona: its lights turning round the star, and the trails the pulse leaves.
   if(corona){const age=clock-corona.start;for(const t0 of trails)for(const pt of t0.pts){const sp=at(pt.x,pt.y);c.globalAlpha=Math.max(0,.7*(1-(clock-pt.at)/TRAIL_LIFE));c.fillStyle='#ffffff';c.fillRect(Math.round(sp.x)-1.5,Math.round(sp.y)-1.5,3,3);out.trail++;}
-   let shown=0;for(const k of corona.pieces){if(k.done)continue;const cq=coronaAt(corona,k,age),sp=at(cq.x,cq.y);if(!onScreen(sp,10))continue;shown++;const s=reduced()?4:4+Math.sin(clock*6+k.k);c.globalAlpha=.95;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(sp.x-s,sp.y);c.lineTo(sp.x+s,sp.y);c.moveTo(sp.x,sp.y-s);c.lineTo(sp.x,sp.y+s);c.stroke();}
+   let shown=0;for(const k of corona.pieces){if(k.done)continue;const cq=coronaAt(corona,k,age),sp=at(cq.x,cq.y);if(!onScreen(sp,10))continue;shown++;const s=reduced()?4:4+Math.sin(clock*6+k.k);if(!light())glow(c,sp.x,sp.y,13,'#fff2d8',.45,true);c.globalAlpha=.95;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(sp.x-s,sp.y);c.lineTo(sp.x+s,sp.y);c.moveTo(sp.x,sp.y-s);c.lineTo(sp.x,sp.y+s);c.stroke();}
    out.corona={caught:corona.caught,total:corona.pieces.length,shown};if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Corona · ${corona.caught} de ${CORONA}`,r.W/2,Math.max(196,r.H/2-152));c.globalAlpha=.75;c.font='10px "Geist Mono", monospace';say(c,'Atrapa sus luces. Tu pulso deja estela.',r.W/2,Math.max(196,r.H/2-152)+16);out.corona.hint=true;}}
   if(!quiet&&!still&&!rule&&!corona){mark.sort((a,b)=>a.d-b.d);const m=mark[0];if(m)out.edge[m.kind]=edge(c,m.kind,m.o);}
-  for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;c.globalAlpha=.8*(1-k);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
+  for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;if(!g.popped){g.popped=true;r.fxLayer?.pop(g.x,g.y,'#ffffff',{size:.8,sparks:6});}c.globalAlpha=.8*(1-k);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
   if(summary&&words()&&(!quiet||rule)){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}
   c.restore();drawn=out;}
  // The Refugio: the young ones (the newest four, not the one travelling) walk by the cube on its floor.

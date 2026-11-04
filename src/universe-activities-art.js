@@ -1,5 +1,7 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {ACTIVITY_TILE as T} from './universe-activities-model.js';
+import {glow,halo,createAppear,appearAlpha,appearScale} from './fx-kit.js';
+const portalSeen=createAppear();
 const palette=['#9de0d6','#d2b1ed','#e9ca7d','#c7db9a','#a8bfdc'];
 function symbol(c,x,y,shape,r=8){c.beginPath();if(shape%6===0)c.arc(x,y,r,0,Math.PI*2);else if(shape%6===1)c.rect(x-r,y-r,r*2,r*2);else{const count=3+shape%4;for(let i=0;i<=count;i++){const a=i*Math.PI*2/count-Math.PI/2;i?c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r):c.moveTo(x+Math.cos(a)*r,y+Math.sin(a)*r);}c.closePath();}c.stroke();}
 export function drawActivity(r,l,s,t,paid=false){
@@ -65,8 +67,17 @@ export function drawActivity(r,l,s,t,paid=false){
  if(r.S.universeTexts!==false){c.fillStyle='#fff';c.textAlign='center';c.font='14px "Geist Mono",monospace';c.fillText(l.def.name,r.W/2,32,r.W-30);c.fillStyle='#b0bdc4';c.font='11px "Geist Mono",monospace';const echo=id==='race'&&s.ghost?.length?s.ghost.at(-1)[2]:null,versus=echo===null?'':s.done?(s.time<=echo?' · Ganaste a tu eco':' · Tu eco fue más rápido'):'';c.fillText(s.done?(paid?'Completado · +5 ✦':'Completado · Recuerdo conservado')+versus:echo===null?l.def.hint:'Tú '+s.time.toFixed(1)+' s · tu eco '+echo.toFixed(1)+' s',r.W/2,54,r.W-30);c.fillText('Puerta ↓ salir · Círculo ↻ reiniciar',r.W/2,r.H-86,r.W-30);}
  c.restore();
 }
+// Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): the portal grows in when first seen, a ring of dashes turns slowly
+// round it (still with reduced motion), its symbol carries a fine double contour, and while you stay inside its inside
+// lights up and the progress arc has a light at its tip. Light quality: none of the added light or contours.
 export function drawActivityPortal(r,o,definition,done,fill=0){
- const c=r.cx,x=o.x+r.W/2-r.camX,y=o.y+r.H/2-r.camY;c.save();c.strokeStyle=done?'#e9ca7d':'#9de0d6';c.lineWidth=1.2;
- symbol(c,x,y,definition.index%6,28);c.beginPath();c.arc(x,y,35,-Math.PI/2,-Math.PI/2+Math.PI*2*(fill||1));c.stroke();
+ const c=r.cx,x=o.x+r.W/2-r.camX,y=o.y+r.H/2-r.camY,still=r.S.reducedMotion||prefersReducedMotion(),light=!!r.lightQuality?.(),k=portalSeen.k(o.id,performance.now(),still),grow=appearScale(k),seen=appearAlpha(k),ink=done?'#e9ca7d':'#9de0d6';
+ c.save();if(grow!==1){c.translate(x,y);c.scale(grow,grow);c.translate(-x,-y);}
+ if(!light){glow(c,x,y,46,ink,(.07+.2*fill)*seen,true);}
+ c.globalAlpha=seen;c.strokeStyle=ink;c.lineWidth=1.2;
+ symbol(c,x,y,definition.index%6,28);if(!light){halo(c);c.stroke();}
+ c.globalAlpha=.35*seen;c.lineWidth=1;c.setLineDash([2,6]);c.lineDashOffset=still?0:-(performance.now()/90)%8;c.beginPath();c.arc(x,y,42,0,Math.PI*2);c.stroke();c.setLineDash([]);c.lineDashOffset=0;
+ c.globalAlpha=seen;c.lineWidth=1.2;const end=-Math.PI/2+Math.PI*2*(fill||1);c.beginPath();c.arc(x,y,35,-Math.PI/2,end);if(fill>0&&!light)halo(c);c.stroke();
+ if(fill>0&&!light)glow(c,x+Math.cos(end)*35,y+Math.sin(end)*35,9,ink,.8*seen,true);c.globalAlpha=1;
  if(r.S.universeTexts!==false&&Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<160){c.textAlign='center';c.font='11px "Geist Mono",monospace';c.fillStyle='#fff';c.fillText(definition.name,x,y-45);c.fillText(done?'Puedes volver a jugar':'Quédate dentro del portal',x,y+52);}c.restore();
 }

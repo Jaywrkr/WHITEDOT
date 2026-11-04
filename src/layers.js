@@ -1,4 +1,5 @@
 import {WORLD_VISUAL} from './visual.js';
+import {bake,radial} from './fx-kit.js';
 // Capas del mundo: el Subsuelo (1 paso abajo = 8 arriba: atajo para viajar lejos, con graves y dub)
 // y el Cielo (vista del continente desde arriba, para elegir dónde bajar).
 // Se entra con un ritual: tocar el ritmo correcto con pulsos en el beat junto a un portal.
@@ -95,9 +96,11 @@ export function initialize(runtime){
     else if(valueNoise(x/40,y/40,137)>.9){cx.globalAlpha=.3;cx.fillStyle='#8a7a66';cx.fillRect(x+ox,y+oy,2,6);}}
    const ci=Math.floor(s.under.x/UNDER_CELL),cj=Math.floor(s.under.y/UNDER_CELL);let nearest=null;
    for(let i=ci-2;i<=ci+2;i++)for(let j=cj-2;j<=cj+2;j++){const e=exitIn(i,j,isSeaPx,runtime.seedOf,runtime.rng);if(!e)continue;const d=Math.hypot(e.x-s.under.x,e.y-s.under.y);if(!nearest||d<nearest.d)nearest={...e,d};
-    const px=e.x+ox,py=e.y+oy;if(px<-60||px>W+60||py<-60||py>H+60)continue;const g=cx.createLinearGradient(px,py-140,px,py);g.addColorStop(0,'rgba(255,240,200,0)');g.addColorStop(1,'rgba(255,240,200,.55)');cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(px-10,py-140,20,140);cx.fillStyle='#fff3d1';cx.fillRect(px-4,py-4,8,8);}
+    const px=e.x+ox,py=e.y+oy;if(px<-60||px>W+60||py<-60||py>H+60)continue;// Visual 2 (alpha.254): the column of light and the edge glow from cached images (they were gradients per frame).
+    const col=bake('exit-column',20,140,q=>{const g=q.createLinearGradient(0,0,0,140);g.addColorStop(0,'rgba(255,240,200,0)');g.addColorStop(1,'rgba(255,240,200,.55)');q.fillStyle=g;q.fillRect(0,0,20,140);},1);cx.globalAlpha=1;
+    if(col)cx.drawImage(col,px-10,py-140,20,140);else{const g=cx.createLinearGradient(px,py-140,px,py);g.addColorStop(0,'rgba(255,240,200,0)');g.addColorStop(1,'rgba(255,240,200,.55)');cx.fillStyle=g;cx.fillRect(px-10,py-140,20,140);}cx.fillStyle='#fff3d1';cx.fillRect(px-4,py-4,8,8);}
    if(nearest&&nearest.d<40)surface(nearest.x*UNDER_SCALE,nearest.y*UNDER_SCALE,'<em>Saliste</em> · '+runtime.regionOfPos(nearest.x*UNDER_SCALE,nearest.y*UNDER_SCALE).name);
-   else if(nearest&&nearest.d>W*.45){const a=Math.atan2(nearest.y-s.under.y,nearest.x-s.under.x),ex=W/2+Math.cos(a)*W*.45,ey=H/2+Math.sin(a)*H*.45,g=cx.createRadialGradient(ex,ey,0,ex,ey,120);g.addColorStop(0,'rgba(255,230,180,.16)');g.addColorStop(1,'rgba(0,0,0,0)');cx.fillStyle=g;cx.fillRect(ex-120,ey-120,240,240);}
+   else if(nearest&&nearest.d>W*.45){const a=Math.atan2(nearest.y-s.under.y,nearest.x-s.under.x),ex=W/2+Math.cos(a)*W*.45,ey=H/2+Math.sin(a)*H*.45,_=radial(cx,ex,ey,120,'exit-edge',[[0,'rgba(255,230,180,.16)'],[1,'rgba(0,0,0,0)']]);}
   }else{
    if(dx||dy){s.wx+=dx*speed*6*dt;s.wy+=dy*speed*6*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*speed*6*dt);}runtime.camX=s.wx;runtime.camY=s.wy;layerDNA();
    // Vista del continente: cada región es un cuadro; mares oscuros, tierra con el color del continente.

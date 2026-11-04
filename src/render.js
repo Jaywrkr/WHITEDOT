@@ -5,7 +5,7 @@ import {AMBIENCE_LEVEL} from './ambience.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
-import {glow,sparkSprite,createFxLayer,FX_POOL} from './fx-kit.js';
+import {glow,sparkSprite,streak,createFxLayer,FX_POOL} from './fx-kit.js';
 
 // Loop, simulación y dibujo del juego.
 // Consecutive failing frames (about two seconds) before the loop stops and asks for a reload.
@@ -420,9 +420,13 @@ export function initialize(runtime) {
       if(d<90){f.close+=dt;if(f.close>2.5&&!f.done){f.done=true;runtime.unlock("vuelo");runtime.soon(q=>runtime.playVoice('bandada',0,q,runtime.regionOfPos(f.x,f.y),true,1,f));}}
       if(d<R*1.2)runtime.seen("bandada");
       runtime.cx.fillStyle="#fff";
+      // Visual 2 (alpha.254): each light of the swarm is a small added spark and the swarm leaves one short shared trail
+      // behind it (light quality: the 2 px squares of before).
+      const lightQ=!!runtime.lightQuality?.(),sp=lightQ?null:sparkSprite('#ffffff');if(sp){runtime.cx.globalCompositeOperation='lighter';if(d<vis)streak(runtime.cx,f.x+ox,f.y+oy,f.h,70,22,'#ffffff',.07*Math.max(0,1-d/vis));}
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;
         // A swarm of lights crossing, seen from above: each blinks softly, no wings.
-        runtime.cx.globalAlpha=Math.max(0,1-e/vis)*(.6+.4*Math.sin(t/300+q.ph));runtime.cx.fillRect(Math.round(x+ox),Math.round(y+oy),2,2);}
+        runtime.cx.globalAlpha=Math.max(0,1-e/vis)*(.6+.4*Math.sin(t/300+q.ph));if(sp)runtime.cx.drawImage(sp,Math.round(x+ox)-2,Math.round(y+oy)-2,6,6);else runtime.cx.fillRect(Math.round(x+ox),Math.round(y+oy),2,2);}
+      runtime.cx.globalCompositeOperation='source-over';
     }
     runtime.drawLandmarks?.(t,dt,ox,oy);runtime.drawPortals?.(t,ox,oy,b);
     // Only local clues: no global arrow or player-relative spawning.

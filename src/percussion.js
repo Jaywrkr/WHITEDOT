@@ -1,4 +1,5 @@
 import {audibleTime} from './journey-pulse.js';
+import {glow} from './fx-kit.js';
 import {openSurface} from './frame-state.js';
 import {expandedRhythm} from './ecoregions.js';
 import {RHYTHM_ELEMENTS,NEW_PERCUSSION,createRhythmElements,additionalRhythmElements,rhythmPattern} from './percussion-model.js';
@@ -72,12 +73,17 @@ export function initialize(runtime){
   emit(o,time+((s%2)?swing:0),.28,'ambient',bar);
   emit(o,time+(pattern[1]-pattern[0])*runtime.SIX+((pattern[1]%2)?swing:0),.2,'ambient',bar);
  }
+ const popped=new WeakMap();
  function draw(t,dt,ox,oy,radius){
   const c=runtime.cx;
   for(const o of nearby(radius)){
    const elapsed=audibleTime(runtime.ac)-(o.onset??-10),lit=Math.max(elapsed>=0?Math.max(0,1-elapsed/.3):0,Math.max(0,1-(performance.now()-(o.visualAt??-Infinity))/400));
    const spec=RHYTHM_ELEMENTS[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
-   c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=elementAlpha(d,radius,lit*.4);c.strokeStyle=elementInk(spec.material,runtime.regionOfPos(o.x,o.y).hue,lit>.1);c.fillStyle=c.strokeStyle;c.lineWidth=WORLD_VISUAL.line;
+   // Visual 2 (alpha.254): a struck element lights up (an added glow) and pops once in the shared layer, small, in its
+   // ink (no pop with reduced motion, no glow in light quality).
+   const ink=elementInk(spec.material,runtime.regionOfPos(o.x,o.y).hue,lit>.1),hit=String(o.onset??'')+':'+String(o.visualAt??'');
+   if(lit>.6&&popped.get(o)!==hit){popped.set(o,hit);runtime.fxLayer?.pop(o.x,o.y,ink,{size:.55,sparks:4});}
+   c.save();c.translate(o.x+ox,o.y+oy);if(lit>.02&&!runtime.lightQuality?.())glow(c,0,0,28,ink,lit*.45,true);c.globalAlpha=elementAlpha(d,radius,lit*.4);c.strokeStyle=ink;c.fillStyle=c.strokeStyle;c.lineWidth=WORLD_VISUAL.line;
    c.beginPath();
    if(NEW_PERCUSSION[o.kind]){
     if(o.kind==='membrane'){c.ellipse(0,0,13+lit*3,7+lit*2,0,0,6.283);c.moveTo(-11,0);c.quadraticCurveTo(0,20-lit*6,11,0);c.moveTo(-6,-1);c.quadraticCurveTo(0,-5-lit*6,6,-1);}

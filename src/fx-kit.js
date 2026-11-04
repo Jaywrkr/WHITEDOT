@@ -13,7 +13,7 @@ import {LIVE_COLORS} from './live-encounters-model.js';
 export const FX_GOLD=WORLD_VISUAL.gold;
 export const FX_POOL=Object.freeze({full:256,light:96});
 export const FX_POPS=24;
-export const FX_SPRITES=40;
+export const FX_SPRITES=96;   // visual 2: room for the sky's and the big objects' lights without churning
 const TAU=Math.PI*2;
 // Easing, 0..1 in and out.
 export const easeOutCubic=k=>1-(1-k)**3;
@@ -23,13 +23,23 @@ const clamp01=v=>v<0?0:v>1?1:v;
 // Offscreen canvases. Without a document (Node) there is none and every primitive falls back to the plain drawing it
 // replaced, so the old contracts still hold there.
 let factory=(w,h)=>{try{if(typeof document!=='undefined'&&document.createElement){const c=document.createElement('canvas');c.width=w;c.height=h;return c;}if(typeof OffscreenCanvas==='function')return new OffscreenCanvas(w,h);}catch(_){}return null;};
-const sprites=new Map();
-export function setFxCanvas(fn){factory=typeof fn==='function'?fn:()=>null;sprites.clear();}
+const sprites=new Map(),baked=new Map();
+export function setFxCanvas(fn){factory=typeof fn==='function'?fn:()=>null;sprites.clear();baked.clear();}
 export const fxSpriteCount=()=>sprites.size;
+// How many sprites were painted so far (a test sees the caches settle: none new frame after frame).
+let made=0;export const fxSpritesMade=()=>made;
 // A small LRU: a sprite used again moves to the end; the oldest leaves past FX_SPRITES.
 function sprite(key,size,paint){let s=sprites.get(key);if(s!==undefined){sprites.delete(key);sprites.set(key,s);return s;}
- const cv=factory(size,size),c=cv?.getContext?.('2d');s=null;if(c){try{paint(c,size);s=cv;}catch(_){s=null;}}
+ const cv=factory(size,size),c=cv?.getContext?.('2d');s=null;made++;if(c){try{paint(c,size);s=cv;}catch(_){s=null;}}
  sprites.set(key,s);while(sprites.size>FX_SPRITES)sprites.delete(sprites.keys().next().value);return s;}
+// Visual 2 (alpha.254): any drawing done once, in an offscreen canvas of w×h units at `scale` pixels per unit (sharp on
+// a phone), cached by key in its own small LRU (FX_BAKED): totem pieces, a probe, a star, a corona. null without a
+// canvas, so the caller draws as before. Drawn with drawImage(s,x,y,w,h).
+export const FX_BAKED=64;
+export function bake(key,w,h,paint,scale=2){let s=baked.get(key);if(s!==undefined){baked.delete(key);baked.set(key,s);return s;}
+ const cv=factory(Math.max(1,Math.ceil(w*scale)),Math.max(1,Math.ceil(h*scale))),c=cv?.getContext?.('2d');s=null;made++;if(c){try{c.scale(scale,scale);paint(c,w,h);s=cv;}catch(_){s=null;}}
+ baked.set(key,s);while(baked.size>FX_BAKED)baked.delete(baked.keys().next().value);return s;}
+export const fxBakedCount=()=>baked.size;
 const GLOW=96;   // the glow sprite's side; scaled to any radius (a smooth fall-off reads the same)
 // The canvas of the World passes hsl colours through the living palette; the sprites take the same colour.
 const ink=color=>vividColor(String(color||'#ffffff'));
@@ -57,6 +67,13 @@ export function shadePuff(c,x,y,r,alpha){if(!(r>0)||!(alpha>0))return;const s=sp
 // A fake contact shadow: a soft dark ellipse under something that stands (w and h are its half sizes).
 export function contactShadow(c,x,y,w,h,alpha=.35){if(!(w>0)||!(h>0)||!(alpha>0))return;const s=sprite('contact',64,(q,n)=>{const g=q.createRadialGradient(n/2,n/2,0,n/2,n/2,n/2);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(.6,'rgba(0,0,0,.55)');g.addColorStop(1,'rgba(0,0,0,0)');q.fillStyle=g;q.fillRect(0,0,n,n);});
  c.globalAlpha=Math.min(1,alpha);if(s){c.drawImage(s,x-w,y-h,w*2,h*2);return;}c.fillStyle='#000';c.beginPath();c.ellipse(x,y,w,h,0,0,TAU);c.fill();}
+// A streak of light (a meteor's tail, a comet's tail, a beam): bright at x,y and fading back along the angle `a` over
+// `len`, `width` wide; one sprite per colour, drawn rotated (added with `add`). Without a canvas, a plain line.
+export function streakSprite(color){const col=ink(color);return sprite('k:'+col,64,(c,s)=>{const g=c.createLinearGradient(0,0,s,0);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.75,col);g.addColorStop(1,col);c.fillStyle=g;c.fillRect(0,s/2-6,s,12);
+ c.globalCompositeOperation='destination-in';const v=c.createLinearGradient(0,s/2-6,0,s/2+6);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(.5,'#000');v.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=v;c.fillRect(0,s/2-6,s,12);});}
+export function streak(c,x,y,a,len,width,color,alpha=1,add=true){if(!(len>0)||!(alpha>0))return;const s=streakSprite(color);c.globalAlpha=Math.min(1,alpha);
+ if(!s){c.strokeStyle=color;c.lineWidth=Math.max(1,width/3);c.beginPath();c.moveTo(x,y);c.lineTo(x-Math.cos(a)*len,y-Math.sin(a)*len);c.stroke();return;}
+ const op=c.globalCompositeOperation;if(add)c.globalCompositeOperation='lighter';c.save();c.translate(x,y);c.rotate(a);c.drawImage(s,0,26,64,12,-len,-width/2,len,width);c.restore();c.globalCompositeOperation=op;}
 // The fine double contour: before the thin line, the same path three times as wide, faint and added.
 export function halo(c,path=null,{width=3,alpha=.15}={}){const a=c.globalAlpha,op=c.globalCompositeOperation,w=c.lineWidth;
  c.globalCompositeOperation='lighter';c.globalAlpha=a*alpha;c.lineWidth=w*width;if(path)c.stroke(path);else c.stroke();c.lineWidth=w;c.globalAlpha=a;c.globalCompositeOperation=op;}

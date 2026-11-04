@@ -1,4 +1,5 @@
 import {openSurface} from './frame-state.js';
+import {glow,sparkSprite} from './fx-kit.js';
 import {consonantPitch} from './musical-conductor.js';
 import {PET_SPECIES,normalizePet,createPet,petStage,learnPet,growPet,petFormationEligible,petFromBox} from './pet-model.js';
 import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
@@ -75,7 +76,11 @@ export function initialize(runtime){
  function draw(t){
   const p=ensure();if(!p||!runtime.inWorld()||!state.ready)return;
   const c=runtime.cx,stage=petStage(p),col=elementInk('glass',PET_SPECIES[p.species].hue+(p.seed%45)),x=state.x+runtime.W/2-S().wx,y=state.y+runtime.H/2-S().wy,s=5+stage*1.3;
-  c.save();c.strokeStyle=c.fillStyle=col;c.lineWidth=WORLD_VISUAL.line;for(const q of state.trail){c.globalAlpha=q.a;c.fillRect(q.x+runtime.W/2-S().wx,q.y+runtime.H/2-S().wy,1.5,1.5);}c.translate(x,y);c.globalAlpha=state.sleep>20?.4:.8;c.rotate(Math.sin(t/800)*.15);
+  // Visual 2 (alpha.254): the trail is a line of small added sparks and a soft light under the wings that rises when it
+  // sings (light quality: the dots and no light, as before).
+  const light=!!runtime.lightQuality?.(),spark=light?null:sparkSprite(col);c.save();c.strokeStyle=c.fillStyle=col;c.lineWidth=WORLD_VISUAL.line;
+  if(spark){c.globalCompositeOperation='lighter';for(const q of state.trail){c.globalAlpha=q.a;c.drawImage(spark,q.x+runtime.W/2-S().wx-2,q.y+runtime.H/2-S().wy-2,4,4);}c.globalCompositeOperation='source-over';glow(c,x,y,s*3.2,col,(state.sleep>20?.08:.16)+(state.lit||0)*.35,true);}
+  else for(const q of state.trail){c.globalAlpha=q.a;c.fillRect(q.x+runtime.W/2-S().wx,q.y+runtime.H/2-S().wy,1.5,1.5);}c.translate(x,y);c.globalAlpha=state.sleep>20?.4:.8;c.rotate(Math.sin(t/800)*.15);
   c.beginPath();if(p.species==='luciernaga'){c.ellipse(0,0,s*.55,s,0,0,TAU);c.moveTo(-s,0);c.quadraticCurveTo(0,-s*1.8,s,0);}else{const flap=state.sleep>20?.2:.5+Math.sin(t/(p.species==='grulla'?320:120))*.25;c.moveTo(-s*1.4,-s*flap);c.quadraticCurveTo(-s*.4,-s*.2,0,0);c.quadraticCurveTo(s*.4,-s*.2,s*1.4,-s*flap);if(p.species==='grulla'){c.moveTo(0,0);c.quadraticCurveTo(s,-s,s*1.3,-s*1.6);}}
   if(stage>=2){c.moveTo(-s,s*.35);c.quadraticCurveTo(0,s*1.2,s,s*.35);}if(stage>=3){c.moveTo(0,s*.4);c.bezierCurveTo(-s,s*1.8,s,s*1.8,0,s*2);}if(p.species==='luciernaga'&&stage){c.moveTo(-s*.3,-s);c.lineTo(-s*.7,-s*1.5);c.moveTo(s*.3,-s);c.lineTo(s*.7,-s*1.5);}c.stroke();for(let i=0;i<stage;i++){c.beginPath();c.arc(-s-i*3,s,1,0,TAU);c.fill();}if(state.lit){c.globalAlpha=state.lit*.35;c.beginPath();c.arc(0,0,s+state.lit*8,0,TAU);c.stroke();}c.restore();
  }

@@ -1,6 +1,57 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.253** en la rama `jay/visual-1`, que une `jay/viaje-d` (alpha.252, con las tandas C, B y A). Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.254** en la rama `jay/visual-2`, desde `jay/visual-1` (alpha.253, que une `jay/viaje-d` con las tandas C, B y A). Las entradas describen su revisión, no certifican producción.
+
+
+## Visual 2 · el cielo y los objetos grandes · 2.3.0-alpha.254
+
+Rama `jay/visual-2`, desde `jay/visual-1` `1d51eab` (alpha.253, PR #390 abierto: dependencia explícita). Pedido de Jay: que todo lo del mundo se vea más profesional y «wow», igual de jugable y sin subir el coste. Son las tandas 2 y 3 de la auditoría visual, con el kit de visual 1. Guía: [El mundo](docs/MUNDO.md#visual-2-el-cielo-y-los-objetos-grandes).
+
+- **El kit** (`src/fx-kit.js`) gana `bake()`, un dibujo hecho una vez al doble de resolución con su propia caché, y `streak()`, una estela de luz en un sprite girado. La caché de brillos pasa de 40 a 96. Ningún módulo nuevo.
+- **El cielo.**
+  - Meteoros con cabeza de luz y cola.
+  - Cristales de cometa con coma y dos colas opuestas al cubo.
+  - Corona del eclipse con rayos finos y diamante al cubrirse.
+  - Sonda legible: disco oscuro, contorno claro, paneles y antena; su luz parpadea sumada.
+  - Estrellas del Mapa del cielo con cuatro puntas, la línea que se escribe con una luz en la punta y pops al completar la figura.
+  - Satélite con luz cálida que cae suave (antes, un disco plano), una luz que recorre su anillo y doble contorno.
+  - Boyas con reflejo y luz al compás; bengala, púlsares, asteroide secreto, luna y luces de la corona de la tanda D.
+- **Los objetos grandes.**
+  - Tótems pintados una vez por pieza, con borde de luz y algo menos de saturación, sombra de contacto y la luz del bioma detrás.
+  - Portales de actividades que aparecen, con anillo de guiones que gira y luz al esperar dentro.
+  - Portales de otra regla, hitos con rayos desde el borde, y percusión y micro-instrumentos que se iluminan y hacen pop.
+  - Mascota y bandadas en chispas sumadas; crías con halo en el Refugio.
+  - Los objetos de las tandas A–D, con sombra, luz y doble contorno; cada cumplido hace un pop en la capa común, dorado solo si se gana.
+- **El coste.** No queda ningún degradado por fotograma en estas escenas. Pasan a sprites el charco del bioma, el alba, el ocaso y la noche, la cubierta y la bruma de la niebla, el borde de la tormenta, la luz del borde hacia el siguiente lugar, las salidas bajo tierra, la pelota, la bengala, la estrella del eclipse, la luna y la nebulosa. Los micro-instrumentos usan un `Path2D` por tipo.
+- **Sin cambios.** Mecánicas, posiciones, colisiones, guardado, sonido (`audio.js` intacto), RNG e ID de HTML se mantienen. El cubo no crece. Con movimiento reducido nada nuevo gira ni hace pop. En calidad ligera no hay luz sumada ni doble contorno, y los meteoros y el cometa vuelven a sus líneas.
+- **Medido** (Chromium sin interfaz, 390×844, DPR 1, frente a `1d51eab`). La CPU es la media de dos pasadas alternas. Las llamadas al lienzo (`fillRect`, `stroke`, `fill` y `drawImage`) y los degradados son por fotograma, de una pasada con contadores:
+
+  | Escena | CPU del navegador por fotograma (ms) | Fotogramas/s | JS p50 (ms) | Llamadas · degradados |
+  |---|---|---|---|---|
+  | Inicio | 25,0 → 25,4 | 47 → 47 | 6,0 → 5,9 | 1 082 → 1 094 · 7 → 0 |
+  | Cristal de cometa | 27,7 → 26,4 | 43 → 46 | 6,6 → 6,6 | 1 041 → 1 055 · 7 → 0 |
+  | Sonda | 22,5 → 24,2 | 52 → 49 | 5,6 → 6,4 | 1 185 → 1 190 · 7 → 0 |
+  | Eclipse | 21,8 → 21,9 | 58 → 56 | 5,2 → 5,2 | 405 → 496 · 9 → 0 |
+  | Boya | 21,0 → 19,1 | 55 → 59 | 6,2 → 5,8 | 1 026 → 1 077 · 9 → 0 |
+  | Satélite | 29,3 → 30,5 | 38 → 39 | 6,6 → 6,8 | 1 352 → 1 369 · 5 → 0 |
+  | Meteoros | 19,2 → 18,2 | 56 → 60 | 5,3 → 4,8 | 893 → 840 · 5 → 0 |
+  | Figura del cielo | 28,5 → 27,0 | 41 → 44 | 6,7 → 6,2 | 2 313 → 2 250 · 5 → 0 |
+  | Tótems | 29,9 → 26,5 | 38 → 43 | 6,6 → 5,9 | 782 → 784 · 11 → 0 |
+  | Portal de actividad | 20,4 → 21,6 | 57 → 54 | 5,2 → 5,5 | 459 → 419 · 6 → 1 |
+  | Hito · en el borde | 23,6 → 23,0 · 24,5 → 22,6 | 51 → 51 · 48 → 51 | 6,9 → 6,7 · 6,5 → 6,4 | 1 069 → 1 023 · 5 → 0 |
+  | Pelota de luz | 22,3 → 19,4 | 52 → 59 | 7,7 → 6,2 | 2 257 → 2 205 · 10 → 0 |
+  | Púlsar | 26,5 → 24,7 | 44 → 48 | 7,1 → 5,9 | 965 → 924 · 7 → 0 |
+  | Asteroide por capas | 26,0 → 26,4 | 48 → 46 | 6,2 → 6,5 | 1 686 → 1 625 · 6 → 0 |
+  | Portal de otra regla | 18,5 → 18,0 | 57 → 59 | 5,8 → 5,2 | 408 → 366 · 5 → 0 |
+  | Estación | 17,5 → 17,1 | 59 → 60 | 5,0 → 5,2 | — · 4 → 0 |
+  | Región apagada | 20,8 → 20,9 | 55 → 55 | 5,1 → 5,5 | 762 → 723 · 6 → 0 |
+  | Bandada y mascota | 30,1 → 24,5 | 43 → 49 | 7,3 → 6,3 | 1 080 → 1 066 · 8 → 0 |
+
+  Media de CPU en las 19 escenas: 24,0 → 23,0 ms, de −5,6 a +1,7 ms según la escena, dentro del ruido del servidor (4 núcleos, rasterizado por software). El eclipse depende del reloj y su pasada con contadores lo cogió más cubierto; la de la estación no es comparable porque se movió el encuadre. No se midió en teléfono: hay que hacerlo con `?medir=1`.
+- **Pruebas nuevas.** `tests/visual2.mjs`: tótems en piezas cacheadas (y los degradados de antes sin lienzo), la estela y la caché de `bake`. `tests/visual2_smoke.py`: 16 escenas del cielo y de los objetos en 390×844 y 1280×800. Comprueba que no hay errores ni degradados por fotograma ni `shadowBlur`, que las cachés se asientan y que las llamadas quedan bajo las de `1d51eab`. También que un tambor golpeado hace pop, que no hay pop con movimiento reducido y que la calidad ligera no suma luz.
+- **Capturas** antes (`1d51eab`) y después, con el mismo nombre, en el scratchpad de la sesión (`visual2-shots/antes` y `despues`). No están en Git.
+- **Preservación.** Capa `approvedV2`, primera en la cadena, para los trece archivos protegidos que cambian. La lista offline de `sw.js` se compara con ella y no cambia, salvo la clave de versión.
+- **Límites.** Probado en local: lógica, recorridos de navegador de los sistemas tocados y `audio_mix.py`. Sin CI remoto, sin teléfono y sin personas.
 
 
 ## Visual 1 · luz común · 2.3.0-alpha.253

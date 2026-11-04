@@ -15,6 +15,7 @@ import {creditSparks} from './sparks-model.js';
 import {SOUND_TRIM,edgeSpot,worldKey,rumorNow} from './descubrir-model.js';
 import {nearestSatellite} from './recorrer-model.js';
 import {scaleNote} from './secretos-model.js';
+import {glow,halo,contactShadow,streak} from './fx-kit.js';
 import {VIAJE_A_VERSION,EDGE_REACH,switchesNear,radarsNear,ballsNear,switchKind,SWITCH_TOUCH,SWITCH_PULSE,RETO_SECONDS,RETO_LEAVE,retoRings,retoLights,ringDone,lightDone,retoReward,
  RADAR_ZONE,RADAR_OUT,radarPulse,radarReward,BALL_R,KICK_REACH,NUDGE_REACH,NUDGE_SPEED,BALL_LEASH,ROCK_R,PARTY_SECONDS,BOUNCE_GAP,goalFor,kick,stepBall,crossedGoal,goalReward,
  FLARE_ARRIVE,FLARE_AWAY,FLARE_HEAR,FLARE_EVERY,FLARE_RISE,FLARE_HEIGHT,flareLoudness,flarePan,boardFor,BOARD_READ,BOARD_TAKE,ORDER_MAX,ordersFor,ORDER_DO,orderDone,orderReward,
@@ -134,23 +135,36 @@ export function initialize(r){
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  const onScreen=(q,m=30)=>q.x>-m&&q.y>-m&&q.x<r.W+m&&q.y<r.H+m;
  const say=(c,t,x,y,max=r.W-32)=>{c.fillText(t,Math.max(16+Math.min(max,c.measureText(t).width)/2,Math.min(r.W-16-Math.min(max,c.measureText(t).width)/2,x)),y,max);};
- function drawSwitch(c,q,kind,spent){c.globalAlpha=spent?.45:.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-6,q.y-6,12,12);c.strokeRect(q.x-6,q.y-6,12,12);c.fillStyle='#ffffff';
+ // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): the batch's objects with the shared kit, a soft contact shadow
+ // under what stands, added light where something shines, a fine double contour on the frames. Light quality: no added
+ // light and no double contour; reduced motion: nothing new moves.
+ const light=()=>!!r.lightQuality?.();
+ function drawSwitch(c,q,kind,spent){contactShadow(c,q.x,q.y+8,9,2.5,spent?.25:.45);if(!spent&&!light())glow(c,q.x,q.y,18,'#ffffff',reduced()?.22:.16+.1*Math.sin(clock*3),true);
+  c.globalAlpha=spent?.45:.95;c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.5;c.fillRect(q.x-6,q.y-6,12,12);c.beginPath();c.rect(q.x-6,q.y-6,12,12);if(!spent&&!light())halo(c);c.stroke();c.fillStyle='#ffffff';
   if(kind==='luces')for(const [dx,dy] of [[-2,-2],[2,-2],[-2,2],[2,2]])c.fillRect(Math.round(q.x+dx)-1,Math.round(q.y+dy)-1,2,2);else{c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();}
   if(!spent&&!reduced()){c.globalAlpha=.3*(.6+.4*Math.sin(clock*3));c.beginPath();c.arc(q.x,q.y,11,0,TAU);c.stroke();}}
- function drawRadar(c,q,inside){c.globalAlpha=.9;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y+10);c.lineTo(q.x,q.y-4);c.stroke();c.fillStyle='#000';c.fillRect(q.x-5,q.y-9,10,6);c.strokeRect(q.x-5,q.y-9,10,6);
+ function drawRadar(c,q,inside){contactShadow(c,q.x,q.y+10,7,2,.4);if(!light())glow(c,q.x,q.y-6,inside?22:14,'#ffffff',inside?.3:.14,true);
+  c.globalAlpha=.9;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y+10);c.lineTo(q.x,q.y-4);c.stroke();c.fillStyle='#000';c.fillRect(q.x-5,q.y-9,10,6);c.strokeRect(q.x-5,q.y-9,10,6);
   c.fillStyle='#ffffff';c.fillRect(Math.round(q.x)-1,Math.round(q.y-7),2,2);for(const k of [1,2]){c.globalAlpha=(inside?.7:.35)/k;c.beginPath();c.arc(q.x,q.y-6,6+k*4,-Math.PI*.8,-Math.PI*.2);c.stroke();}
   c.globalAlpha=inside?.35:.14;c.setLineDash([3,6]);c.beginPath();c.arc(q.x,q.y,RADAR_ZONE,0,TAU);c.stroke();c.setLineDash([]);}
- function drawRock(c,q,seed){c.globalAlpha=.95;c.fillStyle=ROCK;c.beginPath();for(let k=0;k<7;k++){const a=k/7*TAU,rad=ROCK_R*(.8+.2*Math.sin(seed+k*1.7));c.lineTo(q.x+Math.cos(a)*rad,q.y+Math.sin(a)*rad);}c.closePath();c.fill();c.fillStyle='#4a4a52';c.beginPath();c.arc(q.x-5,q.y-3,4,0,TAU);c.fill();}
- function drawBall(c,b,t){const q=at(b.x,b.y),fade=b.back?Math.max(0,1-(clock-b.back.at)/.8):1;const g=c.createRadialGradient(q.x,q.y,1,q.x,q.y,BALL_R*2.6);g.addColorStop(0,`rgba(255,255,255,${.45*fade})`);g.addColorStop(1,'rgba(255,255,255,0)');
-  c.globalAlpha=1;c.fillStyle=g;c.fillRect(q.x-BALL_R*2.6,q.y-BALL_R*2.6,BALL_R*5.2,BALL_R*5.2);c.globalAlpha=fade;c.fillStyle='#ffffff';c.beginPath();c.arc(q.x,q.y,BALL_R,0,TAU);c.fill();
+ function drawRock(c,q,seed){contactShadow(c,q.x+2,q.y+ROCK_R*.75,ROCK_R*1.05,ROCK_R*.35,.5);c.globalAlpha=.95;c.fillStyle=ROCK;c.beginPath();for(let k=0;k<7;k++){const a=k/7*TAU,rad=ROCK_R*(.8+.2*Math.sin(seed+k*1.7));c.lineTo(q.x+Math.cos(a)*rad,q.y+Math.sin(a)*rad);}c.closePath();c.fill();
+  c.globalAlpha=.45;c.strokeStyle='#b4b4bc';c.lineWidth=1;c.beginPath();c.arc(q.x,q.y,ROCK_R*.82,Math.PI*1.05,Math.PI*1.55);c.stroke();c.globalAlpha=.95;c.fillStyle='#4a4a52';c.beginPath();c.arc(q.x-5,q.y-3,4,0,TAU);c.fill();}
+ // The ball: its light from a sprite (it was a gradient per frame) and a shadow on the ground under it.
+ function drawBall(c,b,t){const q=at(b.x,b.y),fade=b.back?Math.max(0,1-(clock-b.back.at)/.8):1;contactShadow(c,q.x,q.y+BALL_R+3,BALL_R*1.1,BALL_R*.4,.45*fade);
+  glow(c,q.x,q.y,BALL_R*2.6,'#ffffff',.45*fade,!light(),'rgba(255,255,255,0)');c.globalAlpha=fade;c.fillStyle='#ffffff';c.beginPath();c.arc(q.x,q.y,BALL_R,0,TAU);c.fill();
   c.globalAlpha=.5*fade;c.fillStyle='#000';const spin=reduced()?0:(b.x+b.y)/14;c.fillRect(Math.round(q.x+Math.cos(spin)*3)-1,Math.round(q.y+Math.sin(spin)*3)-1,2,2);return q;}
- function drawParty(c,b){const k=(clock-b.party.at)/PARTY_SECONDS,q=at(b.party.x,b.party.y);for(let i=0;i<14;i++){const a=i/14*TAU+(i%2)*.2,rad=(reduced()?24:10+k*70)*(.7+.3*((i*7)%5)/4);c.globalAlpha=Math.max(0,.95*(1-k));c.fillStyle=i%3?'#ffffff':GOLD;c.fillRect(Math.round(q.x+Math.cos(a)*rad)-1.5,Math.round(q.y+Math.sin(a)*rad-k*14)-1.5,3,3);}}
- function drawBoard(c,q,lit){c.globalAlpha=.95;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x-6,q.y+5);c.lineTo(q.x-6,q.y+12);c.moveTo(q.x+6,q.y+5);c.lineTo(q.x+6,q.y+12);c.stroke();c.fillStyle='#000';c.fillRect(q.x-9,q.y-7,18,12);c.lineWidth=1.5;c.strokeRect(q.x-9,q.y-7,18,12);
+ // A goal is earned: one gold pop in the shared layer, then the small party of before.
+ function drawParty(c,b){if(!b.party.popped){b.party.popped=true;r.fxLayer?.pop(b.party.x,b.party.y,GOLD,{gold:true,size:1.2,sparks:10});}const k=(clock-b.party.at)/PARTY_SECONDS,q=at(b.party.x,b.party.y);for(let i=0;i<14;i++){const a=i/14*TAU+(i%2)*.2,rad=(reduced()?24:10+k*70)*(.7+.3*((i*7)%5)/4);c.globalAlpha=Math.max(0,.95*(1-k));c.fillStyle=i%3?'#ffffff':GOLD;c.fillRect(Math.round(q.x+Math.cos(a)*rad)-1.5,Math.round(q.y+Math.sin(a)*rad-k*14)-1.5,3,3);}}
+ function drawBoard(c,q,lit){contactShadow(c,q.x,q.y+12,12,2.5,.45);if(lit&&!light())glow(c,q.x,q.y-1,20,'#ffffff',.18,true);
+  c.globalAlpha=.95;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x-6,q.y+5);c.lineTo(q.x-6,q.y+12);c.moveTo(q.x+6,q.y+5);c.lineTo(q.x+6,q.y+12);c.stroke();c.fillStyle='#000';c.fillRect(q.x-9,q.y-7,18,12);c.lineWidth=1.5;c.beginPath();c.rect(q.x-9,q.y-7,18,12);if(!light())halo(c);c.stroke();
   c.globalAlpha=lit?.95:.6;c.fillStyle='#ffffff';for(let k=0;k<3;k++)c.fillRect(Math.round(q.x-6),Math.round(q.y-4+k*3),k===1?8:11,1);}
+ // The flare: a thin rising light on its stick, its head from a sprite (it was a gradient per frame) with four fine points.
  function drawFlare(c,f){const q=at(f.x,f.y),rise=Math.min(1,(clock-flareAt)/FLARE_RISE),h=FLARE_HEIGHT*(flareAt>-Infinity&&f===flare()&&rise<1?rise:1),top={x:q.x,y:q.y-h},pulse=reduced()?1:.75+.25*Math.sin(clock*4);
   c.globalAlpha=.35;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y);c.lineTo(top.x,top.y);c.stroke();
-  const g=c.createRadialGradient(top.x,top.y,1,top.x,top.y,22);g.addColorStop(0,`rgba(255,255,255,${.55*pulse})`);g.addColorStop(1,'rgba(255,255,255,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(top.x-22,top.y-22,44,44);
-  c.fillStyle='#ffffff';c.beginPath();c.arc(top.x,top.y,3,0,TAU);c.fill();c.globalAlpha=.6;c.fillRect(Math.round(q.x)-1.5,Math.round(q.y)-1.5,3,3);return {x:Math.round(top.x),y:Math.round(top.y)};}
+  if(!light())streak(c,top.x,top.y,-Math.PI/2,Math.min(h,60),4,'#ffffff',.45);
+  glow(c,top.x,top.y,22,'#ffffff',.55*pulse,!light(),'rgba(255,255,255,0)');if(!light())glow(c,top.x,top.y,42,'#fff2d8',.18*pulse,true);
+  c.globalAlpha=1;c.fillStyle='#ffffff';c.beginPath();c.arc(top.x,top.y,3,0,TAU);c.fill();c.globalAlpha=.5*pulse;c.fillRect(Math.round(top.x)-7,Math.round(top.y),14,1);c.fillRect(Math.round(top.x),Math.round(top.y)-7,1,14);
+  c.globalAlpha=.6;c.fillRect(Math.round(q.x)-1.5,Math.round(q.y)-1.5,3,3);return {x:Math.round(top.x),y:Math.round(top.y)};}
  function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
   if(kind==='interruptor'){c.strokeRect(x-3,y-3,6,6);c.fillRect(x-1,y-1,2,2);}else if(kind==='radar'){c.beginPath();c.moveTo(x,y+4);c.lineTo(x,y-2);c.stroke();c.beginPath();c.arc(x,y-2,4,-Math.PI*.8,-Math.PI*.2);c.stroke();}
   else if(kind==='pelota'){c.beginPath();c.arc(x,y,3.5,0,TAU);c.fill();}else if(kind==='tablon'){c.strokeRect(x-4,y-3,8,6);}
@@ -184,7 +198,7 @@ export function initialize(r){
   const f=flare();if(f){const sp=at(f.x,f.y);if(onScreen({x:sp.x,y:sp.y-FLARE_HEIGHT/2},40)){out.flare=drawFlare(c,f);}else if(!still)out.edge.bengala=edge(c,'bengala',f,p);}
   // One mark at the edge for the nearest thing of the band, never during a scene.
   if(!quiet&&!still&&!reto&&!r.skySecretBusy?.()){mark.sort((a,b)=>a.d-b.d);const m=mark[0];if(m)out.edge[m.kind]=edge(c,m.kind,m.o,p);}
-  for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;c.globalAlpha=.8*(1-k);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
+  for(const g of glows){const sp=at(g.x,g.y),k=(clock-g.at)/1.3;if(!g.popped){g.popped=true;r.fxLayer?.pop(g.x,g.y,'#ffffff',{size:.8,sparks:6});}c.globalAlpha=.8*(1-k);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(sp.x,sp.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
   if(summary&&words()&&!quiet){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}
   c.restore();drawn=out;}
  // ---------- the Bitácora lines and the map ----------

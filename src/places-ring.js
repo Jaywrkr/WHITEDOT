@@ -1,4 +1,5 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
+import {radial} from './fx-kit.js';
 import {PLACES,placeOpen,starCount,nextGoal,previousPlace,complete} from './places.js';
 import {freeOpen} from './journey-mode.js';
 import {directionPan} from './spatial.js';
@@ -97,7 +98,7 @@ export function initialize(runtime){
    // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
    const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(255,255,255,.3)');g.addColorStop(1,'rgba(255,255,255,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
    // At the edge: a soft upright light of 140 px, fading to every side (panel 10, Nesbitt #4).
-   const glow=(gx,gy,a)=>{c.save();c.translate(gx,gy);c.scale(1,7);const g=c.createRadialGradient(0,0,0,0,0,10);g.addColorStop(0,'rgba(255,255,255,.34)');g.addColorStop(1,'rgba(255,255,255,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(-10,-10,20,20);c.restore();};
+   const glow=(gx,gy,a)=>{c.save();c.translate(gx,gy);c.scale(1,7);c.globalAlpha=1;radial(c,0,0,10,'edge-column',[[0,'rgba(255,255,255,.34)'],[1,'rgba(255,255,255,0)']],a*(still?.8:.7+.3*Math.sin(t/600)));c.restore();};
    if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
    else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);glow(e.x,e.y,Math.max(.45,1-far/(RING_RADIUS*2)));}}
   if(aim&&!runtime.firstJourneyState?.next){const e=routeCompass(aim.dx,aim.dy,W,H,offset);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.8;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}

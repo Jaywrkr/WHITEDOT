@@ -17,6 +17,7 @@ import {creditSparks} from './sparks-model.js';
 import {SOUND_TRIM,edgeSpot,worldKey,rumorNow} from './descubrir-model.js';
 import {nearestSatellite} from './recorrer-model.js';
 import {scaleNote,secretFound} from './secretos-model.js';
+import {glow,streak,bake,radial} from './fx-kit.js';
 import {SKY_SECRETS_VERSION,COMETS,COMET_COUNT,COMET_TOUCH,COMET_PULSE,COMET_GLINT,PROBES,PROBE_HEAR,PROBE_TOUCH,PROBE_PULSE,COORD_ARRIVE,
  meteorInterval,METEOR_COUNT,METEOR_GAP,METEOR_LIFE,METEOR_LEAVE,meteorPath,meteorHead,meteorCaught,meteorReward,
  ECLIPSE_REACH,ECLIPSE_SEE,ECLIPSE_SECONDS,ECLIPSE_CUTOFF,ECLIPSE_TAU,ECLIPSE_TRAVEL,eclipseNear,eclipsePhase,
@@ -111,15 +112,37 @@ export function initialize(r){
  // ---------- drawing ----------
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  const onScreen=(q,m=30)=>q.x>-m&&q.y>-m&&q.x<r.W+m&&q.y<r.H+m;
- function crystal(c,q,t){const k=reduced()?.8:.6+.4*Math.sin(t*3+q.x*.01);c.globalAlpha=.35*k;c.strokeStyle=ICE;c.lineWidth=1;c.beginPath();c.moveTo(q.x+4,q.y-4);c.lineTo(q.x+16,q.y-14);c.stroke();
+ // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): the sky drawn with the shared kit. Light quality: the plain shapes
+ // of before, no added light. Reduced motion: nothing new turns or moves.
+ const light=()=>!!r.lightQuality?.();
+ // A comet crystal: its coma of light and two tails (the ion tail, bluish and straight, and the dust tail, white and a
+ // little apart) pointing away from the cube.
+ function crystal(c,q,t){const k=reduced()?.8:.6+.4*Math.sin(t*3+q.x*.01);
+  if(light()){c.globalAlpha=.35*k;c.strokeStyle=ICE;c.lineWidth=1;c.beginPath();c.moveTo(q.x+4,q.y-4);c.lineTo(q.x+16,q.y-14);c.stroke();}
+  else{const a=Math.atan2(q.y-r.H/2,q.x-r.W/2)+Math.PI;glow(c,q.x,q.y,15,ICE,.32*k,true);streak(c,q.x,q.y,a,46,5,'#8fc8ff',.55*k);streak(c,q.x,q.y,a+.22,24,4,'#ffffff',.35*k);}
   c.globalAlpha=.95;c.fillStyle=ICE;c.beginPath();c.moveTo(q.x,q.y-6);c.lineTo(q.x+4,q.y);c.lineTo(q.x,q.y+6);c.lineTo(q.x-4,q.y);c.closePath();c.fill();c.globalAlpha=.9*k;c.fillStyle='#ffffff';c.fillRect(Math.round(q.x)-1,Math.round(q.y)-3,2,2);}
- function probe(c,q,t){c.globalAlpha=.9;c.fillStyle='#55555c';c.fillRect(q.x-5,q.y-3,10,6);c.strokeStyle='#8a8a92';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y-3);c.lineTo(q.x+3,q.y-10);c.moveTo(q.x-5,q.y);c.lineTo(q.x-10,q.y);c.moveTo(q.x+5,q.y);c.lineTo(q.x+10,q.y);c.stroke();
-  const blink=reduced()?.7:(Math.sin(t*4)>.3?1:.15);c.globalAlpha=blink;c.fillStyle='#ffffff';c.fillRect(Math.round(q.x+3)-1,Math.round(q.y-10)-1,2,2);}
+ // A lost probe, readable over a nebula: a dark disc behind it, a light outline, two framed panels with their cells and
+ // a dish, drawn once (bake); its light blinks as an added glow.
+ function probeArt(c){c.translate(17,13);c.fillStyle='rgba(0,0,0,.45)';c.beginPath();c.arc(0,0,10,0,TAU);c.fill();
+  c.strokeStyle='#cfd3dc';c.lineWidth=1;c.beginPath();c.moveTo(-6,0);c.lineTo(-8,0);c.moveTo(6,0);c.lineTo(8,0);c.moveTo(1,-4);c.lineTo(3,-9);c.stroke();
+  for(const side of [-1,1]){const x0=side<0?-16:8;c.fillStyle='#1d2433';c.fillRect(x0,-3.5,8,7);c.strokeStyle='#b9c6dc';c.strokeRect(x0+.5,-3,7,6);c.globalAlpha=.6;c.beginPath();c.moveTo(x0+4,-3);c.lineTo(x0+4,3);c.stroke();c.globalAlpha=1;}
+  c.fillStyle='#2a2a31';c.fillRect(-6,-4,12,8);c.strokeStyle='#e4e6ec';c.lineWidth=1.2;c.strokeRect(-5.4,-3.4,10.8,6.8);c.fillStyle='#e4e6ec';c.fillRect(-3,-1,2,2);
+  c.strokeStyle='#cfd3dc';c.lineWidth=1;c.beginPath();c.arc(3,-10,2.5,Math.PI*.15,Math.PI*.85,true);c.stroke();}
+ function probe(c,q,t){const blink=reduced()?.7:(Math.sin(t*4)>.3?1:.15),s=bake('sonda',34,26,probeArt);
+  if(!s){c.globalAlpha=.9;c.fillStyle='#55555c';c.fillRect(q.x-5,q.y-3,10,6);c.strokeStyle='#8a8a92';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y-3);c.lineTo(q.x+3,q.y-10);c.moveTo(q.x-5,q.y);c.lineTo(q.x-10,q.y);c.moveTo(q.x+5,q.y);c.lineTo(q.x+10,q.y);c.stroke();}
+  else{if(!light())glow(c,q.x,q.y,20,ICE,.16,true);c.globalAlpha=1;c.drawImage(s,q.x-17,q.y-13,34,26);}
+  if(!light())glow(c,q.x+3,q.y-10,7,'#ffffff',.8*blink,true);c.globalAlpha=blink;c.fillStyle='#ffffff';c.fillRect(Math.round(q.x+3)-1,Math.round(q.y-10)-1,2,2);}
+ // The eclipse's corona: a soft ring and eight thin rays of light, drawn once and turned slowly (still with reduced
+ // motion); it shows as the planet covers the star, and past 70 % a diamond of light shines at the planet's edge.
+ function coronaArt(c,w){const m=w/2,g=c.createRadialGradient(m,m,10,m,m,m);g.addColorStop(0,'rgba(255,255,255,.55)');g.addColorStop(.3,'rgba(220,232,255,.22)');g.addColorStop(1,'rgba(220,232,255,0)');c.fillStyle=g;c.fillRect(0,0,w,w);
+  c.translate(m,m);for(let i=0;i<8;i++){const len=m*(i%2?.62:.95),a=i*TAU/8;c.save();c.rotate(a);const v=c.createLinearGradient(12,0,len,0);v.addColorStop(0,'rgba(255,255,255,.3)');v.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=v;c.beginPath();c.moveTo(12,-1.2);c.lineTo(len,0);c.lineTo(12,1.2);c.closePath();c.fill();c.restore();}}
  function planetStar(c,s,q,f){const star={x:q.x,y:q.y},off=(f.u-.5)*ECLIPSE_TRAVEL,pl={x:q.x+Math.cos(s.side)*off,y:q.y+Math.sin(s.side)*off},cover=Math.max(0,1-Math.hypot(pl.x-star.x,pl.y-star.y)/26);
-  const g=c.createRadialGradient(star.x,star.y,2,star.x,star.y,36);g.addColorStop(0,`rgba(255,255,255,${.5*(1-cover)})`);g.addColorStop(1,'rgba(255,255,255,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(star.x-36,star.y-36,72,72);
-  c.fillStyle='#ffffff';c.beginPath();c.arc(star.x,star.y,5,0,TAU);c.fill();
+  c.globalAlpha=1;radial(c,star.x,star.y,36,'eclipse-star',[[.06,'rgba(255,255,255,.5)'],[1,'rgba(255,255,255,0)']],1-cover);
+  const cor=cover>0?bake('corona',112,112,coronaArt):null;if(cor){const op=c.globalCompositeOperation;c.globalCompositeOperation='lighter';c.globalAlpha=(light()?.5:1)*Math.min(1,.12+.75*cover);c.save();c.translate(star.x,star.y);c.rotate(reduced()?0:clock*.05);c.drawImage(cor,-56,-56,112,112);c.restore();c.globalCompositeOperation=op;}
+  c.globalAlpha=1;c.fillStyle='#ffffff';c.beginPath();c.arc(star.x,star.y,5,0,TAU);c.fill();
   if(onScreen(pl,30)){c.fillStyle='#000';c.beginPath();c.arc(pl.x,pl.y,14,0,TAU);c.fill();c.globalAlpha=.6;c.strokeStyle='#8a8a92';c.lineWidth=1;c.beginPath();c.arc(pl.x,pl.y,14,0,TAU);c.stroke();}
-  if(cover>.7){c.globalAlpha=.5*cover;c.strokeStyle='#ffffff';c.beginPath();c.arc(star.x,star.y,15.5,0,TAU);c.stroke();}return cover;}
+  if(cover>.7){c.globalAlpha=.5*cover;c.strokeStyle='#ffffff';c.beginPath();c.arc(star.x,star.y,15.5,0,TAU);c.stroke();
+   if(!light()){const d=Math.hypot(star.x-pl.x,star.y-pl.y)||1,dx=(star.x-pl.x)/d,dy=(star.y-pl.y)/d;glow(c,star.x+dx*15,star.y+dy*15,11,'#ffffff',Math.min(1,(cover-.7)/.3)*.9,true);}}return cover;}
  function edge(c,kind,o){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.65;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
   if(kind==='cometa'){c.beginPath();c.moveTo(x,y-4);c.lineTo(x+3,y);c.lineTo(x,y+4);c.lineTo(x-3,y);c.closePath();c.fill();}
   else if(kind==='sonda'){c.strokeRect(x-3,y-2,6,4);c.beginPath();c.moveTo(x,y-2);c.lineTo(x+2,y-6);c.stroke();}
@@ -137,9 +160,11 @@ export function initialize(r){
     // Heard before seen; with the sound off there is nothing to hear, so its mark waits at the screen's edge.
     else if(!r.S.sound&&!scene()&&!still&&!busy())out.edge.sonda=edge(c,'sonda',near.probe);}}
   if(shower){const age=clock-shower.start;for(const m of shower.meteors){const a=age-m.born;if(m.caught||a<0||a>METEOR_LIFE)continue;const hd=meteorHead(m,a),h=at(hd.x,hd.y),fade=Math.min(1,a/.3,(METEOR_LIFE-a)/.5);
-    c.globalAlpha=.9*fade;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.moveTo(h.x,h.y);c.lineTo(h.x-m.dx*46,h.y-m.dy*46);c.stroke();c.globalAlpha=.35*fade;c.lineWidth=1;c.beginPath();c.moveTo(h.x-m.dx*46,h.y-m.dy*46);c.lineTo(h.x-m.dx*90,h.y-m.dy*90);c.stroke();
+    // A meteor: a head of light and a tail that fades back (one sprite, rotated); light quality: the two lines of before.
+    if(light()){c.globalAlpha=.9*fade;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.moveTo(h.x,h.y);c.lineTo(h.x-m.dx*46,h.y-m.dy*46);c.stroke();c.globalAlpha=.35*fade;c.lineWidth=1;c.beginPath();c.moveTo(h.x-m.dx*46,h.y-m.dy*46);c.lineTo(h.x-m.dx*90,h.y-m.dy*90);c.stroke();}
+    else{const a=Math.atan2(m.dy,m.dx);streak(c,h.x,h.y,a,96,5,'#dfe9ff',.85*fade);streak(c,h.x,h.y,a,40,3,'#ffffff',.9*fade);glow(c,h.x,h.y,11,'#ffffff',.75*fade,true);}
     c.globalAlpha=fade;c.fillStyle='#ffffff';c.fillRect(Math.round(h.x)-2,Math.round(h.y)-2,4,4);out.meteors++;}}
-  for(const g of glows){const s=at(g.x,g.y),k=(clock-g.at)/1.3;c.globalAlpha=.8*(1-k);c.strokeStyle=g.gold?GOLD:'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(s.x,s.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
+  for(const g of glows){const s=at(g.x,g.y),k=(clock-g.at)/1.3;if(!g.popped){g.popped=true;r.fxLayer?.pop(g.x,g.y,ICE,{gold:!!g.gold,size:.8,sparks:6});}c.globalAlpha=.8*(1-k);c.strokeStyle=g.gold?GOLD:'#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(s.x,s.y,reduced()?14:6+k*30,0,TAU);c.stroke();}
   if(eclipse){const a=clock-eclipse.start,k=Math.min(1,a/1.2,(eclipse.until-clock)/1.5);c.globalAlpha=Math.max(0,.32*k);c.fillStyle='#000';c.fillRect(0,0,r.W,r.H);}
   if(summary&&words()&&!scene()){c.globalAlpha=.92;c.fillStyle='#ffffff';c.textAlign='center';c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}
   c.restore();drawn=out;}

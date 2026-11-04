@@ -14,6 +14,7 @@ import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {LIVE_COLORS} from './live-encounters-model.js';
 import {SOUND_TRIM} from './descubrir-model.js';
+import {radial,glow} from './fx-kit.js';
 import {SECRETS,secretById,codeReader,KEY_DIRECTIONS,swipeDirection,tapCounter,CODE_EFFECT,FLASH_SECONDS,FACE_SECONDS,placesReached,ASTEROID,ASTEROID_NOTE,dateSecret,
  normalizeSecrets,secretFound,secretCount,findSecret,goldEarned,goldOn,ARPEGGIO_DEGREES,CHORD_DEGREES,SECRET_INSTRUMENT,SECRET_GAIN,scaleNote,sequence,SECRETS_VERSION} from './secretos-model.js';
 const TAU=Math.PI*2,GOLD='#f0d27a';
@@ -85,13 +86,17 @@ export function initialize(r){
  function balloons(c,dt){const n=light()?4:7;const first=!fx.balloons.length;while(fx.balloons.length<n)fx.balloons.push({x:r.W*(.08+.84*rand()),y:first?r.H*(.25+.75*rand()):r.H+20+rand()*r.H*.5,v:16+rand()*14,k:rand()*TAU,col:PALETTE[Math.floor(rand()*PALETTE.length)]});fx.balloons.length=n;
   for(const b of fx.balloons){b.y-=b.v*dt;b.k+=dt*.8;if(b.y<-40){b.y=r.H+30;b.x=r.W*(.08+.84*rand());}const x=b.x+Math.sin(b.k)*8,y=b.y;
    c.globalAlpha=.75;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(x,y+8);c.quadraticCurveTo(x+3,y+15,x,y+22);c.stroke();c.fillStyle=b.col;c.beginPath();c.ellipse(x,y,6,8,0,0,TAU);c.fill();}}
- function moon(c){const x=r.W-58,y=Math.max(118,r.H*.18),g=c.createRadialGradient(x,y,14,x,y,46);g.addColorStop(0,'rgba(235,235,242,.18)');g.addColorStop(1,'rgba(235,235,242,0)');
-  c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-46,y-46,92,92);c.globalAlpha=.6;c.fillStyle='#ebebf2';c.beginPath();c.arc(x,y,18,0,TAU);c.fill();c.globalAlpha=.16;c.fillStyle='#000';
+ function moon(c){const x=r.W-58,y=Math.max(118,r.H*.18);
+  // Visual 2 (alpha.254): its halo from a sprite, not a gradient per frame.
+  c.globalAlpha=1;radial(c,x,y,46,'moon',[[14/46,'rgba(235,235,242,.18)'],[1,'rgba(235,235,242,0)']]);c.globalAlpha=.6;c.fillStyle='#ebebf2';c.beginPath();c.arc(x,y,18,0,TAU);c.fill();c.globalAlpha=.16;c.fillStyle='#000';
   for(const [dx,dy,s] of [[-6,-4,4],[5,3,3],[-2,8,2.5]]){c.beginPath();c.arc(x+dx,y+dy,s,0,TAU);c.fill();}}
  const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  function asteroid(c){const p={x:r.S.wx,y:r.S.wy},d=Math.hypot(p.x-ASTEROID.x,p.y-ASTEROID.y);if(d>ASTEROID.see)return false;const q=at(ASTEROID.x,ASTEROID.y);
   if(q.x<-40||q.y<-40||q.x>r.W+40||q.y>r.H+40)return false;
+  // Visual 2: a faint added light behind it and a rim lit from above on the left, so it reads as a rock in space.
+  if(!r.lightQuality?.())glow(c,q.x,q.y,24,'#c8ccd8',.16,true);
   c.globalAlpha=.9;c.fillStyle='#55555c';c.beginPath();[[-11,-3],[-6,-10],[4,-9],[11,-2],[8,8],[-2,11],[-10,6]].forEach(([x,y],i)=>i?c.lineTo(q.x+x,q.y+y):c.moveTo(q.x+x,q.y+y));c.closePath();c.fill();
+  c.globalAlpha=.55;c.strokeStyle='#c8ccd8';c.lineWidth=1;c.beginPath();c.moveTo(q.x-10,q.y+6);c.lineTo(q.x-11,q.y-3);c.lineTo(q.x-6,q.y-10);c.lineTo(q.x+4,q.y-9);c.stroke();c.globalAlpha=.9;
   c.fillStyle='#ffffff';c.fillRect(Math.round(q.x)-3,Math.round(q.y)-4,7,5);
   if(d<=ASTEROID.reach*1.6&&r.S.universeTexts!==false){c.globalAlpha=1;c.font='12px "Geist Mono", monospace';c.textAlign='center';const y=q.y-22;c.fillText('Una nota',q.x,y-16,r.W-32);c.globalAlpha=.8;c.fillText(ASTEROID_NOTE,q.x,y,r.W-32);}
   return true;}
