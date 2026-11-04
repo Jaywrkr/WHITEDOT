@@ -4,9 +4,10 @@ import {drawWonder,drawWonderGift,drawMagicShow} from './musical-wonders-art.js'
 import {playWonderNote} from './musical-wonders-audio.js';
 import {makeRareCard,normalizeRareBook,storeRareCard} from './rare-card-model.js';
 import {pulseCrossed} from './pulse-forms.js';
+import {breath,createAppear,appearAlpha,appearScale,FX_GOLD} from './fx-kit.js';
 export function initialize(r){
- let owner=null,scope='',cache=new Map(),clock=0,queue=[],show=null,song=null,last=null;
- const reduced=()=>r.S.reducedMotion||prefersReducedMotion();
+ let owner=null,scope='',cache=new Map(),clock=0,queue=[],show=null,song=null,last=null;const appear=createAppear();
+const reduced=()=>r.S.reducedMotion||prefersReducedMotion();
  const active=()=>r.inWorld()&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function book(){
   const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');
@@ -26,7 +27,7 @@ export function initialize(r){
   if(nextBook.readOnly||storeRareCard(nextBook,card)==='full')return false;
   q.found[d.id]=true;owner.rareBook=nextBook;
   if(r.save()===false){owner.musicalWonders=previousWonders;owner.rareBook=previous;return false;}
-  r.sparkCardFound?.(card);r.unlock?.('tarjeta1');celebrate(o,d,true);r.toast?.(d.name+' · '+d.gift+' ganado. Equípalo en Tu cubo.',{level:2,category:'hallazgo',coalesce:true});return true;
+r.sparkCardFound?.(card);r.unlock?.('tarjeta1');celebrate(o,d,true);r.fxLayer?.pop(o.x,o.y,FX_GOLD,{gold:true,size:1.6,sparks:12});r.toast?.(d.name+' · '+d.gift+' ganado. Equípalo en Tu cubo.',{level:2,category:'hallazgo',coalesce:true});return true;
  }
  function totem(o){
   const q=book();if(q.version!==1||!active())return false;
@@ -56,10 +57,12 @@ export function initialize(r){
  }
  function gift(c,x,y,size,time=0,id=null){const q=book(),d=wonderDefinition(id??r.S.cube?.wonder);if(q.version!==1||!d||q.found[d.id]!==true)return;drawWonderGift(c,d,x,y,size,time/1000,reduced());}
  function draw(){
-  book();if(!active())return;const c=r.cx,ox=r.W/2-r.camX,oy=r.H/2-r.camY;
+  book();if(!active())return;const c=r.cx,ox=r.W/2-r.camX,oy=r.H/2-r.camY,still=!!reduced(),light=!!r.lightQuality?.(),beat=breath(r.beat?.()||0,still),now=performance.now();
   for(const o of nearby()){
    const d=wonderDefinition(o.kind),distance=Math.hypot(o.x-r.S.wx,o.y-r.S.wy),fade=r.worldOpacity?.(distance)??Math.max(0,1-distance/650);if(fade<.01)continue;
-   c.save();c.globalAlpha=fade;drawWonder(c,d,o.x+ox,o.y+oy,clock,reduced());
+   // Visual 1 (alpha.250): it grows in, breathes with the beat, glows in its colour and writes a ring as you come close.
+   const k=appear.k(o.x+','+o.y,now,still);
+   c.save();c.globalAlpha=fade*appearAlpha(k);drawWonder(c,d,o.x+ox,o.y+oy,clock,still,{scale:appearScale(k)*beat.scale,light:light?.18:beat.glow*.45,halo:!light,near:distance<150?1-distance/150:0});
    if(distance<150){c.fillStyle=d.color;c.textAlign='center';c.font='11px "Geist Mono",monospace';c.fillText(d.name,o.x+ox,o.y+oy+48);c.fillText(book().found[o.kind]?'Recuerdo conservado':'Acércate o lanza un pulso',o.x+ox,o.y+oy+65);}c.restore();
   }
   if(show){const age=(clock-show.at)*(show.first?1:4),point={x:show.x+ox,y:show.y+oy};drawMagicShow(c,point,age,show.variant,show.d.color,reduced());

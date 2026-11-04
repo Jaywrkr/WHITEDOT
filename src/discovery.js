@@ -73,7 +73,8 @@ export function initialize(runtime) {
     document.getElementById("zDo").textContent=Z[2].join(" · ");
     },first?4:3,'biome:'+z,()=>!runtime.inWorld());
   }
-  function burst(x,y,n,gold){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*120;runtime.parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1,g:gold});}}
+  // The particles reuse dead ones (runtime.newPart, render.js): the same objects, no new garbage each burst.
+  function burst(x,y,n,gold){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*120,vx=Math.cos(a)*s,vy=Math.sin(a)*s;runtime.parts.push(runtime.newPart?runtime.newPart(x,y,vx,vy,1,gold):{x,y,vx,vy,l:1,g:gold});}}
   function seen(id){if(runtime.S.species[id])return;runtime.S.species[id]=runtime.S.todayKey;const n=Object.keys(runtime.S.species).length;say("<em>Vida</em> · "+runtime.SPECIES.find(s=>s[0]===id)[1]+" · "+n+" / "+runtime.SPECIES.length);if(n>=runtime.SPECIES.length)runtime.unlock("vida");runtime.save();}
 
   function collect(m){

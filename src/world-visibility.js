@@ -1,5 +1,6 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {territoryInk} from './territory-transition.js';
+import {shadePuff,contactShadow} from './fx-kit.js';
 import {deviceDetail,fogTarget,blendFog,distanceOpacity,preloadCells,visualHash,DEPTH_PLANES,planePoint} from './world-visibility-model.js';
 export function initialize(runtime){
  let fog=null,owner=null,lastCell='',pending=[],frames=0,averageMs=16.7,slow=0,quality=deviceDetail({memory:navigator.deviceMemory||4,cores:navigator.hardwareConcurrency||4}),hardware=quality,detailQuality=quality,lastPos=null,footprints=[];
@@ -43,7 +44,7 @@ export function initialize(runtime){
   }
   for(const p of footprints){if(p.layer!==(s.layer||'superficie'))continue;c.globalAlpha=(1-p.age/12)*.16*opacity(Math.hypot(p.x-s.wx,p.y-s.wy));c.fillRect(p.x+runtime.W/2-s.wx,p.y+runtime.H/2-s.wy,2,1);}
   if(detailQuality>.01){const near=runtime.livingNear?.(220)||[];
-   for(const o of near){const x=o.x+runtime.W/2-s.wx,y=o.y+runtime.H/2-s.wy;c.globalAlpha=.07*Math.min(1,detailQuality)*opacity(Math.hypot(o.x-s.wx,o.y-s.wy));c.fillStyle='#000';c.shadowColor='#000';c.shadowBlur=4;c.beginPath();c.ellipse(x+4,y+4,Math.min(18,o.size*.8),3,0,0,Math.PI*2);c.fill();c.shadowBlur=0;
+   for(const o of near){const x=o.x+runtime.W/2-s.wx,y=o.y+runtime.H/2-s.wy;contactShadow(c,x+4,y+4,Math.min(18,o.size*.8)+3,6,.07*Math.min(1,detailQuality)*opacity(Math.hypot(o.x-s.wx,o.y-s.wy)));   // a soft sprite instead of shadowBlur (visual 1)
     if(water){c.globalAlpha=.1*water*Math.min(1,detailQuality)*opacity(Math.hypot(o.x-s.wx,o.y-s.wy));c.fillStyle='#fff';c.fillRect(x-4+Math.sin(t/1500+o.variant)*2,y+o.size+4,8,1);}}
   }
   if(fog.wet>.1&&detailQuality>.01){c.fillStyle='#fff';for(let k=0;k<12;k++){const h=visualHash(k,Math.floor(t/2400),groundSeed),x=h*runtime.W,y=visualHash(k+12,Math.floor(t/2400),groundSeed)*runtime.H,age=(t%2400)/2400;c.globalAlpha=fog.wet*.07*Math.min(1,detailQuality)*Math.sin(age*Math.PI);c.fillRect(x-3,y,6+age*4,1);}}
@@ -53,7 +54,8 @@ export function initialize(runtime){
   c.save();c.globalAlpha=1;for(const window of runtime.reactiveMistWindows?.()||[]){if(window.radius<.5)continue;c.beginPath();c.rect(0,0,runtime.W,runtime.H);c.moveTo(window.x+window.radius,window.y);c.arc(window.x,window.y,window.radius,0,Math.PI*2);c.clip('evenodd');}const g=c.createRadialGradient(x,y,0,x,y,reach*flicker);
   g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.18,'rgba(0,0,0,0)');g.addColorStop(.52,'rgba(0,0,0,'+fog.density*.42+')');g.addColorStop(.82,'rgba(0,0,0,.66)');g.addColorStop(1,'#000');c.fillStyle=g;c.fillRect(0,0,runtime.W,runtime.H);
   // Noise darkens existing light; it never paints a grey panel over black space.
-  if(detailQuality>.01){c.fillStyle='#000';for(let i=0;i<16;i++){const a=i*Math.PI*2/16+t/180000,rr=reach*(.42+visualHash(i,0,groundSeed)*.35),px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;const n=c.createRadialGradient(px,py,0,px,py,reach*.17);n.addColorStop(0,'rgba(0,0,0,'+fog.density*.13*Math.min(1,detailQuality)+')');n.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=n;c.fillRect(px-reach*.17,py-reach*.17,reach*.34,reach*.34);}}
+  // Visual 1 (alpha.250): the sixteen puffs come from one black sprite (fx-kit.js) instead of sixteen gradients a frame.
+  if(detailQuality>.01){c.fillStyle='#000';const dark=fog.density*.13*Math.min(1,detailQuality);for(let i=0;i<16;i++){const a=i*Math.PI*2/16+t/180000,rr=reach*(.42+visualHash(i,0,groundSeed)*.35),px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;shadePuff(c,px,py,reach*.17,dark);}c.globalAlpha=1;}
   const mist=c.createRadialGradient(x,y,reach*.2,x,y,reach*.8),rgb=[fog.red,fog.green,fog.blue].map(Math.round).join(',');mist.addColorStop(0,'rgba('+rgb+',0)');mist.addColorStop(.55,'rgba('+rgb+','+fog.density*.065+')');mist.addColorStop(1,'rgba('+rgb+',0)');c.fillStyle=mist;c.fillRect(x-reach,y-reach,reach*2,reach*2);
   // Emitters at night stay local and underneath the darkness.
   c.restore();

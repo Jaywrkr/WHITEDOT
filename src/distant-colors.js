@@ -3,6 +3,7 @@ import {cloudBreath} from './wow-model.js';
 import {explorationContext} from './exploration-context.js';
 import {territoryNucleus} from './territory-journey.js';
 import {territoryInk} from './territory-transition.js';
+import {radial} from './fx-kit.js';
 export const GALAXY_PARALLAX=.065;
 // Localized distant color, independent of sound, terrain and collectible RNG streams.
 export function distantDirections(x,y,size,width,height,regionAt,seedOf){
@@ -43,8 +44,9 @@ export function initialize(runtime){
   for(const {q,sx,sy,alpha}of items.slice(0,2)){
    const breath=cloudBreath(q,seconds,reduced),radius=Math.min(q.radius*breath.scale,w*.7,h*.6);c.save();c.globalAlpha=breath.light;c.translate(sx,sy);c.rotate(q.phase);c.scale(1,.8);
    for(let i=0;i<3;i++){
-    const x=(i-1)*radius*.32,g=c.createRadialGradient(x,0,0,x,0,radius*(i===1?.75:1));
-    g.addColorStop(0,`hsla(${(q.hue+i*q.spread)%360},65%,45%,${alpha*.085})`);g.addColorStop(.3,`hsla(${(q.hue+i*q.spread+20)%360},60%,32%,${alpha*.045})`);g.addColorStop(.72,`hsla(${(q.hue+i*q.spread+30)%360},55%,24%,${alpha*.012})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(x-radius,-radius,radius*2,radius*2);
+    // Visual 1 (alpha.250): the cloud's three lights from sprites cached per hue (their stops only share one alpha).
+const x=(i-1)*radius*.32,h=(q.hue+i*q.spread)%360;
+    radial(c,x,0,radius*(i===1?.75:1),'cloud:'+h+':'+q.spread,[[0,`hsla(${h},65%,45%,1)`],[.3,`hsla(${(q.hue+i*q.spread+20)%360},60%,32%,${.045/.085})`],[.72,`hsla(${(q.hue+i*q.spread+30)%360},55%,24%,${.012/.085})`],[1,'rgba(0,0,0,0)']],alpha*.085);
    }c.restore();
   }
   if(outside){
@@ -54,7 +56,7 @@ export function initialize(runtime){
    const ease=1-Math.exp(-Math.min(.05,runtime.activeFrameSeconds||0)*1.4);
    for(const [key,q]of signals){q.opacity+=((q.wanted?1:0)-q.opacity)*ease;if(!q.wanted&&q.opacity<.005){signals.delete(key);continue;}
     const vx=q.target.x-runtime.S.wx,vy=q.target.y-runtime.S.wy,edge=Math.min((w/2+q.radius*.12)/Math.max(.001,Math.abs(vx)),(h/2+q.radius*.12)/Math.max(.001,Math.abs(vy))),sx=w/2+vx*edge,sy=h/2+vy*edge,rgb=q.ink.slice(1).match(/../g).map(h=>parseInt(h,16)).join(',');
-    const g=c.createRadialGradient(sx,sy,0,sx,sy,q.radius);g.addColorStop(0,'rgba('+rgb+','+q.opacity*.2+')');g.addColorStop(.48,'rgba('+rgb+','+q.opacity*.075+')');g.addColorStop(1,'rgba('+rgb+',0)');c.fillStyle=g;c.fillRect(sx-q.radius,sy-q.radius,q.radius*2,q.radius*2);
+radial(c,sx,sy,q.radius,'signal:'+rgb,[[0,'rgba('+rgb+',1)'],[.48,'rgba('+rgb+','+(.075/.2)+')'],[1,'rgba('+rgb+',0)']],q.opacity*.2);
    }
   }c.restore();
  }

@@ -17,6 +17,7 @@ import {LIVE_COLORS} from './live-encounters-model.js';
 import {ACTIVITY_CELL,activityCell} from './universe-activities-model.js';
 import {WONDER_CELL,wonderCell} from './musical-wonders-model.js';
 import {boxAt} from './expansion-music.js';
+import {glow as fxGlow,breath,createAppear,appearAlpha,appearScale} from './fx-kit.js';
 import {RUMOR_VERSION,ALBUM_VERSION,RUMOR_OPEN_MAX,SOUNDS,SOUND_BIOMES,SOUND_BIOME_NAMES,SOUND_HEAR,SOUND_TOUCH,SOUND_PULSE,SOUND_NEAR,SOUND_CELL,SOUND_SING_GAIN,SOUND_KEEP_GAIN,SOUND_MIX_GAIN,SOUND_TRIM,MIX_MAX,
  soundById,biomeSounds,soundCell,soundNote,soundReward,normalizeRumors,normalizeAlbum,albumHas,albumCount,seriesProgress,keepSound,toggleMix,rumorDue,rumorFor,rumorArrived,rumorNow,worldKey,rumorNearOpen,rumorSpaced,RUMOR_AFTER,RUMOR_REFILL,EDGE_REACH,edgeNearest,edgeSpot} from './descubrir-model.js';
 const TAU=Math.PI*2,GOLD='#f0d27a';
@@ -65,7 +66,7 @@ export function initialize(r){
   const res=keepSound(q,spot,{day:today(),onTime});if(!res)return false;
   let amount=0;const economy=r.sparkEconomy;if(economy&&economy.version===1){amount=creditSparks(S,soundReward({first:res.first,x:spot.x,y:spot.y,onTime}));q.earned+=amount;economy.log.push({title:res.sound.name,text:`Álbum de sonidos · +${amount} chispas`,at:today()});economy.log=economy.log.slice(-80);}
   if(r.save?.()===false){S.soundAlbum=before.album;S.sparks=before.sparks;if(before.economy)S.sparkEconomy=before.economy;owner=null;book();return false;}
-  if(amount)r.showSparkPickup?.(amount,{x:spot.x,y:spot.y});glows.push({x:spot.x,y:spot.y,at:clock,gold:true});
+if(amount)r.showSparkPickup?.(amount,{x:spot.x,y:spot.y});glows.push({x:spot.x,y:spot.y,at:clock,gold:true});r.fxLayer?.pop(spot.x,spot.y,GOLD,{gold:true,size:1.2,sparks:10});
   const state=S;if(S.sound&&r.ac?.state==='running'&&r.beatSoon)r.beatSoon(time=>{if(state!==r.S)return;playSoundMotif(r,res.sound,time,spot,SOUND_KEEP_GAIN);},null,'player');
   const p=seriesProgress(q,res.sound.biome);
   summary={text:`${res.sound.name} · ${res.first?SOUND_BIOME_NAMES[res.sound.biome]+' · '+p.done+' de '+p.total:'otra vez'}${amount?' · +'+amount+' ✦':''}`,until:clock+3.2};
@@ -137,15 +138,20 @@ export function initialize(r){
    if(kind==='activity')c.strokeRect(x-4,y-4,8,8);
    else{c.beginPath();c.moveTo(x,y-5);c.lineTo(x+5,y);c.lineTo(x,y+5);c.lineTo(x-5,y);c.closePath();c.stroke();if(kind==='box')c.strokeRect(x-1.5,y-1.5,3,3);}}
   return marks;}
- // ---------- drawing ----------
- const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
+// ---------- drawing ----------
+  const soundAppear=createAppear();
+const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
  // A word centred on a point, kept inside the screen.
  const say=(c,t,x,y)=>{const w=c.measureText(t).width;c.fillText(t,Math.max(8+w/2,Math.min(r.W-8-w/2,x)),y);};
- function draw(){if(!allowed())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?ac.currentTime:0;
+function draw(){if(!allowed())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?ac.currentTime:0,light=!!r.lightQuality?.(),beat=breath(r.beat?.()||0,still);
   let hint=null;c.save();const marks=scene()||paused()?{}:drawMarks(c,p);if(!albumOk()){c.restore();drawn={hint:false,marks};return;}
   for(const s of around(p,SOUND_HEAR)){if(kept(s))continue;const q=at(s.x,s.y),d=Math.hypot(s.x-p.x,s.y-p.y),off=q.x<-12||q.y<-12||q.x>r.W+12||q.y>r.H+12;
    if(off){if(!hint||d<hint.d)hint={...q,d};continue;}
-   const near=d<SOUND_NEAR,col=colorOf(s.biome),song=sang.get(s.id),age=song?now-song.t:9;
+const near=d<SOUND_NEAR,col=colorOf(s.biome),song=sang.get(s.id),age=song?now-song.t:9;
+    // Visual 1 (alpha.250): it grows in, a soft light of its biome under it that breathes with the beat and, unless
+    // still or light, three thin waves opening from it. Keeping it pops in gold.
+    {const k=soundAppear.k(s.id,performance.now(),still),g=appearScale(k),a=appearAlpha(k);fxGlow(c,q.x,q.y,20*g,col,a*(light?.16:beat.glow*.5),true);
+     if(!still&&!light){c.lineWidth=1;c.strokeStyle=col;for(let i=0;i<3;i++){const p=(clock*.45+i/3)%1;c.globalAlpha=.32*(1-p)*a;c.beginPath();c.arc(q.x,q.y,6+p*24,0,TAU);c.stroke();}}}
    // While it sings: a ring of its colour grows out (still with reduced motion: a steady ring).
    if(age>=0&&age<1.2){c.globalAlpha=.6*(1-age/1.2);c.strokeStyle=col;c.lineWidth=1;c.beginPath();c.arc(q.x,q.y,still?14:7+age*22,0,TAU);c.stroke();}
    c.globalAlpha=1;c.fillStyle='#000';c.beginPath();c.arc(q.x,q.y,6,0,TAU);c.fill();c.fillStyle=col;c.globalAlpha=.9;c.beginPath();c.arc(q.x,q.y,3,0,TAU);c.fill();

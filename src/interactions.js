@@ -26,7 +26,15 @@ export function initialize(runtime) {
   let currentWave=null;
   function wsoon(w,fn){if(w.n++<12)runtime.soon(t=>{const before=currentWave;currentWave=w;try{fn(t);}finally{currentWave=before;}},w.origin||"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
-    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:calmMotion(runtime.S)});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*(w.beat?.85:.6);runtime.cx.strokeStyle=w.beat?'#ffffff':w.color||runtime.S.color;runtime.cx.lineWidth=w.beat?2:1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,calmMotion(runtime.S));}}
+     // Visual 1 (alpha.250): a wave holds its light and then fades (ease out instead of a straight fade), a thin echo
+     // follows 40 ms behind, and the wave on time carries a faint added glow. Reduced motion: the steady ring as before,
+     // no echo; light quality: no echo or glow. The reach and the hits are the same.
+     const still=calmMotion(runtime.S),light=!!runtime.lightQuality?.(),c=runtime.cx;
+     for(const w of waves){const p=Math.min(1,w.r/w.max),fade=still?1-p:1-p*p;if(w.look){drawShopPulse(c,w.look,w.x+ox,w.y+oy,w.r,{alpha:fade*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:still});continue;}
+      const form=w.form||selectedPulse({}),ink=w.beat?'#ffffff':w.color||runtime.S.color;c.strokeStyle=ink;
+      if(w.beat&&!light&&!still){c.globalCompositeOperation='lighter';c.globalAlpha=fade*.14;c.lineWidth=6;drawPulse(c,form,w.x+ox,w.y+oy,w.r,still);c.globalCompositeOperation='source-over';}
+      c.globalAlpha=fade*(w.beat?.85:.6);c.lineWidth=w.beat?2:1.5;drawPulse(c,form,w.x+ox,w.y+oy,w.r,still);
+      if(!still&&!light&&w.r>20){c.globalAlpha=fade*(w.beat?.3:.22);c.lineWidth=1;drawPulse(c,form,w.x+ox,w.y+oy,w.r-17,still);}}}
   // atMs: when the finger touched (performance.now()); the pulse is judged then, not when the finger lifts.
   function sonar(origin='player',atMs=null){
     if(runtime.activityActive)return;
