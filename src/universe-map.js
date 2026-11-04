@@ -58,6 +58,8 @@ export function initialize(runtime){
   for(const e of runtime.skySecretCoordsForMap?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
   // Recorrer lejos (alpha.245): the rest satellites you visited (recorrer.js); from inside one, its door leads to the others.
   for(const e of runtime.satellitesForMap?.()||[])out.push({kind:'satellite',id:e.id,x:e.x,y:e.y,name:e.name,here:e.here});
+  // Lo que hay más lejos (alpha.248): what each batch of the bands shows, as rumors are (your flare, an order's buoy).
+  for(const e of runtime.bandMapPoints?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
   if(usable()&&q.mark)out.push({kind:'mark',id:'mark',x:q.mark.x,y:q.mark.y,name:q.mark.name});
   return {items:out,center,next:state?.next?portals.find(p=>p.id===state.next)||null:null};
  }

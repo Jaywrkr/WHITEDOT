@@ -35,7 +35,7 @@ export function initialize(r){
  const wandering=()=>r.autopilotState?.mode==='wander'&&!r.autopilotState.paused;
  // One scene at a time: a living encounter or a mischief scene keeps the stars asleep.
  // Alpha.242: a mischief scene that does not move on (universe-mischief.js, mischiefBusy) keeps nothing asleep.
- const busy=()=>!!r.liveEncounterActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.();   // alpha.247: a meteor shower or an eclipse
+ const busy=()=>!!r.liveEncounterActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.bandBusy?.();   // alpha.247: a meteor shower or an eclipse; alpha.248: a scene of the bands
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.skyMap=normalizeSkyMap(owner.skyMap);world=Math.floor(hashKey(JSON.stringify(r.worldIdentity))*4294967296).toString(36);cache=new Map();born=new Map();extra=new Map();scene=null;notice=null;summary=null;last=null;if(fresh)travel=0;}return owner.skyMap;}
  const today=()=>r.S.todayKey||'';
  const under=(x,y)=>{const d=r.regionOfPos(x,y);return {biome:d?.sea?'vacio':r.BIOMES?.[d?.z]?.id||'vacio',region:d?.sea?newRegionOf(d.key,true)?.id||null:null};};
