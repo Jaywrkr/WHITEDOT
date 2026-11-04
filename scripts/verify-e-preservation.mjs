@@ -125,9 +125,10 @@ const approvedVA='efaf769f3b43aa73329778e320ca723d9cd6a227';
 const rebasedVA=new Set(['src/main.js','src/render.js']);
 // Lejos del origen, tanda B (Jay, 4 Nov 2026, alpha.249): faded regions, habitats, sky songs, the sound fusion and the
 // search postcards, from 10 to 30 km. main starts lejos-b.js, the frame gives it its tick and its drawing, and the
-// offline shell lists two new modules. Held to the code commit of jay/viaje-b; the music's contracts are untouched (the
-// notes play on top, and a faded region lowers the whole output through runtime.musicDuck, the alpha.246 line).
-const approvedVB='00f4ac700bf6e1a9709d1db07d2bdda2e44766a7';
+// offline shell lists two new modules. Held to the commit that merges tanda A (jay/viaje-a) into jay/viaje-b, so main,
+// the frame and the shell carry both batches; the music's contracts are untouched (the notes play on top, and a faded
+// region lowers the whole output through runtime.musicDuck, the alpha.246 line).
+const approvedVB='f3c8414e7b1a504d58682fcbaa6880e06073bf23';
 const rebasedVB=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
