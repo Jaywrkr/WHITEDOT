@@ -6,11 +6,11 @@
 // · The Bitácora page «Lo que hay más lejos»: the bands reached with their things; the ones missing as «?» with their km.
 // · r.bandAttach(id, {busy, mapPoints, line}): each batch's runtime attaches what the rest of the game asks of it, so no
 //   other module has to learn each batch: r.bandBusy() (a scene of a batch plays: encounters, figures, sounds, buoys
-//   and the sky's secrets wait, one scene at a time), r.bandMapPoints() (points for the Mapa del universo, as rumors are)
-//   and its line under its name in the Bitácora.
+//   and the sky's secrets wait, one scene at a time; a batch asks r.bandBusy('B'), a scene of any other batch),
+//   r.bandMapPoints() (points for the Mapa del universo, as rumors are) and its line under its name in the Bitácora.
 import {openSurface} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
-import {BANDAS_VERSION,normalizeBandas,bandasReadOnly,noteFar,bandRows,bandEntries,kmOf,formatKm} from './bandas-model.js';
+import {BANDAS_VERSION,normalizeBandas,bandasReadOnly,noteFar,bandRows,bandEntries,bandEntry,kmOf,formatKm} from './bandas-model.js';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const NOTICE_GAP=4.5;
 export function initialize(r){
@@ -18,7 +18,8 @@ export function initialize(r){
  const attached=new Map();let owner=null,clock=0,queue=[],shownAt=-Infinity,notices=0,seeding=false;
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- const busy=()=>{for(const a of attached.values())try{if(a.busy?.())return true;}catch(_){}return false;};
+ // busy(batch): a scene of any batch but `batch` (each batch asks it of the others, so its own scene never stops itself).
+ const busy=(skip='')=>{for(const [id,a] of attached)try{if(skip&&bandEntry(id)?.batch===skip)continue;if(a.busy?.())return true;}catch(_){}return false;};
  const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||busy();
  // The save (S.bandas): normalised once per save. A save without it starts from what is known: the farthest buoy passed
  // (S.recorrer.far) and, on the first frame in the free World, where you are; those notices count as given.

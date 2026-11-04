@@ -227,6 +227,8 @@ const SHELL=[
  "./src/bandas.js",
  "./src/viaje-a-model.js",
  "./src/viaje-a.js",
+ "./src/lejos-b-model.js",
+ "./src/lejos-b.js",
  "./src/viaje-c-model.js",
  "./src/viaje-c.js",
  "./src/recorrer-model.js",

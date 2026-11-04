@@ -94,10 +94,10 @@ assert.ok(!/viaje|bandBusy|bandas/.test(read('src/audio.js')),'audio.js untouche
 assert.ok(!C.CORES.concat(C.HIDDEN).some(t=>/niñ|hombre|mujer|señor|persona|arma|espada|bomba/i.test(t)),'no people, no weapons');
 // --- one scene at a time, and the wiring
 const shell=read('sw.js');for(const m of ['viaje-c-model.js','viaje-c.js'])assert.equal(shell.split(`"./src/${m}"`).length-1,1,m);
-const main=read('src/main.js');assert.ok(main.includes("import {initialize as viajeC} from './viaje-c.js';"));assert.ok(main.includes('bandas(runtime);viajeA(runtime);viajeC(runtime);'),'after the bands');
+const main=read('src/main.js');assert.ok(main.includes("import {initialize as viajeC} from './viaje-c.js';"));assert.ok(main.includes('bandas(runtime);viajeA(runtime);lejosB(runtime);viajeC(runtime);'),'after the bands and the batches before it');
 const render=read('src/render.js');for(const h of ['runtime.viajeCTick?.(dt,modal)','runtime.drawViajeC?.()','runtime.drawViajeCCube?.('])assert.ok(render.includes(h),h);
 assert.ok(read('src/viaje-c.js').includes("r.bandAttach?.(id,{line:lines[id],...(id==='pulsar'?{busy:mine}:{})})"),'its scenes in r.bandBusy');
-assert.ok(read('src/viaje-a.js').includes('(!reto&&!!r.bandBusy?.())'),'no challenge starts over another batch\'s scene');
+assert.ok(read('src/viaje-c.js').includes("r.bandBusy?.('C')")&&read('src/viaje-a.js').includes("r.bandBusy?.('A')"),'no scene starts over another batch\'s scene');
 assert.ok(!/<button/.test(read('src/viaje-c.js')),'no new button');
 assert.equal(C.VIAJE_C_VERSION,1);assert.equal(A.VIAJE_A_VERSION,1);
 console.log('PASS lo que hay más lejos, tanda C: bands at 30, 35, 40, 45 and 50 km with their notices once; pulsars, layered asteroids, seas of dust, tool boxes and points from hashKey that start at their band and never run out; flashes sent back on time or dodged without sound; asteroids dug to their core and kept layer by layer; zip lines only between buoys stepped on; the ring of rocks under the dust; the net, the magnet and the rod once and for ever; 12–15 ✦ by universeReward; saves and migration; English; no random numbers; wiring');

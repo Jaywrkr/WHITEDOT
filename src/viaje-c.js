@@ -43,8 +43,8 @@ export function initialize(r){
  // A scene of this batch (a volley, a ride, the time under the dust).
  const mine=()=>!!volley||!!ride||!!sunk;
  // Another scene plays: a living encounter, a figure, a mischief scene that moves on, a sky's secret, or another batch's
- // scene (while one of ours plays, the bands are busy with it: then only batch A's challenge is asked).
- const others=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||(mine()?!!r.viajeBusy?.():!!r.bandBusy?.());
+ // scene (r.bandBusy('C'): the bands leave this batch's own scene out, so ours never stops itself).
+ const others=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.bandBusy?.('C');
  const words=()=>r.S.universeTexts!==false;
  function book(){if(owner!==r.S){owner=r.S;owner.viajeC=C.normalizeViajeC(owner.viajeC);volley=null;ride=null;sunk=null;zipLast=zipPrev=zipHere=null;hits=new Map();glows=[];streaks=[];summary=null;}world=worldKey(r.worldIdentity);return owner.viajeC;}
  const ok=()=>book().version===C.VIAJE_C_VERSION&&!C.viajeCReadOnly(book());
