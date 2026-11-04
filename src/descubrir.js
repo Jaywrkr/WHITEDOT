@@ -41,7 +41,7 @@ export function initialize(r){
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  // A scene of its own is playing (a living encounter, a figure, a mischief scene): the sounds wait quietly.
  // Alpha.242: a mischief scene that does not move on (mischiefBusy) no longer counts.
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.();
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.bandBusy?.();
  // The saves (S.rumors, S.soundAlbum): normalised once per save; a later version is only read.
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');if(owner!==r.S||scope!==key){const fresh=owner!==r.S;owner=r.S;scope=key;owner.rumors=normalizeRumors(owner.rumors);owner.soundAlbum=normalizeAlbum(owner.soundAlbum);world=worldKey(r.worldIdentity);cells=new Map();extra=new Map();sang=new Map();edgeCells=new Map();if(fresh){baseline=null;pending=false;summary=null;glows=[];rumorAt=-Infinity;refillAt=null;}}return owner;}
  const rumors=()=>book().rumors,album=()=>book().soundAlbum;

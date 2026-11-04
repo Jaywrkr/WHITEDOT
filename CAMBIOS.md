@@ -1,6 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.247** en la rama `jay/secretos-2`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.248** en la rama `jay/viaje-a`. Las entradas describen su revisión, no certifican producción.
+
+
+## Lo que hay más lejos, tanda A · 2.3.0-alpha.248
+
+Rama `jay/viaje-a`, desde `jay/secretos-2` `e16d9f7` (alpha.247, PR #386 sin fusionar: dependencia explícita). Pedido de Jay: veinte ideas repartidas por distancia al origen, para que llegar más lejos sea en sí una recompensa. Esta es la tanda A, 0–10 km; B (10–30 km) va en paralelo en `jay/viaje-b`. Guía: [El mundo](docs/MUNDO.md#lo-que-hay-más-lejos).
+
+- **Bandas** (`src/bandas-model.js`, `src/bandas.js`). Cada cosa se registra con el km donde empieza y sigue apareciendo más allá (sitios fijos por `hashKey`). Un aviso discreto la primera vez que cruzas 1, 2, 5 y 10 km («Aquí empiezan los radares de ritmo.»). Bitácora › Mapa › «Lo que hay más lejos»: las bandas alcanzadas con sus cosas; las que faltan, «?» con su km. API documentada para las tandas B, C y D (`registerBand`, `bandSiteAt`, `r.bandAttach`).
+- **Interruptor de reto** (desde 500 m). Tocarlo empieza un reto de 30 s sin menú: cinco aros en orden (pulso a tiempo; sin sonido, pasar por ellos). Desde 5 km, la mitad son de ocho luces que recoger.
+- **Radar de ritmo** (desde 1 km). Cuenta tu racha de pulsos a tiempo al pasar por su zona de 30 m y guarda tu récord por radar. Sin sonido lo dice y no cuenta.
+- **Pelota de luz** (desde 2 km). Se patea con el pulso, rebota en las rocas con notas del acorde y entra en una portería de 15 m entre dos rocas: «¡Gol!» con una fiesta pequeña. Pensada para Luca.
+- **Bengala** (desde 0 km). Menú › Más › «Lanzar bengala»: una luz alta donde estás, con su marca en el borde desde cualquier distancia, su «?» en el Mapa del universo y dos notas cada cuatro compases desde su lado. Al volver se apaga. Sin control nuevo en pantalla: el pulso largo ya abre el escáner.
+- **Tablón de encargos** (desde el primer satélite, 10 km). Tres encargos al día de criaturas: recoger un sonido raro, ir a una boya (con su «?» en el mapa) y cazar un encuentro vivo o ganar un reto. Se cumplen donde pasan; hasta seis abiertos.
+- **Premios:** por `universeReward`, una vez al día por cosa: reto 10 ✦ (15 a tiempo), récord de radar 10, primer gol del día 10 (15 a tiempo), encargo 15 a 10 km. Bengala y bandas, sin chispas.
+- **Una escena a la vez:** un reto detiene encuentros vivos, figuras, meteoros, eclipses y marcas del borde (`r.bandBusy`, una línea en `live-encounters.js`, `sky-map.js`, `descubrir.js`, `recorrer.js` y `secretos-cielo.js`). El Mapa del universo lee `r.bandMapPoints`; la Bitácora, `r.bandasSection`.
+- **Guardados nuevos** `S.bandas` y `S.viajeA` (versión 1). Una partida anterior empieza vacía y da por dados, en silencio, los avisos de lo ya alcanzado. Se conservan campos desconocidos; una versión futura no se toca. Si guardar falla, todo vuelve, chispas incluidas.
+- **Sonido medido por render** (`tests/viaje_a_mix.py`). La música del Mundo es idéntica a alpha.247. Aros, radar, pelota, gol y bengala quedan 32,5 y 34,2 dB por debajo. `audio.js` no cambia.
+- Pruebas nuevas: `tests/viaje_a.mjs`, `tests/viaje_a_smoke.py` (390×844 y 1280×800, e inglés; 97 s) y `tests/viaje_a_mix.py`. `tests/audio_mix.mjs` gana `viajeBatch`.
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js` (cuatro módulos), con la capa `approvedVA`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Secretos del cielo · 2.3.0-alpha.247
