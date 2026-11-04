@@ -16,16 +16,18 @@ import {hashKey} from './universe-regions.js';
 import {UNIVERSE_BASE,DIFFICULTY,RARITY,universeReward} from './spark-rules.js';
 import {nearestSatellite} from './recorrer-model.js';
 import {soundById} from './descubrir-model.js';
+import {registerBand} from './bandas-model.js';
 export const LEJOS_B_VERSION=1,UNITS_PER_KM=10000;
 const TAU=Math.PI*2;
-// For the distance bands of tanda A (jay/viaje-a): each thing of this batch with the km it starts from. When both
-// branches meet, the bands module registers these (id, km, name) as its own; nothing else needs to change here.
+// The distance bands (bandas-model.js, from tanda A): each thing of this batch with the km it starts from, registered
+// here, on load, with the notice given the first time you cross that km and the page «Lo que hay más lejos».
 export const BAND_ITEMS=Object.freeze([
- Object.freeze({id:'region-apagada',km:10,name:'Región apagada'}),
- Object.freeze({id:'habitat',km:12,name:'Hábitat'}),
- Object.freeze({id:'cancion-del-cielo',km:15,name:'Canción del cielo'}),
- Object.freeze({id:'fusion-de-sonidos',km:20,name:'Fusión de sonidos'}),
- Object.freeze({id:'postal',km:25,name:'Postal de buscar'})]);
+ Object.freeze({id:'region-apagada',km:10,name:'Región apagada',notice:'Aquí empiezan las regiones apagadas.'}),
+ Object.freeze({id:'habitat',km:12,name:'Hábitat',notice:'Aquí empiezan los hábitats.'}),
+ Object.freeze({id:'cancion-del-cielo',km:15,name:'Canción del cielo',notice:'Aquí empiezan las canciones del cielo.'}),
+ Object.freeze({id:'fusion-de-sonidos',km:20,name:'Fusión de sonidos',notice:'La fusión de sonidos te espera en el Refugio.'}),
+ Object.freeze({id:'postal',km:25,name:'Postal de buscar',notice:'Aquí empiezan las postales de buscar.'})]);
+for(const b of BAND_ITEMS)registerBand({...b,batch:'B'});
 // The kinds that have a place in the World, with the km they start from (the fusion lives in the Refugio).
 export const SITE_KINDS=Object.freeze({apagada:10,habitat:12,cancion:15,postal:25});
 export const FUSION_KM=20;

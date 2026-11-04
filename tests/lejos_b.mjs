@@ -16,6 +16,11 @@ assert.deepEqual(M.BAND_ITEMS.map(b=>[b.id,b.km]),[['region-apagada',10],['habit
 for(const b of M.BAND_ITEMS)assert.ok(b.name&&EN[b.name],b.name);
 assert.ok(Object.isFrozen(M.BAND_ITEMS)&&Object.isFrozen(M.BAND_ITEMS[0]));
 assert.deepEqual((await import('../src/lejos-b.js')).BAND_ITEMS,M.BAND_ITEMS,'the game module exposes the same list');
+// --- registered in the bands of tanda A (bandas-model.js): each with its notice (in English too), batch B, after A's bands
+const B=await import('../src/bandas-model.js');
+for(const b of M.BAND_ITEMS){const e=B.bandEntry(b.id);assert.ok(e&&e.km===b.km&&e.name===b.name&&e.batch==='B'&&e.notice===b.notice,b.id);assert.ok(EN[e.notice],e.notice);}
+assert.deepEqual(B.bandGroups().filter(g=>g.km>=10).map(g=>g.km),[10,12,15,20,25],'B starts at 10 km, where tanda A ends');
+{const q=B.normalizeBandas(null);assert.deepEqual(B.noteFar(q,16).filter(e=>e.batch==='B').map(e=>e.id),['region-apagada','habitat','cancion-del-cielo'],'notices once, nearest first');assert.deepEqual(B.noteFar(q,16),[]);}
 // --- places: fixed, each from its band on and beyond, none near a rest satellite, none before 10 km
 const counts={},below=[];let n=0;
 for(let i=-50;i<50;i++)for(let j=-50;j<50;j++){const s=M.siteCell(W,i,j);if(!s)continue;n++;counts[s.kind]=(counts[s.kind]||0)+1;
@@ -113,6 +118,7 @@ const sw=read('sw.js');for(const m of ['"./src/lejos-b.js"','"./src/lejos-b-mode
 assert.ok(read('src/main.js').includes("import {initialize as lejosB} from './lejos-b.js';")&&read('src/main.js').includes('lejosB(runtime);'));
 const render=read('src/render.js');for(const h of ['runtime.lejosBTick?.(dt,modal)','runtime.drawLejosB?.()'])assert.ok(render.includes(h),h);
 for(const f of ['src/live-encounters.js','src/sky-map.js','src/descubrir.js','src/recorrer.js','src/secretos-cielo.js'])assert.ok(read(f).includes('r.lejosBBusy?.()'),'one scene at a time: '+f);
+{const g=read('src/lejos-b.js');assert.ok(g.includes("r.bandAttach?.(id,{line:lines[id],...(id==='region-apagada'?{busy}:{})})")&&g.includes("r.bandBusy?.('B')"),'B attaches its scene and lines to the bands and waits for the other batches');assert.ok(read('src/viaje-a.js').includes("r.bandBusy?.('A')"),'A waits for the other batches');}
 assert.ok(read('src/universe-map.js').includes('runtime.lejosBForMap?.()')&&read('src/journal.js').includes('runtime.lejosBSection?.()'));
 assert.ok(read('src/descubrir.js').includes('r.fusedSound?.(sound)')&&read('src/descubrir.js').includes('r.fusedAlbum?.()'));
 const html=read('index.html');for(const id of ['houseFusion','mSoundFusion','soundFusionList','soundFusionMake','soundFusionClose','soundFusionNote','soundFusionCount'])assert.equal(html.split(`id="${id}"`).length-1,1,id);

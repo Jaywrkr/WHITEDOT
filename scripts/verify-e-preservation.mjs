@@ -117,6 +117,12 @@ const rebasedF5=new Set(['src/main.js','src/render.js']);
 // top, and the eclipse holds audio.js's own comfort filter dark for a few seconds through runtime.comfortLowpass).
 const approvedF5b='fcca216b42764ebe817fbf4c64f684e736789f49';
 const rebasedF5b=new Set(['src/main.js','src/render.js']);
+// Lo que hay más lejos, tanda A (Jay, 4 Nov 2026, alpha.248): the bands of distance and the first batch of things
+// (0–10 km). main starts bandas.js and viaje-a.js, the frame gives them their ticks and their drawing, and the offline
+// shell lists four new modules. Held to the code commit of jay/viaje-a; the music's contracts are untouched (the notes
+// play on top, as the album of sounds does).
+const approvedVA='efaf769f3b43aa73329778e320ca723d9cd6a227';
+const rebasedVA=new Set(['src/main.js','src/render.js']);
 // Lejos del origen, tanda B (Jay, 4 Nov 2026, alpha.249): faded regions, habitats, sky songs, the sound fusion and the
 // search postcards, from 10 to 30 km. main starts lejos-b.js, the frame gives it its tick and its drawing, and the
 // offline shell lists two new modules. Held to the code commit of jay/viaje-b; the music's contracts are untouched (the
@@ -137,7 +143,7 @@ const rebased=new Set(['src/achievements.js','src/cajas.js','src/color-safe.js',
 // rooms, Q5 the strike heard and the touch scheduled sooner, Q6 back where you were and one gesture in the World.
 const rebasedQ=new Set(['src/achievements.js','src/celebration.js','src/crystal-sparks.js','src/discovery.js','src/house-capsules.js','src/house-model.js','src/interactions.js','src/journey-echo.js','src/journey-games.js','src/progress.js','src/render.js','src/song.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
-for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedVB.has(file)?approvedVB:rebasedF5b.has(file)?approvedF5b:rebasedF2.has(file)?approvedF2:rebasedF5.has(file)?approvedF5:rebasedS.has(file)?approvedS:rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
+for(const file of files.filter(f=>!allowed.has(f))){const a=before(file,rebasedVB.has(file)?approvedVB:rebasedVA.has(file)?approvedVA:rebasedF5b.has(file)?approvedF5b:rebasedF2.has(file)?approvedF2:rebasedF5.has(file)?approvedF5:rebasedS.has(file)?approvedS:rebasedA30.has(file)?approvedA30:rebasedD.has(file)?approvedD:rebasedL5.has(file)?approvedL5:rebasedR.has(file)?approvedR:rebasedV.has(file)?approvedV:rebasedM.has(file)?approvedM:rebasedH2.has(file)?approvedH2:rebasedH1.has(file)?approvedH1:rebasedG.has(file)?approvedG:rebasedF1.has(file)?approvedF1:rebasedAE.has(file)?approvedAE:rebasedR2.has(file)?approvedR2:rebasedE1.has(file)?approvedE1:rebasedM1.has(file)?approvedM1:rebasedL4.has(file)?approvedL4:rebasedL.has(file)?approvedL:rebasedQ.has(file)?approvedQ:rebased.has(file)?approved:base),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
 function section(text,from,to){const a=text.indexOf(from),b=text.indexOf(to,a+from.length);if(a<0||b<0)throw Error('Missing preservation boundary '+from);return text.slice(a,b);}
 function sameSection(file,from,to,label,ref=base){const a=section(before(file,ref).toString(),from,to),b=section(source(file),from,to);if(a!==b)throw Error('Changed '+label);contracts.push({label,file,sha256:sha(b)});}

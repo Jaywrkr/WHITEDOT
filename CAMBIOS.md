@@ -5,7 +5,7 @@ Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.249** en la rama `jay/viaj
 
 ## Lejos del origen, tanda B · 2.3.0-alpha.249
 
-Rama `jay/viaje-b`, desde `jay/secretos-2` `e16d9f7` (alpha.247, PR #386 sin fusionar: dependencia explícita). En paralelo, la tanda A en `jay/viaje-a` (alpha.248, 0–10 km y el módulo de bandas), que esta rama no toca. Pedido de Jay: repartir ideas por distancia al origen para que llegar lejos sea un premio. Esta tanda, de 10 a 30 km. Guía: [El mundo](docs/MUNDO.md#lejos-del-origen-tanda-b). Código: `src/lejos-b-model.js` (reglas) y `src/lejos-b.js` (juego).
+Rama `jay/viaje-b`, desde `jay/secretos-2` `e16d9f7` (alpha.247, PR #386 sin fusionar: dependencia explícita), con `jay/viaje-a` unida por un merge (alpha.248, PR #387 sin fusionar: la tanda A de 0–10 km y el módulo de bandas; segunda dependencia explícita). Pedido de Jay: repartir ideas por distancia al origen para que llegar lejos sea un premio. Esta tanda, de 10 a 30 km. Guía: [El mundo](docs/MUNDO.md#lejos-del-origen-tanda-b). Código: `src/lejos-b-model.js` (reglas) y `src/lejos-b.js` (juego).
 
 - **Dónde.** Celdas de 800 m con `hashKey`; tres de cada cinco tienen una cosa de un tipo cuya banda alcanza ese punto, lejos de los satélites. Cada cosa sigue apareciendo más allá de su banda. Desde 800 m, una marca en el borde.
 - **Región apagada (10 km).** Gris, con la música unos 10 dB más baja. Cuatro brasas: pasar y pulsar a tiempo (sin sonido, pasar). Revivida para siempre: color, peces de luz y música; en el Mapa del universo.
@@ -15,13 +15,31 @@ Rama `jay/viaje-b`, desde `jay/secretos-2` `e16d9f7` (alpha.247, PR #386 sin fus
 - **Postal de buscar (25 km).** Una criatura perdió cinco cosas entre muchas estrellas. Un pulso las ilumina; pasar las encuentra. Las cinco dan su postal.
 - **Premios.** Por `universeReward`, como un encuentro vivo fácil: región revivida 8–15 ✦, hábitat 8–11, primera canción de un sitio 8–15. Postal y fusión, sin chispas: su página y su sonido.
 - **La música de la región apagada.** Por `runtime.musicDuck`, la línea de `audio.js` autorizada en alpha.246. `audio.js` no cambia.
-- **Una escena a la vez.** Nada responde con otra escena. Postal, cielo cercano o región apagada hacen esperar a encuentros, figuras, lluvias y eclipses (`lejosBBusy`, leído por `live-encounters.js`, `sky-map.js`, `descubrir.js`, `recorrer.js` y `secretos-cielo.js`).
-- **Para la tanda A.** `BAND_ITEMS` lista las cinco cosas con su km y su nombre, para que el módulo de bandas las registre al unir las ramas.
+- **Una escena a la vez.** Nada responde con otra escena. Postal, cielo cercano o región apagada hacen esperar a encuentros, figuras, lluvias y eclipses (`lejosBBusy`, leído por `live-encounters.js`, `sky-map.js`, `descubrir.js`, `recorrer.js` y `secretos-cielo.js`, y por las bandas en `r.bandBusy()`). Un reto de la tanda A espera a estas escenas, y estas al reto (`r.bandBusy('A')`, `r.bandBusy('B')`).
+- **En las bandas de la tanda A.** `lejos-b-model.js` registra las cinco con `registerBand`: un aviso al cruzar 10, 12, 15, 20 y 25 km («Aquí empiezan las regiones apagadas.») y su fila en Bitácora › «Lo que hay más lejos», con su línea («2 revividas»). `lejos-b.js` engancha su escena y sus líneas con `r.bandAttach`. A 10 km salen dos avisos seguidos: tablones y regiones apagadas.
 - **Bitácora** › «Lejos del origen · N», solo con lo encontrado. **Mapa del universo:** regiones revividas y hábitats.
 - **Guardado nuevo** `S.lejosB` (versión 1). La fusión escribe además su sonido en `S.soundAlbum.sounds`. Una partida anterior empieza vacía; se conservan campos desconocidos; una versión futura solo se lee. Si guardar falla, todo vuelve, álbum y chispas incluidos.
 - **Sonido medido por render** (`tests/lejos_b_mix.py`). La música del Mundo es idéntica a alpha.247. Los sonidos nuevos quedan 29,9 y 30,9 dB por debajo. En una región apagada la salida baja 10,4 dB y al revivir vuelve a menos de 0,02 dB.
 - Pruebas nuevas: `tests/lejos_b.mjs`, `tests/lejos_b_smoke.py` (390×844, 1280×800 e inglés) y `tests/lejos_b_mix.py`. `tests/audio_mix.mjs` gana `lejosBatch` y `deadRegion`.
-- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js`, con la capa `approvedVB`. Probado en local; sin CI remoto, sin teléfono ni personas.
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js`, con la capa `approvedVB` (el commit que une la tanda A; `approvedVA` debajo). Probado en local; sin CI remoto, sin teléfono ni personas.
+
+
+## Lo que hay más lejos, tanda A · 2.3.0-alpha.248
+
+Rama `jay/viaje-a`, desde `jay/secretos-2` `e16d9f7` (alpha.247, PR #386 sin fusionar: dependencia explícita). Pedido de Jay: veinte ideas repartidas por distancia al origen, para que llegar más lejos sea en sí una recompensa. Esta es la tanda A, 0–10 km; B (10–30 km) va en paralelo en `jay/viaje-b`. Guía: [El mundo](docs/MUNDO.md#lo-que-hay-más-lejos).
+
+- **Bandas** (`src/bandas-model.js`, `src/bandas.js`). Cada cosa se registra con el km donde empieza y sigue apareciendo más allá (sitios fijos por `hashKey`). Un aviso discreto la primera vez que cruzas 1, 2, 5 y 10 km («Aquí empiezan los radares de ritmo.»). Bitácora › Mapa › «Lo que hay más lejos»: las bandas alcanzadas con sus cosas; las que faltan, «?» con su km. API documentada para las tandas B, C y D (`registerBand`, `bandSiteAt`, `r.bandAttach`).
+- **Interruptor de reto** (desde 500 m). Tocarlo empieza un reto de 30 s sin menú: cinco aros en orden (pulso a tiempo; sin sonido, pasar por ellos). Desde 5 km, la mitad son de ocho luces que recoger.
+- **Radar de ritmo** (desde 1 km). Cuenta tu racha de pulsos a tiempo al pasar por su zona de 30 m y guarda tu récord por radar. Sin sonido lo dice y no cuenta.
+- **Pelota de luz** (desde 2 km). Se patea con el pulso, rebota en las rocas con notas del acorde y entra en una portería de 15 m entre dos rocas: «¡Gol!» con una fiesta pequeña. Pensada para Luca.
+- **Bengala** (desde 0 km). Menú › Más › «Lanzar bengala»: una luz alta donde estás, con su marca en el borde desde cualquier distancia, su «?» en el Mapa del universo y dos notas cada cuatro compases desde su lado. Al volver se apaga. Sin control nuevo en pantalla: el pulso largo ya abre el escáner.
+- **Tablón de encargos** (desde el primer satélite, 10 km). Tres encargos al día de criaturas: recoger un sonido raro, ir a una boya (con su «?» en el mapa) y cazar un encuentro vivo o ganar un reto. Se cumplen donde pasan; hasta seis abiertos.
+- **Premios:** por `universeReward`, una vez al día por cosa: reto 10 ✦ (15 a tiempo), récord de radar 10, primer gol del día 10 (15 a tiempo), encargo 15 a 10 km. Bengala y bandas, sin chispas.
+- **Una escena a la vez:** un reto detiene encuentros vivos, figuras, meteoros, eclipses y marcas del borde (`r.bandBusy`, una línea en `live-encounters.js`, `sky-map.js`, `descubrir.js`, `recorrer.js` y `secretos-cielo.js`). El Mapa del universo lee `r.bandMapPoints`; la Bitácora, `r.bandasSection`.
+- **Guardados nuevos** `S.bandas` y `S.viajeA` (versión 1). Una partida anterior empieza vacía y da por dados, en silencio, los avisos de lo ya alcanzado. Se conservan campos desconocidos; una versión futura no se toca. Si guardar falla, todo vuelve, chispas incluidas.
+- **Sonido medido por render** (`tests/viaje_a_mix.py`). La música del Mundo es idéntica a alpha.247. Aros, radar, pelota, gol y bengala quedan 32,5 y 34,2 dB por debajo. `audio.js` no cambia.
+- Pruebas nuevas: `tests/viaje_a.mjs`, `tests/viaje_a_smoke.py` (390×844 y 1280×800, e inglés; 97 s) y `tests/viaje_a_mix.py`. `tests/audio_mix.mjs` gana `viajeBatch`.
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js` (cuatro módulos), con la capa `approvedVA`. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Secretos del cielo · 2.3.0-alpha.247

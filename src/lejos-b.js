@@ -44,8 +44,9 @@ export function initialize(r){
  const reduced=()=>!!(r.S?.reducedMotion||prefersReducedMotion());
  const allowed=()=>!!r.S&&r.inWorld?.()&&(r.S.layer||'superficie')==='superficie'&&freeOpen(r.S.journey)&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!r.houseActive?.()&&!r.travelInLevel?.()&&!r.placeRun?.()&&!r.placeCardDue?.()&&!r.songStageState?.()?.running&&!r.journeyFinaleState?.()?.running;
  const paused=()=>globalThis.document?.hidden||!!r.scanning||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- // Another scene plays (a living encounter, a figure, a mischief scene that moves on, a meteor shower or an eclipse).
- const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.();
+ // Another scene plays (a living encounter, a figure, a mischief scene that moves on, a meteor shower or an eclipse, a
+ // scene of another batch of the bands: a challenge of tanda A).
+ const scene=()=>!!r.liveEncounterActive?.()||!!r.skyMapActive?.()||!!(r.mischiefBusy?r.mischiefBusy():r.mischiefState?.scene)||!!r.skySecretBusy?.()||!!r.bandBusy?.('B');
  const words=()=>r.S.universeTexts!==false;
  function book(){if(owner!==r.S){owner=r.S;owner.lejosB=normalizeLejosB(owner.lejosB);glows=[];flights=[];summary=null;reviving=null;song={site:null,next:0,at:0};effect=null;postal=null;away=new Map();greeting=null;houseKey='';}
   const w=worldKey(r.worldIdentity);if(w!==world){world=w;cells=new Map();}return owner.lejosB;}
@@ -256,6 +257,17 @@ export function initialize(r){
  const forMap=()=>{if(!r.S)return [];book();const q=book(),out=[],mine=id=>id.startsWith('lejos:'+world+':');
   for(const [id,e] of Object.entries(q.dead))if(e.done&&mine(id))out.push({kind:'revived',id,x:e.x,y:e.y,name:'Región revivida',color:colorOf(e.b||'vacio')});
   for(const [id,h] of Object.entries(q.habitats))if(h.done&&mine(id))out.push({kind:'habitat',id,x:h.x,y:h.y,name:h.c});return out;};
+ // The distance bands (bandas.js): this batch's scene (one scene at a time; tanda A's challenges wait for it) and its
+ // line under each name in «Lo que hay más lejos». The map keeps its own points (lejosBForMap: rings, not rumors).
+ const plural=(n,one,many)=>`${n} ${n===1?one:many}`,mineW=id=>id.startsWith('lejos:'+world+':');
+ const lines={
+  'region-apagada':()=>{const n=Object.entries(book().dead).filter(([id,e])=>e.done&&mineW(id)).length;return n?plural(n,'revivida','revividas'):'Cuatro brasas a tiempo la reviven.';},
+  habitat:()=>{const n=Object.values(book().habitats).filter(h=>h.done).length;return n?plural(n,'criatura','criaturas'):'Junta sus elementos en el nido.';},
+  'cancion-del-cielo':()=>{const n=Object.values(book().songs).reduce((a,s)=>a+(s.n||0),0);return n?plural(n,'cantada','cantadas'):'Cuatro notas en orden y a tiempo.';},
+  'fusion-de-sonidos':()=>{const n=fusedIn(album()).length;return n?plural(n,'fusión','fusiones'):'En tu Refugio, en «Más»';},
+  postal:()=>{const n=Object.keys(book().cards).length;return n?plural(n,'postal','postales'):'Cinco cosas perdidas entre estrellas.';},
+ };
+ for(const id of Object.keys(lines))r.bandAttach?.(id,{line:lines[id],...(id==='region-apagada'?{busy}:{})});
  Object.defineProperties(r,{
   lejosBTick:{get:()=>tick},drawLejosB:{get:()=>draw},lejosBSection:{get:()=>section},lejosBForMap:{get:()=>forMap},lejosBBusy:{get:()=>busy},
   fusedSound:{get:()=>fusedSound},fusedAlbum:{get:()=>()=>fusedIn(album())},openSoundFusion:{get:()=>openFusion_},
