@@ -37,7 +37,7 @@ try:
   sparks=p.evaluate("__r.S.sparks||0");cube=p.evaluate("__r.S.size||null")
   # Ajustes: the switch, off; its line says what it does and what it gives.
   settings(p);box=p.locator('#calmKids');assert box.is_visible() and not box.is_checked()
-  assert p.inner_text('#calmKidsHint')=='Sin prisa, con señales grandes. Da ★; ★★ y ★★★, en el modo normal.'
+  assert p.inner_text('#calmKidsHint')=='Más fácil y sin prisa. Solo da ★.'
   box.check();assert p.evaluate("__r.tranquiloState().save")=={'version':1,'on':True}
   p.locator('#calmKids').scroll_into_view_if_needed();p.screenshot(path=str(SHOTS/'luca-tranquilo-ajustes-390.png'))
   # The open World is untouched: no wider window, no target.
@@ -55,7 +55,7 @@ try:
   ring=p.evaluate("__r.journeyCubeRing(12)")
   # Its card: ★, no ★★ even at 100 %, a line that says why; no word of failure; Maestro waits.
   rows=finish(p,'tormenta',100)
-  assert 'Modo tranquilo: ★ ganada.' in rows and '★★ y ★★★, en el modo normal.' in rows and 'Con sonido' not in rows,rows
+  assert 'Modo niños: ★ ganada.' in rows and '★★ y ★★★, en el modo normal.' in rows and 'Con sonido' not in rows,rows
   assert '· Ritmo · en el modo normal' in rows and '100 %' not in rows,rows
   for w in ('Fallaste','fallo','perdiste'):assert w not in rows
   assert p.evaluate("__r.placesData().stars.tormenta")==[True,False,False];assert p.locator('#placeMaestro').is_hidden()
@@ -72,7 +72,7 @@ try:
   assert p.evaluate("__r.placesData().stars.tormenta")==[True,False,False] and p.evaluate("__r.tranquiloState().window") is None
   p.evaluate("()=>{__r.S.sound=true;__r.audio?.();}");assert p.evaluate("__r.startPlace('tormenta',{from:{x:__r.S.wx,y:__r.S.wy}})");p.wait_for_timeout(300)
   assert not p.evaluate("__r.tranquiloState().applies") and not p.evaluate("__r.placeRun().silent")
-  rows=finish(p,'tormenta',80);assert p.evaluate("__r.placesData().stars.tormenta")==[True,True,False],rows;assert 'Modo tranquilo' not in rows
+  rows=finish(p,'tormenta',80);assert p.evaluate("__r.placesData().stars.tormenta")==[True,True,False],rows;assert 'Modo niños' not in rows
   assert p.evaluate("__r.S.sparks||0")==sparks,'no sparks';assert p.evaluate("__r.S.size||null")==cube,'the cube keeps its size'
   assert not errors,errors;ctx.close()
   # The Journey at 1280×800: the Tormenta chapter, calm. The circle waits; the chapter's ★★ waits for the normal mode.
@@ -90,7 +90,7 @@ try:
   assert not errors,errors;ctx.close()
   # In English, the switch and its line.
   ctx,p,errors=open_page(b,(1280,800),'?anillo=1&lang=en');settings(p);p.wait_for_timeout(300)
-  assert 'Calm mode for kids' in p.inner_text('#mSettings') and p.inner_text('#calmKidsHint')=='No hurry, big signals. It gives ★; ★★ and ★★★ come in the normal mode.'
+  assert 'Kids mode' in p.inner_text('#mSettings') and p.inner_text('#calmKidsHint')=='Easier, no hurry. It gives only ★.'
   p.locator('#calmKids').scroll_into_view_if_needed();p.screenshot(path=str(SHOTS/'luca-tranquilo-ajustes-1280-en.png'))
   assert not errors,errors;ctx.close()
   b.close()

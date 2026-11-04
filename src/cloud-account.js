@@ -34,6 +34,9 @@ export function initialize(runtime){
   if(now==='camino'){s.mode='world';runtime.exitWorld?.(false);return;}
   const day=s.lastWorldDay;s.mode='camino';s.lastWorldDay=s.todayKey;runtime.enterWorld?.({automatic:true});if(!runtime.inWorld())s.lastWorldDay=day;}
  function snapshot(){if(scopeState!==runtime.S||sync.scope!==(runtime.cloudScope||runtime.saveStore.key))throw Error('La partida cambió. Abre Cuenta de nuevo.');if(!runtime.save())throw Error('No pudimos guardar en este dispositivo. No reemplazamos tu avance online.');return validateSave(runtime.S,runtime.fresh(),runtime.worldIdentity);}
+ // Menús (alpha.257): while the cloud is paused a player sees no «Cuenta» (CSS hides it outside body.dev, so tests and
+ // development still reach it) and gets «Guardar copia» in «Más», as the sale edition does, to keep a copy of the game.
+ {const off=cloudPaused();document.body.classList.toggle('cloud-paused',off);if(off)$('bSaveTools').hidden=false;}
  $('bConnection').hidden=false;{const label=$('bConnection').querySelector('span');if(label?.firstChild)label.firstChild.nodeValue='Cuenta';else $('bConnection').textContent='Cuenta';}$('connectionRooms').hidden=true;
  $('bConnection').onclick=()=>{$('mMenu').hidden=true;$('mConnection').hidden=false;if(client&&!recovery)run(inspect);else ui();};$('connectionClose').onclick=()=>{$('mConnection').hidden=true;};
  function credentials(){if(!$('accountForm').reportValidity())return null;return [$('accountName').value.trim(),$('accountPassword').value];}

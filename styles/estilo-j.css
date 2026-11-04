@@ -107,6 +107,20 @@ body.world-mode .dock{flex-wrap:wrap}
 body.dev .devbox{display:block}
 /* Seed travel and the lab catalog create separate saves: development only, except to return from another seed. */
 body:not(.dev):not(.seed-travel):not(.ring-complete) #bWorlds,body:not(.dev) p:has(> #guideCatalog){display:none}
+/* Menús (alpha.257): tools for development and tests stay out of the player's view (body.dev keeps them for both).
+   «Datos del mundo» still shows while it is on, so a player who turned it on can turn it off. The version stays, small. */
+body:not(.dev) :is(.latency-setting,#releaseDeploy,#diagnosticInfo,#diagnosticCopy,#seedForm,#seedPresets,#bDetails[aria-pressed="false"]){display:none!important}
+body.cloud-paused:not(.dev) #bConnection{display:none!important}
+body:not(.dev) #mSettings .settings-diagnostic{display:block;margin-top:0;padding-top:0;border-top:0}
+#mSettings #releaseVersion{font-size:11px;color:var(--dim)}
+#mSettings .settings-block>.tiles.settings-danger{margin-top:24px}
+#mSettings .universe-texts-group{border-top:0;padding-top:0}
+#mMenu .menu-group.primary .tiles>#bPrimary{flex:1 1 100%;flex-direction:row;justify-content:flex-start;align-items:center;gap:12px;min-height:48px;padding:8px 12px;width:auto;height:auto;border:1px solid var(--line);border-radius:0;background:transparent}
+.music-advanced{margin-top:12px;border-top:1px solid var(--line);padding-top:8px}
+.music-advanced>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font:400 12px/1.5 var(--display);color:var(--dim);letter-spacing:.04em}
+.music-advanced[open]>summary{color:var(--ink)}
+.music-advanced>summary{list-style:none;gap:8px}.music-advanced>summary::-webkit-details-marker{display:none}.music-advanced>summary::after{content:'+'}.music-advanced[open]>summary::after{content:'−'}
+#profileStars{color:#f0d27a}
 
 /* Discoveries keep their own ink; everything else stays black and white. */
 .rare-card{background:var(--void)}

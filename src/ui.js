@@ -31,11 +31,12 @@ export function initialize(runtime) {
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Explora a tu ritmo";   // regions and forms are counted in the Bitácora
       gr.textContent="Sin reloj";}
     else{const need=runtime.rapidLevel===2?2:10,n=Math.min(need,runtime.S.pathCrystals.length);fill.style.width=(n/need*100)+"%";goal.textContent="Cristales · "+n+" / "+need;gr.textContent="Acércate y lanza un pulso";}
-    // Panel 10 (P2): one way to go at a time. In the World, «Volver al Camino» (#bPrimary) heads «Más › Ir» and #bWorld
-    // hides; elsewhere #bPrimary stays in the dock and #bWorld («Explorar») enters the World or leaves the Refugio.
+    // Panel 10 (P2): one way to go at a time. In the World, «Volver al Camino» (#bPrimary) is the menu's main way back and
+    // #bWorld hides; elsewhere #bPrimary stays in the dock and #bWorld («Explorar») enters the World or leaves the Refugio.
+    // Menús (alpha.257): in the World it sits under «Jugar», in view, not folded in «Más».
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary"),bw=$("bWorld"),world=runtime.inWorld();bw.querySelector("span").firstChild.nodeValue="Explorar";$("bWorldHint").textContent=world?"Volver al Camino":"Explorar el Mundo";
     bw.hidden=world||!(runtime.worldReady()||(freeOpen(runtime.S.journey)&&runtime.houseActive?.()));
-    const destination=world?$('menuMore')?.querySelector('.tiles'):$('dock');if(destination&&bp.parentElement!==destination){if(world)bw.before(bp);else destination.insertBefore(bp,destination.firstChild);}
+    const destination=world?$('bAch')?.parentElement:$('dock');if(destination&&bp.parentElement!==destination){if(world)$('bAch').after(bp);else destination.insertBefore(bp,destination.firstChild);}
     bp.hidden=!(canWorld||world);$("bPrimaryL").textContent=world?"Volver al Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=world?"scaleX(-1)":"";runtime.tidyMenu?.();
   }
   function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t),()=>true,{level:big?2:1,category:'ambiente',coalesce:true});}

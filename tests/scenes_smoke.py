@@ -31,8 +31,8 @@ try:
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.sceneState&&__r.ringState?.().active",timeout=20000)
    page.evaluate(FREE);page.wait_for_timeout(300)
-   # --- The switch in Sonido: off by default, short, inside the sheet at any width.
-   page.evaluate("document.getElementById('mMusic').hidden=false");page.wait_for_timeout(100)
+   # --- The switch in Sonido: off by default, short, inside the sheet at any width (inside «Avanzado» since alpha.257).
+   page.evaluate("document.getElementById('mMusic').hidden=false;document.getElementById('musicAdvanced').open=true");page.wait_for_timeout(100)
    box=page.locator('#scenesSetting');assert box.is_visible() and not box.is_checked()
    label=page.locator('label:has(#scenesSetting)');assert label.inner_text().strip()=='Escenas: más variedad',label.inner_text()
    assert page.inner_text('#scenesHint').startswith('Algunos lugares suenan como un club.')
@@ -47,7 +47,7 @@ try:
    # --- Off: at the stage, nothing.
    page.evaluate(GO,stage);page.wait_for_timeout(2500);st=page.evaluate("__r.sceneState()");assert not st['bus'] and not st['on'],st
    # --- On (the box in Sonido): saved; at the stage its club rises on the bars with its line.
-   page.evaluate("document.getElementById('mMusic').hidden=false");page.click('#scenesSetting');assert page.evaluate("__r.S.scenes.on===true")
+   page.evaluate("document.getElementById('mMusic').hidden=false;document.getElementById('musicAdvanced').open=true");page.click('#scenesSetting');assert page.evaluate("__r.S.scenes.on===true")
    page.evaluate(HIDE)
    page.wait_for_function("__r.sceneState().bus&&__bars.length>=1",timeout=12000)
    st=page.evaluate("__r.sceneState()");assert st['scene']==stage['scene'] and st['stage']['id']==stage['id'] and st['section']=='intro',st
@@ -66,14 +66,14 @@ try:
      page.evaluate(GO,other);page.wait_for_function("__r.sceneState().bus",timeout=12000)
      page.wait_for_function(TOAST,arg='Escena · Patio latino' if other['scene']=='patio' else 'Escena · Almacén',timeout=12000)
      # Switched off at the stage: it fades and lets go.
-     page.evaluate("document.getElementById('mMusic').hidden=false");page.click('#scenesSetting');page.evaluate(HIDE)
+     page.evaluate("document.getElementById('mMusic').hidden=false;document.getElementById('musicAdvanced').open=true");page.click('#scenesSetting');page.evaluate(HIDE)
      assert page.evaluate("__r.S.scenes.on===false");page.wait_for_function("!__r.sceneState().bus",timeout=20000)
-     page.evaluate("document.getElementById('mMusic').hidden=false");page.click('#scenesSetting');page.evaluate(HIDE)
+     page.evaluate("document.getElementById('mMusic').hidden=false;document.getElementById('musicAdvanced').open=true");page.click('#scenesSetting');page.evaluate(HIDE)
    # --- Kept after a reload.
    if width<600:
     page.evaluate("__r.save()");page.reload();page.wait_for_function("!!window.__r?.sceneState",timeout=20000)
     assert page.evaluate("__r.S.scenes.on===true")
-    page.evaluate("document.getElementById('mMusic').hidden=false");page.wait_for_timeout(100);assert page.locator('#scenesSetting').is_checked();page.evaluate(HIDE)
+    page.evaluate("document.getElementById('mMusic').hidden=false;document.getElementById('musicAdvanced').open=true");page.wait_for_timeout(100);assert page.locator('#scenesSetting').is_checked();page.evaluate(HIDE)
    assert not errors,errors
    page.close()
   browser.close()

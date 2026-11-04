@@ -35,7 +35,7 @@ export function initialize(runtime){
  setInterval(()=>{try{tick();}catch(_){}},60)?.unref?.();
  // ---------- the card and the sheets ----------
  // The round's card: a calm round says what it gave and where ★★ and ★★★ wait.
- function card(r){if(!r||!ended||ended.id!==r.id||Math.abs(ended.ms-r.ms)>800)return null;return {rows:['Modo tranquilo: ★ ganada.','★★ y ★★★, en el modo normal.']};}
+ function card(r){if(!r||!ended||ended.id!==r.id||Math.abs(ended.ms-r.ms)>800)return null;return {rows:['Modo niños: ★ ganada.','★★ y ★★★, en el modo normal.']};}
  // ---------- drawing ----------
  // The thing to reach next, in white (white = next): a soft ring around it and, off screen, a small arrow at the edge.
  let drawn=null;

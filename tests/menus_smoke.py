@@ -53,9 +53,10 @@ try:
     for id in ('bContinue','bLugares','bAch','bStudio','bSettings','bGuide'):assert p.evaluate(SHOWN,id),(w,h,view,id,'not in view')
     assert p.evaluate(SHOWN,'bCube')==(view=='libre'),(w,h,view,'Tu cubo in the full view only (no shop in the quiet view)')
     order=p.evaluate("[...document.querySelectorAll('.menu-group.primary .tiles>button')].filter(b=>getComputedStyle(b).display!=='none'&&!b.hidden).map(b=>b.id)")
-    assert order==(['bContinue','bLugares','bCube','bStudio','bAch'] if view=='libre' else ['bContinue','bLugares','bStudio','bAch']),order
+    # alpha.257: in the World «Volver al Camino» closes «Jugar», in view.
+    assert order==(['bContinue','bLugares','bCube','bStudio','bAch','bPrimary'] if view=='libre' else ['bContinue','bLugares','bStudio','bAch','bPrimary']),order
     # The first row closes its gaps: its tiles share the width and the height.
-    tiles=p.evaluate("[...document.querySelectorAll('.menu-group.primary .tiles>button')].filter(b=>getComputedStyle(b).display!=='none'&&!b.hidden&&b.id!=='bContinue').map(b=>{const r=b.getBoundingClientRect();return [r.width,r.height,r.top]})")
+    tiles=p.evaluate("[...document.querySelectorAll('.menu-group.primary .tiles>button')].filter(b=>getComputedStyle(b).display!=='none'&&!b.hidden&&b.id!=='bContinue'&&b.id!=='bPrimary').map(b=>{const r=b.getBoundingClientRect();return [r.width,r.height,r.top]})")
     assert max(t[0] for t in tiles)-min(t[0] for t in tiles)<=1 and max(t[1] for t in tiles)-min(t[1] for t in tiles)<=1,(w,h,view,tiles)
     cont=p.evaluate("(()=>{const a=document.getElementById('bContinue').getBoundingClientRect(),s=[...document.querySelectorAll('.menu-group.primary .tiles>button')].filter(b=>getComputedStyle(b).display!=='none'&&!b.hidden).map(b=>b.getBoundingClientRect());return [a.left,a.right,Math.min(...s.map(r=>r.left)),Math.max(...s.map(r=>r.right))]})()")
     assert abs(cont[0]-cont[2])<=1 and abs(cont[1]-cont[3])<=1,(w,h,view,'tiles fill the row',cont)
@@ -82,15 +83,17 @@ try:
     assert not empty,(w,h,view,'empty section label',empty)
     labels=p.evaluate("[...document.querySelectorAll('#menuMore .menu-section-label')].map(l=>l.textContent)");assert labels==['Ir','Crear','Tú'],labels
     low=p.evaluate("[...document.querySelectorAll('#mMenu .menu-sections button')].filter(b=>b.getClientRects().length&&getComputedStyle(b).display!=='none'&&b.getBoundingClientRect().height<44).map(b=>b.id)");assert not low,(w,h,view,low)
-    # In the World, the way back to the Camino heads «Más › Ir»: one button for it, never in «Ayuda y cuenta».
+    # In the World, the way back to the Camino is one button, under «Jugar» and not folded in «Más» (alpha.257).
     assert p.evaluate(SHOWN,'bPrimary') and not p.evaluate(SHOWN,'bWorld'),(w,h,view,'one way back')
-    assert p.evaluate("document.getElementById('bPrimary').previousElementSibling.textContent")=='Ir'
+    assert p.evaluate("!!document.getElementById('bPrimary').closest('.menu-group.primary')&&!document.getElementById('bPrimary').closest('#menuMore')"),'«Volver al Camino» in view'
     assert p.locator('#bPrimaryL').inner_text()=='Volver al Camino'
     p.locator('#mnClose').click()
     # Volume: ☰ → Ajustes → slider, first thing in Ajustes; «Más sonido» comes back to Ajustes.
     menu(p);p.locator('#bSettings').click();p.wait_for_timeout(150)
     first=p.evaluate("document.querySelector('#mSettings .settings-block input,#mSettings .settings-block button').id");assert first=='rMenuVolume',first
-    blocks=p.evaluate("[...document.querySelectorAll('#mSettings .settings-block>h3')].map(e=>e.textContent)");assert blocks==['Sonido y tiempo','Ver y sentir','Partida'],blocks
+    blocks=p.evaluate("[...document.querySelectorAll('#mSettings .settings-block>h3')].map(e=>e.textContent)");assert blocks==['Lo básico','Más opciones','Partida'],blocks
+    # alpha.257: Volumen, Idioma, Modo niños, Vibración, Daltonismo and Calidad first, in that order.
+    basics=p.evaluate("[...document.querySelectorAll('#mSettings .settings-block:first-of-type :is(input,select,button)')].map(e=>e.id)");assert basics==['rMenuVolume','language','calmKids','haptics','colorSafe','graphicsQuality'],basics
     assert p.evaluate("(()=>{const t=[...document.querySelectorAll('#mSettings .settings-block:last-of-type button')].filter(b=>b.getClientRects().length);return t.at(-1).id})()")=='bStartOver','«Empezar de cero» last'
     p.locator('#rMenuVolume').fill('40');p.locator('#rMenuVolume').dispatch_event('change');assert p.evaluate('__r.S.outputVolume')==.4
     p.locator('#bMusicSettings').click();p.wait_for_timeout(150);assert p.locator('#rVolume').input_value()=='40'
