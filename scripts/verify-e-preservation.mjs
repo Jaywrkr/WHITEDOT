@@ -132,9 +132,10 @@ const approvedVB='fd5fd157aa29641a672a850277751a3599101e3f';
 const rebasedVB=new Set(['src/main.js','src/render.js']);
 // Lo que hay más lejos, tanda C (Jay, 4 Nov 2026, alpha.251): the band from 30 to 60 km (pulsars, layered asteroids,
 // zip lines, seas of dust, the tool kit). main starts viaje-c.js, the frame gives it its tick, its drawing and the dust
-// over the sunk cube, and the offline shell lists two new modules. Held to the code commit of jay/viaje-c; the music's
-// contracts are untouched (the notes play on top, and under the dust audio.js's own comfort filter is held dark).
-const approvedVC='c8c5878d7b072a34918d0990ce0f0b293877cce0';
+// over the sunk cube, and the offline shell lists two new modules. Held to the commit that merges tanda B (jay/viaje-b)
+// into jay/viaje-c, so main, the frame and the shell carry the three batches; the music's contracts are untouched (the
+// notes play on top, and under the dust audio.js's own comfort filter is held dark).
+const approvedVC='f98df70705008a893bad88ed39e31f11039f9dca';
 const rebasedVC=new Set(['src/main.js','src/render.js']);
 const git=(...args)=>execFileSync('git',args),before=(path,ref=base)=>git('show',ref+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
