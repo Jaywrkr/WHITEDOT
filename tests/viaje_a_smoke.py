@@ -120,7 +120,9 @@ try:
    if not en:
     # --- 8 · The first rest satellite: its notice, its board with three orders; the buoy's order fulfilled.
     bd,orders=P['bd'],P['orders'];go(page,0,101000);page.wait_for_function("!!__r.bandState().book.seen.tablon",timeout=6000)
-    page.wait_for_function(f"window.__toasts.some(t=>t.includes('Aquí empiezan los tablones de encargos.'))",timeout=20000)
+    # At 10 km the board's notice shares the queue with the dead regions' (tanda B), 4.5 s of game time apart; a slow
+    # runner's game clock runs behind the wall clock, so give the queue room.
+    page.wait_for_function(f"window.__toasts.some(t=>t.includes('Aquí empiezan los tablones de encargos.'))",timeout=60000)
     go(page,bd['x']+80,bd['y']);page.wait_for_function("__r.viajeState().book.orders.length===3",timeout=8000)
     page.wait_for_function("__r.viajeState().drawn.boardText===3",timeout=6000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/tablon-{width}.png')
@@ -130,7 +132,9 @@ try:
     assert paid_log(page,'Encargo')==[15] and sparks(page)-before>=15 and len(st(page)['book']['orders'])==2,(paid_log(page,'Encargo'),st(page)['book']['orders'])
     page.wait_for_function("window.__toasts.some(t=>t.startsWith('Encargo cumplido · '))",timeout=15000)
     # --- 9 · The Bitácora: every band reached, with its line.
-    j=bandas(page);assert j['missing']==['12','15','20','25'] and j['summary']=='Lo que hay más lejos · 6 de 10',j  # A's six bands at 11 km; tanda B's (10-30 km) beyond start at 12
+    # A's six bands reached at 11 km; later batches (tanda B from 12 km, C from 30 km, D from 60 km) are still «?» with
+    # their km only.
+    j=bandas(page);assert {'12','15','20','25','30','60'}<=set(j['missing']) and all(float(k)>10 for k in j['missing']) and j['summary'].startswith('Lo que hay más lejos · 6 de '),j
     assert set(j['rows'])-{'region-apagada'}=={'bengala','interruptor','radar','pelota','luces','tablon'},j['rows'];assert '1 gol' in j['text'] and '1 encargo cumplido' in j['text'],j['text']
     if sound:assert 'Mejor racha · 5' in j['text'],j['text']
     if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{width}.png')

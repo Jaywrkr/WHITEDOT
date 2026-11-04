@@ -1,6 +1,40 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.249** en la rama `jay/viaje-b`. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.252** en la rama `jay/viaje-d`, que une `jay/viaje-c` (alpha.251, con B y A). Las entradas describen su revisión, no certifican producción.
+
+
+## Lo que hay más lejos, tanda D · 2.3.0-alpha.252
+
+Rama `jay/viaje-d`, desde `jay/viaje-a` `1ea7e84` (alpha.248, PR #387: dependencia explícita, trae la API de bandas), con `jay/viaje-c` unida por un merge (alpha.251, la tanda C de 30–60 km, que ya une `jay/viaje-b`, alpha.249, PR #388; segunda dependencia explícita). En paralelo `jay/visual-1` (alpha.250), sin tocar. Tanda D del pedido de Jay: lo que hay a 60 km o más. Guía: [El mundo](docs/MUNDO.md#tanda-d-60-km-o-más).
+
+- **Portal de otra regla** (desde 60 km). Durante 2 min el cubo se mueve por otra regla: órbita alrededor de un punto, rebote en postes o hielo. Seis luces dentro. Al salir, todo como antes. Una consulta nueva en `render.js` (`runtime.motionRule`), nula fuera de un portal.
+- **Estación del día** (desde 65 km). Cinco salas; en cada una eliges la siguiente entre tres puertas (un reto o un premio). Tres retos (compás, memoria, luces) y tres premios con sello. Se rehace cada día (`hashKey` de la fecha y del camino elegido).
+- **Barrido a tempo** (desde 70 km, dentro de cada satélite). Cuadrícula de 10 × 8 en dos tonos; la línea pasa al compás y borra los cuadrados de 2 × 2 de un tono. 90 s, puntuación y récord.
+- **Herencia de la mascota** (desde 80 km). Un nido da una cría a tu mascota: hereda color, notas y ritmo; «Cruce» y «Eco doble» son raros. Se ve en Bitácora › «Crías» y en el Refugio. Solo viaja si la eliges; tu mascota espera entera. `pet.js` no cambia.
+- **Eclipse que cambia** (desde 90 km). Mientras dura un eclipse de Secretos del cielo, aparece la corona (seis luces) y el pulso deja estela, que también atrapa. `secretos-cielo.js` solo gana la lectura `r.skyEclipse()`.
+- **Premios:** por `universeReward`, fácil, una vez al día por cosa: 15 ✦ a esta distancia (portal, estación con tres retos, barrido desde 16 casillas, corona). Las crías no pagan.
+- **Una escena a la vez:** portal y hoja (`#mViajeD`) son escenas por `r.bandAttach`. La tanda D pregunta `r.bandBusy('D')`: la escena de otra tanda (A, B o C) la hace esperar, y la suya no la detiene. Los botones de la hoja no suenan.
+- **Guardado nuevo** `S.viajeD` (versión 1). Campos desconocidos y versiones futuras se conservan. Si guardar falla, todo vuelve, mascota y chispas incluidas.
+- Enganches: `main.js` (inicia `viaje-d.js`), `render.js` (tick, dibujo y `motionRule`), `journal.js` (sección «Crías»), `house.js` (las crías en el Refugio), `index.html` (la hoja `#mViajeD`), `estilo-j.css`, `i18n-en.js`, `sw.js` (tres módulos).
+- **Sonido medido por render** (`tests/viaje_d_mix.py`): la música del Mundo es idéntica a alpha.248; los sonidos nuevos quedan 33,8 y 34,8 dB por debajo. `audio.js` y `pet.js` no cambian.
+- Pruebas nuevas: `tests/viaje_d.mjs`, `tests/viaje_d_smoke.py` (390×844 y 1280×800, y paso en inglés; 106 s) y `tests/viaje_d_mix.py`. `tests/audio_mix.mjs` gana `viajeDBatch`. `tests/viaje_a_smoke.py` acepta las bandas aún no alcanzadas de B, C y D.
+- Preservación: `main.js`, `render.js` y la lista offline de `sw.js`, con la capa `approvedVD` (el commit que une la tanda C; `approvedVC`, `approvedVB` y `approvedVA` debajo). Orden en `main.js`: bandas, A, B, C, D. Probado en local; sin CI remoto, sin teléfono ni personas.
+
+## Lo que hay más lejos, tanda C · 2.3.0-alpha.251
+
+Rama `jay/viaje-c`, desde `jay/viaje-a` `1ea7e84` (alpha.248, PR #387: dependencia explícita, trae la API de bandas), con `jay/viaje-b` unida por un merge (alpha.249, PR #388: la tanda B de 10–30 km, que ya contiene A y `main`; segunda dependencia explícita). Pedido de Jay: veinte ideas por distancia; esta tanda, 30–60 km. En paralelo `jay/visual-1` (alpha.250) y `jay/viaje-d` (alpha.252), que esta rama no toca. Guía: [El mundo](docs/MUNDO.md#lo-que-hay-más-lejos-tanda-c).
+
+- **Púlsares** (desde 30 km; Clair Obscur y Saros). Seis destellos avisados por tanda. Con sonido, un pulso a tiempo en su golpe los devuelve como nota del acorde y suma a la racha; sin sonido, apartarse los esquiva y cuenta igual. Sin daño ni derrota.
+- **Asteroides por capas** (desde 35 km; Donkey Kong Bananza). De 3 a 5 capas de colores que se rompen a pulsos, hasta uno de siete núcleos. Las capas rotas se guardan.
+- **Tirolinas de luz** (desde 40 km; Death Stranding 2). Un pulso en una boya pisada tiende una línea hacia la boya de la que vienes; otro pulso te lleva por ella en pocos segundos. Solo entre boyas pisadas, como la puerta de los satélites.
+- **Mares de polvo** (desde 45 km; Mina the Hollower). Un anillo de rocas hace de muro en la superficie; un pulso hunde el cubo, que pasa por debajo y sale por el otro lado. En el centro, a veces, un hallazgo que solo se ve hundido. Bajo el polvo la música suena apagada (filtro de confort, como el eclipse).
+- **Kit de herramientas** (desde 50 km; Hades II). Red, imán y caña, para siempre, en cajas. Abren bancos de luz, chatarra de satélite y pozos de estrellas; se recogen pasando o pulsando cerca, sin botón nuevo.
+- **Premios** por `universeReward`: tanda de púlsar 15 ✦ a 30 km (una vez al día por púlsar, racha de 4 o más), núcleo 12 (una vez por asteroide), hallazgo bajo el polvo 12 (una vez por mar), punto 12 desde 50 km (una vez al día). Herramientas y tirolinas, sin chispas.
+- **Una escena a la vez:** tanda de púlsar, viaje en tirolina y tiempo bajo el polvo, con `r.bandAttach` (`busy`). La tanda C pregunta `r.bandBusy('C')`: la escena de otra tanda (un reto de A, una región apagada de B) la hace esperar, y la suya no la detiene. A y B preguntan `r.bandBusy('A')` y `r.bandBusy('B')`, como trae `jay/viaje-b`.
+- **Guardado nuevo** `S.viajeC` (versión 1). Se conservan campos desconocidos; una versión futura no se toca. Si guardar falla, todo vuelve, chispas incluidas.
+- **Sonido medido por render** (`tests/viaje_c_mix.py`). La música del Mundo es idéntica a alpha.248; los sonidos nuevos quedan 31,2 y 32,3 dB por debajo; bajo el polvo los agudos bajan 18–26 dB sin cambiar el nivel y vuelven solos. `audio.js` no cambia.
+- Pruebas nuevas: `tests/viaje_c.mjs`, `tests/viaje_c_smoke.py` (390×844 y 1280×800, e inglés; 114 s) y `tests/viaje_c_mix.py`. `tests/audio_mix.mjs` gana `viajeCBatch` y `dust`. `tests/viaje_a_smoke.py` acepta las bandas aún no alcanzadas de B y C; `tests/viaje_c_smoke.py` da por vistas todas las bandas de menos de 30 km. Una clave repetida de `i18n-en.js` («Campana de polvo», en B y C) queda una vez.
+- Preservación: cambian `main.js`, `render.js` y la lista offline de `sw.js` (dos módulos), con la capa `approvedVC` (el commit que une la tanda B; `approvedVB` y `approvedVA` debajo). Orden en `main.js`: bandas, tanda A, tanda B, tanda C. Probado en local; sin CI remoto, sin teléfono ni personas.
 
 
 ## Lejos del origen, tanda B · 2.3.0-alpha.249

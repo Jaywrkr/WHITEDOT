@@ -915,3 +915,18 @@ button.sound-chip[aria-pressed="true"]{background:#fff;color:#000;border-color:#
 #menuAvatar.secret-face{position:relative}
 #menuAvatar.secret-face::before{content:"";position:absolute;left:22%;top:28%;width:56%;height:16%;background:linear-gradient(90deg,#000 0 26%,transparent 26% 68%,#000 68% 100%)}
 #menuAvatar.secret-face::after{content:"";position:absolute;left:26%;top:66%;width:48%;height:9%;background:#000;transform:rotate(-10deg)}
+/* Lo que hay más lejos, tanda D (alpha.252): the station of the day and the sweep on the beat (#mViajeD), the young ones in the Bitácora. */
+.modal .sheet.viajed-sheet{width:min(440px,calc(100vw - 32px));max-height:min(90dvh,calc(100dvh - 32px));overflow:auto;box-sizing:border-box}
+.viajed-sheet #viajeDStatus{font-size:12px;color:#ffffffd0;margin:0 0 10px}
+.viajed-sheet canvas{display:block;width:min(280px,100%);height:auto;margin:0 auto 10px;border:1px solid #ffffff22;image-rendering:pixelated}
+.viajed-body p{font-size:12px;line-height:1.5;margin:0 0 10px}
+.viajed-sheet .row{display:flex;gap:8px;flex-wrap:wrap}
+.viajed-pad button{flex:1 1 0;min-width:56px;min-height:44px}
+.viajed-doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 10px}
+.viajed-doors button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:72px;padding:8px;text-align:left;border:1px solid #ffffff55;background:#000;color:#fff;border-radius:0}
+.viajed-doors button span{font-size:12px;line-height:1.3;overflow-wrap:anywhere}.viajed-doors button small{font-size:10px;color:#ffffffa0}
+.viajed-beat{display:flex;gap:8px;margin:0 0 10px}.viajed-beat i{display:block;width:28px;height:28px;border:1px solid #ffffff55}.viajed-beat i.on{background:#fff}.viajed-beat i:last-child{border-color:#fff}
+.viajed-cells{display:grid;gap:8px;margin:0 0 10px;max-width:240px}.viajed-cells-4{grid-template-columns:repeat(2,1fr)}.viajed-cells-9{grid-template-columns:repeat(3,1fr)}
+.viajed-cells button{aspect-ratio:1;min-height:44px;border:1px solid #ffffff55;background:#000;border-radius:0}.viajed-cells button.on{background:#fff}
+.viajed-count{color:#ffffffa0}
+.cria-row{border:1px solid #ffffff22;padding:8px 10px;margin:8px 0}.cria-row p{margin:0 0 4px;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.cria-row .rumor-now{color:#ffffffb0}.cria-swatch{font-size:12px}
