@@ -7,7 +7,7 @@ Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.253** en la rama `jay/visu
 
 Rama `jay/visual-1`, desde `main` `c8842cd` (alpha.247); antes alpha.250.
 
-- **Mezclada sobre las tandas C y D.** Un merge une `jay/viaje-d` (alpha.252, PR #389, con C, B y A); la versión pasa a alpha.253.
+- **Mezclada sobre las tandas C y D.** Un merge une `jay/viaje-d` (alpha.252, PR #389, con C, B y A); la versión pasa a alpha.253. Tras la unión pasan en local `release-audit`, `npm test` (295 suites), `verify-e-preservation`, los recorridos de navegador de visual 1, de las tandas A–D y de los sistemas tocados, y `audio_mix.py` y `viaje_d_mix.py`. Los umbrales de `visual1_smoke.py` no cambian: con las tandas siguen por debajo (inicio en el teléfono, 7 degradados y unos 1 008 `fillRect` por fotograma; Cristales, unos 240 `stroke`).
 
 El resto de la entrada describe la tanda gráfica. Tandas 0 y 1 de la auditoría visual, aprobadas por Jay: el mundo más acabado, sin subir el peso ni el trabajo por fotograma. Guía: [El mundo](docs/MUNDO.md#luz-común).
 
