@@ -176,7 +176,7 @@ const rebasedMN=new Set(['src/living-discoveries.js']);
 // same registry) and a box gives one power: the sixteen surprises are retired (saves kept, a saved active one ends).
 // Power ids kept; no audio.js change; the offline shell changes only its release key. Held to the code commit of
 // jay/coherencia-t3 (from jay/coherencia-t4 fbec1b7).
-const approvedT3='27d05e353a72fd3e8bb81b9f7172f2f966f988ab';
+const approvedT3='f5f8f9aa3fcc673e67bb8714c66bb75b8a821c83';
 const rebasedT3=new Set(['src/box-surprises-model.js','src/box-surprises.js','src/cajas.js','src/celebration.js','src/data.js','src/expansion-music.js','src/i18n-en.js','src/narrator.js','src/scanner-arrows-model.js','src/scanner-arrows.js','src/scanner.js']);
 // Avisos y oro (coherencia T4, Jay, 4 Nov 2026, alpha.261): one notice style («Nombre · una frase.», no exclamations),
 // one box one notice, one band notice per crossing, a kind narrator, gold only for what is earned (one rule in the
