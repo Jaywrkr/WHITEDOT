@@ -238,6 +238,48 @@ La ronda que completa los once desemboca sola en el final (D5): la escena se abr
 
 Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. Después, la pantalla pasa a negro opaco y la hoja sale encima (Jay, alpha.232, G1): sus ★ (dorado solo lo ganado) y un solo botón blanco, el que sigue: «Seguir hacia …» o, sin siguiente lugar en el camino, «Otra vez». Tocar el negro no la cierra ni mueve el cubo; los avisos esperan. Los capítulos del Viaje no usan esta hoja y la ronda Libre no tiene. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final (la versión maestra llega así). Efectos de UI silenciosos.
 
+## Luz común
+
+Visual 1, aprobado por Jay (4 de noviembre de 2026, alpha.250, rama `jay/visual-1`, desde `main` `c8842cd`): tandas 0 y 1 de la auditoría visual. Que el mundo se vea más acabado sin subir el peso ni el trabajo por fotograma. Nada cambia de mecánica, posición, guardado ni sonido; el cubo no crece.
+
+**El kit** (`src/fx-kit.js`, sin dependencias ni RNG). Solo dibuja:
+
+- **Brillo.** Un degradado pintado una vez por color en un lienzo pequeño (LRU de 40). Se dibuja con `drawImage`, encima o sumado (`lighter`). Sobre negro, lo sumado deja el negro negro. Sin documento (Node), cae al degradado de antes.
+- **Doble contorno.** La misma línea tres veces más ancha, al 15 % y sumada, bajo el trazo fino.
+- **Aparición.** Al verse un objeto por primera vez, crece de 0,85 a 1 con un pequeño rebote (280 ms) y aparece en opacidad. Si deja de verse medio segundo, vuelve a aparecer.
+- **Pop.** Un anillo con *ease out*, otro más fino, chispas sumadas y un destello breve. Dorado solo para lo ganado: caja abierta, maravilla encontrada, chispa salvaje, sonido raro guardado.
+- **Capa común** (`runtime.fxLayer`). Pops y chispas en coordenadas del mundo, en arrays tipados de tamaño fijo: 256, o 96 en calidad ligera. Se dibuja **después de** `drawWorldSheetGrey`, así que lo dorado conserva su color también en el Viaje.
+- **Respiración al compás, sombra de contacto y tono del bioma.** El tono es el color de los encuentros vivos (`LIVE_COLORS`).
+
+**Movimiento reducido:** nada nuevo se mueve. No hay pop, aparición, estela, ondas nuevas ni eco. **Calidad ligera:** la mitad de chispas, sin doble contorno ni brillo sumado, y las partículas vuelven a ser cuadrados de 2 px.
+
+**Dónde se ve:**
+
+- **Encuentros vivos.** Brillo sumado en el color del bioma y estela de cinco luces detrás de la presa. La presa aparece en 0,28 s. Al ganar, el estallido de siempre más un pop en la capa común.
+- **Cajas.** Brillo sumado que respira, sombra de contacto, doble contorno en los dos cuadrados y aparición. Al abrirse, un pop dorado.
+- **Chispa salvaje.** Halo dorado sumado y tres motas en órbita, quietas con movimiento reducido. Un pop pequeño en cada salto y uno grande al atraparla.
+- **Maravillas musicales.** Aparición, respiración, brillo de su color, doble contorno del icono y un anillo de guiones que se escribe al acercarte (a menos de 150 m). Al encontrarla, un pop dorado.
+- **Cristales de chispa.** Luz del bioma bajo los prismas, que sube con el pulso del Camino, y aparición. En el pulso, un brillo de 1 px recorre una arista. El golpe brilla con un sprite (antes `shadowBlur`). Cada golpe deja una chispa en la capa común y la rotura, un pop.
+- **Sonidos raros.** Aparición, luz del bioma y tres ondas finas que se abren. Al guardarlo, un pop dorado.
+- **Partículas** (`runtime.parts`, misma API). Ya no se crea un array cada fotograma: se compacta en su sitio. Los objetos muertos se reutilizan (`runtime.newPart`) y cada uno toma su color una vez. Se dibujan como chispas sumadas.
+- **Ondas de pulso.** Mantienen la luz y luego se apagan (*ease out*). Llevan un eco fino 40 ms detrás y la onda a tiempo, un brillo sumado. El alcance y los golpes no cambian.
+
+**El coste pagado** (tanda 0):
+
+- **Habitantes píxel.** Un sprite por glifo, tinta y densidad de píxel, en lugar de un `fillRect` por píxel.
+- **Capas del universo.** `rk(key,tag,i)` guarda por celda el mismo número que `rand(key+':'+tag+i)`. La retícula de Cristales va en una ruta por color y las bandas de Dunas, en una ruta por celda.
+- **Degradados por fotograma.** Pasan a sprites los dieciséis de la niebla, el halo del cubo, el charco de luz, la caja y su compañero, los `glow()` de encuentros y Mapa del cielo, los tres a pantalla completa de la quietud y las nubes y señales de los colores lejanos.
+- **Sombras.** La de contacto ya no usa `shadowBlur`.
+- **Paleta viva** (`visual.js`). Dos generaciones de caché. En `hsla` con alfa variable, el tono se convierte una vez y se añade el alfa: misma salida, sin regex.
+
+**Medido**, en Chromium sin interfaz, 390×844 y DPR 1, en los mismos escenarios de la auditoría:
+
+- **Llamadas al lienzo.** Los degradados por fotograma pasan de 15–39 a 5–8, y `fillRect` y `stroke` bajan mucho. Tabla en [CAMBIOS](../CAMBIOS.md).
+- **Tiempo.** La CPU del navegador por fotograma baja un 7–21 %, ya con los efectos nuevos dibujados. El JS por fotograma queda igual dentro del ruido.
+- **Teléfono.** No se midió. Hay que medirlo con `?medir=1`.
+
+Pruebas: `tests/fx-kit.mjs` (kit, caché de la paleta, `rk` y la retícula, que dibuja las mismas aristas) y `tests/visual1_smoke.py` (390×844 y 1280×800: sin errores, pop dorado al abrir una caja, nada con movimiento reducido, mitad de chispas en ligera y llamadas por fotograma bajo las de `main`).
+
 ## Ayuda
 
 Menú → **Cómo jugar** recupera la regla actual. En Jardín indica aproximación, siembra en el golpe, riego entre golpes, cosecha y árbol dorado. Ver el gesto repite una demostración; la guía no obliga a abandonar una ronda ni a visitar el Refugio.
