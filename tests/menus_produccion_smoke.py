@@ -55,7 +55,7 @@ try:
    gap=p.evaluate("(()=>{const a=document.getElementById('bStartOver').getBoundingClientRect(),prev=document.getElementById('releaseVersion').getBoundingClientRect();return a.top-prev.bottom})()")
    assert gap>=24,('«Empezar de cero» apart',gap)
    assert p.evaluate("document.querySelector('label:has(#calmKids)').textContent.trim()")=='Modo niños'
-   assert p.inner_text('#bCreateMode').startswith('Crear libre: '),p.inner_text('#bCreateMode')
+   assert p.locator('#bCreateMode').count()==0,'Crear libre is gone'
    options=p.evaluate("[...document.getElementById('autoIntent').options].map(o=>o.value)");assert len(options)<=3,options
    # «Más sonido»: one volume (in Ajustes), the hard words folded in «Avanzado».
    p.locator('#bMusicSettings').click();p.wait_for_timeout(150)

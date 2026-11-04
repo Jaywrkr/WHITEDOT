@@ -18,7 +18,7 @@ export function initialize(runtime){
  function own(){if(owner!==runtime.S){owner=runtime.S;owner.journey=normalizeJourney(owner.journey,owner,!runtime.festival&&automated());}return owner.journey;}
  const quiet=()=>own().mode==='viaje';
  // Panel 11 (Q1): title and subtitle both say the current state, and the subtitle names what the quiet view hides.
- // Menús (alpha.257): «Mostrar todo: sí / no», so it is not confused with «Modo niños» or «Crear libre»; same modes and saves.
+ // Menús (alpha.257): «Mostrar todo: sí / no», so it is not confused with «Modo niños»; same modes and saves.
  function apply(){const j=own(),b=$('bJourneyMode');document.body.classList.toggle('journey-quiet',j.mode==='viaje');if(b){b.hidden=!freeOpen(j);const free=j.mode==='libre',label=b.querySelector('span');if(label)label.firstChild.textContent=free?'Mostrar todo: sí':'Mostrar todo: no';b.querySelector('small').textContent=free?'Tu cubo, cifras y herramientas a la vista':'Sin Tu cubo, cifras ni herramientas';b.setAttribute('aria-pressed',String(free));}}
  function set(mode){const j=own();if(j.version>JOURNEY_VERSION||(mode!=='viaje'&&mode!=='libre')||j.mode===mode||(mode==='libre'&&!freeOpen(j)))return false;const before=j.mode,free=j.free,seen=runtime.S.help?.camino;j.mode=mode;if(mode==='libre'){j.free=true;if(runtime.S.help)runtime.S.help.camino=true;}if(runtime.save()===false){j.mode=before;j.free=free;if(runtime.S.help)runtime.S.help.camino=seen;return false;}apply();runtime.hud?.();return true;}
  // Playing without an account: once in the free World, the cloud is offered once, quietly; never during the Journey.

@@ -21,11 +21,9 @@ with sync_playwright() as p:
   # First challenge can be completed in several orders, without recording.
   page.evaluate("__testRuntime.creativeAction('bass','touch');__testRuntime.creativeAction('groove','model')")
   assert page.evaluate("!!__testRuntime.S.ach.composicionAbierta")
-  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bCreateMode').click();page.locator('#settingsClose').click()
-  assert page.evaluate('__testRuntime.S.relaxedCreate')
-  if page.locator('#mMenu').is_visible():page.locator('#mnClose').click()
+  assert page.locator('#bCreateMode').count()==0,'Crear libre is gone'
   page.evaluate('__testRuntime.S.lampUsed=__testRuntime.lampMax()+1')
-  page.wait_for_timeout(300);assert page.evaluate('__testRuntime.inWorld()'),'relaxed mode must not end on empty lamp'
+  page.wait_for_timeout(300);assert page.evaluate('__testRuntime.inWorld()'),'an empty lamp never ends the World'
   # Place a real existing prism next to the player; drag models without movement.
   pos=page.evaluate("""()=>{const r=__testRuntime,c=r.sceneChunk(r.wchunk(Math.floor(r.S.wx/r.WCH),Math.floor(r.S.wy/r.WCH)));const o=c.playthings.find(o=>o.kind==='rotor'||o.kind==='resonator')||c.playthings[0];o.kind='rotor';o.x=o.hx=r.S.wx+70;o.y=o.hy=r.S.wy;o.vx=o.vy=0;window.prism=o;return {x:r.S.wx,y:r.S.wy};}""")
   page.wait_for_timeout(100);page.mouse.move(width/2+70,height/2);page.mouse.down();page.mouse.move(width/2+110,height/2-50,steps=10);page.mouse.up();page.wait_for_timeout(100)

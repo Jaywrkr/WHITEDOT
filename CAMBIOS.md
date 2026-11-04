@@ -11,7 +11,8 @@ Rama `jay/menus`, desde `main` `c5b796f` (alpha.256). Pedido de Jay («haz lo de
 - **Cuenta en pausa.** Con la nube en pausa el jugador no ve «Cuenta»; «Guardar copia» aparece en «Más» › Tú, como en la edición de venta. Supabase y su configuración, sin tocar.
 - **Un volumen**, en Ajustes. El de «Más sonido» sigue en la página, oculto y sincronizado.
 - **«Más sonido»:** Música y Calma a la vista; Energía, Repetir, Escenas y Estilo de La Voz, plegados en «Avanzado».
-- **Tres nombres claros:** «Mostrar todo: sí / no» (antes «Vista completa / tranquila»), «Modo niños» (antes «Modo tranquilo para niños», con la línea «Más fácil y sin prisa. Solo da ★.» y la hoja «Modo niños: ★ ganada.») y «Crear libre: sí / no» (antes «Modo crear»). Mismos modos y claves. Hallazgo: `S.relaxedCreate` no lo lee ningún sistema; el botón no cambia nada del juego.
+- **Dos nombres claros:** «Mostrar todo: sí / no» (antes «Vista completa / tranquila»), «Modo niños» (antes «Modo tranquilo para niños», con la línea «Más fácil y sin prisa. Solo da ★.» y la hoja «Modo niños: ★ ganada.»). Mismos modos y claves.
+- **Fuera «Modo crear»** (`#bCreateMode`), por decisión de Jay: ningún sistema leía `S.relaxedCreate`, así que el botón no cambiaba nada. El valor guardado se conserva tal cual.
 - **Paseo automático:** tres opciones, Paisaje, Criaturas y Hallazgos. «Afinidad» y «contraste» guardados siguen funcionando y no se reescriben; la lista los enseña como «Hallazgos».
 - **Ajustes en orden:** Volumen, Idioma, Modo niños, Vibración, Daltonismo y Calidad («Lo básico»); luego «Más opciones»; «Partida» con la versión y, al final y aparte, «Empezar de cero», que ya pedía «¿Seguro?».
 - **«Volver al Camino»** sale de «Más»: en el Mundo cierra «Jugar», a la vista.

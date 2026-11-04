@@ -16,10 +16,10 @@ try:
   context.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   url=f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=closure&generation=2&layout=wide'
   page.goto(url);page.wait_for_function('__testRuntime?.labMode');page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
-  page.evaluate('()=>{const r=__testRuntime;r.givePower("cometa");r.givePower("campo");r.startAutopilot("wander");r.loopButton();r.quietState.stage=6;r.S.softMusic=true;r.S.autoPins=true;r.jamUI();r.S.relaxedCreate=true;r.creativeModeUI();r.styleUI();}')
+  page.evaluate('()=>{const r=__testRuntime;r.givePower("cometa");r.givePower("campo");r.startAutopilot("wander");r.loopButton();r.quietState.stage=6;r.S.softMusic=true;r.S.autoPins=true;r.jamUI();r.styleUI();}')
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dReset').click();page.locator('#dReset').click()
   assert page.evaluate('__testRuntime.S.mode')=='camino';assert page.evaluate('__testRuntime.autopilotState.mode') is None
-  assert page.locator('#bSoft').get_attribute('aria-pressed')=='false';assert page.locator('#bAutoPins').get_attribute('aria-pressed')=='false';assert page.locator('#bCreateMode').get_attribute('aria-pressed')=='false'
+  assert page.locator('#bSoft').get_attribute('aria-pressed')=='false';assert page.locator('#bAutoPins').get_attribute('aria-pressed')=='false';assert page.locator('#bCreateMode').count()==0
   assert not page.evaluate('__testRuntime.jam.loop.armed');assert not page.evaluate('__testRuntime.hasPower("cometa")||__testRuntime.hasPower("campo")')
   from browser_helpers import complete_path_fixture
   complete_path_fixture(page)

@@ -12,9 +12,7 @@ export function advanceOpenChallenge(state,channel,verb){
 export function initialize(runtime){
  runtime.VOZ.composicionAbierta='Tocar, quitar, cultivar, modelar. El lugar ya te responde.';
  runtime.ACH.push(['composicionAbierta','Otra forma de componer','Transforma dos partes musicales de dos maneras en un lugar.']);
- const modeButton=runtime.$('bCreateMode');
- function modeUI(){modeButton.setAttribute('aria-pressed',String(!!runtime.S.relaxedCreate));modeButton.querySelector('span').textContent=runtime.S.relaxedCreate?'Crear libre: sí':'Crear libre: no';}
- modeButton.onclick=()=>{runtime.S.relaxedCreate=!runtime.S.relaxedCreate;modeUI();runtime.save();runtime.hud();};modeUI();
+ // «Modo crear» (Crear libre) is gone (alpha.257): nothing read it. A saved S.relaxedCreate stays as it was.
  const state=()=>runtime.S.creativeJourney||=( {world:false,transformed:false,studio:false} );
  let previousMode=null,subtractIndex=0,gesture=null,lastAction=-Infinity,hintClock=0;
  const available=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!runtime.scanning&&!document.hidden&&!openSurface('.modal:not([hidden])');
@@ -73,5 +71,5 @@ export function initialize(runtime){
   const c=runtime.cx;c.save();c.globalAlpha=.65;c.fillStyle='#ddd';c.textAlign='center';c.font='11px "Geist Mono", monospace';c.fillText(runtime.fingerTouch?gestureHint('toy:'+nearest.kind):'Choca con el cubo · quédate cerca para cultivar',runtime.W/2,runtime.H/2+74,Math.min(300,runtime.W-32));c.restore();
  }
  function card(){const s=state(),step=journeyStep(s),challenges=Object.values(runtime.S.openChallenges||{}),done=challenges.filter(c=>c.done).length;return `<article class="journal-card"><h3>Tu recorrido creativo</h3><p>${JOURNEY.map((name,i)=>`${i<=step?'●':'○'} ${name}`).join(' → ')}</p><p>Explora a tu ritmo. Reto abierto: transforma dos partes de dos maneras distintas (tocar, cultivar, modelar o retirar). Lugares resueltos: ${done}. Toca tu punto blanco para retirar motivo, percusión o bajo por turnos. Las capas regresan suavemente. Los ecos antiguos enseñan a sostener una parte permaneciendo junto a un aro; una constelación rara añade evolución del motivo. Descubrimientos: ${['hold','harmonic'].filter(k=>runtime.S.expressiveFinds?.[k]).map(k=>k==='hold'?'sostén':'respiración armónica').join(", ")||"aún ninguno"}. Fijar sonidos es opcional; el Estudio permite colocar y retirar muestras.</p></article>`;}
- Object.defineProperties(runtime,{creativeModeUI:{get:()=>modeUI},lastCreativeAction:{get:()=>lastAction},rareCreativeFind:{get:()=>rareFind},creativePointerDown:{get:()=>down},creativePointerMove:{get:()=>move},creativePointerUp:{get:()=>up},creativeTap:{get:()=>tapSelf},creativeDraw:{get:()=>draw},gestureHint:{get:()=>gestureHint},creativeTick:{get:()=>tick},creativeAction:{get:()=>action},creativeCard:{get:()=>card}});
+ Object.defineProperties(runtime,{lastCreativeAction:{get:()=>lastAction},rareCreativeFind:{get:()=>rareFind},creativePointerDown:{get:()=>down},creativePointerMove:{get:()=>move},creativePointerUp:{get:()=>up},creativeTap:{get:()=>tapSelf},creativeDraw:{get:()=>draw},gestureHint:{get:()=>gestureHint},creativeTick:{get:()=>tick},creativeAction:{get:()=>action},creativeCard:{get:()=>card}});
 }

@@ -812,8 +812,6 @@ export const EN=Object.freeze({
  "Tocar, quitar, cultivar, modelar. El lugar ya te responde.":"Touch, remove, grow, shape. The place answers you now.",
  "Otra forma de componer":"Another way to compose",
  "Transforma dos partes musicales de dos maneras en un lugar.":"Transform two musical parts in two ways in one place.",
- "Crear libre: sí":"Free create: on",
- "Crear libre: no":"Free create: off",
  "Menos percusión":"Less percussion",
  "Menos motivo":"Less motif",
  "Menos bajo":"Less bass",
