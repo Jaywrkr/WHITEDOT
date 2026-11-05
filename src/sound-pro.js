@@ -1,5 +1,5 @@
 import {soundProfile,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,createTransitionTracker,guestFilter,GUEST_HIGHPASS} from './sound-profiles.js';
-// Sonido pro (alpha.266): one shared production engine under the composition. audio.js keeps deciding every hit and
+// Sonido pro (alpha.266; house clásico alpha.267): one shared production engine under the composition. audio.js keeps deciding every hit and
 // note; for a genre whose family profile is ready, the hit or note sounds here instead (runtime.proDrum and
 // runtime.proVoice), on one bus per region («deck»): a layered kit synthesized once into buffers, the bass split in sub
 // and mid under the kick's sidechain, wide synths, generated room and echo, glue and saturation. Region changes are
@@ -51,8 +51,8 @@ export const ONE_SHOTS={
 export function roomImpulse(sr,sec,seed=61){const n=Math.round(sec*sr),pre=Math.round(.015*sr),out=[new Float32Array(n),new Float32Array(n)];
  for(let c=0;c<2;c++){const r=rng(seed+c);let y=0;for(let i=pre;i<n;i++){const x=i/n,k=.85-.75*x;y+=(r()*2-1-y)*k;out[c][i]=y*Math.pow(1-x,2.4)*(i-pre<sr*.004?(i-pre)/(sr*.004):1);}}
  let pk=0;for(const d of out)for(const x of d)pk=Math.max(pk,Math.abs(x));for(const d of out)for(let i=0;i<n;i++)d[i]*=.35/(pk||1);return out;}
-// The kick sits on the root or its fifth, whichever octave lands nearest 52 Hz.
-export const kickPitch=hz=>{if(!(hz>0))return 52;let best=52,bd=9;for(const r of [1,1.5])for(let k=-6;k<=2;k++){const f=hz*r*Math.pow(2,k),d=Math.abs(Math.log2(f/52));if(d<bd){bd=d;best=f;}}return Math.round(best);};
+// The kick sits on the root or its fifth, whichever octave lands nearest 52 Hz (or the kit's own target).
+export const kickPitch=(hz,target=52)=>{if(!(hz>0))return target;let best=target,bd=9;for(const r of [1,1.5])for(let k=-6;k<=2;k++){const f=hz*r*Math.pow(2,k),d=Math.abs(Math.log2(f/target));if(d<bd){bd=d;best=f;}}return Math.round(best);};
 const mix=(a,b)=>((a*2654435761)^(b*2246822519))>>>0;
 const unit=h=>{h^=h>>>16;h=Math.imul(h,0x85ebca6b);h^=h>>>13;h=Math.imul(h,0xc2b2ae35);h^=h>>>16;return (h>>>0)/4294967296;};
 
@@ -87,20 +87,24 @@ export function initialize(runtime){
   tone.type='lowpass';tone.frequency.value=3200;fb.gain.value=p.space.feedback;pl.pan.value=-.6;pr.pan.value=.6;echoRet.gain.value=p.space.echoRet;
   const six=runtime.SIX||.12;dl.delayTime.value=dr.delayTime.value=Math.min(1.9,six*p.space.echoSteps);
   echoIn.connect(tone).connect(dl);dl.connect(pl).connect(echoRet);dl.connect(fb).connect(dr);dr.connect(pr).connect(echoRet);dr.connect(dl);echoRet.connect(sum);
-  nodes+=16;
-  E={ac,sr,buffers,decks,sum,out,verbIn,echoIn,dl,dr,glue};
+  // A longer, darker hall for the warm families' chords and pads (house): sent to only by voices that ask for it.
+  const hall=ac.createConvolver(),hallIn=ac.createGain(),hallRet=ac.createGain(),hallHp=ac.createBiquadFilter(),hir=roomImpulse(sr,3.2,71),hb=ac.createBuffer(2,hir[0].length,sr);hb.getChannelData(0).set(hir[0]);hb.getChannelData(1).set(hir[1]);hall.buffer=hb;
+  hallHp.type='highpass';hallHp.frequency.value=300;hallRet.gain.value=.45;hallIn.connect(hallHp).connect(hall).connect(hallRet).connect(sum);
+  nodes+=20;
+  E={ac,sr,buffers,decks,sum,out,verbIn,echoIn,hallIn,dl,dr,glue,waves:new Map()};
   return E;
  }
  // Pro bus level into audio.js's own master (its compressor and limiter stay the last stage), the comfort ceiling
  // a converted family asks for, and the final trim that keeps true peak at or under -1 dBTP.
  const OUTPUT=.105,CEILING=16000,TRIM=.88;
  function buffer(key,make){const e=E;let b=e.buffers.get(key);if(!b){const d=make(e.sr);b=e.ac.createBuffer(1,d.length,e.sr);b.getChannelData(0).set(d);e.buffers.set(key,b);}return b;}
- function deck(key){
+ function deck(key,p){
   const e=E;key=key||'solo';let d=e.decks.get(key);if(d){d.used=runtime.MU?.step??0;return d;}
   const ac=e.ac,duck=ac.createGain(),dry=ac.createGain(),hp=ac.createBiquadFilter(),lp=ac.createBiquadFilter(),out=ac.createGain();nodes+=5;
   hp.type='highpass';hp.frequency.value=10;hp.Q.value=.7;lp.type='lowpass';lp.frequency.value=20000;lp.Q.value=.7;
   duck.connect(hp);dry.connect(hp);hp.connect(lp).connect(out).connect(e.sum);
-  d={key,duck,dry,hp,lp,out,used:runtime.MU?.step??0,lead:0};e.decks.set(key,d);
+  // A deck's level is its family's output (house sits a little under tech for the same loudness at the limiter).
+  d={key,duck,dry,hp,lp,out,level:p?.output??1,used:runtime.MU?.step??0,lead:0};out.gain.value=d.level;e.decks.set(key,d);
   if(mixKeys&&key===mixKeys.secondary){hp.frequency.value=GUEST_HIGHPASS;lp.frequency.value=guestFilter(mixKeys.to).lowpass;}
   if(e.decks.size>4){let old=null;for(const x of e.decks.values())if(x!==d&&(!old||x.used<old.used))old=x;if(old){e.decks.delete(old.key);const t=ac.currentTime;old.out.gain.setTargetAtTime(0,t,.3);setTimeout?.(()=>{try{old.out.disconnect();}catch(err){}},3000);}}
   return d;
@@ -129,14 +133,14 @@ export function initialize(runtime){
   a.gain.setValueAtTime(.3,t);a.gain.setTargetAtTime(0,t+.02,.35);o.connect(a).connect(e.sum);o.onended=()=>{o.disconnect();a.disconnect();};o.start(t);o.stop(t+2.5);
   play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),t,.22,{dest:e.sum,room:.5});}
  function cue(f){
-  const plan=tracker.advance(f);if(!live()){dropBar=null;mixKeys=null;return;}const e=engine();if(!e)return;
+  const plan=tracker.advance(f);phraseAt={bar:plan.bar,phrase:plan.phrase};if(!live()){dropBar=null;mixKeys=null;return;}const e=engine();if(!e)return;
   const MU=runtime.MU;if(MU?.dnaA)learn(MU.dnaA.key,MU.dnaA.genre);if(MU?.neighborRadio)learn(MU.neighborRadio.key,MU.neighborRadio.genre);
   const six=runtime.SIX||.12,T=f.time,bar=16*six,active=live()&&(ready(keyGenre.get(plan.primary))||ready(keyGenre.get(plan.secondary)));
   e.dl.delayTime.setTargetAtTime(Math.min(1.9,six*3),T,.1);e.dr.delayTime.setTargetAtTime(Math.min(1.9,six*3),T,.1);
   dropBar=active&&plan.drop?plan.bar:null;mixKeys=active?plan:null;
   for(const d of e.decks.values()){
-   if(active&&d.key===plan.secondary){const a=guestFilter(plan.from),b=guestFilter(plan.to);d.hp.frequency.setValueAtTime(GUEST_HIGHPASS,T);d.lp.frequency.setValueAtTime(a.lowpass,T);d.lp.frequency.exponentialRampToValueAtTime(b.lowpass,T+bar);d.out.gain.setTargetAtTime(1,T,.05);}
-   else if(!active||d.key===plan.primary){d.hp.frequency.setValueAtTime(10,T);d.lp.frequency.setValueAtTime(20000,T);d.out.gain.setTargetAtTime(1,T,.05);
+   if(active&&d.key===plan.secondary){const a=guestFilter(plan.from),b=guestFilter(plan.to);d.hp.frequency.setValueAtTime(GUEST_HIGHPASS,T);d.lp.frequency.setValueAtTime(a.lowpass,T);d.lp.frequency.exponentialRampToValueAtTime(b.lowpass,T+bar);d.out.gain.setTargetAtTime(d.level,T,.05);}
+   else if(!active||d.key===plan.primary){d.hp.frequency.setValueAtTime(10,T);d.lp.frequency.setValueAtTime(20000,T);d.out.gain.setTargetAtTime(d.level,T,.05);
     if(active&&plan.sweep&&ready(keyGenre.get(d.key)))d.hp.frequency.exponentialRampToValueAtTime(320,T+bar);}
    else d.out.gain.setTargetAtTime(0,T,bar/3);
   }
@@ -165,13 +169,14 @@ export function initialize(runtime){
   const p=soundProfile(gid);if(!p.ready&&!swallow)return false;
   const e=engine();if(!e)return false;trim(t);
   drawLike(id);if(swallow)return true;
-  const d=deck(key),base=v/(CLASSIC_LEVEL[id]||.05),lv=p.levels[id]??.3,pan=p.pan[id]||0,room=p.room[id]||0,echo=p.echo[id]||0,step=MU?.step??0,h=unit(mix(step,id.length*131+(neighbor?7:0)));
-  if(id==='kick'){const f=kickPitch(runtime.hz?.(runtime.root?.()??45));play(buffer('kick:'+f,sr=>ONE_SHOTS.kick(sr,f,p.kit.kick)),t,.5*base*lv,{dest:d.dry});duckAll(t,p);
-   if(!neighbor&&p.ghostHats&&step%4===0){const six=runtime.SIX||.12,sw=swingOf(gid),hb=buffer('hat',sr=>ONE_SHOTS.hat(sr,false,p.kit.hatTone));
+  const d=deck(key,p),base=v/(CLASSIC_LEVEL[id]||.05),lv=p.levels[id]??.3,pan=p.pan[id]||0,room=p.room[id]||0,echo=p.echo[id]||0,step=MU?.step??0,h=unit(mix(step,id.length*131+(neighbor?7:0)));
+  const kit=p.kit.id||'tech';
+  if(id==='kick'){const f=kickPitch(runtime.hz?.(runtime.root?.()??45),p.kit.kickHz||52);play(buffer('kick:'+kit+':'+f,sr=>ONE_SHOTS.kick(sr,f,p.kit.kick)),t,.5*base*lv,{dest:d.dry});duckAll(t,p);
+   if(!neighbor&&p.ghostHats&&step%4===0){const six=runtime.SIX||.12,sw=swingOf(gid),hb=buffer('hat:'+p.kit.hatTone,sr=>ONE_SHOTS.hat(sr,false,p.kit.hatTone));
     for(const k of [1,3]){const r=unit(mix(step+k,977));if(r<.72)play(hb,t+(k+sw)*six+(r-.5)*.003,.5*p.ghostHats*(.7+.4*r),{dest:d.dry,pan:p.pan.ghost});}}
    return true;}
   const time=t+(h-.5)*.003,gain=.5*Math.min(4,base)*lv;
-  if(id==='hat'||id==='hatO')play(buffer(id,sr=>ONE_SHOTS.hat(sr,id==='hatO',p.kit.hatTone)),time,gain,{dest:d.dry,pan});
+  if(id==='hat'||id==='hatO')play(buffer(id+':'+p.kit.hatTone,sr=>ONE_SHOTS.hat(sr,id==='hatO',p.kit.hatTone)),time,gain,{dest:d.dry,pan});
   else if(id==='clap'){play(buffer('clap',sr=>ONE_SHOTS.clap(sr)),t+.003,gain,{dest:d.dry,room:p.kit.clapRoom});play(buffer('snare',sr=>ONE_SHOTS.snare(sr)),t,gain*p.kit.snareUnderClap,{dest:d.dry,room:.15});}
   else if(id==='snare')play(buffer('snare',sr=>ONE_SHOTS.snare(sr)),time,gain,{dest:d.dry,room});
   else if(id==='rim')play(buffer('rim',sr=>ONE_SHOTS.rim(sr)),time,gain,{dest:d.dry,pan,room,echo:step%16===14?echo:0});
@@ -183,37 +188,87 @@ export function initialize(runtime){
   else return false;
   return true;
  }
+ // ---------- voices: bass, melody and chords ----------
+ const hzOf=n=>runtime.hz?runtime.hz(n):440*Math.pow(2,(n-69)/12);
+ // Drawbar organ and tine harmonics as periodic waves, made once per context (a square or sine without them).
+ function wave(kind){const e=E;if(!e.ac.createPeriodicWave)return null;let w=e.waves.get(kind);if(!w){const h=kind==='organ'?[0,1,.85,.5,.38,0,.22,0,.16]:[0,1,.3,.1];w=e.ac.createPeriodicWave(new Float32Array(h.length),new Float32Array(h));e.waves.set(kind,w);}return w;}
+ // A progressive build: pads and leads open over the phrase (counted from the bar a region took over, or the clock).
+ let phraseAt=null;
+ function buildCut(p,fallback){const b=p.build;if(!b)return fallback;const st=runtime.MU?.step??0,bar=st>>4,phrase=phraseAt?phraseAt.phrase+bar-phraseAt.bar:bar;
+  const x=Math.min(1,(((phrase%b.bars)+b.bars)%b.bars+(st%16)/16)/(b.bars*.75));return b.low*Math.pow(b.high/b.low,x*x);}
+ function splitBass(d,p,n,t,level){const e=E,ac=e.ac,hz=hzOf;let s=n;while(hz(s)>80)s-=12;while(hz(s)<38)s+=12;
+  const len=p.bass.steps*(runtime.SIX||.12),o=count(ac.createOscillator()),a=count(ac.createGain());
+  o.frequency.value=hz(s);a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(.24*level*p.bass.sub,t+.005);a.gain.setValueAtTime(.24*level*p.bass.sub,t+len);a.gain.linearRampToValueAtTime(0,t+len+.035);o.connect(a).connect(d.duck);o.start(t);o.stop(t+len+.06);
+  const lp=count(ac.createBiquadFilter()),hp=count(ac.createBiquadFilter()),b=count(ac.createGain()),saws=[-8,8].map(dt=>{const s2=count(ac.createOscillator());s2.type='sawtooth';s2.frequency.value=hz(n);s2.detune.value=dt;s2.connect(lp);s2.start(t);s2.stop(t+len+.08);return s2;});
+  lp.type='lowpass';lp.Q.value=3.2;const top=300+1700*p.bass.bright;lp.frequency.setValueAtTime(220,t);lp.frequency.linearRampToValueAtTime(top,t+.006);lp.frequency.setTargetAtTime(260,t+.008,.07+.1*p.bass.bright);
+  hp.type='highpass';hp.frequency.value=110;b.gain.setValueAtTime(0,t);b.gain.linearRampToValueAtTime(.09*level*p.bass.mid,t+.003);b.gain.setValueAtTime(.09*level*p.bass.mid,t+len);b.gain.linearRampToValueAtTime(0,t+len+.03);lp.connect(hp).connect(b).connect(d.duck);
+  o.onended=()=>{for(const x of [o,a,lp,hp,b,...saws])x.disconnect();};}
+ // Acid house: one saw through a resonant low-pass, the 303 way. Its envelope snaps open on each note (more on an
+ // accent), the cutoff breathes over the cycle, some notes slide from the last one; a light sub under it and drive.
+ function acidBass(d,p,n,t,level,step){const e=E,ac=e.ac,b=p.bass,six=runtime.SIX||.12,f=hzOf(n);
+  if(!d.acid){const g=count(ac.createGain()),sh=count(ac.createWaveShaper?ac.createWaveShaper():ac.createGain());
+   if(sh.curve!==undefined){const c=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/1023*2-1;c[i]=Math.tanh(b.drive*x)/Math.tanh(b.drive);}sh.curve=c;}g.connect(sh).connect(d.duck);d.acid={in:g,last:null};}
+  const prev=d.acid.last,slide=!!prev&&t>prev.t&&t-prev.t<=six*1.6&&unit(mix(step,303))<b.slide,accent=unit(mix(step,909))<b.accent||level>1.2;
+  const bar=step>>4,cyc=.5-.5*Math.cos(TAU*((bar%b.cycle)+(step%16)/16)/b.cycle),cut=b.low*Math.pow(b.high/b.low,cyc)*(accent?1.45:1),len=six*b.steps*(slide?1.05:.8);
+  const o=count(ac.createOscillator()),lp=count(ac.createBiquadFilter()),a=count(ac.createGain()),list=[o,lp,a];o.type='sawtooth';
+  if(slide){o.frequency.setValueAtTime(prev.f,t);o.frequency.exponentialRampToValueAtTime(f,t+.055);}else o.frequency.setValueAtTime(f,t);
+  lp.type='lowpass';lp.Q.value=b.q+(accent?4:0);lp.frequency.setValueAtTime(Math.min(9000,cut*(slide?1.6:3)),t);lp.frequency.setTargetAtTime(Math.max(120,cut*.4),t+.003,accent?.1:.07);
+  const peak=.1*level*b.mid*(accent?1.35:1);a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(peak,t+.003);a.gain.setValueAtTime(peak,t+len);a.gain.linearRampToValueAtTime(0,t+len+.025);
+  o.connect(lp).connect(a).connect(d.acid.in);o.start(t);o.stop(t+len+.05);
+  if(b.sub){let s=n;while(hzOf(s)>80)s-=12;while(hzOf(s)<38)s+=12;const so=count(ac.createOscillator()),sg=count(ac.createGain());so.frequency.value=hzOf(s);
+   sg.gain.setValueAtTime(0,t);sg.gain.linearRampToValueAtTime(.24*level*b.sub,t+.005);sg.gain.setValueAtTime(.24*level*b.sub,t+len);sg.gain.linearRampToValueAtTime(0,t+len+.03);so.connect(sg).connect(d.duck);so.start(t);so.stop(t+len+.05);list.push(so,sg);}
+  d.acid.last={t,f};o.onended=()=>{for(const x of list)x.disconnect();};}
  function proVoice(role,ty,m,t,v,region){
   if(!live()||runtime.currentVoiceOrigin!=='track'||!region||!Number.isFinite(m)||!Number.isFinite(t))return false;
   const p=soundProfile(region.genre);if(!p.ready)return false;const e=E&&E.ac===runtime.ac?E:null;if(!e)return false;
-  learn(region.key,region.genre);const d=deck(region.key),ac=e.ac,hz=n=>runtime.hz?runtime.hz(n):440*Math.pow(2,(n-69)/12);
+  learn(region.key,region.genre);const d=deck(region.key,p),ac=e.ac,hz=hzOf,six=runtime.SIX||.12;
   if(role==='bajo'){
    if(mixKeys&&inDrop())return true;
-   let n=m;while(n>52)n-=12;while(n<38)n+=12;let s=n;while(hz(s)>80)s-=12;while(hz(s)<38)s+=12;
-   const len=p.bass.steps*(runtime.SIX||.12),level=Math.min(3,v/.14),o=count(ac.createOscillator()),a=count(ac.createGain());
-   o.frequency.value=hz(s);a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(.24*level*p.bass.sub,t+.005);a.gain.setValueAtTime(.24*level*p.bass.sub,t+len);a.gain.linearRampToValueAtTime(0,t+len+.035);o.connect(a).connect(d.duck);o.start(t);o.stop(t+len+.06);
-   const lp=count(ac.createBiquadFilter()),hp=count(ac.createBiquadFilter()),b=count(ac.createGain()),saws=[-8,8].map(dt=>{const s2=count(ac.createOscillator());s2.type='sawtooth';s2.frequency.value=hz(n);s2.detune.value=dt;s2.connect(lp);s2.start(t);s2.stop(t+len+.08);return s2;});
-   lp.type='lowpass';lp.Q.value=3.2;const top=300+1700*p.bass.bright;lp.frequency.setValueAtTime(220,t);lp.frequency.linearRampToValueAtTime(top,t+.006);lp.frequency.setTargetAtTime(260,t+.008,.07+.1*p.bass.bright);
-   hp.type='highpass';hp.frequency.value=110;b.gain.setValueAtTime(0,t);b.gain.linearRampToValueAtTime(.09*level*p.bass.mid,t+.003);b.gain.setValueAtTime(.09*level*p.bass.mid,t+len);b.gain.linearRampToValueAtTime(0,t+len+.03);lp.connect(hp).connect(b).connect(d.duck);
-   o.onended=()=>{for(const x of [o,a,lp,hp,b,...saws])x.disconnect();};voices++;return true;
+   let n=m;while(n>52)n-=12;while(n<38)n+=12;const level=Math.min(3,v/.14);
+   if(p.bass.kind==='acid')acidBass(d,p,n,t,level,runtime.MU?.step??0);else splitBass(d,p,n,t,level);
+   voices++;return true;
   }
-  const MU=runtime.MU,arrangement=region.key===MU?.dnaA?.key?MU?.radio:MU?.neighborRadio,melody=!!arrangement?.hookI&&ty===arrangement.hookI;
+  const MU=runtime.MU,arrangement=region.key===MU?.dnaA?.key?MU?.radio:MU?.neighborRadio;let melody=role==='lead'&&!!arrangement?.hookI&&ty===arrangement.hookI;
+  if(melody&&p.syncChords){if(d.melodyT!==undefined&&Math.abs(t-d.melodyT)<.002)melody=false;else d.melodyT=t;}
   if(melody){d.lead=(d.lead+1)%p.lead.keep;if(d.lead!==1%p.lead.keep)return true;}
-  const style=melody?p.lead:p.chords,level=Math.min(3,v/(melody?.07:.025))*style.level,h=unit(mix(Math.round(t*1000),m));
-  let n=m;const [lo,hi]=melody?[60,76]:[52,72];while(n>hi)n-=12;while(n<lo)n+=12;
-  const out=count(ac.createGain()),pan=count(ac.createStereoPanner()),list=[out,pan];pan.pan.value=(h-.5)*(melody?.6:.9);out.connect(pan).connect(d.duck);
-  if(style.room){const s=count(ac.createGain());s.gain.value=style.room;pan.connect(s).connect(e.verbIn);list.push(s);}
-  if(style.echo){const s=count(ac.createGain());s.gain.value=style.echo;pan.connect(s).connect(e.echoIn);list.push(s);}
-  let first;
-  if(style.kind==='chop'){   // a synthetic vocal chop: a saw through two vowel formants (no recorded voice)
-   const o=count(ac.createOscillator()),vow=[[800,1150],[400,2000],[600,1000],[350,1700]][Math.floor(h*4)%4];o.type='sawtooth';o.frequency.value=hz(n);first=o;list.push(o);
+  if(role==='acorde')runtime.recordInstrument?.(ty);
+  const style=melody?p.lead:p.chords,kind=style.map?.[ty]||style.kind,level=Math.min(3,v/(melody?.07:role==='acorde'?.05:.025))*style.level,h=unit(mix(Math.round(t*1000),m));
+  let n=m;const [lo,hi]=melody?[60,76]:kind==='pad'?[48,69]:[52,72];while(n>hi)n-=12;while(n<lo)n+=12;
+  const out=count(ac.createGain()),pan=count(ac.createStereoPanner()),list=[out,pan],oscs=[];pan.pan.value=Math.max(-.6,Math.min(.6,(h-.5)*(melody?.6:kind==='pad'?1.2:.9)));out.connect(pan).connect(d.duck);
+  const send=(amount,to)=>{if(!amount)return;const s=count(ac.createGain());s.gain.value=amount;pan.connect(s).connect(to);list.push(s);};
+  send(style.room,e.verbIn);send(style.hall,e.hallIn);send(style.echo,e.echoIn);
+  const osc=(type,f,dt=0)=>{const o=count(ac.createOscillator());if(type&&typeof type==='object')o.setPeriodicWave(type);else o.type=type;o.frequency.value=f;if(dt)o.detune.value=dt;list.push(o);oscs.push(o);return o;};
+  const hold=(style.hold||2)*six,f=hz(n);let first,end;
+  if(kind==='chop'){   // a synthetic vocal chop: a saw through two vowel formants (no recorded voice)
+   const o=osc('sawtooth',f),vow=[[800,1150],[400,2000],[600,1000],[350,1700]][Math.floor(h*4)%4];first=o;
    for(const [fq,gq] of [[vow[0],1],[vow[1],.6]]){const b=count(ac.createBiquadFilter()),g=count(ac.createGain());b.type='bandpass';b.frequency.value=fq;b.Q.value=7;g.gain.value=gq;o.connect(b).connect(g).connect(out);list.push(b,g);}
-   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.3*level,t+.01);out.gain.setTargetAtTime(0,t+.15,.04);o.start(t);o.stop(t+.6);
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.3*level,t+.01);out.gain.setTargetAtTime(0,t+.15,.04);end=t+.6;
+  }else if(kind==='ep'){   // Rhodes-like: a sine bell (FM, index falling fast) and a quiet tine an octave up
+   const o=osc('sine',f),mo=osc('sine',f),mg=count(ac.createGain()),tine=osc(wave('tine')||'sine',f*2),tg=count(ac.createGain());list.push(mg,tg);first=o;
+   mg.gain.setValueAtTime(f*2.2,t);mg.gain.setTargetAtTime(f*.2,t+.002,.12);mo.connect(mg).connect(o.frequency);o.connect(out);
+   tg.gain.setValueAtTime(.22,t);tg.gain.setTargetAtTime(0,t+.002,.08);tine.connect(tg).connect(out);
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.12*level,t+.004);out.gain.setTargetAtTime(.05*level,t+.01,.25);out.gain.setTargetAtTime(0,t+hold,.16);end=t+hold+1;
+  }else if(kind==='organ'){   // drawbar organ: two slightly detuned voices, a soft key click
+   const w=wave('organ')||'square',lp=count(ac.createBiquadFilter());lp.type='lowpass';lp.frequency.value=w==='square'?2400:6000;lp.Q.value=.5;lp.connect(out);list.push(lp);
+   for(const dt of [-5,5]){const o=osc(w,f,dt);o.connect(lp);first=first||o;}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.07*level,t+.006);out.gain.setValueAtTime(.07*level,t+hold);out.gain.setTargetAtTime(0,t+hold,.07);end=t+hold+.5;
+  }else if(kind==='pad'){   // warm pad: three detuned saws under a soft low-pass (the build opens it), slow in and out
+   const lp=count(ac.createBiquadFilter()),cut=buildCut(p,1500);lp.type='lowpass';lp.Q.value=.7;lp.frequency.setValueAtTime(cut*.6,t);lp.frequency.linearRampToValueAtTime(cut,t+hold*.6);lp.connect(out);list.push(lp);
+   for(const dt of [-14,0,14]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.032*level,t+Math.min(.3,hold*.4));out.gain.setValueAtTime(.032*level,t+hold);out.gain.setTargetAtTime(0,t+hold,.45);end=t+hold+3;
+  }else if(kind==='mallet'){   // marimba-like: a sine and its bright overtone (×3.98), struck and gone
+   const o=osc('sine',f),ov=osc('sine',f*3.98),og=count(ac.createGain());list.push(og);first=o;o.connect(out);og.gain.setValueAtTime(.35,t);og.gain.setTargetAtTime(0,t+.002,.035);ov.connect(og).connect(out);
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.17*level,t+.002);out.gain.setTargetAtTime(0,t+.004,.2);end=t+1.4;
+  }else if(kind==='supersaw'){   // progressive lead: three wide saws, a plucked low-pass that the build opens
+   const lp=count(ac.createBiquadFilter()),cut=buildCut(p,3000);lp.type='lowpass';lp.Q.value=1.4;lp.frequency.setValueAtTime(Math.min(16000,cut*1.6),t);lp.frequency.setTargetAtTime(cut*.35,t+.004,.12);lp.connect(out);list.push(lp);
+   for(const dt of [-18,0,18]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.045*level,t+.003);out.gain.setTargetAtTime(0,t+.02,.16);end=t+1;
   }else{   // a short detuned saw stab
-   const lp=count(ac.createBiquadFilter());lp.type='lowpass';lp.Q.value=2;lp.frequency.setValueAtTime(2600,t);lp.frequency.setTargetAtTime(500,t+.004,.06);lp.connect(out);list.push(lp);
-   for(const dt of [-12,12]){const o=count(ac.createOscillator());o.type='sawtooth';o.frequency.value=hz(n);o.detune.value=dt;o.connect(lp);o.start(t);o.stop(t+.5);list.push(o);first=first||o;}
-   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.06*level,t+.003);out.gain.setTargetAtTime(0,t+.02,.07);
+   const lp=count(ac.createBiquadFilter()),top=style.cut||2600;lp.type='lowpass';lp.Q.value=2;lp.frequency.setValueAtTime(top,t);lp.frequency.setTargetAtTime(500,t+.004,.06);lp.connect(out);list.push(lp);
+   for(const dt of [-12,12]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.06*level,t+.003);out.gain.setTargetAtTime(0,t+.02,.07);end=t+.5;
   }
+  for(const o of oscs){o.start(t);o.stop(end);}
   first.onended=()=>{for(const x of list)x.disconnect();};voices++;return true;
  }
  Object.defineProperties(runtime,{
