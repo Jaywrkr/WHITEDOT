@@ -1,8 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.270** en la rama `jay/musica-interaccion`, desde `main` `cae66bb` (alpha.269, con techno y mundo abierto ya integrados), en espera de que Jay escuche los renders. Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.271** en la rama `jay/sonido-pro-4`, desde `origin/jay/musica-interaccion` (PR #408 sin integrar, alpha.270), en espera de que Jay escuche los renders. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Sonido pro 4: melodic y orgánico, afro y latino · 2.3.0-alpha.271
+
+Rama `jay/sonido-pro-4`, desde `origin/jay/musica-interaccion` (PR #408 sin integrar). Cuarto lote del plan aprobado, dos familias en uno. Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
+
+- **Dos familias más.** «Melodic y orgánico» (`melodic`, `organic`) y «Afro y latino» (`afro`, `amapiano`, `tribal`, `andean`). `andean` pasa de la primera a la segunda. Mismo motor y mismos ganchos; tempo, swing, patrones y armonía no cambian.
+- **Melodic y orgánico.** Bombo suave y redondo, plucks al eco largo, pads anchos en la sala larga, percusión de mano y shakers delante, bombeo suave. Melodic: plucks (también el tine piano), pads que se abren cada 32 compases, el tom grave en la sala. Organic: el bombo más suave, congas con más cuerpo, cuerda pulsada (Karplus-Strong) y teclas cálidas.
+- **Afro y latino.** Congas, toms, madera y shakers con cuerpo y sala. Afro: marimba, flauta y percusión. Amapiano: log drum como bajo (tambor afinado que cae sobre la nota, con golpe y saturación) y piano. Tribal: toms largos y golpes de formantes tipo canto, sin voz grabada. Andina: flauta de pan con aliento y vibrato, plucks de doble cuerda tipo charango (rasgueo en los acordes) y bombo legüero con parche.
+- **Tu interacción.** `front` 0,7 en las dos familias. La capa de groove responde con su tambor (`answer`): conga, tom en tribal, madera en la andina. Tu bajo en amapiano suena como log drum.
+- **Sin `audio.js` nuevo.** Nada nuevo en pantalla ni en ajustes. Las demás familias suenan igual: los toms y congas solo cambian de duración y van al eco en los kits que lo piden (`tomDecay`, `congaDecay`); el parche del bombo usa su propio azar.
+- **«Sonido clásico»** también apaga estas familias. Guardado sin cambios (`S.soundPro` versión 1).
+- **Renders** (motor real, offline, 44,1 kHz; directorio del lote `sonido-pro-4/`, fuera de Git): viaje de 90 s organic → andina → amapiano, clásico −15,5 LUFS / −1,2 dBTP y nuevo −9,5 / −1,7. 40 s de cada género: melodic −10,0 / −1,8, organic −10,1 / −1,6, afro −9,6 / −1,9, amapiano −9,7 / −2,0, tribal −9,4 / −1,9, andina −10,4 / −1,6.
+- **CPU.** Nodos creados por segundo (todo el juego, render): viaje clásico 108, nuevo 96; quieto, melodic 84, organic 32, afro 77, amapiano 72, tribal 118, andina 34. No se midió en teléfono.
+- **Pruebas.** `tests/sound-pro.mjs` amplía: las dos familias y sus seis perfiles, el bombo legüero y la cuerda pulsada (afinada), cada instrumento nuevo en el motor, el log drum, el rasgueo, la respuesta del groove, tus voces en estas familias, mezcla de DJ hacia y desde ellas, «Sonido clásico». `npm test`, `node scripts/release-audit.mjs`, `node scripts/verify-e-preservation.mjs` y `node scripts/stale-text-check.mjs --base origin/jay/musica-interaccion`. Sin recorridos de navegador.
+- **Límites.** Nadie lo ha escuchado. Melodic queda oscuro en su render (poco por encima de 1 kHz; en 40 s casi no suena su melodía). El log drum suena en todo bajo de amapiano, también en `p_woodybass`. CPU de teléfono sin medir. Sin PR: la rama espera a Jay.
 
 ## Música e interacción · 2.3.0-alpha.270
 
