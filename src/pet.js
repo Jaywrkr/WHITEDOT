@@ -32,7 +32,7 @@ export function initialize(runtime){
  function box(b){const species=!b.gift&&petFromBox(b.id,runtime.seedOf);if(species){runtime.collectRareCard?.('petbox:'+species,b);runtime.givePower?.('companero',species);runtime.say('~~Se queda para siempre~~ Te acompaña unos minutos. Para quedarse, viaja con su bandada.', 'Visita de '+PET_SPECIES[species].name);}}
  function hear({degree,time,source}){
   const p=ensure();if(!p||!audible()||!Number.isFinite(time)||time-lastHeard<.09||source&&Math.hypot(source.x-S().wx,source.y-S().wy)>360)return;
-  lastHeard=time;learnPet(p,degree);pending={notes:[{degree:((Math.round(degree)%7)+7)%7,step:0}],tap:false};
+  lastHeard=time;learnPet(p,degree);state.heard={degree:((Math.round(degree)%7)+7)%7,time};pending={notes:[{degree:((Math.round(degree)%7)+7)%7,step:0}],tap:false};
  }
  function tick(dt){
   const p=ensure();if(!p)return;if(!active()){pending=null;contact=false;return;}

@@ -195,6 +195,9 @@ const PRO1_LINES=[["  function kick(t,v){runtime.recordInstrument?.(\"kick\");co
 // Sonido pro 2 (alpha.267, pending Jay's review): house clásico. One audio.js line (PRO2_LINES): the organ chord of deep and
 // progressive asks the engine first, with the same pitch and velocity draw; without the engine it plays the same organ.
 const PRO2_LINES=[["  function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(inRegister(n,48,71),t,vel(.05)));}", "  function organChord(ct,t){ct.slice(0,3).forEach(n=>{const m=inRegister(n,48,71),v=vel(.05);if(!runtime.proVoice?.('acorde','organ',m,t,v,MU.dnaA))organ(m,t,v);});}"]];
+// Sonido pro 3 (alpha.268, pending Jay's review): techno. One audio.js line (PRO3_LINES): the dub chord stab (dub techno and
+// heart) asks the engine first, note by note with the same pitches and no random draw; without the engine it plays the same stab.
+const PRO3_LINES=[["  function dubChord(ct,t){stab(ct.slice(0,3).map(n=>inRegister(n,45,65)),t,.35);}", "  function dubChord(ct,t){const tri=ct.slice(0,3).map(n=>inRegister(n,45,65));if(!tri.every(m=>runtime.proVoice?.('acorde','stab',m,t,.045,MU.dnaA)))stab(tri,t,.35);}"]];
 // Los lugares te encuentran (Jay, 5 Nov 2026, alpha.264): the eleven places at fixed distances from the origin, each
 // portal fixed ahead of you the first time you cross its distance (S.lugares version 3: found, ring; won places stay on
 // the ring where they were), the «lugar» arrow, the radar by trophies and a one-place Journey. No audio.js change; the
@@ -286,9 +289,9 @@ const audioQ7=before('src/audio.js',approvedQ7).toString();if(audioQ7.split(SCEN
 const audioS=audioQ7.replace(SCENE_HOOK,SCENE_HOOK+SCENE_LINE);
 if(before('src/audio.js',approvedS).toString()!==audioS)throw Error('The approved scenes commit changed audio beyond its one line');
 if(audioS.split(DUCK_FROM).length!==2)throw Error('Ambiguous satellite duck line');const audioSat=audioS.replace(DUCK_FROM,DUCK_TO);
-let audioPro=audioSat;for(const [from,to] of [...PRO1_LINES,...PRO2_LINES]){if(audioPro.split(from).length!==2)throw Error('Ambiguous sonido pro line');audioPro=audioPro.replace(from,to);}
+let audioPro=audioSat;for(const [from,to] of [...PRO1_LINES,...PRO2_LINES,...PRO3_LINES]){if(audioPro.split(from).length!==2)throw Error('Ambiguous sonido pro line');audioPro=audioPro.replace(from,to);}
 if(source('src/audio.js')!==audioPro)throw Error('Audio differs from the engine approved in Q5 and Q7 plus the scene hook, the satellite duck and the sonido pro lines');
-contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling, the Q7 finale hush, the alpha.241 scene hook, the alpha.246 satellite duck, the alpha.266 sonido pro hooks and the alpha.267 organ chord hook',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
+contracts.push({label:'audio engine unchanged beyond six visual-only replacements, the Q5 touch scheduling, the Q7 finale hush, the alpha.241 scene hook, the alpha.246 satellite duck, the alpha.266 sonido pro hooks, the alpha.267 organ chord hook and the alpha.268 dub chord hook',file:'src/audio.js',sha256:sha(source('src/audio.js'))});
 const shell=source('sw.js').replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'");
 if(shell!==before('sw.js',approvedOPEN).toString().replace(/const CACHE\s*=\s*['"][^'"]+['"]/,"const CACHE='VERSION'"))throw Error('Offline shell changed beyond its release key');
 const runtimeFiles=[...readdirSync('src').filter(n=>n.endsWith('.js')).sort().map(n=>'src/'+n),...readdirSync('styles').filter(n=>n.endsWith('.css')).sort().map(n=>'styles/'+n),'index.html','package.json','sw.js'],hash=createHash('sha256');

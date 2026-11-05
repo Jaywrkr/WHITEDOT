@@ -106,7 +106,7 @@ Entrega 1 (Jay, 3 de noviembre de 2026, alpha.243). Ajuste **«Escenas: más var
 
 ## Sonido pro
 
-Lote 1 (Jay, 5 de noviembre de 2026, alpha.266). Plan aprobado: la composición se queda y cambia la producción. Un solo motor de sonido compartido (`sound-pro.js`) y catorce perfiles de familia (`sound-profiles.js`). Cada género pertenece a una familia y conserva su tempo, swing, patrones, armonía y región. Este lote convierte la primera familia, **tech house y minimal** (`techhouse`, `minimal`, `rominimal`, `microhouse`), en la dirección del render 08 que Jay eligió («bien marcado»). El lote 2 convierte house clásico (abajo); las otras doce familias suenan como siempre hasta su lote.
+Lote 1 (Jay, 5 de noviembre de 2026, alpha.266). Plan aprobado: la composición se queda y cambia la producción. Un solo motor de sonido compartido (`sound-pro.js`) y catorce perfiles de familia (`sound-profiles.js`). Cada género pertenece a una familia y conserva su tempo, swing, patrones, armonía y región. Este lote convierte la primera familia, **tech house y minimal** (`techhouse`, `minimal`, `rominimal`, `microhouse`), en la dirección del render 08 que Jay eligió («bien marcado»). El lote 2 convierte house clásico y el lote 3, techno (abajo); las otras once familias suenan como siempre hasta su lote.
 
 - **Familias.** House clásico · Tech house y minimal · Techno · Melodic y orgánico · Afro y latino · Disco y funk · UK y breaks · Club de bajos · DnB y dubstep · Hip-hop · Electro · Ambient · Jazz · Experimental. Los 52 géneros, cada uno en una sola familia. Son familias de sonido; las familias de composición de `music-families.js` no cambian.
 - **Cómo entra.** `audio.js` sigue decidiendo cada golpe y cada nota. Antes de sonar, pregunta al motor (`runtime.proDrum` en cada golpe de la batería, `runtime.proVoice` en el bajo y la melodía). Para un género convertido suena el motor; para los demás responde que no y suena lo de siempre. Las líneas de `audio.js` son pocas y van en un commit aparte para que Jay las revise una a una.
@@ -124,6 +124,13 @@ Lote 2 (alpha.267): **house clásico** (`deep`, `chicago`, `soulful`, `garagehou
 - **Por género.** Deep: bombo suave, pads. Chicago: 909 crudo y stabs brillantes. Soulful y garage: órgano y hats fantasma con shuffle. Acid house: línea de 303 en la voz del bajo (filtro resonante, acentos y slides por paso, sin azar; ciclo de 16 compases). Progressive: apertura de filtro en cada frase de 32 compases. Tropical: mazos, aire, bombo suave.
 - **Acordes.** En house, una nota del instrumento de la melodía que suena a la vez que otra es acorde. El acorde de órgano de deep y progressive pregunta al motor con una línea de `audio.js` aparte, pendiente de Jay (`PRO2_LINES`); sin ella suena el órgano clásico.
 - **Medidas y límites.** Ver [CAMBIOS](../CAMBIOS.md) (alpha.267). Nadie lo ha escuchado todavía.
+
+Lote 3 (alpha.268): **techno** (`dub`, `acid`, `minimaltechno`, `detroit` y `melodictechno`, que pasa de «Melodic y orgánico» a esta familia).
+
+- **Familia.** Peso bajo la pista. Bombo con *rumble*: la cola del bombo como la dejaría una reverb, con paso bajo, saturada y bombeada por el siguiente bombo (un buffer por kit y tempo). Bajo en sub y medio con un sidechain más hondo. Pads y stabs más anchos (`width`), sala larga, eco en ping-pong y un eco de cinta nuevo: oscuro, saturado, con paso alto y bajo en su bucle y un vaivén lento. Toda la melodía.
+- **Por género.** Dub: stabs de acorde hacia el eco de cinta y una sala brumosa, sub profundo, bombo redondo. Acid: 303 más duro que el de acid house (más resonancia, saturación, acentos y slides) y bombo con más pegada. Minimal: seco y corto, bombo de clic, casi sin sala ni eco, poco rumble. Detroit: cuerdas cálidas (cuatro sierras), hats 909 brillantes, acordes tipo Rhodes. Melodic: arpegios anchos de supersierra y pads que se abren en cada frase de 32 compases.
+- **Acorde de dub.** El stab de `dubChord` (dub y heart) pregunta al motor nota a nota con una línea de `audio.js` aparte, pendiente de Jay (`PRO3_LINES`); sin ella suena el stab clásico. Heart sigue clásico. El stab no cuenta como instrumento del diario.
+- **Medidas y límites.** Ver [CAMBIOS](../CAMBIOS.md) (alpha.268). El volumen final lo fija el limitador de `audio.js`: subir el nivel del deck mueve poco el LUFS. Nadie lo ha escuchado todavía.
 
 El modelo de rareza y el censo no garantizan una probabilidad individual de encuentro en una hora. Depende de recorrido, mundo, región y condiciones. Las muestras forzadas de laboratorio no acreditan encuentros naturales.
 
