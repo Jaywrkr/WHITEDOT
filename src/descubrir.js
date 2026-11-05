@@ -134,11 +134,11 @@ if(amount)r.showSparkPickup?.(amount,{x:spot.x,y:spot.y});glows.push({x:spot.x,y
  function edgeTargets(p){const S=r.S,done=S.activities?.done||{},found=S.musicalWonders?.found||{},opened=S.boxes||{};
   const gifts=(r.boxesNear?.(EDGE_REACH)||[]).filter(b=>b.gift);
   return {activity:edgeAround('activity',p).filter(o=>!done[o.id]),wonder:edgeAround('wonder',p).filter(o=>found[o.kind]!==true),box:[...edgeAround('box',p).filter(b=>!opened[b.id]),...gifts]};}
+ // Coherencia T2: each one is an offer to the one layer of arrows (scanner-arrows.js), which draws three at most.
+ const MARK={activity:['juego','portal'],wonder:['hallazgo','hallazgo'],box:['caja','caja']};
  function drawMarks(c,p){const marks={},view={x:r.camX-r.W/2,y:r.camY-r.H/2,w:r.W,h:r.H},all=edgeTargets(p);
-  for(const kind of ['activity','wonder','box']){const near=edgeNearest(all[kind],p,view);if(!near)continue;const q=edgeSpot(r.W,r.H,near.o.x-r.camX,near.o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);marks[kind]={x,y,d:Math.round(near.d)};
-   c.globalAlpha=.3+.4*(1-near.d/EDGE_REACH);c.strokeStyle='#ffffff';c.lineWidth=1.5;
-   if(kind==='activity')c.strokeRect(x-4,y-4,8,8);
-   else{c.beginPath();c.moveTo(x,y-5);c.lineTo(x+5,y);c.lineTo(x,y+5);c.lineTo(x-5,y);c.closePath();c.stroke();if(kind==='box')c.strokeRect(x-1.5,y-1.5,3,3);}}
+  for(const kind of ['activity','wonder','box']){const near=edgeNearest(all[kind],p,view);if(!near)continue;const [k,shape]=MARK[kind],q=r.edgeOffer?.({key:kind+':'+(near.o.id??Math.round(near.o.x)+','+Math.round(near.o.y)),kind:k,x:near.o.x,y:near.o.y,shape});
+   const at=q||edgeSpot(r.W,r.H,near.o.x-r.camX,near.o.y-r.camY,22,104);marks[kind]={x:Math.round(at.x),y:Math.round(at.y),d:Math.round(near.d)};}
   return marks;}
 // ---------- drawing ----------
   const soundAppear=createAppear();
@@ -148,7 +148,7 @@ const at=(x,y)=>({x:x+r.W/2-r.camX,y:y+r.H/2-r.camY});
 function draw(){if(!allowed())return;const c=r.cx,p={x:r.S.wx,y:r.S.wy},still=reduced(),words=r.S.universeTexts!==false,ac=r.ac,now=ac?audibleTime(ac):0,light=!!r.lightQuality?.(),beat=breath(r.beat?.()||0,still);
   let hint=null;c.save();const marks=scene()||paused()?{}:drawMarks(c,p);if(!albumOk()){c.restore();drawn={hint:false,marks};return;}
   for(const s of around(p,SOUND_HEAR)){if(kept(s))continue;const q=at(s.x,s.y),d=Math.hypot(s.x-p.x,s.y-p.y),off=q.x<-12||q.y<-12||q.x>r.W+12||q.y>r.H+12;
-   if(off){if(!hint||d<hint.d)hint={...q,d};continue;}
+   if(off){if(!hint||d<hint.d)hint={...q,d,id:s.id,wx:s.x,wy:s.y};continue;}
 const near=d<SOUND_NEAR,col=colorOf(s.biome),song=sang.get(s.id),age=song?now-song.t:9;
     // Visual 1 (alpha.250): it grows in, a soft light of its biome under it that breathes with the beat and, unless
     // still or light, three thin waves opening from it. Keeping it pops in gold.
@@ -159,9 +159,9 @@ const near=d<SOUND_NEAR,col=colorOf(s.biome),song=sang.get(s.id),age=song?now-so
    c.globalAlpha=1;c.fillStyle='#000';c.beginPath();c.arc(q.x,q.y,6,0,TAU);c.fill();c.fillStyle=col;c.globalAlpha=.9;c.beginPath();c.arc(q.x,q.y,3,0,TAU);c.fill();
    // Near: the white ring says what to do next.
    if(near){c.globalAlpha=.9;c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,10+(still?0:Math.sin(clock*4)*1.5),0,TAU);c.stroke();
-    if(words){const known=albumHas(album(),s.sound);c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.textAlign='center';say(c,known?soundById(s.sound).name:'Sonido raro',q.x,q.y-18);c.globalAlpha=.75;c.font='11px "Geist Mono", monospace';say(c,'Pasa por él o toca a tiempo',q.x,q.y+24);}}}
-  // Out of view: a small white ring at the screen's edge, toward the nearest one you can hear.
-  if(hint&&!scene()){const cx=r.W/2,cy=r.H/2,a=Math.atan2(hint.y-cy,hint.x-cx),k=Math.min((r.W/2-18)/Math.abs(Math.cos(a)||1e-6),(r.H/2-100)/Math.abs(Math.sin(a)||1e-6));c.globalAlpha=.3+.4*(1-hint.d/SOUND_HEAR);c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(cx+Math.cos(a)*k,cy+Math.sin(a)*k,4,0,TAU);c.stroke();}
+    if(words){const known=albumHas(album(),s.sound);c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.textAlign='center';say(c,known?soundById(s.sound).name:'Sonido raro',q.x,q.y-18);c.globalAlpha=.75;c.font='12px "Geist Mono", monospace';say(c,'Pasa por él o toca a tiempo',q.x,q.y+24);}}}
+  // Out of view: the nearest one you can hear, as «?» in the one layer of arrows (coherencia T2).
+  if(hint&&!scene())r.edgeOffer?.({key:'sonido:'+hint.id,kind:'sonido',x:hint.wx,y:hint.wy,ask:true});
   for(const g of glows){const q=at(g.x,g.y),k=(clock-g.at)/1.2;c.globalAlpha=.85*(1-k);c.strokeStyle=GOLD;c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,still?16:8+k*30,0,TAU);c.stroke();}
   if(summary&&words&&!scene()){c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';c.textAlign='center';c.fillText(summary.text,r.W/2,Math.min(r.H-135,r.H/2+130),r.W-32);}
   c.restore();drawn={hint:!!hint,marks};}

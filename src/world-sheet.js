@@ -18,8 +18,9 @@ export const ease=k=>{const x=Math.max(0,Math.min(1,k));return x*x*(3-2*x);};
 // cube and its goal are the figure. A weight on the alpha of that decoration; nothing moves and no seed is read.
 export const TEXTURE_WEIGHT=Object.freeze({lago:.45,dunas:.4,ruinas:.45});
 export const textureWeight=id=>TEXTURE_WEIGHT[id]??1;
-// The pigment of a recovered biome: how much of its colour goes into the shapes.
-export const PIGMENT=.7;
+// The pigment of a recovered biome: how much of its colour goes into the shapes. Coherencia T2 took the neighbour's
+// coloured light off the edge (a white arrow now), so the place's colour is carried by the shapes alone, in full.
+export const PIGMENT=1;
 const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;};
 // The colours recovered in the Journey: kept as biome ids.
 export function normalizeColors(raw){const out={};if(raw&&typeof raw==='object'&&!Array.isArray(raw))for(const [k,v]of Object.entries(raw))if(v&&typeof k==='string'&&k.length<40)out[k]=true;return out;}

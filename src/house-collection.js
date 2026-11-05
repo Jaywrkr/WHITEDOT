@@ -1,4 +1,5 @@
 import {rarePortrait} from './rare-card-art.js';
+import {TIER_INK} from './rare-card-model.js';
 import {ACH_CATEGORIES} from './achievement-metadata.js';
 import {CUBE_SHOP} from './cube-shop-model.js';
 import {pieceImage} from './cube-shop-preview.js';
@@ -6,7 +7,7 @@ import {livingGlyph} from './living-art.js';
 import {livingDefinition} from './living-catalog.js';
 import {roomBox,FLOORS} from './house-view.js';
 // What you collected, on show in the Refugio: light panels, a constellation of achievements, glass columns and creatures. Only reads the save.
-const TIER_RANK={mitico:4,legendario:3,singular:2,raro:1},TIER_INK={raro:'#9fe8ff',singular:'#bda5f5',legendario:'#bda5f5',mitico:'#f0d27a'};
+const TIER_RANK={mitico:4,legendario:3,singular:2,raro:1};
 export const GALLERY=Object.freeze([{x:262,y:40},{x:330,y:40},{x:398,y:40},{x:466,y:40}].map(Object.freeze));
 export const SHOWCASES=Object.freeze([290,356,422,488,554,620].map(x=>Object.freeze({x,w:52,h:96})));
 export const SHELF=Object.freeze({x:28,y:150,w:196});

@@ -11,7 +11,7 @@ export const ANOMALIES={
  frenesi:{tier:'raro',name:'Frenesí',rule:'El tempo va a una vez y media. Nadie sabe por qué.',rumor:'la música va demasiado rápido',sample:'frenesi'},
  detenido:{tier:'legendario',name:'El tiempo se detiene',rule:'Si te quedas quieto, la música se frena y el mundo espera.',rumor:'el tiempo se detiene si te quedas quieto',sample:'detenido'},
  espejo:{tier:'legendario',name:'Espejo del Origen',rule:'Un reflejo del lugar donde empezaste, con los colores al revés.',rumor:'hay un reflejo de tu Origen',sample:'espejo'},
- luna:{tier:'mitico',name:'Luna de oro',rule:'Todo es dorado y todas las capas suenan a la vez.',rumor:'todo es de oro',sample:'luna'}
+ luna:{tier:'mitico',name:'Luna blanca',rule:'Todo es blanco y todas las capas suenan a la vez.',rumor:'todo es blanco',sample:'luna'}
 };
 const BY_TIER={raro:['invertida','canon','frenesi'],legendario:['detenido','espejo'],mitico:['luna']};
 
@@ -30,7 +30,8 @@ export function applyAnomaly(d,origin){
  if(a.type==='frenesi')d.bpm=Math.min(178,Math.round(d.bpm*1.5));
  if(a.type==='espejo'&&origin){d.genre=origin.genre;d.scale=origin.scale.slice();d.bpm=origin.bpm;d.trOff=origin.trOff;d.track={...origin.track};
   const h=(origin.hue+180)%360;d.hue=h;d.pal={main:`hsl(${h},32%,74%)`,soft:`hsl(${h},22%,50%)`,acc:`hsl(${(h+28)%360},72%,70%)`,sand:`hsl(${(h+40)%360},35%,68%)`};}
- if(a.type==='luna')d.pal={main:'hsl(44,85%,70%)',soft:'hsl(40,55%,48%)',acc:'hsl(48,95%,72%)',sand:'hsl(42,60%,62%)'};
+ // T4 (Kubono coherente): gold is only what you earn, so the mythic moon is white (it was «Luna de oro»).
+ if(a.type==='luna')d.pal={main:'hsl(220,12%,92%)',soft:'hsl(220,8%,58%)',acc:'hsl(0,0%,100%)',sand:'hsl(220,10%,78%)'};
  return d;
 }
 
@@ -72,7 +73,7 @@ export function initialize(runtime){
   runtime.say(`${a.rule}${isNew?' Te llevas una muestra que no existe en ningún otro lado.':''}`,`${TIERS[a.tier].name} · ${a.name}`);
   if(!isNew)return;
   S.anomalies[a.key]={type:a.type,tier:a.tier,day:S.todayKey};S.anomaliesN=(S.anomaliesN||0)+1;
-  S.bag[a.sample]=Math.min(9,(S.bag[a.sample]||0)+3);runtime.toast(`<em>Muestra única</em> · ${runtime.SAMPLES[a.sample]}`);
+  S.bag[a.sample]=Math.min(9,(S.bag[a.sample]||0)+3);runtime.toast(`Muestra única · <em>${runtime.SAMPLES[a.sample]}</em>`,{earned:true});
   runtime.unlock(a.tier==='raro'?'rareza1':a.tier==='legendario'?'leyenda1':'mito1');runtime.flash=Math.max(runtime.flash,.7);runtime.save();
  }
 

@@ -66,7 +66,7 @@ export function createGames(r,hooks){
   s.lineAt+=dt;const eighth=six()*2;while(s.lineAt>=eighth&&!s.over){s.lineAt-=eighth;s.col=s.col+1>SWEEP_COLS?0:s.col+1;const n=sweepStep(s.grid,s,s.col>=SWEEP_COLS?-1:s.col);if(n){s.score+=n;s.cleared++;hooks.sing?.('barrido',[Math.min(7,Math.floor(n/4))]);}}}
  function endSweep(){const s=sweep;if(!s||s.over)return;s.over=true;s.piece=null;s.result=hooks.sweepEnd?.(s.score)||{record:false,amount:0};renderSweep();}
  function renderSweep(){const s=sweep;if(!s)return;const rec=Math.max(s.best,s.score);
-  if(s.over){status.textContent=`Barrido · ${s.score}`+(s.result?.record?' · ¡récord!':` · Récord · ${rec}`)+(s.result?.amount?` · +${s.result.amount} ✦`:'');
+  if(s.over){status.textContent=`Barrido · ${s.score}`+(s.result?.record?' · récord nuevo':` · Récord · ${rec}`)+(s.result?.amount?` · +${s.result.amount} ✦`:'');
    body.innerHTML='<div class="row"><button type="button" data-again>Otra vez</button></div>';}
   else{status.textContent=`Barrido · ${clockText(s.left)} · ${s.score}`;if(body.dataset.sweep!=='on'){body.dataset.sweep='on';body.innerHTML='<p>Coloca las piezas. La línea borra los cuadrados de un solo tono.</p>';}}
   drawSweep();}

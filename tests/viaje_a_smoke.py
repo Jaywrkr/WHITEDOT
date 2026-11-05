@@ -1,6 +1,6 @@
 """Lo que hay más lejos (alpha.248) · the free World on phone and desktop. The Bitácora page «Lo que hay más lejos» shows
-the bands reached and only the km of the rest («?», no names). Crossing 1 km tells «Aquí empiezan los radares de
-ritmo.» once. A challenge switch: touching it starts a 30 s challenge with no menu, a scene of its own (no living
+the bands reached and only the km of the rest («?», no names). Crossing 1 km tells «Radares de ritmo · Empiezan
+aquí.» once. A challenge switch: touching it starts a 30 s challenge with no menu, a scene of its own (no living
 encounter and no meteor shower meanwhile); its rings are passed without sound (phone) or pulsed on time with sound
 (desktop) and pay by the universe's rule (10 ✦; 15 all on time); from 5 km a switch of lights. A rhythm radar counts a
 run of pulses on time and keeps the record (desktop, with sound). A ball of light kicked from behind goes between the
@@ -59,7 +59,7 @@ try:
    page.evaluate(HIDE)
    # --- 2 · Crossing 1 km: its notice, once.
    go(page,10600,0);page.wait_for_function("!!__r.bandState().book.seen.radar",timeout=8000)
-   want='Rhythm radars start here.' if en else 'Aquí empiezan los radares de ritmo.'
+   want='Rhythm radars · They start here.' if en else 'Radares de ritmo · Empiezan aquí.'
    try:page.wait_for_function(f"window.__toasts.some(t=>t.includes({want!r}))",timeout=15000)
    except Exception:print(page.evaluate('JSON.stringify({t:window.__toasts,b:__r.bandState()})'));raise
    go(page,9000,0);go(page,10700,0);page.wait_for_timeout(300);assert page.evaluate(f"window.__toasts.filter(t=>t.includes({want!r})).length")==1,'once'
@@ -91,13 +91,13 @@ try:
      pulse(page,ra['x']+150,ra['y'],False);page.wait_for_function("__r.viajeState().radar?.cur===0",timeout=4000)
      if SHOTS:page.screenshot(path=f'{SHOTS}/radar-{width}.png')
      go(page,ra['x']+2000,ra['y']);page.wait_for_function(f"__r.viajeState().book.radars[{ra['id']!r}]?.best===5",timeout=6000)
-     s=st(page);assert s['summary']=='Radar de ritmo · racha 5 · ¡récord! · +10 ✦' and paid_log(page,'Radar de ritmo')==[10] and sparks(page)-before>=10,(s['summary'],paid_log(page,'Radar de ritmo'))
+     s=st(page);assert s['summary']=='Radar de ritmo · racha 5 · récord nuevo · +10 ✦' and paid_log(page,'Radar de ritmo')==[10] and sparks(page)-before>=10,(s['summary'],paid_log(page,'Radar de ritmo'))
     else:page.wait_for_timeout(300);assert st(page)['radar'] is None,'without sound the radar does not count'
    # --- 6 · A ball of light: kicked from behind, it goes between the rocks; a goal, its party and its sparks.
    ba,goal=P['ba'],P['goal'];dx,dy=goal['x']-ba['x'],goal['y']-ba['y'];l=math.hypot(dx,dy);cx,cy=ba['x']-dx/l*40,ba['y']-dy/l*40
    go(page,cx,cy);page.wait_for_function(f"__r.viajeState().drawn.balls?.some(b=>b.id==={ba['id']!r})",timeout=6000);before=sparks(page)
    pulse(page,cx,cy,sound);page.wait_for_function("__r.viajeState().book.goals>=1",timeout=8000)
-   s=st(page);paid=15 if sound else 10;assert s['summary']==('¡Gol! · +%d ✦'%paid) and paid_log(page,'Gol')==[paid] and sparks(page)-before>=paid,(s['summary'],paid_log(page,'Gol'))
+   s=st(page);paid=15 if sound else 10;assert s['summary']==('Gol · +%d ✦'%paid) and paid_log(page,'Gol')==[paid] and sparks(page)-before>=paid,(s['summary'],paid_log(page,'Gol'))
    assert page.evaluate("__r.viajeState().balls.some(b=>b.party)"),'a small party'
    go(page,goal['x'],goal['y']);page.wait_for_timeout(250)
    if SHOTS:page.screenshot(path=f'{SHOTS}/gol-{lang}-{width}.png')
@@ -110,6 +110,8 @@ try:
    if SHOTS:page.wait_for_timeout(1500);page.screenshot(path=f'{SHOTS}/bengala-{lang}-{width}.png')
    go(page,home['x']+4500,home['y']+2000);page.wait_for_function("!!__r.viajeState().drawn.edge?.bengala",timeout=6000)
    e=st(page)['drawn']['edge']['bengala'];assert 0<=e['x']<=width and 0<=e['y']<=height,e
+   # Coherencia T2: your flare comes first in the one layer of white arrows, with how far it is.
+   page.wait_for_function("__r.edgeState().shown.some(a=>a.kind==='bengala'&&/ (m|km)$/.test(a.label||''))",timeout=4000)
    if SHOTS:page.screenshot(path=f'{SHOTS}/bengala-borde-{lang}-{width}.png')
    if sound:page.wait_for_function("__r.viajeState().flareBeeps>=1",timeout=25000);assert any(n for n in [st(page)['notes']])
    if not en:
@@ -120,9 +122,11 @@ try:
    if not en:
     # --- 8 · The first rest satellite: its notice, its board with three orders; the buoy's order fulfilled.
     bd,orders=P['bd'],P['orders'];go(page,0,101000);page.wait_for_function("!!__r.bandState().book.seen.tablon",timeout=6000)
-    # At 10 km the board's notice shares the queue with the dead regions' (tanda B), 4.5 s of game time apart; a slow
-    # runner's game clock runs behind the wall clock, so give the queue room.
-    page.wait_for_function(f"window.__toasts.some(t=>t.includes('Aquí empiezan los tablones de encargos.'))",timeout=60000)
+    # At 10 km the board and the dead regions (tanda B) start together: T4 gives one notice per crossing, the first band
+    # of the farthest km; the other waits silently in the Bitácora.
+    tens=['Tablones de encargos · Empiezan aquí.','Región apagada · Empieza aquí.']
+    page.wait_for_function(f"window.__toasts.some(t=>{tens!r}.some(w=>t.includes(w)))",timeout=60000);page.wait_for_timeout(500)
+    assert page.evaluate(f"window.__toasts.filter(t=>{tens!r}.some(w=>t.includes(w))).length")==1,('one notice per crossing',page.evaluate('window.__toasts'))
     go(page,bd['x']+80,bd['y']);page.wait_for_function("__r.viajeState().book.orders.length===3",timeout=8000)
     page.wait_for_function("__r.viajeState().drawn.boardText===3",timeout=6000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/tablon-{width}.png')

@@ -26,10 +26,10 @@ try:
    page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bGuide').click();assert page.locator('#guideJourney li').count()==4
    page.locator('#guideGlossary').click();assert page.locator('#guideClose').bounding_box()['y']+page.locator('#guideClose').bounding_box()['height']<=height
    assert 'Geist Mono' in page.locator('#guideClose').evaluate('e=>getComputedStyle(e).fontFamily');page.locator('#guideClose').click()
-   # One reversible temporary effect; menu pauses its active-time clock.
-   page.evaluate('__r.giveSurprise("pequeno")');page.wait_for_function('!document.getElementById("surpriseHud").hidden');assert page.evaluate('__r.surpriseStyle.scale')==.55
-   rect=page.locator('#surpriseHud').bounding_box();assert rect['x']>=0 and rect['x']+rect['width']<=width
-   page.locator('#bMenu').click();page.wait_for_timeout(100);left=page.evaluate('__r.snapshotBoxSurprises().remaining.pequeno');page.wait_for_timeout(250);assert page.evaluate('__r.snapshotBoxSurprises().remaining.pequeno')==left;page.locator('#mnClose').click();page.wait_for_function('!document.getElementById("surpriseHud").hidden');page.locator('#surpriseUndo').click();assert page.evaluate('__r.surpriseStyle.scale')==1
+   # One temporary effect (a box's power, T3: no surprise); the menu pauses its active-time clock.
+   assert page.evaluate('__r.giveSurprise("pequeno")')==False and page.evaluate('__r.surpriseStyle.scale')==1;page.evaluate('__r.givePower("cometa")');page.wait_for_function('!document.getElementById("sparkPowerHud").hidden')
+   rect=page.locator('#sparkPowerHud').bounding_box();assert rect['x']>=0 and rect['x']+rect['width']<=width
+   page.locator('#bMenu').click();page.wait_for_timeout(100);left=page.evaluate('__r.snapshotPowers().remaining.cometa');page.wait_for_timeout(250);assert page.evaluate('__r.snapshotPowers().remaining.cometa')==left;page.locator('#mnClose').click();assert page.locator('#surpriseHud').is_hidden();page.evaluate('__r.clearPowers()')
    # Seeded terrain is actually rendered by the app; silence leaves it interactive.
    page.evaluate('''()=>{const r=__r;let q;for(let i=0;i<40&&!q;i++){r.S.wx=i*1000;r.S.wy=0;q=r.nearbyVisualSegments()[0];}if(!q)throw Error('visual fixture missing');r.S.wx=q.x;r.S.wy=q.y;r.visualGesture();}''');page.wait_for_timeout(100);assert page.evaluate('__r.vjState.cache')<=48
    page.screenshot(path=f'/tmp/whitedot-vj-final-{width}.png')
@@ -39,10 +39,10 @@ try:
    assert page.locator('.rare-reveal-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    page.wait_for_timeout(350);assert page.locator('#rareNotice').is_visible();assert page.locator('#rareNotice').get_attribute('data-inspect')=='false'
    page.screenshot(path=f'/tmp/whitedot-card-final-{width}.png');page.locator('#rareNoticeDismiss').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
-   # A real gifted box opens its earned presentation, including a secondary duration.
-   page.evaluate("()=>{const r=__r;r.givePower('cometa');r.giveSurprise('lento');r.celebrateBox({id:'closure-box:'+innerWidth,x:r.S.wx,y:r.S.wy,power:'cometa',surprise:'lento',gift:true});}")
+   # A real gifted box opens its earned presentation: one power, no surprise (T3).
+   page.evaluate("()=>{const r=__r;r.givePower('cometa');r.celebrateBox({id:'closure-box:'+innerWidth,x:r.S.wx,y:r.S.wy,power:'cometa',surprise:'lento',gift:true});}")
    page.wait_for_function('!document.getElementById("celebration").hidden',timeout=45000)
-   assert '10 s' in page.locator('#celebrationSurpriseName').inner_text()
+   assert page.locator('#celebrationSurpriseName').inner_text().strip()=='' and '20 s' in page.locator('#celebrationTime').inner_text()
    assert page.locator('.celebration-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    page.screenshot(path=f'/tmp/whitedot-box-card-{width}.png')
    page.locator('#celebrationDismiss').click();page.wait_for_function('document.getElementById("celebration").hidden')

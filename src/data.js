@@ -104,7 +104,7 @@ export function initialize(runtime) {
    ["caja5","Coleccionista","Abriste cinco cajas misteriosas."],
    ["poder_campo","Campo de escucha","Usaste el campo que toca solo lo que está dentro."],
    ["poder_cometa","Cometa","Fuiste más rápido que nunca."],
-   ["poder_brujula","Brújula","Seguiste las flechas hacia lo raro."],
+   ["poder_brujula","Carga","Cargaste el Escáner."],
    ["poder_iman","Imán","Lo pequeño te siguió."],
    ["poder_pincel","Pincel sonoro","Tu camino dejó notas."],
    ["poder_companero","Compañero","Una luz te acompañó."],
@@ -159,7 +159,7 @@ export function initialize(runtime) {
    ["tormenta3","Cazatormentas","Estuviste dentro de 3 tormentas."],
    ["rareza1","Esto no es normal","Encontraste una rareza."],
    ["leyenda1","Leyenda","Encontraste una rareza legendaria."],
-   ["mito1","Mito","Encontraste la Luna de oro.",1],
+   ["mito1","Mito","Encontraste la Luna blanca.",1],
    ["rio1","Siguiendo la corriente","Seguiste una corriente un minuto entero."],
    ["lejos10","Lejos de casa","Llegaste a 10 regiones del Origen."],
    ["lejos30","Expedición","Llegaste a 30 regiones del Origen."],
@@ -201,7 +201,7 @@ export function initialize(runtime) {
    ["esquivador","Esquivador","45 s moviéndote en el Mundo sin tocar ninguna luz.",1],
    ["insistente","Insistente","Golpeaste el mismo fragmento 25 veces.",1]
   ];
-  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Fragmento",loto:"Onda",arbol:"Estrella",luciernaga:"Mota",flor:"Espora",faro:"Púlsar",reverso:"Reverso",canon:"Canon",frenesi:"Frenesí",detenido:"Tiempo quieto",espejo:"Espejo",luna:"Luna de oro"};
+  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Fragmento",loto:"Onda",arbol:"Estrella",luciernaga:"Mota",flor:"Espora",faro:"Púlsar",reverso:"Reverso",canon:"Canon",frenesi:"Frenesí",detenido:"Tiempo quieto",espejo:"Espejo",luna:"Luna blanca"};
   const COLORS=CUBE_COLORS;
   // La Voz: estilo J. Directa, con cariño por debajo, máximo 12 palabras.
   // "~~antes~~ después" se muestra tachado y corregido, como en los posts de Jay.
@@ -350,7 +350,7 @@ export function initialize(runtime) {
    rio:"Una corriente. Síguela: la música sube.",
    rareza1:"Una rareza. Aquí las reglas no aplican.",
    leyenda1:"Legendaria. Esto lo ve muy poca gente. Tómale foto. Ah, no puedes.",
-   mito1:"La Luna de oro. Primera vez que no sé qué decir.",
+   mito1:"La Luna blanca. Primera vez que no sé qué decir.",
    rio1:"Un minuto siguiendo la corriente. Ya eres parte del caudal.",
    raro:"La afinación se tuerce. No es tu teléfono. Estás lejos.",
    campamento:"Arrancas desde tu Estudio. Lo lejos ya no es tan lejos.",

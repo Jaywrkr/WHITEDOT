@@ -66,7 +66,7 @@ export function drawSkyHint(r,x,y,alpha=.4){const c=r.cx,cx=r.W/2,cy=r.H/2,a=Mat
 // Words under the cube, where the living encounters write theirs (the two never run at once): the notice with the
 // figure's name, then the summary. «Textos en el universo» hides them (universe-texts.js).
 export function drawSkyWords(r,{title='',hint='',summary=''}={}){if(!title&&!summary)return;const c=r.cx,ty=Math.min(r.H-135,r.H/2+130),width=r.W-32;c.save();c.textAlign='center';
- if(title){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(title,r.W/2,ty,width);if(hint){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='11px "Geist Mono",monospace';c.fillText(hint,r.W/2,ty+18,width);}}
+ if(title){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(title,r.W/2,ty,width);if(hint){c.globalAlpha=.78;c.fillStyle='#ddd';c.font='12px "Geist Mono",monospace';c.fillText(hint,r.W/2,ty+18,width);}}
  else{c.globalAlpha=.92;c.fillStyle='#ffffff';c.font='12px "Geist Mono",monospace';c.fillText(summary,r.W/2,ty,width);}
  c.restore();}
 // The zodiac's prize: twelve small gold stars round the cube, turning slowly (still with reduced motion). Earned, so gold.

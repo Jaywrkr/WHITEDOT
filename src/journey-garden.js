@@ -83,7 +83,7 @@ export function initialize(runtime){
   const px=Math.max(40,Math.min(W-40,x)),py=Math.max(110,Math.min(H-170,y));c.save();c.strokeStyle=c.fillStyle='#ffffff';c.globalAlpha=.65;c.lineWidth=1;c.setLineDash?.([2,5]);c.beginPath();c.arc(px,py,32,0,Math.PI*2);c.stroke();c.setLineDash?.([]);
   // Empty bed: a hollow seed; growing bed: three drops. They anticipate the relevant half of the beat.
   c.globalAlpha=activeStep?.9:.35;if(!move){if(water){for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(px+i*8,py-18);c.lineTo(px+i*8,py-12);c.stroke();}}else c.strokeRect(px-3,py-15,6,6);}
-  c.font='11px "Geist Mono",monospace';c.textAlign='center';c.textBaseline='top';const tx=Math.max(110,Math.min(W-110,px));c.globalAlpha=.9;c.fillText(text,tx,py+38);c.restore();
+  c.font='12px "Geist Mono",monospace';c.textAlign='center';c.textBaseline='top';const tx=Math.max(110,Math.min(W-110,px));c.globalAlpha=.9;c.fillText(text,tx,py+38);c.restore();
  }
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}

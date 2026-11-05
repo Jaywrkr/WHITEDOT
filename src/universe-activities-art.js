@@ -64,7 +64,7 @@ export function drawActivity(r,l,s,t,paid=false){
  c.strokeStyle='#fff';c.strokeRect(exit.x-12,exit.y-16,24,32);c.beginPath();c.moveTo(exit.x,exit.y-4);c.lineTo(exit.x,exit.y+9);c.lineTo(exit.x-5,exit.y+4);c.moveTo(exit.x,exit.y+9);c.lineTo(exit.x+5,exit.y+4);c.stroke();
  const reset=point({x:3.5,y:l.n-1.5});if(id!=='maze'&&id!=='islands'){c.strokeStyle='#7d8b95';c.beginPath();c.arc(reset.x,reset.y,10,.5,Math.PI*2);c.stroke();}
  c.fillStyle='#fff';c.fillRect(r.W/2-5,r.H/2-5,10,10);
- if(r.S.universeTexts!==false){c.fillStyle='#fff';c.textAlign='center';c.font='14px "Geist Mono",monospace';c.fillText(l.def.name,r.W/2,32,r.W-30);c.fillStyle='#b0bdc4';c.font='11px "Geist Mono",monospace';const echo=id==='race'&&s.ghost?.length?s.ghost.at(-1)[2]:null,versus=echo===null?'':s.done?(s.time<=echo?' · Ganaste a tu eco':' · Tu eco fue más rápido'):'';c.fillText(s.done?(paid?'Completado · +5 ✦':'Completado · Recuerdo conservado')+versus:echo===null?l.def.hint:'Tú '+s.time.toFixed(1)+' s · tu eco '+echo.toFixed(1)+' s',r.W/2,54,r.W-30);c.fillText('Puerta ↓ salir · Círculo ↻ reiniciar',r.W/2,r.H-86,r.W-30);}
+ if(r.S.universeTexts!==false){c.fillStyle='#fff';c.textAlign='center';c.font='14px "Geist Mono",monospace';c.fillText(l.def.name,r.W/2,32,r.W-30);c.fillStyle='#b0bdc4';c.font='12px "Geist Mono",monospace';const echo=id==='race'&&s.ghost?.length?s.ghost.at(-1)[2]:null,versus=echo===null?'':s.done?(s.time<=echo?' · Ganaste a tu eco':' · Tu eco fue más rápido'):'';c.fillText(s.done?(paid?'Completado · +5 ✦':'Completado · Recuerdo conservado')+versus:echo===null?l.def.hint:'Tú '+s.time.toFixed(1)+' s · tu eco '+echo.toFixed(1)+' s',r.W/2,54,r.W-30);c.fillText('Puerta ↓ salir · Círculo ↻ reiniciar',r.W/2,r.H-86,r.W-30);}
  c.restore();
 }
 // Visual 2 (alpha.254; docs/MUNDO.md, «Luz común»): the portal grows in when first seen, a ring of dashes turns slowly
@@ -79,5 +79,5 @@ export function drawActivityPortal(r,o,definition,done,fill=0){
  c.globalAlpha=.35*seen;c.lineWidth=1;c.setLineDash([2,6]);c.lineDashOffset=still?0:-(performance.now()/90)%8;c.beginPath();c.arc(x,y,42,0,Math.PI*2);c.stroke();c.setLineDash([]);c.lineDashOffset=0;
  c.globalAlpha=seen;c.lineWidth=1.2;const end=-Math.PI/2+Math.PI*2*(fill||1);c.beginPath();c.arc(x,y,35,-Math.PI/2,end);if(fill>0&&!light)halo(c);c.stroke();
  if(fill>0&&!light)glow(c,x+Math.cos(end)*35,y+Math.sin(end)*35,9,ink,.8*seen,true);c.globalAlpha=1;
- if(r.S.universeTexts!==false&&Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<160){c.textAlign='center';c.font='11px "Geist Mono",monospace';c.fillStyle='#fff';c.fillText(definition.name,x,y-45);c.fillText(done?'Puedes volver a jugar':'Quédate dentro del portal',x,y+52);}c.restore();
+ if(r.S.universeTexts!==false&&Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<160){c.textAlign='center';c.font='12px "Geist Mono",monospace';c.fillStyle='#fff';c.fillText(definition.name,x,y-45);c.fillText(done?'Puedes volver a jugar':'Quédate dentro del portal',x,y+52);}c.restore();
 }

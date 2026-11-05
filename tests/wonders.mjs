@@ -13,7 +13,7 @@ assert(tiers.raro/land<TIERS.raro.p*2&&tiers.raro/land>TIERS.raro.p/2,'rare is r
 // Sus reglas se notan en el ADN.
 const origin=region(0,0),esp=region(...found.espejo),fr=region(...found.frenesi),luna=region(...found.luna);
 assert.equal(esp.anomaly.type,'espejo');assert.equal(esp.genre,origin.genre);assert.deepEqual(esp.scale,origin.scale);
-assert(fr.bpm>=Math.min(178,Math.round(r.GEN[fr.genre].bpm[0]*1.5)));assert(/^hsl\(4\d,/.test(luna.pal.main));
+assert(fr.bpm>=Math.min(178,Math.round(r.GEN[fr.genre].bpm[0]*1.5)));assert(/^hsl\(220,12%,92%\)$/.test(luna.pal.main),"T4: the mythic moon is white, not gold");
 for(const k of ['reverso','canon','frenesi','detenido','espejo','luna'])assert(r.SAMPLES[k],`sample ${k}`);
 // Ríos: escasos, continuos río abajo, con la energía subiendo, y nunca en el mar.
 let on=0,tot=0;const rnd=r.rng(5);for(let i=0;i<30000;i++){const x=(rnd()-.5)*80*RP,y=(rnd()-.5)*80*RP;const q=riverAt(x,y,RP,isSeaPx);if(isSeaPx(x,y)){assert(!q);continue;}tot++;if(q?.on)on++;}

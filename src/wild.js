@@ -13,7 +13,7 @@ import {glow,sparkSprite} from './fx-kit.js';
 export const WILD_AFTER=60000,WILD_SURE=120000,WILD_WALK=1200,WILD_LIFE=30000,WILD_HOPS=5,WILD_REACH=120,WILD_HOP=150,WILD_AHEAD=150,WILD_SPARKS=15;
 export const REMIX_SPARKS=30,REMIX_RECORD=20;
 // Plan H6: the spark is found by ear. It sings on every beat from its side, louder as you come near; the arrow at the
-// edge of the screen is only for playing without sound.
+// edge of the screen (white, the one layer of arrows) is only for playing without sound.
 export const WILD_HEAR=900;
 // Arreglos de la media hora (Jay, alpha.242): with the sound off there is no beat to hear, so five pulses on time are
 // not a fair ask. Then passing through the spark (the cube within WILD_TOUCH of it) catches it, for the same 15 ✦.
@@ -69,7 +69,8 @@ export function initialize(runtime){
    c.globalAlpha=1;c.strokeStyle=gold;c.lineWidth=2;c.beginPath();for(let i=0;i<=30;i++){const a=i/30*9.4+(still?0:t/300),q=2+i/30*r;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.stroke();
    c.globalAlpha=.8;c.beginPath();c.arc(x,y,r+8,-Math.PI/2,-Math.PI/2+Math.max(0,left)*6.283);c.stroke();
    for(let k=0;k<WILD_HOPS;k++){c.globalAlpha=k<spark.hops?1:.3;c.fillStyle=k<spark.hops?gold:'#ffffff';c.fillRect(Math.round(x-WILD_HOPS*4+k*8+2),Math.round(y+r+12),4,4);}}
-  else if(!S.sound){const a=Math.atan2(y-H/2,x-W/2),m=24,k=Math.min((W/2-m)/Math.abs(Math.cos(a)||1e-6),(H/2-m)/Math.abs(Math.sin(a)||1e-6)),ex=W/2+Math.cos(a)*k,ey=H/2+Math.sin(a)*k;c.globalAlpha=.9;c.fillStyle=gold;c.beginPath();c.moveTo(ex+Math.cos(a)*9,ey+Math.sin(a)*9);c.lineTo(ex+Math.cos(a+2.5)*7,ey+Math.sin(a+2.5)*7);c.lineTo(ex+Math.cos(a-2.5)*7,ey+Math.sin(a-2.5)*7);c.closePath();c.fill();}
+  // Out of view and without sound: a white arrow in the one layer at the screen's edge (coherencia T2; it was gold).
+  else if(!S.sound)runtime.edgeOffer?.({key:'chispa:'+spark.n,kind:'chispa',x:spark.x,y:spark.y,shape:'estrella'});
   for(let i=glows.length-1;i>=0;i--){const g=glows[i],k=(now-g.at)/500;if(k>1){glows.splice(i,1);continue;}c.globalAlpha=.8*(1-k);c.strokeStyle=gold;c.lineWidth=1.5;c.beginPath();c.arc(W/2+g.x-cx,H/2+g.y-cy,10+k*30,0,6.283);c.stroke();}
   c.restore();}
  // On every beat the spark sings a note of the chord, from where it is.

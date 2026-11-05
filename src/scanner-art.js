@@ -19,9 +19,32 @@ function paintIcon(shape){return (c,w,h)=>{const m=w/2;c.strokeStyle='#fff';c.fi
   case 'sonda':c.moveTo(m,1.5);c.lineTo(m,h-1.5);c.moveTo(1.5,m);c.lineTo(w-1.5,m);c.stroke();c.strokeRect(m-2.5,m-2.5,5,5);return;
   case 'forma':c.moveTo(m,2.5);c.lineTo(w-2.5,h-3);c.lineTo(2.5,h-3);c.closePath();c.stroke();return;
   case 'voz':c.arc(m,m,m-2.5,0,TAU);c.stroke();c.fillRect(m-1.25,m-1.25,2.5,2.5);return;
+  // T2: a buoy (a post and its light) and «?» (what is only heard, or secret).
+  case 'boya':c.moveTo(m,h-1.5);c.lineTo(m,m);c.stroke();c.beginPath();c.arc(m,m-2.5,2.5,0,TAU);c.fill();return;
+  case 'pregunta':c.lineWidth=1.6;c.arc(m,5,3,Math.PI,Math.PI*2.4);c.lineTo(m,9.4);c.stroke();c.fillRect(m-1,10.8,2,2);return;
   default:c.moveTo(m,1.5);c.lineTo(m+1.6,m-1.6);c.lineTo(w-1.5,m);c.lineTo(m+1.6,m+1.6);c.lineTo(m,h-1.5);c.lineTo(m-1.6,m+1.6);c.lineTo(1.5,m);c.lineTo(m-1.6,m-1.6);c.closePath();c.fill();
  }};}
 export const scanIcon=shape=>bake('scan:'+shape,SCAN_ICON,SCAN_ICON,paintIcon(shape));
+// ---------- the arrows at the edge (coherencia T2) ----------
+// One small white arrowhead pointing out of the screen, the thing's icon just inside it and, when there is one, a short word
+// («4 km»). Baked once (with a soft halo, and a plain one for the light quality); rotated, never rebuilt per frame.
+export const EDGE_ICON=12,EDGE_INSET=15;
+const paintArrow=soft=>(c,w,h)=>{const m=h/2;c.strokeStyle=c.fillStyle='#fff';c.lineJoin='round';const path=()=>{c.beginPath();c.moveTo(w-2.5,m);c.lineTo(w-9,m-4.5);c.lineTo(w-7.5,m);c.lineTo(w-9,m+4.5);c.closePath();};
+ if(soft){c.globalAlpha=.2;c.lineWidth=3.5;path();c.stroke();c.globalAlpha=1;}path();c.fill();};
+export const edgeArrowSprite=(light=false)=>bake(light?'scan:arrow':'scan:arrow:soft',16,16,paintArrow(!light));
+// arrows: [{key, at:{x,y,a}, shape, label}]; fade: Map key → 0..1 (how far each has come in). Returns the calls made.
+export function drawEdgeArrows(c,arrows,{light=false,words=true,fade=null,write=(q,t,x,y)=>q.fillText(t,x,y)}={}){
+ const out={arrows:0,icons:0,labels:0};if(!arrows?.length)return out;const sprite=edgeArrowSprite(light);c.save();c.font=FONT;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';
+ for(const e of arrows){const at=e.at;if(!at)continue;const k=fade?.get(e.key)??1;if(!(k>0))continue;const cos=Math.cos(at.a),sin=Math.sin(at.a);
+  c.globalAlpha=.88*k;
+  c.save();c.translate(at.x,at.y);c.rotate(at.a);
+  if(sprite)c.drawImage(sprite,-12.5,-8,16,16);else{c.fillStyle='#fff';c.beginPath();c.moveTo(1,0);c.lineTo(-5.5,-4.5);c.lineTo(-4,0);c.lineTo(-5.5,4.5);c.closePath();c.fill();}
+  c.restore();out.arrows++;
+  if(e.shape){c.globalAlpha=.8*k;icon(c,e.shape,at.x-cos*EDGE_INSET,at.y-sin*EDGE_INSET,EDGE_ICON);out.icons++;}
+  // The word further in, past the icon, its half width along the arrow's line so it never runs off the screen.
+  if(words&&e.label){const half=e.label.length*CHAR/2,d=EDGE_INSET+(e.shape?EDGE_ICON/2+4:0);c.globalAlpha=.75*k;write(c,e.label,at.x-cos*(d+half*Math.abs(cos)),at.y-sin*(d+7*Math.abs(sin)));out.labels++;}
+ }
+ c.restore();return out;}
 // The same icon without a canvas (Node): a square outline.
 function icon(c,shape,x,y,size){const s=scanIcon(shape);if(s){c.drawImage(s,x-size/2,y-size/2,size,size);return;}c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(x-size/2,y-size/2,size,size);}
 // How far the ring has gone (0..1) at age a of a wave of `dur` seconds; still: it is already there.

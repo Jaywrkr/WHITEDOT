@@ -91,9 +91,9 @@ try:
   page.keyboard.press('ArrowRight')
   page.wait_for_function('__r.noticeLane.owner!=="rare"',timeout=6000)
   assert not page.evaluate('__r.noticeLane.inspecting')
-  page.evaluate("""()=>{const r=__r;r.givePower('campo');r.givePower('campo');r.giveSurprise('pequeno');}""")
+  page.evaluate("""()=>{const r=__r;r.givePower('campo');r.givePower('campo');}""")
   assert 0<page.evaluate('__r.powerSecondsLeft("campo")')<=20
-  assert 0<page.evaluate('__r.snapshotBoxSurprises().remaining.pequeno')<=20000
+  assert page.evaluate("__r.giveSurprise('pequeno')")==False,'T3: no surprise from a box'
   page.wait_for_function('!document.getElementById("sparkPowerHud").hidden')
   page.locator('#sparkPowerUndo').click()
   assert page.evaluate('__r.powerSecondsLeft("campo")')==0

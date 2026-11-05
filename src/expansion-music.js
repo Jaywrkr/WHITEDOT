@@ -45,7 +45,8 @@ export const quietStart=(saved)=>QUIET_STAGES[Math.max(0,Math.floor((saved||0)/2
 export const POWERS={
  campo:{name:'Campo de escucha',seconds:20,text:'Acércate; las voces del círculo destacan sobre la base electrónica.'},
  cometa:{name:'Cometa',seconds:20,text:'Muévete rápido; deja una estela que suena.'},
- brujula:{name:'Brújula',seconds:20,text:'Sigue su giro hacia un encuentro cercano.'},
+ // T3 «la carga» (Kubono coherente, decision 4): the old Brújula. Its id stays (saves, cards, poder_brujula).
+ brujula:{name:'Carga',seconds:20,text:'El Escáner llega lejos y señala lo más raro.'},
  iman:{name:'Imán',seconds:20,text:'Acércate; lo pequeño orbita y toca contigo.'},
  pincel:{name:'Pincel sonoro',seconds:20,text:'Dibuja un camino; tus notas vuelven durante unos segundos.'},
  companero:{name:'Compañero',seconds:20,text:'Camina acompañado; una voz contesta tus gestos.'}

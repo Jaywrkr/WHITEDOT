@@ -1,6 +1,6 @@
 import {distanceOpacity} from './world-visibility-model.js';
 // Shared hierarchy: black space, source-colored music, earned gold, white player.
-export const WORLD_VISUAL=Object.freeze({background:'#000',line:1.2,maxElementAlpha:.88,gold:'#f0d27a',echo:'#9fe8ff'});
+export const WORLD_VISUAL=Object.freeze({background:'#000',line:1.2,maxElementAlpha:.88,gold:'#f0d27a',echo:'#ffffff'});
 const MUSIC_COLORS=Object.freeze(['#88d9eb','#b5a0ed','#96d7b0','#e9a5cb','#91b9ec','#dddded']);
 const MUSIC_ROLES=Object.freeze({bajo:0,perc:1,acorde:2,lead:3,agudo:4});
 export function musicalInk(hue=190,role='lead'){

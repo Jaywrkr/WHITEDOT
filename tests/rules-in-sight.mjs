@@ -40,7 +40,7 @@ const map=read('src/map.js');assert.match(map,/portales abiertos \(○\)/);asser
 // Nor the Refugio's first-landing voice (the finale lands quietly), nor a new colour or reward while the World is calm
 // (from the credits to the first portal, achievements.js); both wait in Tu cubo.
 {const finale=read('src/journey-finale.js');assert.match(finale,/landHouse\?\.\(\{quiet:true\}\)/);{const house=read('src/house.js');assert.match(house,/function land\(\{quiet=false\}=\{\}\)/);assert.match(house,/if\(quiet\)\{\}else if\(!own\(\)\.readOnly&&first\)/);}
- assert.match(read('src/ui.js'),/if\(!runtime\.achievementsCalm\?\.\(\)\)runtime\.COLORS\.forEach/);assert.match(read('src/celebration.js'),/if\(runtime\.achievementsCalm\?\.\(\)\)return;\n\s*runtime\.toast\?\.\('Ganaste/);assert.match(read('src/achievements.js'),/achievementsCalm:\{get:\(\)=>calm\}/);}
+ assert.match(read('src/ui.js'),/if\(!runtime\.achievementsCalm\?\.\(\)\)runtime\.COLORS\.forEach/);assert.match(read('src/celebration.js'),/if\(runtime\.achievementsCalm\?\.\(\)\)return;\n(?:\s*\/\/[^\n]*\n\s*if\(current\|\|queue\.pending\)return;\n)?\s*runtime\.toast\?\.\('Ganaste/);assert.match(read('src/achievements.js'),/achievementsCalm:\{get:\(\)=>calm\}/);}
 // VIAJE.md's header names a version from panel 11 on (it said alpha.207 before Q1).
 {const m=read('docs/VIAJE.md').split('\n').slice(0,4).join('\n').match(/alpha\.(\d+)/);assert(m&&Number(m[1])>=216,'docs/VIAJE.md header names the version in force');}
 console.log('PASS rules in sight: places, buttons and notices in white; ★ and ✦ gold at one size; three HUD numbers aligned; portals and Refugio named once; Vista tranquila says what it hides; one message on leaving the Journey');

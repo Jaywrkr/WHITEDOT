@@ -14,16 +14,17 @@ try:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   for width,height in [(320,640),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=tarjetas-{width}');page.wait_for_function('!!window.__r?.giveSurprise')
-   page.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.mode='world';r.S.sound=false;r.givePower('cometa');r.giveSurprise('lento');r.celebrateBox({id:'card:'+innerWidth,x:r.S.wx,y:r.S.wy,power:'cometa',surprise:'lento',gift:true});}")
+   page.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.mode='world';r.S.sound=false;r.givePower('cometa');r.celebrateBox({id:'card:'+innerWidth,x:r.S.wx,y:r.S.wy,power:'cometa',surprise:'lento',gift:true});}")
    page.wait_for_function('!document.getElementById("celebration").hidden',timeout=45000);page.wait_for_timeout(400)
-   assert '10 s' in page.locator('#celebrationSurpriseName').inner_text();assert '20 s' in page.locator('#celebrationTime').inner_text()
+   # T3: one box, one power; an old card that names a surprise shows none (decision 4).
+   assert page.locator('#celebrationSurpriseName').inner_text().strip()=='' and page.locator('#celebrationSurprise').inner_text().strip()=='';assert '20 s' in page.locator('#celebrationTime').inner_text()
    assert page.locator('#celebration').get_attribute('data-inspect')=='false';page.locator('#celebrationContinue').click()
    assert page.locator('.celebration-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    a=page.locator('#celebrationShare').bounding_box();b=page.locator('#celebrationContinue').bounding_box();assert abs(a['y']-b['y'])<2 and a['x']<b['x'],[a,b]
    page.wait_for_function('Number(getComputedStyle(document.getElementById("celebration")).opacity)>.99')
    assert page.locator('#celebration').evaluate('e=>Number(getComputedStyle(e).opacity)>.99')
-   left=page.evaluate('__r.snapshotBoxSurprises().remaining.lento');page.wait_for_timeout(250);assert page.evaluate('__r.snapshotBoxSurprises().remaining.lento')==left
+   left=page.evaluate('__r.snapshotPowers().remaining.cometa');page.wait_for_timeout(250);assert page.evaluate('__r.snapshotPowers().remaining.cometa')==left
    page.screenshot(path=f'/tmp/whitedot-box-polished-{width}.png');page.locator('#celebrationContinue').click();page.wait_for_function('document.getElementById("celebration").hidden')
-   assert not errors,errors;print(f'PASS inspectable power card, independent durations, paused power and aligned actions at {width}',flush=True)
+   assert not errors,errors;print(f'PASS inspectable power card, no surprise, paused power and aligned actions at {width}',flush=True)
   browser.close()
 finally:server.shutdown()

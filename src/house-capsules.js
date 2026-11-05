@@ -112,7 +112,7 @@ export function initialize(runtime){
  function draw(c,{toScreen,k,t,calm:still,house,cube,night=0,note,simple=false}){
   c.save();c.globalAlpha=1;
   for(const d of house.decor||[]){const p=CAPSULE_DECOR.find(q=>q.id===d.id),b=roomBox(d.room);if(!p||!b||!(house.unlocked||[]).includes(d.room))continue;const w=wallPoint(b,d.x,d.y),s=toScreen(w.x,w.y);c.save();c.translate(Math.round(s.x),Math.round(s.y));drawDecor(c,p.shape,Math.max(10,26*k),t,{night,calm:still});c.restore();}
-  const now=performance.now(),spin=Math.max(0,1-(now-spinAt)/900),armed=now-armedAt<4000,label=(text,x,y,on)=>{c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='center';c.fillStyle=on?'#ffffff':'#ffffff8c';c.fillText(text,x,y);note?.(c,text,x,y,'center');c.textAlign='start';c.letterSpacing='0px';};
+  const now=performance.now(),spin=Math.max(0,1-(now-spinAt)/900),armed=now-armedAt<4000,label=(text,x,y,on)=>{c.font='12px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='center';c.fillStyle=on?'#ffffff':'#ffffff8c';c.fillText(text,x,y);note?.(c,text,x,y,'center');c.textAlign='start';c.letterSpacing='0px';};
   // Panel 11 (Q4): labels at 4.5:1 or more on black (#ffffff8c ≈ 6:1; it was #ffffff73 ≈ 4.4:1).
   // The Prism: a slowly turning triangular prism with sparks inside; it spins when it gives something.
   if(!simple){const p=toScreen(MACHINE.x,MACHINE.floor-36),sz=24*k,a=(still?0:t/2400)+spin*9,near=cube?.floor===1&&Math.abs(cube.x-MACHINE.x)<40,pts=[0,1,2].map(i=>[Math.cos(a+i*2.094)*sz,Math.sin(a+i*2.094)*sz*.35]);

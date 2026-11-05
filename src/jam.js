@@ -130,7 +130,7 @@ export function initialize(runtime){
   // Ecos: anillos que laten cuando suenan.
   for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
    cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=WORLD_VISUAL.line;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
-   cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='11px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(e.auto?'fijo · toca para soltar':'eco · toca para borrar',x,y+40);cx.beginPath();cx.moveTo(x-4,y-4);cx.lineTo(x+4,y+4);cx.moveTo(x+4,y-4);cx.lineTo(x-4,y+4);cx.stroke();}
+   cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.6;cx.fillStyle='#ffffff';cx.font='12px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(e.auto?'fijo · toca para soltar':'eco · toca para borrar',x,y+40);cx.beginPath();cx.moveTo(x-4,y-4);cx.lineTo(x+4,y+4);cx.moveTo(x+4,y-4);cx.lineTo(x-4,y+4);cx.stroke();}
   // Banda: siguen al pixel en formación, cada una en su lugar.
   const slots=['bajo','perc','acorde','melodia'];
   slots.forEach((sl,i)=>{const x=band.members[sl];if(!x)return;x.lit=Math.max(0,x.lit-dt*2.5);
@@ -141,9 +141,9 @@ export function initialize(runtime){
   const n=Object.keys(band.members).length;if(n){const panels=['fxPanel','mirrorPanel','patchPanel','scanner','routeHud','autopilotHud'].map(id=>runtime.$(id)).filter(p=>p&&!p.hidden),panelTop=panels.length?Math.min(...panels.map(p=>p.getBoundingClientRect().top)):null;
    const y0=jamHudTop(H,panelTop,runtime.$('toast')?.classList.contains('on')),w=26;
    BAND_ROLES.forEach(([sl,l],i)=>{const x=W/2+(i-1.5)*(w+6),on=!!band.members[sl];cx.globalAlpha=on?.9:.3;cx.strokeStyle=on?runtime.GOLD:'#fff';cx.lineWidth=1;cx.strokeRect(x-w/2,y0,w,18);
-    cx.fillStyle=on?runtime.GOLD:'#fff';cx.font='11px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(l,x,y0+13);});
+    cx.fillStyle=on?runtime.GOLD:'#fff';cx.font='12px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(l,x,y0+13);});
    if(loop.rec){const k=Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS);cx.globalAlpha=.9;cx.fillStyle='#ff6b6b';cx.fillRect(W/2-60,y0-10,120*k,3);cx.globalAlpha=.4;cx.strokeStyle='#ff6b6b';cx.strokeRect(W/2-60,y0-10,120,3);}}
-  if(loop.rec||loop.armed){const progress=loop.rec?Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS):1;cx.globalAlpha=.8;cx.strokeStyle=loop.rec?'#ff6b6b':runtime.GOLD;cx.lineWidth=2;cx.beginPath();cx.arc(W/2,H/2,30,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);cx.stroke();}
+  if(loop.rec||loop.armed){const progress=loop.rec?Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS):1;cx.globalAlpha=.8;cx.strokeStyle=loop.rec?'#ff6b6b':'#ffffff';cx.lineWidth=2;cx.beginPath();cx.arc(W/2,H/2,30,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);cx.stroke();}
   cx.globalAlpha=1;
  }
  function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Repetir: sí':'Repetir: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);const near=loop.ecos.some(e=>(e.layer||'superficie')===layer()&&Math.hypot(e.x-S().wx,e.y-S().wy)<90);const label=loop.rec||loop.armed?'Cancelar grabación':near?'Borrar eco cercano':'Grabar un eco';btn.title=label;btn.setAttribute('aria-label',label);btn.setAttribute('aria-pressed',String(!!(loop.rec||loop.armed)));}

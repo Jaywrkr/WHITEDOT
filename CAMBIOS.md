@@ -1,6 +1,56 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.259** en la rama `jay/coherencia-t1`, desde `jay/menus` `7acb2b2` (alpha.257, PR #394), con `jay/coherencia-t0` (alpha.258, PR #395) fusionada: depende de T0. Las entradas describen su revisión, no certifican producción.
+Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.262** en la rama `jay/coherencia-t3`, desde `main` `d5a4f27` (con T0 y T1, PR #395 y #396) fusionada sobre T4 y T2: depende de T4. Las entradas describen su revisión, no certifican producción.
+
+
+## La carga (coherencia T3) · 2.3.0-alpha.262
+
+Rama `jay/coherencia-t3`, desde `jay/coherencia-t4` `fbec1b7` (alpha.261, que ya contiene T0, T1 y T2; dependencia explícita). Plan de coherencia, tanda T3, con la decisión 4 de Jay aprobada (una caja, un poder, sin sorpresas). Guía: [La carga](docs/MUNDO.md#la-carga).
+
+- **El radar siempre está.** El Escáner no necesita cajas; la carga es un extra.
+- **La Brújula pasa a ser la Carga.** Su caja pone el Escáner en el nivel más alto (4c, 1200 m) durante 20 s de juego, y una sola flecha blanca, en la capa de flechas de T2, señala lo más raro sin encontrar, con su distancia. La caja ya no dibuja sus cuatro flechas ni guarda su propia lista de lo raro.
+- **El Compañero usa el mismo registro:** una flecha de la capa hacia lo más raro, al alcance de la partida.
+- **Una caja, un poder, un aviso.** Las 16 sorpresas se retiran: ninguna caja las da, no se pueden dar, no se dibujan ni suenan. `#surpriseHud` conserva su id, siempre oculto. La tarjeta de la caja no nombra sorpresa.
+- **Guardados.** Sin migración: `brujula` y `poder_brujula` se quedan (el logro se llama «Carga»). `S.boxSurprises` se conserva; una sorpresa guardada activa termina sin más y sus datos siguen en el guardado. Ningún logro dependía de una sorpresa.
+- **Sin cambios** en `audio.js`, azar antiguo, posiciones y probabilidades de las cajas, ids de HTML ni premios. Se van las notas de las cinco estelas de sorpresa.
+- **El color del lugar, entero en las formas.** T2 quitó la luz de color de la región vecina en el borde (ahora una flecha blanca); con ella se iba parte del color del capítulo recuperado. El pigmento pasa de 0,7 a 1 (`PIGMENT`, `world-sheet.js`): el color del lugar va completo a las formas, el fondo sigue negro, la flecha sigue blanca y el oro sigue para lo ganado. En `color_earned_smoke`, el mínimo estable sube de 1,3 % a 3,4 % de croma (`main` `d5a4f27`: 1,6 %, por eso la prueba fallaba a veces también allí).
+- **Preservación:** capa `approvedT3`.
+- **Pruebas.** Nuevas `tests/carga.mjs` y `tests/carga_smoke.py` (390×844 y 1280×800: sin caja, nivel 2 y ninguna flecha a 900 m; con la Carga, su aviso, nivel 4c, una flecha blanca a lo más raro y el escáner que llega a 900 m; a los 20 s, vuelta al nivel 2). `tests/box-surprises.mjs` y `tests/box_surprises_smoke.py` comprueban ahora que no hay sorpresas y que un guardado con una activa carga bien. Ajustadas a la regla nueva, sin desactivar nada: `avisos_oro_smoke`, `power_cards_smoke`, `sparks_economy_smoke`, `visual_closure_smoke` y `micro_mix.py`.
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Las otras flechas del nivel 4c dependen de lo que registren las tandas futuras (hoy ninguna cosa es de nivel 4).
+
+
+## Avisos y oro (coherencia T4) · 2.3.0-alpha.261
+
+Rama `jay/coherencia-t4`, desde `jay/coherencia-t1` `fa47285` (alpha.259, con T0; dependencia explícita). Plan de coherencia, tanda T4, con las doce decisiones aprobadas por Jay. Un solo estilo de aviso y la regla del oro. Guía: [Luz común](docs/MUNDO.md#luz-común).
+
+- **Un aviso: «Nombre · una frase.»** Sin «¡» ni «!» en ningún texto del juego: la caja ya no dice «¡Zum! Eres cometa» sino «Cometa · Corre y suena.»; «récord nuevo», «Gol», «Nueva marca.», «Ya». «Poder renovado» pasa a «Cometa · Poder renovado.».
+- **Una caja, un aviso.** Mientras su tarjeta se ve, los HUD del poder y de la sorpresa esperan debajo; después, un solo reloj (el del poder). La sorpresa que te movió conserva su «Volver». Los logros de la caja (`caja1`, `caja5`, `poder_*`) se guardan sin leer en la Bitácora, sin aviso detrás de la tarjeta (`quietAchievements(ids)`).
+- **«Aquí empiezan…» se va.** Cada banda dice «Radares de ritmo · Empiezan aquí.». Un aviso por cruce: el de lo más lejano; lo demás espera, callado, en la Bitácora. Entre dos, 12 s de juego como mínimo (antes 4,5 s, y una cola). Límite: sale al cruzar el km, no al ver la cosa.
+- **El narrador se ríe con el niño, no de él.** Reescritas 24 líneas que se burlaban o guiñaban a adultos («dejaste atrás tu dignidad», «Tus vecinos te odian», «Muy inútil», alquiler, pasaporte, industria musical…). La voz juguetona se queda.
+- **Oro solo para lo ganado.** Una regla en el aviso: `.toast em` es blanco y `#toast[data-earned="true"] em` dorado. La cola marca `data-earned` con la categoría `ganado` u `options.earned` (logros, colores, compras, tarjetas nuevas, muestras únicas y lo ya marcado). En blanco: «✦ 0 chispas» (clase `empty`), el HUD del poder, `#routeAuto` pulsado, `.fxpad i`, la línea del narrador, la flecha y el nombre de la Brújula, el pincel, el brazo del Campo, la reliquia aún sin ganar (antes cian y lila), las casas apagadas de los campamentos, el festival de luces, el anillo del evento Eclipse, la pista de las travesuras, el destello devuelto del púlsar y el aro del bucle. Fuera la regla vacía `.place-narrator`.
+- **Luna blanca** (antes «Luna de oro»): la rareza mítica es blanca, con su regla y su rumor. El id `luna` y la muestra guardada no cambian.
+- **Sin cian ni lila.** `CARD_TIERS` es una sola tabla (`TIER_INK` para el Refugio y Tu cubo): una tarjeta del libro es ganada, en dorado; el nivel se dice con su nombre. El bucle (`jam.js`) y el resumen del Atlas, en blanco.
+- **Lienzo a 12 px como mínimo** (45 llamadas de 9–11 px), salvo en los archivos de borde de T2 (`viaje-a/c/d`, `lejos-b`, `recorrer`, `descubrir`, `vida`).
+- **Se queda:** el pop dorado al abrir una caja y su tarjeta (Visual 1, aprobado), ★, ✦ ganadas, el cubo dorado y lo completo. Sin cambios en `audio.js`, guardados, recompensas ni ids.
+- **Pruebas.** Nuevas `tests/avisos-oro.mjs` (sin «¡» en los textos legibles, la caja, el narrador, las bandas y la regla del oro en CSS y lienzo) y `tests/avisos_oro_smoke.py` (390×844: una caja, un aviso y un reloj; «✦ 0» blanco y «✦ 5» dorado; nombre cotidiano blanco y ganado dorado; un aviso de banda por cruce). Actualizadas las que leían los textos viejos (`viaje_a/c/d`, `lejos_b`, `luca`, `fewer-counters` y sus recorridos). Capturas antes y después en el scratchpad de la sesión (no en Git).
+- **Con T2 fusionada.** Las flechas de borde y el panel «Cerca» de T2 siguen esta regla: blancos, sin oro, avisos «Nombre · frase». Ninguna flecha de borde es dorada. Al fusionar, los archivos de borde de T2 (`viaje-a/c/d`, `lejos-b`, `recorrer`, `descubrir`, `vida`) pasan también a 12 px (17 llamadas de 10–11 px), y el rótulo de la bandada (`vida.js`) pasa de dorado a blanco.
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Las marcas de borde y la flecha de la bandada son de T2. El resto de textos, nombres y biomas, de T5 y T6.
+
+
+## Una capa de flechas (coherencia T2) · 2.3.0-alpha.260
+
+Rama `jay/coherencia-t2`, desde `jay/coherencia-t1` `fa47285` (alpha.259; dependencia explícita, con T0 dentro). Plan de coherencia, tanda T2, con las doce decisiones aprobadas por Jay. Guía: [Una capa de flechas](docs/MUNDO.md#una-capa-de-flechas).
+
+- **Un solo lenguaje para «hay algo allí»:** una flecha blanca pequeña en el borde, con el icono del Escáner o «?» (secreto o solo oído). Tres como mucho: primero lo tuyo (reto, bengala), luego lo raro, luego lo que se hace, luego el camino; dentro, lo más cercano. Una flecha por cosa; ninguna encima de otra.
+- **Las marcas viejas pasan a la capa:** Descubrir (juego, hallazgo, caja, sonido raro), Recorrer (boya con su km, satélite), Secretos del cielo (eclipse, cristal, sonda), tandas A, B, C y D, pistas de hallazgo (eran puntos cian), chispa salvaje sin sonido (era dorada), la bandada que enseña una caja (era dorada), los hitos (eran brillo y rayos de color) y la región vecina (era una luz de color; ahora solo si no hay nada más). Ninguna marca dorada ni cian.
+- **La tanda B deja una sola marca** (antes, una por tipo). **La sonda tiene su «?» también con sonido.** Las cosas de B, C y D son «?» hasta el nivel 4 del Escáner.
+- **Nivel 3 del Escáner, con los once lugares** (`S.lugares.won`): 300 m, el registro también señala (rumores, cristales de cometa y asteroide secreto nuevos en el registro, como «?»). Al soltar, «Cerca» se queda 4 s y **una fila pone la marca en el Mapa del universo** (la marca única). `SCAN_OPEN = 3`.
+- **Movimiento reducido:** sin aparecer poco a poco. **Calidad ligera:** sin halo. Flecha e iconos horneados; sin degradados ni `shadowBlur`.
+- **Coste** (`?anillo=1`, llamadas al lienzo por fotograma, mediana de tres, a 3/15/35/65 km): 758/477/3778/1058 → 753/459/3771/1046 a 390×844 y 1481/761/7377/1948 → 1476/742/7375/1932 a 1280×800; con el nivel 3 abierto, igual o menos en los ocho.
+- **Sin cambios** en qué son las cosas, premios, sonidos, `audio.js`, azar antiguo, ids de HTML ni guardados (la marca usa `S.universeMap.mark`). La Brújula sigue igual hasta T3.
+- **Preservación:** capa `approvedT2`.
+- **Pruebas.** Nuevas `tests/scanner-arrows.mjs` y `tests/flechas_smoke.py` (390×844 y 1280×800: solo blanco, tres como mucho, nivel 2 frente a 3, «?» del secreto y del rumor, una fila marca el mapa y una marca nueva sustituye a la anterior, movimiento reducido, calidad ligera y coste). Al día: `scanner-model.mjs` (nivel 3), `secretos_cielo_smoke.py` (la sonda con sonido lleva «?»), y `recorrer`, `viaje_a`, `descubrir_sonidos`, `arreglos30_mundo` y `journey_ui` comprueban que su marca entra en la capa. Capturas en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono, sin escucha y sin personas. Sin carga (T3) ni nivel 4.
 
 
 ## El Escáner, núcleo (coherencia T1) · 2.3.0-alpha.259

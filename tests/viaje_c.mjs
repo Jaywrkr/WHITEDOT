@@ -15,7 +15,7 @@ const km=p=>Math.hypot(p.x,p.y)/10000,W='mundo';
 // --- the bands: batch C after batch A, by km; their notices once, nearest first
 const c=bandEntries().filter(e=>e.batch==='C');
 assert.deepEqual(c.map(e=>[e.id,e.km]),[['pulsar',30],['asteroide',35],['tirolina',40],['polvo',45],['kit',50]]);
-assert.ok(c.every(e=>e.notice&&e.notice.startsWith('Aquí empiezan ')),'a notice for each');
+assert.ok(c.every(e=>e.notice&&e.notice===e.name+' · '+(/s$/.test(e.name.split(' ')[0])?'Empiezan':'Empieza')+' aquí.'),'a notice for each, «Nombre · una frase.»');
 assert.deepEqual(bandGroups().map(g=>g.km),[0,.5,1,2,5,10,30,35,40,45,50],'one band per km, A and C');
 const q=normalizeBandas(undefined);noteFar(q,12);assert.deepEqual(noteFar(q,41).map(e=>e.id),['pulsar','asteroide','tirolina']);assert.deepEqual(noteFar(q,38),[]);assert.deepEqual(noteFar(q,60).map(e=>e.id),['polvo','kit']);
 assert.deepEqual(Object.keys(normalizeBandas(undefined,{far:47}).seen).filter(k=>c.some(e=>e.id===k)).sort(),['asteroide','polvo','pulsar','tirolina'],'an old save far away is seeded quietly');
@@ -80,7 +80,7 @@ assert.deepEqual(old.pulsars,{'pulsar:1,1':'2026-11-04',x:''});assert.deepEqual(
 assert.deepEqual(old.tools,{red:'2026-11-04'});assert.deepEqual(old.gathered,{banco:0,chatarra:0,pozo:2});assert.deepEqual(old.buoys,['w|boya:41:1']);assert.deepEqual(old.futuro,{k:1},'unknown fields kept');
 const future={version:2,tools:{red:'x'},whatever:true};assert.equal(C.normalizeViajeC(future),future);assert.equal(C.takeTool(future,'kit:9,9','d'),null);assert.equal(C.noteVolley(future,'p',9,9,'d'),null);assert.equal(C.layLine(future,W,b1,b2,''),null);assert.equal(C.notePoint(future,pt,'d'),null);
 // --- English
-for(const e of c){assert.ok(EN[e.name],e.name);assert.ok(EN[e.notice],e.notice);}
+for(const e of c){assert.ok(EN[e.name],e.name);assert.ok(e.notice.split(' · ').every(p=>EN[p]),e.notice);}
 for(const k of [...C.CORES,...C.HIDDEN,...Object.values(C.TOOL_NAMES),...Object.values(C.TOOL_LINES),...Object.values(C.POINT_DEFS).flatMap(d=>[d.name,d.need]),'Púlsar · Pulsa a tiempo cuando llegue su destello.','Púlsar · Apártate de su destello.',
  'racha {n} de {n}','Racha · {n}','Tirolina de luz','hasta el km {n}','tirolina al km {n}','Bajo el polvo · Sal por el otro lado.','Fuera del polvo','para siempre','{n} de {n} clases'])assert.ok(EN[k],k);
 // --- no random numbers, sparks only by the universe's rule, quiet notes, audio.js untouched

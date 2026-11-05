@@ -4,7 +4,7 @@
 // (A, 0–10 km; B, 10–30 km; C, 30–60 km; D, 60 km and more):
 // · registerBand({id, km, name, notice?, hint?, batch?}) — on the batch's model load, once per thing. km: where it
 //   starts (km from the origin, 0 allowed). name: what the Bitácora calls it once reached («Radares de ritmo»). notice:
-//   the line shown the first time you cross km («Aquí empiezan los radares de ritmo.»); none for a thing found by itself.
+//   the line shown the first time you cross km («Radares de ritmo · Empiezan aquí.»); none for a thing found by itself.
 //   hint: a short line under its name in the Bitácora. Registering an id twice with other data throws.
 // · bandEntries() / bandGroups(): what is registered, by km (the groups are the bands: one per distinct km).
 // · bandSiteAt(kind, i, j, opts) / bandSites(kind, p, reach, opts): fixed sites from hashKey, one at most per cell, only

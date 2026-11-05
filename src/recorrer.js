@@ -74,7 +74,7 @@ export function initialize(r){
   c.globalAlpha=dim?.5:.95;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.moveTo(q.x,q.y+12);c.lineTo(q.x,q.y+3);c.stroke();
   c.fillStyle='#000';c.beginPath();c.arc(q.x,q.y,5,0,TAU);c.fill();c.fillStyle='#ffffff';c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();
   if(!reduced()){c.globalAlpha=(dim?.2:.4)*(.6+.4*Math.sin(clock*2));c.beginPath();c.arc(q.x,q.y,9,0,TAU);c.stroke();}
-  c.globalAlpha=dim?.6:1;c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillText(String(b.km),q.x,q.y-12);}
+  c.globalAlpha=dim?.6:1;c.font='12px "Geist Mono", monospace';c.textAlign='center';c.fillText(String(b.km),q.x,q.y-12);}
  // A rest satellite: its warm light falls off softly from a sprite (it was a flat disc), a light goes round the inside
  // ring (still with reduced motion), and the body and panels carry a fine double contour.
  function drawSatellite(c,s,q,mine){
@@ -87,10 +87,9 @@ export function initialize(r){
   c.globalAlpha=.5;c.beginPath();for(const side of [-1,1]){c.moveTo(q.x+side*19,q.y-5);c.lineTo(q.x+side*19,q.y+5);}c.stroke();c.globalAlpha=1;
   if(!light())glow(c,q.x,q.y,9,WARM,.5,true);c.globalAlpha=1;c.fillStyle=WARM;c.beginPath();c.arc(q.x,q.y,2.5,0,TAU);c.fill();
   if(mine){c.globalAlpha=.8;c.strokeStyle='#ffffff';c.setLineDash([2,3]);c.beginPath();c.arc(q.x,q.y,26,0,TAU);c.stroke();c.setLineDash([]);}}
- function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,24,108),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.75;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='buoy'){c.beginPath();c.moveTo(x,y+5);c.lineTo(x,y-1);c.stroke();c.beginPath();c.arc(x,y-3,2.5,0,TAU);c.fill();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText(String(o.km),x+(q.x>r.W/2?-12:12),y-1);}
-  else{c.strokeRect(x-2.5,y-2.5,5,5);c.beginPath();c.moveTo(x-8,y);c.lineTo(x-3,y);c.moveTo(x+3,y);c.lineTo(x+8,y);c.stroke();}
-  return {x,y,d:Math.round(Math.hypot(o.x-p.x,o.y-p.y)),id:o.id,km:o.km};}
+ // Coherencia T2: the next buoy (with its km) and a satellite are offers to the one layer of arrows (scanner-arrows.js).
+ function edge(c,kind,o,p){const q=r.edgeOffer?.({key:kind+':'+o.id,kind:kind==='buoy'?'boya':'satelite',x:o.x,y:o.y,shape:kind==='buoy'?'boya':'portal',label:kind==='buoy'?`${o.km} km`:null})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,24,108);
+  return {x:Math.round(q.x),y:Math.round(q.y),d:Math.round(Math.hypot(o.x-p.x,o.y-p.y)),id:o.id,km:o.km};}
  function draw(){const out={buoy:null,sat:null,next:null,edge:{},inside:inside?.id||null};if(!allowed()||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),words=r.S.universeTexts!==false,q=book();c.save();
   // Buoys near you: the nearest of your km and of the ones on either side.
@@ -104,7 +103,7 @@ export function initialize(r){
    if(sat&&!satShown&&sat.d<=SAT_EDGE&&!(inside&&inside.id===sat.id))out.edge.sat=edge(c,'sat',sat,p);}
   // Inside a satellite: its name, the point of return, and where its door is.
   c.globalAlpha=1;c.fillStyle='#ffffff';c.textAlign='center';
-  if(inside&&words&&!scene()){const doors=doorFrom(q,world,inside).length;c.font='12px "Geist Mono", monospace';say(c,satelliteName(inside.km),r.W/2,Math.max(196,r.H/2-152));c.globalAlpha=.75;c.font='11px "Geist Mono", monospace';say(c,doors?'Puerta · en el mapa o la Bitácora':'Punto de retorno guardado',r.W/2,Math.max(214,r.H/2-134));}
+  if(inside&&words&&!scene()){const doors=doorFrom(q,world,inside).length;c.font='12px "Geist Mono", monospace';say(c,satelliteName(inside.km),r.W/2,Math.max(196,r.H/2-152));c.globalAlpha=.75;c.font='12px "Geist Mono", monospace';say(c,doors?'Puerta · en el mapa o la Bitácora':'Punto de retorno guardado',r.W/2,Math.max(214,r.H/2-134));}
   else if(summary&&words&&!scene()){c.globalAlpha=.92;c.font='12px "Geist Mono", monospace';c.fillText(summary.text,r.W/2,Math.min(r.H-150,r.H/2+150),r.W-32);}
   c.restore();drawn=out;}
  // ---------- the door ----------

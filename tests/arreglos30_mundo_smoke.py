@@ -57,13 +57,15 @@ try:
    st=page.evaluate("__r.discoverState()");assert st['rumors'].get('owed')==1 and st['refillAt'] is not None,('one owed, with time',st['rumors'].get('owed'),st['refillAt'])
    page.reload();page.wait_for_function("!!window.__r?.discoverState&&!!__r.liveEncounterSpawn",timeout=20000);page.evaluate(FREE)
    assert page.evaluate("__r.discoverState().rumors.owed")==1,'the owed rumor survives a reload'
-   # --- 5 · Marks at the edge: within 300 m, one for each kind; beyond, none.
+   # --- 5 · Marks at the edge: within 300 m, one for each kind (offered to the one layer of arrows); beyond, none.
    page.evaluate(HIDE)
    for kind in ['activity','wonder','box']:
     o=page.evaluate(FIND,[kind,page.evaluate("__r.S.wx"),page.evaluate("__r.S.wy")]);assert o,kind
     page.evaluate(f"()=>{{__r.S.wx={o['x']}-2400;__r.S.wy={o['y']};}}")
     page.wait_for_function(f"(__r.discoverState().drawn.marks?.{kind}?.d??9e9)<=2500",timeout=6000);mk=page.evaluate(f"__r.discoverState().drawn.marks.{kind}")
     assert mk['x']>=width-40 and 90<=mk['y']<=height-90 and 2300<=mk['d']<=2500,(kind,mk)
+    # Coherencia T2: offered to the one layer of white arrows (game, find, box).
+    page.wait_for_function("k=>__r.edgeState().kinds.includes(k)",arg={'activity':'juego','wonder':'hallazgo','box':'caja'}[kind],timeout=4000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/borde-{kind}-{width}.png')
     page.evaluate(f"()=>{{__r.S.wx={o['x']}-3800;__r.S.wy={o['y']};}}");page.wait_for_timeout(400)
     mk=page.evaluate(f"__r.discoverState().drawn.marks?.{kind}");assert not mk or mk['d']<3000,(kind,'beyond 300 m, that one has no mark',mk)

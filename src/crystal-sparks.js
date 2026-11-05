@@ -151,7 +151,7 @@ const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().
      c.fillStyle=c.strokeStyle=ink;for(let i=0;i<(p.trail?.length||0);i++){c.globalAlpha=opacity*.15*(i+1)/p.trail.length;c.fillRect(p.trail[i].x+ox-1,p.trail[i].y+oy-1,2,2);}
      c.globalAlpha=opacity*.3;c.beginPath();c.arc(x,y,p.rare?12:10,0,Math.PI*2);c.fill();
      c.globalAlpha=opacity*(reduced()?1:.85+.15*Math.sin(seconds*2));c.beginPath();c.moveTo(x,y-6);c.lineTo(x+4,y);c.lineTo(x,y+6);c.lineTo(x-4,y+1);c.closePath();c.fill();c.fillStyle='#fff';c.fillRect(x-1,y-2,2,3);
-     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+(dim?DIM_FRAGMENT_SPARKS:p.value)+' ✦',x,y-15);}}
+     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='12px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+(dim?DIM_FRAGMENT_SPARKS:p.value)+' ✦',x,y-15);}}
     }
     continue;
    }
@@ -174,7 +174,7 @@ c.globalAlpha=opacity*.5;c.beginPath();c.moveTo(px,y-h);c.lineTo(px+1,y-h+5);c.l
    // Panel 10 (P7, Mizuguchi, Roset): the Journey writes no words, not even on its Path; the near crystal blinks on
    // the beat instead, a thin ring that opens with each pulse of the music.
    if(d<85){if(runtime.journeyQuiet?.()){if(!reduced()&&glow>.05){c.globalAlpha=opacity*.5*glow;c.strokeStyle='#d3eef2';c.lineWidth=1;c.beginPath();c.arc(x,y-4,12+glow*5,0,Math.PI*2);c.stroke();}}
-    else{c.globalAlpha=opacity*.8;c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText('Lanza un pulso',x,y+19);}}
+    else{c.globalAlpha=opacity*.8;c.font='12px "Geist Mono",monospace';c.textAlign='center';c.fillText('Lanza un pulso',x,y+19);}}
   }
   if(!reduced())for(const p of feedback){
    const age=seconds-p.at,u=Math.min(1,age/.48),count=p.broken?3+p.size:3;c.globalAlpha=opacityForFeedback(p)*(1-u)**2*.7;c.strokeStyle=c.fillStyle='#d3eef2';c.lineWidth=1;

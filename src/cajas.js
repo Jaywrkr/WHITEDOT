@@ -8,13 +8,15 @@ import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js
 // - Campo de escucha: un círculo te sigue; la base baja y un brazo gira en el campo tocando
 //   a tempo solo lo que está dentro. Moverte = cambiar la canción.
 // - Cometa: más velocidad y una estela que suena.
-// - Brújula: flechas hacia lo raro (materia, aves lira, santuarios, puertas, otras cajas).
+// - Carga (id brujula; T3 «la carga», decisión 4 de Jay): 20 s con el Escáner en su nivel más alto y una flecha
+//   blanca, en la capa de flechas (scanner-arrows.js), hacia lo más raro del registro. El radar siempre está; esto suma.
+//   Una caja da un solo poder: sin sorpresas (box-surprises.js las retira).
 // - Imán: los objetos pequeños te siguen y suenan a tu alrededor.
 // - Pincel sonoro: tu camino deja notas que se repiten mientras dure.
-// - Compañero: una luz te sigue, contesta lo que tocas y te lleva hacia algo raro.
+// - Compañero: una luz te sigue, contesta lo que tocas y una flecha de la misma capa señala lo más raro del registro.
 import {boxAt,POWERS,POWER_IDS,activePowers,fieldRadius} from './expansion-music.js';
-import {swatchOf,WORLD_VISUAL} from './visual.js';
-import {glow,halo,contactShadow,breath,createAppear,appearAlpha,appearScale} from './fx-kit.js';
+import {swatchOf} from './visual.js';
+import {glow,halo,contactShadow,breath,createAppear,appearAlpha,appearScale,FX_GOLD} from './fx-kit.js';
 const TAU=Math.PI*2;
 
 export function normalizeGiftBoxes(items){const seen=new Set();return (Array.isArray(items)?items:[]).filter(b=>b&&typeof b.id==='string'&&b.id.startsWith('regalo:')&&!seen.has(b.id)&&Number.isFinite(b.x)&&Number.isFinite(b.y)&&Math.abs(b.x)<1e12&&Math.abs(b.y)<1e12&&Object.hasOwn(POWERS,b.power)&&seen.add(b.id)).map(b=>({...b,gift:true,hue:Number.isFinite(b.hue)?b.hue:0,spin:0}));}
@@ -35,14 +37,15 @@ export function initialize(runtime){
   for(const b of spawned)if(!S().boxes[b.id])out.push(b);
   return out.filter(b=>Math.hypot(b.x-S().wx,b.y-S().wy)<radius);
  }
- function findBoxes(range=6){const W=runtime.WCH,cx=Math.floor(S().wx/W),cy=Math.floor(S().wy/W),out=[];for(let x=cx-range;x<=cx+range;x++)for(let y=cy-range;y<=cy+range;y++){const b=boxAt(x,y,W,runtime.seedOf,runtime.rng);if(b&&!S().boxes[b.id])out.push(b);}return out;}
  function spawnBox(x,y,power=POWER_IDS[Math.floor(Math.random()*POWER_IDS.length)]){ensureOwner();if(!Number.isFinite(x)||!Number.isFinite(y)||!Object.hasOwn(POWERS,power))return null;const stem=`regalo:${Math.round(x)},${Math.round(y)}:${Date.now()}`;let id=stem,n=0;while(spawned.some(b=>b.id===id))id=stem+':'+(++n);const b={id,x,y,power,hue:Math.floor(Math.random()*360),spin:0,gift:true};spawned.push(b);S().giftBoxes=[...(Array.isArray(S().giftBoxes)?S().giftBoxes:[]),{...b}];return b;}
 
  function open(b){if(!b.gift)runtime.collectRareCard?.('box:'+b.power,b);runtime.recordElement?.('box',runtime.regionOfPos(b.x,b.y));
   const book=S().boxes;if(!b.gift)book[b.id]=1;else{const i=spawned.indexOf(b);if(i>=0)spawned.splice(i,1);S().giftBoxes=(Array.isArray(S().giftBoxes)?S().giftBoxes:[]).filter(item=>item?.id!==b.id);}
-  S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.giveBoxSurprise?.(b);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);runtime.fxLayer?.pop(b.x,b.y,WORLD_VISUAL.gold,{gold:true,size:1.4,sparks:10});
+  S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);runtime.fxLayer?.pop(b.x,b.y,FX_GOLD,{gold:true,size:1.4,sparks:10});
   if(runtime.celebrateBox)runtime.celebrateBox(b);else runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
+  // T4 (Kubono coherente): one box, one notice. Its card (or «Poder renovado») says it; what the box earned waits, unread, in the Bitácora.
+  if(runtime.celebrateBox)runtime.quietAchievements?.(['caja1','caja5','poder_'+b.power]);
  }
  function give(id,visitor=null){
   ensureOwner();const p=Object.hasOwn(POWERS,id)&&POWERS[id];if(!p)return;clock.give(id);if(!runtime.celebrateBox)runtime.toast(`<em>${p.name}</em> · ${p.text}`);
@@ -90,15 +93,7 @@ export function initialize(runtime){
   if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];const n=ct[(h+2)%ct.length],spec=PET_SPECIES[companion.species];if(spec?.role==='bass'){let pitch=n;while(pitch>52)pitch-=12;while(pitch<36)pitch+=12;runtime.bassInst(spec.pool[0],pitch,time,.025);}else if(spec?.role==='groove')runtime.wood(time,.025);else melody(n,time,.025,companion);if(spec?.role==='bass'||spec?.role==='groove')runtime.soundCue?.(companion,spec.role==='bass'?'bajo':'perc',time);setTimeout(()=>{companion.lit=1;},cueDelay(runtime.ac,time));}
  }
  function hear(index){if(companion.on){companion.heard.push(index||0);if(companion.heard.length>4)companion.heard.shift();}}
- // Brújula y compañero: lo raro cerca (dirección y nombre).
- function rareTargets(){
-  const out=[];const add=(x,y,name)=>out.push({x,y,name,d:Math.hypot(x-S().wx,y-S().wy)});
-  for(const b of findBoxes(5))add(b.x,b.y,'Caja');
-  for(const m of runtime.nearbyMateria?.(9000)||[])add(m.x,m.y,{strings:'Cuerdas',prism:'Prisma',membrane:'Membrana'}[m.kind]);
-  for(const f of runtime.nearbyFlocks?.(9000)||[])if(f.species==='lira')add(f.x,f.y,'Quásar imitador');
-  for(const c of runtime.cultureTargets?.()||[])add(c.x,c.y,c.name);
-  return out.filter(t=>t.d>120).sort((a,b)=>a.d-b.d).slice(0,4);
- }
+ // La Carga y el Compañero señalan con el registro del Escáner (scanner-arrows.js): sin lista propia de lo raro (T3).
  // ---------- dibujo ----------
  const boxAppear=createAppear();
  function draw(t,dt,ox,oy){
@@ -112,17 +107,14 @@ export function initialize(runtime){
    c.translate(x,y);c.scale(grow,grow);for(const [k2,s] of [[0,10],[Math.PI/4,10]]){c.save();c.rotate(rot+k2);c.globalAlpha=(.9)*fade*seen;c.strokeStyle=col;c.lineWidth=1.6;c.beginPath();c.rect(-s,-s,s*2,s*2);if(!light)halo(c);c.stroke();c.restore();}
    c.globalAlpha=(.9)*fade*seen;c.fillStyle=col;c.beginPath();c.arc(0,0,2.5+Math.sin(t/200)*1,0,TAU);c.fill();
    for(let i=0;i<3;i++){const a=t/600+i*TAU/3;c.globalAlpha=(.7)*fade*seen;c.fillRect(Math.cos(a)*18-1,Math.sin(a)*18-1,2,2);}
-   c.scale(1/grow,1/grow);c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=col;c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
+   c.scale(1/grow,1/grow);c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=col;c.font='12px "Geist Mono", monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
   if(has('campo')){const R=listeningRadius(),arm=((runtime.MU.step%16)+(audibleTime(runtime.ac)%runtime.SIX)/runtime.SIX)/16*TAU-Math.PI/2,hue=runtime.MU.dnaT?.hue||0,[H]=swatchOf(hue);
    c.globalAlpha=.08;c.fillStyle=`hsl(${H},80%,60%)`;c.beginPath();c.arc(cx,cy,R,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=`hsl(${H},80%,64%)`;c.lineWidth=1.4;c.stroke();
-   c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
+   c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||'#ffffff';c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
   if(trail.length){for(const p of trail){const [H]=swatchOf((p.x+p.y)/7);c.globalAlpha=p.a*.6;c.fillStyle=`hsl(${H},85%,62%)`;c.fillRect(p.x+ox-2,p.y+oy-2,4,4);}}
-  for(const m of marks){m.lit=Math.max(0,m.lit-dt*1.5);const [H]=swatchOf(m.degree*51);c.globalAlpha=.5+m.lit*.5;c.fillStyle=m.lit>.3?WORLD_VISUAL.gold:`hsl(${H},80%,64%)`;c.beginPath();c.arc(m.x+ox,m.y+oy,3+m.lit*4,0,TAU);c.fill();}
+  for(const m of marks){m.lit=Math.max(0,m.lit-dt*1.5);const [H]=swatchOf(m.degree*51);c.globalAlpha=.5+m.lit*.5;c.fillStyle=m.lit>.3?'#ffffff':`hsl(${H},80%,64%)`;c.beginPath();c.arc(m.x+ox,m.y+oy,3+m.lit*4,0,TAU);c.fill();}
   if(has('iman'))for(const o of magnetFollowers(runtime.MU.near,S().wx,S().wy)){const elapsed=audibleTime(runtime.ac)-(o.magnetOnset??-10),lit=elapsed>=0?Math.max(0,1-elapsed/.4):0;if(!lit)continue;const x=o.x+ox,y=o.y+oy;c.strokeStyle=runtime.cubeColor?.()||'#fff';c.globalAlpha=lit*.55;c.lineWidth=1;c.beginPath();c.moveTo(cx,cy);c.quadraticCurveTo((cx+x)/2,(cy+y)/2-10,x,y);c.stroke();c.beginPath();c.arc(x,y,9+(calmMotion(runtime.S)?0:(1-lit)*12),0,TAU);c.stroke();}
   if(companion.on){const x=companion.x+ox,y=companion.y+oy;glow(c,x,y,22,'#ffffff',.5+companion.lit*.4);c.globalAlpha=1;}
-  if(has('brujula')||companion.on)for(const tg of rareTargets().slice(0,has('brujula')?4:1)){const a=Math.atan2(tg.y-S().wy,tg.x-S().wx),r=Math.min(cx,cy)-46,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
-   c.save();c.translate(x,y);c.rotate(a);c.globalAlpha=.85;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-6,6);c.closePath();c.fill();c.restore();
-   c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${tg.name} · ${Math.round(tg.d/10)} m`,x-Math.cos(a)*22,y-Math.sin(a)*22+3);}
   c.restore();
  }
  function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
@@ -131,5 +123,5 @@ export function initialize(runtime){
  function ensureOwner(){if(previous!==S()){previous=S();clear();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};restore();}}
  function snapshot(){ensureOwner();const raw=S().boxPowers;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw?.remaining,...data.remaining},elapsed:{...raw?.elapsed,...data.elapsed},companion:{...raw?.companion,species:companion.species,heard:[...companion.heard]},marks:marks.map(m=>({x:m.x,y:m.y,degree:m.degree,step:m.step}))};}
  restore();
- Object.defineProperties(runtime,{undoBoxPowers:{get:()=>undo},powerFieldRadius:{get:()=>listeningRadius},snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
+ Object.defineProperties(runtime,{undoBoxPowers:{get:()=>undo},powerFieldRadius:{get:()=>listeningRadius},snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},hasPower:{get:()=>has},scanCharged:{get:()=>()=>surface()&&has('brujula')},companionPoints:{get:()=>()=>surface()&&companion.on&&has('companero')}});
 }

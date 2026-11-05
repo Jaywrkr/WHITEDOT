@@ -6,7 +6,9 @@ import {registerScan,unregisterScan,scanEntries,scanEntry,scanLevel,scanEarned,s
 import '../src/scanner.js';
 const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 // The game's providers, registered once on load.
-for(const id of ['voces','cajas','hallazgos','actividades','sondas'])assert.ok(scanEntry(id),id);
+for(const id of ['voces','cajas','hallazgos','actividades','sondas','rumores','cometas','asteroide'])assert.ok(scanEntry(id),id);
+// T2: rumours, comet crystals and the secret asteroid are level-3 secrets («?»).
+for(const id of ['rumores','cometas','asteroide'])assert.ok(scanEntry(id).level===3&&scanEntry(id).secret,id);
 assert.equal(scanEntry('sondas').level,2,'the probes are named from level 2');
 // Registering an id twice throws; a bad entry throws.
 assert.throws(()=>registerScan({id:'voces',name:'Otra',sites:()=>[]}),/twice/);
@@ -14,15 +16,19 @@ assert.throws(()=>registerScan({id:'Mal id',name:'x',sites:()=>[]}),/Invalid/);
 assert.throws(()=>registerScan({id:'sin-sitios',name:'x'}),/Invalid/);
 // ---------- levels ----------
 assert.deepEqual(SCAN_LEVELS.map(L=>[L.id,L.reach]),[['1',40],['2',120],['3',300],['4a',600],['4b',900],['4c',1200]]);
-assert.equal(SCAN_OPEN,2,'T1 opens levels 1 and 2; later batches raise it');
+assert.equal(SCAN_OPEN,3,'T2 opens levels 1 to 3; later batches raise it');
 assert.equal(scanLevel({}).id,'1','level 1 from the start');
 assert.equal(scanLevel({journey:{chapter:3}}).id,'1','still 1 during the Journey');
 assert.equal(scanLevel({journey:{finished:true}}).id,'2','level 2 after the Journey');
 assert.equal(scanLevel({journey:{free:true}}).id,'2','or with the World open');
-// 3 and 4 are written and earned, but stay closed until their batch.
+// 3 opens with the eleven places (T2); 4 is written and earned, but stays closed until its batch.
 const late={journey:{finished:true},lugares:{won:true},bandas:{far:35}};
 assert.equal(scanEarned(late),5,'the eleven places and 35 km earn 4b');
-assert.equal(scanLevel(late).id,'2','capped at SCAN_OPEN');
+assert.equal(scanLevel(late).id,'3','capped at SCAN_OPEN');
+assert.equal(scanLevel({journey:{finished:true},lugares:{won:false}}).id,'2','level 3 waits for the eleven places');
+assert.equal(scanLevel({journey:{finished:true},lugares:{won:true}}).id,'3','the eleven places open level 3');
+assert.equal(scanLevel({lugares:{won:true}}).id,'1','never past level 1 during the Journey');
+assert.equal(scanLevel(late).arrows,3,'level 3 points with three arrows at most');
 assert.equal(scanLevel(late,{open:6}).id,'4b');
 assert.equal(scanLevel({journey:{finished:true},bandas:{far:80}},{open:6}).id,'2','no level 4 without level 3');
 assert.equal(scanLevel({},{charged:true}).id,'4c','a charge (T3) is the whole ladder');
@@ -51,6 +57,9 @@ assert.deepEqual(two.map(i=>i.name),['Caja','Caja','Sonda perdida','Luz','Luz'],
 assert.deepEqual(two.map(i=>i.done),[false,true,false,false,false],'found ones are marked');
 assert.equal(scanNear(p,S).length,SCAN_ROWS,'the panel shows three');
 assert.ok(!two.some(i=>i.id==='secreto'),'a level-3 secret stays hidden at level 2');
+const three=scanNear(p,{journey:{finished:true},lugares:{won:true}},{max:0});
+assert.equal(three.find(i=>i.id==='secreto')?.name,'?','level 3: a secret is «?»');
+assert.ok(scanNear(p,{journey:{finished:true},lugares:{won:true}},{max:0,minRarity:1}).every(i=>i.rarity>=1),'minRarity leaves out what is not rare enough to point at');
 // Same distance and rarity: the one not found comes first.
 registerScan({id:'par',name:'Par',rarity:3,sites:p=>[{key:'a',x:p.x+20,y:p.y},{key:'z',x:p.x-20,y:p.y}],done:(S,s)=>s.key==='a'});
 assert.deepEqual(scanNear(p,S,{max:2}).map(i=>i.key),['par:z','par:a']);
@@ -76,4 +85,4 @@ assert.ok(!/RP\)|'reto'/.test(src),'the region challenge left the panel');
 for(const f of ['descubrir','viaje-a','lejos-b','recorrer','secretos-cielo','viaje-c'])assert.ok(!/const paused=\(\)=>[^;]*r\.scanning/.test(read(`src/${f}.js`)),'scanning does not pause '+f);
 // Drawing: no gradient built per frame, icons baked once.
 const art=read('src/scanner-art.js');assert.ok(!/create(Radial|Linear)Gradient|shadowBlur/.test(art));assert.match(art,/bake\(/);
-console.log('PASS scanner model: registry once per id, levels 1–2 open (3–4 written), reach 40/120 m, order by rarity, distance and found, names from level 2, hashKey sites, band hook, «Cerca» ids kept, no BPM or challenge, scanning pauses no beacon');
+console.log('PASS scanner model: registry once per id, levels 1–3 open (4 written), secrets as «?» at level 3, reach 40/120 m, order by rarity, distance and found, names from level 2, hashKey sites, band hook, «Cerca» ids kept, no BPM or challenge, scanning pauses no beacon');

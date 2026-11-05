@@ -22,11 +22,11 @@ export const VIAJE_D_VERSION=1;
 const TAU=Math.PI*2;
 // ---------- the band: what starts where ----------
 export const BAND_D=Object.freeze([
- registerBand({id:'portal-regla',km:60,name:'Portales de otra regla',notice:'Aquí empiezan los portales de otra regla.',batch:'D'}),
- registerBand({id:'estacion',km:65,name:'Estación del día',notice:'Aquí empieza la estación del día.',batch:'D'}),
- registerBand({id:'barrido',km:70,name:'Barrido a tempo',notice:'Aquí los satélites tienen un barrido a tempo.',batch:'D'}),
- registerBand({id:'herencia',km:80,name:'Nidos de crías',notice:'Aquí empiezan los nidos de crías.',batch:'D'}),
- registerBand({id:'eclipse-regla',km:90,name:'Eclipses que cambian',notice:'Aquí los eclipses cambian las reglas.',batch:'D'}),
+ registerBand({id:'portal-regla',km:60,name:'Portales de otra regla',notice:'Portales de otra regla · Empiezan aquí.',batch:'D'}),
+ registerBand({id:'estacion',km:65,name:'Estación del día',notice:'Estación del día · Empieza aquí.',batch:'D'}),
+ registerBand({id:'barrido',km:70,name:'Barrido a tempo',notice:'Barrido a tempo · Empieza aquí.',batch:'D'}),
+ registerBand({id:'herencia',km:80,name:'Nidos de crías',notice:'Nidos de crías · Empiezan aquí.',batch:'D'}),
+ registerBand({id:'eclipse-regla',km:90,name:'Eclipses que cambian',notice:'Eclipses que cambian · Empiezan aquí.',batch:'D'}),
 ]);
 // ---------- sites (cells of hashKey; a site under its band does not exist) ----------
 // About one portal every 4 km², one station every 7 km², one nest every 6 km²: walking with the marks at the edge

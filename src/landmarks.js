@@ -1,5 +1,5 @@
 import {cueDelay} from './journey-pulse.js';
-import {glow as fxGlow,streak} from './fx-kit.js';
+import {glow as fxGlow} from './fx-kit.js';
 import {musicalCharacter,inRegister} from './musical-character.js';
 import {elementInk,WORLD_VISUAL,localGlowRadius} from './visual.js';
 // Hitos y horizonte sonoro. Un hito grande primero se OYE (apagado y desde su dirección),
@@ -70,18 +70,16 @@ export function initialize(runtime){
   out.connect(runtime.bus);if(runtime.verbIn){const s=ac.createGain();s.gain.value=.45;out.connect(s).connect(runtime.verbIn);}
  }
 
- // Dibujo: silueta enorme si está en pantalla; brillo en el borde si solo se intuye.
+ // Dibujo: silueta enorme si está en pantalla; una flecha blanca en el borde si solo se intuye (coherencia T2).
  function drawLandmarks(t,dt,ox,oy){
   const cx=runtime.cx,W=runtime.W,H=runtime.H,S=runtime.S;
   for(const lm of nearby(S.wx,S.wy,SENSE)){
    const ref=lm.ref;ref.lit=Math.max(0,(ref.lit||0)-dt*1.6);
    const sx=lm.x+ox,sy=lm.y+oy,on=sx>-260&&sx<W+260&&sy>-120&&sy<H+420,col=elementInk(lm.type==='arbol'?'wood':'glass',lm.hue),near=1-lm.d/SENSE;
    if(on){if(!runtime.lightQuality?.())fxGlow(cx,sx,sy,30,col,Math.min(1,.25+near*.9)*(.22+ref.lit*.4),true);shape(cx,lm,sx,sy,t,Math.min(1,.25+near*.9),col,ref.lit);}
-   else{const a=Math.atan2(lm.y-S.wy,lm.x-S.wx),ex=W/2+Math.cos(a)*W*.48,ey=H/2+Math.sin(a)*H*.48;
-    // Visual 2 (alpha.254): the edge light from a sprite (it was a gradient per landmark and frame) and, but in light
-    // quality, three faint rays from it toward the cube, like a lighthouse seen from far.
-    const R=localGlowRadius(W,H,60),k=(.35+.65*near);fxGlow(cx,ex,ey,R,`hsl(${lm.hue},70%,70%)`,(.16+ref.lit*.22)*k);
-    if(!runtime.lightQuality?.())for(const d of [-.22,0,.22])streak(cx,ex,ey,a+d,R*1.3,3,`hsl(${lm.hue},70%,70%)`,(d?.1:.16)*k);}
+   // Out of view (coherencia T2): one white arrow in the one layer at the screen's edge, «?» until you have been there.
+   // It was a coloured light and three rays at the edge.
+   else runtime.edgeOffer?.({key:'hito:'+lm.id,kind:'hito',x:lm.x,y:lm.y,shape:'estrella',ask:!S.landmarks?.[lm.id]});
    if(lm.d<170&&!S.landmarks?.[lm.id])reach(lm);
   }
   cx.globalAlpha=1;
@@ -101,7 +99,7 @@ export function initialize(runtime){
    case 'faro':{const a=t/1400,R=localGlowRadius(runtime.W,runtime.H,65);cx.beginPath();cx.arc(x,y,3,0,6.283);cx.fill();cx.beginPath();cx.moveTo(x,y);cx.lineTo(x+Math.cos(a)*R,y+Math.sin(a)*R);cx.stroke();break;}
   }
   cx.restore();
-  if(lm.d<420){cx.globalAlpha=Math.min(1,(420-lm.d)/200);cx.fillStyle=col;cx.font='11px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(lm.name,x,y+22);cx.globalAlpha=1;}
+  if(lm.d<420){cx.globalAlpha=Math.min(1,(420-lm.d)/200);cx.fillStyle=col;cx.font='12px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(lm.name,x,y+22);cx.globalAlpha=1;}
  }
  function reach(lm){runtime.recordElement?.('landmark',runtime.regionOfPos(lm.x,lm.y));
   const S=runtime.S;S.landmarks||={};S.landmarks[lm.id]=S.todayKey;S.landmarksN=(S.landmarksN||0)+1;

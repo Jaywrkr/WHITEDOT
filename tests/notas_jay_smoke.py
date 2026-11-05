@@ -91,7 +91,7 @@ try:
    page.wait_for_function("!document.getElementById('celebration').hidden",timeout=8000);page.wait_for_timeout(500)
    card=page.evaluate("""()=>{const p=document.getElementById('celebration'),r=p.getBoundingClientRect(),line=document.getElementById('celebrationLine'),shown=[...p.querySelectorAll('.celebration-card>*')].filter(e=>getComputedStyle(e).display!=='none'&&!e.hidden).map(e=>e.id);
     return {x:r.x,y:r.y,w:r.width,h:r.height,scroll:p.scrollHeight-p.clientHeight,text:line.innerText,lineCut:line.scrollWidth>line.clientWidth+1,shown,continueBottom:document.getElementById('celebrationContinue').getBoundingClientRect().bottom}}""")
-   assert card['text'].startswith('¡Zum!') and card['text'].endswith('20 s') and len(card['text'])<=48,card
+   assert card['text'].startswith('Cometa · ') and '¡' not in card['text'] and card['text'].endswith('20 s') and len(card['text'])<=48,card
    assert card['shown']==['celebrationLine','celebrationDismiss','celebrationContinue'],card
    assert card['h']<=96 and card['w']<=300 and card['scroll']<=1 and not card['lineCut'] and card['x']>=0 and card['x']+card['w']<=width and card['continueBottom']<=card['y']+card['h']+1,card
    page.screenshot(path=f'/tmp/kubono-m1-caja-{width}.png')

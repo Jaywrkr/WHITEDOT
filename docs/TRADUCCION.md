@@ -49,6 +49,8 @@ Vigente desde **alpha.224** (fase L2 de la [salida web y Android](PLAN_LANZAMIEN
 | eco | echo | |
 | hallazgo / tarjeta | find / card | |
 | reliquia | relic | |
+| Luna blanca | White Moon | Rareza mítica; antes «Luna de oro» / «Golden Moon» (T4, alpha.261) |
+| «Nombre · Empiezan aquí.» / «Empieza aquí.» | «Name · They start here.» / «It starts here.» | Aviso de banda (T4); antes «Aquí empiezan…» |
 | encuentro | encounter | |
 | Paseo musical | Musical stroll | |
 | Mesa de efectos | Effects desk | |
@@ -67,7 +69,7 @@ Géneros (Deep house, Dub techno…) y nombres de instrumentos ya en inglés se 
 
 ## Estilo
 
-Inglés natural y breve, con el tono del español: frases cortas, una idea por frase, el narrador irónico. Ortografía estadounidense (color, favorites, traveler, center). Mayúscula inicial solo en la primera palabra, salvo los nombres propios del juego.
+Inglés natural y breve, con el tono del español: frases cortas, una idea por frase, el narrador juguetón, que se ríe con quien juega y nunca de él (T4). Sin exclamaciones. Ortografía estadounidense (color, favorites, traveler, center). Mayúscula inicial solo en la primera palabra, salvo los nombres propios del juego.
 
 ## Añadir o cambiar un texto
 

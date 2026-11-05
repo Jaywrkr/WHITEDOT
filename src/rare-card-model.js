@@ -11,7 +11,10 @@ import {placeAddress,supportedWorld,sameWorld} from './world-identity.js';
 import {deploymentTime} from './release-model.js';
 import {normalizeAnatomy} from './anatomy.js';
 export const RARE_BOOK_LIMIT=512,RARE_PAGE_SIZE=12;
-export const CARD_TIERS={raro:{name:'Raro',ink:'#9fe8ff'},singular:{name:'Singular',ink:'#bda5f5'},legendario:{name:'Legendario',ink:'#bda5f5'},mitico:{name:'Mítico',ink:'#f0d27a'}};
+// T4 (Kubono coherente): one table, the game's palette. A card in your book is earned, so every tier is gold; the
+// tier is told by its name, never by cyan or violet. TIER_INK is the same ink for the Refugio and Tu cubo.
+export const CARD_TIERS={raro:{name:'Raro',ink:'#f0d27a'},singular:{name:'Singular',ink:'#f0d27a'},legendario:{name:'Legendario',ink:'#f0d27a'},mitico:{name:'Mítico',ink:'#f0d27a'}};
+export const TIER_INK=Object.freeze(Object.fromEntries(Object.entries(CARD_TIERS).map(([id,t])=>[id,t.ink])));
 export function queueRareNotice(queue,event,limit=4){
  const rank=e=>Object.keys(CARD_TIERS).indexOf(e.card.odds.tier),card=event.card,
   near=queue.findIndex(e=>e.card.address&&card.address&&sameWorld(e.card.address,card.address)&&e.card.address.layer===card.address.layer&&Math.hypot(e.card.address.x-card.address.x,e.card.address.y-card.address.y)<3);

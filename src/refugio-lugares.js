@@ -36,7 +36,7 @@ export function initialize(runtime){
  function draw(c,{toScreen,k,t,calm,house,note}){hits.length=0;const d=data();if(!d||visiting()||!(house?.unlocked||['sala']).includes('sala'))return;const sala=roomBox('sala'),gold='#f0d27a',have=starCount(d);c.save();
   // Refugio simple (alpha.234): the whole house on one screen. Small (a phone), the wall's «★ N / 33» would sit on the
   // room's name and the HUD already says it, so only the shelf is drawn; it still opens Lugares.
-  const label=toScreen(sala.x+TROPHY_SHELF.x,sala.y+TROPHY_SHELF.y-20);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle='#ffffff';c.globalAlpha=.9;if(k>=.5){c.fillText(`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);note?.(c,`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);}c.letterSpacing='0px';
+  const label=toScreen(sala.x+TROPHY_SHELF.x,sala.y+TROPHY_SHELF.y-20);c.font='12px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle='#ffffff';c.globalAlpha=.9;if(k>=.5){c.fillText(`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);note?.(c,`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);}c.letterSpacing='0px';
   // Small, the wall's touch area is only as wide as the shelf, clear of the card panels beside it.
   const lw=Math.max(k>=.5?140:0,(PLACES.length-1)*TROPHY_SHELF.gap*k+12);hits.push({x:label.x-4,y:label.y-14,w:lw,h:20,open:true});
   PLACES.forEach((p,i)=>{const q=toScreen(sala.x+TROPHY_SHELF.x+i*TROPHY_SHELF.gap,sala.y+TROPHY_SHELF.y),r=Math.min(Math.max(4,6*k),Math.max(2.5,TROPHY_SHELF.gap*k*.45)),got=stars(p.id),won=got[0],shine=got.filter(Boolean).length;

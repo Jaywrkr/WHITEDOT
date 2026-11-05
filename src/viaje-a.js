@@ -71,7 +71,7 @@ export function initialize(r){
  function endRadar(){const run=radar;radar=null;if(!run||!(run.best>0))return;let amount=0;
   const res=commit(q=>{const n=noteRadar(q,run.id,run.best,today());if(n?.pays){amount=pay('Radar de ritmo',radarReward({x:run.x,y:run.y}));q.earned+=amount;}return n;});
   if(!res)return;if(amount)r.showSparkPickup?.(amount,{x:r.S.wx,y:r.S.wy});
-  summary={text:`Radar de ritmo · racha ${run.best}`+(res.record?' · ¡récord!':` · récord ${res.before}`)+(amount?` · +${amount} ✦`:''),until:clock+3.4};}
+  summary={text:`Radar de ritmo · racha ${run.best}`+(res.record?' · récord nuevo':` · récord ${res.before}`)+(amount?` · +${amount} ✦`:''),until:clock+3.4};}
  function stepRadar(p,pulses){const site=radarsNear(world,p,RADAR_OUT).find(clear);
   if(radar&&(!site||site.id!==radar.id||site.d>RADAR_OUT)){endRadar();}
   if(!site||site.d>RADAR_ZONE||!r.S.sound)return;if(!radar)radar={id:site.id,x:site.x,y:site.y,cur:0,best:0,record:radarRecord(book(),site.id)};
@@ -81,7 +81,7 @@ export function initialize(r){
  function goal(b){b.party={at:clock,x:b.goal.x,y:b.goal.y};b.vx*=.3;b.vy*=.3;let amount=0;
   const res=commit(q=>{const n=noteGoal(q,b.id,today());if(n?.pays){amount=pay('Gol',goalReward({x:b.home.x,y:b.home.y,onTime:b.onTime}));q.earned+=amount;}return n;});
   if(res&&amount)r.showSparkPickup?.(amount,{x:r.S.wx,y:r.S.wy});sing('gol',GOAL_DEGREES,{instrument:BALL_INSTRUMENT,gain:GOAL_GAIN});
-  summary={text:`¡Gol!${amount?' · +'+amount+' ✦':''}`,until:clock+2.6};}
+  summary={text:`Gol${amount?' · +'+amount+' ✦':''}`,until:clock+2.6};}
  function stepBalls(p,pulses,dt){const quiet=scene();
   for(const s of ballsNear(world,p,2600))if(clear(s))ballFor(s);
   for(const [id,b] of balls){if(Math.hypot(b.home.x-p.x,b.home.y-p.y)>3600){balls.delete(id);continue;}
@@ -165,12 +165,11 @@ export function initialize(r){
   glow(c,top.x,top.y,22,'#ffffff',.55*pulse,!light(),'rgba(255,255,255,0)');if(!light())glow(c,top.x,top.y,42,'#fff2d8',.18*pulse,true);
   c.globalAlpha=1;c.fillStyle='#ffffff';c.beginPath();c.arc(top.x,top.y,3,0,TAU);c.fill();c.globalAlpha=.5*pulse;c.fillRect(Math.round(top.x)-7,Math.round(top.y),14,1);c.fillRect(Math.round(top.x),Math.round(top.y)-7,1,14);
   c.globalAlpha=.6;c.fillRect(Math.round(q.x)-1.5,Math.round(q.y)-1.5,3,3);return {x:Math.round(top.x),y:Math.round(top.y)};}
- function edge(c,kind,o,p){const q=edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104),x=Math.round(q.x),y=Math.round(q.y);c.globalAlpha=.7;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.lineWidth=1.5;
-  if(kind==='interruptor'){c.strokeRect(x-3,y-3,6,6);c.fillRect(x-1,y-1,2,2);}else if(kind==='radar'){c.beginPath();c.moveTo(x,y+4);c.lineTo(x,y-2);c.stroke();c.beginPath();c.arc(x,y-2,4,-Math.PI*.8,-Math.PI*.2);c.stroke();}
-  else if(kind==='pelota'){c.beginPath();c.arc(x,y,3.5,0,TAU);c.fill();}else if(kind==='tablon'){c.strokeRect(x-4,y-3,8,6);}
-  // The flare: a small burst (a buoy's mark is a post and a dot), with how far it is.
-  else{c.beginPath();c.arc(x,y,2.5,0,TAU);c.fill();c.lineWidth=1;c.beginPath();for(const [dx,dy] of [[0,-1],[1,0],[0,1],[-1,0]]){c.moveTo(x+dx*4.5,y+dy*4.5);c.lineTo(x+dx*7.5,y+dy*7.5);}c.stroke();c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';c.textAlign='center';const d=Math.hypot(o.x-p.x,o.y-p.y)/10000;c.fillText(d<1?`${Math.round(d*1000)} m`:`${Math.round(d)} km`,x+(q.x>r.W/2?-22:22),y+3);}
-  return {x,y,id:o.id||kind};}
+ // Coherencia T2: an offer to the one layer of arrows (scanner-arrows.js). The next ring of a challenge and your flare
+ // (with how far it is) come first; a thing of the band is a game.
+ function edge(c,kind,o,p){const flare=kind==='bengala',ring=kind==='reto',d=Math.hypot(o.x-p.x,o.y-p.y)/10000;
+  const q=r.edgeOffer?.({key:kind+':'+(o.id||Math.round(o.x)+','+Math.round(o.y)),kind:flare?'bengala':ring?'reto':'banda',x:o.x,y:o.y,shape:flare?'estrella':'portal',label:flare?(d<1?`${Math.round(d*1000)} m`:`${Math.round(d)} km`):null})||edgeSpot(r.W,r.H,o.x-r.camX,o.y-r.camY,22,104);
+  return {x:Math.round(q.x),y:Math.round(q.y),id:o.id||kind};}
  function draw(){const out={switch:null,radar:null,balls:[],board:null,flare:null,edge:{},reto:null,targets:0};if(!allowed()||!r.cx||!ok()){drawn=out;return;}
   const c=r.cx,p=me(),t=performance.now()/1000,q=book(),still=paused(),quiet=scene();c.save();c.textAlign='center';
   const mark=[];
@@ -183,17 +182,17 @@ export function initialize(r){
    if(b.party)drawParty(c,b);}
   // The board by the nearest satellite.
   const bd=boardNow(p);if(bd){const sp=at(bd.x,bd.y),d=Math.hypot(bd.x-p.x,bd.y-p.y);if(onScreen(sp)){drawBoard(c,sp,d<=BOARD_READ);out.board={id:bd.id,x:Math.round(sp.x),y:Math.round(sp.y)};}else if(d<=EDGE_REACH&&ordersFor(world,bd,today()).some(o=>!q.taken.includes(o.id)))mark.push({kind:'tablon',o:bd,d});
-   if(d<=BOARD_READ&&words()&&!quiet){const list=ordersFor(world,bd,today()),openIds=new Set(q.orders.map(o=>o.id)),y0=Math.min(r.H-190,r.H/2+96);c.fillStyle='#ffffff';c.globalAlpha=1;c.font='12px "Geist Mono", monospace';say(c,'Tablón de encargos',r.W/2,y0);c.font='11px "Geist Mono", monospace';
+   if(d<=BOARD_READ&&words()&&!quiet){const list=ordersFor(world,bd,today()),openIds=new Set(q.orders.map(o=>o.id)),y0=Math.min(r.H-190,r.H/2+96);c.fillStyle='#ffffff';c.globalAlpha=1;c.font='12px "Geist Mono", monospace';say(c,'Tablón de encargos',r.W/2,y0);c.font='12px "Geist Mono", monospace';
     list.forEach((o,k)=>{const done=q.taken.includes(o.id)&&!openIds.has(o.id),open=openIds.has(o.id);c.globalAlpha=done?.5:open?.95:.6;say(c,done?`Hecho · ${o.text}`:o.text,r.W/2,y0+18+k*30);if(open){c.globalAlpha=.6;say(c,ORDER_DO[o.kind],r.W/2,y0+32+k*30);}});out.boardText=list.length;}}
   // The challenge: its targets on the world and its clock above.
   if(reto){const next=reto.kind==='aros'?reto.targets.find(x=>!x.done):null;for(const g of reto.targets){if(g.done)continue;const sp=at(g.x,g.y);out.targets++;
-    if(reto.kind==='aros'){const first=g===next;c.globalAlpha=first?.95:.25;c.strokeStyle='#ffffff';c.lineWidth=first?2:1;c.beginPath();c.arc(sp.x,sp.y,first&&!reduced()?28+2*Math.sin(clock*6):28,0,TAU);c.stroke();if(first&&!onScreen(sp,-8))edge(c,'interruptor',g,p);}
+    if(reto.kind==='aros'){const first=g===next;c.globalAlpha=first?.95:.25;c.strokeStyle='#ffffff';c.lineWidth=first?2:1;c.beginPath();c.arc(sp.x,sp.y,first&&!reduced()?28+2*Math.sin(clock*6):28,0,TAU);c.stroke();if(first&&!onScreen(sp,-8))edge(c,'reto',g,p);}
     else{c.globalAlpha=.95;c.fillStyle='#ffffff';c.beginPath();c.arc(sp.x,sp.y,3.5,0,TAU);c.fill();c.globalAlpha=.3;c.beginPath();c.arc(sp.x,sp.y,8,0,TAU);c.fill();}}
    out.reto={kind:reto.kind,done:reto.done,total:reto.targets.length,left:Math.max(0,RETO_SECONDS-(clock-reto.start))};
    if(words()){c.globalAlpha=1;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,`Reto · ${clockText(RETO_SECONDS-(clock-reto.start))} · ${reto.done} de ${reto.targets.length}`,r.W/2,Math.max(196,r.H/2-152));}}
   // The radar you are in: your run and its record.
-  if(radar&&words()&&!quiet){const sp=at(radar.x,radar.y);c.globalAlpha=1;c.fillStyle='#ffffff';c.font='13px "Geist Mono", monospace';say(c,String(radar.cur),sp.x,sp.y-22);c.globalAlpha=.7;c.font='10px "Geist Mono", monospace';say(c,`Récord · ${Math.max(radar.record,radar.best)}`,sp.x,sp.y-36);out.radarRun={cur:radar.cur,best:radar.best};}
-  else if(!r.S.sound&&words()&&!quiet){const s=radarsNear(world,p,RADAR_ZONE).find(clear);if(s){const sp=at(s.x,s.y);c.globalAlpha=.7;c.fillStyle='#ffffff';c.font='10px "Geist Mono", monospace';say(c,'Radar de ritmo · con sonido',sp.x,sp.y-24);}}
+  if(radar&&words()&&!quiet){const sp=at(radar.x,radar.y);c.globalAlpha=1;c.fillStyle='#ffffff';c.font='13px "Geist Mono", monospace';say(c,String(radar.cur),sp.x,sp.y-22);c.globalAlpha=.7;c.font='12px "Geist Mono", monospace';say(c,`Récord · ${Math.max(radar.record,radar.best)}`,sp.x,sp.y-36);out.radarRun={cur:radar.cur,best:radar.best};}
+  else if(!r.S.sound&&words()&&!quiet){const s=radarsNear(world,p,RADAR_ZONE).find(clear);if(s){const sp=at(s.x,s.y);c.globalAlpha=.7;c.fillStyle='#ffffff';c.font='12px "Geist Mono", monospace';say(c,'Radar de ritmo · con sonido',sp.x,sp.y-24);}}
   // The flare: its light, and its mark at the screen's edge from anywhere.
   const f=flare();if(f){const sp=at(f.x,f.y);if(onScreen({x:sp.x,y:sp.y-FLARE_HEIGHT/2},40)){out.flare=drawFlare(c,f);}else if(!still)out.edge.bengala=edge(c,'bengala',f,p);}
   // One mark at the edge for the nearest thing of the band, never during a scene.

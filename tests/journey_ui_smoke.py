@@ -33,6 +33,8 @@ try:
    page.evaluate('''async()=>{const r=__r,{distantDirections}=await import('/src/distant-colors.js'),size=r.REG*r.WCH;for(let x=0;x<8;x++)for(let y=0;y<8;y++){const px=(x+.5)*size,py=(y+.5)*size;if(distantDirections(px,py,size,r.W,r.H,r.regionOfPos,r.seedOf).length===2){r.S.wx=px;r.S.wy=py;return;}}throw Error('No real musical horizon');}''')
    page.wait_for_function('__r.distantSignals.filter(s=>s.opacity>.3).length>=2')
    assert page.evaluate('''()=>__r.distantSignals.every(s=>{const d=__r.regionOfPos(s.target.x,s.target.y);return d.key===s.key&&!d.sea;})''')
+   # Coherencia T2: the neighbouring region is no coloured light at the edge; it is offered to the one layer of white arrows.
+   page.wait_for_function("__r.edgeState().kinds.includes('region')",timeout=4000)
    tint=page.evaluate('({r:__r.worldVisibility.red,g:__r.worldVisibility.green,b:__r.worldVisibility.blue})');assert all(0<=v<=255 for v in tint.values())
    assert page.evaluate('!__r.ac&&__r.waves.length===0'),'muted walking and UI must not allocate audio or create pulses'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors
