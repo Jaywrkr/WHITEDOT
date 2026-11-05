@@ -42,7 +42,9 @@ r.S.journey.moments={faro:{x:500,y:0,reached:true}};assert.equal(r.journeyChapte
 r.S.journey.progress.llanura.bars=CHAPTER_BARS.llanura;assert.equal(r.journeyPhrase(),true);assert.equal(r.journeyChapter().state,'plenitud');assert(r.journeyChapter().portal);assert.equal(r.journeyPhrase(),false,'only once');
 // The portal opens after the theme in tutti.
 assert.equal(r.journeyChapter().portalOpen,false);r.S.wx=140;r.S.wy=-40;r.drawJourneyChapters(c,390,844,10);assert.equal(r.journeyChapter().id,'llanura','not before the theme sounds');
-clock+=PORTAL_WAIT;r.drawJourneyChapters(c,390,844,16);assert.equal(r.journeyChapter().id,'lago','walking into the portal travels');assert(r.S.wx>=1200,'now in the Lago');assert.equal(resets,1,'a new chapter: its theme starts from the first note');
+clock+=PORTAL_WAIT;r.drawJourneyChapters(c,390,844,16);assert.equal(r.journeyChapter().id,'refugio','alpha.264: the Llanura is the whole Journey; its portal leads to the Refugio');assert.equal(resets,0);
+// An older save in the middle of the Journey (or «?capitulo=lago») still walks its chapters: back to the Llanura, on to the Lago.
+r.S.journey.chapter=1;assert.equal(r.journeyTravel(2),true);assert.equal(r.journeyChapter().id,'lago','travelling to a chapter by its index');assert(r.S.wx>=1200,'now in the Lago');assert.equal(resets,1,'a new chapter: its theme starts from the first note');
 r.curZone=0;r.drawJourneyChapters(c,390,844,20);assert.equal(r.journeyChapter().beacon,true,'away from the Lago, a beacon shows the way');
 r.curZone=1;r.drawJourneyChapters(c,390,844,24);assert.equal(r.journeyChapter().beacon,false);clock+=60000;r.drawJourneyChapters(c,390,844,32);assert.equal(r.journeyChapter().state,'silencio','eight quiet bars: the music waits');assert.equal(r.MU.journeyCap,STATE_CAP.silencio);
 // Leaving the Journey lifts every cap.
@@ -55,7 +57,7 @@ r.ac={currentTime:10};r.S.journey.chapter=4;r.curZone=3;clock+=1000;r.drawJourne
 assert.equal(r.MU.journeyFloor,null,'the climax waits for you');r.journeyChapterPulse(true,52);assert.equal(r.journeyChapter().moments.bolts,1);r.drawJourneyChapters(c,390,844,61);assert.equal(r.MU.boltAt,10,'the bolt falls now');assert.equal(r.MU.journeyFloor,STORM_FLOOR.pertenencia,'playing holds the storm up');
 assert.equal(r.MU.boltMine,true,'your bolt');assert.equal(r.MU.journeyOwnBolts,true,'the storm stops its own bolts');
 r.MU.boltAt=0;for(let i=0;i<5;i++)r.journeyChapterPulse(true,52);r.MU.boltAt=1;r.S.journey.progress.tormenta.bars=CHAPTER_BARS.tormenta;assert.equal(r.journeyPhrase(),true);assert.equal(r.journeyChapter().moments.bolts,10,'five more and a bar of four');
-r.biomeOfPos=(x,y)=>y>=600?4:3;r.journeyTravel();assert.equal(r.journeyChapter().id,'vacio');assert.equal(r.journeyChapter().moments.storm,0,'bolts stay in the Tormenta');
+r.biomeOfPos=(x,y)=>y>=600?4:3;r.journeyTravel(5);assert.equal(r.journeyChapter().id,'vacio');assert.equal(r.journeyChapter().moments.storm,0,'bolts stay in the Tormenta');
 // The Vacío: the cube alone; after eight notes the creatures repeat each note; the phrase needs them.
 r.curZone=4;r.drawJourneyChapters(c,390,844,70);assert.equal(r.MU.journeyCap,VOID_CAP);assert.equal(r.MU.journeyFloor,null);
 for(let i=0;i<VOID_ECHO_AFTER;i++)r.journeyChapterPulse(true,60);assert.equal(r.journeyChapter().moments.echoes,0);assert.equal(r.journeyPhrase(),false,'not before the creatures come back');
@@ -64,4 +66,4 @@ for(let i=0;i<4;i++)r.journeyChapterPulse(true,62);assert.equal(r.journeyChapter
 r.S={...r.S,journey:JSON.parse(JSON.stringify(r.S.journey))};r.drawJourneyChapters(c,390,844,81);assert(r.journeyChapter().portal,'the portal is back');
 let finale=0;r.journeyFinale=()=>finale++;assert.equal(r.journeyTravel(),true);assert.equal(finale,1);assert.equal(r.journeyChapter().id,'refugio');
 performance.now=realNow;
-console.log('PASS journey chapters: seven chapters, saved state cleaned, three states and a waiting pedal as music caps, notes remembered, theme completes the chapter and opens a portal, walking in travels to the next biome, the Tormenta brings bolts on the beat, the Vacío keeps the cube alone until the creatures echo, then leads to the finale; phase 2: each chapter asks for its moment and its bars, the portal waits for the theme, your bolts silence the storm, a kept chapter reopens its portal');
+console.log('PASS journey chapters: seven chapters, saved state cleaned, three states and a waiting pedal as music caps, notes remembered, theme completes the chapter and opens a portal, walking in travels to the Refugio since alpha.264 (an older Journey or «?capitulo=» reaches the next biome by index), the Tormenta brings bolts on the beat, the Vacío keeps the cube alone until the creatures echo, then leads to the finale; phase 2: each chapter asks for its moment and its bars, the portal waits for the theme, your bolts silence the storm, a kept chapter reopens its portal');

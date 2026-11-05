@@ -99,9 +99,10 @@ try:
     page.keyboard.press('Escape');page.evaluate("__r.universeMapLevel('anillo')");page.wait_for_timeout(150)
     nxt=page.evaluate('__r.ringState().next');p=icon(page,'place',nxt);page.mouse.click(p['x'],p['y']);page.wait_for_timeout(100)
     assert page.locator('#umapGo').is_visible() and page.inner_text('#umapGo')=='Ir','the next place, free from far away'
-    other=next(q for q in page.evaluate('__r.ringPortals()') if not q['open'])
+    # Alpha.264: no closed places; a found place not entered and not the next one is only marked.
+    other=next(q for q in page.evaluate('__r.ringPortals()') if not q['complete'] and q['id']!=nxt)
     p=icon(page,'place',other['id']);page.mouse.click(p['x'],p['y']);page.wait_for_timeout(100)
-    assert page.inner_text('#umapCardName')==other['name'] and page.locator('#umapGo').is_hidden() and page.inner_text('#umapMark')=='Marcar','a closed place is only marked'
+    assert page.inner_text('#umapCardName')==other['name'] and page.locator('#umapGo').is_hidden() and page.inner_text('#umapMark')=='Marcar','a place not entered is only marked'
     f=icon(page,'favorite',fav['id']);assert f,state(page)['drawn'];page.mouse.click(f['x'],f['y']);page.wait_for_timeout(100)
     assert page.inner_text('#umapCardName')=='Mi rincón' and page.inner_text('#umapGo')=='Ir';page.locator('#umapGo').click();page.wait_for_timeout(600)
     page.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000);page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)")

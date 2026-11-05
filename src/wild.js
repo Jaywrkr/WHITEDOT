@@ -1,7 +1,7 @@
 import {hashKey} from './universe-regions.js';
 import {prefersReducedMotion,openSurface} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
-import {PLACES,placeOpen} from './places.js';
+import {PLACES,placeOpen,placeFound,complete} from './places.js';
 import {RHYTHMS,PLACE_RHYTHMS} from './journey-rhythm.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
 import {directionPan} from './spatial.js';
@@ -28,7 +28,8 @@ export function normalizeWild(raw){const q=object(raw)?raw:{},r=object(q.remix)?
  return {day:typeof q.day==='string'?q.day:'',caught:Number.isInteger(q.caught)?Math.max(0,q.caught):0,today:Number.isInteger(q.today)?Math.max(0,q.today):0,
   remix:{day:typeof r.day==='string'?r.day:'',best:Number.isFinite(r.best)?Math.max(0,Math.min(1,r.best)):0,done:Number.isInteger(r.done)?Math.max(0,r.done):0}};}
 // Today's remix: one open place and a rhythm that is not its own, both from the day's key; null with none open.
-export function dailyRemix(day,places,journey,own=id=>null){const open=REMIX_PLACES.filter(id=>placeOpen(places,id,journey));if(!open.length||!day)return null;
+// Since alpha.264 only a place you can reach: complete, or its portal found.
+export function dailyRemix(day,places,journey,own=id=>null){const open=REMIX_PLACES.filter(id=>placeOpen(places,id,journey)&&(complete(places,id)||placeFound(places,id)));if(!open.length||!day)return null;
  const id=open[Math.floor(hashKey('remix:place:'+day)*open.length)],pool=REMIX_RHYTHMS.filter(k=>k!==own(id)),rhythm=pool[Math.floor(hashKey('remix:rhythm:'+day)*pool.length)];return {id,rhythm};}
 // What a remixed round paid on top until H1 (kept for the record): 30, and 20 more for a better share than the day's best.
 export const remixSparks=(onTime,best)=>REMIX_SPARKS+(onTime>best?REMIX_RECORD:0);

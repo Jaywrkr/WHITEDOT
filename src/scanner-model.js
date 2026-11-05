@@ -52,15 +52,28 @@ export const unregisterScan=id=>registry.delete(id);
 // ---------- levels ----------
 const journeyDone=j=>!!(plain(j)&&(j.free===true||j.finished===true));
 const farKm=S=>{const f=Number(S?.bandas?.far);return Number.isFinite(f)&&f>0?f:0;};
+// «Los lugares te encuentran» (Jay, 5 Nov 2026, alpha.264): each trophy (a place complete, its ★) upgrades the radar.
+// After the Journey: level 2 (names) from the start, level 3 (arrows, «?») from five trophies, and the reach grows with
+// every trophy (TROPHY_REACH, metres, by trophies). The eleven (or S.lugares.won) keep level 3 at 300 m, as before, and
+// level 4 still waits for the eleven and the km. A save that had its level keeps it: nothing goes down.
+export const TROPHY_IDS=Object.freeze(['llanura','lago','bosque','tormenta','vacio','jardin','dunas','cristales','faros','ruinas','cueva']);
+export const TROPHY_LEVEL3=5;
+export const TROPHY_REACH=Object.freeze([120,120,140,160,180,200,215,230,250,265,280,300]);
+// Trophies in a save: places with their ★ (S.lugares.stars) and chapters kept in the Journey, each once.
+export function scanTrophies(S){const stars=S?.lugares?.stars,done=S?.journey?.done;let n=0;
+ for(const id of TROPHY_IDS)if(stars?.[id]?.[0]===true||done?.[id]===true)n++;return n;}
 // The rank the save has earned, before SCAN_OPEN caps it.
 export function scanEarned(S){
- if(!journeyDone(S?.journey))return 1;let rank=2;
- if(S?.lugares?.won===true)rank=3;
- if(rank>=3)for(const L of SCAN_LEVELS)if(L.level===4&&farKm(S)>=L.km)rank=Math.max(rank,L.rank);
+ if(!journeyDone(S?.journey))return 1;let rank=2;const t=scanTrophies(S),eleven=S?.lugares?.won===true||t>=TROPHY_IDS.length;
+ if(eleven||t>=TROPHY_LEVEL3)rank=3;
+ if(eleven)for(const L of SCAN_LEVELS)if(L.level===4&&farKm(S)>=L.km)rank=Math.max(rank,L.rank);
  return rank;}
+// The radar's reach for a save at levels 2 and 3, in metres (trophies); other levels keep their own.
+export function trophyReach(S,L){if(L.level!==2&&L.level!==3)return L.reach;const t=S?.lugares?.won===true?TROPHY_IDS.length:scanTrophies(S);
+ return L.level===2?Math.min(TROPHY_REACH[Math.min(t,TROPHY_LEVEL3-1)],TROPHY_REACH[TROPHY_LEVEL3]-1):Math.max(TROPHY_REACH[TROPHY_LEVEL3],TROPHY_REACH[Math.min(t,TROPHY_IDS.length)]);}
 export function scanLevel(S,{charged=false,open=SCAN_OPEN}={}){
- const rank=charged?SCAN_LEVELS.length:Math.min(scanEarned(S),Math.max(1,open|0));
- return SCAN_LEVELS[Math.max(0,Math.min(SCAN_LEVELS.length,rank)-1)];}
+ const rank=charged?SCAN_LEVELS.length:Math.min(scanEarned(S),Math.max(1,open|0)),L=SCAN_LEVELS[Math.max(0,Math.min(SCAN_LEVELS.length,rank)-1)];
+ if(charged)return L;const reach=trophyReach(S,L);return reach===L.reach?L:Object.freeze({...L,reach,trophies:scanTrophies(S)});}
 const levelOf=level=>typeof level==='object'&&level?level:SCAN_LEVELS.find(L=>L.id===String(level)||L.rank===level)||SCAN_LEVELS[0];
 export const scanReach=level=>levelOf(level).reach*UNITS_PER_M;
 // An entry is in reach of a level when the level is as high, and a level-4 entry when its km is reached.

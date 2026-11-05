@@ -15,7 +15,7 @@ try{
  }
  const raw={version:PLACES_VERSION+1,run:{id:'lago',stash:{untouched:true}},unknown:{x:[1,2]}};
  const r={S:{wx:23,wy:45,journey:{finished:true},lugares:raw},MU:{},save(){throw Error('read-only');}};
- initialize(r);assert.equal(r.places().count,0);assert.equal(r.placesData().readOnly,true);assert.equal(r.startPlace('lago'),false);r.placeHear('lago',true);r.placeChapterKept('lago');assert.equal(r.placeFinish('lago'),false);assert.equal(r.abandonPlace(),false);assert.equal(r.S.lugares,raw);assert.deepEqual(raw,{version:3,run:{id:'lago',stash:{untouched:true}},unknown:{x:[1,2]}});assert.equal(r.S.wx,23);
+ initialize(r);assert.equal(r.places().count,0);assert.equal(r.placesData().readOnly,true);assert.equal(r.startPlace('lago'),false);r.placeHear('lago',true);r.placeChapterKept('lago');assert.equal(r.placeFinish('lago'),false);assert.equal(r.abandonPlace(),false);assert.equal(r.S.lugares,raw);assert.deepEqual(raw,{version:PLACES_VERSION+1,run:{id:'lago',stash:{untouched:true}},unknown:{x:[1,2]}});assert.equal(r.S.wx,23);
  assert.equal(commitJourneyClose({journeyComplete:()=>false,save(){throw Error('double save');}},'lago'),false);
  console.log('PASS durable rewards in eleven places, safe retries without duplicate pay, and future places read-only without mutation');
 }finally{globalThis.setTimeout=oldTimer;}

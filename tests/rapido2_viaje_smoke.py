@@ -1,5 +1,5 @@
 """«?rapido=2» short for real (Jay, 28 Oct 2026, alpha.230): a bot plays the whole Journey on a phone screen, from the
-first screen through the Camino, the five chapters and the finale, walking at the cube's speed and pulsing on time, and
+first screen through the Camino, the Llanura (since alpha.264 the whole Journey) and the finale, walking at the cube's speed and pulsing on time, and
 the run is timed. The Camino asks for two crystals, each chapter closes in two or three actions and its portal opens
 at once beside the cube. The quick save is its own («kubono:rapido»); the player's game is untouched."""
 from pathlib import Path
@@ -83,37 +83,9 @@ try:
     for(let i=cx-6;i<=cx+6;i++)for(let j=cy-6;j<=cy+6;j++){const it=m.cellItem(i,j);if(!it||taken.has(it.id)||r.BIOMES[r.biomeOfPos(it.x,it.y)].id!=='llanura')continue;const d=Math.hypot(it.x-r.S.wx,it.y-r.S.wy);if(!best||d<best.d)best={...it,d};}
     if(best)await __bot.walk(best.x+4,best.y);await __bot.on();}""");n+=1;page.wait_for_timeout(120)
   n=close('llanura',n);actions['llanura']=n;mark(f'Llanura ({n} pulsos)')
-  portal('portal a Lago')
-  # 3 · Lago «Encadena»: just before the first flower of a cluster, a pulse on time; the ripple runs through it.
-  close_help();page.wait_for_function("__r.journeyChain().active",timeout=10000);n=0
-  while not page.evaluate('__r.journeyChain().flower') and n<12:
-   page.evaluate("""async()=>{const m=await import('./src/journey-chain.js'),r=__r,cx=Math.floor(r.S.wx/m.CHAIN_CELL),cy=Math.floor(r.S.wy/m.CHAIN_CELL),lit=new Set(r.S.journey.chain.lit);
-    for(let d=0;d<10;d++)for(let i=cx-d;i<=cx+d;i++)for(let j=cy-d;j<=cy+d;j++){const list=m.cellFlowers(i,j);if(list.length<4||list.some(f=>lit.has(f.id)||r.BIOMES[r.biomeOfPos(f.x,f.y)].id!=='lago'))continue;
-     const f=list[0],a=Math.atan2(f.y-list[1].y,f.x-list[1].x);await __bot.walk(f.x+Math.cos(a)*90,f.y+Math.sin(a)*90);await __bot.on();return;}}""");n+=1;page.wait_for_timeout(1600)
-  n=close('lago',n);actions['lago']=n;mark(f'Lago ({n} pulsos)')
-  portal('portal a Bosque')
-  # 4 · Bosque «Rodea»: a loop around a group of fireflies, then a pulse on time.
-  close_help();page.wait_for_function("__r.journeyLasso().active",timeout=10000);n=0
-  while not page.evaluate('__r.journeyLasso().friend') and n<10:
-   page.evaluate("""async()=>{const m=await import('./src/journey-lasso.js'),r=__r,cx=Math.floor(r.S.wx/m.LASSO_CELL),cy=Math.floor(r.S.wy/m.LASSO_CELL),caught=new Set(r.S.journey.lasso.caught);
-    for(let d=0;d<10;d++)for(let i=cx-d;i<=cx+d;i++)for(let j=cy-d;j<=cy+d;j++){const list=m.cellFireflies(i,j).filter(f=>!caught.has(f.id)&&r.BIOMES[r.biomeOfPos(f.x,f.y)].id==='bosque');if(list.length<4)continue;
-     const x=list.reduce((s,f)=>s+f.x,0)/list.length,y=list.reduce((s,f)=>s+f.y,0)/list.length;await __bot.circle(x,y,80);await __bot.on();return;}}""");n+=1;page.wait_for_timeout(200)
-  n=close('bosque',n);actions['bosque']=n;mark(f'Bosque ({n} pulsos)')
-  portal('portal a Tormenta')
-  # 5 · Tormenta «Baila»: into the circle, a pulse on time when it is there.
-  close_help();page.wait_for_function("__r.journeyDance().active",timeout=10000);n=0
-  while not page.evaluate('__r.journeyDance().eye') and n<12:
-   page.wait_for_function('!!__r.journeyDance().target||!!__r.journeyDance().eye',timeout=5000)
-   page.evaluate("""async()=>{const t=__r.journeyDance().target;if(t)await __bot.walk(t.x,t.y,6);await __bot.on();}""");n+=1
-  n=close('tormenta',n);actions['tormenta']=n;mark(f'Tormenta ({n} pulsos)')
-  portal('portal a Vacío')
-  # 6 · Vacío «Suelta»: a pulse on the «1» lets one thing go; then your light.
-  close_help();page.wait_for_function("__r.journeyRelease().active",timeout=10000);n=0
-  while not page.evaluate('__r.journeyRelease().light') and n<30:
-   page.evaluate("""async()=>{const p=__bot.pos();await __bot.walk(p.x+110,p.y);await __bot.on(true);}""");n+=1
-  n=close('vacio',n)
-  actions['vacio']=n;mark(f'Vacío ({n} pulsos)')
-  # 7 · The last portal opens the finale; it plays whole (nobody presses «Saltar») and leaves the free World.
+  # Alpha.264 («Los lugares te encuentran»): the Journey is one place; the Llanura's portal opens the finale. Lago,
+  # Bosque, Tormenta and Vacío are found in the open World (their games keep their own smokes).
+  # 3 · The Llanura's portal opens the finale; it plays whole (nobody presses «Saltar») and leaves the free World.
   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=20000)
   page.evaluate("async()=>{const p=__r.journeyChapter().portal;await __bot.walk(p.x,p.y,6);}")
   page.wait_for_function("__r.journeyFinaleState().running",timeout=8000);mark('final empieza')

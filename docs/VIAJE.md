@@ -7,12 +7,10 @@ Vigente en `main`, **alpha.221**. El Viaje enseña a participar en la música y 
 | Etapa | Qué se aprende |
 |---|---|
 | Camino | Acercarse, mover el cubo, pulsar y recoger diez luces. Solo abre el Mundo la primera vez (D7-C) |
-| Llanura | Pegar elementos cercanos |
-| Lago | Encadenar flores |
-| Bosque | Rodear y cerrar una vuelta |
-| Tormenta | Participar en el ritmo del rayo |
-| Vacío | Soltar estrellas con espacio |
-| Cierre | Reconocer tu frase y continuar al Mundo libre |
+| Llanura | Pegar elementos cercanos. Es el tutorial: el único lugar del Viaje desde alpha.264 |
+| Cierre | Reconocer tu frase y continuar al Mundo libre, sabiendo que hay once lugares |
+
+**Un lugar de tutorial** («Los lugares te encuentran», Jay, 5 de noviembre de 2026, alpha.264). Al guardar la Llanura, su portal lleva al Refugio y a su final (`shortNext` en `journey-chapters.js`). Lago, Bosque, Tormenta y Vacío ya no son capítulos: son lugares del mundo abierto, a 1, 2, 3 y 5 km del origen, y se encuentran [por distancia](MUNDO.md#los-lugares-te-encuentran). Sus juegos y reglas no cambian. Un guardado a mitad del Viaje antiguo conserva todos sus capítulos guardados (★ y portal en el anillo) y termina el capítulo en que está; después va al Refugio. Nada se vuelve a cerrar. El festival (`?festival=1`) conserva sus cinco capítulos. `?capitulo=lago` sigue abriendo cualquiera de los cinco (`journeyTravel(índice)`).
 
 El código conserva siete IDs de capítulo (`camino`, cinco lugares y`refugio`); el último identifica el cierre, no una visita obligatoria a la casa. Los juegos actuales están registrados en `journey-games.js`; las reglas/momentos anteriores siguen como compatibilidad y comparación, no como instrucciones paralelas.
 
@@ -44,9 +42,9 @@ La ayuda se consulta en menú → Cómo jugar y destaca una acción actual. La p
 
 La aportación personal se guarda de forma aditiva y compatible: notas históricas sin ticks siguen interpretándose. No reemplazar las frases ni borrar progreso para adaptar una versión nueva.
 
-## Final de los cinco capítulos
+## Final del Viaje
 
-`journey-finale.js` reconstruye tus frases y el tema en dub techno (panel 11, Q7, a petición de Jay), con las voces propias de los finales (`createDub`, en `song-stage.js`). Entra el bombo con el sub; cada capítulo suma su capa: bajo dub, hats a contratiempo y rim con eco, stabs de acorde filtrados y la sala. El filtro se abre hasta el golpe. El tema suena con sus alturas, como lo toca el cubo, sin llevarlo al acorde (D8-B): en La mayor, La Si Mi Re Do♯ La, dos veces igual, como nota superior de los stabs y en una octava del registro 52–76. Tus frases van al acorde, en la voz dub. La última nota del tema, la tónica, es el golpe; en el último «1» todo se corta en seco, eco y sala incluidos, y queda el silencio antes de «Tu mundo se abrió». Su partitura abstracta y el arreglo audible son capas distintas; leer la partitura sola no demuestra cómo suena.
+Desde alpha.264 suena la frase de la Llanura y el tema (un guardado del Viaje antiguo, las de sus capítulos). `journey-finale.js`, su partitura y su mezcla no cambian: `finaleScore` ya saltaba los capítulos sin notas. `journey-finale.js` reconstruye tus frases y el tema en dub techno (panel 11, Q7, a petición de Jay), con las voces propias de los finales (`createDub`, en `song-stage.js`). Entra el bombo con el sub; cada capítulo suma su capa: bajo dub, hats a contratiempo y rim con eco, stabs de acorde filtrados y la sala. El filtro se abre hasta el golpe. El tema suena con sus alturas, como lo toca el cubo, sin llevarlo al acorde (D8-B): en La mayor, La Si Mi Re Do♯ La, dos veces igual, como nota superior de los stabs y en una octava del registro 52–76. Tus frases van al acorde, en la voz dub. La última nota del tema, la tónica, es el golpe; en el último «1» todo se corta en seco, eco y sala incluidos, y queda el silencio antes de «Tu mundo se abrió». Su partitura abstracta y el arreglo audible son capas distintas; leer la partitura sola no demuestra cómo suena.
 
 El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo. **Saltar** (Jay, alpha.226) es un botón pequeño y negro en la esquina superior derecha: responde tras 0,6 s y deja el mismo estado que el final completo (Viaje terminado, vista completa, guardado). Escape hace lo mismo. Desde alpha.226 el marco es más corto: reunión 0,8 s, silencio 1 s y «Tu mundo se abrió» 3,5 s (antes 1,6, 2 y 7), y el arreglo nunca va más lento que una semicorchea de 0,125 s (120 BPM); la partitura y el arreglo de Q7 no cambian. Con el tempo por defecto (semicorchea 0,15 s) y notas en los cinco capítulos dura unos 33 s (antes 44 s); en el mundo más lento, 33 s (antes 48 s). Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. **Explorar a pie** es un botón blanco. Después del cierre no sale ningún aviso de texto; «Prólogo» va a la Bitácora sin aviso (panel 11, Q1). No llevan al jugador al Refugio como destino obligatorio.
 
@@ -58,7 +56,7 @@ Guardar el cierre debe funcionar antes de darlo por terminado. Una falla deja po
 
 ## Continuación
 
-Tras el Viaje quedan seis lugares nuevos en orden: Jardín, Dunas, Cristales, Faros, Ruinas y Cueva. Los once completos abren el final de Tu canción;33★, su versión maestra. Detalle en [El mundo](MUNDO.md).
+Tras el Viaje quedan diez lugares en el mundo abierto, sin orden: cada uno a su distancia del origen, con un radar débil que mejora con cada trofeo. Los once completos abren el final de Tu canción;33★, su versión maestra. Detalle en [El mundo](MUNDO.md).
 
 ## Verificación y límites
 

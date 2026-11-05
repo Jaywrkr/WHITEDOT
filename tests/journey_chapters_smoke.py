@@ -1,4 +1,4 @@
-"""The Journey's chapters in the real game: entering the World starts the Llanura, the music is held back until you play, six on-time pulses complete the theme (Plenitud), a gold portal opens and walking into it travels to the Lago."""
+"""The Journey's chapters in the real game: entering the World starts the Llanura, the music is held back until you play, six on-time pulses complete the theme (Plenitud), a gold portal opens and walking into it leads to the Refugio and its finale (alpha.264: a one-place Journey)."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -28,11 +28,10 @@ try:
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
    page.wait_for_function("__r.journeyChapter().portal");assert not page.evaluate('__r.journeyChapter().portalOpen'),'the portal waits for the theme'
    page.wait_for_function("__r.journeyChapter().portalOpen",timeout=8000);ch=page.evaluate('__r.journeyChapter()');assert ch['done'].get('llanura') and len(ch['notes']['llanura'])==12 and len(ch['notes']['llanura'])==len(page.evaluate('__r.S.journey.steps.llanura')) and ch['state']=='plenitud',ch
-   # Walk into the portal: the next chapter, in the Lago.
-   page.evaluate("()=>{const r=__r;r.S.wx+=140;r.S.wy-=40;}");page.wait_for_function("__r.journeyChapter().id==='lago'",timeout=5000);page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='lago'",timeout=8000)
-   assert page.evaluate('__r.journeyChapter().state')=='llegada'
-   page.reload();page.wait_for_function('!!window.__r?.journeyChapter');assert page.evaluate("__r.S.journey.chapter")==2 and page.evaluate("__r.S.journey.done.llanura")==True
+   # Walk into the portal: alpha.264, the Llanura is the whole Journey, so it leads to the Refugio and its finale.
+   page.evaluate("()=>{const r=__r;r.S.wx+=140;r.S.wy-=40;}");page.wait_for_function("__r.journeyChapter().id==='refugio'",timeout=5000);page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
+   page.reload();page.wait_for_function('!!window.__r?.journeyChapter');assert page.evaluate("__r.S.journey.chapter")==6 and page.evaluate("__r.S.journey.done.llanura")==True
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Journey chapters on phone and desktop: the Llanura starts held back, its lighthouse and bars with the theme on time bring Plenitud and, after the theme, a portal, walking in travels to the Lago, kept after reload',flush=True)
+ print('PASS Journey chapters on phone and desktop: the Llanura starts held back, its lighthouse and bars with the theme on time bring Plenitud and, after the theme, a portal, walking in leads to the Refugio and its finale (a one-place Journey), kept after reload',flush=True)
 finally:server.shutdown()

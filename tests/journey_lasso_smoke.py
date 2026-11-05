@@ -19,8 +19,8 @@ try:
    hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=true;s.firstJourney.skipped=true;s.journey.mode='viaje';s.journey.chapter=0;s.journey.colors={};s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();r.audio();}")
    page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000);page.wait_for_timeout(500);page.evaluate(hide);page.wait_for_function("__r.journeyChapter().id==='llanura'",timeout=10000)
-   page.evaluate("()=>{__r.S.journey.done.llanura=true;__r.journeyTravel();}");page.wait_for_function("__r.journeyChapter().id==='lago'",timeout=15000)
-   page.evaluate("()=>{__r.S.journey.done.lago=true;__r.journeyTravel();}");page.wait_for_function("__r.journeyChapter().id==='bosque'&&__r.BIOMES[__r.curZone]?.id==='bosque'",timeout=15000);page.evaluate(hide)
+   page.evaluate("()=>{__r.S.journey.done.llanura=true;__r.journeyTravel(__r.S.journey.chapter+1);}");page.wait_for_function("__r.journeyChapter().id==='lago'",timeout=15000)
+   page.evaluate("()=>{__r.S.journey.done.lago=true;__r.journeyTravel(__r.S.journey.chapter+1);}");page.wait_for_function("__r.journeyChapter().id==='bosque'&&__r.BIOMES[__r.curZone]?.id==='bosque'",timeout=15000);page.evaluate(hide)
    page.wait_for_function("__r.journeyLasso().active",timeout=5000);assert page.evaluate('__r.journeyLasso().points')==0
    assert not page.evaluate('__r.journeyMoments().companion'),'the creature waits for the end of the Bosque'
    # Walk a circle around the nearest whole group of fireflies.

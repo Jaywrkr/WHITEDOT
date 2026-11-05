@@ -1,4 +1,4 @@
-"""The ring (plan F5): ?anillo=1 opens the free World after the Journey on its own save. Eleven portals around the Refugio; walking into an open one starts its round, a closed one asks for stars, one with ★★ asks Jugar or Maestro; «Dejar la ronda» in the menu and a reload both bring you back beside the portal; the map lists the portals entered for fast travel."""
+"""The ring (plan F5): ?anillo=1 opens the free World after the Journey on its own save. Eleven portals around the Refugio; walking into an open one starts its round, a found one opens in any order (alpha.264), one with ★★ asks Jugar or Maestro; «Dejar la ronda» in the menu and a reload both bring you back beside the portal; the map lists the portals entered for fast travel."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -51,8 +51,9 @@ try:
    page.wait_for_function("!__r.places().run",timeout=3000);assert near(page,'lago'),'back beside the Lago portal'
    page.wait_for_timeout(400);assert not page.evaluate('__r.places().run'),'standing beside it does not open it again'
    page.locator('#bMenu').click();assert not page.locator('#bLeavePlace').is_visible();page.locator('#mnClose').click()
-   # A closed portal opens after the one before it (plan H3): the Dunas wait for the Jardín; the light points to the Jardín.
-   walk_in(page,'dunas');page.wait_for_timeout(400);assert not page.evaluate('__r.places().run');assert page.evaluate('__r.ringState().next')=='jardin'
+   # Alpha.264: no order. The Dunas, found (this test save finds them on the old ring), open without the Jardín.
+   walk_in(page,'dunas');page.wait_for_function("__r.places().run?.id==='dunas'",timeout=5000);assert page.evaluate('__r.ringState().next')=='jardin'
+   page.locator('#bMenu').click();page.locator('#bLeavePlace').click();page.wait_for_function("!__r.places().run",timeout=3000)
    # Libre: the place's music with no bar or stars.
    walk_in(page,'llanura');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000);page.locator('#portalFree').click()
    page.wait_for_function("__r.places().run?.free===true",timeout=5000);page.wait_for_timeout(300);assert not page.evaluate("document.body.classList.contains('place-round')"),'no bar in Libre'
@@ -77,5 +78,5 @@ try:
    page.evaluate("()=>{__r.S.studio.x=__r.S.wx+20000;__r.S.studio.y=__r.S.wy;}");moved=page.evaluate('__r.ringState().center');assert moved==c,(moved,c)
    assert not errors,errors;page.close()
   browser.close()
- print('PASS places ring on phone and desktop: eleven portals around the Refugio, a complete place asks Jugar, Libre (no bar) or Maestro with ★★, closed ones open after the one before it, leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio',flush=True)
+ print('PASS places ring on phone and desktop: eleven portals around the Refugio, a complete place asks Jugar, Libre (no bar) or Maestro with ★★, every found portal open in any order (alpha.264), leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio',flush=True)
 finally:server.shutdown()

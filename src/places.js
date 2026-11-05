@@ -1,5 +1,5 @@
 import {audibleTime} from './journey-pulse.js';
-import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
+import {findBiome,WORLD_CHAPTERS,CHAPTERS,shortNext} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
 import {LEVEL_SPARKS} from './spark-rules.js';
 import {placeTier,layerGrew} from './song.js';
@@ -12,13 +12,24 @@ import {placeTier,layerGrew} from './song.js';
 // Plan H3 (24 October): the ring opens in order, like the tracks of a record: each place after the Journey opens when
 // the one before it is complete. Completing all eleven wins the game; the 33 stars are the master version of your song.
 // Version 2 keeps open every place a version-1 save had open by its stars (`kept`), so nobody loses a door.
-export const PLACES_VERSION=2;
+// Version 3 · «Los lugares te encuentran» (Jay, 5 Nov 2026, docs/MUNDO.md#los-lugares-te-encuentran): each place sits at
+// a fixed distance from the origin (PLACE_KM) and its portal is fixed, and saved in `found`, the first time you cross that
+// distance on foot, a step ahead on your heading (places-ring.js). The places already complete when a save reaches
+// version 3, and every chapter kept in the Journey, stay on the old ring around the Refugio (`ring`), where they were.
+// No order any more: a place is open once the free World is; you reach it by finding its portal.
+export const PLACES_VERSION=3;
 export const PLACES=Object.freeze([
  {id:'llanura',name:'Llanura',verb:'Pegar',game:'stick'},{id:'lago',name:'Lago',verb:'Encadenar',game:'chain'},{id:'bosque',name:'Bosque',verb:'Rodear',game:'lasso'},
  {id:'tormenta',name:'Tormenta',verb:'Bailar',game:'dance'},{id:'vacio',name:'Vacío',verb:'Soltar',game:'release'},
  {id:'jardin',name:'Jardín',verb:'Sembrar',game:'garden'},{id:'dunas',name:'Dunas',verb:'Surfear',game:'surf'},{id:'cristales',name:'Cristales',verb:'Resonar',game:'resonance'},
  {id:'faros',name:'Faros',verb:'Guiar',game:'guide'},{id:'ruinas',name:'Ruinas',verb:'Reconstruir',game:'rebuild'},{id:'cueva',name:'Cueva',verb:'Eco',game:'echo'}].map(Object.freeze));
 export const PLACE_IDS=Object.freeze(PLACES.map(p=>p.id));
+// How far from the origin each place is, in km (10 000 units each), in the order of PLACES.
+export const PLACE_KM=Object.freeze([.5,1,2,3,5,8,12,17,23,30,40]),PLACE_UNITS_PER_KM=10000;
+export const placeKm=id=>PLACE_KM[PLACE_IDS.indexOf(id)]??null;
+export const placeRadius=id=>{const km=placeKm(id);return km===null?null:km*PLACE_UNITS_PER_KM;};
+// «0,5 km», «12 km»: how the game writes a place's distance.
+export const kmText=km=>String(km).replace('.',',');
 // Plan I5 (Jay, 24 October, third panel): ★★ at 75 % on time and ★★★ at 70 % in the Maestro round (they were 85 and
 // 80 %; the two-hour model showed the song stopping after the win for anyone below 85 %).
 export const RHYTHM_STAR=.75,MAESTRO_STAR=.7,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,MAESTRO_WINDOW=.06,TOTAL_STARS=33;
@@ -47,16 +58,25 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  const noteTicks={};if(object(q.noteTicks))for(const id of Object.keys(notes)){const v=q.noteTicks[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every((n,i)=>Number.isSafeInteger(n)&&n>=0&&(!i||n>=v[i-1])))noteTicks[id]=[...v];}
  const noteSteps={};if(object(q.noteSteps))for(const id of Object.keys(notes)){const v=q.noteSteps[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every(s=>Number.isInteger(s)&&s>=0&&s<16))noteSteps[id]=[...v];}
  const kept={};if(object(q.kept))for(const id of PLACE_IDS)if(q.kept[id]===true)kept[id]=true;
+ // Version 3: the portals found by distance, and the places that stay on the ring. A save from before version 3 keeps on
+ // the ring every place already complete (its portal does not move); the others are found by distance from now on.
+ const found={};if(object(q.found))for(const id of PLACE_IDS){const p=point(q.found[id]);if(p)found[id]=p;}
+ const ring={};if(Number.isInteger(q.version)&&q.version===PLACES_VERSION){if(object(q.ring))for(const id of PLACE_IDS)if(q.ring[id]===true)ring[id]=true;}
+ // A place complete with no portal found (any save before version 3, a chapter kept in the Journey) is on the ring.
+ for(const id of PLACE_IDS)if(stars[id][0]&&!found[id])ring[id]=true;
+ for(const id of Object.keys(ring))delete found[id];
  if(legacy){const have=PLACE_IDS.reduce((a,id)=>a+stars[id].filter(Boolean).length,0);for(const [id,need] of Object.entries(LEGACY_NEED))if(have>=need)kept[id]=true;}
- return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),ringFixed:q.ringFixed===true,seen,kept,notes,noteSteps,noteTicks,won:q.won===true,master:q.master===true,credited:q.credited===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
+ return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),ringFixed:q.ringFixed===true,seen,kept,ring,found,notes,noteSteps,noteTicks,won:q.won===true,master:q.master===true,credited:q.credited===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
 export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||[]).filter(Boolean).length,0);
-// The place before this one on the path: the Journey's five open together; each later one follows the one before it.
+// The place before this one in the list (version 3 opens every place: kept for the readers that name it).
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
+// Whether a place's portal is somewhere: on the ring or found by distance.
+export const placeFound=(places,id)=>places?.ring?.[id]===true||!!point(places?.found?.[id]);
 export const complete=(places,id)=>places?.stars?.[id]?.[0]===true;
 export const allComplete=places=>PLACE_IDS.every(id=>complete(places,id));
-export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);if(!p||!p.game||places?.version>PLACES_VERSION||places?.readOnly||!freeOpen(journey))return false;const prev=previousPlace(id);
- return !prev||complete(places,prev)||complete(places,id)||places?.seen?.[id]===true||places?.kept?.[id]===true;};
-// The next place on the path: the first one open and not complete, in order; null once all eleven are.
+// Version 3: every place is open in the free World; finding its portal is the way in.
+export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);return !!p&&!!p.game&&!(places?.version>PLACES_VERSION)&&!places?.readOnly&&freeOpen(journey);};
+// The next place on the path: the first one not complete, in order (the nearest to the origin); null once all eleven are.
 export const nextOnPath=(places,journey)=>PLACES.find(p=>p.game&&placeOpen(places,p.id,journey)&&!complete(places,p.id))||null;
 // A read-only objective shared by guide, menu and progress sheets. It never moves the player or spends currency.
 export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
@@ -64,14 +84,14 @@ export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
  if(!freeOpen(s.journey)){
   const n=Math.min(10,s.pathCrystals?.length||0),chapter=Math.max(0,Math.min(CHAPTERS.length-1,s.journey?.chapter||0)),id=CHAPTERS[chapter];
   if(!chapter&&n<10)return {kind:'journey',id:'camino',line:'Toca a tiempo junto a los cristales.',progress:`${n}/10 cristales · abre el Mundo`};
-  if(id==='refugio')return {kind:'journey',id,line:'Escucha tu canción. Después se abre el Mundo.',progress:'Tu viaje reúne sus cinco capítulos.'};
-  const next=s.journey?.done?.[id]?CHAPTERS[chapter+1]:id==='camino'?'llanura':id,name=PLACES.find(p=>p.id===next)?.name||'Tu canción';
+  if(id==='refugio')return {kind:'journey',id,line:'Escucha tu canción. Después se abre el Mundo.',progress:'Luego, once lugares por encontrar.'};
+  const next=s.journey?.done?.[id]?CHAPTERS[shortNext(chapter)]:id==='camino'?'llanura':id,name=PLACES.find(p=>p.id===next)?.name||'Tu canción';
   return {kind:'journey',id:next,line:s.journey?.done?.[id]?`Cruza el portal hacia ${name}.`:`Toca a tiempo en ${name}.`,progress:'El Viaje · escucha y sigue la luz.'};
  }
  const completed=PLACE_IDS.filter(id=>complete(places,id)).length,stars=starCount(places),next=nextOnPath(places,s.journey);
  // Panel 10 (P4, D1): once the eleven are complete, the place nearest its next star; «Explora a tu ritmo» only with 33 ★.
- const aim=next?null:starGoal(places,s.journey),line=next?`Siguiente: ${next.name}.`:aim?`Siguiente: ${'★'.repeat(aim.tier)} en ${aim.name}${aim.best!==null&&aim.tier===2?` · ${roundPercent(aim.best)} %`:''}.`:'Tu canción está completa. Explora a tu ritmo.';
- return {kind:next||aim?'place':'create',id:next?.id||aim?.id||null,name:next?.name||aim?.name||null,...(aim?{tier:aim.tier}:{}),remaining:PLACE_IDS.length-completed,line,progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
+ const aim=next?null:starGoal(places,s.journey),far=next&&!placeFound(places,next.id)?placeKm(next.id):null,line=next?`Siguiente: ${next.name}.${far!==null?` Está más lejos, a ${kmText(far)} km.`:''}`:aim?`Siguiente: ${'★'.repeat(aim.tier)} en ${aim.name}${aim.best!==null&&aim.tier===2?` · ${roundPercent(aim.best)} %`:''}.`:'Tu canción está completa. Explora a tu ritmo.';
+ return {kind:next||aim?'place':'create',id:next?.id||aim?.id||null,name:next?.name||aim?.name||null,...(far!==null?{km:far}:{}),...(aim?{tier:aim.tier}:{}),remaining:PLACE_IDS.length-completed,line,progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
 }
 // After the victory (panel 10, P4, D1): the place without ★★ with the best share on time; with every ★★, the one without
 // ★★★ with the best share. Null before the eleven are complete, during the Journey and with the 33 ★.
@@ -96,7 +116,7 @@ export function initialize(runtime){
    // A round left open by a reload is dropped: the chapter's own state comes back as it was.
    if(state.run){restore(state.run);back(state.run.from);state.run=null;}}
   // A chapter kept in the Journey is always a ★ of its place, whenever it was kept.
-  if(state.version===PLACES_VERSION)for(const id of WORLD_CHAPTERS)if(runtime.S.journey?.done?.[id]===true)state.stars[id][0]=true;
+  if(state.version===PLACES_VERSION)for(const id of WORLD_CHAPTERS)if(runtime.S.journey?.done?.[id]===true){state.stars[id][0]=true;if(!state.found?.[id])(state.ring||={})[id]=true;}
   return state;}
  const gameKey=id=>PLACES.find(p=>p.id===id)?.game;
  function restore(run){const j=runtime.S.journey||{},key=gameKey(run.id);if(key){if(run.stash===undefined)delete j[key];else j[key]=run.stash;}const MU=runtime.MU;if(MU){MU.tempoScale=1;MU.onTimeWindow=null;}}
