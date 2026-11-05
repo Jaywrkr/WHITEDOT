@@ -12,7 +12,7 @@ threading.Thread(target=server.serve_forever,daemon=True).start()
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
-  page=browser.new_page(has_touch=True);page.set_default_timeout(10000);errors=[]
+  page=browser.new_page(has_touch=True);page.set_default_timeout(10000);page.set_default_navigation_timeout(30000);errors=[]
   page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.set_viewport_size({'width':390,'height':844})

@@ -20,7 +20,7 @@ SITE="""async()=>{const r=__r,M=await import('/src/universe-mischief-model.js');
 def page_for(browser,width,height,query='?anillo=1'):
  page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
- page.goto(f'http://127.0.0.1:{server.server_port}/'+query);page.wait_for_function("!!window.__r?.discoverState&&__r.ringState?.().active&&!!__r.liveEncounterSpawn&&!!__r.mischiefBusy",timeout=20000)
+ page.goto(f'http://127.0.0.1:{server.server_port}/'+query);page.wait_for_function("!!window.__r?.discoverState&&__r.ringState?.().active&&!!__r.liveEncounterSpawn&&!!__r.mischiefBusy",timeout=30000)
  page.evaluate(FREE);page.wait_for_timeout(300);return page,errors
 started=time.time()
 try:
@@ -31,7 +31,7 @@ try:
    # --- 3 · A living encounter remembers its kind (the next one is another); kept on reload.
    assert page.evaluate("__r.liveEncounterSpawn('polilla')");assert page.evaluate("__r.liveEncounterState().book.last")=='polilla'
    page.evaluate("()=>{const s=__r.liveEncounterState().scene;s.stage=s.result='escaped';s.over=9;}");page.wait_for_function("!__r.liveEncounterState().scene",timeout=5000)
-   page.evaluate("__r.save()");page.reload();page.wait_for_function("!!window.__r?.liveEncounterState&&!!__r.mischiefBusy",timeout=20000);page.evaluate(FREE)
+   page.evaluate("__r.save()");page.reload();page.wait_for_function("!!window.__r?.liveEncounterState&&!!__r.mischiefBusy",timeout=30000);page.evaluate(FREE)
    assert page.evaluate("__r.liveEncounterState().book.last")=='polilla','kept on reload'
    ok=page.evaluate("""async()=>{const L=await import('/src/live-encounters-model.js');const scope=JSON.stringify(__r.worldIdentity)+':superficie';let last='';for(let n=0;n<60;n++){for(const b of ['llanura','bosque','vacio']){const d=L.livePick(b,scope,n,{last,km:1,land:'bosque'});if(d.id===last)return false;last=d.id;}}return true;}""");assert ok
    # --- 4 · A mischief scene that does not move on.

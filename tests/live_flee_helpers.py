@@ -49,6 +49,9 @@ def flee(browser,kind,shot=False,toast=False):
  if toast:assert not page.evaluate('__r.achievementsCalm()'),'notices speak here'
  home=page.evaluate(FIND,d['biome']);assert home,d
  page.evaluate(f"(()=>{{__r.S.wx={home['x']};__r.S.wy={home['y']};}})()");page.wait_for_timeout(150);page.evaluate(HIDE)
+ # The notice lane counts its seconds in its own ticks (at most 0.1 s each), so a loaded runner stretches each notice:
+ # let the arrival's notices (the World, a first form) go before the encounter, so its notice is not queued behind them.
+ if toast:page.wait_for_function("!__r.noticeLane.owner&&!__r.noticeLane.pending.length&&!document.body.dataset.notice",timeout=60000)
  # A few seconds of travel north bring it, ahead of the cube, with its line.
  page.evaluate("""async()=>{const r=__r;for(let i=0;i<600&&!r.liveEncounterState().scene;i++){r.S.wy-=4;await new Promise(f=>requestAnimationFrame(f));}}""")
  st=page.evaluate("(()=>{const r=__r,s=r.liveEncounterState(),sc=s.scene;return sc&&{kind:sc.kind,verb:sc.verb,line:s.line,dy:sc.dir.y}})()")
@@ -70,7 +73,7 @@ def flee(browser,kind,shot=False,toast=False):
  # Other finds on the way (a crystal, an achievement) may log their own sparks just after.
  assert {'title':d['name'],'text':f'Encuentro vivo · +{exp} chispas'} in [{'title':e['title'],'text':e['text']} for e in after['log']],after
  # Achievements earned on the way (a landscape, the World) may show first: the notice waits its turn (as in live_do_helpers.py).
- if toast:page.wait_for_function("(window.__notices||[]).some(t=>t.includes('Encuentro nuevo'))",timeout=30000);t=next(t for t in page.evaluate('window.__notices') if 'Encuentro nuevo' in t);assert d['name'] in t and 'Logro' not in t,t
+ if toast:page.wait_for_function("(window.__notices||[]).some(t=>t.includes('Encuentro nuevo'))",timeout=60000);t=next(t for t in page.evaluate('window.__notices') if 'Encuentro nuevo' in t);assert d['name'] in t and 'Logro' not in t,t
  page.wait_for_function(GONE,timeout=5000)
  # 2 · On foot, no pulse: out, its ✦.
  assert page.evaluate(f"__r.liveEncounterSpawn('{d['id']}')");before=page.evaluate(STATE,d['id'])
