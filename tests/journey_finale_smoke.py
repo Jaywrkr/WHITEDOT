@@ -26,7 +26,8 @@ try:
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='tormenta'",timeout=8000);page.evaluate(hide);page.evaluate("__r.S.journey.progress.tormenta={bars:99}")
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
    page.wait_for_function("__r.journeyChapter().portalOpen",timeout=12000);m=page.evaluate('__r.journeyChapter().moments');assert m['bolts']>=6,m
-   page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyChapter().id==='vacio'",timeout=5000);page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='vacio'",timeout=8000);page.evaluate(hide)
+   # Alpha.264: the Tormenta's portal would lead to the Refugio; an older Journey (or «?capitulo=vacio») reaches the Vacío by its index.
+   page.evaluate("()=>__r.journeyTravel(5)");page.wait_for_function("__r.journeyChapter().id==='vacio'",timeout=5000);page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='vacio'",timeout=8000);page.evaluate(hide)
    assert abs(page.evaluate('__r.MU.journeyCap')-.1)<1e-9;page.evaluate("__r.S.journey.progress.vacio={bars:99}")
    # In the Vacío the creatures repeat your notes after eight; the theme completes after twelve.
    for i in range(12):page.evaluate(ON);page.wait_for_timeout(320)
@@ -49,7 +50,7 @@ try:
    # (the finale lands in the Refugio; the menu is outside it).
    assert page.evaluate('__r.inWorld()'),'the explicit explore action leaves the Refugio on foot'
    assert page.evaluate("document.getElementById('bMenu').classList.contains('has-new')")
-   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000);assert page.evaluate('__r.ringRoute().id')=='jardin'
+   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000);assert page.evaluate('__r.ringHint().id')=='jardin','alpha.264: the Jardín, not found yet, «más lejos»'
    # And the sparks earned on the way: Tu cubo is marked, without a notice (plan I1: no text before the first portal).
    page.wait_for_function("document.getElementById('bCube').classList.contains('has-new')",timeout=30000);page.wait_for_timeout(3000);assert 'Tu cubo' not in page.evaluate("document.getElementById('toast').textContent");assert page.evaluate("document.getElementById('bCube').classList.contains('has-new')") and page.evaluate('__r.S.journey.sparksHint')==True
    notes=page.evaluate("clearInterval(__noteClock),[...new Set(__notes)]");assert not notes,('no notice between the credits and the first touch',notes)

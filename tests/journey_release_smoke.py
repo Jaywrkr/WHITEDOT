@@ -21,7 +21,7 @@ try:
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=true;s.firstJourney.skipped=true;s.journey.mode='viaje';s.journey.chapter=0;s.journey.colors={};s.journey.stick={gone:Array.from({length:14},(_,i)=>i+',0'),hinted:true};s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();r.audio();r.applyJourneyMode?.();}")
    page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000);page.wait_for_timeout(500);page.evaluate(hide);page.wait_for_function("__r.journeyChapter().id==='llanura'",timeout=10000)
    for done,nxt in [('llanura','lago'),('lago','bosque'),('bosque','tormenta'),('tormenta','vacio')]:
-    page.evaluate(f"()=>{{__r.S.journey.done.{done}=true;__r.journeyTravel();}}");page.wait_for_function(f"__r.journeyChapter().id==='{nxt}'",timeout=15000)
+    page.evaluate(f"()=>{{__r.S.journey.done.{done}=true;__r.journeyTravel(__r.S.journey.chapter+1);}}");page.wait_for_function(f"__r.journeyChapter().id==='{nxt}'",timeout=15000)
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='vacio'&&__r.journeyRelease().active",timeout=15000);page.evaluate(hide)
    st=page.evaluate('__r.journeyRelease()');assert st['total']==14 and st['released']==0,st
    assert page.evaluate('__r.cubeGrowth()')>2,'the cube arrives carrying what stuck'

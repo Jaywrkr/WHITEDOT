@@ -20,7 +20,7 @@ try:
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=true;s.firstJourney.skipped=true;s.journey.mode='viaje';s.journey.chapter=0;s.journey.colors={};s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();r.audio();r.applyJourneyMode?.();}")
    page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000);page.wait_for_timeout(500);page.evaluate(hide);page.wait_for_function("__r.journeyChapter().id==='llanura'",timeout=10000)
    for done,nxt in [('llanura','lago'),('lago','bosque'),('bosque','tormenta')]:
-    page.evaluate(f"()=>{{__r.S.journey.done.{done}=true;__r.journeyTravel();}}");page.wait_for_function(f"__r.journeyChapter().id==='{nxt}'",timeout=15000)
+    page.evaluate(f"()=>{{__r.S.journey.done.{done}=true;__r.journeyTravel(__r.S.journey.chapter+1);}}");page.wait_for_function(f"__r.journeyChapter().id==='{nxt}'",timeout=15000)
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='tormenta'&&__r.journeyDance().active&&!!__r.journeyDance().target",timeout=15000);page.evaluate(hide)
    sparks=page.evaluate('__r.S.sparks')
    assert page.evaluate('__r.journeyDance().inside'),'the first circle appears right beside the cube'

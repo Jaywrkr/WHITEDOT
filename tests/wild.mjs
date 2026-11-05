@@ -11,8 +11,9 @@ assert(wildDue(WILD_AFTER+30000,WILD_WALK,.4)&&!wildDue(WILD_AFTER+30000,WILD_WA
 const all={stars:Object.fromEntries(['llanura','lago','bosque','tormenta','vacio','jardin','dunas','cristales','faros','ruinas','cueva'].map(id=>[id,[true,true,true]]))},journey={free:true};
 const seen=new Set();for(let d=1;d<=60;d++){const day=`2026-11-${String(d).padStart(2,'0')}`,m=dailyRemix(day,all,journey,id=>PLACE_RHYTHMS[id]);assert(REMIX_PLACES.includes(m.id));assert(REMIX_RHYTHMS.includes(m.rhythm));assert.notEqual(m.rhythm,PLACE_RHYTHMS[m.id]);assert.deepEqual(dailyRemix(day,all,journey,id=>PLACE_RHYTHMS[id]),m);seen.add(m.id);}
 assert(seen.size>=5,'the remix moves around the places');
-// Only open places: with no stars only the five chapters' places are open, and none before the free World.
-const none={stars:{}};for(let d=1;d<=20;d++){const m=dailyRemix('2026-12-'+d,none,journey);assert(['llanura','lago','bosque','tormenta'].includes(m.id),m.id);}assert.equal(dailyRemix('2026-12-01',none,{free:false}),null);
+// Only open places, and none before the free World.
+// Since alpha.264, only a place you can reach: complete, on the ring or found by distance.
+const none={stars:{},ring:{llanura:true,lago:true},found:{bosque:{x:1,y:2}}};assert.equal(dailyRemix('2026-12-01',{stars:{}},journey),null,'nothing found, no remix');for(let d=1;d<=20;d++){const m=dailyRemix('2026-12-'+d,none,journey);assert(['llanura','lago','bosque'].includes(m.id),m.id);}assert.equal(dailyRemix('2026-12-01',none,{free:false}),null);
 // What it pays: 30, and 20 more over the day's best.
 assert.equal(remixSparks(.8,.9),REMIX_SPARKS);assert.equal(remixSparks(.95,.9),REMIX_SPARKS+REMIX_RECORD);
 // Plan H6: the spark is louder near, never silent within its reach of a walk.

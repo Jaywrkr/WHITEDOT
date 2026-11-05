@@ -58,8 +58,8 @@ try:
   p.evaluate(f"()=>{{const k=__r.saveStore.key,o=JSON.parse(localStorage.getItem(k));o.todayKey={YESTERDAY};localStorage.setItem(k,JSON.stringify(o));location.reload();}}")
   p.wait_for_function('!!window.__r?.journeyMode&&!!__r.worldOpened');p.wait_for_timeout(500)
   assert p.evaluate('[__r.S.mode,__r.worldReady(),__r.S.todayKey===__r.dayKey()]')==['camino',False,True],'a new player on a new day still needs ten crystals'
-  # Into the World and on through the Journey to the Bosque (chapter 3).
-  p.evaluate("()=>{const r=__r;document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);r.S.pathCrystals=Array.from({length:10},(_,i)=>'t:'+i);r.enterWorld({automatic:true});const j=r.S.journey;j.chapter=2;j.done={...j.done,llanura:true,lago:true};r.journeyTravel();r.save();}")
+  # Into the World and to the Bosque (chapter 3), as a save in the middle of the older Journey (alpha.264: by its index).
+  p.evaluate("()=>{const r=__r;document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);r.S.pathCrystals=Array.from({length:10},(_,i)=>'t:'+i);r.enterWorld({automatic:true});const j=r.S.journey;j.chapter=2;j.done={...j.done,llanura:true,lago:true};r.journeyTravel(3);r.save();}")
   p.wait_for_function("__r.BIOMES[Math.max(0,__r.curZone)]?.id==='bosque'",timeout=10000)
   at=p.evaluate('[__r.S.wx,__r.S.wy,__r.S.journey.chapter,__r.S.sparks]')
   # Leave it there overnight: yesterday's todayKey and World day, in one synchronous step so nothing saves in between.

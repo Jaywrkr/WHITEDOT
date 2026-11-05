@@ -5,12 +5,12 @@ Reglas vigentes en `main`, **alpha.235** (con los arreglos de Jay A–E, el Mapa
 
 ## Propósito y recorrido
 
-Explorar para descubrir sonidos, tocar a tiempo y construir Tu canción. El recorrido principal enseña cinco verbos; después puedes completar los once lugares, explorar el universo y conservar tus hallazgos. El Refugio es voluntario.
+Explorar para descubrir sonidos, tocar a tiempo y construir Tu canción. El recorrido principal enseña un verbo en la Llanura (desde alpha.264); después encuentras y completas los once lugares, explorar el universo y conservar tus hallazgos. El Refugio es voluntario.
 
 | Espacio | Función |
 |---|---|
-| Viaje | Camino, cinco capítulos y cierre; aprende jugando |
-| Once lugares | Rondas que se abren en orden y amplían Tu canción |
+| Viaje | Camino, la Llanura (tutorial) y cierre; aprende jugando |
+| Once lugares | Rondas a su distancia del origen; te encuentran al llegar; amplían Tu canción |
 | Universo abierto | Música procedural, criaturas, hallazgos, actividades y favoritos |
 | Refugio | Trofeos, objetos, colección y jardín de voces |
 
@@ -20,21 +20,36 @@ El cubo permanece pequeño. Música, generación y partidas se conservan; color 
 
 ## Lugares y avance
 
-| Orden | Lugar | Verbo |
-|---|---|---|
-| 1 | Llanura | Pegar |
-| 2 | Lago | Encadenar |
-| 3 | Bosque | Rodear |
-| 4 | Tormenta | Bailar |
-| 5 | Vacío | Soltar |
-| 6 | Jardín | Sembrar |
-| 7 | Dunas | Surfear |
-| 8 | Cristales | Resonar |
-| 9 | Faros | Guiar |
-| 10 | Ruinas | Reconstruir |
-| 11 | Cueva | Eco |
+| Orden | Lugar | Verbo | Distancia |
+|---|---|---|---|
+| 1 | Llanura | Pegar | 0,5 km (tutorial) |
+| 2 | Lago | Encadenar | 1 km |
+| 3 | Bosque | Rodear | 2 km |
+| 4 | Tormenta | Bailar | 3 km |
+| 5 | Vacío | Soltar | 5 km |
+| 6 | Jardín | Sembrar | 8 km |
+| 7 | Dunas | Surfear | 12 km |
+| 8 | Cristales | Resonar | 17 km |
+| 9 | Faros | Guiar | 23 km |
+| 10 | Ruinas | Reconstruir | 30 km |
+| 11 | Cueva | Eco | 40 km |
 
-El Viaje completa las cinco primeras; Jardín queda como siguiente destino. Completar cada lugar abre el siguiente. Los guardados anteriores conservan puertas ya ganadas o visitadas. Puedes repetir los lugares abiertos; no pierdes estrellas.
+El Viaje completa la Llanura. Los otros diez [te encuentran](#los-lugares-te-encuentran) en el mundo abierto, a su distancia del origen; no hay orden ni puerta cerrada. Los guardados anteriores conservan sus lugares ganados, en su sitio del anillo. Puedes repetir los lugares encontrados; no pierdes estrellas.
+
+### Los lugares te encuentran
+
+Jay, 5 de noviembre de 2026 («Me gusta, hazlo así»), alpha.264, rama `jay/lugares-te-encuentran` (depende de `jay/escaner-nms`, PR #398). El objetivo es claro: once lugares, once trofeos. Ir lejos, encontrarlos y liberarlos mientras exploras.
+
+- **Distancia fija, dirección tuya.** Cada lugar está a una distancia fija del origen (la tabla de arriba, `PLACE_KM` en `places.js`; 10 000 unidades por km). La primera vez que cruzas esa distancia a pie, hacia fuera o hacia dentro, su portal queda fijo 150 m por delante, en tu rumbo (`FOUND_AHEAD`; un poco más allá si cae en el mar), y se guarda en `S.lugares.found`. Así se encuentra vaya por donde vaya. Un aviso: «Una señal: Lago.».
+- **Un salto no es caminar.** Un paso de más de 120 m de golpe (`FOUND_JUMP`: «Otro paisaje», el regreso de una ronda, un viaje) no fija nada. Si ya estás más allá del siguiente lugar sin su portal (un guardado antiguo, un salto), queda fijo delante de ti en tu siguiente paso; solo ese, para que no se amontonen.
+- **El radar capta su señal.** La [capa de flechas](#una-capa-de-flechas) ofrece siempre una flecha con el icono `lugar` hacia el siguiente lugar sin ★ cuyo portal existe (tipo `lugar`, rango 3,5: bajo lo tuyo, sobre lo raro), con su distancia. Sustituye la luz del borde del anillo; la columna blanca sobre el portal en pantalla se queda. Antes de que exista el portal, la línea bajo el HUD dice «Lago · más lejos · 1 km», el objetivo dice «Siguiente: Lago. Está más lejos, a 1 km.» y Lugares lo lista así, sin «Seguir» ni «Ir».
+- **Abiertos y sin orden.** Todo lugar está abierto tras el Viaje (`placeOpen`); se entra por su portal. «Siguiente» es el primero sin ★ en la tabla. La Remezcla de hoy solo elige lugares encontrados o completos. El viaje rápido del mapa, solo a portales que existen.
+- **Cada trofeo mejora el radar.** Ver [El Escáner](#el-escáner): nivel 2 tras el Viaje, nivel 3 con cinco trofeos, más alcance con cada uno.
+- **El anillo se queda para lo ganado.** Los lugares completos cuando un guardado pasa a la versión 3, y todo capítulo guardado en el Viaje, viven en el anillo alrededor del Refugio, en el mismo sitio de siempre (`S.lugares.ring`, mismo `portalSpots` y mismo centro fijo). Un lugar encontrado por distancia se queda donde lo encontraste, también al ganarlo. «Volver al anillo» sigue igual.
+- **Migración** (`normalizePlaces`, versión 2 → 3). Se conservan estrellas, récords, notas, rondas del día, `seen`, `kept`, centro y `won`/`master`. Un guardado nuevo: anillo vacío. A mitad del Viaje: sus capítulos guardados en el anillo, con su ★. Tras el Viaje con algunos lugares: los ganados en el anillo, donde estaban; los demás pasan a la distancia (un `seen` o `kept` sin ★ también: su puerta no se cierra, se encuentra). Con los once: los once en el anillo. Una versión futura no se toca y queda de solo lectura. Un lugar completo sin portal (por ejemplo de `?lugar=`) va al anillo al cargar.
+- **Tiempo.** A ~68 km/h, los 40 km de la Cueva son unos 35 min a pie en línea recta.
+
+Pruebas: `tests/lugares-encuentran.mjs` (distancias, cruce en cuatro direcciones, en diagonal y hacia dentro, ya pasado, salto, mar, guardado y fallo de escritura, migración de cada forma de guardado, siguiente portal, flecha, radar por trofeo, Viaje de un lugar) y `tests/lugares_encuentran_smoke.py` (390×844 y 1280×800: tras la Llanura, en cuatro direcciones aparece el Lago delante a 1 km, la flecha `lugar` apunta a él, ganarlo mejora el radar, y un guardado avanzado, también desde la versión 2, conserva sus lugares ganados donde estaban). No probado en teléfono ni con personas; Jay no lo ha jugado.
 
 | Estrella | Condición |
 |---|---|
@@ -315,10 +330,21 @@ Coherencia T1 (Jay, 4 de noviembre de 2026, alpha.259) y **Escáner NMS** (Jay, 
 - **Cuánto duran.** Mientras el dedo está quieto y **7 s después** (`SCAN_SHOW`); luego se apagan en 1 s y la vista queda limpia. Una hoja o salir del Mundo las borra al instante.
 - **Nada tapa la vista.** No hay panel. `#scanner` (ids `#scannerRegion`, `#scannerSources`, `#scannerHint`) sigue en la página, oculto: solo `?dev=1` lo muestra, con el detalle técnico de cada voz en `data-detail` (papel, instrumento, patch, efecto; para el jugador, en la Bitácora › Música). Mientras el dedo está quieto se apartan los avisos, la línea de la zona y el HUD del poder (`body[data-scan]`). Tocar una fila ya no marca el mapa: el mapa conserva su «Marcar».
 - **Nivel 1, desde el inicio:** alcance 40 m, onda corta, solo iconos (sin nombres ni distancias).
-- **Nivel 2, con el Viaje terminado** (`S.journey.finished` o el Mundo abierto): alcance 120 m, «Nombre · distancia». Los nombres salen aunque «Mostrar todo» esté en «no», porque se pidieron; con «Textos del universo» apagados, no.
+- **Nivel 2, con el Viaje terminado** (`S.journey.finished` o el Mundo abierto): alcance 120 m, «Nombre · distancia».
+- **Cada trofeo mejora el radar** (alpha.264, [los lugares te encuentran](#los-lugares-te-encuentran)). Un trofeo es un lugar con su ★ (o un capítulo guardado en el Viaje). `scanTrophies`, `TROPHY_REACH` y `trophyReach` en `scanner-model.js`. Antes había un solo salto, el de los once; ahora el nivel y el alcance siguen a los trofeos:
+
+| Trofeos | Nivel | Alcance |
+|---|---|---|
+| 0–1 | 2 (nombres) | 120 m |
+| 2 · 3 · 4 | 2 | 140 · 160 · 180 m |
+| 5 | 3 (flechas del registro, «?») | 200 m |
+| 6 · 7 · 8 · 9 · 10 | 3 | 215 · 230 · 250 · 265 · 280 m |
+| 11 (o `S.lugares.won`) | 3 | 300 m, como antes |
+
+  Durante el Viaje, nivel 1 (40 m). El nivel 4 (4a/4b/4c) sigue pidiendo los once y los km, y `SCAN_OPEN = 3` lo cierra. La Carga sigue poniendo el 4c (1200 m) 20 s. Ningún guardado baja: con el Viaje terminado nunca menos de 2, con `won` siempre 300 m. Los nombres salen aunque «Mostrar todo» esté en «no», porque se pidieron; con «Textos del universo» apagados, no.
 - **Escanear no calla nada** (bug 8). Las sondas siguen pitando, los sonidos raros y la bengala siguen sonando, y el eclipse y el polvo siguen oscuros: `paused()` ya no mira `r.scanning` en `descubrir.js`, `viaje-a.js`, `lejos-b.js`, `recorrer.js`, `secretos-cielo.js` y `viaje-c.js`.
 - **Registro** (`src/scanner-model.js`, puro). `registerScan({id, name, shape, level, km, rarity, secret, known, batch, sites, done, page})`, una vez por tipo; el mismo id dos veces lanza un error. `shape` es un tipo de la tabla de iconos. `sites` sale del generador propio de cada cosa o de `hashKey` (`scanSiteAt`), nunca del RNG antiguo. `known(S)`: un tipo secreto deja de ser «?» cuando ya encontraste uno. `scanLevel`, `scanReach`, `scanNear`, `scanPage`, y la colocación de las marcas, `scanMarks` (pura, probada en Node). Proveedores (`scanner.js`): voces, cajas, hallazgos, juegos, sondas (nivel 2); rumores, cristales de cometa y asteroide (nivel 3).
-- **Nivel 3, desde T2** (los once lugares, `S.lugares.won`, 300 m): ver [Una capa de flechas](#una-capa-de-flechas). **Niveles 4a/4b/4c** (`S.bandas.far` ≥ 10/30/60 km, 600/900/1200 m) escritos; `SCAN_OPEN = 3` los cierra salvo la [carga](#la-carga), que pone el 4c 20 s. `scanBandEntry` deja listo el enganche con `registerBand`.
+- **Nivel 3, desde T2** (desde alpha.264, cinco trofeos; con los once, 300 m): ver [Una capa de flechas](#una-capa-de-flechas). **Niveles 4a/4b/4c** (`S.bandas.far` ≥ 10/30/60 km, 600/900/1200 m) escritos; `SCAN_OPEN = 3` los cierra salvo la [carga](#la-carga), que pone el 4c 20 s. `scanBandEntry` deja listo el enganche con `registerBand`.
 - **Guardado.** Ninguno nuevo. «Encontrado» se lee de lo que ya se guarda (colección de elementos, formas, reliquias, juegos, sondas, cristales, secretos).
 - **Dibujo y coste.** Iconos horneados una vez (`fx-kit` `bake`), el anillo es un trazo, el texto es `fillText`; ningún degradado por fotograma ni `shadowBlur`. Con movimiento reducido el anillo no viaja (aparece a su alcance y se apaga) y las marcas salen a la vez, sin destello. Con calidad ligera, sin halo, sin segundo anillo y sin destello. Medido en `?anillo=1` (llamadas al lienzo por fotograma, una pasada): sin escanear 1004 y escaneando, con ocho marcas, 1016 a 390×844; 1694 y 1708 a 1280×800.
 
@@ -368,12 +394,12 @@ Coherencia T2 (Jay, 4 de noviembre de 2026, alpha.260, rama `jay/coherencia-t2`)
 - **Una capa** (`src/scanner-arrows.js`, reglas puras en `src/scanner-arrows-model.js`). Cada sistema que pintaba su marca en el borde la ofrece (`r.edgeOffer`) mientras dibuja; la capa elige y dibuja una vez por fotograma, desde el dibujo del Escáner. Antes había diez u once marcas distintas.
 - **Qué entra.** Descubrir (juego, hallazgo del cubo, caja y el sonido raro, «?»); Recorrer (la siguiente boya con su km y el satélite); Secretos del cielo (eclipse, cristal de cometa «?» y sonda «?», también con sonido); la tanda A (una cosa de la tanda, el siguiente aro de un reto y la bengala con su distancia); las tandas B, C y D (una sola marca cada una, «?» hasta el nivel 4); las pistas de hallazgo (`clues.js`, eran tres puntos cian); la chispa salvaje sin sonido (era dorada); la bandada que enseña una caja (`vida.js`, era dorada); los hitos (`landmarks.js`, eran brillo y rayos de color; «?» si aún no llegaste) y la región vecina (`distant-colors.js`, era una luz de color: ahora solo se señala cuando no hay nada más).
 - **Cuáles.** Primero lo tuyo (el siguiente aro de un reto, la bengala); luego lo raro o secreto (sonda, rumor, secreto, chispa, eclipse); luego lo que se puede hacer (caja, cristal, cosa de una tanda, hallazgo, juego, sonido, satélite); luego el camino (hito, boya). Dentro de cada grupo, lo más cercano. Dos ofertas a menos de 30 m son una flecha; dos flechas no se pisan en el borde. Durante una escena solo quedan el reto y la bengala.
-- **Nivel 3 del Escáner, con los once lugares** (`S.lugares.won`). Alcance 300 m. El registro también ofrece flechas: lo que alcanza, lo bastante raro para señalar (no las voces) y no encontrado. Nuevos en el registro: rumores abiertos, cristales de cometa y el asteroide secreto, «?» en las marcas («? · 240 m») y en las flechas hasta que conoces su tipo. Desde alpha.263 no hay panel ni filas que marquen el mapa: ver [El Escáner](#el-escáner).
-- **Antes de los once**, las flechas vienen solo de los sistemas que ya marcaban el borde.
+- **Nivel 3 del Escáner, con cinco trofeos** (desde alpha.264; antes, los once). Alcance de 200 a 300 m. El registro también ofrece flechas: lo que alcanza, lo bastante raro para señalar (no las voces) y no encontrado. Nuevos en el registro: rumores abiertos, cristales de cometa y el asteroide secreto, «?» en las marcas («? · 240 m») y en las flechas hasta que conoces su tipo. Desde alpha.263 no hay panel ni filas que marquen el mapa: ver [El Escáner](#el-escáner).
+- **Antes de cinco trofeos**, las flechas vienen solo de los sistemas que ya marcaban el borde, entre ellos el siguiente lugar (`lugar`, alpha.264).
 - **Movimiento reducido:** la flecha está desde el primer fotograma, sin aparecer poco a poco. **Calidad ligera:** sin halo. La flecha y los iconos se hornean una vez (`fx-kit` `bake`); ningún degradado ni `shadowBlur`.
 - **Coste.** En `?anillo=1`, llamadas al lienzo por fotograma (mediana de tres) en cuatro sitios (3, 15, 35 y 65 km), antes y después: 758→753, 477→459, 3778→3771 y 1058→1046 a 390×844; 1481→1476, 761→742, 7377→7375 y 1948→1932 a 1280×800. Con el nivel 3 abierto, 755, 460, 3777 y 1049; 1476, 742, 7376 y 1932: menos o igual en los ocho. Tres flechas cuestan unas pocas llamadas (`flechas_smoke.py`).
 - **Guardado.** Ninguno nuevo. La marca usa `S.universeMap.mark`, como «Marcar» en el mapa.
-- **Fuera de T2.** La Brújula (poder de caja) pasa a ser la [carga](#la-carga) en T3. La columna y la brújula del anillo, el mini-mapa y las marcas del Viaje no son esta capa.
+- **Fuera de T2.** La Brújula (poder de caja) pasa a ser la [carga](#la-carga) en T3. La columna sobre el portal y la brújula del anillo, el mini-mapa y las marcas del Viaje no son esta capa. Desde alpha.264 el siguiente lugar fuera de la pantalla sí: su luz del borde pasó a ser una flecha `lugar`.
 
 Pruebas: `tests/scanner-arrows.mjs` (elección, tope, una por cosa, separación, región sola, escena, blanco, «?», km de la boya, movimiento reducido, calidad ligera y que cada marca vieja ofrece a la capa), `tests/scanner-model.mjs` (nivel 3) y `tests/flechas_smoke.py` (390×844 y 1280×800). Los recorridos de Recorrer, Secretos del cielo, tanda A, sonidos raros, arreglos de la media hora y el Viaje comprueban que su marca entra en la capa. No probado en teléfono ni con personas.
 
@@ -381,7 +407,7 @@ Pruebas: `tests/scanner-arrows.mjs` (elección, tope, una por cosa, separación,
 
 Coherencia, tanda T3 (alpha.262), con la decisión 4 de Jay aprobada: una caja, un poder, sin sorpresas.
 
-- **El radar siempre está.** El Escáner no necesita cajas: su nivel es el de la partida (1 al empezar, 2 tras el Viaje, 3 con los once lugares). La carga suma, no abre nada.
+- **El radar siempre está.** El Escáner no necesita cajas: su nivel es el de la partida (1 al empezar, 2 tras el Viaje, 3 con cinco trofeos; el alcance crece con cada uno desde alpha.264). La carga suma, no abre nada.
 - **La Brújula pasa a ser la Carga.** Abrir su caja pone el Escáner en su nivel más alto (4c: 1200 m, con nombres) durante 20 s de juego. El reloj es el del poder (`power-clock.js`): se para con un menú, una hoja o el escáner abierto. Al acabar vuelve el nivel de la partida.
 - **Una flecha, la de la capa.** Mientras dura, la [capa de flechas](#una-capa-de-flechas) lee el registro en 4c y da una flecha propia, blanca, con su distancia («900 m»), a lo más raro que no has encontrado (el primero del registro: rareza, luego distancia). Es de las tuyas (`EDGE_RANK.carga` 4,5: sigue en una escena, bajo el reto). Las otras flechas del nivel siguen; ninguna es dorada. La caja ya no dibuja flechas propias ni lleva su lista de lo raro.
 - **El Compañero señala igual.** Con el mismo registro, al alcance de la partida: una flecha a lo más raro no encontrado.
@@ -404,7 +430,7 @@ Tanda aprobada por Jay (29 de octubre de 2026, alpha.236, rama `jay/volver`). Na
 Jay, 29 de octubre de 2026 (alpha.235, rama `jay/mapa-universo`): «el mapa tiene que ser perfecto». Sustituye al recuadro de cuadros marrones de la Bitácora. Código: `universe-map-model.js` (modelo), `universe-map-art.js` (dibujo) y `universe-map.js` (pantalla); `map.js` lo carga.
 
 - **Dónde.** Un botón con un mapa junto al menú (`#bUniverseMap`) en el Mundo libre tras el Viaje, en la superficie, en las dos vistas. No sale en capítulos, rondas, finales, actividades ni en el Refugio. En la Bitácora, Mapa muestra una vista quieta de todo lo descubierto; «Abrir el mapa» (`#mapZoom`) o tocar el dibujo abre la misma pantalla. «Más › Mapa y favoritos» sigue abriendo la Bitácora. No se quitó ningún control: el dock del Mundo tenía solo el menú.
-- **Tres acercamientos.** Anillo (los once lugares en su círculo, centrado en el anillo, con nombre, color de completo y sus ★), Región (alrededor de ti, unos 3 km) y Universo (centrado en el origen, todo lo descubierto, nunca menos que el anillo de 5 km). «+» y «−» pasan de uno a otro; pellizcar y la rueda acercan sin saltos, alrededor del dedo o del puntero. Arrastrar desplaza. ◎ centra en ti. El rótulo dice el acercamiento. Lejos, los once lugares se juntan en un anillo pequeño con sus colores.
+- **Tres acercamientos.** Anillo (los lugares con portal: los del anillo en su círculo y, desde alpha.264, los encontrados por distancia donde están; centrado en el anillo, con nombre, color de completo y sus ★), Región (alrededor de ti, unos 3 km) y Universo (centrado en el origen, todo lo descubierto, nunca menos que el anillo de 5 km). «+» y «−» pasan de uno a otro; pellizcar y la rueda acercan sin saltos, alrededor del dedo o del puntero. Arrastrar desplaza. ◎ centra en ti. El rótulo dice el acercamiento. Lejos, los once lugares se juntan en un anillo pequeño con sus colores.
 - **Niebla.** Lo no visitado es negro. Cada región visitada (`S.places`) se pinta con el color de su bioma como un disco suave que se funde con los vecinos: sin cuadros duros. El Abismo, muy tenue. Anillos discontinuos a 5, 20 y 50 km del origen. Arriba, el porcentaje descubierto del primer anillo sin completar: «Hasta 5 km · 8 % descubierto».
 - **Un anillo de distancia entero es ganado.** Descubrir todas las regiones de un disco (unas 608 hasta 5 km) lo guarda con su día (`S.universeMap.bands`), lo dibuja en dorado y avisa una vez: «Mapa del universo · Todo hasta 5 km descubierto». No paga chispas: la regla `universeReward` es para lo que aparece o se hace en un sitio; esto es una meta larga y única, y Jay decidió que lo especial no da chispas (decisión 9 del [catálogo](IDEAS_UNIVERSO.md#decisiones-de-jay-28-de-octubre-de-2026)). Tampoco es un logro de la lista, que sí paga chispas.
 - **Tú siempre claro.** Tu cubo blanco con una flecha de rumbo. Una línea blanca fina al siguiente lugar con su distancia (`formatDistance`). Abajo a la derecha, la escala.
@@ -590,10 +616,11 @@ Las duraciones son objetivos de diseño, no tiempos garantizados de jugadores. E
 
 | URL | Uso |
 |---|---|
-| `?capitulo=llanura` | Aísla uno de los cinco capítulos |
+| `?capitulo=llanura` | Aísla uno de los cinco capítulos (desde alpha.264 solo la Llanura es del Viaje; los otros cuatro siguen para guardados antiguos y pruebas) |
 | `?lugar=jardin` | Aísla cualquiera de los once lugares |
 | `?lugar=jardin&maestro=1` | Ronda Maestro |
-| `?anillo=1` | Mundo libre posterior al Viaje |
+| `?anillo=1` | Mundo libre posterior al Viaje (los cinco capítulos antiguos guardados). Desde alpha.264 los otros seis vienen ya encontrados, en su sitio del anillo antiguo, para que las pruebas lleguen a cualquier portal (también con `?lugar=`) |
+| `?anillo=1&lejos=1` | Lo mismo sin encontrar nada: los lugares se encuentran por distancia (`lugares_encuentran_smoke.py`) |
 | `?festival=1` | Viaje completo con guardado separado y reinicio para otra persona |
 | `?prueba=1` / `?prueba=ver` | Observaciones locales de prueba |
 | `?medir=1` | Medida local de fotogramas |

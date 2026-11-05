@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.263** en la rama `jay/escaner-nms`, desde `main` `72a5bd1` (con T0–T4). Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.264** en la rama `jay/lugares-te-encuentran`, desde `jay/escaner-nms` (PR #398, alpha.263, aún no en `main`). Las entradas describen su revisión, no certifican producción.
+
+
+## Los lugares te encuentran · 2.3.0-alpha.264
+
+Rama `jay/lugares-te-encuentran`, desde `origin/jay/escaner-nms` (dependencia explícita: PR #398, alpha.263). Aprobado por Jay el 5 de noviembre («Me gusta, hazlo así»). Guía: [Los lugares te encuentran](docs/MUNDO.md#los-lugares-te-encuentran) y [El Viaje](docs/VIAJE.md).
+
+- **Once distancias.** Los once lugares están a una distancia fija del origen: 0,5 · 1 · 2 · 3 · 5 · 8 · 12 · 17 · 23 · 30 · 40 km, en su orden de siempre (`PLACE_KM`). La primera vez que cruzas esa distancia a pie, su portal aparece 150 m por delante, en tu rumbo, y se guarda. Se encuentra vaya por donde vaya. Un salto no cuenta como caminar; si ya estás más allá del siguiente lugar, aparece en tu siguiente paso.
+- **El radar capta su señal.** Una flecha de la capa de flechas, con el icono `lugar` y su distancia, apunta siempre al siguiente lugar sin ★ cuyo portal existe (sustituye la luz del borde del anillo). Antes: «Lago · más lejos · 1 km» bajo el HUD, en el objetivo y en Lugares. Aviso al encontrarlo: «Una señal: Lago.».
+- **Sin orden.** Todo lugar está abierto tras el Viaje; se entra por su portal. Lugares deja un solo «Seguir», el del siguiente encontrado.
+- **Cada trofeo mejora el radar.** Nivel 2 tras el Viaje (120 m); 140, 160 y 180 m con dos, tres y cuatro trofeos; nivel 3 (flechas del registro y «?») con cinco, de 200 a 300 m con los once. Antes el nivel 3 pedía los once. El nivel 4 sigue pidiendo los once y los km; la Carga sigue en 4c 20 s. Ningún guardado baja de nivel.
+- **El Viaje, un lugar.** Camino, Llanura y su final. Al guardar la Llanura su portal lleva al Refugio. El final y su música no cambian de código (suena la frase de la Llanura y el tema). El festival conserva sus cinco capítulos.
+- **Tu progreso intacto.** `S.lugares` pasa a la versión 3: `found` (portales encontrados) y `ring` (lugares que se quedan en el anillo). Los lugares ya ganados, y todo capítulo guardado en el Viaje, siguen ganados y en su sitio del anillo, con el mismo centro. Solo los no ganados pasan a la distancia. Un guardado a mitad del Viaje conserva sus capítulos guardados y termina el que está jugando. Estrellas, récords, notas, `seen`, `kept`, `won` y `master` se conservan; una versión futura no se toca.
+- **Para probar.** `?anillo=1` (y `?lugar=`) trae los otros seis ya encontrados en su sitio del anillo antiguo, para llegar a cualquier portal; `?anillo=1&lejos=1`, nada encontrado.
+- **Sin cambios** en `audio.js`, en las rondas, estrellas, Maestro, Libre, Eco ni retos, ni en el tamaño del cubo. Ningún módulo nuevo (`sw.js` solo cambia su clave). Sin RNG: las posiciones salen del rumbo del jugador o de `portalSpots`.
+- **Preservación:** capa `approvedLTE`.
+- **Pruebas.** Nuevas `tests/lugares-encuentran.mjs` y `tests/lugares_encuentran_smoke.py` (390×844 y 1280×800). Actualizadas a las reglas nuevas, sin desactivar ninguna: `places.mjs`, `places-ring.mjs`, `places-durability.mjs`, `game-objective.mjs`, `journey-chapters.mjs`, `refugio-lugares.mjs`, `wild.mjs`; en navegador `ring_smoke.py` (sin orden), `journey_chapters_smoke.py` y `rapido2_viaje_smoke.py` (el Viaje de un lugar), `journey_finale_smoke.py`, `free_world_return_smoke.py` y los de los juegos del Viaje (`journey_chain`, `journey_dance`, `journey_lasso`, `journey_release`: llegan a su capítulo por índice), `escaner_smoke.py`, `escaner_nms_smoke.py`, `carga_smoke.py` y `flechas_smoke.py` (nivel 2 con un trofeo; la flecha `lugar` ocupa un sitio) y `universe_map_smoke.py` (ya no hay lugar cerrado).
+- **Resultados.** `npm test`: 303 suites. `node scripts/release-audit.mjs`: sin errores. 105 recorridos de navegador y audio de lugares, anillo, Viaje, Escáner, flechas y mapa (incluidos `journey_mix.py` y `journey_finale_mix.py`, que no cambian), bajo el candado, todos en verde tras los cambios. No probado en teléfono ni con personas; nadie ha escuchado el final de un solo capítulo.
 
 
 ## El Escáner como No Man's Sky · 2.3.0-alpha.263

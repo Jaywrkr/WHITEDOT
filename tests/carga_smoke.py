@@ -32,6 +32,8 @@ try:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.edgeState&&!!window.__r?.spawnBox&&__r.ringState?.().active",timeout=90000)
+   # Alpha.264: each trophy upgrades the radar; as a new player after the Llanura (one trophy), level 2 at 120 m.
+   page.evaluate("()=>{__r.S.journey.done={llanura:true};const d=__r.placesData();for(const id of Object.keys(d.stars))if(id!=='llanura')d.stars[id]=[false,false,false];}")
    page.evaluate(FREE);page.wait_for_timeout(600);page.evaluate(FREE);page.evaluate(ENTRY)
    page.evaluate(GO,{'x':31000,'y':1234});page.evaluate("()=>{__r.S.lugares={...(__r.S.lugares||{}),won:false};}");page.evaluate(PLACE);page.wait_for_timeout(700);page.evaluate(HIDE)
    # --- 1 · Without a box the radar is there at the save's level (2 here); nothing points 900 m away.

@@ -43,6 +43,8 @@ try:
    page.add_init_script(COUNT)
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.scanState&&__r.ringState?.().active&&!!__r.skySecretState",timeout=90000)
+   # Alpha.264: each trophy upgrades the radar; as a new player after the Llanura (one trophy), level 2 at 120 m.
+   page.evaluate("()=>{__r.S.journey.done={llanura:true};const d=__r.placesData();for(const id of Object.keys(d.stars))if(id!=='llanura')d.stars[id]=[false,false,false];}")
    page.evaluate(FREE);page.wait_for_timeout(600);page.evaluate(FREE);page.evaluate(PROBE_ENTRY)
    M=page.evaluate("async()=>{const M=await import('/src/secretos-cielo-model.js');return {probes:M.PROBES.map(p=>({i:p.i,x:p.x,y:p.y})),site:M.eclipseNear({x:__r.S.wx,y:__r.S.wy},2e6),cutoff:M.ECLIPSE_CUTOFF};}")
    home=page.evaluate("({x:__r.S.wx,y:__r.S.wy})");page.evaluate(GO,home)

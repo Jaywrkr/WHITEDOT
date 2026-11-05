@@ -7,6 +7,8 @@ import {familyOf} from './superbiomes.js';
 // the theme plays whole, the chapter is kept and a gold portal opens to the next. If the player stops playing, the
 // music falls back to a pedal and waits. Places come from the World's own map; nothing consumes the old random sequence.
 export const CHAPTERS=Object.freeze(['camino','llanura','lago','bosque','tormenta','vacio','refugio']);
+// The chapter after `chapter`: since alpha.264 a world chapter leads to the Refugio (the festival walks all five).
+export const shortNext=(chapter,festival=false)=>!festival&&chapter>=1&&chapter<CHAPTERS.length-1?CHAPTERS.length-1:chapter+1;
 export const CHAPTER_MARK=4;
 export const WORLD_CHAPTERS=Object.freeze(['llanura','lago','bosque','tormenta','vacio']);
 // How loud the music may get in each state, as a cap on its energy.
@@ -118,8 +120,12 @@ export function initialize(runtime){
   // The Tormenta's Plenitud: a bar of bolts, one on every beat.
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
   const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+(runtime.rapidLevel===2?RAPID_PORTAL_WAIT:Math.max(PORTAL_WAIT,theme))};return true;}
- // Through the portal: the next chapter's biome, found on the map near here.
- function travel(){runtime.cancelJourneyVictory?.();const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
+ // Through the portal: the next chapter's biome, found on the map near here. «Los lugares te encuentran» (Jay, 5 Nov 2026,
+// alpha.264): the Journey is a tutorial of one place, so a chapter kept goes to the Refugio and its finale; the other
+// places are found in the open World by distance (places-ring.js). A save in the middle of an older Journey finishes the
+// chapter it is in, then goes to the Refugio; every chapter it kept stays kept. The festival keeps its five. `to` (a
+// chapter's index) is for «?capitulo=», which still opens any of the five on its own save.
+ function travel(to=null){runtime.cancelJourneyVictory?.();const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=Number.isInteger(to)&&to>j.chapter&&to<CHAPTERS.length?to:shortNext(j.chapter,!!runtime.festival),id=CHAPTERS[next];
   // A festival build with fewer chapters would end early, in the Refugio, with your phrase (since plan I5 it has all five).
   if(runtime.festival&&!FESTIVAL_CHAPTERS.includes(id)){portal=null;finaleAsked=true;if(runtime.journeyFinale)runtime.journeyFinale({festival:true});else runtime.landHouse?.();return true;}
   if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale(runtime.festival?{festival:true}:undefined);else runtime.landHouse?.();return true;}
@@ -169,8 +175,9 @@ export function initialize(runtime){
    c.beginPath();c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a+2.5)*9,by+Math.sin(a+2.5)*9);c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a-2.5)*9,by+Math.sin(a-2.5)*9);c.stroke();c.globalAlpha=1;}
   // The Journey's map beside the Line (panel 10, P3): marks of 4 px, and only inside a chapter, never over a round.
   // A chapter done keeps its colour here (P7), so the palette you earn grows mark by mark.
-  if(inChapter()){const y=Math.round(H*.8),x1=W-Math.max(24,W*.12),gap=10;c.globalAlpha=1;
-   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?runtime.earnedColor?.(id)||'#ffffff':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-2,y+9,CHAPTER_MARK,CHAPTER_MARK);});}
+  // Alpha.264: only the chapters of this Journey (kept, or the one you are in): one mark for a new player.
+  if(inChapter()){const y=Math.round(H*.8),x1=W-Math.max(24,W*.12),gap=10,marks=runtime.festival?WORLD_CHAPTERS:WORLD_CHAPTERS.filter(id=>j.done[id]||current()===id);c.globalAlpha=1;
+   marks.forEach((id,i)=>{const x=x1-(marks.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?runtime.earnedColor?.(id)||'#ffffff':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-2,y+9,CHAPTER_MARK,CHAPTER_MARK);});}
   c.restore();}
  Object.defineProperties(runtime,{journeyChapterPulse:{get:()=>pulse},journeyPhrase:{get:()=>phrase},journeyComplete:{get:()=>complete},journeyTravel:{get:()=>travel},drawJourneyChapters:{get:()=>draw},
   journeyChapter:{get:()=>()=>({moments:{...moments,storm:storm.length},progress:{...progress(current())},lived:momentLived(current(),progress(current()),journey().moments||{}),bars:barsLived(current(),progress(current())),portalOpen:portalOpen(),beacon:!!(active()&&beacon()),chapter:own().chapter,id:current(),state:stateNow(),hits,portal:portal?{x:portal.x,y:portal.y}:null,done:{...own().done},notes:Object.fromEntries(Object.entries(own().notes).map(([k,v])=>[k,[...v]]))})}});

@@ -15,14 +15,15 @@ export const EDGE_SIDE=22,EDGE_TOP=104;   // px kept off the sides and the bars 
 export const EDGE_SCENE_RANK=4;
 // What matters most first. The player's own (the Carga's arrow, T3, is one of them); then what is rare or secret; then
 // what can be done; then the way.
-export const EDGE_RANK=Object.freeze({reto:5,carga:4.5,bengala:4,secreto:3,rumor:3,sonda:3,chispa:3,eclipse:3,caja:2,cometa:2,
+// «Los lugares te encuentran» (alpha.264): the next place, the game's goal, sits under the player's own (3,5).
+export const EDGE_RANK=Object.freeze({reto:5,carga:4.5,bengala:4,lugar:3.5,secreto:3,rumor:3,sonda:3,chispa:3,eclipse:3,caja:2,cometa:2,
  banda:2,hallazgo:2,juego:1.5,sonido:1.5,satelite:1.5,hito:1,boya:1,cosa:1,region:0});
 export const EDGE_SHAPES=ICON_KINDS;
 // Escáner NMS (alpha.263): one icon per kind (scan-icons.js). The kind decides the arrow's icon, whatever shape a system
 // offered; carga and cosa keep the shape of the thing they point at. «?» (secreto) only for what is not known.
 export const EDGE_ICON=Object.freeze({reto:'reto',bengala:'bengala',secreto:'secreto',rumor:'secreto',sonda:'sonda',chispa:'chispa',
  eclipse:'eclipse',caja:'caja',cometa:'cometa',banda:'banda',hallazgo:'hallazgo',juego:'juego',sonido:'sonido',satelite:'satelite',
- hito:'hito',boya:'boya',region:'region',carga:null,cosa:null});
+ hito:'hito',boya:'boya',region:'region',lugar:'lugar',carga:null,cosa:null});
 const some=o=>!!o&&typeof o==='object'&&Object.keys(o).length>0;
 // Whether a kind offered as «?» is already known in this save: one of its kind found (a comet crystal, a probe, a rare
 // sound in the album) or heard and named (a landmark: the map already says «Estrella guía»). A rumour, a secret and

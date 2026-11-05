@@ -52,6 +52,8 @@ try:
    page.add_init_script(COUNT)
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.edgeState&&__r.ringState?.().active",timeout=90000)
+   # Alpha.264: each trophy upgrades the radar; as a new player after the Llanura (one trophy), level 2 at 120 m.
+   page.evaluate("()=>{__r.S.journey.done={llanura:true};const d=__r.placesData();for(const id of Object.keys(d.stars))if(id!=='llanura')d.stars[id]=[false,false,false];}")
    page.evaluate(FREE);page.wait_for_timeout(600);page.evaluate(FREE);page.evaluate(ENTRIES)
    home={'x':31000,'y':1234};page.evaluate(GO,home);page.evaluate("()=>{__r.S.lugares={...(__r.S.lugares||{}),won:false};}");page.evaluate(PLACE,True);page.wait_for_timeout(900);page.evaluate(HIDE)
    # --- 1 · Before the eleven places (level 2): the World's own marks only, white, three at most; no registry arrow.
@@ -59,7 +61,8 @@ try:
    assert not any(e['key'].startswith('scan:') for e in s['shown']),('no registry arrow before level 3',s)
    # --- 2 · The eleven places open level 3: the registry points, the rarer first, three at most; the secret is «?».
    page.evaluate("()=>{__r.S.lugares={...(__r.S.lugares||{}),won:true};}")
-   page.wait_for_function("__r.edgeState().level==='3'&&__r.edgeState().shown.filter(e=>e.key.startsWith('scan:prueba')).length===3",timeout=5000)
+   # Alpha.264: the next place's arrow («lugar», over the rare) keeps one of the three.
+   page.wait_for_function("(()=>{const s=__r.edgeState().shown;return __r.edgeState().level==='3'&&s.filter(e=>e.key.startsWith('scan:prueba')).length===3-(s.some(e=>e.kind==='lugar')?1:0);})()",timeout=5000)
    most=0
    for _ in range(12):s=st(page);most=max(most,len(s['shown']),s['drawn']['arrows']);page.wait_for_timeout(60)
    assert most<=3,('three arrows at most',most);assert s['offered']>=5,s
