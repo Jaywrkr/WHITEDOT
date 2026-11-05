@@ -45,7 +45,10 @@ try:
    # The pet comes to a still cube. Moving the cube, a following flock or a travelling pulse would play player notes that may teach it legitimately.
    page.evaluate('()=>{const r=__testRuntime,p=r.petState;r.waves.length=0;const x=r.S.wx;for(let i=1;i<40&&(r.nearbyFlocks(900).length||r.currentPocket()?.kind==="quiet"||r.regionOfPos(r.S.wx,r.S.wy).sea);i++)r.S.wx=x+i*1500;if(r.nearbyFlocks(900).length)throw Error("no quiet test spot");window.__phrase=JSON.stringify(r.S.pet.phrase);window.__count=__petNotes.length;p.x=r.S.wx;p.y=r.S.wy;}')
    page.wait_for_function('__petNotes.length>__count',timeout=12000)
-   assert page.evaluate('JSON.stringify(__testRuntime.S.pet.phrase)')==page.evaluate('__phrase')
+   # The phrase may change only by hearing someone else's note (another sound nearby on a slow runner), never its own:
+   # what it last heard must not be one of the notes it just played (same time).
+   if page.evaluate('JSON.stringify(__testRuntime.S.pet.phrase)')!=page.evaluate('__phrase'):
+    assert page.evaluate("(()=>{const h=__testRuntime.petState.heard;return !!h&&!__petNotes.slice(__count).some(n=>Math.abs(n.time-h.time)<.05)})()"),'the pet never learns its own phrase back'
    page.evaluate('()=>{__testRuntime.S.sound=false;window.__silentCount=__petNotes.length;}');page.wait_for_timeout(300);assert page.evaluate('__petNotes.length')==page.evaluate('__silentCount');page.evaluate('__testRuntime.S.sound=true')
    page.locator('#bMenu').click();page.locator('#bCube').click();assert page.locator('#mCube').is_visible()
    page.evaluate('()=>{const r=__testRuntime;r.S.ach.poder_cometa=r.S.ach.tiempo=r.S.ach.bandada1=r.S.todayKey;r.S.ach.tope=r.S.todayKey;}')

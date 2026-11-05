@@ -19,6 +19,13 @@ Rama `jay/sonido-pro-3`, desde `origin/jay/sonido-pro-2` (PR #403 sin integrar).
 - **Pruebas.** `tests/sound-pro.mjs` amplía: la familia y sus cinco perfiles, el rumble, el stab de dub (sin contar como instrumento), el 303 más resonante, cuerdas y arpegios, la apertura de melodic, mezcla de DJ de techno a house, «Sonido clásico». `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/jay/sonido-pro-2`. Sin recorridos de navegador, por la regla rápida.
 - **Límites.** Nadie lo ha escuchado todavía. En el render de dub la composición no llega a tocar su acorde de dub (energía baja en 40 s): los stabs son la melodía. El limitador de `audio.js` fija el volumen final; el nivel del deck mueve poco el LUFS. CPU de teléfono sin medir. Sin PR: la rama espera a Jay.
 
+
+## Pruebas estables: mascota y escáner (sin subir versión)
+
+`main` salió en rojo por dos recorridos que leen el juego mientras sigue vivo.
+- `pet_smoke`: la frase puede cambiar si la mascota oye otra nota del jugador cerca; la prueba exige que nunca aprenda su propia frase (`petState.heard` guarda la última nota oída y su tiempo).
+- `escaner_nms_smoke`: `elementBook` y `cat` pueden crecer mientras el mundo suena; escanear no debe borrar ni cambiar nada de lo que había. El resto se compara igual que antes.
+
 ## Sonido pro 2: house clásico · 2.3.0-alpha.267
 
 Rama `jay/sonido-pro-2`, desde `main` `ff8f5d8`. Segundo lote del plan aprobado. Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
