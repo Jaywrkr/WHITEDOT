@@ -77,11 +77,8 @@ export function drawUniverseMap(c,W,H,view,scene,{names=null,bottom=24,scale=tru
  if(scene.me&&scene.mark){const [lx,ly,on]=lineTo(c,W,H,view,scene.me,scene.mark,{dash:[4,4],alpha:.7});if(!on&&words)label(c,formatDistance(Math.hypot(scene.mark.x-scene.me.x,scene.mark.y-scene.me.y)),lx,ly,{W,H});}
  if(scene.me&&scene.next){const [lx,ly,on]=lineTo(c,W,H,view,scene.me,scene.next);if(words&&Math.hypot(scene.next.x-scene.me.x,scene.next.y-scene.me.y)*view.scale>40){const [mx,my]=toScreen(view,W,H,scene.me.x,scene.me.y);label(c,`${scene.next.name} · ${formatDistance(Math.hypot(scene.next.x-scene.me.x,scene.next.y-scene.me.y))}`,on?(mx+lx)/2:lx,on?(my+ly)/2:ly,{W,H});}}
  // Icons: the important ones always; the rest only where nothing more important is drawn (14 px cells).
- // Far out, the eleven places become one small ring with their colours (tapping it opens the ring's card).
- const ringR=scene.center?6000*view.scale:Infinity,compact=ringR<34;
- if(compact&&scene.center){const [x,y]=toScreen(view,W,H,scene.center.x,scene.center.y),r=Math.max(5,ringR);c.save();c.strokeStyle='#ffffff';c.globalAlpha=.7;c.lineWidth=1;c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();c.globalAlpha=1;
-  for(const it of scene.items||[])if(it.kind==='place'){const a=Math.atan2(it.y-scene.center.y,it.x-scene.center.x);c.fillStyle=it.complete?it.ink:it.open?'#ffffff':'#8a8a8f';c.fillRect(x+Math.cos(a)*r-1.5,y+Math.sin(a)*r-1.5,3,3);}c.restore();drawn.push({kind:'ring',x:Math.round(x),y:Math.round(y)});}
- const taken=new Set(),order=[...(scene.items||[])].filter(it=>!compact||(it.kind!=='place'&&it.kind!=='ringHome')).sort((a,b)=>(UMAP_PRIORITY[b.kind]??12)-(UMAP_PRIORITY[a.kind]??12));
+ // Since alpha.269 there is no ring: each place is drawn where its portal is.
+ const taken=new Set(),order=[...(scene.items||[])].sort((a,b)=>(UMAP_PRIORITY[b.kind]??12)-(UMAP_PRIORITY[a.kind]??12));
  const keep=[];for(const it of order.reverse()){const [x,y]=toScreen(view,W,H,it.x,it.y);if(x<-30||x>W+30||y<-30||y>H+30)continue;const cell=Math.floor(x/14)+','+Math.floor(y/14),always=(UMAP_PRIORITY[it.kind]??12)<=UMAP_PRIORITY.refugio;if(!always&&taken.has(cell))continue;taken.add(cell);keep.push([it,x,y]);}
  for(const [it,x,y] of keep.reverse()){icon(c,it,x,y,view,{names:showNames,W,H});drawn.push({kind:it.kind,id:it.id,x:Math.round(x),y:Math.round(y)});}
  if(scene.me){const [x,y]=toScreen(view,W,H,scene.me.x,scene.me.y);drawMe(c,x,y,scene.me.heading);drawn.push({kind:'me',x:Math.round(x),y:Math.round(y)});}

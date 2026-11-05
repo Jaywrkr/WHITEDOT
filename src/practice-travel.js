@@ -59,7 +59,7 @@ export function initialize(runtime){
  // Jay (27 Oct 2026, alpha.226): no jump to another place inside a level, so nobody ends up far from it: a chapter of the
  // Journey still being played, a round of a place or the Journey's finale. Once the Journey is over the jump is there
  // from the first moment (its first one is free, sparks.js), and «Volver al punto anterior» is always free.
- const inLevel=()=>{const j=runtime.S.journey;return !!(runtime.placeRun?.()||runtime.journeyFinaleState?.()?.running||j&&j.finished!==true&&j.mode==='viaje');};
+ const inLevel=()=>{const j=runtime.S.journey;return !!(runtime.placeRun?.()||runtime.journeyFinaleState?.()?.running||j&&j.finished!==true&&j.open!==true&&j.mode==='viaje');};
  // Jay (28 Oct 2026, alpha.230): «Otro paisaje» and «Viajar a otra tierra» only once the eleven places of the ring are
  // complete; before, they are nowhere (dock, menu, Tu cubo) and the code refuses the jump. The first jump after that is
  // free (sparks.js). «Volver al punto anterior» stays as it was; a player already in another seed keeps the way home, and «?dev=1» keeps its tools.

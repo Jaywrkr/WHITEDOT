@@ -13,8 +13,8 @@ export function initialize(runtime){
  function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.tranquilo=normalizeTranquilo(runtime.S.tranquilo);state=runtime.S.tranquilo;calmRun=null;ended=null;}return state;}
  const on=()=>!!runtime.S&&tranquiloOn(own());
  const run=()=>runtime.placeRun?.()||null;
- // The Journey: the Camino, then each of its five chapters until it is finished.
- const inJourney=()=>{const S=runtime.S;if(S.mode==='camino')return true;if(S.journey?.finished===true)return false;const ch=runtime.journeyChapter?.();return !!ch&&WORLD_CHAPTERS.includes(ch.id);};
+ // The Journey: the Camino, then each of its five chapters until it is finished; never on a save with no Journey (alpha.269).
+ const inJourney=()=>{const S=runtime.S;if(S.journey?.open===true)return false;if(S.mode==='camino')return true;if(S.journey?.finished===true)return false;const ch=runtime.journeyChapter?.();return !!ch&&WORLD_CHAPTERS.includes(ch.id);};
  const applies=()=>!!runtime.S&&calmApplies({on:on(),run:run(),journey:inJourney()});
  // The switch: on and off at any moment; a failed save puts it back as it was.
  function set(value){if(!runtime.S||!tranquiloWritable(own()))return false;const before=state.on;state.on=!!value;if(runtime.save?.()===false){state.on=before;sync();return false;}tick();sync();return true;}

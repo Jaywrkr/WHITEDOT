@@ -57,7 +57,7 @@ function game(){const els={};const el=id=>els[id]||(els[id]={hidden:id==='mJourn
  const targets=[],cues=[],toasts=[],moves=[];const identity={seed:'s1'};
  const r={S:{mode:'world',layer:'superficie',journey:{finished:true,free:true},todayKey:'2026-11-03',wx:0,wy:0,sparks:7,sound:true},worldIdentity:identity,$:el,inWorld:()=>true,save:()=>r.saveOk,saveOk:true,toast:t=>toasts.push(t),
   ac:{state:'running',currentTime:1},master:{gain:{value:1,setTargetAtTime(v){targets.push(v);this.value=v;}}},musicVolume(){return this.musicDuck??1;},beatSoon:fn=>fn(2),chordTones:()=>[57,60,64,67,71],SIX:.125,vel:v=>v,hookInst:(...a)=>cues.push(a),
-  canPracticeTravel:()=>true,travelPracticePoint:p=>{moves.push(p);r.S.wx=p.x;r.S.wy=p.y;return true;},ringHome:()=>{moves.push('ring');return true;},ringHomePoint:()=>({x:0,y:0}),W:390,H:844,camX:0,camY:0,cx:canvas,targets,cues,toasts,moves};
+  canPracticeTravel:()=>true,travelPracticePoint:p=>{moves.push(p);r.S.wx=p.x;r.S.wy=p.y;return true;},originHome:()=>{moves.push('origin');return true;},originSpot:()=>({x:0,y:0,layer:'superficie'}),W:390,H:844,camX:0,camY:0,cx:canvas,targets,cues,toasts,moves};
  recorrer(r);return r;}
 {const r=game(),w=worldKey(r.worldIdentity);const step=(n=3)=>{for(let i=0;i<n;i++){r.camX=r.S.wx;r.camY=r.S.wy;r.recorrerTick(.05);r.drawRecorrer();}};
  // A buoy: one soft note of the chord, an octave up; counted; nothing paid.
@@ -77,7 +77,7 @@ function game(){const els={};const el=id=>els[id]||(els[id]={hidden:id==='mJourn
  const sec=r.recorrerSection();assert.match(sec,/Recorrer lejos · 2 satélites/);assert.match(sec,/data-sat-door="sat:1:0"/);assert.match(sec,/data-sat-ring/);assert.match(sec,/Estás aquí/);
  const forMap=r.satellitesForMap();assert.equal(forMap.length,2);assert.equal(forMap.find(e=>e.id===s2.id).here,true);
  assert.equal(r.satelliteDoor(s1.id),true);assert.equal(r.moves.length,1);assert.equal(satelliteHere(w,{x:r.S.wx,y:r.S.wy})?.id,s1.id,'arrives inside the other');assert.equal(r.S.sparks,7,'the door costs nothing and pays nothing');
- step();assert.equal(r.recorrerState().inside.id,s1.id);assert.equal(r.recorrerState().book.sats.length,2);assert.equal(r.satelliteRing(),true);assert.equal(r.moves.at(-1),'ring');
+ step();assert.equal(r.recorrerState().inside.id,s1.id);assert.equal(r.recorrerState().book.sats.length,2);assert.equal(r.satelliteRing(),true);assert.equal(r.moves.at(-1),'origin','«Volver al origen» (alpha.269: no ring)');assert.match(sec,/Volver al origen/);assert.doesNotMatch(sec,/anillo/);
  // A failed save leaves the satellite unkept.
  const r2=game();r2.saveOk=false;const s3=satelliteAt(worldKey(r2.worldIdentity),3,1);r2.S.wx=s3.x;r2.S.wy=s3.y;r2.recorrerTick(.05);assert.equal(r2.recorrerState().book.sats.length,0);
  // Outside the free World (a round, the Refugio): nothing, and the music as it was.

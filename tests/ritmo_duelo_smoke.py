@@ -1,6 +1,6 @@
 """Ritmo · Duelo final (Jay, 29 Oct 2026, alpha.237), on a 390×844 phone (the eleven rhythms) and at 1280×800 with
 ?rapido=2 in English (four of them). It is secret until the eleven places are complete, their finale played and their
-note seen (eleven-note.js); then it is announced once, drawn white in the centre of the ring with a column of light, and
+note seen (eleven-note.js); then it is announced once, drawn white at the origin (no ring since alpha.269) with a column of light, and
 Lugares takes you there. Walking into it asks; «Ahora no» closes. The duel sings each place's rhythm for a bar and you
 answer it in the next; a real touch counts; «Dejar la ronda» or walking away ends it, losing nothing. Completing it gives
 its own ★ (outside the 33), the Corona de los once (worn, in Tu cubo, can be taken off) and its entry in the Bitácora,
@@ -23,7 +23,7 @@ def open_page(b,size,query=''):
  p.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1'+query);p.wait_for_function('!!window.__r?.ringState&&__r.inWorld()&&!!__r.ringState().active',timeout=20000)
  p.evaluate("()=>{"+HIDE+";__r.setJourneyMode?.('libre');document.body.classList.remove('dev');}");p.wait_for_timeout(300);p.evaluate(HIDE);return ctx,p,errors
 def at(p,dx,dy):
- c=p.evaluate("__r.ringState().center");p.evaluate("([x,y])=>{__r.S.wx=x;__r.S.wy=y;}",[c['x']+dx,c['y']+dy]);p.wait_for_timeout(250)
+ c=p.evaluate("__r.originSpot()");p.evaluate("([x,y])=>{__r.S.wx=x;__r.S.wy=y;}",[c['x']+dx,c['y']+dy]);p.wait_for_timeout(250)
 def walk_in(p):
  p.evaluate(HIDE);at(p,0,200);at(p,0,0);p.wait_for_function("!document.getElementById('mDuel').hidden",timeout=5000);p.wait_for_timeout(500)
 def answer_all(p,real=False,limit=90):
@@ -57,11 +57,11 @@ try:
   p.locator('#elevenExplore').click();p.wait_for_function("__r.ritmoState().save.said.duel",timeout=3000)
   assert p.evaluate("__r.ritmoDuelOpen()") and p.evaluate("__r.ritmoState().save.said.duel"),'announced once'
   assert p.locator('#mDuel').is_hidden(),'standing on it already does not ask'
-  # Lugares has its line; it takes you to the centre of the ring.
+  # Lugares has its line; it takes you to the origin (alpha.269: no ring).
   at(p,3000,0);p.locator('#bMenu').click();p.locator('#bLugares').click();p.wait_for_function("!document.getElementById('lugaresDuel').hidden")
-  assert p.inner_text('#lugaresDuel')=='Duelo final · en el centro del anillo ›' and p.locator('#lugaresList li').count()==11
+  assert p.inner_text('#lugaresDuel')=='Duelo final · en el origen ›' and p.locator('#lugaresList li').count()==11
   p.locator('#lugaresDuel').click();p.wait_for_timeout(400);assert p.locator('#mLugares').is_hidden()
-  c=p.evaluate("__r.ringState().center");assert p.evaluate("([x,y])=>Math.hypot(__r.S.wx-x,__r.S.wy-y)",[c['x'],c['y']])<400,'back at the centre'
+  c=p.evaluate("__r.originSpot()");assert p.evaluate("([x,y])=>Math.hypot(__r.S.wx-x,__r.S.wy-y)",[c['x'],c['y']])<400,'back at the origin'
   at(p,0,170);p.screenshot(path=str(SHOTS/'ritmo-duelo-anillo-390.png'))
   # Walking in asks; «Ahora no» closes it.
   walk_in(p);text=p.inner_text('#mDuel')
@@ -110,7 +110,7 @@ try:
   p.reload();p.wait_for_function('!!window.__r?.ringState&&__r.inWorld()',timeout=20000);p.evaluate(HIDE)
   assert p.evaluate("__r.ritmoState().save.duel.won");sec=p.evaluate("__r.ritmoSection()");assert 'Duelo final' in sec and 'Corona de los once' in sec,sec
   p.locator('#bMenu').click();p.locator('#bLugares').click();p.wait_for_function("!document.getElementById('lugaresDuel').hidden")
-  assert p.inner_text('#lugaresDuel')=='Duelo final ★ · en el centro del anillo ›';p.evaluate(HIDE)
+  assert p.inner_text('#lugaresDuel')=='Duelo final ★ · en el origen ›';p.evaluate(HIDE)
   assert not errors,errors;ctx.close()
   # At 1280×800, ?rapido=2 and in English: four rhythms, the same sheets.
   ctx,p,errors=open_page(b,(1280,800),'&rapido=2&lang=en');p.evaluate(ELEVEN);p.evaluate("()=>{__r.S.elevenNote={version:1,seen:true};__r.save();}")

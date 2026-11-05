@@ -48,7 +48,8 @@ export function initialize(runtime) {
   // Break ten Camino crystals to open the World. Panel 11 (Q6, D7-C): whoever opened it once keeps it open on later days.
   // `lastWorldDay` and the «mundo» achievement are both written by enterWorld and never cleared, so either one proves it.
   const worldOpened=()=>!!S.lastWorldDay||!!S.ach?.mundo;
-  const worldReady=()=>(S.pathCrystals?.length||0)>=10||worldOpened();
+  // «Directo mundo abierto» (alpha.269): a World given at the start (journey-mode.js, `abierto`) is open without crystals.
+  const worldReady=()=>(S.pathCrystals?.length||0)>=10||worldOpened()||S.journey?.open===true;
   const inWorld=()=>S.mode==="world";
   function shownStreak(){if(!S.lastDay)return 0;const d=diffDays(S.lastDay,S.todayKey);return d<=1?S.streak:0;}
   function displayDay(){return S.lastDay===S.todayKey?S.totalDays:S.totalDays+1;}

@@ -42,7 +42,7 @@ try:
   # 2. The same browser opens the sale edition: same progress, no account, no client.
   sale['on']=True;page.reload();page.wait_for_function(ready);page.wait_for_timeout(600)
   state=page.evaluate("({edition:__r.edition,html:document.documentElement.dataset.edition,sparks:__r.S.sparks,crystals:__r.S.pathCrystals.length,client:__r.accountClient,owner:__r.accountUserId,locked:document.body.dataset.accountLocked||null,mode:__r.journeyMode()})")
-  assert state=={'edition':'store','html':'store','sparks':57,'crystals':10,'client':None,'owner':None,'locked':None,'mode':'viaje'},state
+  assert state=={'edition':'store','html':'store','sparks':57,'crystals':10,'client':None,'owner':None,'locked':None,'mode':'libre'},('alpha.269: the open World from the start, in the full view',state)
   def no_account():
    for id in ACCOUNT:assert page.locator('#'+id).is_hidden(),id
    words=page.evaluate("[...document.querySelectorAll('button,a,[role=button]')].filter(b=>b.offsetParent!==null&&b.getClientRects().length&&/cuenta|nube|^entrar$/i.test(b.textContent.trim())).map(b=>b.id||b.textContent.trim())")

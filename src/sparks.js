@@ -55,8 +55,9 @@ export function initialize(runtime){
  // Jay (27 Oct 2026, alpha.226): the jump is there as soon as the Journey ends; the first one after it is free, so a
  // player who arrives with no sparks can still go somewhere else (and come back free). Kept in S.journey.freeJumpUsed.
  // Since alpha.230 (Jay) the jump only exists once the eleven places are complete: the free one is the first after that.
+ // Since alpha.269 a save with no Journey (`open`) gets it the same way.
  const ring=()=>runtime.placesAllComplete?.()===true;
- const freeJump=()=>book().version===1&&owner.journey?.finished===true&&ring()&&owner.journey.freeJumpUsed!==true&&!(owner.journey.version>1);
+ const freeJump=()=>book().version===1&&(owner.journey?.finished===true||owner.journey?.open===true)&&ring()&&owner.journey.freeJumpUsed!==true&&!(owner.journey.version>1);
  function reserveJump(){const q=book();if(freeJump()){const ticket={free:true,balance:owner.sparks,economy:structuredClone(q)};owner.journey.freeJumpUsed=true;q.stats.jumps++;q.stats.sinceJump=0;return ticket;}
   if(q.version!==1||sparkNumber(owner.sparks)<SPARK_JUMP_COST){notice('Necesitas '+Math.max(0,SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas más');return false;}
   const ticket={balance:owner.sparks,economy:structuredClone(q)};debitSparks(owner,SPARK_JUMP_COST);q.stats.jumps++;q.stats.sinceJump=0;return ticket;

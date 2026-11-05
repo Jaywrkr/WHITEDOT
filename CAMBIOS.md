@@ -1,8 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.268** en la rama `jay/sonido-pro-3`, desde `origin/jay/sonido-pro-2` (dependencia explícita: PR #403, alpha.267, sin integrar), en espera de que Jay escuche los renders y revise las líneas nuevas de `audio.js`. Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.269** en la rama `jay/mundo-abierto`, desde `main` `372419e` (alpha.267; alpha.268 queda reservada para el lote de sonido techno), en espera de que Jay la juegue. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Directo mundo abierto · 2.3.0-alpha.269
+
+Rama `jay/mundo-abierto`, desde `main` `372419e`. Jay (5 de noviembre): «Quitemos Llanura… de una vez al mundo abierto. No debe aparecer el anillo. Directo mundo abierto.» Guía: [Directo mundo abierto](docs/MUNDO.md#directo-mundo-abierto).
+
+- **Empiezas en el Mundo.** Un guardado nuevo entra al Mundo al cargar: sin Camino, sin Viaje, sin capítulo de la Llanura y sin ventana. Vista completa. El radar empieza en el nivel 1. La línea bajo el HUD dice «Llanura · más lejos · 0,5 km».
+- **Los once por distancia.** La Llanura es un lugar más, el primero, a 0,5 km. Tabla sin cambios: 0,5 · 1 · 2 · 3 · 5 · 8 · 12 · 17 · 23 · 30 · 40 km. Cada portal aparece delante al cruzar su distancia a pie; la flecha `lugar` apunta al siguiente sin ★; Lugares dice «Más lejos · X km» antes.
+- **Sin anillo.** Ni portales en anillo, ni centro, ni «Volver al anillo» (Lugares, mapa, satélites), ni brújula de lugares. `#lugaresRing` sigue en la página, oculto. El mapa llama «Cerca» a su acercamiento más próximo, centrado en ti. El Duelo final pasa al origen; desde un satélite, «Volver al origen».
+- **El progreso se conserva.** `S.lugares` pasa a la versión 4: cada lugar ganado del anillo (y cada capítulo guardado) va a su distancia, en la dirección de su ángulo antiguo, guardado y visitable. Estrellas, récords, notas, rondas, `seen`, `kept`, `won`, `master` y `credited` se quedan. El Viaje no cambia de formato: `open` (sin Viaje) y, si el Mundo se dio al empezar, `freeGiven`. A mitad del Viaje: Mundo libre con capítulos, notas y colores.
+- **Reapuntado.** Radar por trofeos (nivel 2 con el primero; nadie baja). Reto entre dos, salto «Otro paisaje» y su primer salto gratis, la primera media hora y la vista tranquila: ya no esperan al Viaje terminado. El final de los once y sus créditos no cambian; el final del Viaje queda para el festival y las pruebas.
+- **El Viaje se conserva para pruebas.** `?festival=1`, `?capitulo=`, `?viaje=1`, `?testSeed=` y `?lab=1` empiezan como antes, igual que los navegadores automatizados sin `?abierto=1`.
+- **Pruebas.** Nuevas: `tests/mundo_abierto.mjs` y `tests/mundo_abierto_smoke.py` (ejecutada en local, 390×844 y 1280×800). Reescritas a la regla nueva: `places-ring.mjs`, `lugares-encuentran.mjs`, `places.mjs`, `recorrer.mjs`, `universe-map.mjs`, `lugares_encuentran_smoke.py`, `ring_smoke.py`, `ritmo_duelo_smoke.py`, `recorrer_smoke.py`, `arreglos_ae_smoke.py`, `universe_map_smoke.py`, `universe_map_mark_smoke.py`, `universe_map_english_smoke.py`, `compass_handoff_smoke.py`, `sale_edition_smoke.py`. Con `?viaje=1`, porque prueban el Viaje: `journey_entry_smoke.py`, `free_world_return_smoke.py`, `player_touch_smoke.py`, `notas_jay_smoke.py`, `sky_map_halo_smoke.py`, `live_do_c_smoke.py`, `live_flee_c_smoke.py`, `rapido2_viaje_smoke.py`. Ninguna desactivada. `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/main`. Los demás recorridos de navegador no se ejecutaron en local (regla rápida): los corre el CI.
+- **Límites.** Nadie lo ha jugado. Sin teléfono ni personas. Sin `audio.js` ni música.
 
 ## Sonido pro 3: techno · 2.3.0-alpha.268
 

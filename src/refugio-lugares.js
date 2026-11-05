@@ -6,7 +6,7 @@ import {glow} from './fx-kit.js';
 // In the Sala, a shelf of eleven trophies: each place's gold thing once it has its ★, an empty socket before. Above it,
 // the wall of stars (★ N / 33, white since panel 11: the stars under the trophies are the gold). In the house bar,
 // «Lugares» opens Lugares (no number since panel 11, Q1: the HUD counts them): the map table (every place with its stars,
-// record and what it asks; fast travel to the ones already entered) and the door to the ring.
+// record and what it asks; fast travel to the ones already entered).
 export const TROPHY_SHELF=Object.freeze({x:34,y:76,gap:19});
 // What comes next on the path (plan H3): the first closed place and the one to complete before it; null once all are open
 // (always after the Journey since alpha.264).
@@ -62,7 +62,7 @@ export function initialize(runtime){
   // «Los lugares te encuentran» (alpha.264): a place whose portal is not found yet says how far it is.
   if(!stars(p.id)[0]&&!placeFound(d,p.id))return `${p.name} · más lejos · ${kmText(placeKm(p.id))} km`;
   return `${p.name} ${glyphs(p.id)}${best?` · ${roundPercent(best.onTime)} % a tiempo`:''}`;}
- // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
+ // Lugares: every place with its stars and what it asks, or how far it is; «Ir» to the ones already entered.
  function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d),goal=gameObjective(runtime.S,d);$('lugaresCount').textContent=d.readOnly?'':`${goal.completed||0} / 11`;if($('lugaresDoor'))$('lugaresDoor').textContent=goal.id?`Seguir hacia ${nameOf(goal.id)}`:'Explorar';$('lugaresNext').textContent=d.readOnly?goal.line:`${nextLine(d,runtime.S.journey)} · ★ ${have}/${TOTAL_STARS}`;
   const list=$('lugaresList');list.replaceChildren();
   // Alpha.264: one «Seguir», the next place whose portal is found (the arrow's), as when only the next one was open.
@@ -76,8 +76,8 @@ export function initialize(runtime){
   runtime.ritmoLugares?.(list);
   // Con Luca (alpha.239, duos.js): «Reto entre dos ›» once a place is complete.
   runtime.duoLugares?.();
-  // Jay (28 Oct 2026, alpha.230): «Volver al anillo», always there after the Journey, free; first when you are far away.
-  const ring=$('lugaresRing');if(ring){const show=runtime.S.journey?.finished===true&&!d.readOnly&&!runtime.placeRun?.();ring.hidden=!show;ring.classList.toggle('next',show&&!!runtime.ringAway?.());ring.onclick=home;}
+  // «Directo mundo abierto» (Jay, 5 Nov 2026, alpha.269): no ring, so no «Volver al anillo»; #lugaresRing stays, hidden.
+  const ring=$('lugaresRing');if(ring){ring.hidden=true;ring.classList.remove('next');ring.onclick=null;}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
    if(place){const quote=document.createElement('span');quote.style.whiteSpace='nowrap';quote.textContent=`${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;line.replaceChildren('Remezcla de hoy: ',quote);btn.onclick=()=>remixGo(mix);}}
@@ -99,8 +99,6 @@ export function initialize(runtime){
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
  function door(){runtime.ringGuide?.();}
- // Out of the Refugio and back to the ring's centre; if it cannot move (a recording, a failed save), Lugares stays open.
- function home(){if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.ringHome?.()){$('mLugares').hidden=true;return true;}runtime.toast?.('Ahora no se puede volver. Inténtalo otra vez.');return false;}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':'Lugares';}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};

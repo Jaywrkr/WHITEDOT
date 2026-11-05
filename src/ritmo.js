@@ -60,7 +60,8 @@ export function initialize(runtime){
  const noteSeen=()=>elevenNoteSeen(runtime.S.elevenNote);
  const open=()=>writable()&&duelOpen(places(),noteSeen());
  const ring=()=>runtime.ringState?.()||{};
- const center=()=>ring().center||null;
+ // «Directo mundo abierto» (alpha.269): the duel is at the origin, where the eleven distances start (places-ring.js).
+ const center=()=>runtime.originSpot?.()||null;
  const ringActive=()=>!!ring().active;
  const six=()=>runtime.SIX||.15;
  function start(){if(!open()||duel||runtime.placeRun?.()||!sound()||!ringActive())return false;const c=center();if(!c)return false;
@@ -93,18 +94,18 @@ export function initialize(runtime){
  // At the portal: what it is, its ★, and «Jugar»; «Ahora no» closes. Without sound it says it needs it.
  function ask(){const s=sheet('ask');if(!s)return false;$('duelTitle').textContent='Duelo final';s.add('Los once ritmos, uno tras otro.');s.add('Escucha un compás. Repítelo en el siguiente.');
   if(s.d.won)s.add(`Tu mejor duelo · ${roundPercent(s.d.best)} % a tiempo.`);if(!sound())s.add('Con sonido: actívalo en Ajustes.');
-  const play=$('duelPlay');play.hidden=!sound();play.textContent='Jugar';play.onclick=()=>{s.box.hidden=true;if(!start())runtime.toast?.('Ahora no se puede. Vuelve al centro del anillo.',{force:true});};
+  const play=$('duelPlay');play.hidden=!sound();play.textContent='Jugar';play.onclick=()=>{s.box.hidden=true;if(!start())runtime.toast?.('Ahora no se puede. Vuelve al origen.',{force:true});};
   const close=$('duelClose');close.textContent='Ahora no';close.onclick=()=>{s.box.hidden=true;};s.box.hidden=false;return true;}
  // The end, on black: its ★ in gold, how it went and, the first time, the ornament. «Explorar» goes on.
  function result({score,share:sh,fresh}){const s=sheet('result');if(!s)return false;$('duelTitle').textContent='Duelo final · Completo';s.add(`Ecos · ${score.echoes} de ${duelList(rapid()).length}`);s.add(`${roundPercent(sh)} % a tiempo`);
   if(fresh){s.add('Nuevo adorno: Corona de los once. Está en Tu cubo.');s.add('Queda en la Bitácora.');}
   const play=$('duelPlay');play.hidden=false;play.textContent='Explorar';play.onclick=()=>{s.box.hidden=true;runtime.hud?.();};
-  const close=$('duelClose');close.textContent='Otra vez';close.onclick=()=>{s.box.hidden=true;if(!start())runtime.toast?.('Ahora no se puede. Vuelve al centro del anillo.',{force:true});};s.box.hidden=false;return true;}
+  const close=$('duelClose');close.textContent='Otra vez';close.onclick=()=>{s.box.hidden=true;if(!start())runtime.toast?.('Ahora no se puede. Vuelve al origen.',{force:true});};s.box.hidden=false;return true;}
  // ---------- each tick ----------
  let inside=null;
  function duelTick(){if(!duel){if(!open()||!ringActive()){inside=null;return;}const c=center(),S=runtime.S;if(!c)return;
    // Announced once, when the ring first shows it.
-   if(!state.said.duel&&!modal()&&runtime.toast?.('Duelo final · en el centro del anillo',{force:true})!==false)commit(s=>{s.said.duel=true;});
+   if(!state.said.duel&&!modal()&&runtime.toast?.('Duelo final · en el origen',{force:true})!==false)commit(s=>{s.said.duel=true;});
    // It asks when you walk into it, not when you already stand there (a load, a return to the ring).
    const near=Math.hypot(S.wx-c.x,S.wy-c.y)<DUEL_REACH;if(inside===null)inside=near;else if(near&&!inside&&!modal()){inside=true;ask();}else if(!near)inside=false;return;}
   const S=runtime.S,c=duel.center;
@@ -153,11 +154,11 @@ export function initialize(runtime){
  // Lugares: «Eco» on each place that offers it, and the duel's line once it is open (to the centre of the ring).
  function lugares(list){const d=places();if(!d||!list)return;for(const li of list.children){const id=li.dataset?.placeId,acts=li.querySelector?.('.lugar-actions');if(!id||!acts||!echoOffered(d,id,sound()))continue;
    const b=doc.createElement('button');b.textContent='Eco';b.dataset.echo=id;b.title='De memoria, sin señales';b.onclick=()=>{$('mLugares')&&($('mLugares').hidden=true);if(!startEcho(id))runtime.toast?.('Ahora no se puede. Inténtalo en el Mundo.',{force:true});};acts.prepend(b);}
-  const link=$('lugaresDuel');if(link){link.hidden=!open();if(open()){link.textContent=own().duel.won?'Duelo final ★ · en el centro del anillo ›':'Duelo final · en el centro del anillo ›';link.onclick=()=>{if(runtime.ringHome?.()){$('mLugares')&&($('mLugares').hidden=true);}else runtime.toast?.('Ahora no se puede volver. Inténtalo otra vez.');};}}}
+  const link=$('lugaresDuel');if(link){link.hidden=!open();if(open()){link.textContent=own().duel.won?'Duelo final ★ · en el origen ›':'Duelo final · en el origen ›';link.onclick=()=>{if(runtime.originHome?.()){$('mLugares')&&($('mLugares').hidden=true);}else runtime.toast?.('Ahora no se puede volver. Inténtalo otra vez.');};}}}
  const esc=v=>String(v).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
  // The Bitácora (Lugares tab): the duel, the ornament, the places played from memory and the ghosts kept.
  function section(){if(!writable())return '';const d=state.duel,echo=Object.keys(state.echo).filter(id=>state.echo[id].rounds>0),ghosts=PLACE_IDS.filter(id=>state.ghosts[id]);if(!d.won&&!open()&&!echo.length&&!ghosts.length)return '';
-  const rows=[];if(d.won)rows.push(`<p>Duelo final <span class="ritmo-star">★</span> · ${roundPercent(d.best)} % a tiempo · ${d.echoes} ecos</p><p>Corona de los once · tu adorno</p>`);else if(open())rows.push('<p>Duelo final · en el centro del anillo</p>');
+  const rows=[];if(d.won)rows.push(`<p>Duelo final <span class="ritmo-star">★</span> · ${roundPercent(d.best)} % a tiempo · ${d.echoes} ecos</p><p>Corona de los once · tu adorno</p>`);else if(open())rows.push('<p>Duelo final · en el origen</p>');
   if(echo.length)rows.push(`<p>Eco · ${esc(echo.map(name).join(', '))}</p>`);if(ghosts.length)rows.push(`<p>Fantasmas · ${esc(ghosts.map(id=>`${name(id)} ${roundTime(state.ghosts[id].ms)}`).join(' · '))}</p>`);
   return `<details class="journal-section" data-journal-detail="Ritmo" id="journalRitmo"><summary>Ritmo</summary>${rows.join('')}</details>`;}
  own();

@@ -9,15 +9,17 @@ import {placeTier,layerGrew} from './song.js';
 // with 70 % on time. Stars never pay sparks. H1 (Jay, alpha.233): a round pays no sparks either (LEVEL_SPARKS, spark-rules.js):
 // it gives ★ and grows Tu canción; sparks are earned in the open universe.
 // They live in S.lugares: S.places already holds the regions visited, for the map and the Bitácora.
-// Plan H3 (24 October): the ring opens in order, like the tracks of a record: each place after the Journey opens when
+// Plan H3 (24 October, replaced by version 3): the places opened in order, like the tracks of a record: each place after the Journey opens when
 // the one before it is complete. Completing all eleven wins the game; the 33 stars are the master version of your song.
 // Version 2 keeps open every place a version-1 save had open by its stars (`kept`), so nobody loses a door.
 // Version 3 · «Los lugares te encuentran» (Jay, 5 Nov 2026, docs/MUNDO.md#los-lugares-te-encuentran): each place sits at
 // a fixed distance from the origin (PLACE_KM) and its portal is fixed, and saved in `found`, the first time you cross that
-// distance on foot, a step ahead on your heading (places-ring.js). The places already complete when a save reaches
-// version 3, and every chapter kept in the Journey, stay on the old ring around the Refugio (`ring`), where they were.
-// No order any more: a place is open once the free World is; you reach it by finding its portal.
-export const PLACES_VERSION=3;
+// distance on foot, a step ahead on your heading (places-ring.js).
+// Version 4 · «Directo mundo abierto» (Jay, 5 Nov 2026, docs/MUNDO.md#directo-mundo-abierto): no ring any more, Llanura
+// included. A place a save had on the old ring (complete, or kept in the Journey) moves to its distance from the origin,
+// along the direction of its old ring angle (`legacySpot`), and is saved in `found` like any other; `moved` remembers it.
+// No order: every place is open; you reach it by finding its portal.
+export const PLACES_VERSION=4;
 export const PLACES=Object.freeze([
  {id:'llanura',name:'Llanura',verb:'Pegar',game:'stick'},{id:'lago',name:'Lago',verb:'Encadenar',game:'chain'},{id:'bosque',name:'Bosque',verb:'Rodear',game:'lasso'},
  {id:'tormenta',name:'Tormenta',verb:'Bailar',game:'dance'},{id:'vacio',name:'Vacío',verb:'Soltar',game:'release'},
@@ -30,6 +32,11 @@ export const placeKm=id=>PLACE_KM[PLACE_IDS.indexOf(id)]??null;
 export const placeRadius=id=>{const km=placeKm(id);return km===null?null:km*PLACE_UNITS_PER_KM;};
 // «0,5 km», «12 km»: how the game writes a place's distance.
 export const kmText=km=>String(km).replace('.',',');
+// Version 4: where a place of the old ring goes. Its old angle (from the north, clockwise, i/11 of a turn) from the
+// origin, at its own distance; a spot at sea moves along that ray, out and in, to land (as the ring did). Deterministic.
+export const LEGACY_SEA_STEP=300,LEGACY_SEA_TRIES=6;
+export function legacySpot(id,isSea=()=>false){const i=PLACE_IDS.indexOf(id),R=placeRadius(id);if(i<0||R===null)return null;const a=-Math.PI/2+i/PLACES.length*2*Math.PI,at=r=>({x:Math.round(Math.cos(a)*r),y:Math.round(Math.sin(a)*r)});
+ for(let k=0;k<=LEGACY_SEA_TRIES*2;k++){const q=at(R+(k%2?1:-1)*Math.ceil(k/2)*LEGACY_SEA_STEP);if(!isSea(q.x,q.y))return q;}return at(R);}
 // Plan I5 (Jay, 24 October, third panel): ★★ at 75 % on time and ★★★ at 70 % in the Maestro round (they were 85 and
 // 80 %; the two-hour model showed the song stopping after the win for anyone below 85 %).
 export const RHYTHM_STAR=.75,MAESTRO_STAR=.7,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,MAESTRO_WINDOW=.06,TOTAL_STARS=33;
@@ -41,7 +48,7 @@ const point=v=>object(v)&&Number.isFinite(v.x)&&Number.isFinite(v.y)?{x:Math.rou
 const share=(hits,total)=>total>0?Math.max(0,Math.min(1,hits/total)):0;
 // Stars a round earns: ★ always on completion; ★★ with sound and 75 % on time; ★★★ only in a Maestro round, with 70 %.
 export function roundStars({onTime,maestro=false,sound=true}){return [true,!maestro&&sound&&onTime>=RHYTHM_STAR||maestro&&sound&&onTime>=RHYTHM_STAR,maestro&&sound&&onTime>=MAESTRO_STAR];}
-export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger(raw.version)&&raw.version>PLACES_VERSION)return raw;const q=object(raw)?raw:{};
+export function normalizePlaces(raw,journey={},{isSea=()=>false}={}){if(object(raw)&&Number.isInteger(raw.version)&&raw.version>PLACES_VERSION)return raw;const q=object(raw)?raw:{};
  // A version-1 save: every place its stars had open stays open (the old ladder asked 5, 8, 12, 16, 20 and 24 ★).
  const legacy=Number.isInteger(q.version)&&q.version<2,LEGACY_NEED={jardin:5,dunas:8,cristales:12,faros:16,ruinas:20,cueva:24};
  const stars={},best={};for(const id of PLACE_IDS){const s=Array.isArray(q.stars?.[id])?q.stars[id]:[];stars[id]=[0,1,2].map(i=>s[i]===true);
@@ -50,7 +57,7 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  for(const id of WORLD_CHAPTERS)if(journey?.done?.[id]===true)stars[id][0]=true;
  const counts={};if(object(q.rounds?.counts))for(const [id,n] of Object.entries(q.rounds.counts))if(PLACE_IDS.includes(id)&&Number.isInteger(n))counts[id]=Math.max(0,Math.min(999,n));
  const journeyShare={};if(object(q.journeyShare))for(const id of WORLD_CHAPTERS){const j=q.journeyShare[id];if(object(j))journeyShare[id]={hits:Math.max(0,j.hits|0),total:Math.max(0,j.total|0),silent:j.silent===true};}
- // The ring (plan F5): its centre when there is no Refugio yet, and the portals already entered (for fast travel).
+ // The portals already entered (for fast travel).
  const seen={};if(object(q.seen))for(const id of PLACE_IDS)if(q.seen[id]===true)seen[id]=true;
  // Your notes from each place's last round (plan H4): up to eight, for the finale of your song.
  const notes={};if(object(q.notes))for(const id of PLACE_IDS){const v=q.notes[id];if(Array.isArray(v)){const m=v.filter(n=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(m.length)notes[id]=m;}}
@@ -58,20 +65,20 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  const noteTicks={};if(object(q.noteTicks))for(const id of Object.keys(notes)){const v=q.noteTicks[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every((n,i)=>Number.isSafeInteger(n)&&n>=0&&(!i||n>=v[i-1])))noteTicks[id]=[...v];}
  const noteSteps={};if(object(q.noteSteps))for(const id of Object.keys(notes)){const v=q.noteSteps[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every(s=>Number.isInteger(s)&&s>=0&&s<16))noteSteps[id]=[...v];}
  const kept={};if(object(q.kept))for(const id of PLACE_IDS)if(q.kept[id]===true)kept[id]=true;
- // Version 3: the portals found by distance, and the places that stay on the ring. A save from before version 3 keeps on
- // the ring every place already complete (its portal does not move); the others are found by distance from now on.
+ // Version 3: the portals found by distance. Version 4: no ring. Every place an older save had on the ring (version 3's
+ // `ring`; before it, every place complete) and any place complete with no portal (a chapter kept in the Journey, a test
+ // round) gets its portal at its distance, on its old ring angle (legacySpot), saved in `found`. Stars never move.
  const found={};if(object(q.found))for(const id of PLACE_IDS){const p=point(q.found[id]);if(p)found[id]=p;}
- const ring={};if(Number.isInteger(q.version)&&q.version===PLACES_VERSION){if(object(q.ring))for(const id of PLACE_IDS)if(q.ring[id]===true)ring[id]=true;}
- // A place complete with no portal found (any save before version 3, a chapter kept in the Journey) is on the ring.
- for(const id of PLACE_IDS)if(stars[id][0]&&!found[id])ring[id]=true;
- for(const id of Object.keys(ring))delete found[id];
+ const moved={};if(object(q.moved))for(const id of PLACE_IDS)if(q.moved[id]===true)moved[id]=true;
+ const onRing=id=>q.version===3&&object(q.ring)&&q.ring[id]===true;
+ for(const id of PLACE_IDS)if((onRing(id)||stars[id][0])&&!found[id]){const p=legacySpot(id,isSea);if(p){found[id]=p;moved[id]=true;}}
  if(legacy){const have=PLACE_IDS.reduce((a,id)=>a+stars[id].filter(Boolean).length,0);for(const [id,need] of Object.entries(LEGACY_NEED))if(have>=need)kept[id]=true;}
- return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),ringFixed:q.ringFixed===true,seen,kept,ring,found,notes,noteSteps,noteTicks,won:q.won===true,master:q.master===true,credited:q.credited===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
+ return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,seen,kept,found,moved,notes,noteSteps,noteTicks,won:q.won===true,master:q.master===true,credited:q.credited===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
 export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||[]).filter(Boolean).length,0);
 // The place before this one in the list (version 3 opens every place: kept for the readers that name it).
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
-// Whether a place's portal is somewhere: on the ring or found by distance.
-export const placeFound=(places,id)=>places?.ring?.[id]===true||!!point(places?.found?.[id]);
+// Whether a place's portal is somewhere (found by distance, or moved there from the old ring).
+export const placeFound=(places,id)=>!!point(places?.found?.[id]);
 export const complete=(places,id)=>places?.stars?.[id]?.[0]===true;
 export const allComplete=places=>PLACE_IDS.every(id=>complete(places,id));
 // Version 3: every place is open in the free World; finding its portal is the way in.
@@ -97,7 +104,7 @@ export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
 // ★★★ with the best share. Null before the eleven are complete, during the Journey and with the 33 ★.
 export function starGoal(places,journey){if(!allComplete(places))return null;const best=id=>{const b=places?.best?.[id];if(b&&Number.isFinite(b.onTime))return b.onTime;const j=places?.journeyShare?.[id];return j?.total>0?share(j.hits,j.total):null;};
  for(const tier of [2,3]){let aim=null;for(const p of PLACES){if(places.stars?.[p.id]?.[tier-1]||!placeOpen(places,p.id,journey))continue;const b=best(p.id);if(!aim||(b??-1)>(aim.best??-1))aim={id:p.id,name:p.name,tier,best:b};}if(aim)return aim;}return null;}
-// The next step after a round or from the ring: the path first, then the nearest star.
+// The next step after a round or from Lugares: the path first, then the nearest star.
 export const nextGoal=(places,journey)=>nextOnPath(places,journey)||starGoal(places,journey);
 // Panel 10 (P4, Pope and Matsuura): the live count of a round, without words. A tick at the end of the Line lights while
 // the round is at the share its next star asks (75 %, or 70 % in a Maestro round). Same share as the card's.
@@ -110,13 +117,14 @@ export function nearMiss(onTime){const tenths=Math.floor(Math.max(0,Math.min(1,N
 function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
  let owner=null,state=null,shown=null,cardDue=null;
- function own(){if(owner!==runtime.S){if(owner){const card=runtime.$?.('mPlace');if(card)card.hidden=true;}shown=null;owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
+ const sea=(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea;
+ function own(){if(owner!==runtime.S){if(owner){const card=runtime.$?.('mPlace');if(card)card.hidden=true;}shown=null;owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey,{isSea:sea});state=runtime.S.lugares;
    // A future format remains untouched on disk and in S; readers get a safe, locked view.
    if(state.version>PLACES_VERSION)state={...normalizePlaces(null),version:state.version,readOnly:true};
    // A round left open by a reload is dropped: the chapter's own state comes back as it was.
    if(state.run){restore(state.run);back(state.run.from);state.run=null;}}
-  // A chapter kept in the Journey is always a ★ of its place, whenever it was kept.
-  if(state.version===PLACES_VERSION)for(const id of WORLD_CHAPTERS)if(runtime.S.journey?.done?.[id]===true){state.stars[id][0]=true;if(!state.found?.[id])(state.ring||={})[id]=true;}
+  // A chapter kept in the Journey is always a ★ of its place, whenever it was kept; with no portal, at its distance.
+  if(state.version===PLACES_VERSION)for(const id of WORLD_CHAPTERS)if(runtime.S.journey?.done?.[id]===true){state.stars[id][0]=true;if(!state.found?.[id]){const p=legacySpot(id,sea);if(p){(state.found||={})[id]=p;(state.moved||={})[id]=true;}}}
   return state;}
  const gameKey=id=>PLACES.find(p=>p.id===id)?.game;
  function restore(run){const j=runtime.S.journey||{},key=gameKey(run.id);if(key){if(run.stash===undefined)delete j[key];else j[key]=run.stash;}const MU=runtime.MU;if(MU){MU.tempoScale=1;MU.onTimeWindow=null;}}

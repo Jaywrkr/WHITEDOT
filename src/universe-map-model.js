@@ -6,7 +6,7 @@
 export const UMAP_VERSION=1;
 // Spans in world units (10 u are 1 m) of the shorter side of the screen for each zoom.
 export const UMAP_LEVELS=Object.freeze(['anillo','region','universo']);
-export const UMAP_LEVEL_NAMES=Object.freeze({anillo:'Anillo',region:'Región',universo:'Universo'});
+export const UMAP_LEVEL_NAMES=Object.freeze({anillo:'Cerca',region:'Región',universo:'Universo'});
 export const UMAP_SPAN=Object.freeze({anillo:16000,region:30000,universo:110000});
 export const UMAP_MIN_SPAN=3000,UMAP_MAX_SPAN=4000000;
 // Distance rings around the origin (decision 5 of the catalogue: distance from 0,0), in km.
@@ -74,13 +74,13 @@ export const toWorld=(view,W,H,px,py)=>[view.x+(px-W/2)/view.scale,view.y+(py-H/
 export const UMAP_PRIORITY=Object.freeze({me:0,mark:1,place:2,ringHome:3,refugio:4,favorite:5,satellite:5.2,habitat:5.3,revived:5.4,rumor:5.5,sky:6,live:7,landmark:8,heard:9,rare:10});
 export function hitTest(items,view,W,H,px,py,reach=UMAP_TOUCH){let best=null,bd=Infinity;for(const it of items||[]){const [sx,sy]=toScreen(view,W,H,it.x,it.y),d=Math.hypot(sx-px,sy-py);if(d>reach)continue;const score=d+(UMAP_PRIORITY[it.kind]??12)*2;if(score<bd){bd=score;best=it;}}return best;}
 
-// What a card offers. go: the move of today's rules (a place of the ring you can travel to, «Volver al anillo», a
-// favourite); otherwise «Marcar». A point that is the mark offers «Quitar marca». You yourself: nothing.
+// What a card offers. go: the move of today's rules (a place you can travel to, a favourite; since alpha.269 there is
+// no ring and no «Volver al anillo»); otherwise «Marcar». A point that is the mark offers «Quitar marca». You yourself: nothing.
 // A satellite you visited (Recorrer lejos, alpha.245) offers its door only from inside another one you visited.
-export function cardActions(item,{canTravel=false,canHome=false,canFavorite=false,canDoor=false,mark=null}={}){
+export function cardActions(item,{canTravel=false,canFavorite=false,canDoor=false,mark=null}={}){
  if(!item||item.kind==='me')return {go:null,mark:null};
  const marked=!!mark&&(item.kind==='mark'||Math.hypot(mark.x-item.x,mark.y-item.y)<1);
- const go=item.kind==='place'&&canTravel?'place':(item.kind==='ringHome'||item.home)&&canHome?'ring':item.kind==='favorite'&&canFavorite?'favorite':item.kind==='satellite'&&canDoor?'door':null;
+ const go=item.kind==='place'&&canTravel?'place':item.kind==='favorite'&&canFavorite?'favorite':item.kind==='satellite'&&canDoor?'door':null;
  return {go,mark:marked?'unmark':go?null:'mark'};
 }
 // A mark from an item: where it is and its name, nothing else.

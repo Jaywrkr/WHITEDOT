@@ -5170,4 +5170,14 @@ export const EN=Object.freeze({
  "Derecha":"Right",
  "Girar":"Turn",
  "Bajar":"Drop",
+ // «Directo mundo abierto» (alpha.269): no ring; the Duelo final and the satellites' way back are at the origin.
+ "Duelo final · en el origen":"Final duel · at the origin",
+ "Duelo final · en el origen ›":"Final duel · at the origin ›",
+ "Duelo final ★ · en el origen ›":"Final duel ★ · at the origin ›",
+ "Ahora no se puede. Vuelve al origen.":"Not now. Go back to the origin.",
+ "Volver al origen":"Back to the origin",
+ "Cada 10 km, un satélite de descanso. Dentro, su puerta lleva a otro satélite visitado o al origen.":"Every 10 km, a rest satellite. Inside, its door leads to another satellite you visited or to the origin.",
+ "Lugar · completo":"Place · complete",
+ "Lugar · abierto":"Place · open",
+ "Lugar · cerrado":"Place · closed",
 });

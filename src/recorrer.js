@@ -113,12 +113,13 @@ export function initialize(r){
  const doorOpen=id=>!!r.canPracticeTravel?.()&&doors().some(e=>e.id===id);
  function goDoor(id){const e=doors().find(x=>x.id===id);if(!e||!r.canPracticeTravel?.())return false;const point=doorPoint(e);if(!r.travelPracticePoint?.(point))return false;
   inside={id:e.id,km:e.km,x:e.x,y:e.y};book().last=e.id;r.save?.();soon(time=>playRecorrerNotes(r,time,2,SAT_GAIN,1));if(r.S.universeTexts!==false)r.toast?.(`Puerta · ${satelliteName(e.km)}`);return true;}
- function goRing(){if(!here())return false;return !!r.ringHome?.();}
+ // «Directo mundo abierto» (alpha.269): from inside a satellite, «Volver al origen» (places-ring.js), not to a ring.
+ function goRing(){if(!here())return false;return !!r.originHome?.();}
  // ---------- the Bitácora ----------
  function section(){if(!r.S)return '';book();if(!ok())return '';const q=book(),p=me(),mine=q.sats.filter(e=>e.w===world).sort((a,b)=>a.km-b.km||a.id.localeCompare(b.id)),h=here();
   const rows=mine.map(e=>{const hereNow=h&&h.id===e.id;return `<div class="recorrer-sat" data-satellite="${e.id}"><p>${satelliteName(e.km)}</p><p class="rumor-now">${hereNow?'Estás aquí':`Ahora · ${rumorNow(e,p)}`}</p>${h&&!hereNow&&doorOpen(e.id)?`<div class="row"><button type="button" data-sat-door="${e.id}">Ir por la puerta</button></div>`:''}</div>`;}).join('');
-  const ring=h&&r.ringHomePoint?.()?'<div class="row"><button type="button" data-sat-ring>Volver al anillo</button></div>':'';
-  return `<details class="journal-section" data-journal-detail="Recorrer lejos" id="journalRecorrer"><summary>Recorrer lejos · ${mine.length} ${mine.length===1?'satélite':'satélites'}</summary><p>${q.far?`Boya más lejana · ${q.far} km`:'Cada km tiene sus boyas de luz. Sigue la siguiente.'}</p><p>Cada 10 km, un satélite de descanso. Dentro, su puerta lleva a otro satélite visitado o al anillo.</p>${rows}${ring}</details>`;}
+  const ring=h&&r.originSpot?.()?'<div class="row"><button type="button" data-sat-ring>Volver al origen</button></div>':'';
+  return `<details class="journal-section" data-journal-detail="Recorrer lejos" id="journalRecorrer"><summary>Recorrer lejos · ${mine.length} ${mine.length===1?'satélite':'satélites'}</summary><p>${q.far?`Boya más lejana · ${q.far} km`:'Cada km tiene sus boyas de luz. Sigue la siguiente.'}</p><p>Cada 10 km, un satélite de descanso. Dentro, su puerta lleva a otro satélite visitado o al origen.</p>${rows}${ring}</details>`;}
  $('journalBody')?.addEventListener('click',e=>{const t=e.target.closest?.('[data-sat-door],[data-sat-ring]');if(!t)return;e.stopPropagation();const ok=t.dataset.satDoor?goDoor(t.dataset.satDoor):goRing();if(ok){const j=$('mJournal');if(j)j.hidden=true;}else r.refreshJournal?.();});
  // ---------- the map and tests ----------
  const forMap=()=>{if(!r.S)return [];book();if(!ok())return [];const h=here();return book().sats.filter(e=>e.w===world).map(e=>({id:e.id,x:e.x,y:e.y,km:e.km,name:satelliteName(e.km),here:!!h&&h.id===e.id}));};

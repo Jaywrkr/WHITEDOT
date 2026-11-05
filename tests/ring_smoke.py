@@ -1,4 +1,4 @@
-"""The ring (plan F5): ?anillo=1 opens the free World after the Journey on its own save. Eleven portals around the Refugio; walking into an open one starts its round, a found one opens in any order (alpha.264), one with ★★ asks Jugar or Maestro; «Dejar la ronda» in the menu and a reload both bring you back beside the portal; the map lists the portals entered for fast travel."""
+"""The portals (plan F5; no ring since alpha.269): ?anillo=1 opens the free World after the Journey on its own save, with the five chapters' portals at their distance (version 4) and the other six found at test spots around an anchor; walking into an open one starts its round, a found one opens in any order (alpha.264), one with ★★ asks Jugar or Maestro; «Dejar la ronda» in the menu and a reload both bring you back beside the portal; the map lists the portals entered for fast travel."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -23,14 +23,18 @@ try:
    page.goto(base+'?anillo=1');page.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000)
    assert page.evaluate('__r.accountClient')==None and not page.evaluate("localStorage.getItem('pixel-blanco-v4')"),'a test save of its own'
    ring=page.evaluate('__r.ringState()');assert len(ring['spots'])==11 and ring['next'],ring
-   c=ring['center']
+   c=ring['anchor'];assert c and 'center' not in ring,ring
+   KM={'llanura':5000,'lago':10000,'bosque':20000,'tormenta':30000,'vacio':50000}
    page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)")
    before=page.evaluate('[__r.S.wx,__r.S.wy,__r.S.sparks]')
    page.evaluate('__r.openLugares()');page.locator('#lugaresDoor').click()
    page.wait_for_function("!document.getElementById('ringRoute').hidden")
    assert page.evaluate('[__r.S.wx,__r.S.wy,__r.S.sparks]')==before,'following never teleports or charges'
    assert page.evaluate('__r.ringRoute().id')=='jardin' and 'Jardín' in page.inner_text('#ringRoute')
-   for s in ring['spots']:assert 5000<math.hypot(s['x']-c['x'],s['y']-c['y'])<8000,s
+   assert sorted(ring['moved'])==sorted(KM),ring['moved']
+   for s in ring['spots']:
+    if s['id'] in KM:assert abs(math.hypot(s['x'],s['y'])-KM[s['id']])<=1900,('a chapter kept: at its distance from the origin',s)
+    else:assert 5000<math.hypot(s['x']-c['x'],s['y']-c['y'])<8000,s
    # Plan H6: from the Refugio the next portal is heard, softly, on the «3» and from its side.
    page.evaluate("()=>{__r.S.sound=true;__r.audio();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}");page.wait_for_function("__r.ac?.state==='running'",timeout=20000)
    nx=spot(page,ring['next']);page.evaluate(f"()=>{{__r.S.wx={c['x']}+({nx['x']}-{c['x']})*.3;__r.S.wy={c['y']}+({nx['y']}-{c['y']})*.3;}}")
@@ -74,9 +78,9 @@ try:
    page.evaluate('__r.openMap()');page.wait_for_function("!document.getElementById('ringTravel').hidden",timeout=3000)
    labels=page.locator('#ringTravel button').all_inner_texts();assert any(l.startswith('Lago') for l in labels) and any(l.startswith('Bosque') for l in labels),labels
    page.locator('#ringTravel button',has_text='Lago').click();assert page.evaluate("document.getElementById('mJournal').hidden") and near(page,'lago'),'fast travel to the Lago'
-   # Deploying the portable Refugio never moves the migrated ring.
-   page.evaluate("()=>{__r.S.studio.x=__r.S.wx+20000;__r.S.studio.y=__r.S.wy;}");moved=page.evaluate('__r.ringState().center');assert moved==c,(moved,c)
+   # Deploying the portable Refugio never moves a portal (there is no ring to follow it).
+   spots=page.evaluate('__r.ringState().spots');page.evaluate("()=>{__r.S.studio.x=__r.S.wx+20000;__r.S.studio.y=__r.S.wy;}");page.wait_for_timeout(200);assert page.evaluate('__r.ringState().spots')==spots
    assert not errors,errors;page.close()
   browser.close()
- print('PASS places ring on phone and desktop: eleven portals around the Refugio, a complete place asks Jugar, Libre (no bar) or Maestro with ★★, every found portal open in any order (alpha.264), leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio',flush=True)
+ print('PASS places on phone and desktop: eleven portals (the Journey\'s five at their distance, no ring), a complete place asks Jugar, Libre (no bar) or Maestro with ★★, every found portal open in any order (alpha.264), leaving and reloading bring you back to the portal, fast travel from the map, the Refugio moves no portal',flush=True)
 finally:server.shutdown()

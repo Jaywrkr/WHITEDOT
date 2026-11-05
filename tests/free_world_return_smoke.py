@@ -1,4 +1,4 @@
-"""Panel 11 (Q6). D7-C: a new player starts on the Camino; a save left mid-Journey in the Bosque with yesterday's
+"""Panel 11 (Q6). D7-C: a new player in the Journey («?viaje=1» since alpha.269) starts on the Camino; a save left mid-Journey in the Bosque with yesterday's
 todayKey loads in the Bosque, where it was, with the day's Camino back as a walk. D11-B: in the open Universe the
 pulse sounds when the finger goes down (40 blank taps 20 ms after the heard beat: pointerdown to the theme's note
 median within 15 ms, 95 % within 30 ms on shared runners; output latency apart), a still finger opens the scanner at
@@ -49,9 +49,10 @@ try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
-  # A real player's browser: new saves start in the Journey, on the Camino.
+  # A real player's browser; «?viaje=1» keeps the Journey and its Camino start (alpha.269: new saves start in the open
+  # World, tests/mundo_abierto_smoke.py).
   p.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});")
-  url=f'http://127.0.0.1:{srv.server_port}/'
+  url=f'http://127.0.0.1:{srv.server_port}/?viaje=1'
   p.goto(url);p.wait_for_function('!!window.__r?.journeyMode&&!!__r.worldOpened');p.wait_for_timeout(500)
   assert p.evaluate('[__r.S.mode,__r.worldReady(),__r.worldOpened(),__r.journeyMode()]')==['camino',False,False,'viaje'],'a new player starts on the Camino'
   # A new player on a new day: still the Camino and the ten crystals.

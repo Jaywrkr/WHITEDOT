@@ -27,8 +27,9 @@ def menu_ids(page):
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
-  # 1 · Inside a chapter of the Journey: neither the jump nor «Volver al punto anterior», in the dock, the menu or by code.
-  page,errors=page_for(browser,390,844)
+  # 1 · Inside a chapter of the Journey («?viaje=1» keeps it since alpha.269): neither the jump nor «Volver al punto
+  # anterior», in the dock, the menu or by code.
+  page,errors=page_for(browser,390,844,'?viaje=1')
   page.evaluate("()=>{"+HIDE+";const r=__r,s=r.S;s.sound=false;s.pathCrystals=Array.from({length:10},(_,i)=>'j:'+i);s.help.camino=s.help.mundo=true;s.sparks=60;r.sparkEconomy.earned=60;r.enterWorld({automatic:true});r.stopAutopilot?.();s.practiceTravel.previous={x:s.wx+5000,y:s.wy,layer:'superficie'};r.save();}")
   page.wait_for_timeout(400);assert page.evaluate('__r.journeyMode()')=='viaje' and page.evaluate('__r.inWorld()')
   assert page.locator('#bJump').is_hidden() and page.locator('#bJumpBack').is_hidden(),'no jump inside a level'
@@ -69,7 +70,7 @@ try:
   page.wait_for_function("document.getElementById('bJump').textContent==='Otro paisaje · 20 ✦'&&document.getElementById('bJump').disabled",timeout=3000)
   assert page.locator('#bJump').is_visible(),'after the free one it stays in view, waiting for sparks'
   ids=menu_ids(page);assert 'bJumpBack' in ids,ids
-  # Far from the ring, Lugares offers «Ir» to the next place, free, and lands beside its portal.
+  # Far away, Lugares offers «Ir» to the next place, free, and lands beside its portal.
   page.evaluate(HIDE);far=page.evaluate("()=>{const r=__r,p=r.ringRoute();return p?p.distance:null}");assert far and far>9600,far
   page.locator('#bMenu').click();page.locator('#bLugares').click();page.wait_for_function("!document.getElementById('mLugares').hidden")
   row=page.locator('#lugaresList li[aria-current=step]');go=row.get_by_role('button',name='Ir',exact=True);assert go.count()==1,row.inner_text()

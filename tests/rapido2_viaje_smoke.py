@@ -12,7 +12,8 @@ class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 URL=f'http://127.0.0.1:{server.server_port}/'
-QUERY=os.environ.get('RAPIDO_QUERY','?rapido=2')
+# Since alpha.269 a new player starts in the open World; «&viaje=1» keeps the Journey this run times.
+QUERY=os.environ.get('RAPIDO_QUERY','?rapido=2&viaje=1')
 # A bot never hesitates: a person takes longer (reading, finding the next thing). The bound catches a regression.
 LIMIT=float(os.environ.get('RAPIDO_LIMIT','120'))
 MAIN=json.dumps({'mark':'player-save'})
@@ -97,7 +98,7 @@ try:
   assert 'kubono:rapido' in state['keys'],state
   say('acciones por capítulo:',actions,'pulsos repetidos:',missed)
   say(f'TOTAL {total:.1f} s')
-  if QUERY=='?rapido=2':
+  if QUERY.startswith('?rapido=2'):
    assert crystals==2,crystals
    assert all(v<=3 for v in actions.values()),actions
    assert len(missed)<=2,missed

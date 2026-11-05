@@ -14,7 +14,7 @@ assert(!placeOpen(n,'llanura',{done:{}}),'closed during the Journey');assert(pla
 assert(placeOpen(normalizePlaces({stars:{jardin:[true]}},{}),'dunas',{finished:true}),'the Jardín complete opens the Dunas');
 assert(placeOpen(normalizePlaces({stars:{dunas:[true]}},{}),'dunas',{finished:true}),'a place already complete stays open');
 // A version-1 save keeps every door its stars had opened (old ladder 5, 8, 12…); a fresh one follows the path.
-{const v1=normalizePlaces({version:1,stars:Object.fromEntries(['llanura','lago','bosque'].map(id=>[id,[true,true,true]]))},{});assert(v1.kept.jardin&&v1.kept.dunas&&!v1.kept.cristales);assert(placeOpen(v1,'dunas',{finished:true}));assert.equal(v1.version,3);assert.deepEqual(Object.keys(v1.ring),['llanura','lago','bosque'],'its complete places stay on the ring');
+{const v1=normalizePlaces({version:1,stars:Object.fromEntries(['llanura','lago','bosque'].map(id=>[id,[true,true,true]]))},{});assert(v1.kept.jardin&&v1.kept.dunas&&!v1.kept.cristales);assert(placeOpen(v1,'dunas',{finished:true}));assert.equal(v1.version,4);assert.deepEqual(Object.keys(v1.found),['llanura','lago','bosque'],'its complete places keep a portal, at their distance (alpha.269: no ring)');assert.deepEqual(v1.moved,{llanura:true,lago:true,bosque:true});
  assert.equal(nextOnPath(v1,{finished:true}).id,'tormenta','the next on the path: the first open and not complete');}
 // Winning is the eleven complete; the 33 stars are the master version.
 {const eleven=normalizePlaces({stars:Object.fromEntries(PLACE_IDS.map(id=>[id,[true]]))},{});assert(allComplete(eleven));assert.equal(starCount(eleven),11);assert.equal(nextOnPath(eleven,{finished:true}),null);}

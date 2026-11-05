@@ -1,4 +1,4 @@
-"""Play as a real player on a phone: a browser that is not marked as automated (so the Journey, the real touch controls
+"""Play as a real player on a phone: a browser that is not marked as automated (with «?viaje=1», the Journey kept since alpha.269; the real touch controls
 and the automatic quality are on), real touch events and no runtime shortcuts. The finger dismisses the greeting, walks
 the Camino, breaks its ten crystals with taps on the beat (one per tap; an offbeat tap breaks none) and reaches the
 World. A ghost finger shows the gestures after four quiet seconds. Then one failing frame must not freeze the game."""
@@ -21,7 +21,7 @@ try:
   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});"+FRAMES)
   # Only exposes the runtime for reading; the account gate and everything else run as for a player.
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
-  page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.journeyMode');page.wait_for_timeout(800)
+  page.goto(f'http://127.0.0.1:{server.server_port}/?viaje=1');page.wait_for_function('!!window.__r?.journeyMode');page.wait_for_timeout(800)
   state=lambda:page.evaluate("({mode:__r.S.mode,journey:__r.journeyMode(),px:__r.S.px,inWorld:__r.inWorld(),crystals:(__r.S.pathCrystals||[]).length,finger:!!__r.fingerTouch})")
   s=state();assert s['journey']=='viaje' and s['mode']=='camino' and not s['finger'],s
   cdp=context.new_cdp_session(page)
