@@ -3,7 +3,7 @@ passing it counts once (the farthest kept) and the next one outward is marked at
 10 km: marked at the edge on the way, kept on entering («Punto de retorno guardado»), the music a little lower inside
 (the whole output at 0.84, back to 1 outside). A second one at 20 km: from inside it the Mapa del universo shows both and its
 card offers «Ir por la puerta» to the first, which leaves you inside it, for no sparks; outside a satellite the card
-only marks. The Bitácora lists them and from inside one offers «Volver al anillo». Kept on reload; English at 390×844."""
+only marks. The Bitácora lists them and from inside one offers «Volver al origen» (no ring since alpha.269). Kept on reload; English at 390×844."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -80,7 +80,7 @@ try:
    page.wait_for_function(f"__r.recorrerState().inside?.id==='{s1['id']}'",timeout=8000)
    p=page.evaluate("({x:__r.S.wx,y:__r.S.wy})");assert math.hypot(p['x']-s1['x'],p['y']-s1['y'])<inside,('inside the first',p,s1)
    assert page.evaluate("__r.S.sparks")==sparks,'nothing paid, nothing charged'
-   # --- 4 · The Bitácora lists both; from inside one, «Volver al anillo».
+   # --- 4 · The Bitácora lists both; from inside one, «Volver al origen» (alpha.269: no ring).
    page.evaluate(HIDE);page.evaluate("__r.openJournal('places')");page.wait_for_function("!!document.querySelector('#journalRecorrer [data-sat-ring]')",timeout=6000)
    summary=page.inner_text('#journalRecorrer summary');assert summary==('Travel far · 2 satellites' if lang=='en' else 'Recorrer lejos · 2 satélites'),summary
    assert page.locator(f'#journalRecorrer [data-sat-door="{s2["id"]}"]').count()==1
@@ -88,7 +88,8 @@ try:
    page.wait_for_function("document.getElementById('journalRecorrer').open",timeout=4000);page.locator('#journalRecorrer [data-sat-ring]').scroll_into_view_if_needed()
    if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{lang}-{width}.png')
    page.locator('#journalRecorrer [data-sat-ring]').click();page.wait_for_function("document.getElementById('mJournal').hidden",timeout=6000)
-   c=page.evaluate("__r.ringState().center");p=page.evaluate("({x:__r.S.wx,y:__r.S.wy})");assert math.hypot(p['x']-c['x'],p['y']-c['y'])<1500,('back at the ring',p,c)
+   c=page.evaluate("__r.originSpot()");p=page.evaluate("({x:__r.S.wx,y:__r.S.wy})");assert math.hypot(p['x']-c['x'],p['y']-c['y'])<1500,('back at the origin',p,c)
+   assert page.locator('#journalRecorrer').inner_text().count('anillo')==0
    page.wait_for_timeout(300);assert page.evaluate("__r.recorrerState().doors")==[],'away from a satellite the door is closed'
    # --- 5 · Kept on reload.
    page.reload();page.wait_for_function("!!window.__r?.recorrerState",timeout=30000);page.evaluate(FREE)

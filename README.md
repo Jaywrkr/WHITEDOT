@@ -2,7 +2,7 @@
 
 Un cubo, un universo que suena. Explora, toca a tiempo y construye tu canción con lo que descubres.
 
-Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.267**. Cuenta opcional y guardado local. Sin publicación en tiendas.
+Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.269**. Cuenta opcional y guardado local. Sin publicación en tiendas.
 
 ## Estado de la entrega
 
@@ -24,8 +24,8 @@ Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión de
 
 ## El juego
 
-- **El Viaje:** Camino y cinco capítulos. Aprendes a pegar, encadenar, rodear, bailar y soltar; el cierre abre el Mundo libre.
-- **Once lugares:** retos que se abren en orden. ★ por completar, ★★ con 75 % a tiempo y ★★★ con 70 % en Maestro. Las estrellas amplían Tu canción.
+- **Directo al mundo abierto:** empiezas en el Mundo, sin tutorial ni anillo. El radar empieza débil.
+- **Once lugares, once trofeos:** cada uno a su distancia del origen, de 0,5 a 40 km. Su portal aparece delante al cruzarla a pie. ★ por completar, ★★ con 75 % a tiempo y ★★★ con 70 % en Maestro. Cada trofeo mejora el radar; las estrellas amplían Tu canción.
 - **El universo:** exploración procedural, criaturas, hallazgos, tarjetas, favoritos y música electrónica generativa.
 - **El Refugio:** espacio voluntario para tus trofeos, objetos y jardín de voces.
 

@@ -1,7 +1,7 @@
 // Mapa del universo (Jay, 29 Oct 2026, alpha.235; docs/MUNDO.md#mapa-del-universo): a screen of its own, opened with
 // one touch from the World (#bUniverseMap) or from the Bitácora's map. Three zooms (pinch, + / −, the wheel), drag to
 // move, «centrar en mí». Fog: only what you visited has colour. A tap opens a card: «Ir» where today's rules already
-// let you go (a place of the ring you can travel to, «Volver al anillo», a favourite); «Marcar» everywhere else. One
+// let you go (a place you can travel to, a favourite, a satellite's door; since alpha.269 no ring); «Marcar» everywhere else. One
 // mark at a time: the compass by the cube and the line under the HUD lead to it (places-ring.js asks mapMarkRoute).
 // Nothing is drawn while it is closed; the optional mini map (Ajustes, off by default) redraws twice a second.
 import {openSurface} from './frame-state.js';
@@ -41,11 +41,11 @@ export function initialize(runtime){
  function checkBands(){if(!usable()||book().readOnly)return;const q=book();for(const b of bandsNow())if(b.complete&&!q.bands[b.km]){q.bands[b.km]=runtime.S.todayKey||'';if(runtime.save?.()===false){delete q.bands[b.km];return;}runtime.toast?.(`<em>Mapa del universo</em> · Todo hasta ${b.km} km descubierto`,{level:2,category:'ganado'});}}
  // Everything the map shows, as plain points.
  function collect(){
-  const S=runtime.S,r=RP(),out=[],q=book(),state=runtime.ringState?.(),portals=runtime.ringPortals?.()||[],center=state?.center||null;
+  const S=runtime.S,r=RP(),out=[],q=book(),state=runtime.ringState?.(),portals=runtime.ringPortals?.()||[],center=null;
   for(const p of portals)out.push({kind:'place',id:p.id,x:p.x,y:p.y,name:p.name,open:p.open,complete:p.complete,ink:p.ink,stars:p.stars});
-  const studio=S.studio&&Number.isFinite(S.studio.x)&&Number.isFinite(S.studio.y)?{x:S.studio.x,y:S.studio.y}:null,home=!!(center&&freeOpen(S.journey));
-  if(studio)out.push({kind:'refugio',id:'refugio',x:studio.x,y:studio.y,name:'Tu Refugio',home:home&&Math.hypot(studio.x-center.x,studio.y-center.y)<400});
-  if(home&&!(studio&&Math.hypot(studio.x-center.x,studio.y-center.y)<400))out.push({kind:'ringHome',id:'ring',x:center.x,y:center.y,name:'Centro del anillo'});
+  // «Directo mundo abierto» (alpha.269): no ring, so no ring centre and no way back to it.
+  const studio=S.studio&&Number.isFinite(S.studio.x)&&Number.isFinite(S.studio.y)?{x:S.studio.x,y:S.studio.y}:null;
+  if(studio)out.push({kind:'refugio',id:'refugio',x:studio.x,y:studio.y,name:'Tu Refugio'});
   for(const key of Object.keys(S.landmarks||{})){const [rx,ry]=key.slice(3).split(',').map(Number);if(!Number.isFinite(rx)||!Number.isFinite(ry))continue;let lm=null;try{lm=runtime.landmarkAt?.(rx,ry);}catch(_){}if(lm)out.push({kind:'landmark',id:lm.id||key,x:lm.x,y:lm.y,type:lm.type,name:lm.name||LANDMARK_TYPES[lm.type]?.name||'Hito'});}
   for(const [id,v] of Object.entries(S.heardLm||{})){if(S.landmarks?.[id]||!Array.isArray(v))continue;const [rx,ry,type]=v;if(!Number.isFinite(rx)||!Number.isFinite(ry))continue;out.push({kind:'heard',id,x:(rx+.5)*r,y:(ry+.5)*r,type,name:LANDMARK_TYPES[type]?.name||'Algo lejano'});}
   const sky=S.skyMap;if(sky&&sky.version===1&&sky.sites&&typeof sky.sites==='object')for(const [id,s] of Object.entries(sky.sites)){const f=skyFigure(s?.fig);if(!f||!Number.isFinite(s.x)||!Number.isFinite(s.y))continue;const known=(sky.figures?.[f.id]?.done||0)>0;
@@ -71,7 +71,7 @@ export function initialize(runtime){
  // only heard of (a landmark heard, a rumor), which may lie far away.
  let pts=[];
  function sceneNow(){const c=collect();items=c.items;pts=items.filter(i=>i.kind!=='heard'&&i.kind!=='rumor').map(i=>({x:i.x,y:i.y})).concat(fogCells(runtime.S.places||{}).map(f=>({x:(f.rx+.5)*RP(),y:(f.ry+.5)*RP()})));const band=bandsNow();return {fog:fogNow(),RP:RP(),items,me:{...me(),heading},next:c.next?{x:c.next.x,y:c.next.y,name:c.next.name}:null,mark:usable()?book().mark:null,bands:band.map(b=>({km:b.km,complete:b.complete})),center:c.center};}
- const context=()=>({me:me(),ring:scene?.center||runtime.ringState?.()?.center||null,points:pts});
+ const context=()=>({me:me(),ring:null,points:pts});
 
  // ---------- the screen ----------
  const box=$('mUniverseMap'),cv=$('umapCv');
@@ -90,19 +90,19 @@ export function initialize(runtime){
  function centerMe(){view={...view,x:runtime.S.wx,y:runtime.S.wy};redraw();}
  // ---------- the card ----------
  const kindLine=it=>{switch(it.kind){
-  case 'place':return it.complete?'Lugar del anillo · completo':it.open?'Lugar del anillo · abierto':'Lugar del anillo · cerrado';
-  case 'ringHome':return 'El centro de los once lugares';case 'refugio':return 'Donde está tu Refugio';case 'favorite':return 'Tu lugar guardado';
+  case 'place':return it.complete?'Lugar · completo':it.open?'Lugar · abierto':'Lugar · cerrado';
+  case 'refugio':return 'Donde está tu Refugio';case 'favorite':return 'Tu lugar guardado';
   case 'sky':return it.done?'Constelación · completa':`Constelación · ${it.lit} de ${it.total}`;
   case 'live':return it.won?'Encuentro vivo · logrado':'Encuentro vivo · visto';
   case 'satellite':return it.here?'Satélite de descanso · estás aquí':'Satélite de descanso · visitado';
   case 'revived':return 'Región revivida · con su color y su música';case 'habitat':return it.name?'Hábitat · '+it.name+' vive aquí':'Hábitat';
   case 'landmark':return 'Hito visitado';case 'heard':return 'Hito oído · aún no llegaste';case 'rumor':return it.icon&&it.icon!=='secreto'?it.text||it.name:'Rumor · '+(it.text||'algo lejano');case 'rare':return 'Rareza encontrada';
   case 'mark':return 'Tu marca · la brújula te lleva';case 'me':return 'Tú';default:return it.visited?'Lugar explorado':'Sin explorar';}};
- function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canHome:(it.kind==='ringHome'||it.home)&&!!runtime.ringHomePoint?.(),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,canDoor:it.kind==='satellite'&&!!runtime.satelliteDoorOpen?.(it.id),mark:usable()?book().mark:null};}
+ function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,canDoor:it.kind==='satellite'&&!!runtime.satelliteDoorOpen?.(it.id),mark:usable()?book().mark:null};}
  function showCard(it){card=it;const a=cardActions(it,flags(it)),d=Math.hypot(it.x-runtime.S.wx,it.y-runtime.S.wy);
   $('umapCardName').textContent=it.kind==='me'?'Tú':it.name;$('umapCardWhat').textContent=kindLine(it);
   $('umapCardDist').textContent=it.kind==='me'?`A ${formatDistance(Math.hypot(it.x,it.y))} del origen`:d<300?'Aquí':`A ${formatDistance(d)} de ti`;
-  const go=$('umapGo'),mark=$('umapMark');go.hidden=!a.go;go.textContent=a.go==='ring'?'Volver al anillo':a.go==='door'?'Ir por la puerta':'Ir';go.dataset.go=a.go||'';
+  const go=$('umapGo'),mark=$('umapMark');go.hidden=!a.go;go.textContent=a.go==='door'?'Ir por la puerta':'Ir';go.dataset.go=a.go||'';
   mark.hidden=!a.mark;mark.textContent=a.mark==='unmark'?'Quitar marca':'Marcar';mark.dataset.mark=a.mark||'';mark.classList.toggle('gold',a.mark==='mark'&&!a.go);go.classList.toggle('gold',!!a.go);
   $('umapCard').hidden=false;box.dataset.card=it.kind;}
  function hideCard(){card=null;const c=$('umapCard');if(c)c.hidden=true;if(box)delete box.dataset.card;}
@@ -112,14 +112,13 @@ export function initialize(runtime){
  // The compass's target while there is a mark (places-ring.js): reaching it clears it, with one quiet line.
  function route(){if(!usable())return null;const q=book();if(!q.mark)return null;const r=markRoute(q.mark,me());if(r.arrived){clearMark();runtime.toast?.('Llegaste a tu marca');return null;}return r;}
  function go(){const it=card;if(!it)return;const a=cardActions(it,flags(it));let ok=false;
-  if(a.go==='place')ok=!!runtime.ringTravel?.(it.id);else if(a.go==='ring')ok=!!runtime.ringHome?.();else if(a.go==='door')ok=!!runtime.satelliteDoor?.(it.id);
+  if(a.go==='place')ok=!!runtime.ringTravel?.(it.id);else if(a.go==='door')ok=!!runtime.satelliteDoor?.(it.id);
   else if(a.go==='favorite'){runtime.rememberFavoriteReturn?.(it.point);ok=!!runtime.visitWorldAddress?.(it.point.address);if(!ok)runtime.clearFavoriteReturn?.();}
   if(ok){close();const j=$('mJournal');if(j)j.hidden=true;}else showCard(it);}
  function markAction(){const it=card;if(!it)return;const a=cardActions(it,flags(it));if(a.mark==='unmark'){clearMark();hideCard();return;}if(a.mark==='mark'&&setMark(it)){runtime.toast?.('Marca puesta · la brújula te lleva');showCard({...it});}}
  // ---------- touch, mouse and keys ----------
- function tap(px,py){const [W,H]=size(),ring=drawnIcons.find(d=>d.kind==='ring');let it=hitTest(ring?items.filter(i=>i.kind!=='place'&&i.kind!=='ringHome'):items,view,W,H,px,py);
-  // Far out the eleven places are one small ring: its card is the ring's centre («Volver al anillo»).
-  if(ring&&Math.hypot(ring.x-px,ring.y-py)<26&&(!it||['live','landmark','heard','rare','sky','favorite','rumor'].includes(it.kind))){const c=scene?.center;if(c)it={kind:'ringHome',id:'ring',x:c.x,y:c.y,name:'Los once lugares'};}const meAt=drawnIcons.find(d=>d.kind==='me');if(meAt&&Math.hypot(meAt.x-px,meAt.y-py)<16&&(!it||it.kind!=='mark'))it={kind:'me',x:runtime.S.wx,y:runtime.S.wy,name:'Tú'};
+ function tap(px,py){const [W,H]=size();let it=hitTest(items,view,W,H,px,py);
+  const meAt=drawnIcons.find(d=>d.kind==='me');if(meAt&&Math.hypot(meAt.x-px,meAt.y-py)<16&&(!it||it.kind!=='mark'))it={kind:'me',x:runtime.S.wx,y:runtime.S.wy,name:'Tú'};
   if(!it){const [wx,wy]=toWorld(view,W,H,px,py),r=RP(),key=Math.floor(wx/r)+','+Math.floor(wy/r),visited=!!runtime.S.places?.[key];let name='Este punto';if(visited){const id=biomeId(wx,wy);name=runtime.BIOMES?.find(b=>b.id===id)?.name||name;}it={kind:'spot',id:'spot',x:Math.round(wx),y:Math.round(wy),name,visited};}
   showCard(it);}
  function onDown(e){cv.setPointerCapture?.(e.pointerId);pointers.set(e.pointerId,{x:e.offsetX,y:e.offsetY,x0:e.offsetX,y0:e.offsetY,t:performance.now()});
@@ -148,7 +147,7 @@ export function initialize(runtime){
  if(mini)mini.onclick=()=>open('region');
  if(toggle){toggle.checked=usable()&&book().mini;toggle.onchange=()=>{if(!usable())return;const q=book(),before=q.mini;q.mini=toggle.checked;if(runtime.save?.()===false){q.mini=before;toggle.checked=before;}miniKey='';tick();};}
  function drawMini(){if(!miniCv)return;miniDraws++;const W=88,H=88,dpr=Math.min(2,window.devicePixelRatio||1);if(miniCv.width!==W*dpr){miniCv.width=W*dpr;miniCv.height=H*dpr;}const c=miniCv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);
-  const s=sceneNow();s.level='region';s.items=s.items.filter(i=>['place','refugio','mark','ringHome'].includes(i.kind));drawUniverseMap(c,W,H,{x:runtime.S.wx,y:runtime.S.wy,scale:W/24000},s,{names:false,scale:false,words:false});}
+  const s=sceneNow();s.level='region';s.items=s.items.filter(i=>['place','refugio','mark'].includes(i.kind));drawUniverseMap(c,W,H,{x:runtime.S.wx,y:runtime.S.wy,scale:W/24000},s,{names:false,scale:false,words:false});}
  function tick(){const S=runtime.S;if(!S)return;if(owner!==S){book();if(toggle)toggle.checked=usable()&&book().mini;}
   const p=me();if(last){const dx=p.x-last.x,dy=p.y-last.y;if(Math.hypot(dx,dy)>20)heading=Math.atan2(dy,dx);}last=p;
   const ok=allowed();if(button&&button.hidden===ok)button.hidden=!ok;

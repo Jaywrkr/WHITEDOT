@@ -80,7 +80,8 @@ export function initialize(runtime){
  const progress=id=>{const j=own();return (j.progress[id]||={});};
  const ready=id=>momentLived(id,progress(id),journey().moments||{})&&barsLived(id,progress(id));
  const portalOpen=()=>!!portal&&performance.now()>=portal.at;
- const active=()=>!!(runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie');
+ // «Directo mundo abierto» (alpha.269): a save with no Journey (journey-mode.js, `open`) never plays a chapter.
+ const active=()=>!!(runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie'&&journey().open!==true);
  const current=()=>CHAPTERS[own().chapter];
  const biomeId=()=>runtime.BIOMES?.[Math.max(0,runtime.curZone)]?.id;
  // The chapter's place: its region with the chapter's music family when the map has one nearby (findChapter).

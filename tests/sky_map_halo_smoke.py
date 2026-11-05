@@ -73,7 +73,7 @@ try:
   page,errors=page_for(browser,'?lugar=jardin&cielo=orion');page.wait_for_function('!!__r.placeRun?.()',timeout=8000);page.evaluate('__r.S.sound=false');page.evaluate(TRAVEL)
   assert page.evaluate('!__r.skyMapState().scene&&!__r.skyMapState().allowed') and not page.evaluate("__r.skyMapSpawn('orion')"),'not in a round'
   assert not errors,errors;page.close()
-  page,errors=page_for(browser,'?cielo=orion')
+  page,errors=page_for(browser,'?viaje=1&cielo=orion')
   page.evaluate("()=>{"+HIDE+";const r=__r,s=r.S;s.sound=false;s.pathCrystals=Array.from({length:10},(_,i)=>'j:'+i);s.help.camino=s.help.mundo=true;r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();}")
   page.wait_for_timeout(300);assert page.evaluate("__r.journeyMode()=='viaje'&&__r.inWorld()&&__r.travelInLevel()")
   page.evaluate(TRAVEL);assert page.evaluate('!__r.skyMapState().scene') and not page.evaluate("__r.skyMapSpawn('orion')"),'not in a chapter'

@@ -4,7 +4,7 @@ Spanish on the page, its labels or the canvas; no text cut (tests/english_helper
 legend and the card stay inside the screen and clear of each other."""
 from playwright.sync_api import sync_playwright
 from english_helpers import serve,launch,new_page,open_game,check,OUT
-WALK="""()=>{const r=__r,RP=r.REG*r.WCH,c=r.ringState().center;for(let i=-4;i<=4;i++)for(let j=-3;j<=3;j++){if(Math.abs(i)+Math.abs(j)>5)continue;r.S.places[(Math.floor(c.x/RP)+i)+','+(Math.floor(c.y/RP)+j)]=1;}
+WALK="""()=>{const r=__r,RP=r.REG*r.WCH,c=r.ringState().anchor;for(let i=-4;i<=4;i++)for(let j=-3;j<=3;j++){if(Math.abs(i)+Math.abs(j)>5)continue;r.S.places[(Math.floor(c.x/RP)+i)+','+(Math.floor(c.y/RP)+j)]=1;}
  const q=r.S.skyMap||(r.S.skyMap={version:1,figures:{},sites:{},earned:0,halo:null,wear:{}});q.sites||={};q.figures||={};q.sites['en:casiopea']={fig:'casiopea',x:c.x-2400,y:c.y+2200,turn:0,lit:2,done:false,onTime:false,at:''};
  r.mapNoteLive({kind:'ola',x:c.x+1800,y:c.y-900,won:false});document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);}"""
 def drawn(page,kind,id=None):
@@ -28,12 +28,14 @@ try:
    page.locator('#umapLegend summary').click();page.wait_for_timeout(200);legend=page.locator('#umapLegend').bounding_box()
    assert inside(legend,width,height) and apart(tools,legend),(tools,legend);check(page,f'map-en-legend-{tag}')
    page.locator('#umapLegend summary').click()
-   page.locator('#umapIn').click();page.wait_for_timeout(200);assert page.inner_text('#umapLevel')=='Ring'
+   # The closest zoom is «Nearby», on you (alpha.269: no ring); stand near the Lago (at its distance) to see it.
+   home=page.evaluate('[__r.S.wx,__r.S.wy]');lg=page.evaluate("__r.ringState().spots.find(q=>q.id==='lago')");page.evaluate(f"()=>{{__r.S.wx={lg['x']+2500};__r.S.wy={lg['y']};}}")
+   page.locator('#umapIn').click();page.wait_for_timeout(200);assert page.inner_text('#umapLevel')=='Nearby'
    lago=drawn(page,'place','lago');page.mouse.click(lago['x'],lago['y']);page.wait_for_function("!document.getElementById('umapCard').hidden")
    assert page.inner_text('#umapGo')=='Go' and 'from you' in page.inner_text('#umapCardDist');card=page.locator('#umapCard').bounding_box()
    assert inside(card,width,height) and apart(card,tools),(card,tools);check(page,f'map-en-card-go-{tag}')
-   page.keyboard.press('Escape')
-   page.locator('#umapOut').click();page.wait_for_timeout(200);sky=drawn(page,'sky','en:casiopea');assert sky,page.evaluate('__r.universeMapState().drawn')
+   page.keyboard.press('Escape');page.evaluate(f"()=>{{__r.S.wx={home[0]};__r.S.wy={home[1]};}}")
+   page.evaluate("__r.universeMapLevel('region')");page.wait_for_timeout(200);sky=drawn(page,'sky','en:casiopea');assert sky,page.evaluate('__r.universeMapState().drawn')
    page.mouse.click(sky['x'],sky['y']);page.wait_for_function("!document.getElementById('umapCard').hidden")
    assert page.inner_text('#umapCardName')=='Cassiopeia' and page.inner_text('#umapMark')=='Mark' and 'Constellation · 2 of 5' in page.inner_text('#umapCardWhat'),page.inner_text('#umapCard')
    check(page,f'map-en-card-mark-{tag}')

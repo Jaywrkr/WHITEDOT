@@ -14,9 +14,9 @@ OUT=Path(os.environ.get('KUBONO_MAP_CAPTURES') or tempfile.mkdtemp(prefix='kubon
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
-WALK="""()=>{const r=__r,RP=r.REG*r.WCH,c=r.ringState().center;for(let i=-4;i<=4;i++)for(let j=-3;j<=3;j++){if(Math.abs(i)+Math.abs(j)>5)continue;r.S.places[(Math.floor(c.x/RP)+i)+','+(Math.floor(c.y/RP)+j)]=1;}document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);}"""
+WALK="""()=>{const r=__r,RP=r.REG*r.WCH,c=r.ringState().anchor;for(let i=-4;i<=4;i++)for(let j=-3;j<=3;j++){if(Math.abs(i)+Math.abs(j)>5)continue;r.S.places[(Math.floor(c.x/RP)+i)+','+(Math.floor(c.y/RP)+j)]=1;}document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);}"""
 # Two figures of the Mapa del cielo near the ring (one complete, one half done) and a landmark only heard.
-SKY="""()=>{const r=__r,c=r.ringState().center,q=r.S.skyMap||(r.S.skyMap={version:1,figures:{},sites:{},earned:0,halo:null,wear:{}});q.version=1;q.sites||={};q.figures||={};
+SKY="""()=>{const r=__r,c=r.ringState().anchor,q=r.S.skyMap||(r.S.skyMap={version:1,figures:{},sites:{},earned:0,halo:null,wear:{}});q.version=1;q.sites||={};q.figures||={};
  q.sites['map:orion']={fig:'orion',x:c.x+2600,y:c.y-1800,turn:0,lit:7,done:true,onTime:false,at:r.S.todayKey||''};q.figures.orion={first:r.S.todayKey||'',done:1,onTime:0};
  q.sites['map:casiopea']={fig:'casiopea',x:c.x-2400,y:c.y+2200,turn:.2,lit:2,done:false,onTime:false,at:''};
  const RP=r.REG*r.WCH;r.S.heardLm||={};r.S.heardLm['lm:9,9']=[Math.floor(c.x/RP)+3,Math.floor(c.y/RP)-3,'torre'];r.save();}"""
@@ -36,13 +36,13 @@ try:
   page.evaluate(WALK);page.evaluate(SKY)
   assert page.evaluate('__r.S.universeMap.version')==1 and page.evaluate('__r.S.universeMap.mark') is None and page.evaluate('__r.S.universeMap.mini')==False
   # A real living encounter, caught: it stays on the map where it ended.
-  c=page.evaluate('__r.ringState().center');page.evaluate(f"()=>{{__r.S.wx={c['x']+1500};__r.S.wy={c['y']+300};}}");page.wait_for_timeout(300)
+  c=page.evaluate('__r.ringState().anchor');page.evaluate(f"()=>{{__r.S.wx={c['x']+1500};__r.S.wy={c['y']+300};}}");page.wait_for_timeout(300)
   assert page.evaluate("__r.liveEncounterSpawn('polilla')");left=page.evaluate(CATCH);assert left is None,left
   live=page.evaluate('__r.S.universeMap.live');assert len(live)==1 and live[0]['k']=='polilla' and live[0]['w'],live
   page.evaluate(f"()=>{{__r.S.wx={c['x']};__r.S.wy={c['y']+400};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}}");page.wait_for_timeout(600)
   page.locator('#bUniverseMap').click();page.wait_for_timeout(200)
   kinds={d['kind'] for d in state(page)['drawn']};assert {'sky','live','heard','place','me'}<=kinds,kinds
-  assert {'refugio','ringHome'}&kinds,kinds
+  assert 'ringHome' not in kinds,('no ring centre since alpha.269',kinds)
   items={i['id']:i for i in state(page)['items']};assert items['map:orion']['name']=='Orión' and items['map:casiopea']['name']=='Casiopea'
   page.screenshot(path=str(OUT/'mapa-lo-tuyo-390x844.png'))
   # The half-done figure: its card says how far it is; it can only be marked.

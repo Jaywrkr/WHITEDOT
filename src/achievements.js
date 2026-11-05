@@ -14,7 +14,8 @@ export function achievementPick(ids,meta){let best=null,score=-1;for(const id of
 export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH),rules=[...legacy,...[...ADVENTURE_ACHIEVEMENTS,...HOUSE_ACHIEVEMENTS].filter(p=>!runtime.ACH.some(a=>a[0]===p.id))];for(const p of rules)runtime.ACH.push([p.id,p.name,p.description,p.hidden?1:0]);let clock=0;if(runtime.S.achievementVersion!==2){for(const p of legacy)if(!runtime.S.ach[p.id]&&achievementProgress(p,runtime.S).ratio===1)runtime.S.ach[p.id]=runtime.S.todayKey||new Date().toISOString().slice(0,10);runtime.S.achievementVersion=2;}
  let owner=null,seen=[],pending=[],lastNotice=-Infinity;
  const worldSeconds=()=>{const v=runtime.S.firstWorldSeconds;return Number.isFinite(v)&&v>0?v:0;};
- const firstWorld=()=>!!runtime.S.journey?.finished&&worldSeconds()<FIRST_WORLD;
+ // After the Journey, or from the start on a save with no Journey (alpha.269).
+ const firstWorld=()=>!!(runtime.S.journey?.finished||runtime.S.journey?.open)&&worldSeconds()<FIRST_WORLD;
  const metaOf=id=>{const a=runtime.ACH.find(x=>x[0]===id);return a?achievementMeta(a,rules):null;};
  function sync(){if(owner!==runtime.S){owner=runtime.S;owner.journal||={};lastNotice=-Infinity;
   // A save from before alpha.242 that already earned a lot is past its first half hour.
@@ -37,7 +38,7 @@ export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH
  sync();
  function check(dt=2){if(owner!==runtime.S)sync();clock+=dt;
   // The first half hour counts only in the free World, after the Journey, with the game in view.
-  if(runtime.S.journey?.finished&&worldSeconds()<FIRST_WORLD&&runtime.inWorld?.()&&freeOpen(runtime.S.journey)&&!document.hidden&&!runtime.placeRun?.()&&!runtime.travelInLevel?.())runtime.S.firstWorldSeconds=Math.min(FIRST_WORLD,worldSeconds()+Math.max(0,Math.min(.25,dt||0)));if(clock<2||document.hidden||openSurface('.modal:not([hidden])'))return;clock=0;sync();announce();for(const p of legacy)if(!runtime.S.ach[p.id]&&achievementProgress(p,runtime.S).ratio===1){runtime.unlock(p.id);break;}
+  if((runtime.S.journey?.finished||runtime.S.journey?.open)&&worldSeconds()<FIRST_WORLD&&runtime.inWorld?.()&&freeOpen(runtime.S.journey)&&!document.hidden&&!runtime.placeRun?.()&&!runtime.travelInLevel?.())runtime.S.firstWorldSeconds=Math.min(FIRST_WORLD,worldSeconds()+Math.max(0,Math.min(.25,dt||0)));if(clock<2||document.hidden||openSurface('.modal:not([hidden])'))return;clock=0;sync();announce();for(const p of legacy)if(!runtime.S.ach[p.id]&&achievementProgress(p,runtime.S).ratio===1){runtime.unlock(p.id);break;}
   if(runtime.labMode||runtime.S.previewSeed&&!runtime.realTravel||runtime.activityActive)return;
   // World achievements are earned in the World; house ones wherever the house changed.
   const ready=p=>!runtime.S.ach[p.id]&&adventureProgress(p,runtime.S).ratio===1,earned=[...(runtime.inWorld()?ADVENTURE_ACHIEVEMENTS.filter(ready):[]),...HOUSE_ACHIEVEMENTS.filter(ready)];if(!earned.length)return;

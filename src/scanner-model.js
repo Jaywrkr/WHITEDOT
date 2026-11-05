@@ -5,7 +5,7 @@
 //   [{key, x, y, name?, kind?, hint?}], from the thing's own generator or from hashKey (scanSiteAt), never from the old
 //   random sequence. done(S, site, ctx): already found (drawn dim). page(S, ctx): its line for the Bitácora (later).
 // · scanLevel(S, {charged}): the level the save has opened. 1 from the start (short wave, shapes without names); 2 after
-//   the Journey (names and distance). 3 (the eleven places, S.lugares.won) and 4a/4b/4c (S.bandas.far ≥ 10/30/60 km)
+//   the Journey or the first trophy (names and distance). 3 (the eleven places, S.lugares.won) and 4a/4b/4c (S.bandas.far ≥ 10/30/60 km)
 //   are written here so later batches only add; SCAN_OPEN keeps the rest closed until then. charged = 4c (the boxes, T3).
 //   T2 opens level 3: arrows at the screen's edge (scanner-arrows.js), secrets and rumours as «?», a row marks the map.
 // · scanReach(level) in units (10 per metre), scanNear(p, S, {level, ctx, max, minRarity}) in order: rarity, then
@@ -51,20 +51,23 @@ export const scanEntry=id=>registry.get(id)||null;
 export const unregisterScan=id=>registry.delete(id);
 // ---------- levels ----------
 const journeyDone=j=>!!(plain(j)&&(j.free===true||j.finished===true));
+// A World given at the start (alpha.269, journey-mode.js `freeGiven`), not earned by the Journey.
+const freeGiven=j=>plain(j)&&j.freeGiven===true;
 const farKm=S=>{const f=Number(S?.bandas?.far);return Number.isFinite(f)&&f>0?f:0;};
 // «Los lugares te encuentran» (Jay, 5 Nov 2026, alpha.264): each trophy (a place complete, its ★) upgrades the radar.
 // After the Journey: level 2 (names) from the start, level 3 (arrows, «?») from five trophies, and the reach grows with
-// every trophy (TROPHY_REACH, metres, by trophies). The eleven (or S.lugares.won) keep level 3 at 300 m, as before, and
+// every trophy (TROPHY_REACH, metres, by trophies). «Directo mundo abierto» (alpha.269): a World given at the start
+// begins at level 1, the weakest; the first trophy (TROPHY_LEVEL2) gives level 2. The eleven (or S.lugares.won) keep level 3 at 300 m, as before, and
 // level 4 still waits for the eleven and the km. A save that had its level keeps it: nothing goes down.
 export const TROPHY_IDS=Object.freeze(['llanura','lago','bosque','tormenta','vacio','jardin','dunas','cristales','faros','ruinas','cueva']);
-export const TROPHY_LEVEL3=5;
+export const TROPHY_LEVEL2=1,TROPHY_LEVEL3=5;
 export const TROPHY_REACH=Object.freeze([120,120,140,160,180,200,215,230,250,265,280,300]);
 // Trophies in a save: places with their ★ (S.lugares.stars) and chapters kept in the Journey, each once.
 export function scanTrophies(S){const stars=S?.lugares?.stars,done=S?.journey?.done;let n=0;
  for(const id of TROPHY_IDS)if(stars?.[id]?.[0]===true||done?.[id]===true)n++;return n;}
 // The rank the save has earned, before SCAN_OPEN caps it.
 export function scanEarned(S){
- if(!journeyDone(S?.journey))return 1;let rank=2;const t=scanTrophies(S),eleven=S?.lugares?.won===true||t>=TROPHY_IDS.length;
+ const t=scanTrophies(S);if(!journeyDone(S?.journey)||freeGiven(S?.journey)&&t<TROPHY_LEVEL2)return 1;let rank=2;const eleven=S?.lugares?.won===true||t>=TROPHY_IDS.length;
  if(eleven||t>=TROPHY_LEVEL3)rank=3;
  if(eleven)for(const L of SCAN_LEVELS)if(L.level===4&&farKm(S)>=L.km)rank=Math.max(rank,L.rank);
  return rank;}

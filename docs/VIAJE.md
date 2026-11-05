@@ -2,6 +2,8 @@
 
 Vigente en `main`, **alpha.221**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
 
+**Directo mundo abierto (Jay, 5 de noviembre de 2026, alpha.269).** Un jugador nuevo ya no hace el Viaje: empieza en el Mundo libre, sin Camino, sin Llanura como capítulo y sin anillo. La Llanura es el primer lugar, a 0,5 km, y se encuentra como los demás. Un guardado a mitad del Viaje entra al Mundo libre con todo lo ganado. Detalle y migración en [El mundo](MUNDO.md#directo-mundo-abierto). Lo que sigue describe el Viaje, que se conserva en el código para el festival (`?festival=1`), `?capitulo=` y `?viaje=1` (sus pruebas); su final («Tu mundo se abrió») ya no se oye en una partida normal. Los créditos de autoría siguen en el final de los once (Tu canción).
+
 ## Recorrido
 
 | Etapa | Qué se aprende |
@@ -56,7 +58,7 @@ Guardar el cierre debe funcionar antes de darlo por terminado. Una falla deja po
 
 ## Continuación
 
-Tras el Viaje quedan diez lugares en el mundo abierto, sin orden: cada uno a su distancia del origen, con un radar débil que mejora con cada trofeo. Los once completos abren el final de Tu canción;33★, su versión maestra. Detalle en [El mundo](MUNDO.md).
+Desde alpha.269 no hay Viaje antes: los once lugares están en el mundo abierto, sin orden, cada uno a su distancia del origen, con un radar débil que mejora con cada trofeo. Los once completos abren el final de Tu canción;33★, su versión maestra. Detalle en [El mundo](MUNDO.md).
 
 ## Verificación y límites
 

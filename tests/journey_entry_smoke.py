@@ -1,4 +1,4 @@
-"""Entering the Journey as a new player: no account sheet and no welcome window, a quiet screen (no counters, no shop, a short menu), the free World one tap away and remembered."""
+"""Entering the Journey: no account sheet and no welcome window, a quiet screen (no counters, no shop, a short menu), the free World one tap away and remembered. Since alpha.269 a new player starts in the open World (tests/mundo_abierto_smoke.py); the Journey stays reachable with «?viaje=1», which this test uses."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -14,10 +14,10 @@ try:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   # A real player's browser, not an automated one: new saves start in the Journey.
+   # A real player's browser, not an automated one; «?viaje=1» keeps the Journey (alpha.269: new saves start in the World).
    page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});")
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
-   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.journeyMode');page.wait_for_timeout(600)
+   page.goto(f'http://127.0.0.1:{server.server_port}/?viaje=1');page.wait_for_function('!!window.__r?.journeyMode');page.wait_for_timeout(600)
    assert page.locator('#mConnection').is_hidden() and page.locator('#mHelpC').is_hidden(),'no sheet and no window before playing'
    assert page.evaluate('__r.journeyMode()')=='viaje' and page.evaluate("document.body.classList.contains('journey-quiet')")
    for id in QUIET:assert page.evaluate(f"getComputedStyle(document.getElementById('{id}')).visibility")=='hidden',id

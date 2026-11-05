@@ -21,7 +21,7 @@ export function rememberVoice(state,text,title,context={}){
 // Explicit help follows the active rule; no new automatic overlay interrupts play.
 export function guideLesson(runtime){
  const round=runtime.placeRun?.(),chapter=round?null:runtime.journeyChapter?.();
- const id=round?.id||(!runtime.S.journey?.finished&&runtime.journeyQuiet?.()?chapter?.id:null);
+ const id=round?.id||(!runtime.S.journey?.finished&&runtime.S.journey?.open!==true&&runtime.journeyQuiet?.()?chapter?.id:null);
  if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Toca al ritmo. Arrastra para moverte.'};
  const steps=PLACE_LESSONS[id]?[...PLACE_LESSONS[id]]:null;if(!steps)return null;
  const progress=runtime.journeyGameProgress?.(id)||0,done=!round&&chapter?.done?.[id];if(id==='jardin'&&progress>=1)steps[2]='Tu árbol dorado está listo. Pulsa en el golpe.';

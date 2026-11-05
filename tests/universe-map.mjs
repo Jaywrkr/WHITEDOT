@@ -57,12 +57,11 @@ const items=[{kind:'heard',x:0,y:0},{kind:'place',id:'lago',x:30,y:0},{kind:'liv
 assert.equal(hitTest(items,v,W,H,W/2+3,H/2).kind,'place','a place over a rumour a few px away');assert.equal(hitTest(items,v,W,H,W/2+400*.1,H/2),null,'nothing out of reach');
 assert.equal(hitTest(items,v,W,H,W/2+400,H/2).kind,'live');
 
-// What can be gone to: a place you may travel to, «Volver al anillo», a favourite; the rest is marked.
+// What can be gone to: a place you may travel to, a favourite; the rest is marked. No ring since alpha.269.
 assert.deepEqual(cardActions({kind:'place',x:1,y:1},{canTravel:true}),{go:'place',mark:null});
 assert.deepEqual(cardActions({kind:'place',x:1,y:1},{canTravel:false}),{go:null,mark:'mark'},'a place you cannot travel to yet is marked');
-assert.deepEqual(cardActions({kind:'ringHome',x:1,y:1},{canHome:true}),{go:'ring',mark:null});
-assert.deepEqual(cardActions({kind:'refugio',home:true,x:1,y:1},{canHome:true}),{go:'ring',mark:null},'the Refugio at the ring centre takes you back to the ring');
-assert.deepEqual(cardActions({kind:'refugio',x:1,y:1},{canHome:true}),{go:null,mark:'mark'});
+assert.deepEqual(cardActions({kind:'ringHome',x:1,y:1},{canHome:true}),{go:null,mark:'mark'},'no «Volver al anillo»');
+assert.deepEqual(cardActions({kind:'refugio',home:true,x:1,y:1},{canHome:true}),{go:null,mark:'mark'},'the Refugio is marked, never a way back to a ring');
 assert.deepEqual(cardActions({kind:'favorite',x:1,y:1},{canFavorite:true}),{go:'favorite',mark:null});
 for(const kind of ['sky','live','landmark','heard','rare','spot'])assert.deepEqual(cardActions({kind,x:5,y:5},{}),{go:null,mark:'mark'},kind);
 assert.deepEqual(cardActions({kind:'me',x:0,y:0},{}),{go:null,mark:null});
@@ -78,7 +77,7 @@ assert.ok(markRoute(mark,{x:1234-UMAP_ARRIVE+1,y:-6}).arrived);assert.equal(mark
 // encounters leave their spot; the page keeps the old ids of the Bitácora's map and adds the new ones.
 const sw=read('sw.js');for(const m of ['universe-map-model.js','universe-map-art.js','universe-map.js'])assert.equal(sw.split(`"./src/${m}"`).length-1,1,m);
 assert.match(read('src/map.js'),/import \{initialize as universeMap\} from '\.\/universe-map\.js';/);
-const ring=read('src/places-ring.js');assert.match(ring,/const mark=runtime\.mapMarkRoute\?\.\(\);if\(mark\)return mark;/);assert.match(ring,/runtime\.clearMapMark\?\.\(\)/);
+const ring=read('src/places-ring.js');assert.match(ring,/const mark=runtime\.mapMarkRoute\?\.\(\);if\(mark\)return \{\.\.\.mark,mark:true\};/);assert.match(ring,/runtime\.clearMapMark\?\.\(\)/);
 assert.match(read('src/live-encounters.js'),/r\.mapNoteLive\?\.\(\{kind:scene\.kind,x:scene\.x,y:scene\.y,won:liveWon\(scene\)\}\)/);
 const html=read('index.html');for(const id of ['miniMapRow','mapCv','mapNote','ringTravel','mapZoom','mapShare','mapClose','bMap','mUniverseMap','umapCv','umapIn','umapOut','umapMe','umapClose','umapLegend','umapCard','umapGo','umapMark','bUniverseMap','miniMap','miniMapCv','miniMapSetting'])assert.equal(html.split(`id="${id}"`).length-1,1,id);
 // The mini map is off by default: its box is checked only by the save.

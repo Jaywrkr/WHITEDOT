@@ -36,7 +36,7 @@ try:
    assert p.evaluate('__r.S.wx')>before[0],'guidance cannot intercept real movement'
    assert p.evaluate('__r.S.sparks')==before[2]
    # A chosen favorite/house owns navigation; following the ring cancels it explicitly.
-   p.evaluate("()=>{const c=__r.ringState().center;__r.S.studio.x=c.x;__r.S.studio.y=c.y;}")
+   p.evaluate("()=>{const c=__r.ringState().anchor;__r.S.studio.x=c.x;__r.S.studio.y=c.y;}")
    assert p.evaluate("__r.selectDestination('studio')")
    p.wait_for_function('document.getElementById("ringRoute").hidden');assert p.evaluate('__r.ringRoute()') is None
    assert p.evaluate("__r.ringGuide('jardin')");p.wait_for_function('!document.getElementById("ringRoute").hidden');assert p.evaluate('__r.S.destination') is None

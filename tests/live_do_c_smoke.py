@@ -18,7 +18,7 @@ try:
   assert page.evaluate('!__r.liveEncounterState().scene&&__r.liveEncounterState().travel===0'),'not in a round'
   assert not page.evaluate("__r.liveEncounterSpawn('brotes')")
   assert not errors,errors;page.close()
-  page,errors=H.page_for(browser,H.URL+'?encuentro=constelacion')
+  page,errors=H.page_for(browser,H.URL+'?viaje=1&encuentro=constelacion')
   page.evaluate("()=>{"+H.HIDE+";const r=__r,s=r.S;s.sound=false;s.pathCrystals=Array.from({length:10},(_,i)=>'j:'+i);s.help.camino=s.help.mundo=true;r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();}")
   page.wait_for_timeout(300);assert page.evaluate("__r.journeyMode()=='viaje'&&__r.inWorld()&&__r.travelInLevel()")
   page.evaluate("""async()=>{const r=__r;for(let i=0;i<300;i++){r.S.wx+=4;await new Promise(f=>requestAnimationFrame(f));}}""")
