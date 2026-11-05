@@ -54,8 +54,11 @@ try:
    while(performance.now()-t0<3400){await new Promise(f=>requestAnimationFrame(f));const s=r.worldSheetState();out.push([performance.now()-t0,s.grey]);if(s.front)front=Math.max(front,s.front.r/s.front.reach);}return {out,front};}""")
   assert times,'recovered';reach=next(t for t,g in times['out'] if g<=.05);assert reach>=2000,('grey 1 → 0,05 in ≥ 2 s',reach,times['out'][:5])
   assert times['front']>.85,('the colour opens from the cube to the edge',times['front'])
-  p.wait_for_timeout(600);p.evaluate(HIDE);st=p.evaluate(PIXELS,['w',[]])
-  assert max(st['median'])<20,('a black ground',st)
+  # One frame can catch the shapes between two beats: read five frames and judge their median, same thresholds.
+  p.wait_for_timeout(600);p.evaluate(HIDE);frames=[]
+  for _ in range(5):frames.append(p.evaluate(PIXELS,['w',[]]));p.wait_for_timeout(120)
+  mid=lambda xs:sorted(xs)[len(xs)//2];st={'ground':mid([max(f['median']) for f in frames]),'median':sorted((f['median'] for f in frames),key=max)[len(frames)//2],'chroma':mid([f['chroma'] for f in frames]),'frames':[{'median':f['median'],'chroma':round(f['chroma'],4)} for f in frames]}
+  assert st['ground']<20,('a black ground',st)
   assert st['chroma']>.02,('the colour on the shapes',st)
   assert not errors,errors;p.close()
   # 3. The recording pill: white with a dot that blinks.

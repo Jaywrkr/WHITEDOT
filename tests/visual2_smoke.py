@@ -12,6 +12,7 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import threading,os,shutil,time
+from browser_helpers import pin_clock
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -51,7 +52,8 @@ try:
   for width,height in [(390,844),(1280,800)]:
    area=max(1,width*height/(390*844))
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.add_init_script(COUNT)
+   # The sky's schedules (eclipses, storms, the day's events) follow the real clock: start them at a fixed moment.
+   page.add_init_script(COUNT);pin_clock(page)
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.liveEncounterSpawn&&!!__r.fxLayer&&!!__r.viajeDState&&!!__r.skySecretState&&__r.ringState?.().active",timeout=90000)
    page.evaluate(FREE);page.wait_for_timeout(900);page.evaluate(FREE);page.wait_for_timeout(600)
@@ -73,10 +75,14 @@ try:
    # --- The sky (tanda 2).
    scene('comet',check=lambda:sky()['comet'] is not None or (_ for _ in ()).throw(AssertionError('the comet crystal is drawn')))
    scene('probe',check=lambda:sky()['probe'] is not None or (_ for _ in ()).throw(AssertionError('the probe is drawn')))
-   def cover():
-    e=P['eclipse']['site'];wait=page.evaluate(f"async()=>{{const M=await import('/src/secretos-cielo-model.js');return M.eclipseWait(M.eclipseNear({{x:{e['x']},y:{e['y']}}},10),__r.skySecretState().now);}}")
-    page.evaluate(f"__r.skySecretSkip({wait+.9})")
-   scene('eclipse',cover,lambda:(sky()['eclipse'] or {}).get('cover',0)>.5 or (_ for _ in ()).throw(AssertionError(('the star covered, its corona drawn',sky()))))
+   # The middle of the eclipse, by the sky's own clock: the measure and the check both start there, however long the
+   # runner takes between them (the star stays more than half covered for about three seconds either side).
+   def mid_eclipse():
+    e=P['eclipse']['site'];page.evaluate(f"async()=>{{const M=await import('/src/secretos-cielo-model.js'),s=M.eclipseNear({{x:{e['x']},y:{e['y']}}},10),f=M.eclipsePhase(s,__r.skySecretState().now);__r.skySecretSkip((.5-f.u)*s.period);}}")
+   def covered():
+    mid_eclipse();page.wait_for_timeout(250)
+    (sky()['eclipse'] or {}).get('cover',0)>.5 or (_ for _ in ()).throw(AssertionError(('the star covered, its corona drawn',sky())))
+   scene('eclipse',mid_eclipse,covered)
    scene('buoy',check=lambda:page.evaluate("__r.recorrerState().drawn.buoy") or (_ for _ in ()).throw(AssertionError('a buoy is drawn')))
    scene('satellite',check=lambda:page.evaluate("__r.recorrerState().drawn.sat") or (_ for _ in ()).throw(AssertionError('the satellite is drawn')))
    def shower():

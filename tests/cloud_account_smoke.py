@@ -8,11 +8,11 @@ ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
-remote={};online=True;calls=[]
+remote={};online=True;calls=[];away=set()   # away: pages whose requests fail as if offline
 config="export const CLOUD_CONFIG={url:'https://fixture.supabase.co',publishableKey:'sb_publishable_fixture'};"
 def api(route):
  req=route.request;path=req.url.split('.co')[1];calls.append(path)
- if not online:route.abort('internetdisconnected');return
+ if not online or req.frame.page in away:route.abort('internetdisconnected');return
  body=req.post_data_json if req.post_data else {};uid='two' if body.get('email','').startswith('two@') else 'one'
  token=req.headers.get('authorization','');owner='two' if token.endswith('-two') else 'one';data={};status=200
  if '/signup' in path:data={'user':{'id':uid}}
@@ -83,11 +83,15 @@ try:
   desk.evaluate("()=>{const r=__r;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.save();dispatchEvent(new Event('focus'));}")
   deadline=time.monotonic()+45
   while remote.get('two',{}).get('state',{}).get('mode')!='world' and time.monotonic()<deadline:desk.wait_for_timeout(100)
+  # The Mundo copy is online. The PC stays away while the phone takes it: a later save of its own (on a slow runner it
+  # can earn something while it waits) would land first and turn the phone's change into a divergence.
+  away.add(desk)
   mobile=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(mobile);sign_in(mobile,'two@example.test');mobile.wait_for_function("window.__r?.accountUserId==='two'",timeout=15000);started(mobile);mobile.wait_for_function('__r.inWorld()')
   mobile.evaluate("()=>{__r.exitWorld(false);__r.S.sparks=11;__r.save();dispatchEvent(new Event('focus'));}")
   deadline=time.monotonic()+45
   while remote.get('two',{}).get('state',{}).get('mode')!='camino' and time.monotonic()<deadline:mobile.wait_for_timeout(100)
   assert remote['two']['state']['mode']=='camino'
+  away.discard(desk)
   desk.evaluate("()=>{__r.S.sparks=99;__r.save();dispatchEvent(new Event('focus'));}");desk.wait_for_function("!document.getElementById('cloudPull').hidden",timeout=20000);assert desk.evaluate('__r.curRegion')!=None
   desk.once('dialog',lambda d:d.accept());desk.locator('#cloudPull').click();desk.wait_for_function('__r.S.sparks===11&&!__r.inWorld()')
   desk.wait_for_timeout(500);assert desk.evaluate('__r.curRegion') is None;assert not desk.evaluate('!!__r.MU.dnaT');assert 'world-mode' not in desk.evaluate('document.body.className')

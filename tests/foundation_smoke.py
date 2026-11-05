@@ -11,7 +11,7 @@ try:
  with sync_playwright() as p:
   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for width,height in [(390,844),(844,390),(1280,800)]:
-   context=browser.new_context(viewport={'width':width,'height':height},accept_downloads=True,has_touch=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.set_default_timeout(10000)
+   context=browser.new_context(viewport={'width':width,'height':height},accept_downloads=True,has_touch=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.set_default_timeout(10000);page.set_default_navigation_timeout(30000)
    page.add_init_script("const original=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(window.__quota&&k.startsWith('pixel-blanco'))throw new DOMException('Quota','QuotaExceededError');return original.call(this,k,v)}")
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=foundation-lab&layout=classic');page.wait_for_function('window.__testRuntime?.S.mode==="world"');page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")

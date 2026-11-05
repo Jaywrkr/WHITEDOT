@@ -12,7 +12,7 @@ with sync_playwright() as p:
  browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
  for width,height in [(390,844),(844,390),(1280,800)]:
   context=browser.new_context(viewport={'width':width,'height':height},has_touch=True)
-  page=context.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page=context.new_page();page.set_default_timeout(10000);page.set_default_navigation_timeout(30000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   def visit(kind):
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=deep-lab&encounter={kind}')

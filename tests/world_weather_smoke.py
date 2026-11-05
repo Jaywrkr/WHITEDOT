@@ -4,6 +4,7 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import threading,os,shutil
+from browser_helpers import pin_clock
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -13,6 +14,8 @@ try:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   page=browser.new_page(viewport={'width':390,'height':844});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  # Storms move with the real clock: start at a fixed moment, when the strongest nearby storm is at its peak.
+  pin_clock(page)
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=world-weather&layout=wide&generation=2');page.wait_for_function('!!window.__r?.windSway')
   page.evaluate("""()=>{const r=__r,s=r.S;document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();}""")
   # A gust band travels: the same blade sways differently over time, and a blade beside the cube leans away from it.
@@ -24,7 +27,9 @@ try:
   page.wait_for_function('__r.rainingNow&&__r.weatherSplashes()>3',timeout=20000)
   page.screenshot(path='/tmp/kubono-weather-rain.png')
   # A full panel pauses the light drops: none move, none land on the cube, no note plays behind it.
-  page.evaluate("()=>{const r=__r;r.rain.push({x:r.S.wx,y:r.S.wy-30,vy:120});document.getElementById('mSettings').hidden=false;}");page.wait_for_timeout(150)
+  page.evaluate("()=>{const r=__r;r.rain.push({x:r.S.wx,y:r.S.wy-30,vy:120});document.getElementById('mSettings').hidden=false;}")
+  # The game reads the panel once per frame: hold the drops after two frames have seen it, however slow the runner.
+  page.evaluate("()=>new Promise(f=>requestAnimationFrame(()=>requestAnimationFrame(f)))");page.wait_for_timeout(150)
   held=page.evaluate("()=>({drops:__r.rain.map(q=>q.y),queue:__r.MU.queue.length})");page.wait_for_timeout(1200)
   assert page.evaluate("__r.rain.map(q=>q.y)")==held['drops'] and page.evaluate('__r.MU.queue.length')<=held['queue'],'drops wait behind a panel'
   # Sound on at night and in rain: the beds start without errors.

@@ -10,6 +10,7 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import threading,os,shutil,time
+from browser_helpers import pin_clock
 ROOT=Path(__file__).resolve().parents[1]
 SHOTS=os.environ.get('VISUAL3_SHOTS')
 class Handler(SimpleHTTPRequestHandler):
@@ -45,7 +46,8 @@ try:
   for width,height in [(390,844),(1280,800)]:
    area=max(1,width*height/(390*844))
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.add_init_script(COUNT)
+   # Storms and the day's region events follow the real clock: a fixed moment keeps the Void clear of rain.
+   page.add_init_script(COUNT);pin_clock(page)
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.ambientState&&!!__r.sceneState&&!!__r.enterHouse&&__r.ringState?.().active",timeout=90000)
    page.evaluate(FREE);page.wait_for_timeout(900);page.evaluate(FREE);page.wait_for_timeout(600)
