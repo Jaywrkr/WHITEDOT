@@ -24,9 +24,20 @@ Usar la revisión anterior al cambio. La selección sigue dependencias transitiv
 
 Como máximo dos procesos Node. Navegador/audio pesados, uno después del otro. Corregir causas de intermitencias; no eliminar aserciones. Estabilizar los cambios antes del pase completo final y no repetir catálogo pesado por documentos.
 
+Intermitencias por reloj o por un runner lento (lote de estabilidad, noviembre de 2026). Se corrige la causa en la prueba, con el mismo umbral:
+
+- Lo que sigue al reloj real (tormentas, eventos del día, estaciones, eclipses) empieza en un instante fijo con `pin_clock(page)` de `tests/browser_helpers.py` (2 jun 2026, 02:00 UTC). La hora sigue avanzando a ritmo real.
+- Un calendario propio del juego se fija en su punto: `visual2_smoke.py` lleva el eclipse a su centro con `skySecretSkip` antes de medir y antes de comprobar.
+- Esperar al fotograma, no a un número de milisegundos: el juego lee los paneles una vez por fotograma.
+- Los avisos cuentan su tiempo en ticks propios (0,1 s como máximo): un runner cargado los alarga. Los recorridos de encuentros vivos esperan a que la cola de avisos quede vacía antes de provocar el suyo.
+- Varios dispositivos en `cloud_account_smoke.py`: el que no actúa queda «fuera» (`away`) mientras el otro guarda, para que un guardado suyo no adelante la copia.
+- Navegación: con `set_default_timeout(10000)` se añade `set_default_navigation_timeout(30000)`. El primer recorrido de un runner frío puede tardar más de 10 s en cargar.
+- Una medida de píxeles de un solo fotograma es ruido: `color_earned_smoke.py` usa la mediana de cinco.
+
 ## Antes del push
 
 - Cambios funcionales:`npm run audit:release`, `npm test` y recorridos del sistema cambiado, por ejemplo `CHROMIUM_PATH=/ruta/chromium python3 tests/journal_entry_smoke.py`.
+- Textos cambiados:`node scripts/stale-text-check.mjs --base SHA_BASE`. Lista los textos en español que el cambio quitó o reescribió en `src/` e `index.html` (y que ya no aparecen en ninguna parte del juego; la tabla de traducción no cuenta) y las pruebas que aún los esperan. Falla si una prueba espera un texto viejo; las que comprueban que ya no está solo se listan. Tarda menos de un segundo, pero es heurístico y necesita una base, así que no forma parte de `npm test`.
 - Sonido modificado:renders afectados. Si se conserva exactamente, documentar la comprobación y qué render se reutiliza.
 - Solo documentación/evidencia:enlaces, coherencia de fuentes, `git diff --check`, auditoría y selección de impacto. Sin navegador/audio innecesarios.
 - Limpieza de archivos:comprobar referencias y consumidores; no borrar por nombre antiguo un formato, módulo o fixture de compatibilidad.
@@ -44,7 +55,7 @@ npm run test:browser
 npm run test:audio
 ```
 
-[checks.yml](../.github/workflows/checks.yml) reparte navegador y audio en seis grupos por catálogo, con agregador obligatorio. `WHITEDOT_BROWSER_SHARD=i/6` y `WHITEDOT_AUDIO_SHARD=i/6` seleccionan grupos; no omiten pruebas. El grupo de navegador tiene30min; cada recorrido conserva su límite. No integrar con checks pendientes o en rojo.
+[checks.yml](../.github/workflows/checks.yml) reparte navegador en diez grupos y audio en ocho, con agregador obligatorio (`browser-audio`). `WHITEDOT_BROWSER_SHARD=i/10` y `WHITEDOT_AUDIO_SHARD=i/8` seleccionan grupos; no omiten pruebas. `tests/flow_shards.py` equilibra los grupos con los segundos medidos en CI (`tests/flow-durations.json`); un recorrido nuevo cuenta como la mediana de su tipo. `python3 tests/flow_shards.py --list browser 10` (o `audio 8`) enseña el reparto y comprueba que cada recorrido va a un solo grupo; `--from-logs` rehace la tabla con registros de `gh run view RUN --log`. Plan: unos 15 min por grupo de navegador y 13 por grupo de audio, más la instalación (con seis grupos tardaban de 20 a 29 min). Son 19 trabajos a la vez, dentro del límite de 20 del plan gratuito de GitHub. Cada trabajo tiene 40 min; cada recorrido conserva su límite (145 s navegador, 895 s audio). `living_mix.py` renderiza la primera mitad del catálogo vivo y `living_b_mix.py` la segunda: juntas pasaban de diez minutos en un solo recorrido. No integrar con checks pendientes o en rojo.
 
 CI del PR354/alpha.200 aprobado:[registro](INTEGRACION_ALPHA_200.md). E/alpha.207 tiene254 suites Node y veinte recorridos enfocados locales; su catálogo completo/CI y aceptación física siguen pendientes. Vercel Preview aprobado no equivale a esos checks.
 
