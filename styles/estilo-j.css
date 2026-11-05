@@ -757,7 +757,8 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* «Volver al anillo» (alpha.230): a whole row under «Seguir hacia …»; above it when you are far from the ring. */
 .sheet .row>#lugaresRing{flex-basis:100%;order:-1}.sheet .row>#lugaresRing.next{order:-2}
 /* One more row of buttons: the list gives up that row, so «Cerrar» stays whole on a phone. */
-.lugares-sheet:has(#lugaresRing:not([hidden])) .lugares-list{max-height:calc(52vh - 124px)}
+.lugares-sheet:has(#lugaresRing:not([hidden])) .lugares-list{max-height:calc(52vh - 60px)}
+@media (min-height:700px){.lugares-sheet:has(#lugaresRing:not([hidden])) .lugares-list{max-height:calc(52vh - 124px)}}
 /* Panel 10 (P4): near ★★ (70–74,9 %), «Otra vez» stands beside «Seguir hacia», on the first line. */
 #mPlace[data-near] .sheet .row>#placeNext{flex:1 1 170px}#mPlace[data-near] .sheet .row>#placeAgain{order:-1;flex:0 1 auto;padding-inline:18px;border-color:var(--ink)}#mPlace[data-near] .sheet .row>#placeClose{flex-basis:100%}
 .sheet .place-rows .place-near{color:var(--ink)}
