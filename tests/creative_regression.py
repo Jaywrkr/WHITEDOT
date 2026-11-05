@@ -3,18 +3,22 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor,as_completed
 import os,subprocess,sys
 ROOT=Path(__file__).resolve().parents[1]
-# desktop_smoke.py needs the Electron build and runs in the manual desktop workflow instead.
-flows=sorted(p for p in (ROOT/'tests').glob('*smoke.py') if p.name not in ('offline_smoke.py','desktop_smoke.py'))
+sys.path.insert(0,str(ROOT/'tests'))
+import flow_shards
+# desktop_smoke.py needs the Electron build and runs in the manual desktop workflow instead; offline_smoke.py runs
+# after the catalogue, in the first shard (scripts/run-browser-tests.py).
+names=flow_shards.browser_flows(exclude=('offline_smoke.py','desktop_smoke.py'))
 # The principal existing journey also validates controls, Studio and reload.
-if ROOT/'tests/smoke.py' not in flows:flows.append(ROOT/'tests/smoke.py')
+assert 'smoke.py' in names
 # CI splits the catalogue across runners (WHITEDOT_BROWSER_SHARD=index/total): every flow runs in exactly one shard,
-# each runner has its own CPU, so flows no longer race each other on one shared machine.
+# each runner has its own CPU, so flows no longer race each other on one shared machine. The shards are balanced by
+# the seconds measured on CI (tests/flow-durations.json); the first one also runs the offline check afterwards.
 if os.environ.get('WHITEDOT_BROWSER_SHARD'):
- try:shard,total=map(int,os.environ['WHITEDOT_BROWSER_SHARD'].split('/'))
- except ValueError:raise SystemExit('WHITEDOT_BROWSER_SHARD must be index/total')
- if not 1<=shard<=total<=len(flows):raise SystemExit('Invalid browser shard')
- flows=flows[shard-1::total]
- print(f'Browser shard {shard}/{total}: {len(flows)} flows',flush=True)
+ spec=os.environ['WHITEDOT_BROWSER_SHARD']
+ try:total=int(spec.split('/')[1]);names=flow_shards.shard_of(names,spec,'browser',[4.0]+[0.0]*(total-1))
+ except (ValueError,IndexError):raise SystemExit('WHITEDOT_BROWSER_SHARD must be index/total, within the catalogue')
+ print(f'Browser shard {spec}: {len(names)} flows',flush=True)
+flows=[ROOT/'tests'/n for n in names]
 def run(path):
  result=subprocess.run([sys.executable,str(ROOT/'scripts/browser-processes.py'),'--timeout=145',sys.executable,str(path)],cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=150)
  (Path('/tmp')/('whitedot-review-'+path.stem+'.txt')).write_text(result.stdout)
