@@ -510,8 +510,8 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 .music-destination span{flex:0 1 46%;min-width:0;line-height:1.6;overflow-wrap:anywhere}.music-destination button{line-height:1.6;overflow-wrap:anywhere}
 
 /* Escenas (alpha.241): the switch in Sonido. */
-.scenes-setting{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;min-width:0}.scenes-setting p{font-size:11px;line-height:1.7;color:#aaa;margin:4px 0 8px}
-#scenesSetting,#universeTexts,#haptics,#colorSafe,#miniMapSetting{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
+.scenes-setting,.sound-classic-setting{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;min-width:0}.scenes-setting p,.sound-classic-setting p{font-size:11px;line-height:1.7;color:#aaa;margin:4px 0 8px}
+#scenesSetting,#classicSound,#universeTexts,#haptics,#colorSafe,#miniMapSetting{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
 
 /* Silent unread marker without changing button layout. */
 /* Panel 11 (Q1): notices are states, so white; gold is for what was earned. */
