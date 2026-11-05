@@ -1,8 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.267** en la rama `jay/sonido-pro-2`, desde `main` `ff8f5d8` (alpha.266), en espera de que Jay escuche los renders y revise la línea nueva de `audio.js`. Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.268** en la rama `jay/sonido-pro-3`, desde `origin/jay/sonido-pro-2` (dependencia explícita: PR #403, alpha.267, sin integrar), en espera de que Jay escuche los renders y revise las líneas nuevas de `audio.js`. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Sonido pro 3: techno · 2.3.0-alpha.268
+
+Rama `jay/sonido-pro-3`, desde `origin/jay/sonido-pro-2` (PR #403 sin integrar). Tercer lote del plan aprobado. Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
+
+- **Tercera familia: techno** (`dub`, `acid`, `minimaltechno`, `detroit`, `melodictechno`). `melodictechno` pasa de «Melodic y orgánico» a esta familia. Mismo motor y mismos ganchos; tempo, swing, patrones y armonía no cambian.
+- **La familia.** Bombo con rumble (cola con paso bajo, saturada y bombeada por el siguiente bombo), bajo en sub y medio con sidechain más hondo, pads y stabs anchos, sala larga, eco en ping-pong y un eco de cinta nuevo (oscuro, saturado, con vaivén). Toda la melodía.
+- **Un toque por género.** Dub: stabs al eco de cinta y sala brumosa, sub profundo. Acid: 303 más duro que el de acid house (resonancia 20, más saturación, acentos y slides) y bombo con más pegada. Minimal: seco y corto, bombo de clic, casi sin sala ni eco. Detroit: cuerdas de cuatro sierras, hats 909, acordes tipo Rhodes. Melodic: arpegios anchos y pads que se abren en cada frase de 32 compases.
+- **`audio.js`: una línea más, por revisar.** Commit aparte «audio.js lines for Jay's approval»: el stab de `dubChord` pregunta antes al motor, nota a nota, con las mismas notas y sin azar; sin el motor suena el stab de siempre. Heart (ambient) sigue clásico. La preservación la admite exactamente (`PRO3_LINES`). Ningún otro archivo protegido cambia.
+- **Transiciones.** Las de DJ ya funcionan dentro, hacia y desde la familia: el bombo de techno y su rumble caen el último medio compás antes del relevo, y el bajo descansa.
+- **«Sonido clásico»** también apaga techno. Guardado sin cambios (`S.soundPro` versión 1).
+- **Renders** (motor real, offline, 44,1 kHz; directorio del lote `sonido-pro-3/`, fuera de Git): viaje de 90 s melodic techno → acid → detroit → dub, clásico −12,0 LUFS / −0,5 dBTP y nuevo −9,3 / −1,0. 40 s de cada género: dub −9,9 / −1,9, acid −8,4 / −1,5, minimal −9,5 / −1,6, detroit −9,0 / −1,1, melodic −9,9 / −1,7.
+- **CPU.** Nodos de Web Audio creados por segundo (todo el juego, render): viaje clásico 159, nuevo 189; quieto, dub 41, acid 159, minimal 94, detroit 109, melodic 82. No se midió en teléfono.
+- **Pruebas.** `tests/sound-pro.mjs` amplía: la familia y sus cinco perfiles, el rumble, el stab de dub (sin contar como instrumento), el 303 más resonante, cuerdas y arpegios, la apertura de melodic, mezcla de DJ de techno a house, «Sonido clásico». `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/jay/sonido-pro-2`. Sin recorridos de navegador, por la regla rápida.
+- **Límites.** Nadie lo ha escuchado todavía. En el render de dub la composición no llega a tocar su acorde de dub (energía baja en 40 s): los stabs son la melodía. El limitador de `audio.js` fija el volumen final; el nivel del deck mueve poco el LUFS. CPU de teléfono sin medir. Sin PR: la rama espera a Jay.
 
 
 ## Pruebas estables: mascota y escáner (sin subir versión)

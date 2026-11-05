@@ -1,12 +1,12 @@
-// Sonido pro (alpha.266, house clásico alpha.267): the production layer only. Each of the 52 genres belongs to one of fourteen sound families;
+// Sonido pro (alpha.266, house clásico alpha.267, techno alpha.268): the production layer only. Each of the 52 genres belongs to one of fourteen sound families;
 // a family profile says how its notes and hits sound (kit, bass, synths, space, bus). The composition (tempo, swing,
 // patterns, harmony, regions) is not read or changed here. A family without a ready profile keeps the classic sound.
 const family=(id,name,genres)=>Object.freeze({id,name,genres:Object.freeze(genres.split(' '))});
 export const SOUND_FAMILIES=Object.freeze([
  family('house','House clásico','deep chicago soulful garagehouse acidhouse progressive tropical'),
  family('tech','Tech house y minimal','techhouse minimal rominimal microhouse'),
- family('techno','Techno','acid minimaltechno detroit dub'),
- family('melodic','Melodic y orgánico','melodic melodictechno organic andean'),
+ family('techno','Techno','dub acid minimaltechno detroit melodictechno'),
+ family('melodic','Melodic y orgánico','melodic organic andean'),
  family('afro','Afro y latino','afro tribal amapiano'),
  family('disco','Disco y funk','nudisco cosmic boogie electrofunk'),
  family('uk','UK y breaks','garage breaks brokenbeat'),
@@ -68,7 +68,29 @@ const HOUSE=Object.freeze({
  build:null,
  phrase:Object.freeze({crash:16,sweep:32})
 });
-// Per-genre touches inside the family (one level deep over HOUSE). The composition (tempo, swing, patterns) is not here.
+// «Techno»: weight under the floor. A kick with its rumble (the kick's own tail, low-passed, driven and pumped), the bass in
+// sub and mid under a deeper sidechain, wide pads and stabs into the hall, the room and a dark tape echo. Each genre
+// keeps its own touch (GENRE_TOUCH): dub stabs into the tape, the hard 303, dry minimal clicks, Detroit strings, big arps.
+const TECHNO=Object.freeze({
+ ready:true,
+ kit:Object.freeze({id:'techno',kick:Object.freeze({click:.6,decay:.14,drive:3,length:.46,hold:.12,tail:.07}),kickHz:48,hatTone:1.5,clapRoom:.4,snareUnderClap:.35}),
+ rumble:Object.freeze({level:.32,drive:3,q:6}),   // the rumble under each kick, ducked by the next one
+ levels:Object.freeze({kick:.5,snare:.65,clap:.85,hat:1.2,hatO:.9,rim:.6,shaker:.6,wood:.5,tom:.6,conga:.5,cowbell:.3,blip:.45}),
+ pan:Object.freeze({hat:.25,hatO:-.2,rim:-.4,shaker:.45,wood:.38,conga:-.3,tom:.3,cowbell:.3,blip:-.35,ghost:-.3}),
+ room:Object.freeze({clap:.4,snare:.3,rim:.3,wood:.25,conga:.25,tom:.35,blip:.4}),
+ echo:Object.freeze({rim:.15,blip:.35,wood:.1,tom:.1}),
+ ghostHats:.14,
+ bass:Object.freeze({kind:'split',sub:.72,mid:.7,steps:1,bright:.3}),
+ lead:Object.freeze({keep:1,kind:'stab',level:.8,room:.18,hall:.3,echo:.3,tape:0,width:1,hold:2,map:Object.freeze({saw:'supersaw',strings:'strings',silkstrings:'strings',bowed:'strings',organ:'organ',keys:'ep',rhodes:'ep',feltpiano:'ep',glass:'mallet',steel:'mallet',marimba:'mallet',phasekeys:'ep',tinepiano:'ep',p_tinepiano:'ep',clav:'stab',feltmallet:'mallet',p_feltmallet:'mallet',fmharp:'mallet',p_fmharp:'mallet',reed:'strings',cellobody:'strings',p_cellobody:'strings',gutguitar:'stab',p_gutguitar:'stab',barkkeys:'stab',p_barkkeys:'stab'})}),
+ chords:Object.freeze({kind:'pad',level:1.1,room:.1,hall:.45,echo:.18,tape:0,width:1.2,hold:4,map:Object.freeze({strings:'strings',silkstrings:'strings',bowed:'strings',rhodes:'ep',keys:'ep',feltpiano:'ep',organ:'organ',stab:'stab',phasekeys:'ep',tinepiano:'ep',p_tinepiano:'ep',clav:'stab',feltmallet:'mallet',p_feltmallet:'mallet',fmharp:'mallet',p_fmharp:'mallet',reed:'strings',cellobody:'strings',p_cellobody:'strings',gutguitar:'stab',p_gutguitar:'stab',barkkeys:'stab',p_barkkeys:'stab'})}),
+ space:Object.freeze({seconds:1.8,ret:.4,echoSteps:3,feedback:.33,echoRet:.5}),
+ sidechain:Object.freeze({floor:.28,release:.13}),
+ output:.85,
+ syncChords:true,
+ build:null,
+ phrase:Object.freeze({crash:16,sweep:32})
+});
+// Per-genre touches inside each family (one level deep over its profile). The composition (tempo, swing, patterns) is not here.
 const GENRE_TOUCH=Object.freeze({
  // Warm pads, a softer and rounder kick, the side-stick and hats pulled back.
  deep:{kit:{id:'deep',kick:{click:.2,decay:.2,drive:1.5,length:.55,hold:.15,tail:.1},kickHz:50,hatTone:1.3},levels:{kick:.4,hat:1.25,rim:.6,shaker:.9},ghostHats:.3,
@@ -88,13 +110,30 @@ const GENRE_TOUCH=Object.freeze({
   chords:{kind:'pad',level:1.3,hall:.5,hold:12,map:{organ:'pad',rhodes:'pad',keys:'pad'}},lead:{map:{saw:'supersaw',keys:'supersaw',organ:'organ'},echo:.32},build:{bars:32,low:500,high:14000},sidechain:{floor:.3,release:.14}},
  // Airy: mallet plucks, a soft kick, more hall and echo, light hats.
  tropical:{kit:{id:'tropical',kick:{click:.25,decay:.17,drive:1.6,length:.5,hold:.13,tail:.09},kickHz:50,hatTone:1.35},levels:{kick:.42,hat:1.1,shaker:1.3,conga:.7},room:{conga:.35},echo:{conga:.1},ghostHats:.2,
-  bass:{bright:.22,sub:.55,mid:.6},lead:{kind:'mallet',level:.85,hall:.35,echo:.32,map:{steel:'mallet',kalimba:'mallet'}},chords:{kind:'mallet',hall:.45},sidechain:{floor:.45,release:.15}}
+  bass:{bright:.22,sub:.55,mid:.6},lead:{kind:'mallet',level:.85,hall:.35,echo:.32,map:{steel:'mallet',kalimba:'mallet'}},chords:{kind:'mallet',hall:.45},sidechain:{floor:.45,release:.15}},
+ // Techno. Dub: chord stabs into the long tape echo and a hazy hall, a deep sub, a soft round kick and its rumble.
+ dub:{kit:{id:'dub',kick:{click:.3,decay:.18,drive:2,length:.55,hold:.14,tail:.1},kickHz:46,hatTone:1.4},rumble:{level:.38,drive:2.4,q:5},levels:{hat:1,shaker:.8},ghostHats:.1,
+  bass:{sub:.95,mid:.35,bright:.15,steps:2},chords:{kind:'stab',level:1.6,cut:2200,decay:.18,room:.15,hall:.55,echo:0,tape:.6,range:[45,67],hold:2},lead:{kind:'stab',level:3,cut:2200,decay:.18,hall:.5,tape:.45,echo:0,width:1.4,map:{glass:'mallet',flute:'pad'}},sidechain:{floor:.4,release:.16},output:1.1},
+ // Acid techno: a harder 303 (more resonance and drive, more accents and slides) over a punchy kick with its rumble.
+ acid:{kit:{id:'acidtechno',kick:{click:.8,decay:.13,drive:3.6,length:.44,hold:.11,tail:.06},kickHz:50,hatTone:1.55},rumble:{level:.36,drive:3.6,q:7},levels:{kick:.54,hatO:.95,clap:.9},ghostHats:.1,
+  bass:{kind:'acid',sub:.4,mid:1.1,steps:1,bright:.6,q:20,low:300,high:3400,cycle:16,slide:.36,accent:.45,drive:4.2},lead:{level:.65,map:{saw:'supersaw'}},sidechain:{floor:.3,release:.1},output:.78},
+ // Minimal techno: dry and tight. A short clicky kick, crisp hats and rim, almost no room or echo, a little rumble.
+ minimaltechno:{kit:{id:'minimaltechno',kick:{click:.85,decay:.09,drive:2.6,length:.32,hold:.07,tail:.04},kickHz:50,hatTone:1.62,clapRoom:.12,snareUnderClap:.25},rumble:{level:.14,drive:2.6,q:6},
+  levels:{rim:.75,tom:.7,hat:1.3},room:{clap:.12,snare:.1,rim:.06,wood:.06,tom:.08,blip:.12},echo:{rim:.05,blip:.12,wood:0,tom:0},ghostHats:.18,
+  bass:{sub:.7,mid:.75,bright:.4},lead:{kind:'stab',level:.75,cut:2200,room:.05,hall:.05,echo:.08,hold:1,map:{organ:'organ',keys:'stab',phasekeys:'stab'}},chords:{kind:'stab',cut:2000,room:.05,hall:.08,echo:.08,hold:1},sidechain:{floor:.32,release:.09}},
+ // Detroit: warm strings and pads, bright 909 hats, soulful chords on Rhodes-like keys.
+ detroit:{kit:{id:'detroit',kick:{click:.55,decay:.14,drive:2.6,length:.46,hold:.12,tail:.07},kickHz:50,hatTone:1.62},rumble:{level:.2,drive:2.4,q:6},levels:{hat:1.45,hatO:1.1,clap:.9},ghostHats:.26,
+  bass:{sub:.65,mid:.8,bright:.35},lead:{kind:'strings',level:.85,hall:.4,echo:.22,hold:3,map:{strings:'strings',saw:'strings',reed:'strings',organ:'ep',keys:'ep',rhodes:'ep',phasekeys:'ep'}},chords:{kind:'strings',level:1.2,hall:.5,hold:6,map:{organ:'ep',keys:'ep',rhodes:'ep'}},sidechain:{floor:.32,release:.14}},
+ // Melodic techno: big wide arps and pads that open over each 32-bar phrase, a deep kick with its rumble.
+ melodictechno:{kit:{id:'melodictechno',kick:{click:.5,decay:.15,drive:2.8,length:.5,hold:.13,tail:.08},kickHz:46,hatTone:1.45},rumble:{level:.24,drive:2.8,q:6},levels:{hat:1.15,clap:.85},ghostHats:.12,
+  bass:{sub:.55,mid:.85,bright:.32},lead:{kind:'arp',level:.85,hall:.45,echo:.42,width:1.6,map:{saw:'arp',strings:'pad',keys:'arp',pluck:'arp',phasekeys:'arp',p_gutguitar:'arp',p_barkkeys:'arp'}},chords:{kind:'pad',level:1.8,hall:.6,echo:.38,width:1.6,hold:10,map:{strings:'pad',silkstrings:'pad',keys:'pad',rhodes:'pad',organ:'pad',phasekeys:'arp'}},
+  build:{bars:32,low:600,high:12000},sidechain:{floor:.26,release:.15},output:1.7}
 });
 const plainObj=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 function freezeDeep(o){if(plainObj(o)){for(const v of Object.values(o))freezeDeep(v);Object.freeze(o);}return o;}
 function touched(base,touch){if(!touch)return base;const out={...base};for(const [k,v] of Object.entries(touch)){const b=base[k];
  out[k]=plainObj(v)&&plainObj(b)?Object.fromEntries([...Object.entries(b),...Object.entries(v).map(([k2,v2])=>[k2,plainObj(v2)&&plainObj(b[k2])?{...b[k2],...v2}:v2])]):v;}return freezeDeep(out);}
-const PROFILES=Object.freeze({tech:TECH,house:HOUSE});
+const PROFILES=Object.freeze({tech:TECH,house:HOUSE,techno:TECHNO});
 const CLASSIC=Object.freeze({ready:false});
 const MEMO=new Map();
 export function soundProfile(genre){let p=MEMO.get(genre);if(!p){const f=soundFamily(genre);p=f&&PROFILES[f.id]?Object.freeze({family:f.id,name:f.name,...touched(PROFILES[f.id],GENRE_TOUCH[genre])}):Object.freeze({family:f?.id||null,name:f?.name||null,...CLASSIC});if(MEMO.size<128)MEMO.set(genre,p);}return p;}
