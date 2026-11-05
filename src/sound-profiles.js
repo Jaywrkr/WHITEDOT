@@ -1,4 +1,4 @@
-// Sonido pro (alpha.266, house clásico alpha.267, techno alpha.268): the production layer only. Each of the 52 genres belongs to one of fourteen sound families;
+// Sonido pro (alpha.266, house clásico alpha.267, techno alpha.268, melodic y orgánico and afro y latino alpha.271): the production layer only. Each of the 52 genres belongs to one of fourteen sound families;
 // a family profile says how its notes and hits sound (kit, bass, synths, space, bus). The composition (tempo, swing,
 // patterns, harmony, regions) is not read or changed here. A family without a ready profile keeps the classic sound.
 const family=(id,name,genres)=>Object.freeze({id,name,genres:Object.freeze(genres.split(' '))});
@@ -6,8 +6,8 @@ export const SOUND_FAMILIES=Object.freeze([
  family('house','House clásico','deep chicago soulful garagehouse acidhouse progressive tropical'),
  family('tech','Tech house y minimal','techhouse minimal rominimal microhouse'),
  family('techno','Techno','dub acid minimaltechno detroit melodictechno'),
- family('melodic','Melodic y orgánico','melodic organic andean'),
- family('afro','Afro y latino','afro tribal amapiano'),
+ family('melodic','Melodic y orgánico','melodic organic'),
+ family('afro','Afro y latino','afro tribal amapiano andean'),
  family('disco','Disco y funk','nudisco cosmic boogie electrofunk'),
  family('uk','UK y breaks','garage breaks brokenbeat'),
  family('bass','Club de bajos','ghetto baltimore jersey miamibass footwork'),
@@ -92,6 +92,51 @@ const TECHNO=Object.freeze({
  build:null,
  phrase:Object.freeze({crash:16,sweep:32})
 });
+// «Melodic y orgánico»: warm and deep, Anjunadeep and Keinemusik. A soft round kick, plucks into a long dotted echo,
+// warm wide pads in the hall, hand drums and shakers up front, a gentle pump. Each genre keeps its touch (GENRE_TOUCH).
+const MELODIC=Object.freeze({
+ ready:true,
+ kit:Object.freeze({id:'melodic',kick:Object.freeze({click:.22,decay:.17,drive:1.6,length:.5,hold:.13,tail:.09}),kickHz:50,hatTone:1.36,clapRoom:.42,snareUnderClap:.28,tomDecay:.2,congaDecay:.1}),
+ levels:Object.freeze({kick:.44,snare:.6,clap:.75,hat:1,hatO:.8,rim:.55,shaker:.95,wood:.6,tom:.75,conga:.75,cowbell:.3,blip:.4}),
+ pan:Object.freeze({hat:.22,hatO:-.18,rim:-.35,shaker:.42,wood:.38,conga:-.34,tom:.22,cowbell:.3,blip:-.3,ghost:-.28}),
+ room:Object.freeze({clap:.42,snare:.3,rim:.3,wood:.3,conga:.3,tom:.4,blip:.4,cowbell:.2}),
+ echo:Object.freeze({rim:.14,blip:.35,wood:.12,conga:.08,tom:.12}),
+ ghostHats:.12,
+ bass:Object.freeze({kind:'split',sub:.64,mid:.6,steps:2,bright:.2}),
+ lead:Object.freeze({keep:1,kind:'pluck',level:.85,room:.12,hall:.3,echo:.48,width:1.3,hold:2,map:Object.freeze({rhodes:'ep',keys:'ep',feltpiano:'ep',p_tinepiano:'ep',tinepiano:'ep',phasekeys:'pluck',saw:'pluck',strings:'pad',silkstrings:'pad',bowed:'pad',lowbow:'pad',cellobody:'pad',p_cellobody:'pad',kalimba:'mallet',marimba:'mallet',steel:'mallet',glass:'mallet',feltmallet:'mallet',p_feltmallet:'mallet',flute:'flute',airflute:'flute',reed:'flute',p_panreed:'flute',gutguitar:'string',p_gutguitar:'string',organ:'pad',resonantpluck:'pluck'})}),
+ chords:Object.freeze({kind:'pad',level:1.35,room:.08,hall:.5,echo:.16,width:1.6,hold:8,map:Object.freeze({rhodes:'ep',keys:'ep',feltpiano:'ep',p_tinepiano:'ep',tinepiano:'ep',kalimba:'mallet',marimba:'mallet',steel:'mallet',feltmallet:'mallet',p_feltmallet:'mallet',gutguitar:'string',p_gutguitar:'string',phasekeys:'pluck',resonantpluck:'pluck'})}),
+ space:Object.freeze({seconds:1.8,ret:.4,echoSteps:3,feedback:.33,echoRet:.5}),
+ sidechain:Object.freeze({floor:.42,release:.15}),
+ output:1,
+ front:.7,          // the player's voices against this mix: long pads and echoes leave a little less room than house
+ answer:Object.freeze({id:'conga',mult:4}),   // the groove layer's answer to the player: a hand drum
+ syncChords:true,
+ build:null,
+ phrase:Object.freeze({crash:16,sweep:32})
+});
+// «Afro y latino»: the drums in front. Hand drums, shakers and toms with body and room, a rounder kick, warm keys and
+// pads under marimba, flute and string plucks. Each genre keeps its touch: afro's marimba and percussion, amapiano's log
+// drum and piano, tribal toms and chant-like formant hits (no recorded voice), the Andean pan flute, charango and bombo.
+const AFRO=Object.freeze({
+ ready:true,
+ kit:Object.freeze({id:'afro',kick:Object.freeze({click:.35,decay:.15,drive:2,length:.46,hold:.12,tail:.08}),kickHz:50,hatTone:1.4,clapRoom:.32,snareUnderClap:.3,tomDecay:.18,congaDecay:.11}),
+ levels:Object.freeze({kick:.46,snare:.62,clap:.8,hat:1.05,hatO:.85,rim:.65,shaker:1.05,wood:.75,tom:.8,conga:.85,cowbell:.4,blip:.4}),
+ pan:Object.freeze({hat:.22,hatO:-.2,rim:-.38,shaker:.45,wood:.4,conga:-.36,tom:.28,cowbell:.32,blip:-.3,ghost:-.28}),
+ room:Object.freeze({clap:.32,snare:.25,rim:.25,wood:.28,conga:.3,tom:.38,blip:.35,cowbell:.2}),
+ echo:Object.freeze({rim:.1,blip:.3,wood:.1,conga:.06,tom:.06}),
+ ghostHats:.16,
+ bass:Object.freeze({kind:'split',sub:.66,mid:.66,steps:2,bright:.24}),
+ lead:Object.freeze({keep:1,kind:'mallet',level:.85,room:.18,hall:.25,echo:.3,width:1.2,hold:2,map:Object.freeze({rhodes:'ep',keys:'ep',feltpiano:'ep',p_tinepiano:'ep',tinepiano:'ep',organ:'organ',strings:'pad',silkstrings:'pad',bowed:'pad',cellobody:'pad',p_cellobody:'pad',flute:'flute',airflute:'flute',reed:'flute',p_panreed:'flute',gutguitar:'string',p_gutguitar:'string',saw:'pluck',phasekeys:'pluck',resonantpluck:'pluck',membrane:'mallet'})}),
+ chords:Object.freeze({kind:'pad',level:1.2,room:.1,hall:.42,echo:.14,width:1.4,hold:6,map:Object.freeze({rhodes:'ep',keys:'ep',feltpiano:'ep',p_tinepiano:'ep',tinepiano:'ep',organ:'organ',kalimba:'mallet',marimba:'mallet',steel:'mallet',gutguitar:'string',p_gutguitar:'string',resonantpluck:'pluck'})}),
+ space:Object.freeze({seconds:1.8,ret:.4,echoSteps:3,feedback:.33,echoRet:.5}),
+ sidechain:Object.freeze({floor:.45,release:.13}),
+ output:1,
+ front:.7,
+ answer:Object.freeze({id:'conga',mult:4}),
+ syncChords:true,
+ build:null,
+ phrase:Object.freeze({crash:16,sweep:32})
+});
 // Per-genre touches inside each family (one level deep over its profile). The composition (tempo, swing, patterns) is not here.
 const GENRE_TOUCH=Object.freeze({
  // Warm pads, a softer and rounder kick, the side-stick and hats pulled back.
@@ -129,13 +174,30 @@ const GENRE_TOUCH=Object.freeze({
  // Melodic techno: big wide arps and pads that open over each 32-bar phrase, a deep kick with its rumble.
  melodictechno:{kit:{id:'melodictechno',kick:{click:.5,decay:.15,drive:2.8,length:.5,hold:.13,tail:.08},kickHz:46,hatTone:1.45},rumble:{level:.24,drive:2.8,q:6},levels:{hat:1.15,clap:.85},ghostHats:.12,
   bass:{sub:.55,mid:.85,bright:.32},lead:{kind:'arp',level:.85,hall:.45,echo:.42,width:1.6,map:{saw:'arp',strings:'pad',keys:'arp',pluck:'arp',phasekeys:'arp',p_gutguitar:'arp',p_barkkeys:'arp'}},chords:{kind:'pad',level:1.8,hall:.6,echo:.38,width:1.6,hold:10,map:{strings:'pad',silkstrings:'pad',keys:'pad',rhodes:'pad',organ:'pad',phasekeys:'arp'}},
-  build:{bars:32,low:600,high:12000},sidechain:{floor:.26,release:.15},output:1.7}
+  build:{bars:32,low:600,high:12000},sidechain:{floor:.26,release:.15},output:1.7},
+ // Melodic house: plucks into the long echo and wide pads that open over each 32-bar phrase; the low tom answers in the hall.
+ melodic:{kit:{id:'melodichouse',kick:{click:.28,decay:.16,drive:1.8,length:.5,hold:.13,tail:.09},kickHz:49},levels:{tom:.85,shaker:1.1},room:{tom:.48},bass:{sub:.56,mid:.55},
+  lead:{level:1.05,echo:.52,hall:.32,map:{rhodes:'pluck',keys:'pluck',p_tinepiano:'pluck',tinepiano:'pluck',strings:'pad'}},chords:{level:2.3,hall:.55,echo:.3,width:1.7,hold:10,map:{strings:'pad',silkstrings:'pad',rhodes:'ep',keys:'ep',p_tinepiano:'pluck',tinepiano:'pluck'}},build:{bars:32,low:1600,high:12000},sidechain:{floor:.38,release:.15},output:.45},
+ // Organic house: the softest kick, hand drums with longer skins, shakers up, string plucks and kalimba, warm keys.
+ organic:{kit:{id:'organic',kick:{click:.14,decay:.19,drive:1.4,length:.54,hold:.14,tail:.1},kickHz:48,hatTone:1.3,congaDecay:.14,tomDecay:.22},levels:{kick:.42,shaker:1.15,conga:.95,wood:.8,hat:.9},room:{conga:.34,wood:.34},echo:{wood:.16,conga:.1},ghostHats:.08,
+  lead:{kind:'string',echo:.42,hall:.3},chords:{kind:'ep',level:1.2,hall:.5,hold:4,map:{strings:'pad',silkstrings:'pad',bowed:'pad',cellobody:'pad',p_cellobody:'pad'}},sidechain:{floor:.5,release:.16},output:2.1},
+ // Afro house: marimba and flute over rolling hand drums, a firmer kick, pads underneath.
+ afro:{kit:{id:'afrohouse',kick:{click:.45,decay:.14,drive:2.3,length:.46,hold:.12,tail:.07},kickHz:51},levels:{conga:.95,shaker:1.1,tom:.85},ghostHats:.2,sidechain:{floor:.4,release:.12},output:.55},
+ // Amapiano: the log drum is the bass (a pitched, knocking drum that drops), piano chords, rim and shaker, little pump.
+ amapiano:{kit:{id:'amapiano',kick:{click:.2,decay:.16,drive:1.6,length:.48,hold:.12,tail:.08},kickHz:50,hatTone:1.45},levels:{kick:.4,shaker:1.25,rim:.8,conga:.8},ghostHats:.1,
+  bass:{kind:'logdrum',sub:.6,mid:.7,steps:2,bright:.2,drop:.9,decay:1,knock:.35,drive:1.8},lead:{kind:'piano',level:.8,hall:.28,map:{rhodes:'piano',keys:'piano',feltpiano:'piano'}},chords:{kind:'piano',level:1.1,hall:.4,hold:4,map:{rhodes:'piano',keys:'piano',feltpiano:'piano',strings:'pad'}},sidechain:{floor:.6,release:.12},output:.5},
+ // Tribal: toms with long skins and room, a hard kick, chant-like formant hits (synthetic vowels) for the melody.
+ tribal:{kit:{id:'tribal',kick:{click:.55,decay:.15,drive:2.8,length:.46,hold:.12,tail:.07},kickHz:50,hatTone:1.45,tomDecay:.28,congaDecay:.12},levels:{kick:.5,tom:1.1,conga:.95,wood:.8},room:{tom:.48,conga:.34},echo:{tom:.1},ghostHats:.12,
+  lead:{kind:'chant',level:.9,hall:.35,echo:.26,map:{organ:'chant',membrane:'chant',marimba:'mallet'}},chords:{kind:'pad',level:1,hall:.45},answer:{id:'tom',mult:2},sidechain:{floor:.36,release:.12},output:.55},
+ // Electrónica andina: pan flute and charango-like double-course plucks, a bombo legüero (low, long, with its skin), wood.
+ andean:{kit:{id:'andean',kick:{click:.12,decay:.26,drive:1.5,length:.72,hold:.16,tail:.14,skin:.45},kickHz:44,hatTone:1.32,congaDecay:.12},levels:{kick:.5,wood:.95,conga:.85,shaker:1.1},room:{wood:.34,conga:.3},echo:{wood:.14},ghostHats:.06,
+  lead:{kind:'flute',level:.9,hall:.32,echo:.3,map:{kalimba:'charango',marimba:'charango',gutguitar:'charango',p_gutguitar:'charango',steel:'charango'}},chords:{kind:'charango',level:1,hall:.35,echo:.12,hold:3,map:{kalimba:'charango',gutguitar:'charango',p_gutguitar:'charango',strings:'pad',cellobody:'pad',p_cellobody:'pad'}},answer:{id:'wood',mult:1},sidechain:{floor:.5,release:.15},output:3.3}
 });
 const plainObj=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 function freezeDeep(o){if(plainObj(o)){for(const v of Object.values(o))freezeDeep(v);Object.freeze(o);}return o;}
 function touched(base,touch){if(!touch)return base;const out={...base};for(const [k,v] of Object.entries(touch)){const b=base[k];
  out[k]=plainObj(v)&&plainObj(b)?Object.fromEntries([...Object.entries(b),...Object.entries(v).map(([k2,v2])=>[k2,plainObj(v2)&&plainObj(b[k2])?{...b[k2],...v2}:v2])]):v;}return freezeDeep(out);}
-const PROFILES=Object.freeze({tech:TECH,house:HOUSE,techno:TECHNO});
+const PROFILES=Object.freeze({tech:TECH,house:HOUSE,techno:TECHNO,melodic:MELODIC,afro:AFRO});
 const CLASSIC=Object.freeze({ready:false});
 const MEMO=new Map();
 export function soundProfile(genre){let p=MEMO.get(genre);if(!p){const f=soundFamily(genre);p=f&&PROFILES[f.id]?Object.freeze({family:f.id,name:f.name,...touched(PROFILES[f.id],GENRE_TOUCH[genre])}):Object.freeze({family:f?.id||null,name:f?.name||null,...CLASSIC});if(MEMO.size<128)MEMO.set(genre,p);}return p;}

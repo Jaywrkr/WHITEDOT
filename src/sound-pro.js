@@ -1,5 +1,5 @@
 import {soundProfile,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,createTransitionTracker,guestFilter,GUEST_HIGHPASS} from './sound-profiles.js';
-// Sonido pro (alpha.266; house clásico alpha.267; techno alpha.268): one shared production engine under the composition. audio.js keeps deciding every hit and
+// Sonido pro (alpha.266; house clásico alpha.267; techno alpha.268; melodic y orgánico, afro y latino alpha.271): one shared production engine under the composition. audio.js keeps deciding every hit and
 // note; for a genre whose family profile is ready, the hit or note sounds here instead (runtime.proDrum and
 // runtime.proVoice), on one bus per region («deck»): a layered kit synthesized once into buffers, the bass split in sub
 // and mid under the kick's sidechain, wide synths, generated room and echo, glue and saturation. Region changes are
@@ -27,8 +27,10 @@ const metal=[205.3,304.4,369.6,522.7,540,800];
 const square=(ph)=>ph%1<.5?1:-1;
 export const ONE_SHOTS={
  kick(sr,f0,k){const r=rng(3),click=chain(biquad('highpass',2500,.7,sr),biquad('peaking',4500,1,sr,6)),lp=biquad('lowpass',9000,.7,sr),drive=sat(k.drive);let ph=0;
+  // A skin (the bombo legüero's felt beater on the hide): band-passed noise of its own random stream, only when asked.
+  const r2=k.skin?rng(7):null,skin=k.skin?chain(biquad('bandpass',170,1.2,sr),biquad('lowpass',900,.7,sr)):null;
   return render(k.length,sr,t=>{const f=t<.018?glide(t,f0*5.5,f0*1.6,.018):glide(t-.018,f0*1.6,f0,.067);ph+=TAU*f/sr;
-   const amp=t<.0015?t/.0015:t<.05?1:Math.exp(-(t-.05)/k.decay),body=lp(drive(Math.sin(ph)*amp)),c=click(r()*2-1)*(t<.007?k.click*Math.pow(.001/k.click,t/.007):0);return (body+c)*(t<k.hold?1:Math.exp(-(t-k.hold)/k.tail));});},
+   const amp=t<.0015?t/.0015:t<.05?1:Math.exp(-(t-.05)/k.decay),body=lp(drive(Math.sin(ph)*amp)),c=click(r()*2-1)*(t<.007?k.click*Math.pow(.001/k.click,t/.007):0),sk=skin?skin(r2()*2-1)*k.skin*4*(t<.002?t/.002:Math.exp(-t/.06)):0;return (body+c+sk)*(t<k.hold?1:Math.exp(-(t-k.hold)/k.tail));});},
  hat(sr,open,tone){const r=rng(open?9:5),f=chain(biquad('bandpass',10500,.6,sr),biquad('highpass',7200,.7,sr),biquad('highshelf',12000,.7,sr,-3)),ph=metal.map(()=>0),tau=open?.11:.018;
   return render(open?.6:.15,sr,t=>{let s=0;metal.forEach((m,i)=>{ph[i]+=m*tone/sr;s+=square(ph[i]);});const amp=t<.0008?t/.0008:t<.002?1:Math.exp(-(t-.002)/tau);return f((s*.25+(r()*2-1)*.5))*amp;});},
  clap(sr){const r=rng(13),f=chain(biquad('bandpass',1150,1.1,sr),biquad('highpass',550,.7,sr),biquad('peaking',2400,1.5,sr,3)),at=[0,.011,.021,.032],lv=[.85,.85,.85,1];
@@ -48,6 +50,11 @@ export const ONE_SHOTS={
  // the kick's pitch and its fifth, swelling in after the hit and gone before the next beat (the sidechain pumps it too).
  rumble(sr,f0,len,k){const r=rng(71+Math.round(f0)),q=k.q||6,a=biquad('bandpass',f0,q,sr),b=biquad('bandpass',f0*1.5,q,sr),lp=chain(biquad('lowpass',190,.7,sr),biquad('lowpass',240,.7,sr)),drive=sat(k.drive||3);
   return render(len,sr,t=>{const env=t<.035?0:t<.11?(t-.035)/.075:Math.exp(-(t-.11)/(len*.32)),fade=t>len-.04?Math.max(0,(len-t)/.04):1;return lp(drive((a(r()*2-1)+.55*b(r()*2-1))*5))*env*fade;});},
+ // A plucked string (Karplus-Strong): a noise burst, darker when bright is low, ringing in a damped delay loop. Charango
+ // and guitar-like plucks for the organic and Andean genres; one buffer per pitch and tone.
+ string(sr,f,bright=.5,len=1.6){const r=rng(83+Math.round(f)),N=Math.max(2,Math.round(sr/f)),line=new Float32Array(N),lp=biquad('lowpass',1200+9000*bright,.7,sr),damp=.4985+.0012*bright;
+  for(let i=0;i<N;i++)line[i]=lp(r()*2-1);let i=0,last=0;const hp=biquad('highpass',f*.7,.7,sr);
+  return render(len,sr,()=>{const x=line[i],y=(x+last)*damp;last=x;line[i]=y;i=(i+1)%N;return hp(x);});},
  crash(sr){const r=rng(53),f=chain(biquad('bandpass',6500,.8,sr),biquad('highpass',4000,.7,sr)),ph=[];for(const m of metal)for(const k of [2.1,3.3])ph.push([m*k,0]);
   return render(2,sr,t=>{let s=0;for(const p of ph){p[1]+=p[0]/sr;s+=square(p[1]);}const e=t<.001?t/.001:.25+.75*Math.exp(-(t-.001)/.02);return f(s*.2+(r()*2-1)*.6)*e*Math.exp(-t/.6);});}
 };
@@ -165,6 +172,8 @@ export function initialize(runtime){
  Object.defineProperty(runtime,'territoryJourneyCue',{configurable:true,get:()=>frame=>{try{cue(frame);}finally{listener?.(frame);}},set:fn=>{listener=typeof fn==='function'?fn:null;}});
 
  // ---------- the hooks audio.js calls ----------
+ // A kit's skins: how long its toms and hand drums ring (tribal and organic longer; the classic engine's .12 and .07 elsewhere).
+ const skinOf=(p,id)=>id==='tom'?p.kit.tomDecay||.12:p.kit.congaDecay||.07;
  function drawLike(id){for(let i=CLASSIC_DRAWS[id]||0;i>0;i--)runtime.rnd?.();}
  // The output stage's last trim (headroom, exposed by audio.js): a little lower under a converted family, so its true
  // peak stays at or under -1 dBTP; back to audio.js's own value elsewhere and with «Sonido clásico».
@@ -203,7 +212,10 @@ export function initialize(runtime){
  function respond(d,p,gid,t,step,M){
   const six=runtime.SIX||.12,bar=16*six;
   if(M.groove>.35){const x=(M.groove-.35)/.65,lv=p.levels.shaker??.6;play(buffer('shaker',sr=>ONE_SHOTS.shaker(sr)),t+2*six,.5*lv*.7*x,{dest:d.dry,pan:(p.pan.shaker||.4)*((step>>2)%2?-1:1)});
-   if(x>.4&&unit(mix(step,555))<.5){const f=Math.round(Math.max(40,Math.min(900,(runtime.hz?.(runtime.root?.()??45)??110)*4)));play(buffer('conga:'+f,sr=>ONE_SHOTS.perc(sr,f,.07)),t+3*six+swingOf(gid)*six,.5*(p.levels.conga??.55)*.8*x,{dest:d.dry,pan:p.pan.conga||-.3,room:p.room.conga||.25});}}
+   // The answer is the family's own (a hand drum by default; tribal a tom, Andean the bombo's wood).
+   if(x>.4&&unit(mix(step,555))<.5){const a=p.answer||{id:'conga',mult:4},at=t+3*six+swingOf(gid)*six,lv=.5*(p.levels[a.id]??.55)*.8*x,pan=p.pan[a.id]||-.3,room=p.room[a.id]||.25;
+    if(a.id==='wood')play(buffer('wood',sr=>ONE_SHOTS.perc(sr,780,.035)),at,lv,{dest:d.dry,pan,room});
+    else{const f=Math.round(Math.max(40,Math.min(900,(runtime.hz?.(runtime.root?.()??45)??110)*(a.mult||4)))),dec=a.id==='tom'||a.id==='conga'?skinOf(p,a.id):.07;play(buffer(a.id+':'+f+':'+dec,sr=>ONE_SHOTS.perc(sr,f,dec)),at,lv,{dest:d.dry,pan,room});}}}
   if(M.streak>=4&&M.streak>=milestone+4&&!mixKeys&&step%16===0){milestone=M.streak-M.streak%4;const at=t;if(riseAt===null||at>riseAt+bar){riseAt=at;riser(at,bar);
    for(let i=0;i<4;i++)play(buffer('clap',sr=>ONE_SHOTS.clap(sr)),at+(12+i)*six,.5*(p.levels.clap??.85)*(.35+.2*i),{dest:d.dry,room:p.kit.clapRoom});
    play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),at+bar,.16,{dest:E.sum,room:.4,pan:-.2});}}
@@ -217,7 +229,7 @@ export function initialize(runtime){
   if(id==='kick'){const f=kickPitch(runtime.hz?.(runtime.root?.()??45),p.kit.kickHz||52);play(buffer('kick:'+(p.kit.id||'tech')+':'+f,sr=>ONE_SHOTS.kick(sr,f,p.kit.kick)),t,gain,{dest:g});duckAll(t,p);}
   else if(id==='hat'||id==='hatO')play(buffer(id+':'+p.kit.hatTone,sr=>ONE_SHOTS.hat(sr,id==='hatO',p.kit.hatTone)),t,gain,{dest:g,pan,...send});
   else if(id==='clap')play(buffer('clap',sr=>ONE_SHOTS.clap(sr)),t,gain,{dest:g,...send,room:p.kit.clapRoom});
-  else if(id==='tom'||id==='conga'){const f=Math.round(Math.max(40,Math.min(900,x||(id==='tom'?90:200))));play(buffer(id+':'+f,sr=>ONE_SHOTS.perc(sr,f,id==='tom'?.12:.07)),t,gain,{dest:g,pan,...send});}
+  else if(id==='tom'||id==='conga'){const f=Math.round(Math.max(40,Math.min(900,x||(id==='tom'?90:200)))),dec=skinOf(p,id);play(buffer(id+':'+f+':'+dec,sr=>ONE_SHOTS.perc(sr,f,dec)),t,gain,{dest:g,pan,...send});}
   else if(id==='blip'){const f=Math.round(runtime.hz?.(x)||440);play(buffer('blip:'+f,sr=>ONE_SHOTS.perc(sr,f,.08)),t,gain,{dest:g,pan,...send});}
   else{const make={snare:sr=>ONE_SHOTS.snare(sr),rim:sr=>ONE_SHOTS.rim(sr),shaker:sr=>ONE_SHOTS.shaker(sr),wood:sr=>ONE_SHOTS.perc(sr,780,.035),cowbell:sr=>ONE_SHOTS.cowbell(sr)}[id];if(!make)return false;play(buffer(id,make),t,gain,{dest:g,pan,...send});}
   hits++;played++;return true;
@@ -236,7 +248,7 @@ export function initialize(runtime){
    const group=list.slice(i,j),chord=group.length>1&&group[0].role!=='bajo';for(const n of group)front(n,chord);heard();i=j;}}
  function front(o,chord){
   const {p,t,v,dest,theme}=o,e=E,ac=e.ac,g=count(ac.createGain());g.gain.value=FRONT_LEVEL*(p.output??1)*(p.front??1);g.connect(dest);later(g,8000);
-  if(o.role==='bajo'){let n=o.m;while(n>52)n-=12;while(n<38)n+=12;const level=Math.min(3,v/.14);if(p.bass.kind==='acid')acidBass({},g,p,n,t,level,runtime.MU?.step??0);else splitBass(g,p,n,t,level);voices++;played++;return;}
+  if(o.role==='bajo'){let n=o.m;while(n>52)n-=12;while(n<38)n+=12;const level=Math.min(3,v/.14);if(p.bass.kind==='acid')acidBass({},g,p,n,t,level,runtime.MU?.step??0);else if(p.bass.kind==='logdrum')logBass({},g,p,n,t,level);else splitBass(g,p,n,t,level);voices++;played++;return;}
   const style=chord?p.chords:p.lead,kind=style.map?.[o.ty]||style.kind,level=Math.min(3,v/(chord?.05:.07))*style.level,h=unit(mix(Math.round(t*1000),o.m)),M=shaped;
   let n=o.m;const [lo,hi]=chord?style.range||(kind==='pad'||kind==='strings'?[48,69]:[52,72]):[55,84];while(n>hi)n-=12;while(n<lo)n+=12;
   const k=M.streak>=4,sends=theme?{room:.2,echo:.55,hall:k?.3:0,tape:k&&e.tapeIn&&p.kit.id==='techno'?.25:0}:{room:(style.room||.15)*M.wet,hall:(style.hall||0)*M.wet,echo:Math.max(.18,(style.echo||0)*1.2)*M.wet,tape:(style.tape||0)*M.wet};
@@ -275,7 +287,7 @@ export function initialize(runtime){
   else if(id==='rim')play(buffer('rim',sr=>ONE_SHOTS.rim(sr)),time,gain,{dest:d.dry,pan,room,echo:step%16===14?echo:0});
   else if(id==='shaker')play(buffer('shaker',sr=>ONE_SHOTS.shaker(sr)),time,gain,{dest:d.dry,pan:pan*(step%4===1?-1:1)});
   else if(id==='wood')play(buffer('wood',sr=>ONE_SHOTS.perc(sr,780,.035)),time,gain,{dest:d.dry,pan,room,echo});
-  else if(id==='tom'||id==='conga'){const f=Math.round(Math.max(40,Math.min(900,x||(id==='tom'?90:200))));play(buffer(id+':'+f,sr=>ONE_SHOTS.perc(sr,f,id==='tom'?.12:.07)),time,gain,{dest:d.dry,pan,room});}
+  else if(id==='tom'||id==='conga'){const f=Math.round(Math.max(40,Math.min(900,x||(id==='tom'?90:200)))),dec=skinOf(p,id);play(buffer(id+':'+f+':'+dec,sr=>ONE_SHOTS.perc(sr,f,dec)),time,gain,{dest:d.dry,pan,room,echo:p.kit.tomDecay?echo:0});}   // kits with their own skins send them to the echo too
   else if(id==='cowbell')play(buffer('cowbell',sr=>ONE_SHOTS.cowbell(sr)),time,gain,{dest:d.dry,pan});
   else if(id==='blip'){const f=Math.round(runtime.hz?.(x)||440);play(buffer('blip:'+f,sr=>ONE_SHOTS.perc(sr,f,.08)),time,gain,{dest:d.duck,pan,room,echo});}
   else return false;
@@ -284,7 +296,7 @@ export function initialize(runtime){
  // ---------- voices: bass, melody and chords ----------
  const hzOf=n=>runtime.hz?runtime.hz(n):440*Math.pow(2,(n-69)/12);
  // Drawbar organ and tine harmonics as periodic waves, made once per context (a square or sine without them).
- function wave(kind){const e=E;if(!e.ac.createPeriodicWave)return null;let w=e.waves.get(kind);if(!w){const h=kind==='organ'?[0,1,.85,.5,.38,0,.22,0,.16]:[0,1,.3,.1];w=e.ac.createPeriodicWave(new Float32Array(h.length),new Float32Array(h));e.waves.set(kind,w);}return w;}
+ function wave(kind){const e=E;if(!e.ac.createPeriodicWave)return null;let w=e.waves.get(kind);if(!w){const h=kind==='organ'?[0,1,.85,.5,.38,0,.22,0,.16]:kind==='flute'?[0,1,.12,.05,.015]:kind==='piano'?[0,0,.55,.3,.16,.08,.04]:[0,1,.3,.1];w=e.ac.createPeriodicWave(new Float32Array(h.length),new Float32Array(h));e.waves.set(kind,w);}return w;}
  // A progressive build: pads and leads open over the phrase (counted from the bar a region took over, or the clock).
  let phraseAt=null;
  function buildCut(p,fallback){const b=p.build;if(!b)return fallback;const st=runtime.MU?.step??0,bar=st>>4,phrase=phraseAt?phraseAt.phrase+bar-phraseAt.bar:bar;
@@ -311,6 +323,15 @@ export function initialize(runtime){
   if(b.sub){let s=n;while(hzOf(s)>80)s-=12;while(hzOf(s)<38)s+=12;const so=count(ac.createOscillator()),sg=count(ac.createGain());so.frequency.value=hzOf(s);
    sg.gain.setValueAtTime(0,t);sg.gain.linearRampToValueAtTime(.24*level*b.sub,t+.005);sg.gain.setValueAtTime(.24*level*b.sub,t+len);sg.gain.linearRampToValueAtTime(0,t+len+.03);so.connect(sg).connect(to);so.start(t);so.stop(t+len+.05);list.push(so,sg);}
   d.acid.last={t,f};o.onended=()=>{for(const x of list)x.disconnect();};}
+ // Amapiano's log drum: a pitched drum as the bass. A sine that knocks in high and drops onto the note (and a little
+ // under it), a short triangle knock an octave up, gently driven; it rings about a beat, as composed, no slide.
+ function logBass(d,to,p,n,t,level,lift=0){const e=E,ac=e.ac,b=p.bass,f=hzOf(n);
+  if(!d.log){const sh=count(ac.createWaveShaper?ac.createWaveShaper():ac.createGain());if(sh.curve!==undefined){const c=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/1023*2-1;c[i]=Math.tanh(b.drive*x)/Math.tanh(b.drive);}sh.curve=c;}sh.connect(to);d.log={in:sh};}
+  const o=count(ac.createOscillator()),a=count(ac.createGain()),k=count(ac.createOscillator()),kg=count(ac.createGain()),list=[o,a,k,kg],dec=.16*(b.decay||1)*(1+.3*lift),peak=.32*level*b.mid;
+  o.frequency.setValueAtTime(f*2.1,t);o.frequency.exponentialRampToValueAtTime(f,t+.03);o.frequency.exponentialRampToValueAtTime(f*(b.drop||.9),t+.03+dec*3);
+  a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(peak,t+.003);a.gain.setTargetAtTime(0,t+.03,dec);
+  k.type='triangle';k.frequency.setValueAtTime(f*2,t);kg.gain.setValueAtTime(peak*(b.knock||.3)*(1+lift),t);kg.gain.setTargetAtTime(0,t+.002,.03);
+  o.connect(a).connect(d.log.in);k.connect(kg).connect(d.log.in);o.start(t);o.stop(t+.03+dec*6);k.start(t);k.stop(t+.25);o.onended=()=>{for(const x of list)x.disconnect();};}
  function proVoice(role,ty,m,t,v,region){
   if(runtime.currentVoiceOrigin!=='track')return playerVoice(role,ty,m,t,v,region,runtime.currentVoiceOrigin);
   if(!live()||!region||!Number.isFinite(m)||!Number.isFinite(t))return false;
@@ -319,7 +340,7 @@ export function initialize(runtime){
   if(role==='bajo'){
    if(mixKeys&&inDrop())return true;
    let n=m;while(n>52)n-=12;while(n<38)n+=12;const level=Math.min(3,v/.14);
-   if(p.bass.kind==='acid')acidBass(d,d.duck,p,n,t,level,runtime.MU?.step??0);else splitBass(d.duck,p,n,t,level,M.bass);
+   if(p.bass.kind==='acid')acidBass(d,d.duck,p,n,t,level,runtime.MU?.step??0);else if(p.bass.kind==='logdrum')logBass(d,d.duck,p,n,t,level,M.bass);else splitBass(d.duck,p,n,t,level,M.bass);
    voices++;return true;
   }
   const MU=runtime.MU,arrangement=region.key===MU?.dnaA?.key?MU?.radio:MU?.neighborRadio;let melody=role==='lead'&&!!arrangement?.hookI&&ty===arrangement.hookI;
@@ -373,12 +394,37 @@ export function initialize(runtime){
    const lp=count(ac.createBiquadFilter()),cutHz=buildCut(p,3000)*cut;lp.type='lowpass';lp.Q.value=1.4;lp.frequency.setValueAtTime(Math.min(16000,cutHz*1.6),t);lp.frequency.setTargetAtTime(cutHz*.35,t+.004,.12);lp.connect(out);list.push(lp);
    for(const dt of [-18,0,18]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
    out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.045*level,t+.003);out.gain.setTargetAtTime(0,t+.02,.16);end=t+1;
+  }else if(kind==='pluck'){   // melodic house pluck: two detuned saws and a square an octave down, a snappy low-pass, into the echo
+   const lp=count(ac.createBiquadFilter()),cutHz=buildCut(p,2600)*cut;lp.type='lowpass';lp.Q.value=3;lp.frequency.setValueAtTime(Math.min(16000,cutHz*2.2),t);lp.frequency.setTargetAtTime(Math.max(300,cutHz*.25),t+.002,.07);lp.connect(out);list.push(lp);
+   for(const dt of [-9,9]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
+   const sq=osc('square',f/2),sg=count(ac.createGain());list.push(sg);sg.gain.value=.3;sq.connect(sg).connect(lp);
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.055*level,t+.002);out.gain.setTargetAtTime(0,t+.01,.16);end=t+1.1;
+  }else if(kind==='flute'){   // pan flute: a near-sine with its breath (noise around the note), a chiff on the attack and a late vibrato
+   const w=wave('flute')||'sine',o=osc(w,f),lfo=osc('sine',5.2),lg=count(ac.createGain());list.push(lg);first=o;o.connect(out);
+   lg.gain.setValueAtTime(0,t);lg.gain.linearRampToValueAtTime(f*.006,t+Math.min(.35,hold));lfo.connect(lg).connect(o.frequency);
+   if(runtime.noiseBuffer){const src=count(ac.createBufferSource()),bp=count(ac.createBiquadFilter()),bg=count(ac.createGain());src.buffer=runtime.noiseBuffer;src.loop=true;bp.type='bandpass';bp.frequency.value=Math.min(12000,f*2);bp.Q.value=1.6;
+    bg.gain.setValueAtTime(0,t);bg.gain.linearRampToValueAtTime(.9,t+.012);bg.gain.setTargetAtTime(.22,t+.02,.05);bg.gain.setTargetAtTime(0,t+hold,.08);src.connect(bp).connect(bg).connect(out);list.push(src,bp,bg);oscs.push(src);}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.09*level,t+.045);out.gain.setValueAtTime(.09*level,t+hold);out.gain.setTargetAtTime(0,t+hold,.09);end=t+hold+.6;
+  }else if(kind==='string'||kind==='charango'){   // a plucked string (Karplus-Strong buffer); the charango doubles each course, a hair apart
+   const char=kind==='charango',bright=Math.min(1,(char?.75:.45)*Math.sqrt(cut)),key='string:'+n+':'+Math.round(bright*10),b=buffer(key,sr=>ONE_SHOTS.string(sr,f,Math.round(bright*10)/10,char?1.2:1.8));
+   const strum=style===p.chords?(n-48)/24*.018:0;t+=Math.max(0,strum);   // chord notes strum upward
+   for(const [rate,lag,lv] of char?[[1,0,.6],[1.004,.007,.5]]:[[1,0,1]]){const src=count(ac.createBufferSource()),sg=count(ac.createGain());src.buffer=b;src.playbackRate.value=rate;sg.gain.value=lv;src.connect(sg).connect(out);list.push(src,sg);oscs.push(src);first=first||src;src.__at=t+lag;}
+   out.gain.setValueAtTime(.13*level,t);out.gain.setValueAtTime(.13*level,t+hold+.4);out.gain.setTargetAtTime(0,t+hold+.4,.2);end=t+(char?1.2:1.8);
+  }else if(kind==='piano'){   // amapiano piano: a sine with a harmonic wave over it that dies faster (the hammer's brightness), a slight chorus
+   const o=osc('sine',f),o2=osc('sine',f,3),hw=osc(wave('piano')||'triangle',f),hg=count(ac.createGain()),lp=count(ac.createBiquadFilter());list.push(hg,lp);first=o;
+   lp.type='lowpass';lp.frequency.value=Math.min(16000,5200*cut);lp.connect(out);o.connect(lp);o2.connect(lp);hg.gain.setValueAtTime(.7,t);hg.gain.setTargetAtTime(.08,t+.002,.09);hw.connect(hg).connect(lp);
+   const tau=Math.max(.35,1.1-(n-60)*.03);out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.09*level,t+.003);out.gain.setTargetAtTime(0,t+.005,tau);out.gain.setTargetAtTime(0,t+hold+.1,.12);end=t+Math.min(hold+.8,tau*4);
+  }else if(kind==='chant'){   // a chant-like formant hit: a saw and its sub through three vowel formants (no recorded voice), a short swell
+   const o=osc('sawtooth',f),sb=osc('triangle',f/2),vib=osc('sine',5.6),vg=count(ac.createGain()),vow=[[570,840,2410],[450,800,2830],[730,1090,2440],[300,870,2240]][Math.floor(h*4)%4];first=o;list.push(vg);
+   vg.gain.value=f*.008;vib.connect(vg).connect(o.frequency);
+   for(const [fq,gq] of [[vow[0],1],[vow[1],.7],[vow[2],.25]]){const b=count(ac.createBiquadFilter()),g=count(ac.createGain());b.type='bandpass';b.frequency.value=fq;b.Q.value=8;g.gain.value=gq;o.connect(b);sb.connect(b);b.connect(g).connect(out);list.push(b,g);}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.32*level,t+.025);out.gain.setTargetAtTime(0,t+Math.min(.3,hold),.07);end=t+Math.min(.3,hold)+.5;
   }else{   // a short detuned saw stab
    const lp=count(ac.createBiquadFilter()),top=Math.min(16000,(style.cut||2600)*cut);lp.type='lowpass';lp.Q.value=2;lp.frequency.setValueAtTime(top,t);lp.frequency.setTargetAtTime(500,t+.004,.06);lp.connect(out);list.push(lp);
    for(const dt of [-12,12]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
    out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.06*level,t+.003);out.gain.setTargetAtTime(0,t+.02,style.decay||.07);end=t+.5+(style.decay||0)*4;
   }
-  for(const o of oscs){o.start(t);o.stop(end);}
+  for(const o of oscs){o.start(o.__at??t);o.stop(end);}
   first.onended=()=>{for(const x of list)x.disconnect();};return pan;
  }
  Object.defineProperties(runtime,{
