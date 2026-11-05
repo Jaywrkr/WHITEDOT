@@ -2634,7 +2634,7 @@ export const EN=Object.freeze({
  "Escuchaste un nuevo linaje con el cubo.":"You heard a new lineage with the cube.",
  "Ver todo":"See all",
  "Ver cerca":"See close",
- "{} oídos sin visitar (?)":"{} heard, not visited (?)",
+ "{} hitos oídos sin visitar":"{} landmarks heard, not visited",
  "⌂ tu Refugio":"⌂ your Refuge",
  "{} favoritos (◇)":"{} favorites (◇)",
  "{} hitos visitados":"{} landmarks visited",
@@ -4735,6 +4735,8 @@ export const EN=Object.freeze({
  "en el modo normal":"in the normal mode",
  // Recorrer lejos (alpha.245)
  "Satélite":"Satellite",
+ "Rumor: aún sin descubrir":"Rumor: not discovered yet",
+ "Estación":"Station",
  "Satélite de descanso":"Rest satellite",
  "Satélite de descanso · estás aquí":"Rest satellite · you are here",
  "Satélite de descanso · visitado":"Rest satellite · visited",

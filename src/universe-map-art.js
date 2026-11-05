@@ -3,6 +3,7 @@
 // discovered). Icons keep their size at every zoom; when two crowd the same spot the more important one is drawn.
 import {toScreen,UNITS_PER_KM,UMAP_PRIORITY} from './universe-map-model.js';
 import {formatDistance} from './player-profile-model.js';
+import {drawScanIcon,iconKind} from './scan-icons.js';
 export const UMAP_GOLD='#f0d27a',UMAP_FONT='12px "Geist Mono", monospace';
 const TAU=Math.PI*2;
 // The fog, cached: each region you visited is a soft disc of its biome's colour in a small canvas (k px per region),
@@ -29,34 +30,32 @@ function bands(c,W,H,view,list,words=true,drawn=[]){const [ox,oy]=toScreen(view,
   // Its name where the ring crosses the screen's top half, nearest the middle.
   let lx=ox,ly=oy-r;if(ly<100||ly>H-40){const dy=Math.max(100,Math.min(H*.45,oy))-oy,dx=Math.sqrt(Math.max(0,r*r-dy*dy));lx=Math.abs(ox+dx-W/2)<Math.abs(ox-dx-W/2)?ox+dx:ox-dx;ly=oy+dy;}
   if(words&&lx>-20&&lx<W+20&&ly>-20&&ly<H+20)label(c,b.km+' km',lx,ly,{color:b.complete?UMAP_GOLD:'#ffffffb0',W,H});}}
-// One icon per kind, at a fixed size.
+// One icon per kind, at a fixed size. Escáner NMS (alpha.263): the same pictogram as the scanner's marks and the arrows
+// (scan-icons.js); «?» only for what you have not discovered (an open rumour, a probe's secret coordinate). A landmark
+// you only heard shows its own icon, dim (the map used to fill with «?»). The eleven places keep their colour and ★.
+export const UMAP_ICON={refugio:'refugio',favorite:'favorito',landmark:'hito',heard:'hito',rare:'rareza',satellite:'satelite',
+ habitat:'criatura',revived:'region',live:'criatura',sky:'figura',mark:'marca'};
+export const umapIconOf=it=>it.kind==='rumor'?iconKind(it.icon,'secreto'):iconKind(UMAP_ICON[it.kind]||it.kind);
 function icon(c,it,x,y,view,{names=false,W,H}){c.save();c.lineWidth=1.5;
  switch(it.kind){
   case 'place':{const r=7;c.fillStyle='#000';c.strokeStyle=it.ink||'#ffffff';c.globalAlpha=it.open?1:.55;c.beginPath();c.arc(x,y,r,0,TAU);c.fill();c.stroke();if(it.complete){c.fillStyle=it.ink;c.globalAlpha=.85;c.beginPath();c.arc(x,y,3,0,TAU);c.fill();}
    c.globalAlpha=1;for(let i=0;i<3;i++){c.fillStyle=i<it.stars?UMAP_GOLD:'#ffffff38';star(c,x+(i-1)*8,y+r+7,3.4);c.fill();}
    if(names)label(c,it.name,x,y+r+20,{color:it.open?'#ffffff':'#8a8a8f',W,H});break;}
   case 'ringHome':{c.strokeStyle='#ffffff';c.globalAlpha=.7;c.setLineDash([2,3]);c.beginPath();c.arc(x,y,5,0,TAU);c.stroke();break;}
-  case 'refugio':{const z=7;c.strokeStyle='#ffffff';c.fillStyle='#000';c.beginPath();c.moveTo(x-z,y);c.lineTo(x,y-z);c.lineTo(x+z,y);c.lineTo(x+z,y+z);c.lineTo(x-z,y+z);c.closePath();c.fill();c.stroke();break;}
-  case 'favorite':{c.strokeStyle='#ffffff';c.globalAlpha=.8;c.fillStyle='#000';c.beginPath();c.moveTo(x,y-6);c.lineTo(x+5,y);c.lineTo(x,y+6);c.lineTo(x-5,y);c.closePath();c.fill();c.stroke();break;}
+  case 'refugio':case 'favorite':case 'landmark':case 'rare':case 'habitat':case 'revived':{c.globalAlpha=.92;drawScanIcon(c,umapIconOf(it),x,y,14);break;}
   case 'sky':{const big=it.stars&&it.stars.length&&160*view.scale>=7;
    if(big){c.strokeStyle='#ffffff';c.lineWidth=1;const P=s=>toScreen(view,W,H,s.x,s.y);for(const [a,b] of it.lines||[]){const on=a<it.lit&&b<it.lit;c.globalAlpha=on?.85:.22;const [ax,ay]=P(it.stars[a]),[bx,by]=P(it.stars[b]);c.beginPath();c.moveTo(ax,ay);c.lineTo(bx,by);c.stroke();}
     it.stars.forEach((s,k)=>{const [sx,sy]=P(s);c.globalAlpha=k<it.lit?1:.35;c.fillStyle='#ffffff';c.fillRect(sx-1.5,sy-1.5,3,3);});}
-   else{c.fillStyle='#ffffff';c.strokeStyle='#ffffff';star(c,x,y,6,4);if(it.done){c.globalAlpha=.95;c.fill();}else{c.globalAlpha=.85;c.lineWidth=1;c.stroke();}}break;}
-  case 'live':{c.translate(x,y);c.rotate(Math.PI/4);c.fillStyle=it.won?it.color:'#000';c.strokeStyle=it.color||'#ffffff';c.lineWidth=1.5;c.fillRect(-3.5,-3.5,7,7);c.strokeRect(-3.5,-3.5,7,7);break;}
-  case 'landmark':{const z=6;c.strokeStyle='#ffffff';c.fillStyle='#ffffff';c.globalAlpha=.9;c.lineWidth=1.2;
-   if(it.type==='torre'){c.fillRect(x-1.5,y-z,3,z*2);}else if(it.type==='arbol'){c.beginPath();c.arc(x,y,z*.8,0,TAU);c.stroke();}
-   else if(it.type==='ciudad'){c.strokeRect(x-z*.8,y-z*.8,z*1.6,z*1.6);c.fillRect(x-1.5,y-1.5,3,3);}else if(it.type==='monolito'){c.strokeRect(x-2.5,y-z,5,z*2);}
-   else{c.beginPath();c.moveTo(x,y-z);c.lineTo(x+z*.8,y+z*.6);c.lineTo(x-z*.8,y+z*.6);c.closePath();c.stroke();}break;}
-  // A rumor someone told you (Descubrir): a white «?» in a small square, white because it is somewhere to go.
-  case 'rumor':{c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.fillRect(x-7,y-7,14,14);c.strokeRect(x-6.5,y-6.5,13,13);c.font=UMAP_FONT;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#ffffff';c.fillText('?',x,y+.5);break;}
+   else{c.globalAlpha=it.done?.95:.6;drawScanIcon(c,'figura',x,y,14);}break;}
+  // A live encounter you saw: the creature, dim; bright with a line of its biome's colour under it once you managed it.
+  case 'live':{c.globalAlpha=it.won?.95:.6;drawScanIcon(c,'criatura',x,y,14);if(it.won&&it.color){c.fillStyle=it.color;c.fillRect(x-4,y+9,8,1.5);}break;}
+  // A rumour, a probe's coordinate: «?» on black (not discovered yet). Your flare and an order: their own icon.
+  case 'rumor':{const k=umapIconOf(it);if(k==='secreto'){c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.fillRect(x-8,y-8,16,16);c.strokeRect(x-7.5,y-7.5,15,15);}drawScanIcon(c,k,x,y,14);break;}
   // A rest satellite you visited (Recorrer lejos): a small body with its two panels; the one you are in, with its light.
-  case 'satellite':{c.fillStyle='#000';c.strokeStyle='#ffffff';c.fillRect(x-3.5,y-3.5,7,7);c.strokeRect(x-3.5,y-3.5,7,7);c.strokeRect(x-11,y-2.5,6,5);c.strokeRect(x+5,y-2.5,6,5);if(it.here){c.globalAlpha=.6;c.strokeStyle='#ffd2a0';c.beginPath();c.arc(x,y,13,0,TAU);c.stroke();}break;}
-  // Lejos del origen (alpha.249): a region you revived, a ring of its colour; a habitat with its creature, a small triangle.
-  case 'revived':{c.strokeStyle=it.color||'#ffffff';c.lineWidth=1.5;c.globalAlpha=.9;c.beginPath();c.arc(x,y,6,0,TAU);c.stroke();c.globalAlpha=.35;c.fillStyle=it.color||'#ffffff';c.beginPath();c.arc(x,y,6,0,TAU);c.fill();break;}
-  case 'habitat':{c.fillStyle='#000';c.strokeStyle='#ffffff';c.lineWidth=1.2;c.beginPath();c.moveTo(x,y-6);c.lineTo(x+5.5,y+4);c.lineTo(x-5.5,y+4);c.closePath();c.fill();c.stroke();c.fillStyle='#ffffff';c.fillRect(x-1,y,2,2);break;}
-  case 'heard':{c.font=UMAP_FONT;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#8a8a8f';c.fillText('?',x,y);break;}
-  case 'rare':{c.fillStyle='#ffffff';c.globalAlpha=.8;star(c,x,y,5,6);c.fill();break;}
-  case 'mark':{c.strokeStyle='#ffffff';c.lineWidth=1.5;c.beginPath();c.arc(x,y,8,0,TAU);c.stroke();c.beginPath();c.moveTo(x-13,y);c.lineTo(x-4,y);c.moveTo(x+4,y);c.lineTo(x+13,y);c.moveTo(x,y-13);c.lineTo(x,y-4);c.moveTo(x,y+4);c.lineTo(x,y+13);c.stroke();break;}
+  case 'satellite':{drawScanIcon(c,'satelite',x,y,14);if(it.here){c.globalAlpha=.6;c.strokeStyle='#ffd2a0';c.beginPath();c.arc(x,y,13,0,TAU);c.stroke();}break;}
+  // A landmark you only heard: its own icon, dim, until you get there.
+  case 'heard':{c.globalAlpha=.45;drawScanIcon(c,'hito',x,y,14);break;}
+  case 'mark':{drawScanIcon(c,'marca',x,y,24);break;}
  }c.restore();}
 // You: the small white cube and, ahead of it, a chevron along your heading.
 export function drawMe(c,x,y,heading=-Math.PI/2,size=8){c.save();c.fillStyle='#ffffff';c.strokeStyle='#000';c.lineWidth=2;c.strokeRect(x-size/2,y-size/2,size,size);c.fillRect(x-size/2,y-size/2,size,size);

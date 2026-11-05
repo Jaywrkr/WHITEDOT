@@ -44,18 +44,18 @@ with sync_playwright() as p:
   # Real pointer gestures: hold scans, drag moves, a short tap pulses.
   center={'x':size['width']/2,'y':size['height']/2}
   page.mouse.move(center['x']+60,center['y']);before=page.evaluate('({x:window.__testRuntime.S.wx,y:window.__testRuntime.S.wy,waves:window.__testRuntime.waves.length})')
-  page.mouse.down();page.wait_for_timeout(650);assert page.locator('#scanner').is_visible();page.screenshot(path='/tmp/whitedot-scanner-'+label+'.png')
+  page.mouse.down();page.wait_for_timeout(650);assert page.evaluate('window.__testRuntime.scanning') and not page.locator('#scanner').is_visible();page.screenshot(path='/tmp/whitedot-scanner-'+label+'.png')
   after=page.evaluate('({x:window.__testRuntime.S.wx,y:window.__testRuntime.S.wy,waves:window.__testRuntime.waves.length})')
   assert abs(after['x']-before['x'])<.001 and abs(after['y']-before['y'])<.001
-  page.mouse.up();assert not page.locator('#scanner').is_visible()
+  page.mouse.up();assert not page.evaluate('window.__testRuntime.scanning')
   page.wait_for_timeout(800);page.mouse.click(center['x'],center['y'])
   assert page.evaluate('window.__testRuntime.influenceState.targets.melody<0'), 'white point reduces a layer'
   page.mouse.click(30,300);page.wait_for_function('window.__testRuntime.waves.length > 0',timeout=3000)   # Q5: the wave is born when its note is heard
   page.mouse.move(center['x'],center['y']);before=page.evaluate('window.__testRuntime.S.wx');page.mouse.down();page.mouse.move(center['x']+80,center['y']);page.wait_for_timeout(650)
-  assert not page.locator('#scanner').is_visible();assert page.evaluate('window.__testRuntime.S.wx')>before;page.mouse.up()
-  page.keyboard.down('e');assert page.locator('#scanner').is_visible();page.keyboard.up('e');assert not page.locator('#scanner').is_visible()
+  assert not page.evaluate('window.__testRuntime.scanning');assert page.evaluate('window.__testRuntime.S.wx')>before;page.mouse.up()
+  page.keyboard.down('e');assert page.evaluate('window.__testRuntime.scanning') and not page.locator('#scanner').is_visible();page.keyboard.up('e');assert not page.evaluate('window.__testRuntime.scanning')
   if label=='mobile':
-   cdp=c.new_cdp_session(page);cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[center]});page.wait_for_timeout(650);assert page.locator('#scanner').is_visible();cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});assert not page.locator('#scanner').is_visible()
+   cdp=c.new_cdp_session(page);cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[center]});page.wait_for_timeout(650);assert page.evaluate('window.__testRuntime.scanning') and not page.locator('#scanner').is_visible();cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});assert not page.evaluate('window.__testRuntime.scanning')
   page.evaluate('''()=>{const r=window.__testRuntime,cx=Math.floor(r.S.wx/r.WCH),cy=Math.floor(r.S.wy/r.WCH);let c;for(let a=cx-2;a<=cx+2&&!c;a++)for(let b=cy-2;b<=cy+2&&!c;b++){const q=r.sceneChunk(r.wchunk(a,b));if(q.playthings.length)c=q;}if(!c)throw Error('No new elements');const o=c.playthings[0];r.S.wx=o.x-5;r.S.wy=o.y;o.hx=o.x;o.hy=o.y;o.vx=o.vy=0;o.touching=false;o.cd=0;r.frame.l=1000;r.frame(1050);if(o.lit<=0)throw Error('Contact failed '+JSON.stringify({x:o.x,y:o.y,px:r.S.wx,py:r.S.wy,lit:o.lit,touching:o.touching,mode:r.S.mode,scanning:r.scanning,activity:r.activityActive,layer:r.S.layer,modals:[...document.querySelectorAll('.modal:not([hidden])')].map(e=>e.id)}));o.x=r.S.wx+30;o.y=r.S.wy;o.cd=0;o.lit=0;r.waves=[{x:r.S.wx,y:r.S.wy,r:29,prev:0,max:340,n:0}];r.frame.l=1050;r.frame(1100);if(o.lit<=0)throw Error('Pulse failed');r.frame.l=performance.now();}''')
   page.evaluate('''async()=>{const r=window.__testRuntime,{TOY_NAMES}=await import('/src/playthings.js'),c=r.sceneChunk(r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900)));window.__toyRestore={c,items:c.playthings};c.playthings=Object.keys(TOY_NAMES).map((kind,i)=>({kind,x:r.S.wx+(i-2)*35,y:r.S.wy-80,hx:r.S.wx+(i-2)*35,hy:r.S.wy-80,size:8,phase:i,rotation:.4,lit:1,jump:.2,ring:.7,vx:0,vy:0,cd:1e12,snd:q=>r.playVoice('toy:'+kind,i,q,r.regionOfPos(r.S.wx,r.S.wy))}));r.frame.l=1000;r.frame(1050);r.frame.l=performance.now();}''')
   page.screenshot(path='/tmp/whitedot-playthings-'+label+'.png')

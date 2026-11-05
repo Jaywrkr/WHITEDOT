@@ -13,6 +13,7 @@ import {skyFigure,skyStars,skyLines} from './sky-map-model.js';
 import {LIVE_COLORS,liveDefinition} from './live-encounters-model.js';
 import {UMAP_VERSION,UMAP_LEVEL_NAMES,UMAP_BANDS,UNITS_PER_KM,normalizeUniverseMap,noteLive,fogCells,bandCells,bandProgress,currentBand,levelOf,viewFor,stepLevel,zoomAt,toWorld,hitTest,cardActions,markOf,markRoute,clampScale,spanOf} from './universe-map-model.js';
 import {buildFog,drawUniverseMap} from './universe-map-art.js';
+import {iconCanvas} from './scan-icons.js';
 
 // Room kept free for the buttons at the sides and the header and legend above and below.
 const INSET=Object.freeze({x:64,y:84});
@@ -59,7 +60,8 @@ export function initialize(runtime){
   // Recorrer lejos (alpha.245): the rest satellites you visited (recorrer.js); from inside one, its door leads to the others.
   for(const e of runtime.satellitesForMap?.()||[])out.push({kind:'satellite',id:e.id,x:e.x,y:e.y,name:e.name,here:e.here});
   // Lo que hay más lejos (alpha.248): what each batch of the bands shows, as rumors are (your flare, an order's buoy).
-  for(const e of runtime.bandMapPoints?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text});
+  // Escáner NMS (alpha.263): your flare and an order are yours, with their own icon; only what is not discovered is «?».
+  for(const e of runtime.bandMapPoints?.()||[])out.push({kind:'rumor',id:e.id,x:e.x,y:e.y,name:e.name,text:e.text,icon:e.id==='bengala'?'bengala':String(e.id).startsWith('encargo:')?'encargo':'secreto'});
   // Lejos del origen (alpha.249): the regions you revived and the habitats where a creature lives (lejos-b.js).
   for(const e of runtime.lejosBForMap?.()||[])out.push({...e});
   if(usable()&&q.mark)out.push({kind:'mark',id:'mark',x:q.mark.x,y:q.mark.y,name:q.mark.name});
@@ -94,7 +96,7 @@ export function initialize(runtime){
   case 'live':return it.won?'Encuentro vivo · logrado':'Encuentro vivo · visto';
   case 'satellite':return it.here?'Satélite de descanso · estás aquí':'Satélite de descanso · visitado';
   case 'revived':return 'Región revivida · con su color y su música';case 'habitat':return it.name?'Hábitat · '+it.name+' vive aquí':'Hábitat';
-  case 'landmark':return 'Hito visitado';case 'heard':return 'Hito oído · aún no llegaste';case 'rumor':return 'Rumor · '+(it.text||'algo lejano');case 'rare':return 'Rareza encontrada';
+  case 'landmark':return 'Hito visitado';case 'heard':return 'Hito oído · aún no llegaste';case 'rumor':return it.icon&&it.icon!=='secreto'?it.text||it.name:'Rumor · '+(it.text||'algo lejano');case 'rare':return 'Rareza encontrada';
   case 'mark':return 'Tu marca · la brújula te lleva';case 'me':return 'Tú';default:return it.visited?'Lugar explorado':'Sin explorar';}};
  function flags(it){return {canTravel:it.kind==='place'&&!!runtime.ringCanTravel?.(it.id),canHome:(it.kind==='ringHome'||it.home)&&!!runtime.ringHomePoint?.(),canFavorite:it.kind==='favorite'&&!!runtime.canPracticeTravel?.()&&!!runtime.visitWorldAddress&&!!it.point?.address,canDoor:it.kind==='satellite'&&!!runtime.satelliteDoorOpen?.(it.id),mark:usable()?book().mark:null};}
  function showCard(it){card=it;const a=cardActions(it,flags(it)),d=Math.hypot(it.x-runtime.S.wx,it.y-runtime.S.wy);
@@ -134,6 +136,8 @@ export function initialize(runtime){
  if(box&&cv){cv.addEventListener('pointerdown',onDown);cv.addEventListener('pointermove',onMove);cv.addEventListener('pointerup',onUp);cv.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);gesture=null;});cv.addEventListener('wheel',onWheel,{passive:false});
   $('umapClose').onclick=close;$('umapIn').onclick=()=>step(1);$('umapOut').onclick=()=>step(-1);$('umapMe').onclick=centerMe;$('umapGo').onclick=go;$('umapMark').onclick=markAction;$('umapCardClose').onclick=()=>{hideCard();cv.focus?.({preventScroll:true});};
   $('umapLegend')?.addEventListener('toggle',()=>{hideCard();});
+  // The legend shows the map's own icons (one table, scan-icons.js), drawn once.
+  for(const i of document.querySelectorAll('#umapLegend i[data-icon]'))if(!i.firstChild){const cv=iconCanvas(i.dataset.icon,14);if(cv)i.append(cv);}
   window.addEventListener('resize',()=>{if(!box.hidden)redraw();});
   // A dialog closed by accessibility.js (Escape) stops drawing too.
   new MutationObserver(()=>{if(box.hidden){hideCard();if(raf){cancelAnimationFrame(raf);raf=0;}}}).observe(box,{attributes:true,attributeFilter:['hidden']});}
@@ -161,7 +165,7 @@ export function initialize(runtime){
   if(!Number.isFinite(x0))return {x:runtime.S.wx,y:runtime.S.wy,scale:Math.min(W,H)/16000};const span=Math.max(16000,x1-x0+RP(),y1-y0+RP());return {x:(x0+x1)/2,y:(y0+y1)/2,scale:clampScale(Math.min(W-2*margin,H-2*margin)/span,W,H)};}
  function preview(canvas,{X=0,Y=0,W=canvas.width,H=canvas.height,margin=24}={}){const c=canvas.getContext('2d');book();const s=sceneNow();const v=fitView(W,H,margin);s.level=levelOf(v,W,H);c.save();c.translate(X,Y);c.beginPath();c.rect(0,0,W,H);c.clip();const drawn=drawUniverseMap(c,W,H,v,s,{names:spanOf(v,W,H)<30000,scale:true,bottom:16});c.restore();return {drawn,items:s.items,view:v};}
  // Tests only (the runtime is never published): the state, a tap at a point of the screen, the level.
- function state(){const [W,H]=box&&!box.hidden?size():[390,844];return {open:!!box&&!box.hidden,draws,miniDraws,level:view?levelOf(view,W,H,INSET):null,view,book:book(),allowed:allowed(),items:items.map(i=>({kind:i.kind,id:i.id,x:i.x,y:i.y,name:i.name})),drawn:drawnIcons.slice(),card:card?{kind:card.kind,id:card.id,name:card.name}:null,bands:bandsNow().map(b=>({km:b.km,done:b.done,total:b.total,pct:b.pct,complete:b.complete})),fogCells:fogCells(runtime.S.places||{}).length,heading};}
+ function state(){const [W,H]=box&&!box.hidden?size():[390,844];return {open:!!box&&!box.hidden,draws,miniDraws,level:view?levelOf(view,W,H,INSET):null,view,book:book(),allowed:allowed(),items:items.map(i=>({kind:i.kind,id:i.id,x:i.x,y:i.y,name:i.name,icon:i.icon})),drawn:drawnIcons.slice(),card:card?{kind:card.kind,id:card.id,name:card.name}:null,bands:bandsNow().map(b=>({km:b.km,done:b.done,total:b.total,pct:b.pct,complete:b.complete})),fogCells:fogCells(runtime.S.places||{}).length,heading};}
  function noteSeen(s){if(!usable()||!s)return false;return noteLive(book(),{kind:s.kind,x:s.x,y:s.y,won:!!s.won,day:runtime.S.todayKey||''});}
  Object.defineProperties(runtime,{
   openUniverseMap:{get:()=>open},closeUniverseMap:{get:()=>close},universeMapLevel:{get:()=>setLevel},universeMapPreview:{get:()=>preview},

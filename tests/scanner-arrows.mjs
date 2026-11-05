@@ -18,7 +18,11 @@ const pick=edgePick(offers,view,p);
 assert.equal(pick.length,3,'capped at three');
 assert.deepEqual(pick.map(e=>e.key),['sonda:1','caja:1','juego:1'],'the most important first, then the nearest');
 assert.ok(pick.every(e=>e.at&&Number.isFinite(e.at.x)&&Number.isFinite(e.at.a)),'each has its place at the edge');
-assert.equal(pick[0].shape,'pregunta','what is only heard is «?»');assert.equal(pick[0].label,null,'«?» says nothing more');
+assert.equal(pick[0].shape,'secreto','what is only heard is «?»');
+// Escáner NMS: the kind decides the icon (one table, scan-icons.js), whatever shape a system offered.
+assert.equal(pick[2].shape,'juego','a game offered as the old «portal» shows the game icon');
+assert.equal(edgeOffer({kind:'hito',x:1,y:1,shape:'estrella'},p).shape,'hito');assert.equal(edgeOffer({kind:'satelite',x:1,y:1,shape:'portal'},p).shape,'satelite');
+assert.equal(edgeOffer({kind:'carga',x:1,y:1,shape:'cometa'},p).shape,'cometa','the Carga points with the thing\'s own icon');assert.equal(pick[0].label,null,'«?» says nothing more');
 assert.ok(!edgePick(offers,view,p,{cap:9}).some(e=>e.kind==='region'),'a region only when nothing else is there');
 assert.deepEqual(edgePick([{kind:'region',x:-9000,y:0}],view,p).map(e=>e.kind),['region'],'alone, the region is pointed at');
 // Two offers for one thing (the box from Descubrir and from the registry) are one arrow.

@@ -1,8 +1,9 @@
 """Una capa de flechas (coherencia T2, alpha.260) · phone (390x844) and desktop (1280x800). «Hay algo allí» has one
 language: small white arrows at the screen's edge, three at most, with the scanner's icon of the thing or «?» for what is
 secret or only heard. Before the eleven places (scanner level 2) the arrows come only from the systems that marked the
-edge before; with the eleven places (level 3) the scanner's registry points too, secrets and rumours are «?» in the
-«Cerca» panel, the panel stays a moment after release and tapping a row puts the one mark on the Mapa del universo.
+edge before; with the eleven places (level 3) the scanner's registry points too, and secrets and rumours are «?».
+Escáner NMS (alpha.263): a scan shows them as marks on the canvas («? · 150 m»), no panel, and while the marks show an
+arrow does not say the same thing twice; the map keeps its own «Marcar» (scanning marks nothing).
 Reduced motion: an arrow is there at once. Light quality: no gradient or shadow and no more calls. The cost: a handful of
 canvas calls for the arrows. Only white: the bright pixels of every arrow have no colour."""
 from pathlib import Path
@@ -62,37 +63,28 @@ try:
    most=0
    for _ in range(12):s=st(page);most=max(most,len(s['shown']),s['drawn']['arrows']);page.wait_for_timeout(60)
    assert most<=3,('three arrows at most',most);assert s['offered']>=5,s
-   sec=[e for e in s['shown'] if e['key'].startswith('scan:prueba-secreto')];assert sec and sec[0]['ask'] and sec[0]['shape']=='pregunta' and sec[0]['label'] is None,s
+   sec=[e for e in s['shown'] if e['key'].startswith('scan:prueba-secreto')];assert sec and sec[0]['ask'] and sec[0]['shape']=='secreto' and sec[0]['label'] is None,s
    assert all(e['kind']!='region' for e in s['shown']),'a region only when nothing else is there'
    page.wait_for_timeout(400);s=st(page);white(page,s['shown'])
    for e in s['shown']:assert 0<=e['x']<=width and 90<=e['y']<=height-90,('at the edge, off the bars',e)
    if SHOTS:page.screenshot(path=f'{SHOTS}/flechas-nivel3-{width}.png')
-   # --- 3 · «Cerca» at level 3: «?» rows, the panel stays on release, a row marks the map (one mark).
-   hold(page);assert page.get_attribute('#scanner','data-level')=='3'
-   rows=page.locator('#scannerSources li.scan-row');assert 1<=rows.count()<=3,rows.count()
-   first=rows.nth(0).inner_text();assert first.startswith('? · '),('the secret is «?»',first)
-   assert page.locator('#scannerSources button.scan-row').count()==rows.count(),'from level 3 a row is a button'
-   if SHOTS:page.screenshot(path=f'{SHOTS}/flechas-cerca-{width}.png')
-   page.mouse.up();page.wait_for_timeout(150)
-   assert page.locator('#scanner').is_visible() and 'keep' in (page.get_attribute('#scanner','class') or ''),'released: the panel stays a moment'
-   page.locator('#scannerSources button.scan-row').nth(1).click()
-   m=page.evaluate("__r.S.universeMap.mark");want=page.evaluate("window.__flechas.find(s=>s.key==='e')")
-   assert m and abs(m['x']-want['x'])<=1 and abs(m['y']-want['y'])<=1 and m['name']=='Faro de prueba',('the row marks its place',m,want)
-   assert not page.locator('#scanner').is_visible(),'marked: the panel closes'
-   assert page.evaluate("__r.mapMarkRoute()?.name")=='Tu marca · Faro de prueba'
-   # The secret marks without a name; a new mark replaces the old (one mark).
-   hold(page);page.mouse.up();page.wait_for_timeout(150);page.locator('#scannerSources button.scan-row').nth(0).click()
-   m2=page.evaluate("__r.S.universeMap.mark");assert m2['name']=='Tu marca' and abs(m2['y']-(home['y']+1500))<=1,m2
-   # A tap elsewhere closes the panel; it closes alone after a moment.
-   hold(page);page.mouse.up();page.wait_for_timeout(150);assert page.locator('#scanner').is_visible()
-   page.mouse.click(30,height/2);page.wait_for_timeout(100);assert not page.locator('#scanner').is_visible(),'a tap elsewhere closes it'
-   hold(page);page.mouse.up();page.wait_for_function("document.getElementById('scanner').hidden",timeout=6000)
-   page.evaluate("__r.clearMapMark()")
-   # A rumour within reach is «?» too, in the panel and at the edge.
+   # --- 3 · A scan at level 3 (Escáner NMS): marks on the canvas, the secret «?», no panel, the map untouched.
+   page.evaluate("__r.clearMapMark()");hold(page,1500);sc=page.evaluate("__r.scanState()")
+   assert sc['level']=='3' and not page.locator('#scanner').is_visible(),('no panel',sc['level'])
+   mk=[m for m in sc['marks'] if m['id'].startswith('prueba')];assert len(mk)>=3,sc['marks']
+   q=[m for m in mk if m['id']=='prueba-secreto'];assert q and q[0]['shape']=='secreto' and q[0]['label'].startswith('? · '),('the secret is «?»',q)
+   f=[m for m in mk if m['id']=='prueba-flecha'];assert f and all(m['label'].startswith('Faro de prueba · ') and m['shape']=='sonda' for m in f),f
+   if SHOTS:page.screenshot(path=f'{SHOTS}/flechas-marcas-{width}.png')
+   page.mouse.up();page.wait_for_timeout(400)
+   s=st(page);assert not any(e['key'].startswith('scan:prueba') for e in s['shown']),('while the marks show, no arrow says the same',s['shown'])
+   assert not page.evaluate("__r.S.universeMap?.mark"),'scanning marks nothing on the map'
+   # A rumour within reach is «?» too, on the canvas and at the edge.
    page.evaluate(PLACE,False);page.evaluate("()=>{const r=__r,q=r.S.rumors||(r.S.rumors={version:1,open:[],done:[],n:0,given:0});q.open=[...(q.open||[]),{id:'prueba-rumor',kind:'figure',key:'k',name:'',text:'Dicen que…',x:r.S.wx-2500,y:r.S.wy+700,at:''}];}")
+   page.wait_for_function("__r.scanState().left===0",timeout=12000)
    page.wait_for_function("__r.edgeState().shown.some(e=>e.kind==='rumor'&&e.ask)",timeout=5000)
-   hold(page);assert any(page.locator('#scannerSources li.scan-row').nth(k).inner_text().startswith('? · ') for k in range(page.locator('#scannerSources li.scan-row').count())),'the rumour is «?»'
-   page.mouse.up();page.evaluate("()=>{const q=__r.S.rumors;q.open=q.open.filter(o=>o.id!=='prueba-rumor');}");page.evaluate("document.getElementById('scanner').hidden=true");page.evaluate(PLACE,True)
+   hold(page,1500);rm=[m for m in page.evaluate("__r.scanState()")['marks'] if m['id']=='rumores'];assert rm and rm[0]['shape']=='secreto' and rm[0]['label'].startswith('? · '),('the rumour is «?»',rm)
+   page.mouse.up();page.evaluate("()=>{const q=__r.S.rumors;q.open=q.open.filter(o=>o.id!=='prueba-rumor');}");page.evaluate(PLACE,True)
+   page.wait_for_function("__r.scanState().left===0&&__r.scanState().marks.length===0",timeout=12000)
    # --- 4 · Reduced motion: a new arrow is there at once (no fade in).
    page.evaluate("()=>{__r.S.reducedMotion=true;}");page.evaluate(GO,{'x':home['x']+20000,'y':home['y']});page.evaluate(PLACE,True);page.wait_for_timeout(400)
    s=st(page);assert s['shown'] and all(e['k']==1 for e in s['shown']),('still: no fade',s)
@@ -114,5 +106,5 @@ try:
    assert not errors,errors;page.close()
   browser.close()
  elapsed=time.time()-started
- print(f'PASS flechas on phone and desktop in {elapsed:.0f} s: one layer of white arrows, three at most; before the eleven places only the World\'s own marks; level 3 points with the registry, the secret and a rumour as «?»; «Cerca» stays on release and a row puts the one mark on the map; reduced motion without fade; light quality without shadow; a handful of canvas calls',flush=True)
+ print(f'PASS flechas on phone and desktop in {elapsed:.0f} s: one layer of white arrows, three at most; before the eleven places only the World\'s own marks; level 3 points with the registry, the secret and a rumour as «?»; a scan shows them as marks with no panel, no arrow repeats a mark, the map untouched; reduced motion without fade; light quality without shadow; a handful of canvas calls',flush=True)
 finally:server.shutdown()

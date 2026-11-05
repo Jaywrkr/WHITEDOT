@@ -147,15 +147,12 @@ body:not(.dev) #mSettings .settings-diagnostic{display:block;margin-top:0;paddin
 .scan-ico[data-shape="sonda"]{width:8px;height:8px;margin:1px}
 .scan-ico[data-shape="forma"]{border:0;background:var(--ink);clip-path:polygon(50% 8%,94% 92%,6% 92%)}
 .scan-ico[data-shape="estrella"]{border:0;background:var(--ink);transform:rotate(45deg) scale(.6)}
-/* Coherencia T2: «?» for what is secret or only heard, a buoy; from level 3 a row is a quiet button that marks the map,
-   and the panel takes taps for the moment it stays after release. */
+/* Coherencia T2: «?» for what is secret or only heard, a buoy. Escáner NMS (alpha.263): the panel is for ?dev=1 only;
+   the player sees the marks on the canvas, and the power's HUD steps aside while the finger is held. */
 .scan-ico[data-shape="pregunta"]{border:0;width:10px;height:12px;font:500 11px/12px var(--mono);text-align:center}
 .scan-ico[data-shape="pregunta"]::before{content:"?"}
 .scan-ico[data-shape="boya"]{border:0;border-left:1.25px solid var(--ink);width:6px;margin-left:4px}
-.scanner.keep{pointer-events:auto}
-.scanner button.scan-row{display:flex;align-items:center;gap:8px;width:100%;min-height:28px;padding:0;margin:0;background:none;border:0;border-radius:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
-.scanner button.scan-row:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
-body:has(#scanner:not([hidden])) #sparkPowerHud,body:has(#scanner:not([hidden])) #surpriseHud{visibility:hidden}
+body[data-scan] #sparkPowerHud,body[data-scan] #surpriseHud{visibility:hidden}
 /* T4 (Kubono coherente): one box, one notice. While its card shows, the power and the surprise wait under it; after,
    one clock at a time (the power's). A surprise that moved you keeps its «Volver». */
 body:has(#celebration:not([hidden])) :is(#sparkPowerHud,#surpriseHud),body:has(#sparkPowerHud:not([hidden])) #surpriseHud:not([data-return="true"]){visibility:hidden}
@@ -761,6 +758,7 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .sheet .row>#lugaresRing{flex-basis:100%;order:-1}.sheet .row>#lugaresRing.next{order:-2}
 /* One more row of buttons: the list gives up that row, so «Cerrar» stays whole on a phone. */
 .lugares-sheet:has(#lugaresRing:not([hidden])) .lugares-list{max-height:calc(52vh - 60px)}
+@media (min-height:700px){.lugares-sheet:has(#lugaresRing:not([hidden])) .lugares-list{max-height:calc(52vh - 124px)}}
 /* Panel 10 (P4): near ★★ (70–74,9 %), «Otra vez» stands beside «Seguir hacia», on the first line. */
 #mPlace[data-near] .sheet .row>#placeNext{flex:1 1 170px}#mPlace[data-near] .sheet .row>#placeAgain{order:-1;flex:0 1 auto;padding-inline:18px;border-color:var(--ink)}#mPlace[data-near] .sheet .row>#placeClose{flex-basis:100%}
 .sheet .place-rows .place-near{color:var(--ink)}
@@ -875,13 +873,9 @@ html[lang="en"] .super-grid th{max-width:none}
 .umap-legend .lg-next::before{content:"";width:16px;height:1px;background:#fff}
 .umap-legend .lg-place::before{content:"";width:10px;height:10px;border:1.5px solid #fff;border-radius:50%}
 .umap-legend .lg-gold{color:var(--gold);font-weight:400}
-.umap-legend .lg-home::before{content:"⌂";color:#fff;font-size:14px}
-.umap-legend .lg-mark::before{content:"⊕";color:#fff;font-size:15px}
-.umap-legend .lg-sky::before{content:"✧";color:#fff;font-size:12px}
-.umap-legend .lg-live::before{content:"";width:7px;height:7px;transform:rotate(45deg);border:1.5px solid #6fe08a}
-.umap-legend .lg-fav::before{content:"◇";color:#fff;font-size:13px}
-.umap-legend .lg-lm::before{content:"△";color:#fff;font-size:12px}
 .umap-legend .lg-band::before{content:"";width:14px;height:14px;border:1px dashed #ffffff80;border-radius:50%}
+/* Escáner NMS (alpha.263): the legend draws the same icons as the map (scan-icons.js, a small canvas each). */
+.umap-legend i[data-icon] canvas{display:block}.umap-legend .lg-heard canvas{opacity:.45}.umap-legend .lg-rumor{border:1px solid #fff;width:16px;height:16px;box-sizing:border-box}
 .umap-legend .lg-fog::before{content:"";width:14px;height:10px;background:linear-gradient(90deg,#eb9a3c80,#6fe08a80,#5cc8ff80)}
 .umap-card{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);max-width:420px;margin:0 auto;background:#000;border:1px solid #ffffff59;padding:12px 16px 16px}
 .umap-card #umapCardClose{position:absolute;top:2px;right:2px;width:44px;height:44px;border:0;background:none}
@@ -918,7 +912,6 @@ body.world-mode.activity-open .dock>button#bUniverseMap:not([hidden]){display:no
 #duelStars .got{color:#f0d27a}
 /* Descubrir (alpha.240): the rumor on the map's legend (white: somewhere to go); rumors in the Bitácora; the album of
    sounds, its chips (white when chosen for your mix) and the gold «Aro» of a complete series (earned). */
-.umap-legend .lg-rumor{color:#fff;border:1px solid #fff;width:13px;height:13px;font-size:10px}
 .rumor-open{border:1px solid #ffffff22;padding:8px 10px;margin:8px 0}.rumor-open p{margin:0 0 4px;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.rumor-open .rumor-now{color:#ffffffb0}.rumor-open .row{display:flex;gap:8px;margin-top:6px}.rumor-done{font-size:11px;color:#ffffff99;margin:4px 0}
 .modal .sheet.sound-album-sheet{width:min(560px,calc(100vw - 32px));max-height:min(88dvh,calc(100dvh - 32px));overflow:hidden!important;box-sizing:border-box;display:flex;flex-direction:column}.sound-album-sheet>h2,.sound-album-sheet>p,.sound-album-sheet>.row{flex:none}.sound-album{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;padding-right:2px}
 .sound-album-sheet h2 span{font-weight:400;font-size:12px;color:#ffffffb0;margin-left:8px}

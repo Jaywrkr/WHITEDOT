@@ -1,7 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 4 de noviembre de 2026. Código **2.3.0-alpha.262** en la rama `jay/coherencia-t3`, desde `main` `d5a4f27` (con T0 y T1, PR #395 y #396) fusionada sobre T4 y T2: depende de T4. Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.263** en la rama `jay/escaner-nms`, desde `main` `72a5bd1` (con T0–T4). Las entradas describen su revisión, no certifican producción.
 
+
+## El Escáner como No Man's Sky · 2.3.0-alpha.263
+
+Rama `jay/escaner-nms`, desde `main` `72a5bd1` (alpha.262, con T0–T4). Pedido de Jay (resumido): el escáner como en No Man's Sky, solo el icono y un texto corto, nada que tape la vista; cada tipo siempre con el mismo icono; en el mapa, lo que ya conoce no puede ser «?»; el avance no se toca. Guía: [El Escáner](docs/MUNDO.md#el-escáner).
+
+- **Marcas en vez de panel.** Dedo quieto 500 ms o la tecla E, como antes; la onda es la misma. Cada cosa al alcance se vuelve una marca: su icono y «Nombre · distancia» («Caja · 240 m»). Lo lejano o fuera de la pantalla va al borde, en su dirección; lo que se ve más allá del anillo, sobre sí mismo; lo que está pegado al cubo, en un anillo a su alrededor (nunca sobre el cubo). Ocho como mucho, en el orden del registro; ninguna tapa a otra ni a una flecha. Se quedan 7 s tras escanear y se apagan en 1 s: la vista vuelve a estar limpia. Una hoja las borra al instante. Nivel 1: solo iconos.
+- **Sin panel «Cerca».** `#scanner` y sus ids siguen en la página, ocultos; solo `?dev=1` lo muestra (con `data-detail` de cada voz). Se va el «tocar una fila marca el mapa»: el mapa conserva su «Marcar». Mientras el dedo está quieto, los avisos y el HUD del poder se apartan (`body[data-scan]`).
+- **Un icono por tipo, en todas partes.** Nuevo `src/scan-icons.js` (una vez en `SHELL`): 28 pictogramas blancos de línea, horneados una vez. Los usan las marcas, la capa de flechas (el tipo decide el icono, no la forma que ofrece cada sistema) y el Mapa del universo (también su leyenda). El oro sigue solo para lo ganado. Leyenda en [El Escáner](docs/MUNDO.md#un-icono-por-tipo).
+- **«?» solo para lo no descubierto.** Un tipo secreto muestra su icono en cuanto encontraste uno: cristales de cometa, sondas, sonidos raros, el asteroide. Un hito oído ya es un hito. Siguen «?» los rumores, la coordenada secreta de una sonda y lo de las bandas lejanas hasta el nivel 4.
+- **Por qué el mapa estaba lleno de «?».** Cada hito oído de lejos (`S.heardLm`, hasta 600, uno de cada diez regiones, se oyen a 1,1 km) se dibujaba como «?» gris, aunque su tarjeta ya decía qué era («Estrella guía»). Además la bengala y los encargos de la tanda A entraban en el mapa como rumor («?» en un cuadrado). Ahora el hito oído es el icono de hito, tenue; la bengala y el encargo, su icono. Nada nuevo se revela: solo cambia cómo se dibuja lo que el mapa ya tenía. La nota de la Bitácora dice «N hitos oídos sin visitar».
+- **Guardado y avance.** Sin cambios: ningún campo nuevo ni migración. Los niveles y el alcance siguen (1 corto, 2 tras el Viaje, 3 con los once, 4 por distancia; la Carga, al máximo 20 s).
+- **Coste** (`escaner_smoke.py`, `?anillo=1`, llamadas al lienzo por fotograma): sin escanear 1004 y escaneando 1016 a 390×844; 1694 y 1708 a 1280×800 (una pasada). Sin degradados ni `shadowBlur`; iconos horneados. Movimiento reducido: las marcas salen a la vez, sin anillo que viaja ni destello. Calidad ligera: sin halo ni destello.
+- **Preservación:** capa `approvedNMS`.
+- **Pruebas.** Nuevas `tests/escaner-nms.mjs` (colocación en anillo y borde, tope, sin solapes, la tabla de iconos y su uso en Escáner, flechas y mapa) y `tests/escaner_nms_smoke.py` (390×844 y 1280×800: marcas con icono y texto en el borde, sin panel, vista limpia al apagarse, ninguna flecha sobre una marca, el mapa con hitos y «?» solo para el rumor, leyenda con los mismos iconos, el guardado intacto). Al día, sin desactivar nada: `escaner_smoke`, `flechas_smoke`, `carga_smoke`, `secretos_cielo_smoke` (el segundo cristal y la sonda ya conocida llevan su icono), `smoke`, `focusui_smoke`, `mirrors_smoke` y `scanner-arrows.mjs`. Capturas antes y después en el scratchpad de la sesión (no en Git).
+- **Límites.** Probado en local (lógica y Chromium sin interfaz). Sin CI remoto, sin teléfono y sin personas. Los iconos son una primera tanda: Jay no los ha visto.
 
 ## La carga (coherencia T3) · 2.3.0-alpha.262
 
