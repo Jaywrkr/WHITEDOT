@@ -284,11 +284,13 @@ crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMem
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);festival(runtime);colorSafe(runtime);journeyPulse(runtime);journeyMode(runtime);worldSheet(runtime);universeRegions(runtime);ambience(runtime);superbiomes(runtime);universeLayers(runtime);universeRare(runtime);journeyChapters(runtime);journeyFinale(runtime);journeyMoments(runtime);journeyHint(runtime);themeKey(runtime);journeyGames(runtime);journeyStick(runtime);journeyChain(runtime);journeyLasso(runtime);journeyDance(runtime);journeyRelease(runtime);journeyRhythm(runtime);journeyVictory(runtime);places(runtime);placesRing(runtime);refugioLugares(runtime);song(runtime);songStage(runtime);narrator(runtime);journeyGarden(runtime);journeySurf(runtime);journeyResonance(runtime);journeyGuide(runtime);journeyRebuild(runtime);journeyEcho(runtime);wild(runtime);rhythmCalibration(runtime);barBeatHint(runtime);chapterTestStart(runtime);playtest(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);liveEncounters(runtime);skyMap(runtime);elevenNote(runtime);skyStreak(runtime);universeLetter(runtime);descubrir(runtime);recorrer(runtime);secretos(runtime);secretosCielo(runtime);bandas(runtime);viajeA(runtime);lejosB(runtime);viajeC(runtime);viajeD(runtime);scenes(runtime);
 // «Directo mundo abierto» (alpha.269, journey-mode.js): a new player starts in the World, not in the Camino.
-runtime.openWorldStart?.();
+const openStart=runtime.openWorldStart?.()===true;
 runtime.styleUI();runtime.hud();
 // The Journey starts with no window at all; the free World keeps its welcome.
 if(!runtime.S.help.camino&&!runtime.journeyQuiet?.())runtime.$("mHelpC").hidden=false;
 returnEntrance(runtime);
+// The open start has no window either, not even the greeting: the first tap lands on the World and starts the sound.
+if(openStart)runtime.$('returnEntrance').hidden=true;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.
 setTimeout(()=>{try{runtime.regionOfPos(5*runtime.REG*runtime.WCH,0);}catch(e){}},1200);
 setInterval(()=>{if(runtime.accountClient&&runtime.accountClient.user()?.id!==runtime.accountUserId)return;runtime.checkDay();if(!runtime.inWorld())runtime.hud();runtime.S.collected=[...runtime.collected];runtime.save();},2000);
