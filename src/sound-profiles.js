@@ -64,6 +64,7 @@ const HOUSE=Object.freeze({
  space:Object.freeze({seconds:1.8,ret:.4,echoSteps:3,feedback:.33,echoRet:.5}),
  sidechain:Object.freeze({floor:.4,release:.12}),
  output:.8,
+ front:.75,         // the player's voices (sound-pro.js), measured against this family's mix: its pads and keys leave them more room
  syncChords:true,   // notes of the melody's instrument struck together with it are chord notes, not melody
  build:null,
  phrase:Object.freeze({crash:16,sweep:32})
@@ -86,6 +87,7 @@ const TECHNO=Object.freeze({
  space:Object.freeze({seconds:1.8,ret:.4,echoSteps:3,feedback:.33,echoRet:.5}),
  sidechain:Object.freeze({floor:.28,release:.13}),
  output:.85,
+ front:.6,          // the player's voices: bright arps and stabs carry, so they sit lower
  syncChords:true,
  build:null,
  phrase:Object.freeze({crash:16,sweep:32})
