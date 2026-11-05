@@ -26,8 +26,9 @@ def open_page(browser,size,query=''):
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
-  # 1. The start (00-inicio): the finger at rest is a ring around a dot, inside 14×14, its centre ≤ 30 px from the cube.
-  context,page,errors=open_page(browser,(390,844))
+  # 1. The Journey's start (00-inicio): the finger at rest is a ring around a dot, inside 14×14, its centre ≤ 30 px from
+  # the cube. Since alpha.269 a new save starts in the open World, with no finger; «?viaje=1» keeps the Journey.
+  context,page,errors=open_page(browser,(390,844),'?viaje=1')
   page.wait_for_function('__r.journeyHint().showing',timeout=12000)
   rest=page.evaluate(RECORD,True);W,H=390,844
   assert rest,'the finger draws'
