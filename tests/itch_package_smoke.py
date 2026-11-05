@@ -39,7 +39,7 @@ try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=user-gesture-required'])
   context=browser.new_context(viewport={'width':430,'height':900},has_touch=True,accept_downloads=True)
-  # A real player's browser: a new save starts in the Viaje, in Spanish.
+  # A real player's browser: a new save starts in the open World (alpha.269), in Spanish.
   context.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false});Object.defineProperty(navigator,'languages',{get:()=>['es-ES']});")
   # Tests read the runtime by serving main.js with it exposed (never in the build).
   context.route(f'**{SUB}src/main.js',lambda r:r.fulfill(body=(game/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))

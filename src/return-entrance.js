@@ -13,7 +13,9 @@ export function initialize(runtime){
   runtime.$('returnPhrase').textContent=phrases[runtime.seedOf('return:phrase:v1:'+(runtime.S.practiceTravel?.arrivals||0))%phrases.length];
   panel.hidden=false;clearTimeout(timer);timer=setTimeout(close,2400);return true;
  }
- runtime.$('returnContinue').onclick=close;
+ // «Continuar» is often the visit's first tap (alpha.269: every save starts in the free World, which keeps the greeting),
+ // so it starts the sound, as a tap on the World does (canvas.js).
+ runtime.$('returnContinue').onclick=()=>{runtime.audio?.();close();};
  // Escape also closes dialogs through the shared accessibility handler.
  new MutationObserver(()=>{if(panel.hidden)close();}).observe(panel,{attributes:true,attributeFilter:['hidden']});
  document.addEventListener('visibilitychange',()=>{
