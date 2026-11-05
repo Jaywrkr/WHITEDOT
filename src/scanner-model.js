@@ -14,6 +14,7 @@
 // · scanBandEntry(band, opts): the hook for registerBand (bandas-model.js): a band's thing registered at level 4 by its
 //   km. Not called yet (FINAL.md T2/T4).
 import {hashKey} from './universe-regions.js';
+import {ICON_KINDS,iconKind} from './scan-icons.js';
 export const UNITS_PER_M=10;
 // The ladder. reach in metres; names: the panel and the wave say what each thing is; arrows: edge marks (from level 3).
 export const SCAN_LEVELS=Object.freeze([
@@ -27,7 +28,9 @@ export const SCAN_LEVELS=Object.freeze([
 // The highest rank a save can reach today: 3 (levels 1 to 3, coherencia T2). Later batches raise it.
 export const SCAN_OPEN=3;
 export const SCAN_ROWS=3;
-export const SCAN_SHAPES=Object.freeze(['voz','caja','hallazgo','portal','sonda','forma','estrella','boya','pregunta']);
+// Escáner NMS (alpha.263): a shape is a kind of the one icon table (scan-icons.js); old words (portal, estrella,
+// pregunta) are read as their kinds.
+export const SCAN_SHAPES=ICON_KINDS;
 const ID=/^[a-z][a-z0-9-]{0,31}$/;
 const plain=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const registry=new Map();
@@ -35,10 +38,12 @@ export function registerScan(entry){
  if(!plain(entry)||!ID.test(entry.id)||typeof entry.name!=='string'||!entry.name||typeof entry.sites!=='function')throw Error('Invalid scan entry');
  if(registry.has(entry.id))throw Error('Scan entry registered twice: '+entry.id);
  const level=Number.isInteger(entry.level)&&entry.level>=1&&entry.level<=4?entry.level:1;
- const e=Object.freeze({id:entry.id,name:entry.name,shape:SCAN_SHAPES.includes(entry.shape)?entry.shape:'estrella',level,
+ const e=Object.freeze({id:entry.id,name:entry.name,shape:iconKind(entry.shape),level,
   km:Number.isFinite(entry.km)&&entry.km>=0?entry.km:0,rarity:Number.isFinite(entry.rarity)?Math.max(0,Math.min(3,entry.rarity)):0,
   secret:entry.secret===true,batch:typeof entry.batch==='string'?entry.batch:'',sites:entry.sites,
-  done:typeof entry.done==='function'?entry.done:null,page:typeof entry.page==='function'?entry.page:null});
+  done:typeof entry.done==='function'?entry.done:null,page:typeof entry.page==='function'?entry.page:null,
+  // A secret kind is «?» until known(S) says you have found one of its kind; then it shows its own icon and name.
+  known:typeof entry.known==='function'?entry.known:null});
  registry.set(e.id,e);return e;}
 export const scanEntries=()=>[...registry.values()];
 export const scanEntry=id=>registry.get(id)||null;
@@ -78,12 +83,15 @@ export function scanNear(p,S,{level=scanLevel(S),ctx=null,max=SCAN_ROWS,reach=nu
    if(!s||!finite(s.x)||!finite(s.y))continue;const d=Math.hypot(s.x-p.x,s.y-p.y);if(d>R)continue;
    const key=e.id+':'+(s.key??`${Math.round(s.x)},${Math.round(s.y)}`);if(seen.has(key))continue;seen.add(key);
    let done=false;try{done=!!e.done?.(S,s,ctx);}catch(_){done=false;}
-   out.push({id:e.id,key,shape:s.shape&&SCAN_SHAPES.includes(s.shape)?s.shape:e.shape,name:L.names?(e.secret?'?':s.name||e.name):null,
+   const ask=e.secret&&!done&&!kindKnown(e,S,ctx);
+   out.push({id:e.id,key,shape:ask?'secreto':s.shape?iconKind(s.shape,e.shape):e.shape,name:L.names?(ask?'?':s.name||e.name):null,ask,
     x:s.x,y:s.y,d,rarity:finite(s.rarity)?s.rarity:e.rarity,done,secret:e.secret,kind:s.kind||null,hint:s.hint||null,site:s});
   }
  }
  out.sort((a,b)=>b.rarity-a.rarity||a.d-b.d||Number(a.done)-Number(b.done)||a.key.localeCompare(b.key));
  return max>0?out.slice(0,max):out;}
+// Whether a secret entry's kind is known (one of them found): then it is no longer «?».
+export function kindKnown(e,S,ctx=null){if(!e)return false;if(!e.secret)return true;try{return !!e.known?.(S,ctx);}catch(_){return false;}}
 // What the Bitácora will list (T9): every entry the level shows, with its own line when it has one.
 export function scanPage(S,ctx=null,level=scanLevel(S)){const out=[];
  for(const e of registry.values()){if(!scanVisible(e,level)||e.secret)continue;let line=null;try{line=e.page?.(S,ctx)??null;}catch(_){line=null;}out.push({id:e.id,name:e.name,shape:e.shape,line});}
@@ -96,6 +104,40 @@ export function scanSiteAt(kind,i,j,{cell,share=1,margin=.2,world=''}={}){const 
 // ---------- the band hook ----------
 // The level-4 tier a band's km opens: under 10 km a band is level 2 (what is close is named), from 10/30/60 km 4a/4b/4c.
 export function scanBandLevel(km){return km>=10?4:2;}
-export function scanBandEntry(band,{shape='estrella',rarity=1,sites,done=null,page=null,secret=false}={}){
+export function scanBandEntry(band,{shape='banda',rarity=1,sites,done=null,page=null,secret=false}={}){
  if(!plain(band)||typeof sites!=='function')throw Error('Invalid band scan');const km=Number(band.km)||0,level=scanBandLevel(km);
  return registerScan({id:'banda-'+band.id,name:band.name,shape,level,km:level===4?km:0,rarity,secret,batch:band.batch||'',sites,done,page});}
+// ---------- the marks (Escáner NMS, Jay, 5 Nov 2026, alpha.263) ----------
+// «Como No Man's Sky»: after a scan, each thing within reach shows as its icon and a short text («Caja · 240 m») on a
+// ring round the cube that stops at the screen's edge: a thing farther than the ring (or off the screen) sits on the
+// screen's perimeter in its direction, one on the screen beyond the ring sits on itself, and one close to the cube sits
+// on the ring (never on the cube). SCAN_MARKS at most, in the registry's order; none covers another.
+export const SCAN_MARKS=8;
+export const SCAN_SHOW=7,SCAN_SHOW_FADE=1;              // s the marks stay after the scan, and their fade
+export const MARK_SIDE=22,MARK_TOP=104,MARK_BOTTOM=104;  // px kept off the sides and the bars (as the edge arrows)
+export const MARK_ICON=14,MARK_CHAR=7.3,MARK_GAP=4;      // px: the icon, one letter at 12 px Geist Mono, between them
+// The inner ring's radius (px) on a screen W×H.
+export const markRing=(W,H)=>Math.max(70,Math.min(160,.28*Math.min(W,H)));
+// How far from (cx,cy) along angle a before leaving the safe area of the screen.
+export function edgeReach(a,{W,H,cx,cy},side=MARK_SIDE,top=MARK_TOP,bottom=MARK_BOTTOM){const c=Math.cos(a),s=Math.sin(a),x0=Math.max(side,Math.min(W-side,cx)),y0=Math.max(top,Math.min(H-bottom,cy));
+ const tx=c>1e-9?(W-side-x0)/c:c<-1e-9?(side-x0)/c:Infinity,ty=s>1e-9?(H-bottom-y0)/s:s<-1e-9?(top-y0)/s:Infinity;return Math.max(0,Math.min(tx,ty));}
+// The box a mark takes: its icon and, under it, its words (centred, kept inside the screen).
+export function markBox(x,y,label,W){const half=MARK_ICON/2+2;let box={x:x-half,y:y-half,w:half*2,h:half*2,lx:x,ly:y+MARK_ICON/2+MARK_GAP};
+ if(label){const w=label.length*MARK_CHAR+4,lx=Math.max(6+w/2,Math.min(W-6-w/2,x));box={...box,lx,x:Math.min(box.x,lx-w/2),w:Math.max(box.x+box.w,lx+w/2)-Math.min(box.x,lx-w/2),h:half*2+MARK_GAP+16};}
+ return box;}
+const hit=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
+// items: [{key, x, y (screen px), label}] in order; view: {W, H, cx, cy} with (cx,cy) the cube on screen. Returns the
+// marks kept: {key, x, y, a, edge (on the perimeter), ring (pushed out to the ring), box, label}.
+export function scanMarks(items,view,{cap=SCAN_MARKS,ring=markRing(view.W,view.H)}={}){
+ const out=[];if(!view||!(view.W>0)||!(view.H>0))return out;
+ for(const it of items||[]){
+  if(out.length>=cap)break;if(!it||!finite(it.x)||!finite(it.y))continue;
+  const dx=it.x-view.cx,dy=it.y-view.cy,d=Math.hypot(dx,dy),a0=d>.5?Math.atan2(dy,dx):-Math.PI/2;
+  // Try its own direction, then a little to each side, a step about a mark's width at that distance.
+  const place=a=>{const edge=edgeReach(a,view),rho=Math.min(Math.max(d,ring),edge),x=view.cx+Math.cos(a)*rho,y=view.cy+Math.sin(a)*rho;
+   return {x:Math.round(x),y:Math.round(y),a,edge:rho>=edge-.5,ring:d<ring&&rho<edge-.5,box:markBox(x,y,it.label,view.W)};};
+  let got=null;const step=Math.max(.06,24/Math.max(ring,Math.min(d,edgeReach(a0,view))));
+  for(let i=0;i<=8&&!got;i++)for(const sgn of i?[1,-1]:[1]){const m=place(a0+sgn*i*step);if(!out.some(o=>hit(o.box,m.box))){got=m;break;}}
+  if(got)out.push({key:it.key,label:it.label||null,...got});
+ }
+ return out;}

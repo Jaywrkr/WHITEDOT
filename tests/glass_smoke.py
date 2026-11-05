@@ -36,7 +36,7 @@ with sync_playwright() as p:
   assert page.evaluate('JSON.stringify(__testRuntime.S.glassSites["glass:0,0"].angles)')==original
   page.screenshot(path=f'/tmp/whitedot-glass-{label}.png')
   state=page.evaluate('window.__testRuntime.S.glassSites');assert 'glass:0,0' in state
-  page.evaluate("()=>{const r=window.__testRuntime,s=r.nearbyGlass(400)[0];r.S.wx=s.x;r.S.wy=s.y;}");page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Vidrio' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
+  page.evaluate("()=>{const r=window.__testRuntime,s=r.nearbyGlass(400)[0];r.S.wx=s.x;r.S.wy=s.y;}");page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2});page.keyboard.down('e');page.wait_for_timeout(250);assert any('Vidrio' in (i['name'] or '') for i in page.evaluate('window.__testRuntime.scanState()')['items']);page.keyboard.up('e')
   keep_place_on_reload(page)
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime && window.__testRuntime.S.glassSites["glass:0,0"]')
   assert page.evaluate('window.__testRuntime.S.glassSites["glass:0,0"].angles')==[0,0,0]

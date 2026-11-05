@@ -53,8 +53,11 @@ try:
    for o in page.evaluate(WHITE,mine):
     assert o['bright']>0,('the arrow is drawn',o);assert o['worst']<=40,('only white, never gold',o)
    if SHOTS:page.screenshot(path=f'{SHOTS}/carga-{width}.png')
-   hold(page);sc=page.evaluate("__r.scanState()");page.mouse.up();assert sc['level']=='4c' and sc['charged'] and sc['reach']==12000,sc
+   hold(page,2400);sc=page.evaluate("__r.scanState()");page.mouse.up();assert sc['level']=='4c' and sc['charged'] and sc['reach']==12000,sc
    assert any(i['id']=='prueba-carga' for i in sc['items']),('the charged scanner reaches 900 m',sc['items'])
+   # Escáner NMS: the far thing is a mark at the screen's edge, its icon and «Lo más raro · 900 m»; no panel.
+   mk=[m for m in sc['marks'] if m['id']=='prueba-carga'];assert mk and mk[0]['edge'] and mk[0]['label']=='Lo más raro · 900 m' and mk[0]['shape']=='sonda',sc['marks']
+   assert not page.locator('#scanner').is_visible()
    page.wait_for_timeout(300);page.evaluate("()=>{__r.stopScanner?.();}");page.evaluate(HIDE)
    # --- 3 · After 20 s of play the charge ends: the save's level comes back and the arrow goes.
    left=page.evaluate("__r.powerSecondsLeft('brujula')");assert 0<left<=20,left

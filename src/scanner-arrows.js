@@ -1,4 +1,4 @@
-import {edgePick,edgePlace,offScreen,EDGE_CAP,EDGE_RANK} from './scanner-arrows-model.js';
+import {edgePick,edgePlace,offScreen,edgeKnown,EDGE_CAP,EDGE_RANK,EDGE_MERGE} from './scanner-arrows-model.js';
 import {drawEdgeArrows} from './scanner-art.js';
 import {scanLevel,scanNear,scanDistance} from './scanner-model.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
@@ -27,21 +27,25 @@ export function initialize(r){
  // A system's mark: {key, kind, x, y (world), shape, ask, label, far}. Returns where its arrow would sit (for its own
  // state). far: a thing of the batches past 10 km (B, C, D), a «?» until level 4 names it.
  function offer(o){if(!live()||!o||!Number.isFinite(o.x)||!Number.isFinite(o.y))return null;
+  // Escáner NMS: a «?» of a kind you already know shows its own icon (edgeKnown).
+  if(o.ask===true&&edgeKnown(o.kind,r.S))o={...o,ask:false};
   if(o.far===true&&(level||scanLevel(r.S,{charged:charged()})).level<4)o={...o,ask:true};if(offers.length<OFFERS_MAX)offers.push(o);return edgePlace(o.x,o.y,view());}
  // What the registry reaches from level 3: rare enough to point at (not the voices), not found yet; the rarer first.
  function readRegistry(now){if(now-regAt<EDGE_SCAN_EVERY)return;regAt=now;const charge=charged(),mate=!charge&&!!r.companionPoints?.();level=scanLevel(r.S,{charged:charge});reg=[];pointer=null;if(!(level.arrows>0)&&!mate)return;
   let near=[];try{near=scanNear({x:r.S.wx,y:r.S.wy},r.S,{level,ctx:r,max:0,minRarity:1});}catch(_){near=[];}
   // The Carga's (or the Compañero's) one arrow: the registry's order is rarity first, so the first not found is the rarest.
   const top=charge||mate?near.find(it=>!it.done)||null:null;
-  for(const it of near){if(it.done)continue;const kind=KIND[it.id]||(it.secret?'secreto':'cosa'),ask=it.secret||HEARD.has(it.id);
+  for(const it of near){if(it.done)continue;const kind=KIND[it.id]||(it.secret?'secreto':'cosa'),ask=!!it.ask||(HEARD.has(it.id)&&!edgeKnown(kind,r.S));
    if(it===top){pointer={key:'scan:'+it.key,id:it.id,m:Math.round(it.d/10)};reg.push({key:'scan:'+it.key,kind:'carga',x:it.x,y:it.y,shape:it.shape,ask,label:ask?null:scanDistance(it.d),rank:EDGE_RANK.carga});}
    else if(level.arrows>0)reg.push({key:'scan:'+it.key,kind,x:it.x,y:it.y,shape:it.shape,ask,rank:Math.max(EDGE_RANK[kind],it.rarity)});}}
  function draw(){
   const now=performance.now(),dt=Math.min(.1,Math.max(0,(now-last)/1000));last=now;
   const mine=offers;offers=[];
   if(!live()||!r.cx||openSurface('.modal:not([hidden])')){shown=[];fade.clear();drawn={arrows:0,icons:0,labels:0};offered=0;kinds=[];return;}
-  readRegistry(now);const v=view(),all=mine.concat(reg).filter(o=>offScreen(o.x,o.y,v,-8));offered=all.length;kinds=[...new Set(all.map(o=>o.kind))];
+  // What the scanner's marks show now is not said twice by an arrow (Escáner NMS).
+  readRegistry(now);const v=view(),marked=r.scanMarked?.()||[],all=mine.concat(reg).filter(o=>offScreen(o.x,o.y,v,-8)&&!marked.some(m=>Math.hypot(m.x-o.x,m.y-o.y)<EDGE_MERGE));offered=all.length;kinds=[...new Set(all.map(o=>o.kind))];
   shown=edgePick(all,v,{x:r.S.wx,y:r.S.wy},{cap:EDGE_CAP,scene:scene()});
+  if(marked.length)shown=shown.filter(e=>!e.at||!marked.some(({box:b})=>b&&e.at.x>b.x-14&&e.at.x<b.x+b.w+14&&e.at.y>b.y-14&&e.at.y<b.y+b.h+14));
   const calm=still(),keys=new Set(shown.map(e=>e.key));for(const k of fade.keys())if(!keys.has(k))fade.delete(k);
   for(const e of shown)fade.set(e.key,calm?1:Math.min(1,(fade.get(e.key)??0)+dt/EDGE_FADE));
   drawn=drawEdgeArrows(r.cx,shown,{light:!!r.lightQuality?.(),words:r.S.universeTexts!==false,fade});}

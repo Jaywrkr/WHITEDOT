@@ -1,5 +1,6 @@
 // Mapa dibujado: solo muestra lo que viste. Lo visitado lleva el color de su bioma, con bordes suaves; los hitos a
-// los que llegaste con su símbolo y los que solo oíste como "?". Todo lo demás queda negro: el mapa recuerda, no revela.
+// los que llegaste con su símbolo y los que solo oíste con el mismo símbolo, tenue (Escáner NMS, alpha.263: antes «?»).
+// Todo lo demás queda negro: el mapa recuerda, no revela.
 // Desde alpha.235 (Mapa del universo, universe-map.js) la Bitácora muestra una vista quieta de todo lo descubierto y
 // «Abrir el mapa» (o tocarla) abre la pantalla entera, con sus tres acercamientos.
 import {initialize as universeMap} from './universe-map.js';
@@ -27,7 +28,7 @@ export function initialize(runtime){
   // One item per span: lines break between items, never leaving a separator hanging (panel 10, Nesbitt #14).
   const rare=Object.keys(runtime.S.anomalies||{}).length,open=m.ring.filter(q=>q.open).length;
   // Panel 10 (P8): no counter at zero; regions, continents and record live in Tú (index.html #journalYouPart).
-  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Refugio',open&&`${open} portales abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
+  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} hitos oídos sin visitar`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Refugio',open&&`${open} portales abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
   runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}

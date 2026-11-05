@@ -55,7 +55,7 @@ with sync_playwright() as p:
   assert page.evaluate('window.__testRuntime.nearbyMirrors(300)[0].mirrors.map(m=>m.angle)')==angles
   assert page.evaluate('JSON.stringify(window.__testRuntime.S.mirrorSites["mirror:0,0"])')==saved
   page.evaluate("()=>{const r=window.__testRuntime,m=r.nearbyMirrors(300)[0].mirrors[0];r.S.wx=m.x;r.S.wy=m.y;}")
-  page.locator('#w').click(position={'x':30,'y':200});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Espejo musical' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
+  page.locator('#w').click(position={'x':30,'y':200});page.keyboard.down('e');page.wait_for_timeout(250);assert any('Espejo musical' in (i['name'] or '') for i in page.evaluate('window.__testRuntime.scanState()')['items']);page.keyboard.up('e')
   keep_place_on_reload(page)
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.mirrorSites["mirror:0,0"]?.solved')
   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-tab="places"]').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Espejos musicales' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
