@@ -1,7 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.266** en la rama `jay/sonido-pro-1`, desde `main` `5d211f5` (alpha.264), en espera de que Jay revise las líneas de `audio.js`. Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.267** en la rama `jay/sonido-pro-2`, desde `main` `ff8f5d8` (alpha.266), en espera de que Jay escuche los renders y revise la línea nueva de `audio.js`. Las entradas describen su revisión, no certifican producción.
 
+
+
+## Sonido pro 2: house clásico · 2.3.0-alpha.267
+
+Rama `jay/sonido-pro-2`, desde `main` `ff8f5d8`. Segundo lote del plan aprobado. Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
+
+- **Segunda familia: house clásico** (`deep`, `chicago`, `soulful`, `garagehouse`, `acidhouse`, `progressive`, `tropical`). `tropical` pasa de «Melodic y orgánico» a esta familia, como pidió Jay. Mismo motor y mismos ganchos; tempo, swing, patrones y armonía no cambian.
+- **La familia.** Cálida donde el tech es seco. Toda la melodía (el tech suena la mitad), tocada según el instrumento que eligió la composición: órgano de registros, teclas tipo Rhodes, mazos, pads o supersierra. Acordes anchos en una sala larga nueva, bombeo más suave, bajo en sub y medio con sidechain. Cada deck sale a 0,8 del nivel del tech para la misma sonoridad.
+- **Un toque por género.** Deep: bombo suave y redondo, acordes de pad cálidos. Chicago: bombo 909 crudo (más clic y saturación), hats brillantes, palma seca y stabs brillantes. Soulful y garage: acordes de órgano, hats fantasma con el shuffle del género. Acid house: línea ácida de 303 en la voz del bajo (sierra, filtro resonante con envolvente, acentos y slides fijos por paso, sin azar, y un ciclo de filtro de 16 compases). Progressive: pads y lead que se abren a lo largo de cada frase de 32 compases. Tropical: mazos tipo marimba, más sala y eco, bombo suave.
+- **Acordes sobre el instrumento de la melodía.** En house, las notas que suenan a la vez que una nota de la melodía, con su mismo instrumento, suenan como acorde. El tech no cambia.
+- **`audio.js`: una línea más, por revisar.** Commit aparte «audio.js lines for Jay's approval»: el acorde de órgano de deep y progressive (`organChord`) pregunta antes al motor, con la misma nota y el mismo azar; sin el motor suena el órgano de siempre. Sin esa línea, esos acordes siguen con el órgano clásico. La preservación la admite exactamente (`PRO2_LINES`). Ningún otro archivo protegido cambia.
+- **Transiciones.** Las de DJ ya funcionan dentro, hacia y desde la familia: el bombo de house también cae el último medio compás antes del relevo, y el bajo descansa.
+- **«Sonido clásico»** también apaga house. Guardado sin cambios (`S.soundPro` versión 1).
+- **Renders** (motor real, offline, 44,1 kHz; directorio del lote `sonido-pro-2/`, fuera de Git): viaje de 90 s soulful → deep → tropical → jazztronica, clásico −11,4 LUFS / −1,2 dBTP y nuevo −10,9 / −1,1. 40 s de cada género: deep −10,3 / −1,6, chicago −9,0 / −1,4, soulful −9,4 / −1,3, garage −8,9 / −1,5, acid −9,3 / −1,5, progressive −8,7 / −1,8, tropical −9,6 / −1,7.
+- **CPU.** Nodos de Web Audio creados por segundo (todo el juego, render): viaje clásico 151, nuevo 145; quieto, deep 71, chicago 122, soulful 99, garage 70, acid 141, progressive 97, tropical 77. No se midió en teléfono.
+- **Pruebas.** `tests/sound-pro.mjs` amplía: la familia y sus siete perfiles, la línea ácida (sierra resonante y slides), cada tipo de voz, el acorde de órgano, la apertura de progressive, mezcla de DJ de house a tech y vuelta, «Sonido clásico». `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/main`. Sin recorridos de navegador, por la regla rápida.
+- **Límites.** Nadie lo ha escuchado todavía. En garage los acordes de órgano quedan bajos y estrechos al principio del render (el patrón los toca con energía alta). CPU de teléfono sin medir. Sin PR: la rama espera a Jay.
 
 ## Sonido pro 1: tech house y minimal · 2.3.0-alpha.266
 
