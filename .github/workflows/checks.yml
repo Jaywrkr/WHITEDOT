@@ -4,13 +4,17 @@ on:
   push:
     branches: [main]
     # Documentation-only updates do not change the validated runtime.
-    # Pull requests still run every suite without path filters.
+    # Pull requests run the logic job in full and the browser and audio flows their diff affects
+    # (tests/flow_impact.py); main, the nightly run and a manual run keep every flow.
     paths-ignore:
       - '**/*.md'
       - 'scripts/posmusica-*-validation.json'
       - 'scripts/posmusica-08-ci.json'
       - 'scripts/mejora-*-validation.json'
       - 'scripts/mejora-10-ci.json'
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -26,10 +30,37 @@ jobs:
       - run: node scripts/reencuentro-audit.mjs /tmp/reencuentro-audit.json
       - run: npm run audit:universe -- 2000 2
       - run: npm run audit:universe -- 2000 2 2 classic
+  # Which browser and audio flows run. A pull request's diff (the merge commit against its first parent) picks them;
+  # shared core or an unmapped file means the full catalogue. Any other event runs everything.
+  select:
+    runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.pick.outputs.mode }}
+      browser_flows: ${{ steps.pick.outputs.browser_flows }}
+      browser_total: ${{ steps.pick.outputs.browser_total }}
+      browser_shards: ${{ steps.pick.outputs.browser_shards }}
+      audio_flows: ${{ steps.pick.outputs.audio_flows }}
+      audio_total: ${{ steps.pick.outputs.audio_total }}
+      audio_shards: ${{ steps.pick.outputs.audio_shards }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: pick
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = pull_request ] && git rev-parse --verify -q HEAD^2 >/dev/null; then
+            python3 tests/flow_impact.py --base HEAD^1 --head HEAD --github-output
+          else
+            python3 tests/flow_impact.py --full --github-output
+          fi
   # The browser catalogue is split in ten shards with one worker each: on one shared runner with two workers it took
   # about 38 of its 40 minutes and different flows lost races every run. Six shards took 20 to 29 minutes each
   # (4 Nov 2026); ten, balanced by the seconds measured on CI (tests/flow-durations.json), plan about 15 each.
   browser:
+    needs: select
+    if: needs.select.outputs.browser_total != '0'
     runs-on: ubuntu-latest
     # A slow browser install (10 minutes on 27 Oct 2026) once cancelled a shard after every flow had passed: keep
     # forty minutes of room, like the audio shards.
@@ -37,9 +68,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shard: ${{ fromJSON(needs.select.outputs.browser_shards) }}
     env:
-      WHITEDOT_BROWSER_SHARD: ${{ matrix.shard }}/10
+      WHITEDOT_BROWSER_SHARD: ${{ matrix.shard }}/${{ needs.select.outputs.browser_total }}
+      WHITEDOT_BROWSER_FLOWS: ${{ needs.select.outputs.browser_flows }}
       WHITEDOT_BROWSER_WORKERS: '1'
     steps:
       # pwa_updates_smoke.py archives the real pre-closure release from history.
@@ -59,14 +91,17 @@ jobs:
   # measured seconds, plan about 13 minutes each, under the browser shards; with the ten browser shards and the logic
   # job that is 19 jobs at once, inside the free plan's limit of 20 concurrent jobs.
   audio:
+    needs: select
+    if: needs.select.outputs.audio_total != '0'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+        shard: ${{ fromJSON(needs.select.outputs.audio_shards) }}
     env:
-      WHITEDOT_AUDIO_SHARD: ${{ matrix.shard }}/8
+      WHITEDOT_AUDIO_SHARD: ${{ matrix.shard }}/${{ needs.select.outputs.audio_total }}
+      WHITEDOT_AUDIO_FLOWS: ${{ needs.select.outputs.audio_flows }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -78,15 +113,21 @@ jobs:
       - run: python3 -m pip install -r requirements-dev.txt
       - run: python3 -m playwright install --with-deps chromium
       - run: npm run test:audio
-  # Preserve the required check name: every browser flow and audio shard must pass.
+  # Preserve the required check name: every selected browser flow and audio shard must pass. A kind with no selected
+  # flow is skipped on purpose (total 0) and counts as passed; any other skip, cancel or failure is red.
   browser-audio:
     runs-on: ubuntu-latest
-    needs: [browser, audio]
+    needs: [select, browser, audio]
     if: always()
     env:
+      WHITEDOT_SELECT_RESULT: ${{ needs.select.result }}
       WHITEDOT_BROWSER_RESULT: ${{ needs.browser.result }}
       WHITEDOT_AUDIO_RESULT: ${{ needs.audio.result }}
+      WHITEDOT_BROWSER_TOTAL: ${{ needs.select.outputs.browser_total }}
+      WHITEDOT_AUDIO_TOTAL: ${{ needs.select.outputs.audio_total }}
     steps:
       - run: |
-          test "$WHITEDOT_BROWSER_RESULT" = success
-          test "$WHITEDOT_AUDIO_RESULT" = success
+          echo "select=$WHITEDOT_SELECT_RESULT browser=$WHITEDOT_BROWSER_RESULT/$WHITEDOT_BROWSER_TOTAL audio=$WHITEDOT_AUDIO_RESULT/$WHITEDOT_AUDIO_TOTAL"
+          test "$WHITEDOT_SELECT_RESULT" = success
+          test "$WHITEDOT_BROWSER_RESULT" = success || { test "$WHITEDOT_BROWSER_RESULT" = skipped && test "$WHITEDOT_BROWSER_TOTAL" = 0; }
+          test "$WHITEDOT_AUDIO_RESULT" = success || { test "$WHITEDOT_AUDIO_RESULT" = skipped && test "$WHITEDOT_AUDIO_TOTAL" = 0; }

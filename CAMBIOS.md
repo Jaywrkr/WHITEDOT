@@ -19,6 +19,15 @@ Rama `jay/sonido-pro-1`, desde `main` `5d211f5`. Plan aprobado por Jay (5 de nov
 - **Pruebas.** Nueva `tests/sound-pro.mjs` (familias, perfiles, ajuste y su guardado, plan de transiciones contra el viaje real, golpes, contrato del motor y sus líneas). `tests/audio_mix.mjs` acepta `soundPro` ('pro' o 'classic'; sin él, las suites de mezcla no cargan el motor) y cuenta nodos creados. `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/main` en verde. Sin recorridos de navegador ni suites de mezcla, por la regla rápida de Jay: solo los renders para escuchar.
 - **Límites.** Nadie lo ha escuchado todavía (ni Jay, ni en teléfono, ni con auriculares). CPU de teléfono sin medir. Las suites de mezcla de CI no cargan el motor nuevo. Sin PR: la rama espera la revisión de Jay de las líneas de `audio.js`.
 
+## CI rápido (proceso, sin cambio de código del juego)
+
+Rama `jay/ci-rapido`, desde `main`. Aprobado por Jay para acortar esperas. Guía: [Verificación](docs/VERIFICACION.md#ci).
+
+- **PR:** lógica completa y solo los recorridos de navegador y audio afectados (`tests/flow_impact.py`, nuevo); el núcleo compartido o lo dudoso corre todo. Se mantienen los grupos y el check `browser-audio`, verde si no hay nada elegido.
+- **`main`, nocturna (06:17 UTC) y manual:** catálogo completo.
+- **En local:** `npm test`, `release-audit` y `stale-text-check`; navegador solo para depurar. Ver [AGENTS](AGENTS.md).
+- Sin subir versión.
+
 ## Los lugares te encuentran · 2.3.0-alpha.264
 
 Rama `jay/lugares-te-encuentran`, desde `origin/jay/escaner-nms` (dependencia explícita: PR #398, alpha.263). Aprobado por Jay el 5 de noviembre («Me gusta, hazlo así»). Guía: [Los lugares te encuentran](docs/MUNDO.md#los-lugares-te-encuentran) y [El Viaje](docs/VIAJE.md).

@@ -10,6 +10,11 @@ import flow_shards
 names=flow_shards.browser_flows(exclude=('offline_smoke.py','desktop_smoke.py'))
 # The principal existing journey also validates controls, Studio and reload.
 assert 'smoke.py' in names
+# Pull requests run only the flows tests/flow_impact.py selects (WHITEDOT_BROWSER_FLOWS, comma-separated); unset or
+# empty means the full catalogue.
+if os.environ.get('WHITEDOT_BROWSER_FLOWS'):
+ chosen=set(os.environ['WHITEDOT_BROWSER_FLOWS'].split(','));names=[n for n in names if n in chosen]
+ if not names:print('Browser: no catalogue flow selected',flush=True);sys.exit(0)
 # CI splits the catalogue across runners (WHITEDOT_BROWSER_SHARD=index/total): every flow runs in exactly one shard,
 # each runner has its own CPU, so flows no longer race each other on one shared machine. The shards are balanced by
 # the seconds measured on CI (tests/flow-durations.json); the first one also runs the offline check afterwards.

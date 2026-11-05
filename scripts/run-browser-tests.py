@@ -16,6 +16,11 @@ flows['audio']+=sorted(p.name for p in (ROOT/'tests').glob('*_mix.py') if p.name
 sys.path.insert(0,str(ROOT/'tests'))
 import flow_shards
 selected=flows[mode]
+# Pull requests run only the flows tests/flow_impact.py selects; unset or empty means the full catalogue.
+chosen=os.environ.get('WHITEDOT_BROWSER_FLOWS' if mode=='browser' else 'WHITEDOT_AUDIO_FLOWS')
+if chosen:
+ chosen=set(chosen.split(','))
+ selected=[f for f in selected if f=='creative_regression.py' or f in chosen]
 # The offline flow runs once, in the first browser shard.
 if mode=='browser' and os.environ.get('WHITEDOT_BROWSER_SHARD','1/1').split('/')[0]!='1':selected=[f for f in selected if f!='offline_smoke.py']
 # Each flow in exactly one shard, balanced by the seconds measured on CI (tests/flow-durations.json).

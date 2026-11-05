@@ -11,7 +11,8 @@ Leer este archivo antes de tocar código. Después: [README](README.md), [HANDOF
 - Commits en inglés, en imperativo y sin identificadores de modelos. Evitar pushes innecesarios.
 - Actualizar [CAMBIOS](CAMBIOS.md) y la guía del área; la arquitectura solo si cambia.
 - Durante la iteración: `npm run test:impact -- --base SHA_BASE` (como máximo dos procesos Node a la vez).
-- Antes del push: `node scripts/release-audit.mjs`, `npm test` y los recorridos de navegador del sistema cambiado (`CHROMIUM_PATH=… python3 tests/X_smoke.py`). Si cambia el sonido, sus renders. Solo documentación no requiere navegador ni audio. Detalle en [Verificación](docs/VERIFICACION.md).
+- Antes del push, en local: `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base SHA_BASE`. Sin recorridos de navegador, salvo para depurar un fallo concreto. Si cambia el sonido, renderizar solo lo que Jay va a escuchar.
+- El CI del PR corre los recorridos afectados; `main` y la pasada nocturna, todos. Si `main` o la nocturna salen en rojo, arreglarlo es lo primero. Detalle en [Verificación](docs/VERIFICACION.md).
 - Registrar resultados y límites; no afirmar CI, despliegue, escucha en teléfono ni pruebas con personas sin comprobarlo. No desactivar pruebas ni ejecutar a la vez suites pesadas de navegador y audio.
 
 ## Reglas técnicas
