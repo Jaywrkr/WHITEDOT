@@ -161,7 +161,8 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
 const audioSource=read('src/audio.js');
 assert.equal(audioSource.split("proHit('").length-1,11,'one hook in each kit primitive');assert.ok(audioSource.includes("proHit(dec>=.1?'hatO':'hat',t,v)||noise("));
 assert.ok(audioSource.includes("const proHit=(id,t,v,x)=>runtime.proDrum?.(drumCtx,id,t,v,x)===true;"));
-assert.equal(audioSource.split('runtime.proVoice?.(').length-1,2,'bass and lead hooks');
+assert.equal(audioSource.split('runtime.proVoice?.(').length-1,3,'bass, lead and organ chord hooks');
+assert.ok(audioSource.includes("  function organChord(ct,t){ct.slice(0,3).forEach(n=>{const m=inRegister(n,48,71),v=vel(.05);if(!runtime.proVoice?.('acorde','organ',m,t,v,MU.dnaA))organ(m,t,v);});}"),'the organ chord asks the engine first, same pitch and velocity');
 assert.ok(audioSource.includes('runtime.proCeiling?.()||0'));
 const sw=read('sw.js');for(const f of ['./src/sound-profiles.js','./src/sound-pro.js'])assert.equal(sw.split('"'+f+'"').length-1,1,f);
 const html=read('index.html'),adv=html.slice(html.indexOf('<details id="musicAdvanced"'),html.indexOf('</details>',html.indexOf('<details id="musicAdvanced"')));
