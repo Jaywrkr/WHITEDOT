@@ -1,8 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.269** en la rama `jay/mundo-abierto`, desde `main` `372419e` (alpha.267; alpha.268 queda reservada para el lote de sonido techno), en espera de que Jay la juegue. Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.270** en la rama `jay/musica-interaccion`, desde `main` `cae66bb` (alpha.269, con techno y mundo abierto ya integrados), en espera de que Jay escuche los renders. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Música e interacción · 2.3.0-alpha.270
+
+Rama `jay/musica-interaccion`, desde `main` `cae66bb`. Jay (5 de noviembre): «La interacción mía con los elementos… siento que está menos que antes. La música debería depender más de mi interacción, pero tampoco como para perder la identidad.» Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
+
+- **La causa, medida.** En las familias pro, lo que tocas seguía sonando con los sintes clásicos. La mezcla pro es 2,9 dB más fuerte que la clásica, y el recorte final de pico (−1,1 dB) baja también tus toques. En tech house, tus toques quedaban a −12,7 dB de la música; con «Sonido clásico», a −8,7. En la racha de pulsos, 5 dB por debajo del clásico. El pulso a tiempo (la nota del tema) ni siquiera pasaba por el motor: se toca fuera de toda voz.
+- **Tus toques, con los instrumentos de la familia.** Toques, pulsos, respuestas de la onda y poderes (`player`, `field`) suenan en el motor: notas sueltas con la melodía de la familia (chop en tech, teclas o pads en house, stab o arpegio en techno), notas a la vez como acorde, bajo y percusión con su kit. Mismo tiempo (la rejilla de siempre), mismo tono, mismo azar. Salen por el bus que les dio el juego (distancia, efectos), fuera del sidechain y del agache de los gestos.
+- **El tema a tiempo rebota en el eco.** Sus tres notas van al eco de la familia; con racha, también a la sala larga (y a la cinta en techno).
+- **El arreglo te responde, dentro de la composición.** Tu influencia sobre el lugar (`influence.js`), lo que has tocado en los últimos segundos, la racha y caminar: abren o cierran el filtro de pads, cuerdas, arpegios y stabs; suben hats y hats fantasma; añaden un shaker a contratiempo y, más arriba, una conga. Cada cuatro pulsos seguidos a tiempo, riser sobre el compás, palmas de relleno y platillo. Mismo tempo, armonía y patrones.
+- **Quieto, nada cambia.** Sin jugador, cada factor es neutro: el render quieto queda a −70 dB de `main` (redondeo).
+- **Nivel por familia.** Medido contra cada mezcla: tech 0,3, house × 0,75, techno × 0,6 (`front` en `sound-profiles.js`).
+- **Sin `audio.js` nuevo.** Todo entra por los ganchos ya aprobados (`PRO1_LINES`). Nada nuevo en pantalla ni en ajustes. «Sonido clásico» lo apaga todo. Las once familias clásicas no cambian.
+- **Renders** (motor real, offline, 44,1 kHz; directorio del lote `musica-interaccion/`, fuera de Git): A/B de 60 s con un jugador simulado. Toques frente a la música: tech house −12,7 → −7,0 dB, deep −3,1 → −3,2 dB (ya alto; ahora en la paleta), melodic techno −11,1 → −5,7 dB. LUFS / dBTP después: −9,7 / −1,3, −10,6 / −1,4, −9,3 / −1,5. Quieto en tech house, −9,8 / −1,3.
+- **CPU.** Nodos creados por segundo (todo el juego): tech house 149 → 162, deep 123 → 134, melodic techno 151 → 177 tocando; quieto, igual. No se midió en teléfono.
+- **Pruebas.** `tests/sound-pro.mjs` amplía: toques en el motor y en el bus del toque, acorde, bajo, percusión y sus sorteos, `field`, el tema y su eco, familias clásicas y «Sonido clásico», filtro que se abre y se cierra, capa de percusión, racha con riser y su ruptura, y el quieto idéntico. `tests/audio_mix.mjs` acepta `playerBatch` ('on' o 'silent'). `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/main`. Sin recorridos de navegador.
+- **Límites.** Nadie lo ha escuchado. El pulso a tiempo está simulado en el render. Pasar junto a elementos solo suena distinto si el juego ya lo tocaba como toque del jugador. CPU de teléfono sin medir.
 
 ## Directo mundo abierto · 2.3.0-alpha.269
 

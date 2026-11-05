@@ -132,6 +132,12 @@ Lote 3 (alpha.268): **techno** (`dub`, `acid`, `minimaltechno`, `detroit` y `mel
 - **Acorde de dub.** El stab de `dubChord` (dub y heart) pregunta al motor nota a nota con una línea de `audio.js` aparte, pendiente de Jay (`PRO3_LINES`); sin ella suena el stab clásico. Heart sigue clásico. El stab no cuenta como instrumento del diario.
 - **Medidas y límites.** Ver [CAMBIOS](../CAMBIOS.md) (alpha.268). El volumen final lo fija el limitador de `audio.js`: subir el nivel del deck mueve poco el LUFS. Nadie lo ha escuchado todavía.
 
+Interacción (alpha.270): **lo que tocas, dentro de la música**, en las tres familias convertidas.
+
+- **Tus voces.** Lo que causa el jugador (`player` y `field`: toques, pulsos, respuestas de la onda, poderes) suena con los instrumentos de la familia: nota suelta con la melodía, notas a la vez como acorde, bajo y percusión con su kit. El tiempo y el tono los fija el juego como siempre. Salen por el bus que les tocó (distancia, efectos, parche), sin sidechain ni agache, a `FRONT_LEVEL` por el nivel del deck y la parte `front` de la familia. Las notas del tema de un pulso a tiempo llegan sin origen: el motor las reconoce porque llegan justo tras un acierto nuevo (`journeyPulseState`) y las manda al eco.
+- **El arreglo responde.** Por paso, del estado de influencia del lugar, la actividad reciente (decae en 4 s), la racha de pulsos a tiempo y la velocidad al caminar: filtro de pads, cuerdas, arpegios, stabs y órgano (abre hasta ×2,4; cierra si quitas la melodía), nivel de la melodía, envíos de sala y eco, hats, hats fantasma, shaker a contratiempo y conga, brillo del bajo. Cada cuatro aciertos seguidos: riser, palmas y platillo. Sin jugador, todo es neutro.
+- **Medidas y límites.** Ver [CAMBIOS](../CAMBIOS.md) (alpha.270). Nadie lo ha escuchado todavía.
+
 El modelo de rareza y el censo no garantizan una probabilidad individual de encuentro en una hora. Depende de recorrido, mundo, región y condiciones. Las muestras forzadas de laboratorio no acreditan encuentros naturales.
 
 ## Estado y validación
