@@ -45,6 +45,8 @@ Las fuentes de la tabla están en `src/`. Catálogos y detalles en [Universo](UN
 
 ## Música, reloj y presentación
 
+**Sonido pro (alpha.266).** La producción se separa de la composición: `sound-profiles.js` (14 familias de sonido, perfiles, ajuste `S.soundPro`, plan de transiciones) y `sound-pro.js` (kit en buffers, bajo partido, sintes, decks por región, sidechain, sala, eco, pegamento). `audio.js` pregunta antes de cada golpe (`proDrum`), bajo y melodía (`proVoice`) y abre el techo de confort (`proCeiling`). Sin el motor o con «Sonido clásico», nada cambia. [Universo](UNIVERSO.md#sonido-pro).
+
 Web Audio sintetiza localmente; no se usan Tone ni instrumentos de Arturia. El secuenciador conserva la rejilla y la armonía del territorio, con tempos distintos entre lugares. Los modelos musicales gobiernan evolución y relevos; una limpieza de UI no autoriza modificar síntesis, patrones o mezcla.
 
 `MU.sq` conserva paso módulo16 y tick absoluto. `journey.notes/steps/ticks` y `lugares.notes/noteSteps/noteTicks` conservan la aportación personal; formatos antiguos sin ticks siguen interpretándose sin reescribirlos.

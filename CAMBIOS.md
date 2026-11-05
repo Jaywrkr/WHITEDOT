@@ -1,7 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.264** en la rama `jay/lugares-te-encuentran`, desde `jay/escaner-nms` (PR #398, alpha.263, aún no en `main`). Las entradas describen su revisión, no certifican producción.
+Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.266** en la rama `jay/sonido-pro-1`, desde `main` `5d211f5` (alpha.264), en espera de que Jay revise las líneas de `audio.js`. Las entradas describen su revisión, no certifican producción.
 
+
+## Sonido pro 1: tech house y minimal · 2.3.0-alpha.266
+
+Rama `jay/sonido-pro-1`, desde `main` `5d211f5`. Plan aprobado por Jay (5 de noviembre): la música del universo como electrónica profesional de 2026, sin perder los 52 géneros, sus tempos, ritmos, armonía ni regiones. Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
+
+- **Un motor compartido.** `sound-profiles.js` (catorce familias de sonido para los 52 géneros, perfiles, ajuste y plan de transiciones) y `sound-pro.js` (el motor). Ambos una vez en `SHELL`. La composición no cambia: `audio.js` decide cada golpe y cada nota y pregunta al motor antes de sonar.
+- **Primera familia: tech house y minimal** (`techhouse`, `minimal`, `rominimal`, `microhouse`), en la dirección del 08. Batería por capas sintetizada una vez en buffers, bajo partido en sub y medio con sidechain, chops vocales sintéticos y stabs abiertos, la mitad de la melodía, sala generada, eco en ping-pong, pegamento y saturación. Mismos golpes, mismas velocidades relativas y el mismo azar que el sonido clásico. Se añaden hats fantasma suaves en las semicorcheas impares.
+- **Las otras trece familias** suenan como siempre hasta su lote.
+- **Cambios de región como un DJ.** Desde las señales del viaje (`territory-journey.js` no cambia): la región que llega entra filtrada y sin graves, riser dos compases antes, sin bombo el último medio compás, impacto en el relevo y cambio de graves. Platillo cada 16 compases y barrido en el último de cada 32. Solo si una de las dos regiones es de una familia convertida.
+- **«Sonido clásico»** en Sonido › Avanzado (`#classicSound`), apagado por defecto. `S.soundPro` `{version:1,classic}` se normaliza al leer, sin borrar nada; si el guardado falla, vuelve atrás.
+- **`audio.js`, línea a línea.** Commit aparte «audio.js lines for Jay's approval»: once golpes de la batería, el bajo y la melodía preguntan al motor; `drums()` dice de qué género es cada golpe; el techo de confort puede subir a 16 kHz bajo una familia convertida. Sin el motor, todo suena como antes. La preservación (`approvedPRO1`) admite exactamente esas líneas.
+- **Renders** (motor real del juego, offline, 44,1 kHz): viaje de 90 s tech house → minimal → microhouse → rominimal, clásico −12,1 LUFS / −1,2 dBTP y nuevo −9,7 / −1,1 (ancho 0,00 → 0,07; sobre 4 kHz 0,0 → 1,3 %); 45 s de cada género nuevo: tech house −10,1 / −1,8, minimal −9,1 / −1,1, rominimal −8,6 / −1,7, microhouse −9,3 / −1,4; 60 s de acid house (clásico) a tech house −11,4 / −1,1. Archivos y lista en el directorio de trabajo del lote (`sonido-pro-1/`, fuera de Git).
+- **CPU.** Nodos de Web Audio creados por segundo en el render (todo el juego): viaje clásico 139, nuevo 165 (+18 %); quieto, tech house 75 (clásico 66), minimal 68, rominimal 112, microhouse 107. Los golpes salen de buffers hechos una vez (10 como máximo en el viaje). No se midió en teléfono.
+- **Pruebas.** Nueva `tests/sound-pro.mjs` (familias, perfiles, ajuste y su guardado, plan de transiciones contra el viaje real, golpes, contrato del motor y sus líneas). `tests/audio_mix.mjs` acepta `soundPro` ('pro' o 'classic'; sin él, las suites de mezcla no cargan el motor) y cuenta nodos creados. `npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base origin/main` en verde. Sin recorridos de navegador ni suites de mezcla, por la regla rápida de Jay: solo los renders para escuchar.
+- **Límites.** Nadie lo ha escuchado todavía (ni Jay, ni en teléfono, ni con auriculares). CPU de teléfono sin medir. Las suites de mezcla de CI no cargan el motor nuevo. Sin PR: la rama espera la revisión de Jay de las líneas de `audio.js`.
 
 ## Los lugares te encuentran · 2.3.0-alpha.264
 
