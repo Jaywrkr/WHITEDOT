@@ -81,15 +81,21 @@ export function initialize(runtime){
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
    if(place){const quote=document.createElement('span');quote.style.whiteSpace='nowrap';quote.textContent=`${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;line.replaceChildren('Remezcla de hoy: ',quote);btn.onclick=()=>remixGo(mix);}}
-  list.style.maxHeight='';box.hidden=false;(globalThis.requestAnimationFrame||((fn)=>fn()))(()=>{if(box.hidden)return;align(list);scrollCue();});}
- // The list opens on whole rows (panel 10, Nesbitt #3): the row before the next place sits at the top edge, and the
- // list ends on the last row that fits whole; scrolling still shows the rest.
- function align(list){const next=list.querySelector('[aria-current=step]'),first=next?.previousElementSibling||next;if(!list.getBoundingClientRect)return;
+  list.style.maxHeight=list.style.minHeight='';box.hidden=false;
+  // Twice: the scroll cues the first pass shows take height from the list (the sheet is a flex column), so the second
+  // pass measures the list it really has.
+  (globalThis.requestAnimationFrame||((fn)=>fn()))(()=>{if(box.hidden)return;align(list);scrollCue();align(list,true);scrollCue();});}
+ // The list opens on whole rows (panel 10, Nesbitt #3): the row before the next place sits at the top edge (only the
+ // next place when both do not fit), and the list ends on the last row that fits whole; scrolling still shows the rest.
+ function align(list,last){const next=list.querySelector('[aria-current=step]'),prev=next?.previousElementSibling;if(!list.getBoundingClientRect)return;
+  const first=prev&&next.getBoundingClientRect().bottom-prev.getBoundingClientRect().top<=list.clientHeight+1?prev:next;
   if(first)list.scrollTop+=first.getBoundingClientRect().top-list.getBoundingClientRect().top-list.clientTop;if(list.scrollHeight<=list.clientHeight+2)return;
   const top=list.getBoundingClientRect().top+list.clientTop,bottom=top+list.clientHeight,rows=[...list.children].map(li=>li.getBoundingClientRect()),whole=rows.filter(r=>r.top>=top-1&&r.bottom<=bottom+1);if(!whole.length)return;
   // Near the end the scroll cannot lift the row to the top: the list then ends with the list and starts on a whole row.
-  if(whole[0].top>top+1){list.style.maxHeight=Math.floor(bottom-whole[0].top+list.clientTop*2)+'px';list.scrollTop=list.scrollHeight;return;}
-  const last=whole.at(-1);if(last.bottom<bottom-1)list.style.maxHeight=Math.ceil(last.bottom-top+list.clientTop*2)+'px';}
+  // The last pass fixes the trimmed height, under the sheet's 120 px floor too: the column cannot cut a row again.
+  const fit=px=>{list.style.maxHeight=px+'px';if(last)list.style.minHeight=px+'px';};
+  if(whole[0].top>top+1){fit(Math.floor(bottom-whole[0].top+list.clientTop*2));list.scrollTop=list.scrollHeight;return;}
+  const end=whole.at(-1);if(end.bottom<bottom-1)fit(Math.ceil(end.bottom-top+list.clientTop*2));}
  // Two cues: «↓» while rows wait below, «↑ N más arriba» while whole rows are hidden above (panel 11, Q4: what you
  // already won is above the next place, and the list opens there).
  function scrollCue(){const list=$('lugaresList'),hint=$('lugaresScrollHint'),up=$('lugaresScrollUp');if(!list)return;if(hint)hint.hidden=list.scrollHeight<=list.clientHeight+2||list.scrollTop+list.clientHeight>=list.scrollHeight-2;

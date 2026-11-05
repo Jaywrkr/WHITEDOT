@@ -14,8 +14,9 @@ export function initialize(runtime){
   panel.hidden=false;clearTimeout(timer);timer=setTimeout(close,2400);return true;
  }
  // «Continuar» is often the visit's first tap (alpha.269: every save starts in the free World, which keeps the greeting),
- // so it starts the sound, as a tap on the World does (canvas.js).
- runtime.$('returnContinue').onclick=()=>{runtime.audio?.();close();};
+ // so a real finger on it starts the sound, as a tap on the World does (canvas.js). A scripted click is no gesture: the
+ // browser would keep that context suspended, so it only closes the greeting and allocates no audio (menus stay silent).
+ runtime.$('returnContinue').onclick=e=>{if(e?.isTrusted)runtime.audio?.();close();};
  // Escape also closes dialogs through the shared accessibility handler.
  new MutationObserver(()=>{if(panel.hidden)close();}).observe(panel,{attributes:true,attributeFilter:['hidden']});
  document.addEventListener('visibilitychange',()=>{
