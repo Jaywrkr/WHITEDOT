@@ -4,6 +4,13 @@ Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.267** en la rama `jay/soni
 
 
 
+
+## Pruebas estables: mascota y escáner (sin subir versión)
+
+`main` salió en rojo por dos recorridos que leen el juego mientras sigue vivo.
+- `pet_smoke`: la frase puede cambiar si la mascota oye otra nota del jugador cerca; la prueba exige que nunca aprenda su propia frase (`petState.heard` guarda la última nota oída y su tiempo).
+- `escaner_nms_smoke`: `elementBook` y `cat` pueden crecer mientras el mundo suena; escanear no debe borrar ni cambiar nada de lo que había. El resto se compara igual que antes.
+
 ## Sonido pro 2: house clásico · 2.3.0-alpha.267
 
 Rama `jay/sonido-pro-2`, desde `main` `ff8f5d8`. Segundo lote del plan aprobado. Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).

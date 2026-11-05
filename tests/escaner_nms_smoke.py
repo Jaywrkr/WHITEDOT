@@ -93,7 +93,16 @@ try:
    # --- 4 · Progress untouched: scanning wrote nothing to what the save keeps of finds, places and the map (an achievement
    # for opening the map may be added by the map itself).
    after=json.loads(page.evaluate("JSON.stringify(__r.S)"));before=json.loads(save0)
-   for k in ['elementBook','cat','relicSites','activities','skySecrets','secrets','lugares','journey','universeMap']:
+   # elementBook and cat may grow while the world keeps playing (things heard or met on a slow runner); scanning must
+   # not remove or rewrite anything already there. The rest must be identical.
+   def kept(a,b):
+    if isinstance(a,dict):return isinstance(b,dict) and all(k in b and kept(v,b[k]) for k,v in a.items())
+    if isinstance(a,list):return isinstance(b,list) and len(b)>=len(a)
+    if isinstance(a,(int,float)) and not isinstance(a,bool):return isinstance(b,(int,float)) and b>=a
+    return a==b
+   for k in ['elementBook','cat']:
+    assert kept(before.get(k),after.get(k)),('the save keeps '+k)
+   for k in ['relicSites','activities','skySecrets','secrets','lugares','journey','universeMap']:
     assert json.dumps(after.get(k),sort_keys=True)==json.dumps(before.get(k),sort_keys=True),('the save keeps '+k)
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors
    page.close()
