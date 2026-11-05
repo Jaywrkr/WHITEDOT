@@ -1,5 +1,5 @@
 import {soundProfile,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,createTransitionTracker,guestFilter,GUEST_HIGHPASS} from './sound-profiles.js';
-// Sonido pro (alpha.266; house clásico alpha.267): one shared production engine under the composition. audio.js keeps deciding every hit and
+// Sonido pro (alpha.266; house clásico alpha.267; techno alpha.268): one shared production engine under the composition. audio.js keeps deciding every hit and
 // note; for a genre whose family profile is ready, the hit or note sounds here instead (runtime.proDrum and
 // runtime.proVoice), on one bus per region («deck»): a layered kit synthesized once into buffers, the bass split in sub
 // and mid under the kick's sidechain, wide synths, generated room and echo, glue and saturation. Region changes are
@@ -44,6 +44,10 @@ export const ONE_SHOTS={
   return render(Math.min(1.2,dec*6+.05),sr,t=>{ph+=TAU*glide(t,f0*1.5,f0,.025)/sr;const e=t<.001?t/.001:Math.exp(-Math.max(0,t-.004)/dec);return drive(Math.sin(ph)*e)+n(r()*2-1)*.4*Math.exp(-t/.004)*2;});},
  cowbell(sr){const f=biquad('bandpass',800,3,sr),drive=sat(1.5);let a=0,b=0;
   return render(.3,sr,t=>{a+=540/sr;b+=800/sr;return drive(f(square(a)+square(b))*Math.exp(-t/.06)*3);});},
+ // Techno rumble: the kick's tail as a reverb would leave it, low-passed and driven. Noise through narrow band-passes on
+ // the kick's pitch and its fifth, swelling in after the hit and gone before the next beat (the sidechain pumps it too).
+ rumble(sr,f0,len,k){const r=rng(71+Math.round(f0)),q=k.q||6,a=biquad('bandpass',f0,q,sr),b=biquad('bandpass',f0*1.5,q,sr),lp=chain(biquad('lowpass',190,.7,sr),biquad('lowpass',240,.7,sr)),drive=sat(k.drive||3);
+  return render(len,sr,t=>{const env=t<.035?0:t<.11?(t-.035)/.075:Math.exp(-(t-.11)/(len*.32)),fade=t>len-.04?Math.max(0,(len-t)/.04):1;return lp(drive((a(r()*2-1)+.55*b(r()*2-1))*5))*env*fade;});},
  crash(sr){const r=rng(53),f=chain(biquad('bandpass',6500,.8,sr),biquad('highpass',4000,.7,sr)),ph=[];for(const m of metal)for(const k of [2.1,3.3])ph.push([m*k,0]);
   return render(2,sr,t=>{let s=0;for(const p of ph){p[1]+=p[0]/sr;s+=square(p[1]);}const e=t<.001?t/.001:.25+.75*Math.exp(-(t-.001)/.02);return f(s*.2+(r()*2-1)*.6)*e*Math.exp(-t/.6);});}
 };
@@ -90,8 +94,15 @@ export function initialize(runtime){
   // A longer, darker hall for the warm families' chords and pads (house): sent to only by voices that ask for it.
   const hall=ac.createConvolver(),hallIn=ac.createGain(),hallRet=ac.createGain(),hallHp=ac.createBiquadFilter(),hir=roomImpulse(sr,3.2,71),hb=ac.createBuffer(2,hir[0].length,sr);hb.getChannelData(0).set(hir[0]);hb.getChannelData(1).set(hir[1]);hall.buffer=hb;
   hallHp.type='highpass';hallHp.frequency.value=300;hallRet.gain.value=.45;hallIn.connect(hallHp).connect(hall).connect(hallRet).connect(sum);
-  nodes+=20;
-  E={ac,sr,buffers,decks,sum,out,verbIn,echoIn,hallIn,dl,dr,glue,waves:new Map()};
+  // A dark tape echo for the techno family (dub above all): saturated, filtered and slowly wobbling in its own loop.
+  const tapeIn=ac.createGain(),tl=ac.createDelay(2),tr=ac.createDelay(2),tfb=ac.createGain(),tlp=ac.createBiquadFilter(),thp=ac.createBiquadFilter(),tsat=ac.createWaveShaper?ac.createWaveShaper():ac.createGain(),tpl=ac.createStereoPanner(),tpr=ac.createStereoPanner(),tapeRet=ac.createGain();
+  tlp.type='lowpass';tlp.frequency.value=2100;thp.type='highpass';thp.frequency.value=320;tfb.gain.value=.56;tpl.pan.value=-.45;tpr.pan.value=.45;tapeRet.gain.value=.55;
+  if(tsat.curve!==undefined){const n=1024,c=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;c[i]=Math.tanh(1.6*x)/1.6;}tsat.curve=c;}   // unity gain for small signals: the loop stays under one
+  tl.delayTime.value=tr.delayTime.value=Math.min(1.9,six*3);
+  tapeIn.connect(thp).connect(tl);tl.connect(tpl).connect(tapeRet);tl.connect(tlp).connect(tsat).connect(tfb).connect(tr);tr.connect(tpr).connect(tapeRet);tr.connect(tl);tapeRet.connect(sum);
+  if(ac.createOscillator){const wow=ac.createOscillator(),depth=ac.createGain();wow.frequency.value=.37;depth.gain.value=.0016;wow.connect(depth);depth.connect(tl.delayTime);depth.connect(tr.delayTime);wow.start?.();nodes+=2;}
+  nodes+=31;
+  E={ac,sr,buffers,decks,sum,out,verbIn,echoIn,hallIn,tapeIn,dl,dr,tl,tr,glue,waves:new Map()};
   return E;
  }
  // Pro bus level into audio.js's own master (its compressor and limiter stay the last stage), the comfort ceiling
@@ -136,7 +147,7 @@ export function initialize(runtime){
   const plan=tracker.advance(f);phraseAt={bar:plan.bar,phrase:plan.phrase};if(!live()){dropBar=null;mixKeys=null;return;}const e=engine();if(!e)return;
   const MU=runtime.MU;if(MU?.dnaA)learn(MU.dnaA.key,MU.dnaA.genre);if(MU?.neighborRadio)learn(MU.neighborRadio.key,MU.neighborRadio.genre);
   const six=runtime.SIX||.12,T=f.time,bar=16*six,active=live()&&(ready(keyGenre.get(plan.primary))||ready(keyGenre.get(plan.secondary)));
-  e.dl.delayTime.setTargetAtTime(Math.min(1.9,six*3),T,.1);e.dr.delayTime.setTargetAtTime(Math.min(1.9,six*3),T,.1);
+  for(const x of [e.dl,e.dr,e.tl,e.tr])x.delayTime.setTargetAtTime(Math.min(1.9,six*3),T,.1);
   dropBar=active&&plan.drop?plan.bar:null;mixKeys=active?plan:null;
   for(const d of e.decks.values()){
    if(active&&d.key===plan.secondary){const a=guestFilter(plan.from),b=guestFilter(plan.to);d.hp.frequency.setValueAtTime(GUEST_HIGHPASS,T);d.lp.frequency.setValueAtTime(a.lowpass,T);d.lp.frequency.exponentialRampToValueAtTime(b.lowpass,T+bar);d.out.gain.setTargetAtTime(d.level,T,.05);}
@@ -172,6 +183,7 @@ export function initialize(runtime){
   const d=deck(key,p),base=v/(CLASSIC_LEVEL[id]||.05),lv=p.levels[id]??.3,pan=p.pan[id]||0,room=p.room[id]||0,echo=p.echo[id]||0,step=MU?.step??0,h=unit(mix(step,id.length*131+(neighbor?7:0)));
   const kit=p.kit.id||'tech';
   if(id==='kick'){const f=kickPitch(runtime.hz?.(runtime.root?.()??45),p.kit.kickHz||52);play(buffer('kick:'+kit+':'+f,sr=>ONE_SHOTS.kick(sr,f,p.kit.kick)),t,.5*base*lv,{dest:d.dry});duckAll(t,p);
+   if(p.rumble&&!neighbor){const beat=Math.round(4*(runtime.SIX||.12)*100)/100;play(buffer('rumble:'+kit+':'+f+':'+beat,sr=>ONE_SHOTS.rumble(sr,f,beat,p.rumble)),t,.5*base*lv*p.rumble.level,{dest:d.duck});}
    if(!neighbor&&p.ghostHats&&step%4===0){const six=runtime.SIX||.12,sw=swingOf(gid),hb=buffer('hat:'+p.kit.hatTone,sr=>ONE_SHOTS.hat(sr,false,p.kit.hatTone));
     for(const k of [1,3]){const r=unit(mix(step+k,977));if(r<.72)play(hb,t+(k+sw)*six+(r-.5)*.003,.5*p.ghostHats*(.7+.4*r),{dest:d.dry,pan:p.pan.ghost});}}
    return true;}
@@ -231,12 +243,12 @@ export function initialize(runtime){
   const MU=runtime.MU,arrangement=region.key===MU?.dnaA?.key?MU?.radio:MU?.neighborRadio;let melody=role==='lead'&&!!arrangement?.hookI&&ty===arrangement.hookI;
   if(melody&&p.syncChords){if(d.melodyT!==undefined&&Math.abs(t-d.melodyT)<.002)melody=false;else d.melodyT=t;}
   if(melody){d.lead=(d.lead+1)%p.lead.keep;if(d.lead!==1%p.lead.keep)return true;}
-  if(role==='acorde')runtime.recordInstrument?.(ty);
+  if(role==='acorde'&&ty!=='stab')runtime.recordInstrument?.(ty);   // the dub chord stab is the engine's own, not an instrument
   const style=melody?p.lead:p.chords,kind=style.map?.[ty]||style.kind,level=Math.min(3,v/(melody?.07:role==='acorde'?.05:.025))*style.level,h=unit(mix(Math.round(t*1000),m));
-  let n=m;const [lo,hi]=melody?[60,76]:kind==='pad'?[48,69]:[52,72];while(n>hi)n-=12;while(n<lo)n+=12;
-  const out=count(ac.createGain()),pan=count(ac.createStereoPanner()),list=[out,pan],oscs=[];pan.pan.value=Math.max(-.6,Math.min(.6,(h-.5)*(melody?.6:kind==='pad'?1.2:.9)));out.connect(pan).connect(d.duck);
+  let n=m;const [lo,hi]=melody?[60,76]:style.range||(kind==='pad'||kind==='strings'?[48,69]:[52,72]);while(n>hi)n-=12;while(n<lo)n+=12;
+  const width=style.width||1,edge=Math.min(.9,.6*width),out=count(ac.createGain()),pan=count(ac.createStereoPanner()),list=[out,pan],oscs=[];pan.pan.value=Math.max(-edge,Math.min(edge,(h-.5)*(melody?.6:kind==='pad'||kind==='strings'?1.2:.9)*width));out.connect(pan).connect(d.duck);
   const send=(amount,to)=>{if(!amount)return;const s=count(ac.createGain());s.gain.value=amount;pan.connect(s).connect(to);list.push(s);};
-  send(style.room,e.verbIn);send(style.hall,e.hallIn);send(style.echo,e.echoIn);
+  send(style.room,e.verbIn);send(style.hall,e.hallIn);send(style.echo,e.echoIn);send(style.tape,e.tapeIn);
   const osc=(type,f,dt=0)=>{const o=count(ac.createOscillator());if(type&&typeof type==='object')o.setPeriodicWave(type);else o.type=type;o.frequency.value=f;if(dt)o.detune.value=dt;list.push(o);oscs.push(o);return o;};
   const hold=(style.hold||2)*six,f=hz(n);let first,end;
   if(kind==='chop'){   // a synthetic vocal chop: a saw through two vowel formants (no recorded voice)
@@ -256,6 +268,15 @@ export function initialize(runtime){
    const lp=count(ac.createBiquadFilter()),cut=buildCut(p,1500);lp.type='lowpass';lp.Q.value=.7;lp.frequency.setValueAtTime(cut*.6,t);lp.frequency.linearRampToValueAtTime(cut,t+hold*.6);lp.connect(out);list.push(lp);
    for(const dt of [-14,0,14]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
    out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.032*level,t+Math.min(.3,hold*.4));out.gain.setValueAtTime(.032*level,t+hold);out.gain.setTargetAtTime(0,t+hold,.45);end=t+hold+3;
+  }else if(kind==='strings'){   // Detroit strings: four detuned saws, a bowed attack and a warm low-pass that breathes a little
+   const lp=count(ac.createBiquadFilter()),cut=buildCut(p,2800);lp.type='lowpass';lp.Q.value=.8;lp.frequency.setValueAtTime(cut*.55,t);lp.frequency.linearRampToValueAtTime(cut,t+Math.min(.5,hold*.5));lp.connect(out);list.push(lp);
+   for(const dt of [-11,-4,4,11]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.026*level,t+Math.min(.18,hold*.35));out.gain.setValueAtTime(.026*level,t+hold);out.gain.setTargetAtTime(0,t+hold,.35);end=t+hold+2.4;
+  }else if(kind==='arp'){   // melodic techno arp: a wide supersaw pluck with a bright snap, the build opening it over the phrase
+   const lp=count(ac.createBiquadFilter()),cut=buildCut(p,4200);lp.type='lowpass';lp.Q.value=2.2;lp.frequency.setValueAtTime(Math.min(16000,cut*2),t);lp.frequency.setTargetAtTime(cut*.3,t+.003,.09);lp.connect(out);list.push(lp);
+   for(const dt of [-22,-7,7,22]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
+   const sq=osc('square',f*2),sg=count(ac.createGain());list.push(sg);sg.gain.value=.25;sq.connect(sg).connect(lp);
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.04*level,t+.002);out.gain.setTargetAtTime(0,t+.015,.13);end=t+1;
   }else if(kind==='mallet'){   // marimba-like: a sine and its bright overtone (×3.98), struck and gone
    const o=osc('sine',f),ov=osc('sine',f*3.98),og=count(ac.createGain());list.push(og);first=o;o.connect(out);og.gain.setValueAtTime(.35,t);og.gain.setTargetAtTime(0,t+.002,.035);ov.connect(og).connect(out);
    out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.17*level,t+.002);out.gain.setTargetAtTime(0,t+.004,.2);end=t+1.4;
@@ -266,7 +287,7 @@ export function initialize(runtime){
   }else{   // a short detuned saw stab
    const lp=count(ac.createBiquadFilter()),top=style.cut||2600;lp.type='lowpass';lp.Q.value=2;lp.frequency.setValueAtTime(top,t);lp.frequency.setTargetAtTime(500,t+.004,.06);lp.connect(out);list.push(lp);
    for(const dt of [-12,12]){const o=osc('sawtooth',f,dt);o.connect(lp);first=first||o;}
-   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.06*level,t+.003);out.gain.setTargetAtTime(0,t+.02,.07);end=t+.5;
+   out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(.06*level,t+.003);out.gain.setTargetAtTime(0,t+.02,style.decay||.07);end=t+.5+(style.decay||0)*4;
   }
   for(const o of oscs){o.start(t);o.stop(end);}
   first.onended=()=>{for(const x of list)x.disconnect();};voices++;return true;
