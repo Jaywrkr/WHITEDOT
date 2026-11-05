@@ -3,6 +3,15 @@
 Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.264** en la rama `jay/lugares-te-encuentran`, desde `jay/escaner-nms` (PR #398, alpha.263, aún no en `main`). Las entradas describen su revisión, no certifican producción.
 
 
+## CI rápido (proceso, sin cambio de código del juego)
+
+Rama `jay/ci-rapido`, desde `main`. Aprobado por Jay para acortar esperas. Guía: [Verificación](docs/VERIFICACION.md#ci).
+
+- **PR:** lógica completa y solo los recorridos de navegador y audio afectados (`tests/flow_impact.py`, nuevo); el núcleo compartido o lo dudoso corre todo. Se mantienen los grupos y el check `browser-audio`, verde si no hay nada elegido.
+- **`main`, nocturna (06:17 UTC) y manual:** catálogo completo.
+- **En local:** `npm test`, `release-audit` y `stale-text-check`; navegador solo para depurar. Ver [AGENTS](AGENTS.md).
+- Sin subir versión.
+
 ## Los lugares te encuentran · 2.3.0-alpha.264
 
 Rama `jay/lugares-te-encuentran`, desde `origin/jay/escaner-nms` (dependencia explícita: PR #398, alpha.263). Aprobado por Jay el 5 de noviembre («Me gusta, hazlo así»). Guía: [Los lugares te encuentran](docs/MUNDO.md#los-lugares-te-encuentran) y [El Viaje](docs/VIAJE.md).

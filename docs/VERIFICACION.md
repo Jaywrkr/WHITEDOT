@@ -36,26 +36,23 @@ Intermitencias por reloj o por un runner lento (lote de estabilidad, noviembre d
 
 ## Antes del push
 
-- Cambios funcionales:`npm run audit:release`, `npm test` y recorridos del sistema cambiado, por ejemplo `CHROMIUM_PATH=/ruta/chromium python3 tests/journal_entry_smoke.py`.
-- Textos cambiados:`node scripts/stale-text-check.mjs --base SHA_BASE`. Lista los textos en español que el cambio quitó o reescribió en `src/` e `index.html` (y que ya no aparecen en ninguna parte del juego; la tabla de traducción no cuenta) y las pruebas que aún los esperan. Falla si una prueba espera un texto viejo; las que comprueban que ya no está solo se listan. Tarda menos de un segundo, pero es heurístico y necesita una base, así que no forma parte de `npm test`.
-- Sonido modificado:renders afectados. Si se conserva exactamente, documentar la comprobación y qué render se reutiliza.
-- Solo documentación/evidencia:enlaces, coherencia de fuentes, `git diff --check`, auditoría y selección de impacto. Sin navegador/audio innecesarios.
+- En local, siempre:`npm test`, `node scripts/release-audit.mjs` y `node scripts/stale-text-check.mjs --base SHA_BASE`. No correr recorridos de navegador ni audio en local, salvo para depurar un fallo concreto (por ejemplo `CHROMIUM_PATH=/ruta/chromium python3 tests/journal_entry_smoke.py`). El CI del PR corre los recorridos afectados.
+- `stale-text-check` lista los textos en español que el cambio quitó o reescribió en `src/` e `index.html` (y que ya no aparecen en ninguna parte del juego; la tabla de traducción no cuenta) y las pruebas que aún los esperan. Falla si una prueba espera un texto viejo; las que comprueban que ya no está solo se listan. Tarda menos de un segundo, pero es heurístico y necesita una base, así que no forma parte de `npm test`.
+- Sonido modificado:renderizar solo los archivos que Jay va a escuchar. Los renders de prueba los corre el CI.
+- Solo documentación/evidencia:enlaces, coherencia de fuentes, `git diff --check`, auditoría y selección de impacto.
 - Limpieza de archivos:comprobar referencias y consumidores; no borrar por nombre antiguo un formato, módulo o fixture de compatibilidad.
 
 `npm test` no reutiliza la caché de impacto. No atribuir las pruebas de otra instantánea a una nueva sin explicar preservación/alcance.
 
-## Antes de integrar main
+## CI
 
-Comprobar una vez el candidato final completo:
+- **Pull request:** la lógica completa (`npm test`, auditorías) y solo los recorridos de navegador y audio que el diff afecta. `tests/flow_impact.py` los elige a partir del commit de fusión frente a su primer padre y los imprime en el registro del trabajo `select`. Documentación sola: ningún recorrido. Un flujo cambiado: ese flujo. Un módulo de `src/`: los recorridos con su nombre o que lo citan (o a su familia, `scanner.js` y `scanner-model.js`, o a quien lo importa), más todo el audio si el render de audio lo carga. Núcleo compartido (`src/main.js`, `src/audio.js`, `src/render.js`, `index.html`, `styles/`, `sw.js`, `assets/`, el arnés y sus helpers, los workflows), un módulo que importan quince o más, un módulo que ningún recorrido de navegador cita o una ruta desconocida: catálogo completo. Prueba en seco: `python3 tests/flow_impact.py --files src/scanner.js` (o `--base REV`).
+- **`main`, nocturna (06:17 UTC) y manual:** catálogo completo. Si `main` o la nocturna salen en rojo, arreglarlo es lo primero.
+- `browser-audio` sigue siendo el check obligatorio: un tipo sin recorridos elegidos se salta y cuenta como verde.
 
-```sh
-npm run audit:release
-npm test
-npm run test:browser
-npm run test:audio
-```
+Para el catálogo completo en local (solo al depurar):`npm run test:browser` y `npm run test:audio`, uno después del otro.
 
-[checks.yml](../.github/workflows/checks.yml) reparte navegador en diez grupos y audio en ocho, con agregador obligatorio (`browser-audio`). `WHITEDOT_BROWSER_SHARD=i/10` y `WHITEDOT_AUDIO_SHARD=i/8` seleccionan grupos; no omiten pruebas. `tests/flow_shards.py` equilibra los grupos con los segundos medidos en CI (`tests/flow-durations.json`); un recorrido nuevo cuenta como la mediana de su tipo. `python3 tests/flow_shards.py --list browser 10` (o `audio 8`) enseña el reparto y comprueba que cada recorrido va a un solo grupo; `--from-logs` rehace la tabla con registros de `gh run view RUN --log`. Plan: unos 15 min por grupo de navegador y 13 por grupo de audio, más la instalación (con seis grupos tardaban de 20 a 29 min). Son 19 trabajos a la vez, dentro del límite de 20 del plan gratuito de GitHub. Cada trabajo tiene 40 min; cada recorrido conserva su límite (145 s navegador, 895 s audio). `living_mix.py` renderiza la primera mitad del catálogo vivo y `living_b_mix.py` la segunda: juntas pasaban de diez minutos en un solo recorrido. No integrar con checks pendientes o en rojo.
+[checks.yml](../.github/workflows/checks.yml) reparte navegador en diez grupos y audio en ocho (en un PR, hasta diez y ocho sobre lo elegido), con agregador obligatorio (`browser-audio`). `WHITEDOT_BROWSER_SHARD=i/N` y `WHITEDOT_AUDIO_SHARD=i/N` seleccionan grupos; no omiten pruebas. `WHITEDOT_BROWSER_FLOWS` y `WHITEDOT_AUDIO_FLOWS` (lista separada por comas) limitan el catálogo; vacías, todo. `tests/flow_shards.py` equilibra los grupos con los segundos medidos en CI (`tests/flow-durations.json`); un recorrido nuevo cuenta como la mediana de su tipo. `python3 tests/flow_shards.py --list browser 10` (o `audio 8`) enseña el reparto y comprueba que cada recorrido va a un solo grupo; `--from-logs` rehace la tabla con registros de `gh run view RUN --log`. Plan: unos 15 min por grupo de navegador y 13 por grupo de audio, más la instalación (con seis grupos tardaban de 20 a 29 min). Son 19 trabajos a la vez, dentro del límite de 20 del plan gratuito de GitHub. Cada trabajo tiene 40 min; cada recorrido conserva su límite (145 s navegador, 895 s audio). `living_mix.py` renderiza la primera mitad del catálogo vivo y `living_b_mix.py` la segunda: juntas pasaban de diez minutos en un solo recorrido. No integrar con checks pendientes o en rojo.
 
 CI del PR354/alpha.200 aprobado:[registro](INTEGRACION_ALPHA_200.md). E/alpha.207 tiene254 suites Node y veinte recorridos enfocados locales; su catálogo completo/CI y aceptación física siguen pendientes. Vercel Preview aprobado no equivale a esos checks.
 
