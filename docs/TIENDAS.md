@@ -41,7 +41,7 @@ Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 
 
 Pendiente de Jay:
 - La identidad aprobada con violeta eléctrico está en `outputs/kubono-visual/`, fuera de Git y fuera de esta sesión. Los gráficos de ahora usan la marca del juego; se rehacen cuando esa maqueta esté disponible.
-- El tráiler final se monta con estos clips; el guion está más abajo.
+- Ver y aprobar el tráiler (más abajo).
 
 ## Ficha en español
 
@@ -83,7 +83,18 @@ You are a cube in an open universe that sounds. The music answers what you do.
 
 One-time purchase. No ads, no in-app purchases and no subscriptions: sparks are only earned by playing. No account and no connection: your game is saved on your device. In English and Spanish. Best with headphones.
 
-## Tráiler (guion, 30–45 s)
+## Tráiler
+
+### Montaje
+
+`python3 scripts/trailer.py --media outputs/tienda --out outputs/trailer` corta el tráiler con ffmpeg desde los clips y capturas de arriba. Escribe `trailer-es|en-1920x1080.mp4` y `-1080x1920.mp4`, de 37 s, e `informe.json`; nada entra en Git. Tarda unos dos minutos.
+
+- **Orden:** «Kubono» y «Un cubo. Un universo que suena.» · Mundo · «Explora un universo abierto.» · ronda del Lago · «Once lugares. Cada uno más lejos.» · escáner, portal, Tu cubo y Bitácora (1 s cada una) · «La música responde a lo que haces.» · Refugio · icono, «Kubono» y «Pronto · itch.io · Google Play». En inglés, los mismos carteles traducidos.
+- **Imagen:** carteles en Geist Mono sobre negro. En horizontal, la ronda y el Refugio (grabados en vertical) van centrados con bandas negras.
+- **Sonido:** el del juego, de los propios clips: Mundo → ronda → Refugio, con fundidos cruzados de 1 s. Cada clip se ve mientras suena su propio audio. Masterizado en dos pasadas de `loudnorm` y medido con `ebur128`: los cuatro dan −15,9 LUFS; pico real −1,8 dBTP (ES horizontal) y −4,7 dBTP (los otros tres). El script falla si se sale de ±0,5 LU o pasa de −1 dBTP.
+- **Límites:** nadie lo ha visto ni oído aún, salvo fotogramas sueltos. Sin alojar: el press kit lleva el hueco [ENLACE DEL TRÁILER]. El guion pedía un comienzo del cubo en negro con un pulso; los clips no lo tienen y no se grabó nada nuevo.
+
+### Guion (30–45 s)
 
 Regla del plan: primero una acción del cubo y su respuesta. Solo funciones reales, música del juego.
 
@@ -92,6 +103,17 @@ Regla del plan: primero una acción del cubo y su respuesta. Solo funciones real
 3. **14–24 s:** el Refugio se despliega desde el cubo, que camina por sus cámaras; un pulso, y las criaturas responden (`clip-refugio-vertical`).
 4. **24–32 s:** un portal y su ronda a tiempo; cortes rápidos del escáner, Tu cubo y Bitácora (capturas).
 5. **32–40 s:** «Un cubo. Un universo que suena.» y el logo.
+
+## Sitio: landing, privacidad y prensa
+
+`site/` tiene el sitio estático: `index.html` y `en.html` (landing), `privacidad.html` y `privacy.html`, `prensa.html` y `press.html`, `site.css`, las fuentes Geist Mono (con su licencia OFL) y las imágenes (seis capturas de escritorio por idioma en WebP de 1280×720, icono, cabecera y la imagen para compartir). Unos 650 KB en total.
+
+- **Se genera** con `node scripts/site-build.mjs`; `--check` dice si alguna página quedó atrás. Las de privacidad salen de la parte pública de [Privacidad](PRIVACIDAD.md), sin las notas de Jay: tras cambiar ese texto, se vuelve a generar. `tests/site.mjs` lo comprueba.
+- **Sin rastreo.** Sin scripts, cookies, analítica ni peticiones externas: todo es local. Los botones de tienda son textos («Pronto en itch.io», «Pronto en Google Play»), no enlaces.
+- **Huecos visibles.** [NOMBRE LEGAL], [CORREO], [FECHA] y el enlace del tráiler salen recuadrados hasta completarlos.
+- **Fuera del juego.** No está en `SHELL` de `sw.js` ni en el zip de itch.io (`GAME_PATHS`), Android o escritorio.
+- **Cómo se sirve.** El despliegue actual del juego en Vercel sirve la raíz del repositorio, así que el sitio se ve en `/site/` sin tocar el juego. Para `playkubono.com` (no comprado): un proyecto de Vercel aparte con directorio raíz `site/`, sin build. Al publicarlo, el alojamiento guarda registros técnicos de las visitas: nombrarlo en la privacidad entonces.
+- **Límites.** Comprobado con capturas sin cabeza a 390 y 1280 px. No publicado. `og:image` es relativa hasta que haya dominio. Sin clip en bucle: el vídeo pesaría más que todo el sitio.
 
 ## Landing (textos)
 
@@ -106,4 +128,5 @@ Regla del plan: primero una acción del cubo y su respuesta. Solo funciones real
 - **Datos:** Kubono. Desarrollo independiente. Plataformas: Android, iOS/iPadOS, web y escritorio, cada una cuando esté lista. Precio: US$2,99 móvil, US$4,99 escritorio, pago único, sin compras dentro del juego. Idiomas: español e inglés.
 - **Descripción corta:** Un cubo explora un universo abierto donde cada región suena distinta; encuentra once lugares cada vez más lejos, juega sus rondas a tiempo y la música responde a lo que hace.
 - **Contenido:** la carpeta `outputs/tienda` (capturas, iconos, gráficos y clips).
-- **Pendiente:** fecha, nombre del editor, contacto de prensa y enlaces de tiendas.
+- **Página:** `site/prensa.html` y `site/press.html`. Precio y fecha salen «por confirmar».
+- **Pendiente:** fecha, nombre del editor, contacto de prensa, enlace del tráiler y enlaces de tiendas.

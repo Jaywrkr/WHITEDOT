@@ -2,7 +2,7 @@
 
 Borrador del 6 de noviembre de 2026 (alpha.273), no publicado. Describe las ediciones de venta: Android y escritorio (Windows, macOS y Linux), sin cuenta ni nube. La cuenta opcional está aprobada, pero su configuración (Supabase) está en pausa y no forma parte de esta edición. Si vuelve, esta política se reescribe antes. [Índice vigente](README.md).
 
-Antes de publicar, Jay completa `[NOMBRE LEGAL]`, `[CORREO]` y `[FECHA]`, y la publica en una URL propia: Google Play la pide en su consola.
+Antes de publicar, Jay completa `[NOMBRE LEGAL]`, `[CORREO]` y `[FECHA]`, y la publica en una URL propia: Google Play la pide en su consola. Las páginas `site/privacidad.html` y `site/privacy.html` salen de los dos textos de abajo con `node scripts/site-build.mjs`.
 
 ## Texto para publicar · español
 
