@@ -72,7 +72,7 @@ jobs:
   # (4 Nov 2026); ten, balanced by the seconds measured on CI (tests/flow-durations.json), plan about 15 each.
   browser:
     needs: select
-    if: needs.select.outputs.browser_total != '0'
+    if: false # TEMPORARY diagnostic commit
     runs-on: ubuntu-latest
     # The official Playwright image of the pinned version (requirements-dev.txt) already has Chromium and its system
     # libraries in /ms-playwright: no browser install on each run (up to 10 minutes on 27 Oct 2026). It runs as root;
@@ -113,7 +113,7 @@ jobs:
   # job that is 19 jobs at once, inside the free plan's limit of 20 concurrent jobs.
   audio:
     needs: select
-    if: needs.select.outputs.audio_total != '0'
+    if: false # TEMPORARY diagnostic commit
     runs-on: ubuntu-latest
     # The same Playwright image as the browser shards.
     container:
@@ -141,6 +141,32 @@ jobs:
           node-version: '22'
       - run: python3 -m pip install -r requirements-dev.txt
       - run: npm run test:audio
+  # TEMPORARY: compare the menu at 844x390 in the Playwright image and on the runner. Removed before merge.
+  diag-container:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.62.0-noble
+      options: --ipc=host
+    env:
+      PIP_BREAK_SYSTEM_PACKAGES: '1'
+    steps:
+      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates fonts-dejavu-core fonts-dejavu-mono
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: cat /etc/os-release | head -3; ls /ms-playwright; python3 scripts/diag-menu.py
+      - run: python3 tests/menus_size844_smoke.py || true
+  diag-host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: python3 -m playwright install --with-deps chromium
+      - run: cat /etc/os-release | head -3; ls -la /usr/bin/chromium* || true; python3 scripts/diag-menu.py
+      - run: python3 tests/menus_size844_smoke.py || true
   # Preserve the required check name: every selected browser flow and audio shard must pass. A kind with no selected
   # flow is skipped on purpose (total 0) and counts as passed; any other skip, cancel or failure is red.
   browser-audio:
