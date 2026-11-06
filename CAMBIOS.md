@@ -12,6 +12,7 @@ Rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Jay lo aprobó: ya no se sa
 - **Siguiente.** Flecha, «Siguiente» y «Seguir hacia» solo al lugar de la frontera; sin portal, «Camina recto. Llanura está a 0,5 km.». Un formato futuro lo dice en el portal y en el estante.
 - **Guardados.** `S.frontera` (versión 1, intentos por lugar). Un guardado más allá del lugar pendiente vuelve 20 m por dentro al cargar; no pierde estrellas ni portales.
 - **Pruebas.** `tests/frontera.mjs`; `tests/mundo_abierto_smoke.py` camina hasta 0,5 km y ve la ronda empezar sola. Los navegadores automatizados sin `?abierto=1` o `?frontera=1` no tienen frontera.
+- **Preservación.** Capa `approvedFRONTERA` (`55414f8`) en `verify-e-preservation.mjs` para `i18n-en.js`, `places-ring.js`, `practice-travel.js`, `render.js`, `tranquilo.js` y la lista del modo sin conexión (dos módulos nuevos); sin archivos de música.
 - **Límites.** No probado en teléfono ni con personas; Jay no lo ha jugado.
 
 ## Listo 4: la Voz del Refugio sin tapar rótulos y clips sin saturar · 2.3.0-alpha.277
