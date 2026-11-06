@@ -3,11 +3,14 @@
 // the soft edge you cannot walk past until its ★, jumps kept inside, and the sheet after a try without ★ («Otra vez»,
 // «Más fácil» after three tries, «Salir»). Loaded by the ring (places-ring.js). No sound: the edge is a faint line.
 // Automated browsers keep the old open World unless «?abierto=1» or «?frontera=1» asks for the player's one, as
-// journey-mode.js does for the start.
+// journey-mode.js does for the start; the test tools below never have it unless «?frontera=1».
 import {openSurface} from './frame-state.js';
 import {PLACES,complete} from './places.js';
 import {frontierOf,clampStep,clampJump,isJump,insideSpot,normalizeFrontier,frontierWritable,assistOffered,callLine,FRONTIER_INSIDE,FRONTIER_REARM,FRONTIER_SOFT,CALL_SECONDS,RECALL_SECONDS} from './frontier-model.js';
-function wanted(){try{const q=new URLSearchParams(globalThis.location?.search||'');if(q.get('frontera')==='1'||q.get('abierto')==='1')return true;return !globalThis.navigator?.webdriver;}catch(_){return true;}}
+// The test and preview tools (a seed of their own, the lab, the festival, a chapter, the Journey, a place or the test
+// layout of the portals) play without it too: they are not the player's own World.
+const TOOLS=['testSeed','lab','festival','capitulo','viaje','lugar','anillo'];
+function wanted(){try{const q=new URLSearchParams(globalThis.location?.search||'');if(q.get('frontera')==='1')return true;if(TOOLS.some(k=>q.has(k)))return false;if(q.get('abierto')==='1')return true;return !globalThis.navigator?.webdriver;}catch(_){return true;}}
 export function initialize(runtime){
  const $=id=>runtime.$?.(id)||globalThis.document?.getElementById?.(id)||null,on=wanted();
  let owner=null,state=null,last=null,armed=true,call=null,pushT=0,watch=null,live=false,sheet=null,edge=null;

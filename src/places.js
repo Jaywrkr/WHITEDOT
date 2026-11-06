@@ -212,7 +212,7 @@ export function initialize(runtime){
   const echo=runtime.$('placeEcho');if(echo){echo.hidden=!runtime.ritmoEchoOffered?.(r.id);echo.onclick=()=>{box.hidden=true;runtime.ritmoStartEcho?.(r.id,{from:r.from});};}
   // The next track on the path, straight from the card (plan H3); after the eleven, the place nearest its next star.
   // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
-  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}
+  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id,{say:true});};}}
   // Clean screens (P4): near ★★, only «Otra vez» stands beside «Seguir hacia»; Eco waits in Lugares and at the portal.
   if(echo&&near&&nb&&!nb.hidden)echo.hidden=true;
   // Jay (alpha.232, G1): one white button, the one that follows; with no next place on the path, «Otra vez».

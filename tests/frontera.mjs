@@ -78,4 +78,8 @@ function world({kids=false,places=won(),at={x:0,y:-4700}}={}){const els={},toast
 // The Journey: no frontier either.
 {const w=world({at:{x:0,y:90000}});w.r.S.journey={done:{}};w.r.frontierStep(1/60);assert.equal(w.r.S.wy,90000);}
 assert.equal(placeRadius('lago'),10000);
+// The test and preview tools (a seed of their own, the lab, a place, the test layout…) have no frontier, even when a
+// test says it is not automated; «?frontera=1» asks for it.
+for(const search of ['?lab=1&testSeed=laboratorio','?testSeed=x','?anillo=1','?lugar=lago','?viaje=1','?festival=1','?capitulo=lago']){globalThis.location={search};const w=world({at:{x:0,y:90000}});w.r.frontierStep(1/60);assert.equal(w.r.frontierState().on,false,search);assert.equal(w.r.S.wy,90000,search);}
+globalThis.location={search:'?testSeed=x&frontera=1'};assert.equal(world().r.frontierState().on,true);delete globalThis.location;
 console.log('PASS niveles en orden: the frontier at the first place without ★ (+200 m), soft at its edge and sliding along it, jumps and old saves just inside, the call once and its round by itself, tries counted with «Otra vez»/«Salir» and the easier round after three (one in Modo niños), its ★ moving the frontier on; no frontier in the Journey or with the eleven');

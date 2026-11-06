@@ -11,7 +11,7 @@ Rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Jay lo aprobó: ya no se sa
 - **Sin ★.** Salir de su ronda abre «Otra vez» / «Salir». Tras tres intentos (uno con Modo niños), «Más fácil»: la ronda tranquila con meta al 60 %. Su ★ cuenta igual; ★★ y ★★★ esperan al modo normal. Maestro sigue opcional.
 - **Siguiente.** Flecha, «Siguiente» y «Seguir hacia» solo al lugar de la frontera; sin portal, «Camina recto. Llanura está a 0,5 km.». Un formato futuro lo dice en el portal y en el estante.
 - **Guardados.** `S.frontera` (versión 1, intentos por lugar). Un guardado más allá del lugar pendiente vuelve 20 m por dentro al cargar; no pierde estrellas ni portales.
-- **Pruebas.** `tests/frontera.mjs`; `tests/mundo_abierto_smoke.py` camina hasta 0,5 km y ve la ronda empezar sola. Los navegadores automatizados sin `?abierto=1` o `?frontera=1` no tienen frontera.
+- **Pruebas.** `tests/frontera.mjs`; `tests/mundo_abierto_smoke.py` camina hasta 0,5 km y ve la ronda empezar sola. Los navegadores automatizados sin `?abierto=1` o `?frontera=1` no tienen frontera; las herramientas de prueba (`?testSeed=`, `?lab=1`, `?lugar=`, `?anillo=1`…) tampoco, salvo `?frontera=1`.
 - **Preservación.** Capa `approvedFRONTERA` (`55414f8`) en `verify-e-preservation.mjs` para `i18n-en.js`, `places-ring.js`, `practice-travel.js`, `render.js`, `tranquilo.js` y la lista del modo sin conexión (dos módulos nuevos); sin archivos de música.
 - **Límites.** No probado en teléfono ni con personas; Jay no lo ha jugado.
 

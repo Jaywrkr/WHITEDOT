@@ -78,9 +78,10 @@ export function initialize(runtime){
  function route(){if(owner!==runtime.S){owner=runtime.S;target=null;}if(!active()||runtime.S.destination||runtime.placeCardDue?.())return null;
   // Mapa del universo (alpha.235): while there is a mark, the compass and the line under the HUD lead to it.
   const mark=runtime.mapMarkRoute?.();if(mark)return {...mark,mark:true};const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
- function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));
-  // «Niveles en orden»: with no portal yet, the way is to walk out; with nothing left on the path, explore. Never silent.
-  if(!aim){const h=placeHint(spots(),data(),runtime.S.journey);runtime.toast?.(h?`Camina recto. ${h.name} está a ${kmText(h.km)} km.`:'Explora a tu ritmo.',{force:true});return false;}if(runtime.S.destination)runtime.cancelDestination?.();runtime.clearMapMark?.();owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
+ function guide(id,{say=false}={}){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));
+  // «Niveles en orden»: with no portal yet, the way is to walk out; with nothing left on the path, explore. A button the
+  // player pressed (say) is never silent; the end of the Journey's finale asks quietly.
+  if(!aim){if(!say)return false;const h=placeHint(spots(),data(),runtime.S.journey);runtime.toast?.(h?`Camina recto. ${h.name} está a ${kmText(h.km)} km.`:'Explora a tu ritmo.',{force:true});return false;}if(runtime.S.destination)runtime.cancelDestination?.();runtime.clearMapMark?.();owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
 
  const sea=(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea;
  let testFilled=null;

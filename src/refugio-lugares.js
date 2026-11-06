@@ -105,7 +105,7 @@ export function initialize(runtime){
  function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
- function door(){runtime.ringGuide?.();}
+ function door(){runtime.ringGuide?.(null,{say:true});}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':'Lugares';}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};
