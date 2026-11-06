@@ -6,19 +6,19 @@ Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 
 
 `python3 scripts/store-media.py` abre el juego real en Chromium y guarda todo en `outputs/tienda/`, fuera de Git. Con `--only capturas,iconos,clips` se elige qué generar; `--sizes movil,escritorio` y `--langs es,en` acotan tamaños e idiomas. Tarda unos diez minutos entero.
 
-- **Capturas** (rehechas en alpha.274, Listo 2): ocho escenas por tamaño y por idioma (español e inglés), `TAMAÑO-IDIOMA-N-escena.png`:
+- **Capturas** (rehechas en alpha.275, Listo 3): ocho escenas por tamaño y por idioma (español e inglés), `TAMAÑO-IDIOMA-N-escena.png`:
   1. `inicio`: guardado nuevo del mundo abierto (`?abierto=1`, sin Viaje ni Camino), la guía en 1/6 y «Llanura · más lejos · 0,5 km».
   2. `escaner`: el dedo mantenido y las marcas del escáner, también en el borde.
   3. `portal`: el portal de Llanura con sus ★.
-  4. `ronda`: una ronda del Lago.
+  4. `ronda`: una ronda del Lago, jugada. Suena la música, el lugar canta su compás y el cubo pulsa en sus pasos con el pulso del juego (el de la barra espaciadora). La Línea y el cubo muestran los aciertos.
   5. `resultado`: la hoja de ★ de esa ronda.
   6. `cubo`: Tu cubo, pestaña Piezas («Cambiar ✦»).
   7. `bitacora`: Bitácora, Logros.
-  8. `refugio`: el Refugio.
+  8. `refugio`: el Refugio, con su primera frase escrita entera.
   - Desde la escena 2, la partida tiene 21 días, tres lugares completos (Llanura, Lago, Bosque), sombrero y mascota y el Refugio con todos los ornamentos. Sigue siendo del mundo abierto.
   - Los avisos pasajeros se ocultan, y la guía desde la escena 2; el resto es el juego tal cual.
 - **Iconos y gráficos:** se dibujan con la marca actual (cubo blanco en aro dorado sobre negro), sin canal alfa.
-- **Clips:** la pantalla se graba a la mitad y se duplica con píxeles nítidos; el sonido es el del juego, tomado de su salida. El del Mundo empieza con la guía del guardado nuevo y luego camina por una región viva.
+- **Clips:** la pantalla se graba a la mitad y se duplica con píxeles nítidos; el sonido es el del juego, tomado de su salida. El del Mundo empieza con la guía del guardado nuevo y luego camina por una región viva. El de la ronda (`clip-ronda-vertical-*`): el Lago canta su compás y el cubo lo responde a tiempo.
 
 | Archivo | Tamaño | Para |
 |---|---|---|
@@ -35,6 +35,7 @@ Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 
 | `graficos/steam-*` | 1232×706, 920×430, 462×174, 600×900 | Cápsulas de Steam |
 | `graficos/og-1200x630` | 1200×630 | Vista previa al compartir |
 | `clips/clip-mundo-vertical-es`, `-en`, `clip-refugio-vertical` | 1080×1920, 12–14 s | Tráiler vertical, redes |
+| `clips/clip-ronda-vertical-es`, `-en` | 1080×1920, 14 s | Tráiler vertical: cómo se juega una ronda |
 | `clips/clip-mundo-horizontal-es`, `-en` | 1920×1080, 14 s | Tráiler de Steam y landing |
 
 Pendiente de Jay:

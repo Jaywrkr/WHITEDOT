@@ -88,6 +88,7 @@ Inglés natural y breve, con el tono del español: frases cortas, una idea por f
 | `tests/i18n-coverage.mjs` | Todo texto español legible de `src/`, `index.html` y `recovery.html` sale en inglés; excepciones nombradas (ids de lugares de `world-families.js`); español intacto; cableado |
 | `tests/i18n.mjs` | Idioma del sistema, partidas antiguas, automatización, guardado, Ajustes con escritura fallida, búsquedas |
 | `tests/english_screens_smoke.py` | Inicio, cinco capítulos y seis lugares en inglés a 390×844: sin español ni texto cortado |
+| `tests/listo3_layout_smoke.py` | Pestañas de la Bitácora sin cortes ES/EN a 320, 360, 390 y 1280 px; la frase del Refugio entera |
 | `tests/english_panels_smoke.py` | Anillo, Lugares, Tu canción, chispa salvaje, menú, guía, libro, resultado y favoritos |
 | `tests/english_menus_smoke.py` | Las trece hojas de menú en Viaje y Mundo libre; «Idioma / Language» sin traducir |
 | `tests/language_choice_smoke.py` | Sistema en inglés y en español, partida antigua, cambio en Ajustes en ambos sentidos con el español restaurado exacto, recarga |

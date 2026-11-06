@@ -1,8 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.274** en la rama `jay/listo-2`, desde `main` `496eb6d` (alpha.273, PR #411). Alpha.272 (sonido pro 5) vive en `jay/sonido-pro-5`, sin integrar; esta rama no toca el sonido. Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.275** en la rama `jay/listo-3`, desde `main` `662bf57` (alpha.274, PR #412). Alpha.272 (sonido pro 5) vive en `jay/sonido-pro-5`, sin integrar; esta rama no toca el sonido. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Listo 3: pestañas enteras, la frase del Refugio y una ronda jugada en los medios · 2.3.0-alpha.275
+
+Rama `jay/listo-3`, desde `main` `662bf57`. Tres detalles que Jay aprobó tras generar los medios de tienda. Guías: [Material de tienda](docs/TIENDAS.md), [Traducción](docs/TRADUCCION.md), [Casa viva](docs/CASA_VIVA.md).
+
+- **Pestañas de la Bitácora enteras.** En inglés, a 360 px, «Achievements» se partía («Achievemen/ts»); a 320 px, también «Colección» y «Collection». Ahora ningún nombre se corta. En teléfono son tres columnas que toman el ancho de su nombre más largo; en pantallas anchas, una fila de seis. Mismos textos y mismos ID. Comprobado en ES/EN a 320, 360, 390, 600, 601, 800 y 1280 px.
+- **La frase del Refugio, entera.** La Voz del Refugio («Tu Refugio viaja contigo. Se abre donde estés.») admite tres líneas en vez de dos. En una franja horizontal estrecha (640×360) el inglés ocupa tres y ya no se corta. En la captura de escritorio se veía a medio escribir: el script ahora espera a la frase entera.
+- **Ronda jugada en los medios.** En `scripts/store-media.py`, la captura `ronda` suena y se juega: el Lago canta su compás y el cubo pulsa en sus pasos con el pulso del juego (`runtime.sonar`, el de la barra espaciadora). La Línea y el cubo muestran los aciertos. Nuevo clip `clip-ronda-vertical-es` y `-en`. Sin cambios en la interfaz.
+- **Sin dB en el Mundo abierto.** Al revisar las capturas, el rótulo de un sonido cercano decía «Bajo · Filtro 24 dB» («Bass · Filter 24 dB»). En un guardado del mundo abierto (sin Viaje ni Camino) dice «Bajo · Filtro»; los guardados con Viaje o Camino lo conservan (`feedback.js`).
+- **Preservación.** Capa `approvedLISTO3` (`SHA_GAME`) en `verify-e-preservation.mjs` para `feedback.js` y `scanner.js`; sin archivos de música.
+- **Escáner sin textos montados.** En inglés, dos nombres del escáner se pisaban («Light · 11 m» junto a «Light · 13 m»): las marcas se separaban por el largo del nombre en español. Ahora se separan por el nombre tal como se escribe (`scanner.js`); en español no cambia nada. Mientras se mantiene el dedo, la línea del objetivo («Tormenta · más lejos · 3 km») se aparta, como ya hacían los avisos, y vuelve al soltar.
+- **Medios.** El aviso de zona pasajero se oculta en las capturas, como los demás avisos. En teléfono, la frase del Refugio tapa el nombre de una sala: allí la captura espera a que se haya leído.
+- **Pruebas.** `tests/listo3_layout_smoke.py`: pestañas en una línea, sin desbordar, ES/EN a 320, 360, 390 y 1280 px; la frase del Refugio entera a 640×360, 1280×720 y 320×568; la línea del objetivo apartada durante el escaneo. `tests/feedback.mjs`: el rótulo sin dB en el mundo abierto y con dB tras el Viaje.
+- **Límites.** Medios regenerados fuera de Git. No probado en teléfono ni con personas.
 
 ## Listo 2: sin verbos de compra, Ámbar sin Camino, Android sin red y medios de tienda · 2.3.0-alpha.274
 

@@ -23,3 +23,7 @@ r.ac.state='suspended';r.soundCue(source,'perc',1);r.ac.state='running';r.drawSo
 console.log('PASS: audio onset gating, moving sources, lifetime, bounded cues, mute and suspended audio');
 
 r.musicVolume=()=>0;r.soundCue(source,'lead',1);const silentStrokes=strokes;r.drawSoundCues(0,0,100);assert.equal(strokes,silentStrokes);r.musicVolume=()=>1;labels.length=0;r.soundCue(source,'lead',1);r.drawSoundCues(0,0,100);assert.equal(labels.length,0,'ambient activity cannot steal the gesture label');r.clearSoundCues();r.soundCue(source,'lead',1,'player');r.filterCue(source,'lead',{slope:24,stages:2,start:100,end:1000},1);r.drawSoundCues(0,0,100);assert.equal(labels.length,1);assert.match(labels[0],/Filtro 24 dB/);
+// Listo 3: a new save of the open World (no Journey, no Camino) names the filter without dB; the save above keeps it.
+labels.length=0;r.S.journey={open:true,freeGiven:true};r.clearSoundCues();r.soundCue(source,'lead',1,'player');r.filterCue(source,'lead',{slope:24,stages:2,start:100,end:1000},1);r.drawSoundCues(0,0,100);assert.equal(labels.length,1);assert.match(labels[0],/· Filtro$/);assert.doesNotMatch(labels[0],/dB/);
+r.S.journey.finished=true;labels.length=0;r.clearSoundCues();r.soundCue(source,'lead',1,'player');r.filterCue(source,'lead',{slope:24,stages:2,start:100,end:1000},1);r.drawSoundCues(0,0,100);assert.match(labels[0],/Filtro 24 dB/);r.S.journey=undefined;
+console.log('PASS: the open World names a filter without dB; Journey and Camino saves keep it');
