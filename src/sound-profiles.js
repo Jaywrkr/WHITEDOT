@@ -1,4 +1,4 @@
-// Sonido pro (alpha.266, house clásico alpha.267, techno alpha.268, melodic y orgánico and afro y latino alpha.271): the production layer only. Each of the 52 genres belongs to one of fourteen sound families;
+// Sonido pro (alpha.266, house clásico alpha.267, techno alpha.268, melodic y orgánico and afro y latino alpha.271, the other nine families alpha.276): the production layer only. Each of the 52 genres belongs to one of fourteen sound families;
 // a family profile says how its notes and hits sound (kit, bass, synths, space, bus). The composition (tempo, swing,
 // patterns, harmony, regions) is not read or changed here. A family without a ready profile keeps the classic sound.
 const family=(id,name,genres)=>Object.freeze({id,name,genres:Object.freeze(genres.split(' '))});
@@ -137,8 +137,179 @@ const AFRO=Object.freeze({
  build:null,
  phrase:Object.freeze({crash:16,sweep:32})
 });
+// Alpha.272: the nine remaining families. Shared instrument maps (the composition's instrument → the engine's kind);
+// each family overrides what it needs. The beat layer (beats) hangs ghosts and the answer on each beat, not on the kick.
+const KEYS=Object.freeze({rhodes:'ep',keys:'ep',feltpiano:'ep',tinepiano:'ep',p_tinepiano:'ep',p_tapepiano:'ep',p_ebonypiano:'ep',phasekeys:'ep',organ:'organ',p_fogorgan:'organ',
+ strings:'strings',silkstrings:'strings',bowed:'strings',lowbow:'strings',cellobody:'strings',p_cellobody:'strings',p_violaswell:'strings',p_stringcloud:'pad',p_velvetchoir:'pad',p_breathingpad:'pad',choir:'pad',wavetable:'pad',
+ clav:'clav',p_barkkeys:'clav',barkkeys:'clav',brass:'brass',p_softhorn:'brass',vocalform:'chop',metalkeys:'bell',p_roundbell:'bell',p_celestabody:'bell',roundbell:'bell',glass:'bell',p_fmharp:'bell',fmharp:'bell',
+ kalimba:'mallet',marimba:'mallet',steel:'mallet',feltmallet:'mallet',p_feltmallet:'mallet',flute:'flute',airflute:'flute',p_panreed:'flute',reed:'sax',p_bassclarinet:'sax',gutguitar:'string',p_gutguitar:'string',saw:'supersaw',pluck:'pluck',resonantpluck:'pluck'});
+const lead=(kind,o={},map={})=>Object.freeze({keep:1,kind,level:.85,room:.15,hall:.25,echo:.25,width:1.2,hold:2,...o,map:Object.freeze({...KEYS,...map})});
+const kit=(id,kick,o={})=>Object.freeze({id,kick:Object.freeze(kick),kickHz:50,hatTone:1.45,clapRoom:.32,snareUnderClap:.3,...o});
+const LEVELS=Object.freeze({kick:.46,snare:.65,clap:.85,hat:1.1,hatO:.9,rim:.6,shaker:.7,wood:.55,tom:.6,conga:.6,cowbell:.35,blip:.4});
+const PAN=Object.freeze({hat:.24,hatO:-.2,rim:-.36,shaker:.42,wood:.36,conga:-.32,tom:.26,cowbell:.3,blip:-.3,ghost:-.28});
+const ROOM=Object.freeze({clap:.32,snare:.25,rim:.25,wood:.25,conga:.28,tom:.3,blip:.35,cowbell:.2});
+const ECHO=Object.freeze({rim:.1,blip:.3,wood:.08,conga:.06});
+const SPACE=Object.freeze({seconds:1.8,ret:.4,echoSteps:3,feedback:.33,echoRet:.5}),PHRASE=Object.freeze({crash:16,sweep:32});
+const base=o=>Object.freeze({ready:true,levels:LEVELS,pan:PAN,room:ROOM,echo:ECHO,space:SPACE,phrase:PHRASE,build:null,syncChords:true,output:1,front:.7,beats:true,ghostHats:.14,...o});
+// «Disco y funk»: four on the floor or the funk's own kick, a slap-like synth bass, disco strings through a phaser,
+// brass-like stabs, clavinet and Rhodes, open hats on the off-beats, chords in a filtered loop, talkbox-like formant
+// leads (no recorded voice) and warm analog glue on the deck.
+const DISCO=base({
+ kit:kit('disco',{click:.45,decay:.14,drive:2.2,length:.44,hold:.12,tail:.07},{kickHz:52,hatTone:1.42,clapRoom:.36}),
+ levels:{...LEVELS,hatO:1.15,clap:.9,shaker:.8,cowbell:.4},room:{...ROOM,clap:.36},
+ bass:Object.freeze({kind:'slap',sub:.6,mid:.95,steps:2,bright:.5,pop:.35,q:5}),
+ lead:lead('clav',{level:.85,hall:.22,echo:.24},{vocalform:'talkbox',saw:'talkbox'}),
+ chords:lead('strings',{level:1.2,room:.12,hall:.4,echo:.12,phase:.55,width:1.5,hold:4},{brass:'brass',p_softhorn:'brass',clav:'clav',organ:'organ',vocalform:'talkbox'}),
+ loop:Object.freeze({bars:8,low:.45}),warm:1.8,ghostHats:.12,
+ sidechain:Object.freeze({floor:.42,release:.13}),front:.7,answer:Object.freeze({id:'conga',mult:4})
+});
+// «UK y breaks»: synthesized breakbeats (a layered snare, ghost snares and hats with the composition's swing), the 2-step
+// shuffle with organ and chord stabs over a sub, broken beat's jazzy keys; reese bass for breaks.
+const UK=base({
+ kit:kit('uk',{click:.65,decay:.12,drive:2.8,length:.4,hold:.1,tail:.06},{kickHz:54,hatTone:1.55,clapRoom:.28,snareClap:.35,snare:Object.freeze({body:200,noise:1.1,tail:.07,drive:2.2})}),
+ levels:{...LEVELS,snare:.75,hat:1.2,hatO:.95,rim:.7},room:{...ROOM,snare:.3},
+ bass:Object.freeze({kind:'split',sub:.85,mid:.45,steps:2,bright:.25}),
+ lead:lead('ep',{level:.85,hall:.25,echo:.28},{saw:'stab',glass:'bell'}),
+ chords:lead('organ',{level:1,room:.15,hall:.3,echo:.18,hold:1.5},{keys:'organ',rhodes:'ep'}),
+ ghostHats:.2,ghostSnare:Object.freeze({level:.22,steps:[2,7,9,15],p:.55}),
+ sidechain:Object.freeze({floor:.45,release:.11}),front:.75,answer:Object.freeze({id:'snare',mult:1})
+});
+// «Club de bajos»: hard and bright. 808 booms, bright claps, chopped synthetic vocal stabs (formants, no recorded
+// voice), the triplet and Jersey kick patterns as composed.
+const BASS=base({
+ kit:kit('club',{click:.7,decay:.16,drive:3,length:.5,hold:.12,tail:.08},{kickHz:50,hatTone:1.55,clapRoom:.25,snareUnderClap:.4}),
+ levels:{...LEVELS,clap:1.05,hat:1.15,snare:.7},
+ bass:Object.freeze({kind:'boom',sub:.85,mid:.5,steps:2,bright:.4,decay:.32,drive:2.2,glide:0}),
+ lead:lead('chop',{level:1,room:.18,hall:.12,echo:.3,hold:1},{vocalform:'chop',brass:'brass',saw:'stab'}),
+ chords:lead('stab',{level:.9,cut:3200,room:.15,hall:.15,echo:.2,hold:1},{brass:'brass',vocalform:'chop'}),
+ sidechain:Object.freeze({floor:.4,release:.1}),front:.7,answer:Object.freeze({id:'clap',mult:1})
+});
+// «DnB y dubstep»: layered fast breaks, reese and sub, liquid pads and Rhodes, the dubstep wobble (an LFO on the
+// bass filter, in time) under half-time drums as composed.
+const DNB=base({
+ kit:kit('dnb',{click:.7,decay:.1,drive:2.6,length:.34,hold:.08,tail:.05},{kickHz:55,hatTone:1.6,clapRoom:.3,snareClap:.3,snare:Object.freeze({body:210,noise:1.15,tail:.08,drive:2.4})}),
+ levels:{...LEVELS,snare:.8,hat:.7,shaker:.5},room:{...ROOM,snare:.32},
+ bass:Object.freeze({kind:'reese',sub:.8,mid:.7,steps:4,bright:.3,detune:16,drive:2}),
+ lead:lead('ep',{level:.85,hall:.35,echo:.3},{organ:'pad',saw:'supersaw'}),
+ chords:lead('pad',{level:1.2,room:.08,hall:.5,echo:.15,width:1.5,hold:6},{rhodes:'ep',keys:'ep',organ:'pad'}),
+ ghostHats:.12,ghostSnare:Object.freeze({level:.18,steps:[2,6,10,14],p:.4}),
+ sidechain:Object.freeze({floor:.45,release:.1}),front:.72,answer:Object.freeze({id:'snare',mult:1})
+});
+// «Hip-hop»: dusty drums with the composition's swing, warm glue, round bass; lo-fi adds vinyl and a tape wobble,
+// trap the 808 glide and rolling hats, G-funk a whining lead with portamento and a funky bass.
+const HIPHOP=base({
+ kit:kit('hiphop',{click:.4,decay:.17,drive:2.4,length:.5,hold:.13,tail:.08},{kickHz:50,hatTone:1.35,clapRoom:.3,snare:Object.freeze({body:180,noise:.8,tail:.09,drive:2.6})}),
+ levels:{...LEVELS,snare:.8,kick:.5,hat:1},room:{...ROOM,snare:.3,rim:.3},
+ bass:Object.freeze({kind:'split',sub:.75,mid:.55,steps:3,bright:.2}),
+ lead:lead('ep',{level:.85,hall:.25,echo:.22,hold:3},{saw:'whine'}),
+ chords:lead('ep',{level:1,room:.15,hall:.35,echo:.12,hold:4},{strings:'strings'}),
+ warm:2,ghostHats:.1,
+ sidechain:Object.freeze({floor:.55,release:.14}),front:.72,answer:Object.freeze({id:'rim',mult:1})
+});
+// «Electro»: the 808 machine. A long 808 kick, bright claps and cowbell, robotic vocoder-like formant hits (no recorded
+// voice), sequenced machine bass; EBM's dark gated snare.
+const ELECTRO=base({
+ kit:kit('electro',{click:.5,decay:.22,drive:2.2,length:.6,hold:.14,tail:.12},{kickHz:48,hatTone:1.6,clapRoom:.3,snareUnderClap:.4,snare:Object.freeze({body:200,noise:1,tail:.07,drive:2})}),
+ levels:{...LEVELS,clap:.95,hat:1.2,cowbell:.5,rim:.7},
+ bass:Object.freeze({kind:'split',sub:.7,mid:.85,steps:1,bright:.5}),
+ lead:lead('vocoder',{level:.9,room:.15,hall:.2,echo:.3,hold:1},{vocalform:'vocoder',saw:'stab',keys:'bell',strings:'strings'}),
+ chords:lead('stab',{level:.9,cut:3000,room:.1,hall:.3,echo:.22,hold:2},{strings:'strings',organ:'organ',vocalform:'vocoder'}),
+ ghostHats:.1,
+ sidechain:Object.freeze({floor:.4,release:.11}),front:.68,answer:Object.freeze({id:'cowbell',mult:1})
+});
+// «Ambient»: long evolving pads in the hall, granular-like clouds (synthesized), Berlin School sequences, soft kicks
+// where composed, heart's deep dub echoes. Quieter on purpose (about -14 LUFS).
+const AMBIENT=base({
+ kit:kit('ambient',{click:.12,decay:.2,drive:1.4,length:.55,hold:.14,tail:.1},{kickHz:46,hatTone:1.3,clapRoom:.5,tomDecay:.2,congaDecay:.1}),
+ levels:{...LEVELS,kick:.4,hat:.8,shaker:.8},room:{...ROOM,clap:.5,snare:.45,rim:.4,wood:.4,tom:.45},echo:{...ECHO,rim:.2,wood:.2,blip:.4},
+ bass:Object.freeze({kind:'split',sub:.6,mid:.3,steps:4,bright:.12}),
+ lead:lead('grain',{level:.9,room:.15,hall:.5,echo:.35,width:1.6,hold:4},{glass:'bell',flute:'flute'}),
+ chords:lead('pad',{level:1.4,room:.05,hall:.6,echo:.12,width:1.8,hold:12},{glass:'grain',flute:'pad',stab:'stab'}),
+ build:Object.freeze({bars:32,low:700,high:6000}),ghostHats:0,
+ sidechain:Object.freeze({floor:.8,release:.2}),front:.8,answer:Object.freeze({id:'wood',mult:1})
+});
+// «Jazz»: brushes and ride, an upright-like bass (a dark plucked string), Rhodes and a sax-like formant lead.
+const JAZZ=base({
+ kit:kit('jazz',{click:.22,decay:.16,drive:1.6,length:.46,hold:.12,tail:.08},{kickHz:52,hatTone:1.3,clapRoom:.4,ride:1.1,brush:true}),
+ levels:{...LEVELS,snare:.9,kick:.42,hat:1.1,rim:.7,shaker:.7},room:{...ROOM,snare:.3,rim:.3},
+ bass:Object.freeze({kind:'upright',sub:.6,mid:.9,steps:2,bright:.1}),
+ lead:lead('sax',{level:.9,room:.2,hall:.3,echo:.18,hold:3},{rhodes:'ep',clav:'clav'}),
+ chords:lead('ep',{level:1.1,room:.15,hall:.35,echo:.1,hold:4},{clav:'clav'}),
+ warm:1.6,ghostHats:.08,ghostSnare:Object.freeze({level:.25,steps:[3,7,11,14],p:.45}),
+ sidechain:Object.freeze({floor:.7,release:.15}),front:.75,answer:Object.freeze({id:'rim',mult:1})
+});
+// «Experimental»: precise glitchy drums with stutters, FM bells, granular stutter clouds, patterns as composed.
+const EXPERIMENTAL=base({
+ kit:kit('glitch',{click:.8,decay:.09,drive:2.6,length:.3,hold:.07,tail:.04},{kickHz:52,hatTone:1.7,clapRoom:.2,snare:Object.freeze({body:240,noise:1.2,tail:.04,drive:2.8,gate:.09})}),
+ levels:{...LEVELS,rim:.8,wood:.75,blip:.6,hat:1.2},echo:{...ECHO,rim:.2,blip:.4,wood:.15},
+ bass:Object.freeze({kind:'split',sub:.7,mid:.75,steps:1,bright:.55}),
+ lead:lead('bell',{level:.9,room:.15,hall:.3,echo:.35,hold:2},{kalimba:'bell',metalkeys:'bell',clav:'clav'}),
+ chords:lead('grain',{level:1,room:.1,hall:.4,echo:.2,hold:3},{clav:'clav',metalkeys:'bell'}),
+ stutter:Object.freeze({p:.16}),ghostHats:.12,
+ sidechain:Object.freeze({floor:.45,release:.1}),front:.7,answer:Object.freeze({id:'rim',mult:1})
+});
 // Per-genre touches inside each family (one level deep over its profile). The composition (tempo, swing, patterns) is not here.
 const GENRE_TOUCH=Object.freeze({
+ // Disco y funk. Nu-disco: punchy four on the floor, the slap bass, phased strings and brass stabs, clav and talkbox.
+ nudisco:{kit:{id:'nudisco'},output:0.85},
+ // Cosmic disco: slower and spacier, strings deep in the phaser and the hall, a longer echo, a round bass.
+ cosmic:{kit:{id:'cosmic',kick:{click:.32,decay:.16,drive:1.9,length:.48,hold:.13,tail:.08},kickHz:50},bass:{pop:.15,bright:.35,sub:.7},chords:{phase:.8,hall:.55,level:1.3,hold:6},lead:{echo:.42,hall:.35},loop:{bars:16,low:.35},output:0.76},
+ // Boogie: post-disco. A brighter slap with more pop, clav and brass up front, a punchy kick.
+ boogie:{kit:{id:'boogie',kick:{click:.55,decay:.13,drive:2.6,length:.42,hold:.11,tail:.06},kickHz:56},bass:{pop:.55,bright:.62,mid:1.05},chords:{kind:'brass',level:1.1,phase:.3},output:0.84},
+ // Electro-funk: machine funk. A long 808-like kick, a synth bass without the pop, the talkbox lead, cowbell.
+ electrofunk:{kit:{id:'electrofunk',kick:{click:.4,decay:.24,drive:2.2,length:.62,hold:.14,tail:.12},kickHz:48},levels:{cowbell:.5,rim:.7},bass:{pop:0,bright:.6,q:8,steps:1},lead:{kind:'talkbox',level:1},chords:{kind:'stab',cut:3000,phase:.2},warm:1.4,output:1.01},
+ // UK y breaks. Breaks: the layered break, ghost snares, a reese bass and saw stabs.
+ breaks:{kit:{id:'breaks'},levels:{hat:.75,hatO:.7},bass:{kind:'reese',sub:.75,mid:.75,steps:2,bright:.35,detune:16,drive:2},chords:{kind:'stab',cut:3200,hold:1},lead:{kind:'stab',cut:3400,map:{saw:'supersaw',organ:'organ'}},output:0.44},
+ // UK garage: the 2-step shuffle in the ghost hats, organ stabs, a deep sub.
+ garage:{kit:{id:'garage2step',kick:{click:.55,decay:.12,drive:2.4,length:.4,hold:.1,tail:.06},snareClap:.5},ghostHats:.32,ghostSnare:{level:.15,p:.35},bass:{sub:.95,mid:.35,bright:.2},output:0.48},
+ // Broken beat: jazzy Rhodes in the hall, a softer slap, rim and shaker in the cracks.
+ brokenbeat:{kit:{id:'brokenbeat',kick:{click:.4,decay:.14,drive:2,length:.44,hold:.12,tail:.07},snareClap:.15},bass:{kind:'slap',sub:.6,mid:.85,steps:2,bright:.35,pop:.2,q:4},chords:{kind:'ep',level:1.1,hall:.4,hold:4},lead:{map:{clav:'clav'}},warm:1.5,output:0.66},
+ // Club de bajos. Ghetto house: hard kicks, fast claps, chopped vocal stabs, the machine bass.
+ ghetto:{kit:{id:'ghetto'},bass:{kind:'split',sub:.8,mid:.8,steps:1,bright:.5},output:0.82},
+ // Footwork: the triplet kicks as composed, a long 808 boom, toms, chopped vocals.
+ footwork:{kit:{id:'footwork',kick:{click:.6,decay:.2,drive:2.6,length:.55,hold:.12,tail:.1},kickHz:44},bass:{decay:.45,glide:.25},output:0.61},
+ // Baltimore club: the doubled kicks, bright claps and brass-like stabs.
+ baltimore:{kit:{id:'baltimore'},lead:{map:{brass:'brass'}},output:0.82},
+ // Jersey club: the bouncing five-kick bursts, bright claps, vocal chops.
+ jersey:{kit:{id:'jersey',kick:{click:.75,decay:.14,drive:3,length:.42,hold:.1,tail:.07},kickHz:52},output:0.65},
+ // Miami bass: the longest 808 kick and boom, fast hats, cowbell.
+ miamibass:{kit:{id:'miamibass',kick:{click:.45,decay:.35,drive:2.4,length:.9,hold:.16,tail:.2},kickHz:42},bass:{decay:.45,glide:.15,sub:.9},levels:{cowbell:.5},output:0.7},
+ // DnB y dubstep. Drum & bass: the fast layered break and the reese.
+ dnb:{kit:{id:'dnbkit'},levels:{hat:.55,shaker:.4},output:0.32},
+ // Liquid: softer drums, the sub under Rhodes and wide pads.
+ liquid:{kit:{id:'liquid',kick:{click:.45,decay:.12,drive:2,length:.38,hold:.09,tail:.06},snareClap:.15},bass:{kind:'split',sub:.85,mid:.35,steps:4,bright:.15,map:{reese:'reese'}},chords:{level:1.4,hall:.55},output:0.4},
+ // Dubstep: half-time drums as composed, a heavy kick, the wobble bass.
+ dubstep:{kit:{id:'dubstep',kick:{click:.75,decay:.2,drive:3,length:.55,hold:.13,tail:.1},kickHz:46,snareClap:.45},bass:{kind:'wobble',sub:.85,mid:.9,steps:4,bright:.35,drive:2.6},lead:{map:{organ:'stab',saw:'supersaw'}},output:0.35},
+ // Hip-hop. Boom bap: a dusty kick and a fat snare, Rhodes, a round bass.
+ boombap:{kit:{id:'boombap'},output:0.75},
+ // Lo-fi: a soft kick, vinyl under it and a tape wobble on the keys.
+ lofi:{kit:{id:'lofi',kick:{click:.2,decay:.18,drive:1.8,length:.5,hold:.13,tail:.08},snare:{body:175,noise:.6,tail:.08,drive:2}},vinyl:.04,lead:{wobble:14,map:{kalimba:'mallet'}},chords:{wobble:14,hall:.4},sidechain:{floor:.65},output:0.55},
+ // Trap: an 808 that glides, a hard clap, rolling hats as composed.
+ trap:{kit:{id:'trap',kick:{click:.55,decay:.3,drive:2.6,length:.8,hold:.16,tail:.18},kickHz:42,snareUnderClap:.5},bass:{kind:'boom',sub:.9,mid:.4,steps:4,bright:.3,decay:.55,drive:2.4,glide:.45},lead:{kind:'bell'},chords:{kind:'strings'},levels:{clap:1,hat:1.2},output:0.63},
+ // G-funk: the whining lead with portamento and the funky slap bass, a laid-back kick.
+ gfunk:{kit:{id:'gfunk'},bass:{kind:'slap',sub:.65,mid:.9,steps:2,bright:.4,pop:.25,q:5},lead:{kind:'whine',map:{saw:'whine'}},output:0.74},
+ // Electro. Electro: the 808 machine with clap and cowbell, robotic stabs.
+ electro:{kit:{id:'electro808'},output:0.68},
+ // Electro robótico: slow and exact, vocoder-like hits, the timbale's tom bright.
+ robotic:{kit:{id:'robotic',kick:{click:.45,decay:.18,drive:2,length:.52,hold:.13,tail:.1}},output:0.82},
+ // Electro de Detroit: fast and aquatic, strings and cold FM bells.
+ detroitelectro:{kit:{id:'detroitelectro'},lead:{kind:'bell',map:{metalkeys:'bell',strings:'strings'}},chords:{kind:'strings',hall:.45},output:0.61},
+ // Darkwave / EBM: a dark sequenced bass, a gated snare, vocoder-like hits.
+ ebm:{kit:{id:'ebm',kick:{click:.7,decay:.12,drive:3,length:.4,hold:.1,tail:.06},snare:{body:190,noise:1.2,tail:.18,drive:2.6,gate:.13}},bass:{bright:.65,mid:1},room:{snare:.5},output:0.88},
+ // Ambient: almost no drums, grains and pads in the hall.
+ ambient:{kit:{id:'ambientkit'},output:0.82},
+ // Downtempo: a soft kick, keys and flute, pads.
+ downtempo:{kit:{id:'downtempo'},lead:{kind:'ep',map:{flute:'flute',keys:'ep'}},output:0.6},
+ // Dub profundo (heart): the deep kick, dub chord stabs into the tape echo and the hall, a deep sub.
+ heart:{kit:{id:'heart',kick:{click:.18,decay:.25,drive:1.8,length:.7,hold:.16,tail:.14},kickHz:44},bass:{sub:.9,mid:.2},chords:{map:{stab:'stab'},tape:.6},lead:{kind:'flute',tape:.4,hall:.5},output:0.5},
+ // Berlin School: sequenced arps (resonant plucks into the echo), long pads that open over the phrase.
+ berlin:{kit:{id:'berlin'},lead:{kind:'pluck',echo:.45,map:{organ:'pluck',strings:'pad'}},chords:{kind:'pad'},bass:{kind:'split',bright:.45,steps:1,mid:.6},output:0.34},
+ // Jazztronica: brushes and ride, the upright-like bass, Rhodes and the sax-like lead.
+ jazztronica:{kit:{id:'jazztronica'},output:0.59},
+ // IDM: glitchy stutters, FM bells, grains.
+ idm:{kit:{id:'idm'},output:0.62},
+ // Algorave: live-coded patterns as composed, bright and precise, stutters, bells and clav.
+ algorave:{kit:{id:'algorave',kick:{click:.85,decay:.1,drive:3,length:.34,hold:.08,tail:.05}},stutter:{p:.22},output:0.92},
  // Warm pads, a softer and rounder kick, the side-stick and hats pulled back.
  deep:{kit:{id:'deep',kick:{click:.2,decay:.2,drive:1.5,length:.55,hold:.15,tail:.1},kickHz:50,hatTone:1.3},levels:{kick:.4,hat:1.25,rim:.6,shaker:.9},ghostHats:.3,
   bass:{bright:.2,mid:.7,sub:.46},chords:{kind:'pad',level:1.4,hall:.5,hold:6,map:{organ:'pad',rhodes:'pad',keys:'pad'}},lead:{level:.75,hall:.3},sidechain:{floor:.48,release:.16}},
@@ -197,7 +368,7 @@ const plainObj=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 function freezeDeep(o){if(plainObj(o)){for(const v of Object.values(o))freezeDeep(v);Object.freeze(o);}return o;}
 function touched(base,touch){if(!touch)return base;const out={...base};for(const [k,v] of Object.entries(touch)){const b=base[k];
  out[k]=plainObj(v)&&plainObj(b)?Object.fromEntries([...Object.entries(b),...Object.entries(v).map(([k2,v2])=>[k2,plainObj(v2)&&plainObj(b[k2])?{...b[k2],...v2}:v2])]):v;}return freezeDeep(out);}
-const PROFILES=Object.freeze({tech:TECH,house:HOUSE,techno:TECHNO,melodic:MELODIC,afro:AFRO});
+const PROFILES=Object.freeze({tech:TECH,house:HOUSE,techno:TECHNO,melodic:MELODIC,afro:AFRO,disco:DISCO,uk:UK,bass:BASS,dnb:DNB,hiphop:HIPHOP,electro:ELECTRO,ambient:AMBIENT,jazz:JAZZ,experimental:EXPERIMENTAL});
 const CLASSIC=Object.freeze({ready:false});
 const MEMO=new Map();
 export function soundProfile(genre){let p=MEMO.get(genre);if(!p){const f=soundFamily(genre);p=f&&PROFILES[f.id]?Object.freeze({family:f.id,name:f.name,...touched(PROFILES[f.id],GENRE_TOUCH[genre])}):Object.freeze({family:f?.id||null,name:f?.name||null,...CLASSIC});if(MEMO.size<128)MEMO.set(genre,p);}return p;}

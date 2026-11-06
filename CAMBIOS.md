@@ -1,8 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.275** en la rama `jay/listo-3`, desde `main` `662bf57` (alpha.274, PR #412). Alpha.272 (sonido pro 5) vive en `jay/sonido-pro-5`, sin integrar; esta rama no toca el sonido. Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.276** en la rama `jay/sonido-pro-5`, desde `main` `4e2fe11` (alpha.275, PR #413). Las entradas describen su revisión, no certifican producción.
 
 
+
+## Sonido pro 5: las nueve familias restantes · 2.3.0-alpha.276
+
+Rama `jay/sonido-pro-5`, desde `main` `4e2fe11` (alpha.275). Último lote del plan aprobado («termina la última tanda de música»). Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
+
+- **Los 52 géneros con el motor.** Disco y funk, UK y breaks, Club de bajos, DnB y dubstep, Hip-hop, Electro, Ambient, Jazz y Experimental: 30 géneros, cada uno con su kit. Mismo motor y mismos ganchos; tempo, swing, patrones, armonía, regiones y relevos de DJ no cambian.
+- **Sonidos nuevos.** Bajo slap, reese, wobble (LFO a tiempo), boom de 808 con deslizamiento, contrabajo oscuro. Clavinet, metales, talkbox, vocoder y saxo de formantes (sin voces grabadas), lead de G-funk con portamento, campanas FM, nubes de granos. Phaser con flanger para las cuerdas de disco, bucle de filtro, saturación cálida en el deck, vinilo y cinta para lo-fi, caja con puerta para EBM, escobillas y ride para jazz, stutters sin azar para experimental.
+- **Capa del pulso.** Donde el bombo no cae en cada pulso, los hats y cajas fantasma, el vinilo y la respuesta al jugador cuelgan del primer golpe de cada pulso.
+- **Ambient y heart.** No tienen batería: el motor se crea con su primera nota (antes solo con un golpe). Heart toca el stab de dub en el motor.
+- **Tu interacción.** `front` entre 0,68 y 0,8 y una respuesta al groove por familia. «Sonido clásico» apaga también estas familias.
+- **Sin `audio.js` nuevo.** Nada nuevo en pantalla ni en ajustes. Las cinco familias anteriores suenan igual: los golpes compartidos son idénticos muestra a muestra (caja incluida, ahora afinable por kit).
+- **Renders** (motor real, offline, 44,1 kHz, 36 s, un género por familia; `sonido-pro-5/final/`, fuera de Git). LUFS / dBTP del MP3: nudisco −9,2 / −1,2; garage −9,8 / −1,1; ghetto −9,2 / −1,3; dnb −9,5 / −1,8; boombap −9,2 / −1,8; electro −9,6 / −1,4; ambient −14,1 / −1,2; jazztronica −10,3 / −1,9; idm −10,4 / −1,4. Cuatro MP3 llevan un recorte de 0,45–1,1 dB para quedar en −1 dBTP tras codificar. El nivel de cada género se calibró con renders de 16 s de los 30.
+- **CPU.** Nodos creados por segundo (todo el juego, render): de 22 (ambient) a 155 (electro, dnb y algorave); los lotes anteriores llegaban a 189. No se midió en teléfono.
+- **Pruebas.** `tests/sound-pro.mjs`: los 30 perfiles, los golpes nuevos, cada golpe con el azar clásico, cada bajo y cada voz nuevos, el deslizamiento del 808, la capa del pulso, los stutters, ambient sin batería, tus voces y «Sonido clásico». `npm test`, `node scripts/release-audit.mjs`, `node scripts/stale-text-check.mjs --base 4e2fe11` y `node scripts/verify-e-preservation.mjs`. Sin recorridos de navegador en local.
+- **Límites.** Nadie lo ha escuchado. Medido solo con LUFS, true peak y bandas. Boom bap y lo-fi quedan oscuros (su composición no trae hats). DnB brilla arriba por la caja. Ambient suena solo cuerdas en 36 s. CPU de teléfono sin medir. Sin PR: la rama espera a Jay.
 
 ## Listo 3: pestañas enteras, la frase del Refugio y una ronda jugada en los medios · 2.3.0-alpha.275
 
