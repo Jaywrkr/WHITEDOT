@@ -33,6 +33,8 @@ Intermitencias por reloj o por un runner lento (lote de estabilidad, noviembre d
 - Varios dispositivos en `cloud_account_smoke.py`: el que no actúa queda «fuera» (`away`) mientras el otro guarda, para que un guardado suyo no adelante la copia.
 - Navegación: con `set_default_timeout(10000)` se añade `set_default_navigation_timeout(30000)`. El primer recorrido de un runner frío puede tardar más de 10 s en cargar.
 - Una medida de píxeles de un solo fotograma es ruido: `color_earned_smoke.py` usa la mediana de cinco.
+- `universe_layers_smoke.py` espera, hasta 6 s, un fotograma con el polvo ámbar; `synth_bank_smoke.py`, el movimiento de filtro de la criatura más cercana (la primera nota puede ser de otra).
+- Con el motor pro, tus notas suenan una microtarea después (se agrupan en acordes): contar nodos tras `setTimeout(0)`. El último recorte de salida cambia al llegar la familia de la región: medir la salida después (`victory_live_smoke.py`, desde el compás 2).
 
 ## Antes del push
 

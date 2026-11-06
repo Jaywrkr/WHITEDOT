@@ -2,7 +2,7 @@
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright,TimeoutError as PlaywrightTimeout
 import threading,os,shutil
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
@@ -23,8 +23,12 @@ try:
    L=page.evaluate('__r.universeLayers()');assert L['cells']>40 and L['regions'].get('llanura',0)>L['cells']*.5,L
    page.evaluate("()=>{for(let i=0;i<20;i++)__r.S.wx+=4;}");page.wait_for_timeout(1500);L=page.evaluate('__r.universeLayers()')
    assert L['air']=='llanura' and 0<L['airGain']<=.0121,L
-   # Amber dust on screen around the cube.
-   amber=page.evaluate("()=>{const c=__r.cx,d=c.getImageData(0,0,c.canvas.width,c.canvas.height).data;let n=0;for(let i=0;i<d.length;i+=4)if(d[i]>150&&d[i+1]>70&&d[i+1]<180&&d[i+2]<90)n++;return n;}")
+   # Amber dust on screen around the cube. How much one frame shows varies, and on a loaded runner one snapshot fell short
+   # (CI, 6 Nov 2026; 43 to 950 pixels locally under CPU throttling): wait up to six seconds for a frame that shows it.
+   AMBER="()=>{const c=__r.cx,d=c.getImageData(0,0,c.canvas.width,c.canvas.height).data;let n=0;for(let i=0;i<d.length;i+=4)if(d[i]>150&&d[i+1]>70&&d[i+1]<180&&d[i+2]<90)n++;return n;}"
+   try:page.wait_for_function("("+AMBER+")()>80",polling=100,timeout=6000)
+   except PlaywrightTimeout:pass
+   amber=page.evaluate(AMBER)
    assert amber>80,amber
    for rid in ['lago','bosque','tormenta','ruinas','jardin','dunas','cristales','faros','cueva']:
     assert page.evaluate(GO,[rid,False]);page.wait_for_timeout(1300);page.evaluate(hide);L=page.evaluate('__r.universeLayers()')

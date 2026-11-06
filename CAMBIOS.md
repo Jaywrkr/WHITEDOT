@@ -1,6 +1,6 @@
 # Cambios recientes de Kubono
 
-Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.276** en la rama `jay/sonido-pro-5`, desde `main` `4e2fe11` (alpha.275, PR #413). Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.276** en `main` `968d596` (PR #415); la rama `jay/main-verde-2` repara su CI. Las entradas describen su revisión, no certifican producción.
 
 
 
@@ -14,6 +14,16 @@ Rama `jay/listo-5`, desde `main` `968d596` (alpha.276). Sin cambios en el juego 
 - **Tráiler** (D09): `scripts/trailer.py`, 37 s, ES/EN, horizontal y vertical, con el sonido de los clips. −15,9 LUFS; pico real −1,8 dBTP o menos. Los vídeos quedan fuera de Git.
 - **Pruebas.** `tests/site.mjs`. `npm test`, `node scripts/release-audit.mjs`, `node scripts/stale-text-check.mjs --base 968d596`. Capturas sin cabeza a 390 y 1280 px.
 - **Límites.** Nada publicado. Nadie ha visto el tráiler entero ni lo ha oído. Faltan dominio, editor, correo, fecha, precio y enlaces.
+
+## Main en verde tras el sonido pro 5 · 2.3.0-alpha.276
+
+Rama `jay/main-verde-2`, desde `main` `968d596` (PR #415, fusionado sin CI). El CI de `main` (run 42264652501) falló en los navegadores 5, 6, 8 y 9. Solo cambian pruebas; ni código del juego ni versión.
+
+- **`victory_live_smoke.py`** («close leaves the output alone»). El Jardín es IDM, ahora familia convertida: en su segundo compás, al conocerse la región, el motor pro baja el último recorte un 12 % (de 0,92 a 0,81). La prueba medía antes. Ahora mide desde el compás 2; la aserción sigue: el cierre no toca la salida.
+- **`blobs_smoke.py`** («blob has no audible voice»). Con el motor pro, tus notas de un mismo golpe esperan a una microtarea para sonar juntas (acordes, alpha.270). La prueba contaba osciladores al momento; ahora cuenta tras esa espera.
+- **`universe_layers_smoke.py`** (polvo ámbar 63 de más de 80) y **`synth_bank_smoke.py`** (`filterMotion` vacío). No se reprodujeron en `968d596`. El ámbar ya fallaba en `4e2fe11` con la CPU limitada ×4 (43 y 57 píxeles). Esperan el fotograma con polvo (hasta 6 s) y el movimiento de filtro de la criatura más cercana. Mismos umbrales.
+- **Pruebas.** Antes de #415 (`4e2fe11`) pasan las dos primeras sin cambios; en `968d596`, fallan. Con la rama pasan las cuatro y los diez recorridos de sonido de esos shards. `npm test`, `node scripts/release-audit.mjs`, `node scripts/verify-e-preservation.mjs` y `node scripts/stale-text-check.mjs`.
+- **Límites.** CI de la rama sin correr. Sin PR: la rama espera a Jay.
 
 ## Sonido pro 5: las nueve familias restantes · 2.3.0-alpha.276
 
