@@ -35,6 +35,12 @@ def pulse(page,x,y):page.evaluate(f"()=>__r.waves.push({{x:{x},y:{y},r:0,prev:0,
 def sound_on(page):
  page.evaluate("()=>{__r.S.sound=true;__r.audio?.();__r.ac?.resume?.();}");page.wait_for_function("__r.ac?.state==='running'&&!!__r.master",timeout=10000)
 def log(page,title):return page.evaluate(f"__r.S.sparkEconomy.log.filter(e=>e.title==={title!r}).map(e=>e.text)")
+# The wallet and the ledger, to tell what paid in a span: an amount the entry states («+N chispas»), or the fixed reward of
+# a goal or set (their entries carry only the title). Spark goals tick on their own clock and can land in any span.
+def wallet(page):
+ w=page.evaluate("({sparks:__r.S.sparks,log:__r.S.sparkEconomy.log.length,lejos:__r.lejosBState().book.earned})");assert w['log']<70,w;return w
+LEDGER="""async from=>{const M=await import('/src/sparks-model.js'),fixed={};for(const g of [...M.SPARK_BADGES,...M.SPARK_SETS])fixed[g.title||g.name]=g.reward;for(const m of M.SPARK_MILESTONES)fixed[m.title]=0;fixed[M.SPARK_UNIVERSE.title]=0;
+ return __r.S.sparkEconomy.log.slice(from).map(e=>({title:e.title,text:e.text,amount:Number((/\\+(\\d+) chispas/.exec(e.text)||[])[1]??fixed[e.title]??NaN)}));}"""
 started=time.time()
 try:
  with sync_playwright() as pw:
@@ -83,10 +89,15 @@ try:
     # --- 4 · A search postcard: five lost things in the stars give the postcard, no sparks.
     p=S['postal'];go(page,p['x'],p['y']);page.wait_for_function(f"__r.lejosBState().postal?.id==={p['id']!r}&&__r.lejosBState().drawn.postal?.shown>=1",timeout=8000)
     if SHOTS:page.screenshot(path=f'{SHOTS}/postal-{width}.png')
-    sparks=page.evaluate("__r.S.sparks")
+    before=wallet(page)
     for k,e in enumerate(p['points']):go(page,e['x'],e['y']);page.wait_for_function(f"(__r.lejosBState().book.postals[{p['id']!r}]?.found.length||0)>={k+1}",timeout=8000)
     page.wait_for_function("Object.keys(__r.lejosBState().book.cards).length===1&&!__r.lejosBState().postal",timeout=6000)
-    assert page.evaluate("__r.S.sparks")==sparks,'a postcard pays nothing'
+    # A postcard pays nothing: the Lejos book earns nothing, no entry is the postcard's, and any other change in the wallet
+    # is an entry of another source (a goal or a set reached meanwhile), never an unexplained one.
+    after=wallet(page);paid=page.evaluate(LEDGER,before['log']);creature=page.evaluate("Object.keys(__r.lejosBState().book.cards)[0]||''")
+    assert after['lejos']==before['lejos'],('a postcard pays nothing',before,after,paid)
+    assert not any('Postal' in e['title'] or (creature and creature in e['title']) for e in paid),('a postcard pays nothing',paid)
+    assert after['sparks']-before['sparks']==sum(e['amount'] for e in paid),('a postcard pays nothing',before,after,paid)
    # --- 5 · The fusion: opens at 20 km; in the Refugio, two sounds of the album make a new one.
    page.evaluate("()=>{const a=__r.S.soundAlbum;a.sounds['llanura:grillo']={first:'2026-11-01',count:1,onTime:0};a.sounds['lago:ballena']={first:'2026-11-01',count:1,onTime:0};__r.save();}")
    go(page,205000,0);page.wait_for_function("!!__r.lejosBState().book.fusion.open&&__r.lejosBState().pages.includes('fusion')",timeout=8000)
