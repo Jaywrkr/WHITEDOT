@@ -11,10 +11,13 @@ keep the full catalogue. The rules, in order, for each changed file:
   the audio render (tests/audio_mix.mjs) loads it; a module no browser flow names: the full catalogue;
   another script or test file: the flows that name it.
 The result depends only on the list of changed files, so every runner computes the same selection.
+With --base, a file whose diff only moves the version strings scripts/bump-version.mjs writes (index.html, sw.js,
+package.json, src/release-info.js) is left out of that list: a release bump selects no flow.
 
   python3 tests/flow_impact.py --base REV [--head REV]      changed files from git diff BASE HEAD
   python3 tests/flow_impact.py --files PATH...              a given list (dry run)
-  python3 tests/flow_impact.py --full                       the full catalogue (push, nightly, manual)
+  python3 tests/flow_impact.py --full                       the full catalogue (nightly, manual, merge queue)
+  python3 tests/flow_impact.py --none REASON                no flow (a push to main the merge queue validated)
   add --github-output to write mode, flow lists and shard matrices to $GITHUB_OUTPUT
 """
 from pathlib import Path
@@ -94,18 +97,42 @@ def select(changes):
  return {'mode':'selected' if picked else 'none','reason':'; '.join(reasons) or 'no flow affected',
   'browser':[f for f in browser if f in picked],'audio':[f for f in audio if f in picked]}
 
+# The exact strings scripts/bump-version.mjs rewrites, per file. A diff that only moves them changes no behaviour.
+VERSION={
+ 'index.html':[r'id="releaseVersion">v[^<]+'],
+ 'sw.js':[r'''const CACHE\s*=\s*['"][^'"]+['"]'''],
+ 'package.json':[r'"version":\s*"[^"]+"'],
+ 'src/release-info.js':[r"version:\s*'[^']+'",r"deployedAt:\s*(?:null|'[^']*')",r"revision:\s*(?:null|'[^']*')"],
+}
+
+def version_only(path,before,after):
+ """True when before and after differ only in the version strings bump-version.mjs writes."""
+ if path not in VERSION or before is None or after is None or before==after:return False
+ def norm(text):
+  for pattern in VERSION[path]:text=re.sub(pattern,'@VERSION@',text)
+  return text
+ return norm(before)==norm(after)
+
+def show(rev,path):
+ r=subprocess.run(['git','show',f'{rev}:{path}'],cwd=ROOT,capture_output=True,text=True)
+ return None if r.returncode else r.stdout
+
 def changed(base,head):
  r=subprocess.run(['git','diff','--name-only',base,head,'--'],cwd=ROOT,capture_output=True,text=True)
  if r.returncode:return None
- return [l for l in r.stdout.splitlines() if l]
+ files=[l for l in r.stdout.splitlines() if l]
+ bumped=[f for f in files if f in VERSION and version_only(f,show(base,f),show(head,f))]
+ if bumped:print('Version strings only (no flow): '+', '.join(bumped))
+ return [f for f in files if f not in bumped]
 
 if __name__=='__main__':
  args=sys.argv[1:];value=lambda k:args[args.index(k)+1] if k in args and args.index(k)+1<len(args) else None
- if '--full' in args:files=[]
+ if '--full' in args or '--none' in args:files=[]
  elif '--files' in args:files=[a for a in args[args.index('--files')+1:] if not a.startswith('--')]
  elif value('--base'):files=changed(value('--base'),value('--head') or 'HEAD')
  else:raise SystemExit(__doc__)
- result=full_result('full run') if '--full' in args else select(files) if files is not None else full_result('diff unavailable')
+ if '--none' in args:result={'mode':'none','reason':value('--none') or 'no flow requested','browser':[],'audio':[]}
+ else:result=full_result('full run') if '--full' in args else select(files) if files is not None else full_result('diff unavailable')
  b,a=result['browser'],result['audio']
  # Shards over the selected set: no more shards than flows, none at all for an empty set.
  # offline_smoke.py runs after the catalogue in the first shard, so it does not count towards the split.

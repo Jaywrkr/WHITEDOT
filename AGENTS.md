@@ -23,7 +23,7 @@ Leer este archivo antes de tocar código. Después: [README](README.md), [HANDOF
 - Normalizar y migrar guardados sin borrar progreso; conservar formatos futuros y verificar fallos de escritura.
 - `runtime` no se expone en producción; las pruebas lo instrumentan al servir `src/main.js`.
 - Conservar los ID de HTML: las pruebas dependen de ellos. Los botones plegados en «Más» (`#menuMore`) se abren antes de pulsarlos.
-- Versión con `node scripts/bump-version.mjs 2.3.0-alpha.N`; no subirla por documentación.
+- Versión solo al preparar una publicación (Jay): `node scripts/bump-version.mjs 2.3.0-alpha.N`. Las ramas no la suben; CAMBIOS usa el título de la tanda.
 
 ## Diseño
 

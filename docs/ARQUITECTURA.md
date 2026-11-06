@@ -8,7 +8,7 @@ Mapa técnico contrastado con la entrega E. [Traspaso](../HANDOFF.md) · [diseñ
 
 `src/main.js` inicializa módulos ES nativos; `src/render.js` dirige Canvas2D. `index.html`, `styles/`, `assets/`, `icons/` y `sw.js` forman el cliente estático. `runtime` conecta módulos internamente y no se publica en `window`; las pruebas instrumentan su copia de main.
 
-`package.json` y `src/release-info.js` comparten versión; `scripts/bump-version.mjs` actualiza también README, HTML y clave de caché. Documentación sola no sube versión.
+`package.json` y `src/release-info.js` comparten versión; `scripts/bump-version.mjs` actualiza también README, HTML y clave de caché. La versión sube solo al preparar una publicación, no en cada rama. Cada despliegue de Vercel sella su revisión en la clave de caché (`scripts/stamp-deploy.mjs`), así que el service worker se renueva aunque la versión no cambie.
 
 **Escritorio (L4).** `desktop/` es la única carpeta con dependencias npm (Electron y su empaquetador, fuera de Git): envuelve la copia sellada del juego y no forma parte de él ([itch.io](ITCH.md)).
 

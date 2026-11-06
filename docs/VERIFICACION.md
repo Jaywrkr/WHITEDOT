@@ -49,12 +49,28 @@ Intermitencias por reloj o por un runner lento (lote de estabilidad, noviembre d
 ## CI
 
 - **Pull request:** la lógica completa (`npm test`, auditorías) y solo los recorridos de navegador y audio que el diff afecta. `tests/flow_impact.py` los elige a partir del commit de fusión frente a su primer padre y los imprime en el registro del trabajo `select`. Documentación sola: ningún recorrido. Un flujo cambiado: ese flujo. Un módulo de `src/`: los recorridos con su nombre o que lo citan (o a su familia, `scanner.js` y `scanner-model.js`, o a quien lo importa), más todo el audio si el render de audio lo carga. Núcleo compartido (`src/main.js`, `src/audio.js`, `src/render.js`, `index.html`, `styles/`, `sw.js`, `assets/`, el arnés y sus helpers, los workflows), un módulo que importan quince o más, un módulo que ningún recorrido de navegador cita o una ruta desconocida: catálogo completo. Prueba en seco: `python3 tests/flow_impact.py --files src/scanner.js` (o `--base REV`).
-- **`main`, nocturna (06:17 UTC) y manual:** catálogo completo. Si `main` o la nocturna salen en rojo, arreglarlo es lo primero.
+- **Un push nuevo al PR cancela su run en curso** (`concurrency`). Los de `main`, la cola de fusión, la nocturna y los manuales no se cancelan.
+- **Versión solo en el diff:** con `--base`, un archivo que solo cambia las cadenas que escribe `bump-version.mjs` (`index.html`, `sw.js`, `package.json`, `src/release-info.js`) no elige recorridos. Un cambio real en esos archivos sigue pidiendo el catálogo completo. Prueba: `tests/flow-impact.mjs`.
+- **Cola de fusión (`merge_group`), nocturna (06:17 UTC) y manual:** catálogo completo.
+- **`main`:** catálogo completo mientras la cola de fusión esté apagada. Con la variable `MERGE_QUEUE=on`, un push a `main` corre solo `logic`: ese commit ya pasó el catálogo completo en la cola. La nocturna sigue completa. Si `main` o la nocturna salen en rojo, arreglarlo es lo primero.
 - `browser-audio` sigue siendo el check obligatorio: un tipo sin recorridos elegidos se salta y cuenta como verde.
+- **Imagen de navegador:** los trabajos `browser` y `audio` corren en `mcr.microsoft.com/playwright/python:v1.62.0-noble`, la versión de `requirements-dev.txt`. Chromium ya está en `/ms-playwright`; no se instala en cada run. Al subir Playwright, cambiar las dos cosas a la vez (`tests/flow-impact.mjs` lo comprueba). La imagen no trae git: el trabajo lo instala antes del checkout.
+
+### Encender la cola de fusión (Jay)
+
+Hasta hacer estos pasos no cambia nada: `main` sigue con el catálogo completo.
+
+1. GitHub → WHITEDOT → **Settings → Rules → Rulesets** (o **Branches → Branch protection rules**) → la regla de `main`.
+2. Activar **Require merge queue**. Dejar el método de fusión que se use hoy.
+3. En **Require status checks to pass**, exigir `logic` y `browser-audio`.
+4. Guardar.
+5. **Settings → Secrets and variables → Actions → pestaña Variables → New repository variable**. Nombre `MERGE_QUEUE`, valor `on`. Guardar.
+
+Después, en cada PR: **Merge when ready** (o **Add to merge queue**). La cola corre el catálogo completo sobre `main` + el PR y fusiona si sale verde. Para volver atrás: borrar la variable (o cambiarla a `off`) y quitar la cola.
 
 Para el catálogo completo en local (solo al depurar):`npm run test:browser` y `npm run test:audio`, uno después del otro.
 
-[checks.yml](../.github/workflows/checks.yml) reparte navegador en diez grupos y audio en ocho (en un PR, hasta diez y ocho sobre lo elegido), con agregador obligatorio (`browser-audio`). `WHITEDOT_BROWSER_SHARD=i/N` y `WHITEDOT_AUDIO_SHARD=i/N` seleccionan grupos; no omiten pruebas. `WHITEDOT_BROWSER_FLOWS` y `WHITEDOT_AUDIO_FLOWS` (lista separada por comas) limitan el catálogo; vacías, todo. `tests/flow_shards.py` equilibra los grupos con los segundos medidos en CI (`tests/flow-durations.json`); un recorrido nuevo cuenta como la mediana de su tipo. `python3 tests/flow_shards.py --list browser 10` (o `audio 8`) enseña el reparto y comprueba que cada recorrido va a un solo grupo; `--from-logs` rehace la tabla con registros de `gh run view RUN --log`. Plan: unos 15 min por grupo de navegador y 13 por grupo de audio, más la instalación (con seis grupos tardaban de 20 a 29 min). Son 19 trabajos a la vez, dentro del límite de 20 del plan gratuito de GitHub. Cada trabajo tiene 40 min; cada recorrido conserva su límite (145 s navegador, 895 s audio). `living_mix.py` renderiza la primera mitad del catálogo vivo y `living_b_mix.py` la segunda: juntas pasaban de diez minutos en un solo recorrido. No integrar con checks pendientes o en rojo.
+[checks.yml](../.github/workflows/checks.yml) reparte navegador en diez grupos y audio en ocho (en un PR, hasta diez y ocho sobre lo elegido), con agregador obligatorio (`browser-audio`). `WHITEDOT_BROWSER_SHARD=i/N` y `WHITEDOT_AUDIO_SHARD=i/N` seleccionan grupos; no omiten pruebas. `WHITEDOT_BROWSER_FLOWS` y `WHITEDOT_AUDIO_FLOWS` (lista separada por comas) limitan el catálogo; vacías, todo. `tests/flow_shards.py` equilibra los grupos con los segundos medidos en CI (`tests/flow-durations.json`); un recorrido nuevo cuenta como la mediana de su tipo. `python3 tests/flow_shards.py --list browser 10` (o `audio 8`) enseña el reparto y comprueba que cada recorrido va a un solo grupo; `--from-logs` rehace la tabla con registros de `gh run view RUN --log`. Plan: unos 15 min por grupo de navegador y 13 por grupo de audio, más bajar la imagen (con seis grupos tardaban de 20 a 29 min). Son 19 trabajos a la vez, dentro del límite de 20 del plan gratuito de GitHub. Cada trabajo tiene 40 min; cada recorrido conserva su límite (145 s navegador, 895 s audio). `living_mix.py` renderiza la primera mitad del catálogo vivo y `living_b_mix.py` la segunda: juntas pasaban de diez minutos en un solo recorrido. No integrar con checks pendientes o en rojo.
 
 CI del PR354/alpha.200 aprobado:[registro](INTEGRACION_ALPHA_200.md). E/alpha.207 tiene254 suites Node y veinte recorridos enfocados locales; su catálogo completo/CI y aceptación física siguen pendientes. Vercel Preview aprobado no equivale a esos checks.
 

@@ -4,6 +4,17 @@ Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.276** en `main` `968d596` 
 
 
 
+## CI rápido 2
+
+Rama `jay/ci-rapido-2`, desde `main` `238ce75` (PR #417). Jay aprobó los cuatro cambios («dale»). Objetivo: un PR normal en 5–10 min en vez de 25–40, sin perder el catálogo completo en la cola, la nocturna y (hasta encender la cola) `main`. Guía: [Verificación](docs/VERIFICACION.md#ci). Sin cambios en el juego ni en la versión.
+
+- **Runs viejos cancelados.** Un push nuevo al PR cancela el run en curso. `main`, la cola, la nocturna y los manuales no se cancelan.
+- **Cola de fusión.** El workflow acepta `merge_group` y allí corre el catálogo completo. Con la variable `MERGE_QUEUE=on`, un push a `main` corre solo `logic`. Hasta que Jay encienda la cola y la variable, `main` no cambia. Pasos en la guía.
+- **Versión solo al publicar.** Las ramas ya no suben la versión; CAMBIOS usa el título de la tanda (`AGENTS.md`). Si un diff solo mueve las cadenas de versión, `flow_impact.py` no elige recorridos por esos archivos. Cada despliegue de Vercel sigue sellando su revisión en la caché del service worker.
+- **Imagen de Playwright.** Navegador y audio corren en `mcr.microsoft.com/playwright/python:v1.62.0-noble`, con Chromium ya instalado. Se quita `playwright install --with-deps` y `setup-python`; se instala git (la imagen no lo trae).
+- **Pruebas.** `tests/flow-impact.mjs` (nuevo): un bump real de `bump-version.mjs` no elige recorridos, un cambio real en `index.html` o `sw.js` sí pide todo, y la imagen sigue la versión fijada. `npm test`, `node scripts/release-audit.mjs`, `node scripts/stale-text-check.mjs --base 238ce75`; YAML validado; prueba en seco de `flow_impact.py` sobre un commit de solo versión (0 recorridos). Sin recorridos de navegador en local.
+- **Límites.** La imagen no se ha probado aún en CI: este PR toca `.github/` y corre el catálogo completo, que es la prueba real. Las fuentes del sistema de la imagen pueden diferir del runner; el juego usa sus propias fuentes. Sin PR: los cambios de workflow los fusiona Jay.
+
 ## Main en verde tras el sonido pro 5 · 2.3.0-alpha.276
 
 Rama `jay/main-verde-2`, desde `main` `968d596` (PR #415, fusionado sin CI). El CI de `main` (run 42264652501) falló en los navegadores 5, 6, 8 y 9. Solo cambian pruebas; ni código del juego ni versión.

@@ -5,16 +5,24 @@ on:
     branches: [main]
     # Documentation-only updates do not change the validated runtime.
     # Pull requests run the logic job in full and the browser and audio flows their diff affects
-    # (tests/flow_impact.py); main, the nightly run and a manual run keep every flow.
+    # (tests/flow_impact.py); the merge queue, the nightly run and a manual run keep every flow, and so does main
+    # until the merge queue is on (repository variable MERGE_QUEUE=on, docs/VERIFICACION.md).
     paths-ignore:
       - '**/*.md'
       - 'scripts/posmusica-*-validation.json'
       - 'scripts/posmusica-08-ci.json'
       - 'scripts/mejora-*-validation.json'
       - 'scripts/mejora-10-ci.json'
+  # The merge queue tests main plus the pull request before it lands, with the full catalogue.
+  merge_group:
   schedule:
     - cron: '17 6 * * *'
   workflow_dispatch:
+# A new push to a pull request cancels its run in progress. main, the merge queue, the nightly and a manual run each get
+# their own group (the run id) and are never cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:
@@ -31,7 +39,8 @@ jobs:
       - run: npm run audit:universe -- 2000 2
       - run: npm run audit:universe -- 2000 2 2 classic
   # Which browser and audio flows run. A pull request's diff (the merge commit against its first parent) picks them;
-  # shared core or an unmapped file means the full catalogue. Any other event runs everything.
+  # shared core or an unmapped file means the full catalogue. With the merge queue on (MERGE_QUEUE=on), a push to main
+  # already passed the full catalogue in the queue and runs the logic job only. Any other event runs everything.
   select:
     runs-on: ubuntu-latest
     outputs:
@@ -49,9 +58,12 @@ jobs:
       - id: pick
         env:
           EVENT: ${{ github.event_name }}
+          MERGE_QUEUE: ${{ vars.MERGE_QUEUE }}
         run: |
           if [ "$EVENT" = pull_request ] && git rev-parse --verify -q HEAD^2 >/dev/null; then
             python3 tests/flow_impact.py --base HEAD^1 --head HEAD --github-output
+          elif [ "$EVENT" = push ] && [ "$MERGE_QUEUE" = on ]; then
+            python3 tests/flow_impact.py --none 'validated by the merge queue' --github-output
           else
             python3 tests/flow_impact.py --full --github-output
           fi
@@ -62,8 +74,13 @@ jobs:
     needs: select
     if: needs.select.outputs.browser_total != '0'
     runs-on: ubuntu-latest
-    # A slow browser install (10 minutes on 27 Oct 2026) once cancelled a shard after every flow had passed: keep
-    # forty minutes of room, like the audio shards.
+    # The official Playwright image of the pinned version (requirements-dev.txt) already has Chromium and its system
+    # libraries in /ms-playwright: no browser install on each run (up to 10 minutes on 27 Oct 2026). It runs as root;
+    # Playwright launches Chromium without its sandbox by default. --ipc=host gives Chromium a large /dev/shm.
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.62.0-noble
+      options: --ipc=host
+    # Forty minutes of room, like the audio shards.
     timeout-minutes: 40
     strategy:
       fail-fast: false
@@ -73,7 +90,12 @@ jobs:
       WHITEDOT_BROWSER_SHARD: ${{ matrix.shard }}/${{ needs.select.outputs.browser_total }}
       WHITEDOT_BROWSER_FLOWS: ${{ needs.select.outputs.browser_flows }}
       WHITEDOT_BROWSER_WORKERS: '1'
+      # The image's system Python may be marked externally managed; pip only confirms the pinned playwright there.
+      PIP_BREAK_SYSTEM_PACKAGES: '1'
     steps:
+      # The image has no git: checkout needs it for history, and some flows run git archive and git fetch.
+      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       # pwa_updates_smoke.py archives the real pre-closure release from history.
       - uses: actions/checkout@v4
         with:
@@ -81,11 +103,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      # The image's Python 3.12 already has playwright==1.62.0: pip only confirms the pin.
       - run: python3 -m pip install -r requirements-dev.txt
-      - run: python3 -m playwright install --with-deps chromium
       - run: npm run test:browser
   # Keep every render: the 59-flow catalogue exceeded 40 minutes in three shards. Eight isolated runners, balanced by
   # measured seconds, plan about 13 minutes each, under the browser shards; with the ten browser shards and the logic
@@ -94,6 +113,10 @@ jobs:
     needs: select
     if: needs.select.outputs.audio_total != '0'
     runs-on: ubuntu-latest
+    # The same Playwright image as the browser shards.
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.62.0-noble
+      options: --ipc=host
     timeout-minutes: 40
     strategy:
       fail-fast: false
@@ -102,16 +125,17 @@ jobs:
     env:
       WHITEDOT_AUDIO_SHARD: ${{ matrix.shard }}/${{ needs.select.outputs.audio_total }}
       WHITEDOT_AUDIO_FLOWS: ${{ needs.select.outputs.audio_flows }}
+      # The image's system Python may be marked externally managed; pip only confirms the pinned playwright there.
+      PIP_BREAK_SYSTEM_PACKAGES: '1'
     steps:
+      # The image has no git: checkout needs it for history, and some flows run git archive and git fetch.
+      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
       - run: python3 -m pip install -r requirements-dev.txt
-      - run: python3 -m playwright install --with-deps chromium
       - run: npm run test:audio
   # Preserve the required check name: every selected browser flow and audio shard must pass. A kind with no selected
   # flow is skipped on purpose (total 0) and counts as passed; any other skip, cancel or failure is red.
