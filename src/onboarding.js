@@ -1,11 +1,12 @@
 import {openSurface} from './frame-state.js';
 import {FIRST_JOURNEY_STEPS,OPEN_WORLD_STEPS,normalizeFirstJourney,firstJourneyNext,advanceFirstJourney,lessonAvailable} from './onboarding-model.js';
-import {noJourney} from './journey-mode.js';
+import {noJourney,caminoPast} from './journey-mode.js';
 import {PLACES,placeFound,complete} from './places.js';
 export function initialize(runtime){
  const $=runtime.$,panel=$('firstJourney'),GLOBAL_DONE='whitedot:first-journey:v1';let owner=null,anchor=null,last='',replaying=false,start=null,after=null;
- // Listo 1 (alpha.273): a save of the open World follows OPEN_WORLD_STEPS; the Journey keeps its six steps as they were.
- const open=()=>noJourney(runtime.S?.journey),steps=()=>open()?OPEN_WORLD_STEPS:FIRST_JOURNEY_STEPS,nextStep=b=>firstJourneyNext(b,steps());
+ // Listo 1 (alpha.273): a save of the open World that never had the Camino follows OPEN_WORLD_STEPS; the Journey, and
+ // any save that had the Camino, keep their six steps as they were (practice included).
+ const open=()=>noJourney(runtime.S?.journey)&&!caminoPast(runtime.S),steps=()=>open()?OPEN_WORLD_STEPS:FIRST_JOURNEY_STEPS,nextStep=b=>firstJourneyNext(b,steps());
  function globalDone(){try{return localStorage.getItem(GLOBAL_DONE)==='1';}catch(_){return false;}}
  function rememberDone(){try{localStorage.setItem(GLOBAL_DONE,'1');}catch(_){} }
  function book(){if(owner!==runtime.S){owner=runtime.S;replaying=false;const demo=!!owner.previewSeed&&!runtime.realTravel,experienced=demo||globalDone()||runtime.scopeHadSave&&(!!owner.ach?.mundo||!!owner.help?.creativeVisit);owner.firstJourney=normalizeFirstJourney(owner.firstJourney,{experienced});if(!demo&&!owner.firstJourney.readOnly&&!nextStep(owner.firstJourney))rememberDone();anchor={x:owner.px,y:owner.py};start=after=null;last='';}return owner.firstJourney;}

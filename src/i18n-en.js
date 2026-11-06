@@ -5192,4 +5192,7 @@ export const EN=Object.freeze({
  "Rondas.":"Rounds.",
  "Entra en un portal para jugar. Toca a tiempo con la música. Cada lugar da hasta tres estrellas. Las {n} son maestría.":"Enter a portal to play. Tap in time with the music. Each place gives up to three stars. All {n} are mastery.",
  "Se ganan explorando, no en las rondas. Cada chispa suelta vale {n}; a tiempo, {n}. Cambian Tu cubo. Nunca se pagan con dinero. Las estrellas nunca se gastan.":"You earn them by exploring, not in rounds. Each loose spark is worth {n}; on time, {n}. They change Your Cube. They are never paid for with money. Stars are never spent.",
+ "Cinco capítulos. Tu canción abre el Mundo libre.":"Five chapters. Your Song opens the Free World.",
+ "Se ganan en el universo abierto, no en los niveles. Compran apariencias y saltos. Las estrellas nunca se gastan. Avanzar no cuesta chispas.":"Earned in the open universe, not in the levels. They buy looks and jumps. Stars are never spent. Moving on costs no sparks.",
+ "En el Mundo, cada chispa suelta vale {n}; a tiempo, {n}. Saltar cuesta {n}; volver al punto anterior es gratis. Las apariencias se compran una sola vez.":"In the World, each loose spark is worth {n}; on time, {n}. Jumping costs {n}; going back to the last spot is free. Looks are bought only once.",
 });
