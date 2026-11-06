@@ -35,7 +35,7 @@ try:
    assert cup and ' de ' in cup,cup
    # Showcases in the basement show what was bought.
    page.evaluate("__r.houseWalkTo('sotano',.5)");page.wait_for_function("__r.houseStand().room==='sotano'&&__r.houseSettled()",timeout=15000)
-   shown=page.evaluate("""()=>{const r=__r,rect=r.houseRoomRect('sotano'),out=new Set();for(let y=rect.y;y<rect.y+rect.h+20;y+=4)for(let x=0;x<innerWidth;x+=4){const t=r.houseCollectionLook(x,y);if(t&&t.endsWith('comprada en la tienda'))out.add(t);}return [...out];}""")
+   shown=page.evaluate("""()=>{const r=__r,rect=r.houseRoomRect('sotano'),out=new Set();for(let y=rect.y;y<rect.y+rect.h+20;y+=4)for(let x=0;x<innerWidth;x+=4){const t=r.houseCollectionLook(x,y);if(t&&t.endsWith('conseguida con chispas'))out.add(t);}return [...out];}""")
    assert any('Gorrito' in t for t in shown) and any('Nube' in t for t in shown),shown
    # A pulse makes nearby creatures hop: the deer lifts off the Sala floor for a moment.
    page.evaluate("__r.houseWalkTo('sala',.5)");page.wait_for_function("__r.houseStand().room==='sala'&&__r.houseSettled()",timeout=15000)

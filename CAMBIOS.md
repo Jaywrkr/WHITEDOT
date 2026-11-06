@@ -1,8 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 5 de noviembre de 2026. Código **2.3.0-alpha.271** en la rama `jay/sonido-pro-4`, desde `origin/jay/musica-interaccion` (PR #408 sin integrar, alpha.270), en espera de que Jay escuche los renders. Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.273** en la rama `jay/listo-1`, desde `main` `2760513` (alpha.271). Alpha.272 (sonido pro 5) vive en `jay/sonido-pro-5`, sin integrar; esta rama no toca el sonido. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Listo 1: primer minuto del mundo abierto y fichas · 2.3.0-alpha.273
+
+Rama `jay/listo-1`, desde `main` `2760513`. Arreglos que Jay aprobó tras la auditoría de venta del 6 de noviembre. Guías: [Primer minuto](docs/MUNDO.md#primer-minuto-del-mundo-abierto), [Material de tienda](docs/TIENDAS.md), [Privacidad](docs/PRIVACIDAD.md).
+
+- **Guía del mundo abierto.** Solo para guardados que nunca tuvieron Camino. Un guardado nuevo empezaba en «4/6» y se quedaba en «Guarda con el marcador…», pasos del Camino. Ahora tiene seis pasos propios, desde 1/6: moverse, caminar hacia Llanura, seguir la flecha al portal, tocar a tiempo, la primera ★ y escanear. Avanzan con hechos reales y se conservan al recargar. El Viaje conserva sus seis pasos.
+- **El objetivo a la vista.** «Llanura · más lejos · 0,5 km» ya no se oculta bajo la guía en el mundo abierto. El cubo no cambia.
+- **Sin Camino que nunca existió.** Para quien nunca tuvo Camino: sin «Volver al Camino» en el menú; el grupo de logros «Camino» se llama «Días» (Bitácora y estante del Refugio); «tope» no se lista hasta ganarse; «Recuerdos del Camino» pasa a «Recuerdos del viaje». Los guardados con Camino lo conservan todo.
+- **Cómo jugar.** Para quien no tuvo Camino: mundo abierto, escáner, lugares, rondas y chispas, sin cristales. Quien tuvo Camino conserva sus líneas.
+- **Sin BPM ni dB a la vista,** en español e inglés: línea de la región, Bitácora, favoritos, la pieza «Pantalla» (solo el género) y dos notas de géneros.
+- **«Tienda» pasa a «Piezas»** («Pieces») en Tu cubo, con sus textos (sin «tienda» ni «comprar en la tienda»). Mismos ID. Las chispas solo se ganan.
+- **Fichas y legal.** Fichas ES/EN de Google Play e itch.io reescritas: mundo abierto, escáner, once lugares de 0,5 a 40 km, rondas, música que reacciona, más de 390 logros (395; 394 sin Camino), sin conexión, sin anuncios, sin compras dentro del juego, pago único, sin cuenta. El inglés ya no dice que el juego está en español. Privacidad nueva para esta edición (no se recoge nada), en español e inglés, con `[NOMBRE LEGAL]`, `[CORREO]` y `[FECHA]` para Jay. `LICENSE` cita la OFL 1.1 de Geist Mono; `CREDITOS.md` ya no habla de la cuenta.
+- **Preservación.** Capa `approvedLISTO1` (`fa98bf5`) en `verify-e-preservation.mjs` para los diez archivos protegidos que cambian; los contratos musicales no cambian.
+- **Pruebas.** `tests/onboarding.mjs` (guía abierta, Viaje intacto, `caminoPast`), `tests/region-notice.mjs` (sin BPM), `tests/mundo_abierto_smoke.py` (primer paso y «Volver al Camino»), `alive_smoke.py` y `house_collection_smoke.py` (textos nuevos). En local: `npm test`, `node scripts/release-audit.mjs`, `node scripts/stale-text-check.mjs --base 2760513` y `node scripts/verify-e-preservation.mjs`. Una comprobación en Chromium a 390×844, español e inglés, guardado nuevo sin parámetros: de 1/6 a 6/6 con una ronda simulada, sin errores. Recorridos de navegador sin correr en local; los corre el CI del PR.
+- **CI del PR #411.** `after_journey_smoke.py` y `panel_polish_smoke.py` fallaban porque la guía y «Cómo jugar» nuevas también llegaban a guardados con Camino; ahora solo a los que no lo tuvieron. `viaje_a_smoke.py` fallaba también en `main` el 6 de noviembre: la boya del encargo cae, según el día, en el km 8, 9, 11 o 12 (`ordersFor`), y en el 12 el paseo alcanza el Hábitat. La prueba lo tiene en cuenta.
+- **Límites.** No probado en teléfono ni con personas. Las capturas y clips de tienda siguen siendo de antes del mundo abierto (`store-media.py`): hay que rehacerlos. Siguen «Comprar» y «Compraste» con chispas dentro de Tu cubo. Ámbar (pide «tope») no se puede ganar sin Camino. El permiso `INTERNET` de Android sigue.
 
 ## Sonido pro 4: melodic y orgánico, afro y latino · 2.3.0-alpha.271
 

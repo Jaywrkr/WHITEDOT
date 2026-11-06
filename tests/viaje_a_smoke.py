@@ -137,9 +137,11 @@ try:
     page.wait_for_function("window.__toasts.some(t=>t.startsWith('Encargo cumplido · '))",timeout=15000)
     # --- 9 · The Bitácora: every band reached, with its line.
     # A's six bands reached at 11 km; later batches (tanda B from 12 km, C from 30 km, D from 60 km) are still «?» with
-    # their km only.
-    j=bandas(page);assert {'12','15','20','25','30','60'}<=set(j['missing']) and all(float(k)>10 for k in j['missing']) and j['summary']=='Lo que hay más lejos',j
-    assert set(j['rows'])-{'region-apagada'}=={'bengala','interruptor','radar','pelota','luces','tablon'},j['rows'];assert '1 gol' in j['text'] and '1 encargo cumplido' in j['text'],j['text']
+    # their km only. The order's buoy is on the ring of km 8, 9, 11 or 12, by the day (ordersFor): on a day it sits at
+    # 12 km the walk reaches the Hábitat (12 km), so it is known then and only then.
+    far=max(11,o['km']);later={'12','15','20','25','30','60'}-({'12'} if far>=12 else set())
+    j=bandas(page);assert later<=set(j['missing']) and all(float(k)>far for k in j['missing']) and j['summary']=='Lo que hay más lejos',(far,j)
+    assert set(j['rows'])-{'region-apagada'}-({'habitat'} if far>=12 else set())=={'bengala','interruptor','radar','pelota','luces','tablon'},(far,j['rows']);assert '1 gol' in j['text'] and '1 encargo cumplido' in j['text'],j['text']
     if sound:assert 'Mejor racha · 5' in j['text'],j['text']
     if SHOTS:page.screenshot(path=f'{SHOTS}/bitacora-{width}.png')
    else:

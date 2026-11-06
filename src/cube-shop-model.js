@@ -93,7 +93,7 @@ export const CUBE_SHOP=Object.freeze([
  {id:'world:constellation',slot:'world',name:'Tu constelación',cost:400,text:'Las estrellas forman tu inicial.',art:''},
  {id:'wild:morse',slot:'wild',name:'Morse',cost:150,text:'Parpadea tu nombre en morse.',art:''},
  {id:'wild:backpack',slot:'wild',name:'Mochila',cost:250,text:'Lleva colgadas tus tres últimas tarjetas.',art:''},
- {id:'wild:screen',slot:'wild',name:'Pantalla',cost:300,text:'Muestra el BPM o el género que suena.',art:''},
+ {id:'wild:screen',slot:'wild',name:'Pantalla',cost:300,text:'Muestra el género que suena.',art:''},
  {id:'wild:hologram',slot:'wild',name:'Holograma',cost:350,text:'Proyecta encima tu tarjeta más rara.',art:''},
  {id:'wild:costume',slot:'wild',name:'Disfraces',cost:750,text:'Tres pulsos seguidos: esfera, pirámide o dodecaedro durante un minuto.',art:''},
  {id:'wild:vjskin',slot:'wild',name:'Piel VJ',cost:750,text:'Los visuales VJ sobre el cuerpo del cubo.',art:''},

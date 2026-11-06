@@ -34,7 +34,7 @@ Vigente desde **alpha.224** (fase L2 de la [salida web y Android](PLAN_LANZAMIEN
 | Taller / Núcleo / Prisma | Workshop / Core / Prism | Partes del Refugio |
 | Bitácora | Logbook | |
 | Tu cubo | Your Cube | La hoja de personalización |
-| Llevar / Tienda / Viaje (pestañas) | Wear / Shop / Travel | |
+| Llevar / Piezas / Chispas (pestañas) | Wear / Pieces / Sparks | «Piezas» era «Tienda» hasta alpha.273: se paga solo con chispas ganadas |
 | chispas ✦ | sparks ✦ | |
 | estrellas ★ | stars ★ | |
 | Maestro / Libre / Jugar | Master / Free / Play | Modos de un lugar |

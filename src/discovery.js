@@ -1,7 +1,6 @@
 import {installNoticeLane} from './notice-lane.js';
 import {hybridIdentity} from './musical-hybrids.js';
 import { gravityOf } from './gravity.js';
-import {soundingBpm} from './genre-tempo.js';
 
 // Catálogo, retos y recompensas de exploración.
 export function initialize(runtime) {
@@ -12,7 +11,7 @@ export function initialize(runtime) {
     say("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
     const el=document.getElementById("zone");const render=()=>{
-    document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+soundingBpm(d,runtime.GEN)+" BPM";
+    document.getElementById("zMood").textContent=runtime.GEN[d.genre].name;   // Listo 1 (alpha.273): no BPM on screen
     document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
     document.getElementById("zDo").textContent=(d.sea?(runtime.newRegionAt?.(runtime.S.wx,runtime.S.wy)?.name||"Abismo de silencio"):d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     };render();notices.enqueue('zone',el,()=>{},first?3.2:2.2,'region:'+d.key,()=>runtime.inWorld()&&runtime.MU.dnaT?.key===d.key,{level:1,category:'territorio',coalesce:true});
@@ -68,7 +67,7 @@ export function initialize(runtime) {
   const resetContinent=()=>{lastLand=null;wasSea=false;runtime.MU.tune=0;};
   function showZone(z,first){
     const B=runtime.BIOMES[z],Z=runtime.ZINFO[B.id],el=document.getElementById("zone");notices.enqueue('zone',el,()=>{
-    document.getElementById("zMood").textContent=Z[0]+" · "+Z[1]+" · "+Math.round(92+runtime.style()*30+B.bpm)+" BPM";
+    document.getElementById("zMood").textContent=Z[0]+" · "+Z[1];
     document.getElementById("zName").textContent=B.name;
     document.getElementById("zDo").textContent=Z[2].join(" · ");
     },first?4:3,'biome:'+z,()=>!runtime.inWorld());

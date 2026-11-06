@@ -28,6 +28,14 @@ export function normalizeJourney(raw,s,automated=false,{open=false}={}){const q=
 export const freeOpen=j=>!!(j&&(j.free===true||j.finished===true));
 // A save with no Journey any more (alpha.269): its quiet view is only a view, never a chapter.
 export const noJourney=j=>!!(j&&j.open===true);
+// Listo 1 (alpha.273): whether this save ever had the Camino. A save that is not open, or was free before the open World
+// (it reached the World through the Camino), or kept crystals, chapters or «tope», did; a new player of the open World
+// did not, so the menu, the guide and the Bitácora do not name a Camino it never saw.
+// The Bitácora and the Refugio's shelf: the «Camino» group of achievements (days and streaks) reads «Días» there, and
+// «tope» (only the Camino's tenth crystal gives it) is not listed until it is earned.
+export const categoryLabel=(c,s)=>c==='Casa'?'Refugio':c==='Camino'&&!caminoPast(s)?'Días':c;
+export const hiddenAchievement=(id,s)=>id==='tope'&&!s?.ach?.tope&&!caminoPast(s);
+export function caminoPast(s){const j=s?.journey;if(!noJourney(j))return true;return j.freeGiven!==true||(s.pathCrystals?.length||0)>0||j.finished===true||!!(j.done&&Object.values(j.done).some(v=>v===true))||!!s.ach?.tope;}
 const automated=()=>{try{return !!globalThis.navigator?.webdriver;}catch(_){return false;}};
 export function initialize(runtime){
  const $=runtime.$;let owner=null;

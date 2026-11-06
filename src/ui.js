@@ -1,4 +1,4 @@
-import {freeOpen} from './journey-mode.js';
+import {freeOpen,caminoPast} from './journey-mode.js';
 import {explorationContext} from './exploration-context.js';
 import {installNoticeLane} from './notice-lane.js';
 import { POCKET_NAMES } from './pockets.js';
@@ -37,7 +37,8 @@ export function initialize(runtime) {
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary"),bw=$("bWorld"),world=runtime.inWorld();bw.querySelector("span").firstChild.nodeValue="Explorar";$("bWorldHint").textContent=world?"Volver al Camino":"Explorar el Mundo";
     bw.hidden=world||!(runtime.worldReady()||(freeOpen(runtime.S.journey)&&runtime.houseActive?.()));
     const destination=world?$('bAch')?.parentElement:$('dock');if(destination&&bp.parentElement!==destination){if(world)$('bAch').after(bp);else destination.insertBefore(bp,destination.firstChild);}
-    bp.hidden=!(canWorld||world);$("bPrimaryL").textContent=world?"Volver al Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=world?"scaleX(-1)":"";runtime.tidyMenu?.();
+    // Listo 1 (alpha.273): a player of the open World who never had the Camino has no Camino to go back to.
+    bp.hidden=!(canWorld||world&&caminoPast(runtime.S));$("bPrimaryL").textContent=world?"Volver al Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=world?"scaleX(-1)":"";runtime.tidyMenu?.();
   }
   function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t),()=>true,{level:big?2:1,category:'ambiente',coalesce:true});}
   function toast(html,options={}){const el=$('toast'),important=/no se pudo|no pudo|no pudimos|necesita atención|no disponible|fall[oó]|sin espacio|guardar copia|recoge una luz|libro completo/i.test(html);// The Journey has no words while you play (docs/VIAJE.md): everyday notices wait; problems still show.

@@ -27,11 +27,11 @@ with sync_playwright() as p:
   made=page.evaluate('()=>{const r=window.__testRuntime,ac=r.ac,o=ac.createBufferSource.bind(ac);let n=0;ac.createBufferSource=()=>{n++;return o();};const rnd=Math.random;Math.random=()=>0;try{r.stormBar(ac.currentTime+.1);}finally{ac.createBufferSource=o;Math.random=rnd;}return n;}')
   assert made>0,'thunder'
   page.wait_for_timeout(400);page.screenshot(path=f'/tmp/whitedot-storm-{label}.png')
-  # The season still reaches the engine; the compact region card now shows genre/tempo.
+  # The season still reaches the engine; the compact region card now shows the genre, no BPM (alpha.273).
   page.evaluate('''()=>{const r=window.__testRuntime,size=r.REG*r.WCH;for(let u=-4;u<=4;u++)for(let v=-4;v<=4;v++){const x=(u+.5)*size,y=(v+.5)*size,d=r.regionOfPos(x,y);if(!d.sea&&d.continent){r.S.wx=x;r.S.wy=y;return;}}throw Error('no land fixture');}''')
   page.wait_for_function('''()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);return r.MU.dnaT?.key===d.key&&r.MU.season?.id===r.seasonOf(d.continent.id).id;}''')
   page.evaluate('()=>{const r=window.__testRuntime;r.showRegion(r.MU.dnaT,true);}')
-  page.wait_for_function('''()=>{const r=window.__testRuntime,text=document.getElementById('zMood').textContent;return text.includes(r.GEN[r.MU.dnaT.genre].name)&&text.includes('BPM');}''')
+  page.wait_for_function('''()=>{const r=window.__testRuntime,text=document.getElementById('zMood').textContent;return text.includes(r.GEN[r.MU.dnaT.genre].name)&&!text.includes('BPM');}''')
   # Huellas y campamento anterior.
   for i in range(6):page.evaluate(f'()=>{{const r=window.__testRuntime;r.S.wx+=200;}}');page.wait_for_timeout(60)
   assert page.evaluate('window.__testRuntime.S.steps.length')>=5

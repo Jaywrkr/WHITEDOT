@@ -42,6 +42,9 @@ try:
    assert st['hint']=={'id':'llanura','name':'Llanura','km':0.5},st['hint']
    assert page.evaluate(RADAR)=={'id':'1','reach':40},'the radar at its weakest level'
    assert page.locator('#mHelpW').is_hidden() and page.locator('#mHelpC').is_hidden(),'no window first'
+   # Listo 1 (alpha.273): the open guide starts at its first step and there is no Camino to go back to.
+   g=page.evaluate("({next:__r.firstJourneyState.next,open:__r.firstJourneyState.open})");assert g=={'next':'move','open':True},g
+   assert page.evaluate("__r.hud(),document.getElementById('bPrimary').hidden"),'no «Volver al Camino» without a Camino'
    page.evaluate(HIDE)
    assert page.evaluate("Object.keys(__r.S.lugares).includes('ring')||Object.keys(__r.S.lugares).includes('center')") is False
    rows,ring=lugares(page);assert ring,'#lugaresRing stays hidden'
@@ -58,6 +61,7 @@ try:
    saved=json.loads(page.evaluate(f"localStorage.getItem('{KEY}')"));assert saved['lugares']['found']['llanura']==f,'saved'
    page.wait_for_function("__r.edgeState().shown.some(e=>e.kind==='lugar')||Math.hypot(__r.S.lugares.found.llanura.x-__r.S.wx,__r.S.lugares.found.llanura.y-__r.S.wy)<600",timeout=5000)
    assert page.evaluate('__r.ringState().next')=='llanura'
+   assert page.evaluate('__r.firstJourneyState.next')=='portal','the walk and the portal found are real steps of the guide'
    page.reload();page.wait_for_function(READY,timeout=20000)
    assert page.evaluate('__r.S.lugares.found.llanura')==f and page.evaluate('__r.S.mode')=='world','kept on reload, still in the World'
    assert not errors,errors;page.close()
@@ -71,6 +75,7 @@ try:
    old=page.evaluate(LEGACY,['llanura']);assert page.evaluate("__r.S.lugares.found.llanura")==old['llanura'],'its chapter at 0,5 km'
    assert page.evaluate(RADAR)['id']=='2','one trophy: level 2'
    assert page.evaluate("__r.ringState().hint")=={'id':'lago','name':'Lago','km':1}
+   assert not page.evaluate("__r.hud(),document.getElementById('bPrimary').hidden"),'a save with a Camino keeps «Volver al Camino»'
    assert not errors,errors;page.close()
    # --- 3 · An advanced save (version 3): six places won on the old ring, one found by distance, records and notes.
    page,errors=page_for(browser,width,height,base)
