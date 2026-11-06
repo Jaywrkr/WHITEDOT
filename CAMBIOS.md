@@ -11,7 +11,8 @@ Rama `jay/listo-4`, desde `main` `4e2fe11`. Dos detalles que Jay aprobó. Guías
 - **Sin avisos de logro en el Refugio.** Un «Logro · …» ganado fuera esperaba en la cola de avisos y salía dentro, en dorado y sobre los rótulos. Pasaba en el CI, con la CPU lenta (`tests/rules_in_sight_smoke.py`, 390 px); también en `main` con la CPU a ¼. Ahora el Refugio no anuncia logros. Uno en cola o en pantalla al entrar se retira y vuelve a esperar a la salida, como si no se hubiera enviado. El aviso es «estricto»: la cola lo quita en cuanto deja de valer, también mientras se ve (`achievements.js`, `notice-lane.js`; `tests/arreglos30.mjs`).
 - **Medios.** La captura del Refugio ya no espera a que la Voz se vaya: la incluye y falla si tapa un rótulo. `--scenes 8-refugio` rehace solo esa captura. Las diez del Refugio (cinco tamaños, ES/EN) y el sonido de los siete clips, regenerados fuera de Git.
 - **Pruebas.** `tests/listo3_layout_smoke.py`: la Voz no tapa ningún texto del Refugio ni su panel, ES/EN, a 320×568, 360×640, 390×844, 568×320, 640×360 y 1280×720. Falla con el código anterior.
-- **Límites.** Sin capa de preservación: no cambia ningún archivo protegido. No probado en teléfono ni con personas; los clips no se escucharon en altavoces.
+- **Preservación.** Capa `approvedLISTO4` (`4d42901`) en `verify-e-preservation.mjs` para `achievements.js` y `notice-lane.js`; sin archivos de música.
+- **Límites.** No probado en teléfono ni con personas; los clips no se escucharon en altavoces.
 
 
 
