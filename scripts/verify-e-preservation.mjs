@@ -191,10 +191,10 @@ const rebasedLISTO3=new Set(['src/feedback.js','src/scanner.js']);
 // Niveles en orden: frontera (Jay, 6 Nov 2026, no version change): the next place without ★ calls you at its distance and
 // its round starts by itself; you cannot walk more than 200 m past it until its ★ (render.js asks frontier.js each frame,
 // practice-travel.js clamps jumps, places-ring.js points only to it and loads frontier.js, tranquilo.js plays the easier
-// round calm), with its English strings; the offline shell lists two new modules. Held to the code commit of jay/niveles-frontera (from main 1a9ac62); no music
+// round calm, controls.js asks it to speak from «Seguir hacia»), with its English strings; the offline shell lists two new modules. Held to the last code commit of jay/niveles-frontera (from main 1a9ac62, with the CI fixes); no music
 // file changes.
-const approvedFRONTERA='55414f8317bfe80cb3efa08347ecf40448ea4785';
-const rebasedFRONTERA=new Set(['src/i18n-en.js','src/places-ring.js','src/practice-travel.js','src/render.js','src/tranquilo.js']);
+const approvedFRONTERA='cc25fa756a0fc823eb388dff7159619ac246cdec';
+const rebasedFRONTERA=new Set(['src/controls.js','src/i18n-en.js','src/places-ring.js','src/practice-travel.js','src/render.js','src/tranquilo.js']);
 // Listo 4 (Jay, 6 Nov 2026, alpha.277): the Refugio announces no achievement; one waiting in the notice line or on screen
 // when it opens leaves and waits again for the way out (achievements.js; strict notices in notice-lane.js). Held to the code commit of jay/listo-4; no
 // music file changes.
