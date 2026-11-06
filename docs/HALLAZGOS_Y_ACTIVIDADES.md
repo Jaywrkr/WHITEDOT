@@ -74,7 +74,7 @@ Cada lugar paga una sola vez según la [regla del universo](#chispas-solo-en-el-
 
 Ajustes → Textos en el universo permite ocultar el texto de exploración y de estas escenas. Las señales gráficas, controles, menús y avisos de guardado siguen disponibles. La preferencia se conserva al volver.
 
-Volver al Camino permite seguir rompiendo cristales después de los diez iniciales, sin sumar chispas ni progreso adicional. La campana automática repetitiva se sustituye por una respuesta de piano suave menos frecuente; las respuestas musicales manuales se conservan.
+Volver al Camino (solo en guardados que tuvieron Camino, desde alpha.273) permite seguir rompiendo cristales después de los diez iniciales, sin sumar chispas ni progreso adicional. La campana automática repetitiva se sustituye por una respuesta de piano suave menos frecuente; las respuestas musicales manuales se conservan.
 
 ## Travesuras del universo
 

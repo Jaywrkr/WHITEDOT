@@ -5,7 +5,7 @@ Proyecto de Jay · [@jaywrkr](https://instagram.com/jaywrkr). Juego, gráficos p
 ## Tipografías empaquetadas
 
 - **Silkscreen**, archivo histórico conservado con [su licencia](assets/fonts/silkscreen-OFL.txt), fuera de la interfaz y del shell activo.
-- **Geist Mono**, nueve pesos enviados por Jay, copyright 2024 The Geist Project Authors; [licencia oficial](assets/fonts/geistmono-OFL.txt).
+- **Geist Mono**, la tipografía del juego: nueve pesos enviados por Jay, copyright 2024 The Geist Project Authors ([vercel/geist-font](https://github.com/vercel/geist-font)), SIL Open Font License 1.1; [licencia oficial](assets/fonts/geistmono-OFL.txt).
 - **JetBrains Mono**, archivo anterior conservado con [su licencia](assets/fonts/jetbrainsmono-OFL.txt), fuera de la interfaz y del shell activo.
 
 Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a los archivos. Geist Mono se incorporó sin modificar desde los archivos proporcionados; su licencia se obtuvo del repositorio oficial de Vercel. Los archivos anteriores proceden de Google Fonts. [Procedencia y hashes](assets/fonts/sources.json). Los nueve pesos activos de Geist Mono se sirven localmente y funcionan offline.
@@ -14,7 +14,7 @@ Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a lo
 
 **Todos los derechos reservados.** El código, los gráficos, los textos y la música generada son de Jay; ver [LICENSE](LICENSE). La OFL solo aplica a las tipografías.
 
-El cliente actual genera música sin grabar micrófono. Cuenta opcional, sesión persistente y progreso local/online usan Supabase Dev; no hay controles normales de respaldo manual. El servidor Python de duetos (`server/`) es histórico y no forma parte del lanzamiento. Tratamiento de datos en [Privacidad](docs/PRIVACIDAD.md), borrador no publicado. Estas notas no equivalen a una aceptación de tiendas ni alteran las licencias.
+El juego genera la música en el dispositivo, sin micrófono. La edición de venta no tiene cuenta ni nube: la partida se guarda en el dispositivo. El servidor Python de duetos (`server/`) es histórico y no forma parte del lanzamiento. Tratamiento de datos en [Privacidad](docs/PRIVACIDAD.md), borrador no publicado. Estas notas no equivalen a una aceptación de tiendas ni alteran las licencias.
 
 Los siete motores avanzados, tablas, granos y modelos de cuerda/membrana son síntesis original. No incluyen presets de Arturia ni nuevas grabaciones externas. Las referencias culturales describen inspiración, no autoría ni interpretación auténtica de una tradición.
 

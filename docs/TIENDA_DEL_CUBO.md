@@ -6,7 +6,7 @@ Catálogo construido y conservado en alpha.207. Las tandas0–7 están implement
 
 - Lo comprado con chispas cambia cómo se ve, se mueve, suena y reacciona el cubo. Nada da ventaja para jugar, salvo la ranura **Habilidades**, que se construye al final con su propia revisión de economía.
 - Una sola ranura por tipo. El vestuario que se gana jugando (colores, materiales, formas, rastros, halos) se sigue ganando, marcado en dorado, y se lleva junto a lo comprado. Desde alpha.65 hay un solo rastro a la vez: elegir uno ganado quita el comprado y al revés.
-- Todo se cambia en Tu cubo: Llevar (tocar pone o quita, al momento), Tienda (solo lo que no tienes; al comprar te lo pones y pasa a Llevar) y Viaje. Sin vista previa: la imagen de cada pieza es su dibujo real en el juego.
+- Todo se cambia en Tu cubo: Llevar (tocar pone o quita, al momento), Piezas (solo lo que no tienes; al conseguirla te la pones y pasa a Llevar) y Chispas. La pestaña se llamaba «Tienda» hasta alpha.273: en las tiendas de apps esa palabra se lee como compras con dinero, y aquí solo se pagan chispas ganadas jugando (mismo `#cubeTabShop`). Sin vista previa: la imagen de cada pieza es su dibujo real en el juego.
 - Cada pieza tiene variante estática con movimiento reducido: nada comprado puede quedar invisible.
 - Los sonidos usan las voces sintetizadas, la armonía y el reloj existentes, sin muestras nuevas ni cambios de volumen maestro, y siguen las reglas de silencio, pausa y menús.
 - Determinismo y guardado: las compras viven en `sparkEconomy` y lo equipado en `S.cube`, ambos normalizados sin borrar progreso y conservando formatos futuros.
@@ -182,7 +182,7 @@ Todos los comprados activos.
 |---|---|---|---|
 | Morse | 150 ✦ | Parpadea tu nombre en morse. | 6 |
 | Mochila | 250 ✦ | Lleva colgadas tus tres últimas tarjetas. | 6 |
-| Pantalla | 300 ✦ | Muestra el BPM o el género que suena. | 6 |
+| Pantalla | 300 ✦ | Muestra el género que suena (sin BPM desde alpha.273). | 6 |
 | Holograma | 350 ✦ | Proyecta encima tu tarjeta más rara. | 6 |
 | Disfraces | 750 ✦ | Tres pulsos seguidos: esfera, pirámide o dodecaedro durante un minuto. | 6 |
 | Piel VJ | 750 ✦ | Los visuales VJ sobre el cuerpo del cubo. | 6 |

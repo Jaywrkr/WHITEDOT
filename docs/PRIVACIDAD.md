@@ -1,56 +1,57 @@
 # Privacidad de Kubono · borrador
 
-Revisión documental: 20 de octubre de 2026. Borrador no publicado; la configuración de Supabase está detenida por petición de Jay para revisar el proyecto. [Índice vigente](README.md).
+Borrador del 6 de noviembre de 2026 (alpha.273), no publicado. Describe las ediciones de venta: Android y escritorio (Windows, macOS y Linux), sin cuenta ni nube. La cuenta opcional está aprobada, pero su configuración (Supabase) está en pausa y no forma parte de esta edición. Si vuelve, esta política se reescribe antes. [Índice vigente](README.md).
 
-Preparado el 19 de octubre de 2026. No publicado. Describe la versión actual; completar los campos pendientes antes de usarlo en tiendas. Configuración y decisiones pendientes en [Producción](CONFIGURACION_PRODUCCION.md).
+Antes de publicar, Jay completa `[NOMBRE LEGAL]`, `[CORREO]` y `[FECHA]`, y la publica en una URL propia: Google Play la pide en su consola.
 
-## Responsable y contacto
+## Texto para publicar · español
 
-Kubono es un juego de exploración y música. Responsable: **[nombre legal y país pendientes]**. Contacto para privacidad y soporte: **[correo público pendiente]**. Fecha de entrada en vigor: **[pendiente de lanzamiento]**.
+**Política de privacidad de Kubono**
 
-## Datos y finalidad
+Responsable: [NOMBRE LEGAL]. Contacto: [CORREO]. En vigor desde: [FECHA].
 
-| Datos | Para qué se utilizan | Dónde se procesan |
-|---|---|---|
-| Correo, identificador de cuenta y credenciales de autenticación | Crear la cuenta, iniciar sesión, confirmar correo y recuperar acceso | Supabase Auth; la contraseña se transmite por HTTPS a Auth, que almacena su hash, no una copia legible |
-| Tokens de sesión | Mantener el acceso sin pedir la contraseña cada vez | Almacenamiento local del navegador o aplicación y servicio de autenticación; el cliente no guarda tu contraseña |
-| Partida: mundos/semillas, posición dentro del juego, chispas, compras con chispas, colecciones, logros y preferencias incluidas en el guardado | Conservar el avance y continuar entre dispositivos | Dispositivo y base de datos de Supabase vinculada a la cuenta |
-| Datos técnicos de las solicitudes, como IP, hora y errores | Entregar y proteger el servicio, diagnosticar fallos | Proveedores de infraestructura, según su configuración de registros |
-| Mensajes que envíes a soporte | Resolver incidencias y solicitudes sobre tus datos | Buzón de soporte y herramientas que finalmente se seleccionen |
+Kubono no recoge datos personales. Todo queda en tu dispositivo.
 
-Si el juego falla, guarda en este dispositivo los últimos 20 errores (mensaje, archivo, línea, versión y hora; sin partida, nombre ni correo). No se envían a ningún sitio: solo salen si eliges **Ajustes → Copiar diagnóstico** y pegas el texto, que también incluye la versión del navegador. Las coordenadas del cubo son del mundo virtual, no tu ubicación GPS. La música se genera en el dispositivo; el cliente revisado no graba micrófono. No incorpora SDK publicitario ni de analítica de terceros. Los registros de infraestructura se tratan por separado: no se declara que el juego «no recoge datos».
+- **Sin cuenta.** No hay registro, correo ni contraseña.
+- **Sin conexión.** El juego no envía nada a internet. No hay servidores nuestros que reciban tu partida.
+- **Sin analítica ni anuncios.** No hay SDK de terceros, ni de analítica, ni de publicidad, ni de seguimiento.
+- **Tu partida.** Se guarda solo en el dispositivo: progreso, ajustes e idioma. Nadie más la ve.
+- **Errores.** Si algo falla, el juego guarda en el dispositivo sus últimos 20 errores, sin partida ni datos personales. No se envían. Solo salen si tú eliges «Copiar diagnóstico» en Ajustes y pegas el texto.
+- **Guardar copia y compartir.** «Guardar copia» crea un archivo que tú guardas donde quieras. Compartir usa el menú de tu sistema y solo envía lo que tú eliges, a quien tú eliges.
+- **Sin micrófono, cámara ni ubicación.** La música se genera en el dispositivo. Las coordenadas del cubo son del mundo del juego, no tu ubicación.
+- **Compras.** Kubono se paga una vez. La tienda donde lo compras (Google Play, itch.io u otra) gestiona el pago con su propia política. Dentro del juego no hay compras: las chispas solo se ganan jugando.
+- **Borrar tus datos.** Desinstala el juego o borra sus datos desde el sistema. También puedes usar «Empezar de cero» en Ajustes. No guardamos ninguna copia.
+- **Menores.** No recogemos datos de nadie, tampoco de menores.
+- **Cambios.** Si una versión futura cambia algo de esto, actualizaremos esta página antes de publicarla.
 
-## Proveedores y transferencias
+Preguntas: [CORREO].
 
-Supabase presta autenticación y almacenamiento online. El entorno de desarrollo está en Estados Unidos (us-east-1); confirmar región y condiciones del entorno final antes de publicar. La web utiliza Vercel como alojamiento; confirmar la configuración final. Los proveedores de correo y las plataformas de distribución se identificarán al seleccionarlos. No se ha incorporado venta de datos ni publicidad dirigida.
+## Text to publish · English
 
-Para la distribución de pago, las tiendas gestionarán sus propias operaciones conforme a sus políticas. No se ha implementado todavía recepción/validación de recibos en Kubono: esta política debe actualizarse si el juego empieza a tratarlos. Una cuenta de juego no concede por sí sola compra compartida entre tiendas.
+**Kubono privacy policy**
 
-Antes de publicar se documentarán las condiciones contractuales, bases legales y mecanismos de transferencia aplicables al responsable y a los mercados elegidos. Este borrador no declara ese trabajo completado.
+Controller: [NOMBRE LEGAL]. Contact: [CORREO]. Effective from: [FECHA].
 
-## Conservación, seguridad y eliminación
+Kubono collects no personal data. Everything stays on your device.
 
-La cuenta y el avance online se mantienen mientras utilizas el servicio y hasta su eliminación. No hay una purga automática por inactividad configurada. Se aplican HTTPS y controles de acceso por cuenta; ninguna medida garantiza seguridad absoluta.
+- **No account.** No sign-up, email or password.
+- **No connection.** The game sends nothing to the internet. No server of ours receives your game.
+- **No analytics or ads.** No third-party SDKs: no analytics, advertising or tracking.
+- **Your game.** It is saved only on your device: progress, settings and language. Nobody else sees it.
+- **Errors.** If something fails, the game keeps its last 20 errors on the device, with no game data or personal data. They are not sent. They only leave if you choose "Copy diagnostics" in Settings and paste the text.
+- **Save a copy and sharing.** "Save a copy" creates a file you keep wherever you like. Sharing uses your system's menu and only sends what you choose, to whom you choose.
+- **No microphone, camera or location.** The music is generated on the device. The cube's coordinates belong to the game world, not to your location.
+- **Purchases.** Kubono is paid once. The store you buy it from (Google Play, itch.io or another) handles payment under its own policy. There are no purchases inside the game: sparks are only earned by playing.
+- **Deleting your data.** Uninstall the game or clear its data from your system. You can also use "Start over" in Settings. We keep no copy.
+- **Children.** We collect no data from anyone, children included.
+- **Changes.** If a future version changes any of this, we will update this page before releasing it.
 
-Puedes eliminar la cuenta desde **Menú → Cuenta → Eliminar cuenta**, confirmando tus credenciales. El sistema actual elimina el usuario, sus sesiones del servidor, sus partidas online y la partida de esa cuenta guardada en el dispositivo desde el que lo pides. Cerrar sesión no borra la partida local. Las sesiones de otros dispositivos pueden tardar en detectar la eliminación; una copia offline no se borra a distancia.
+Questions: [CORREO].
 
-Para retirar las copias de otros dispositivos, borra los datos del sitio en el navegador o los datos de la aplicación desde el sistema operativo; esto puede borrar también partidas de otras cuentas que usen esa misma instalación. Los archivos que hayas exportado o respaldado fuera del juego requieren eliminación por separado. Consulta [Eliminación de datos](ELIMINACION_DATOS.md).
+## Notas para Jay (no publicar)
 
-Política aprobada por Jay el 19 de octubre de 2026 para producción:
-
-| Datos o solicitud | Conservación o atención aprobada |
-|---|---|
-| Cuenta y progreso | Hasta eliminación, sin borrado por inactividad |
-| Eliminación desde el juego | Datos online al completarse la operación |
-| Solicitud de eliminación por soporte | Objetivo: resolver en 7 días tras verificar identidad |
-| Registros técnicos bajo nuestro control | Hasta 7 días |
-| Conversaciones de soporte | 90 días después de cerrar la incidencia |
-| Respaldos que gestionemos | Rotación de 7 días; reaplicar eliminaciones antes de volver a servir una restauración |
-
-**Aprobado no significa configurado en todos los servicios:** CI y copias locales de desarrollo tienen controles aplicados según [estado operativo](CONFIGURACION_PRODUCCION.md); quedan la auditoría Supabase, soporte, respaldo completo y los plazos propios de proveedores antes de publicar; documentar cualquier excepción legal justificada. El objetivo de soporte no está operativo mientras no exista el canal público. No se promete borrado instantáneo de copias históricas. La copia técnica local usada para migrar el APK de desarrollo no es un respaldo del servicio de producción.
-
-## Solicitudes y público
-
-Escribe a **[correo pendiente]** para solicitar acceso, corrección, eliminación o información sobre tus datos y los derechos aplicables en tu país. Verificaremos que la solicitud corresponde a tu cuenta sin pedir tu contraseña ni códigos de acceso. La vía web de solicitud está pendiente de activar; el objetivo de resolución aprobado es de 7 días tras verificar identidad.
-
-Público objetivo aprobado: personas de **16 años o más**. La clasificación de contenido de cada tienda se determinará por su cuestionario y no se sustituye por esta decisión. Este texto no implementa verificación de edad; antes de publicar se alinearán la comunicación y las obligaciones de los mercados elegidos con ese público. Los cambios materiales se comunicarán en los canales del juego que se habiliten para el lanzamiento.
+- **Comprobado en el código** (alpha.271–273): la auditoría de venta no vio peticiones fuera del propio origen; la edición de venta (`scripts/itch-package.mjs`, `sale_edition_smoke.py`) no tiene botón de cuenta ni nube. No hay SDK de terceros en el árbol.
+- **Android.** La edición de venta pide el permiso `INTERNET` sin usarlo. Quitarlo antes de subir refuerza esta política. En el formulario de seguridad de datos de Play: «No se recogen datos» y «No se comparten datos».
+- **Web.** Si se publica una versión web, el alojamiento (hoy Vercel) guarda registros técnicos de las visitas (IP, hora). Entonces hay que nombrarlo aquí.
+- **Cuenta.** Si vuelve la cuenta opcional, la política anterior (correo, sesiones, Supabase, eliminación) está en el historial de Git de este archivo y en [Eliminación de datos](ELIMINACION_DATOS.md).
+- Público objetivo aprobado: 16 años o más. La clasificación la da el cuestionario de cada tienda.

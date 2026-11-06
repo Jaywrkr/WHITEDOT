@@ -10,5 +10,17 @@ autorización escrita del autor.
 No permission is granted to copy, modify, distribute, publish or use any part
 of this project commercially without the author's written permission.
 
-Excepciones: las tipografías Silkscreen y JetBrains Mono en assets/fonts/ se
-distribuyen bajo la SIL Open Font License 1.1 incluida junto a cada archivo.
+Excepciones: las tipografías de assets/fonts/ se distribuyen bajo la SIL Open
+Font License 1.1, incluida junto a los archivos:
+
+- Geist Mono (la tipografía del juego), Copyright 2024 The Geist Project
+  Authors (https://github.com/vercel/geist-font). Licencia:
+  assets/fonts/geistmono-OFL.txt.
+- Silkscreen y JetBrains Mono (archivos anteriores, fuera de la interfaz).
+  Licencias: assets/fonts/silkscreen-OFL.txt y
+  assets/fonts/jetbrainsmono-OFL.txt.
+
+Exceptions: the fonts in assets/fonts/ are distributed under the SIL Open Font
+License 1.1, included next to the files. Geist Mono, Copyright 2024 The Geist
+Project Authors (https://github.com/vercel/geist-font), is the game's font
+(assets/fonts/geistmono-OFL.txt).

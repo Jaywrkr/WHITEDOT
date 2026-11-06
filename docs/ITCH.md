@@ -83,41 +83,45 @@ Sin zip «played in the browser»: la web no se publica abierta.
 
 ### Español
 
+Reescrito para alpha.273 (mundo abierto); cifras comprobadas en [Material de tienda](TIENDAS.md#ficha-en-español).
+
 - **Título:** Kubono
-- **Descripción corta:** Un cubo, un universo que suena. Explora, rompe cristales y crea tu música.
+- **Descripción corta:** Un cubo en un universo que suena. Explora, encuentra once lugares y crea música.
 - **Descripción larga:**
 
-Eres un cubo en un universo que suena. Cada lugar tiene su música, y lo que haces la cambia.
+Eres un cubo en un universo abierto que suena. La música responde a lo que haces.
 
-- **Explora un mundo musical.** Once paisajes, del Bosque a la Tormenta, cada uno con su escala, su ritmo y sus instrumentos. Bajo tierra y en el cielo hay otras capas.
-- **Rompe y recoge.** Lanza pulsos para romper cristales; sus fragmentos son chispas.
-- **Descubre.** Criaturas que te siguen, escenas raras y maravillas musicales que solo pasan una vez.
-- **Tu Refugio viaja contigo.** Se despliega desde el cubo donde estés. Coloca objetos que suenan y compón en el Taller.
-- **Tu cubo, a tu manera.** Más de ochenta piezas para cambiar cómo se ve, se mueve y suena.
+- **Un mundo abierto desde el primer segundo.** Sin tutorial largo. Camina hacia donde quieras.
+- **Once lugares, cada uno más lejos.** El primero está a 0,5 km; el último, a 40 km. Al llegar, su portal aparece delante.
+- **Rondas a tiempo.** Cada portal abre una ronda con su propio gesto. Toca a tiempo y gana hasta tres ★.
+- **Un escáner.** Mantén pulsado (o la tecla E) y una onda muestra lo que hay cerca.
+- **Música que reacciona.** Cada región tiene su género y su ritmo. Lo que tocas, tu racha y tu forma de moverte cambian el arreglo.
+- **Tu cubo y tu Refugio.** Más de ochenta piezas, pagadas con chispas que ganas explorando. Más de 390 logros.
 
-Pago único. Sin anuncios ni suscripciones; las chispas no se venden. Sin cuenta ni conexión: tu partida se guarda en este ordenador. «Guardar copia» la lleva a otro. Windows, macOS y Linux. En español e inglés. Mejor con auriculares.
+Pago único. Sin anuncios, sin compras dentro del juego y sin suscripciones: las chispas solo se ganan jugando. Sin cuenta ni conexión: tu partida se guarda en este ordenador. «Guardar copia» la lleva a otro. Windows, macOS y Linux. En español e inglés. Mejor con auriculares.
 
 ### English
 
 - **Title:** Kubono
-- **Short description:** A cube in a universe that sounds. Explore, break crystals, make music.
+- **Short description:** A cube in a universe that sounds. Explore, find eleven places, make music.
 - **Long description:**
 
-You are a cube in a universe that sounds. Every place has its own music, and what you do changes it.
+You are a cube in an open universe that sounds. The music answers what you do.
 
-- **Explore a musical world.** Eleven landscapes, from the Forest to the Storm, each with its own scale, rhythm and instruments. There are more layers underground and in the sky.
-- **Break and collect.** Send pulses to break crystals; their fragments are sparks.
-- **Discover.** Creatures that follow you, odd scenes and musical wonders that happen only once.
-- **Your Refuge travels with you.** It unfolds from the cube wherever you are. Place objects that play and compose in the Workshop.
-- **Your cube, your way.** Over eighty pieces that change how it looks, moves and sounds.
+- **An open world from the first second.** No long tutorial. Walk wherever you like.
+- **Eleven places, each farther away.** The first is 0.5 km away; the last, 40 km. When you get there, its portal appears ahead.
+- **Rounds in time.** Each portal opens a round with its own gesture. Tap in time and win up to three ★.
+- **A scanner.** Hold (or press E), and a wave shows what is near.
+- **Music that reacts.** Every region has its own genre and rhythm. What you play, your streak and the way you move change the arrangement.
+- **Your cube and your Refuge.** Over eighty pieces, paid for with sparks you earn by exploring. Over 390 achievements.
 
-One-time purchase. No ads, no subscriptions; sparks are never sold. No account, no connection: your game is saved on this computer. "Save a copy" takes it to another one. Windows, macOS and Linux. In English and Spanish. Best with headphones.
+One-time purchase. No ads, no in-app purchases and no subscriptions: sparks are only earned by playing. No account, no connection: your game is saved on this computer. "Save a copy" takes it to another one. Windows, macOS and Linux. In English and Spanish. Best with headphones.
 
 ### Etiquetas
 
 `music`, `exploration`, `relaxing`, `procedural-generation`, `atmospheric`, `minimalist`, `cube`, `singleplayer`, `offline`, `electronic-music` (itch.io admite hasta 10).
 
-Nombre legal, correo de contacto, capturas y política de privacidad: pendientes (L5 y tareas de Jay).
+Nombre legal, correo de contacto y capturas: pendientes (L5 y tareas de Jay). Política de privacidad: borrador para esta edición en [Privacidad](PRIVACIDAD.md), con `[NOMBRE LEGAL]` y `[CORREO]` por completar y sin publicar.
 
 ## Pasos de Jay (borrador privado, sin publicar)
 

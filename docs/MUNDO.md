@@ -43,7 +43,7 @@ Tabla de distancias (alpha.269). La Llanura ya ocupaba el primer puesto, a 0,5 k
 Jay, 5 de noviembre de 2026: «Quitemos Llanura… de una vez al mundo abierto. No debe aparecer el anillo. Directo mundo abierto.» Alpha.269, rama `jay/mundo-abierto`.
 
 - **Empiezas en el Mundo.** Un guardado nuevo entra al Mundo al cargar, sin Camino, sin Viaje y sin ventana (`openWorldStart`, `journey-mode.js`). Vista completa («Mostrar todo: sí»). El objetivo es claro: once lugares, once trofeos. La línea bajo el HUD dice «Llanura · más lejos · 0,5 km». Tampoco hay saludo de vuelta (`main.js`): el primer toque cae en el Mundo y enciende el sonido. En las visitas siguientes, un toque real en «Continuar» del saludo también lo enciende (`return-entrance.js`); un clic de script solo lo cierra.
-- **Sin Viaje.** El guardado queda marcado `S.journey.open` (sin Viaje: la vista tranquila ya no abre capítulos) y, si el Mundo se dio al empezar, `freeGiven`. El formato no cambia (versión 1). Un guardado a mitad del Viaje entra al Mundo libre y conserva capítulos, notas, colores y su ★. El Camino sigue como paseo («Volver al Camino»).
+- **Sin Viaje.** El guardado queda marcado `S.journey.open` (sin Viaje: la vista tranquila ya no abre capítulos) y, si el Mundo se dio al empezar, `freeGiven`. El formato no cambia (versión 1). Un guardado a mitad del Viaje entra al Mundo libre y conserva capítulos, notas, colores y su ★. El Camino sigue como paseo («Volver al Camino») para los guardados que lo tuvieron; desde alpha.273 no se ofrece a quien nunca lo vio (ver [Primer minuto](#primer-minuto-del-mundo-abierto)).
 - **Radar débil al principio.** Con `freeGiven`, nivel 1 (40 m, solo iconos) hasta el primer trofeo; nivel 2 con uno, nivel 3 con cinco. Un guardado que ya tenía el nivel 2 lo conserva.
 - **Sin anillo.** Ni portales en anillo, ni centro, ni «Volver al anillo» (Lugares, mapa, satélites), ni brújula de lugares junto al cubo: la [capa de flechas](#una-capa-de-flechas) apunta al siguiente lugar sin ★. `#lugaresRing` sigue en la página, oculto. El acercamiento más cercano del mapa se llama «Cerca» y se centra en ti.
 - **El origen.** El Duelo final está en el origen (0, 0; fuera del mar). Desde un satélite, «Volver al origen». Al volver de una ronda quedas junto al portal, hacia el origen.
@@ -52,6 +52,21 @@ Jay, 5 de noviembre de 2026: «Quitemos Llanura… de una vez al mundo abierto. 
 - **Pruebas que conservan el Viaje.** El festival (`?festival=1`), `?capitulo=`, `?viaje=1`, las vistas previas (`?testSeed=`, `?lab=1`) y los navegadores automatizados sin `?abierto=1` empiezan como antes.
 
 Pruebas: `tests/mundo_abierto.mjs` (qué cargas abren el Mundo; el Viaje nuevo, a mitad, terminado, previo y futuro; radar; la Llanura delante a 0,5 km; migración de cada forma de guardado; nada de anillo) y `tests/mundo_abierto_smoke.py` (390×844 y 1280×800: guardado nuevo en el Mundo, sin anillo, radar 1, la Llanura aparece delante a 0,5 km y se guarda; a mitad del Viaje; guardado avanzado de versión 3 con sus estrellas y sus lugares ganados a su distancia, visitables). No probado en teléfono ni con personas; Jay no lo ha jugado.
+
+### Primer minuto del mundo abierto
+
+Listo 1 (Jay, 6 de noviembre de 2026, alpha.273, tras la auditoría de venta). Rama `jay/listo-1`, desde `main` `2760513`.
+
+- **Guía propia.** Un guardado del mundo abierto (`S.journey.open`) sigue `OPEN_WORLD_STEPS` (`onboarding-model.js`), seis pasos que empiezan en 1/6: «Arrastra para moverte.», «Camina recto hacia Llanura. Su portal aparece delante.», «Sigue la flecha hasta el portal.», «Toca a tiempo con la música.», «Ganaste tu primera ★. Cada lugar da tres.» y «Mantén pulsado para escanear. Hay once lugares.».
+- **Hechos reales** (`onboarding.js`). Moverse 20 unidades; el portal de Llanura encontrado; su ronda empezada; su ★; cerrar la hoja y caminar 400 unidades (o empezar otra ronda); otro lugar encontrado o 2000 unidades más. Un hecho posterior confirma los anteriores. Mismo campo `S.firstJourney` y versión 1; los hechos del Viaje no cambian. Un guardado que ya terminó la guía del Camino no la repite.
+- **El objetivo a la vista.** Con la guía abierta en el mundo abierto, la línea bajo el HUD (`#ringRoute`, «Llanura · más lejos · 0,5 km») ya no se oculta (`body.first-journey-open`). El cubo no cambia de tamaño.
+- **Sin Camino que nunca existió** (`caminoPast`, `journey-mode.js`). Un guardado que no es del mundo abierto, o que era libre antes (llegó por el Camino), o tiene cristales, capítulos o «tope», tuvo Camino. Si no: sin «Volver al Camino» en el menú; en la Bitácora y en el estante del Refugio el grupo «Camino» se llama «Días» y «tope» no se lista hasta ganarse; «Recuerdos del Camino» se llama «Recuerdos del viaje».
+- **Cómo jugar** («Cómo jugar y guardar», `index.html`). Sin Camino ni cristales: «El mundo abierto» con Mundo, Escáner, Lugares, Rondas y Chispas (se ganan explorando; nunca se pagan con dinero).
+- **Sin jerga.** Sin BPM en la línea de la región (`discovery.js`), la Bitácora (regiones, géneros), los favoritos ni la pieza «Pantalla» de Tu cubo, que muestra solo el género; sin dB en los colores de síntesis. Quedan en las herramientas de laboratorio (`?dev=1`, atlas, semillas).
+- **El Viaje, igual.** `?viaje=1`, `?capitulo=`, `?festival=1`, `?testSeed=`, `?lab=1` y los navegadores automatizados sin `?abierto=1` conservan sus seis pasos y el Camino.
+- **Límites.** Comprobado en Chromium a 390×844, español e inglés, sin parámetros y con guardado nuevo: 1/6 → 6/6 con una ronda simulada. No probado en teléfono ni con personas. «Toca a tiempo con la música.» es genérico: cada lugar tiene además su propio gesto.
+
+Pruebas: `tests/onboarding.mjs` (pasos, orden, recarga, Viaje intacto, `caminoPast`) y `tests/mundo_abierto_smoke.py` (primer paso, sin «Volver al Camino» en un guardado nuevo y con él a mitad del Viaje).
 
 ### Los lugares te encuentran
 

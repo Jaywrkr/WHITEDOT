@@ -6,7 +6,7 @@ Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 
 
 `python3 scripts/store-media.py` abre el juego real en Chromium y guarda todo en `outputs/tienda/`, fuera de Git. Con `--only capturas,iconos,clips` se elige qué generar.
 
-- **Capturas:** seis escenas en cada tamaño: Mundo, Refugio, Refugio entero, Taller, Tienda del cubo y Bitácora.
+- **Capturas:** seis escenas en cada tamaño: Mundo, Refugio, Refugio entero, Taller, Tu cubo (pestaña Piezas) y Bitácora. **Desfasadas:** el guion es de antes del mundo abierto (alpha.269). Hay que rehacerlas con alpha.273: el primer minuto con la guía y «Llanura · más lejos · 0,5 km», un portal, una ronda, la hoja de ★ y el escáner.
   - Partida preparada: día 22, sombrero y mascota, Refugio con todos los ornamentos.
   - Los avisos pasajeros se ocultan; el resto es el juego tal cual.
 - **Iconos y gráficos:** se dibujan con la marca actual (cubo blanco en aro dorado sobre negro), sin canal alfa.
@@ -35,63 +35,65 @@ Pendiente de Jay:
 
 ## Ficha en español
 
+Reescrita para alpha.273 (mundo abierto). Cifras comprobadas en el código: once lugares (`PLACES`, de 0,5 a 40 km), 33 ★, 81 piezas de Tu cubo (`CUBE_SHOP`) y 395 logros (399 menos cuatro retirados; un jugador sin Camino ve 394, porque «tope» no se lista).
+
 - **Título (30):** Kubono
-- **Descripción breve (80):** Un cubo, un universo que suena. Explora, rompe cristales y crea tu música.
+- **Descripción breve (80):** Un cubo en un universo que suena. Explora, encuentra once lugares y crea música.
 
 **Descripción larga:**
 
-Eres un cubo en un universo que suena. Cada lugar tiene su música, y lo que haces la cambia.
+Eres un cubo en un universo abierto que suena. La música responde a lo que haces.
 
-- **Explora un mundo musical.** Once paisajes, del Bosque a la Tormenta, cada uno con su escala, su ritmo y sus instrumentos. Bajo tierra y en el cielo hay otras capas.
-- **Rompe y recoge.** Lanza pulsos para romper cristales; sus fragmentos son chispas.
-- **Descubre.** Criaturas que te siguen, escenas raras y maravillas musicales que solo pasan una vez.
-- **Tu Refugio viaja contigo.** Se despliega desde el cubo donde estés: cuatro cámaras de luz que son partituras. Coloca objetos que suenan, enciende tus tarjetas raras, gira el Prisma y compón en el Taller.
-- **Tu cubo, a tu manera.** Más de ochenta piezas para cambiar cómo se ve, se mueve y suena.
-- **Una bitácora de todo.** Lugares, géneros escuchados y 376 logros.
+- **Un mundo abierto desde el primer segundo.** Sin tutorial largo. Camina hacia donde quieras.
+- **Once lugares, cada uno más lejos.** El primero está a 0,5 km; el último, a 40 km. Al llegar, su portal aparece delante.
+- **Rondas a tiempo.** Cada portal abre una ronda con su propio gesto. Toca a tiempo y gana hasta tres ★. Las 33 son maestría.
+- **Un escáner.** Mantén pulsado y una onda muestra lo que hay cerca: criaturas, cajas, secretos.
+- **Música que reacciona.** Cada región tiene su género y su ritmo. Lo que tocas, tu racha y tu forma de moverte cambian el arreglo.
+- **Tu cubo y tu Refugio.** Más de ochenta piezas para cambiar cómo se ve, se mueve y suena, pagadas con chispas que ganas explorando. Un Refugio que viaja contigo.
+- **Una bitácora de todo.** Lugares, géneros escuchados y más de 390 logros.
 
-Pago único. Sin anuncios ni suscripciones, y las chispas no se venden. Se juega sin cuenta; una cuenta con correo guarda tu avance en la nube.
+Pago único. Sin anuncios, sin compras dentro del juego y sin suscripciones: las chispas solo se ganan jugando. Sin cuenta y sin conexión: tu partida se guarda en el dispositivo. En español e inglés. Mejor con auriculares.
 
 ## Store listing in English
 
-The game is in Spanish. Until it is localised, the English listing must say so.
-
 - **Title (30):** Kubono
-- **Short description (80):** A cube in a universe that sounds. Explore, break crystals, make music.
+- **Short description (80):** A cube in a universe that sounds. Explore, find eleven places, make music.
 
 **Full description:**
 
-You are a cube in a universe that sounds. Every place has its own music, and what you do changes it.
+You are a cube in an open universe that sounds. The music answers what you do.
 
-- **Explore a musical world.** Eleven landscapes, from the Forest to the Storm, each with its own scale, rhythm and instruments. There are more layers underground and in the sky.
-- **Break and collect.** Send pulses to break crystals; their fragments are sparks.
-- **Discover.** Creatures that follow you, odd scenes and musical wonders that happen only once.
-- **Your Refuge travels with you.** It unfolds from the cube wherever you are: four chambers of light that are musical scores. Place objects that play, light up your rare cards, turn the Prism and compose in the Workshop.
-- **Your cube, your way.** Over eighty pieces that change how it looks, moves and sounds.
-- **A journal of everything.** Places, genres you have heard and 376 achievements.
+- **An open world from the first second.** No long tutorial. Walk wherever you like.
+- **Eleven places, each farther away.** The first is 0.5 km away; the last, 40 km. When you get there, its portal appears ahead.
+- **Rounds in time.** Each portal opens a round with its own gesture. Tap in time and win up to three ★. All 33 are mastery.
+- **A scanner.** Hold, and a wave shows what is near: creatures, boxes, secrets.
+- **Music that reacts.** Every region has its own genre and rhythm. What you play, your streak and the way you move change the arrangement.
+- **Your cube and your Refuge.** Over eighty pieces that change how it looks, moves and sounds, paid for with sparks you earn by exploring. A Refuge that travels with you.
+- **A journal of everything.** Places, genres you have heard and over 390 achievements.
 
-One-time purchase. No ads, no subscriptions, sparks are never sold. No account needed to play; an account with email keeps your progress in the cloud. Text is in Spanish.
+One-time purchase. No ads, no in-app purchases and no subscriptions: sparks are only earned by playing. No account and no connection: your game is saved on your device. In English and Spanish. Best with headphones.
 
 ## Tráiler (guion, 30–45 s)
 
 Regla del plan: primero una acción del cubo y su respuesta. Solo funciones reales, música del juego.
 
-1. **0–4 s:** el cubo en negro, un pulso, el primer cristal se rompe y suena.
+1. **0–4 s:** el cubo en negro, un pulso, y el mundo responde con su música.
 2. **4–14 s:** recorrido por el Mundo (`clip-mundo-*`): cambia el paisaje y cambia la música.
 3. **14–24 s:** el Refugio se despliega desde el cubo, que camina por sus cámaras; un pulso, y las criaturas responden (`clip-refugio-vertical`).
-4. **24–32 s:** cortes rápidos de Taller, Tienda del cubo y Bitácora (capturas).
+4. **24–32 s:** un portal y su ronda a tiempo; cortes rápidos del escáner, Tu cubo y Bitácora (capturas).
 5. **32–40 s:** «Un cubo. Un universo que suena.» y el logo.
 
 ## Landing (textos)
 
 - **Arriba:** Kubono · Un cubo. Un universo que suena. Clip horizontal en bucle, sin sonido hasta que se toca.
-- **Tres ideas:** Explora un universo sonoro · Rompe, recoge y avanza · Descubre escenas raras.
+- **Tres ideas:** Explora un universo abierto · Once lugares, cada uno más lejos · Música que reacciona.
 - **Tu Refugio:** «Tu Refugio viaja contigo», con la captura del Refugio entero.
 - **Comprar:** botones de cada tienda disponible, con precio. Sin demo.
 - **Pie:** privacidad, soporte, eliminación de datos y créditos.
 
 ## Press kit
 
-- **Datos:** Kubono. Desarrollo independiente. Plataformas: Android, iOS/iPadOS, web y escritorio, cada una cuando esté lista. Precio: US$2,99 móvil, US$4,99 escritorio, pago único. Idioma: español.
-- **Descripción corta:** Un cubo explora un universo donde cada lugar suena distinto; rompe cristales, descubre criaturas y compone en un Refugio de luz que viaja con él.
+- **Datos:** Kubono. Desarrollo independiente. Plataformas: Android, iOS/iPadOS, web y escritorio, cada una cuando esté lista. Precio: US$2,99 móvil, US$4,99 escritorio, pago único, sin compras dentro del juego. Idiomas: español e inglés.
+- **Descripción corta:** Un cubo explora un universo abierto donde cada región suena distinta; encuentra once lugares cada vez más lejos, juega sus rondas a tiempo y la música responde a lo que hace.
 - **Contenido:** la carpeta `outputs/tienda` (capturas, iconos, gráficos y clips).
 - **Pendiente:** fecha, nombre del editor, contacto de prensa y enlaces de tiendas.

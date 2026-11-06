@@ -61,7 +61,7 @@ Modelo de casa versión 2: migra versión 1, conserva campos desconocidos y abre
 
 Módulos: `house-model.js`, `house-auto.js`, `sky-streak.js` (cielo de días), `house-view.js`, `house.js`, `house-audio.js`, `house-collection.js`, `house-capsules.js`, `house-guide.js`, `collection-garden.js` y `refugio-lugares.js`.
 
-Tienda y apariencia viven solo en Tu cubo (Llevar, Tienda, Chispas), donde se gastan las chispas; el Refugio no tiene accesos a ellas.
+Piezas y apariencia viven solo en Tu cubo (Llevar, Piezas, Chispas), donde se gastan las chispas; el Refugio no tiene accesos a ellas.
 
 ## Estado comprobado
 
