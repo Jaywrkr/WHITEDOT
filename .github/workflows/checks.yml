@@ -94,7 +94,9 @@ jobs:
       PIP_BREAK_SYSTEM_PACKAGES: '1'
     steps:
       # The image has no git: checkout needs it for history, and some flows run git archive and git fetch.
-      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates
+      # Nor DejaVu, the ubuntu-latest runner's fallback for glyphs Geist Mono lacks (★ ✦ ☰): without it fontconfig picks
+      # WenQuanYi Zen Hei, whose taller lines pushed the 844×390 menu 8 px past the screen.
+      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates fonts-dejavu-core fonts-dejavu-mono
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       # pwa_updates_smoke.py archives the real pre-closure release from history.
       - uses: actions/checkout@v4
@@ -129,7 +131,9 @@ jobs:
       PIP_BREAK_SYSTEM_PACKAGES: '1'
     steps:
       # The image has no git: checkout needs it for history, and some flows run git archive and git fetch.
-      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates
+      # Nor DejaVu, the ubuntu-latest runner's fallback for glyphs Geist Mono lacks (★ ✦ ☰): without it fontconfig picks
+      # WenQuanYi Zen Hei, whose taller lines pushed the 844×390 menu 8 px past the screen.
+      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates fonts-dejavu-core fonts-dejavu-mono
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -152,6 +156,8 @@ jobs:
     steps:
       - run: |
           echo "select=$WHITEDOT_SELECT_RESULT browser=$WHITEDOT_BROWSER_RESULT/$WHITEDOT_BROWSER_TOTAL audio=$WHITEDOT_AUDIO_RESULT/$WHITEDOT_AUDIO_TOTAL"
-          test "$WHITEDOT_SELECT_RESULT" = success
-          test "$WHITEDOT_BROWSER_RESULT" = success || { test "$WHITEDOT_BROWSER_RESULT" = skipped && test "$WHITEDOT_BROWSER_TOTAL" = 0; }
-          test "$WHITEDOT_AUDIO_RESULT" = success || { test "$WHITEDOT_AUDIO_RESULT" = skipped && test "$WHITEDOT_AUDIO_TOTAL" = 0; }
+          # Explicit exits: bash -e ignores a failure inside `a || { b && c; }`, which let a red browser shard
+          # through on 6 Nov 2026 (run 42285831734). tests/flow-impact.mjs runs this block.
+          test "$WHITEDOT_SELECT_RESULT" = success || exit 1
+          case "$WHITEDOT_BROWSER_RESULT/$WHITEDOT_BROWSER_TOTAL" in success/*|skipped/0) ;; *) exit 1 ;; esac
+          case "$WHITEDOT_AUDIO_RESULT/$WHITEDOT_AUDIO_TOTAL" in success/*|skipped/0) ;; *) exit 1 ;; esac

@@ -47,5 +47,14 @@ print(json.dumps({'bumped':bumped,'kept':kept,'mode':f.select(kept)['mode'],
  assert.equal(images.length,2,'browser and audio jobs use the Playwright image');
  for(const v of images)assert.equal(v,pin,'image matches requirements-dev.txt');
  assert.doesNotMatch(workflow,/playwright install/,'the image already has the browsers');
- console.log('PASS flow impact: a release bump (index.html, sw.js, package.json, release-info) selects no flow; a real page or shell change still runs everything; the CI image follows the pinned Playwright');
+ // The required check: run its script as GitHub does (bash -e) for each outcome.
+ const gate=workflow.slice(workflow.indexOf('  browser-audio:')).split('      - run: |\n')[1].split('\n').map(l=>l.slice(10)).join('\n');
+ const verdict=(select,browser,bt,audio,at)=>spawnSync('bash',['-e','-c',gate],{encoding:'utf8',env:{...process.env,WHITEDOT_SELECT_RESULT:select,WHITEDOT_BROWSER_RESULT:browser,WHITEDOT_BROWSER_TOTAL:bt,WHITEDOT_AUDIO_RESULT:audio,WHITEDOT_AUDIO_TOTAL:at}}).status===0;
+ assert.equal(verdict('success','success','10','success','8'),true,'all green passes');
+ assert.equal(verdict('success','skipped','0','success','2'),true,'a kind with no selected flow is skipped and passes');
+ assert.equal(verdict('success','skipped','0','skipped','0'),true,'nothing selected passes');
+ for(const [args,why] of [[['success','failure','10','success','8'],'a red browser shard'],[['success','success','10','failure','8'],'a red audio shard'],
+  [['success','cancelled','10','success','8'],'a cancelled shard'],[['success','skipped','3','success','8'],'a skip with selected flows'],[['failure','skipped','','skipped',''],'a failed selection']])
+  assert.equal(verdict(...args),false,why+' fails browser-audio');
+ console.log('PASS flow impact: a release bump (index.html, sw.js, package.json, release-info) selects no flow; a real page or shell change still runs everything; the CI image follows the pinned Playwright; browser-audio fails on any red, cancelled or unexpected skip');
 }finally{rmSync(dir,{recursive:true,force:true});}
