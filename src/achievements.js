@@ -32,9 +32,12 @@ export function initialize(runtime){const legacy=newAchievementRules(runtime.ACH
  // nothing is announced (what was earned there waits in the Bitácora).
  function calm(){const j=runtime.S.journey;if(!j?.finished)return false;const d=runtime.placesData?.();return !!d&&!Object.values(d.seen||{}).some(Boolean);}
  // Panel 10 (P8, D3): one achievement per notice, never a count; the rest wait, unread, in the Bitácora.
- function announce(){if(!pending.length||runtime.journeyQuiet?.()||runtime.placeRun?.()||runtime.placeCardDue?.())return;if(calm()){pending=[];return;}const state=runtime.S;let ids=[...new Set(pending)];
+ // Listo 4: the Refugio says nothing of the World. Its gold is only ★ and ✦, and the Voz holds the top line there. A notice
+ // earned outside, waiting in the line or on screen when the house opens, leaves and waits for the way out, as if never sent.
+ function announce(){if(!pending.length||runtime.houseActive?.()||runtime.journeyQuiet?.()||runtime.placeRun?.()||runtime.placeCardDue?.())return;if(calm()){pending=[];return;}const state=runtime.S;let ids=[...new Set(pending)];
   if(firstWorld()){const pick=achievementPick(ids,metaOf);if(!pick){pending=[];return;}if(worldSeconds()-lastNotice<ACH_GAP)return;ids=[pick,...ids.filter(id=>id!==pick)];}
-  const a=runtime.ACH.find(a=>a[0]===ids[0]),escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const accepted=runtime.toast?.('Logro · <em>'+escape(a?.[1]||'Nuevo descubrimiento')+'</em>',{level:2,category:'logros',earned:true,coalesce:true,ttl:120000,valid:()=>runtime.S===state&&ids.some(id=>!seen.includes(id))});if(accepted!==false){pending=[];lastNotice=worldSeconds();}}
+  const a=runtime.ACH.find(a=>a[0]===ids[0]),escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const before=lastNotice,valid=()=>{if(runtime.S!==state||!ids.some(id=>!seen.includes(id)))return false;if(!runtime.houseActive?.())return true;pending.push(...ids.filter(id=>!pending.includes(id)));lastNotice=before;return false;};
+  const accepted=runtime.toast?.('Logro · <em>'+escape(a?.[1]||'Nuevo descubrimiento')+'</em>',{level:2,category:'logros',earned:true,coalesce:true,strict:true,ttl:120000,valid});if(accepted!==false){pending=[];lastNotice=worldSeconds();}}
  sync();
  function check(dt=2){if(owner!==runtime.S)sync();clock+=dt;
   // The first half hour counts only in the free World, after the Journey, with the game in view.
