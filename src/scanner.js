@@ -12,6 +12,7 @@ import {PROBES,probeFound,COMETS,cometFound} from './secretos-cielo-model.js';
 import {ASTEROID,secretFound} from './secretos-model.js';
 import {initialize as arrows} from './scanner-arrows.js';
 import {prefersReducedMotion} from './frame-state.js';
+import {translate} from './i18n.js';
 // El Escáner (coherencia T1, Jay, 4 Nov 2026; docs/MUNDO.md#el-escáner). Hold the finger 500 ms (or the key E): a ring of
 // light leaves the cube and what it touches lights up a moment. Level 1 (from the start): a short wave and shapes
 // without names. Level 2 (after the Journey): the name and the distance («Sonda · 120 m»). Found ones dim, new ones
@@ -154,7 +155,9 @@ export function initialize(runtime) {
       if(!lit.has(it.key)){if(!scanning||(!calm&&Math.min(d,edgeReach(Math.atan2(y-cy,x-cx),view,0,0,0))>radius+1))continue;lit.set(it.key,age);}
       const m=Math.hypot(it.x-S.wx,it.y-S.wy);
       shown.push({key:it.key,id:it.id,x,y,shape:it.shape,done:it.done,flash:Math.max(0,1-(age-lit.get(it.key))/SCAN_FLASH),label:names&&it.name?`${it.name} · ${scanDistance(m)}`:null});}
-    const placed=scanMarks(shown,view,{cap:SCAN_MARKS}),by=new Map(shown.map(s=>[s.key,s]));
+    // Listo 3 (alpha.275): the marks keep apart by the name as it is written (in English «Light · 11 m» is longer than
+    // «Luz · 11 m»); in Spanish nothing changes.
+    const placed=scanMarks(shown.map(s=>s.label?{...s,label:translate(s.label)}:s),view,{cap:SCAN_MARKS}),by=new Map(shown.map(s=>[s.key,s]));
     marks=placed.map(q=>({...by.get(q.key),...q}));
     const alpha=scanning||left>0?1:Math.max(0,1+left/SCAN_SHOW_FADE);
     const out=drawScanMarks(runtime.cx,marks,{alpha,light,still:calm,W,write});

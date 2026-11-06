@@ -227,6 +227,9 @@ body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(
 
 /* Five sections share one album; gold marks earned entries, never selection. */
 .journal-tabs button.selected{color:#fff;border-color:#fff;background:#000}
+/* Listo 3 (alpha.275): a tab's name never breaks inside a word; on a phone the three columns take the width of their longest name. */
+.journal-tabs{display:grid;grid-template-columns:repeat(6,minmax(max-content,1fr))}.journal-tabs button{min-width:0;white-space:nowrap}
+@media(max-width:600px){.journal-tabs{grid-template-columns:repeat(3,minmax(max-content,1fr))}.journal-tabs button{padding-inline:4px}}
 #journalFilters:not([hidden]){display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 #journalSearch{grid-column:1/-1;min-width:0}.journal-album{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .album-piece{min-width:0;border:1px solid #ffffff22;padding:10px}.album-piece h3{font-size:12px;overflow-wrap:anywhere}.album-piece p{font-size:11px;overflow-wrap:anywhere}.album-piece svg{width:56px;height:56px;stroke:#ffffff55;fill:none;stroke-width:1.5}.album-piece[data-owned="true"] svg{stroke:#f0d27a}
@@ -772,6 +775,8 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* In the Refugio the Voice speaks below the counters; in landscape, over the side panel. */
 /* Panel 11 (Q4): in the Refugio the Voz takes the free band under the last room label (house.js voiceSlot). */
 body:has(#housePanel:not([hidden])) .voice:not(.expanded){top:var(--house-voice-top,calc(var(--safe-top,0px) + 128px))}
+/* Listo 3: its short lines are read whole, up to three lines, also in a narrow landscape band. */
+body:has(#housePanel:not([hidden])) .voice:not(.expanded) span{-webkit-line-clamp:3}
 @media(max-height:440px){body:has(#housePanel:not([hidden])) .voice:not(.expanded){left:calc(100vw - 8px - min(150px,25vw - 55px));width:min(300px,calc(50vw - 110px));max-width:min(300px,calc(50vw - 110px))}}
 
 /* Panel 10 · P2 (Hodent; Nesbitt #5–#8, #11, #17, #32, #33): menus reordered, nothing added.
@@ -969,3 +974,5 @@ button.sound-chip[aria-pressed="true"]{background:#fff;color:#000;border-color:#
 .cria-row{border:1px solid #ffffff22;padding:8px 10px;margin:8px 0}.cria-row p{margin:0 0 4px;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.cria-row .rumor-now{color:#ffffffb0}.cria-swatch{font-size:12px}
 /* Listo 1 (alpha.273): in the open World the first goal («Llanura · más lejos · 0,5 km») stays in view with the guide. */
 body.first-journey.first-journey-open .ring-route{visibility:visible}body.first-journey.first-journey-open:has(.modal:not([hidden])) .ring-route{visibility:hidden}
+/* Listo 3 (alpha.275): while the finger is held, the goal's line steps aside with the notices; the scanner's names keep the view. */
+body[data-scan] .ring-route{opacity:0;transition:none}

@@ -5,7 +5,10 @@ Usage: python3 scripts/store-media.py [--out outputs/tienda] [--only capturas,ic
 Everything is rendered by the game itself in Chromium; nothing is painted over it. Output stays out of Git (outputs/).
 Listo 2 (alpha.274): every scene starts from a new save of the open World («?abierto=1»: no Journey, no Camino), as a
 player meets it: the first minute with the guide and «Llanura · más lejos · 0,5 km», then the scanner's marks on the
-edge, a place's portal, a round, its sheet of ★, Tu cubo (Piezas), the Bitácora and the Refugio."""
+edge, a place's portal, a round, its sheet of ★, Tu cubo (Piezas), the Bitácora and the Refugio.
+Listo 3 (alpha.275): the round is played, as a player does: the music runs, the place sings its bar, and then the cube
+pulses on the steps it asks for through the game's own pulse (the Space key's), so the Line and the cube show the hits.
+The Refugio waits for its first line to be written whole. A third clip shows a round."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -25,7 +28,7 @@ READY="!!window.__r?.ringState&&__r.inWorld()&&__r.ringState().active"
 HIDE="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
 # Passing notices are part of play but cover the scene in a still; they are hidden for captures only. The guide is
 # shown in the first scene and hidden after it (GUIDE).
-QUIET="#toast,#phrase,#celebration,#rareNotice,#sparkGain{visibility:hidden!important}"
+QUIET="#toast,#phrase,#zone,#celebration,#rareNotice,#sparkGain{visibility:hidden!important}"
 GUIDE="#firstJourney{visibility:hidden!important}"
 # After the first minute: three weeks of play, three places complete (Llanura, Lago, Bosque: the radar at level 4 and
 # Ámbar earned), sparks spent on a hat and a pet, the Refugio dressed. Still the open World: no Journey, no Camino.
@@ -38,7 +41,16 @@ LIVED="""async()=>{"""+HIDE+""";const r=__r,s=r.S;s.totalDays=21;s.firstJourney.
 PLACE="""()=>{const r=__r,ids=r.BIOMES.map(b=>b.id);for(const want of ['cristales','bosque','jardin','faros'])for(let d=1;d<40;d++)for(let a=0;a<16;a++){const x=Math.round(Math.cos(a/16*6.283)*d*300),y=Math.round(Math.sin(a/16*6.283)*d*300);if(ids[r.biomeOfPos(x,y)]===want&&!r.regionOfPos(x,y)?.sea){r.S.wx=x;r.S.wy=y;return want;}}return null;}"""
 # The Llanura's portal on screen: the cube a few steps from it, on the side of the origin.
 PORTAL="""()=>{const r=__r,f=r.S.lugares.found.llanura;if(!f)return false;const d=Math.hypot(f.x,f.y)||1;r.S.wx=Math.round(f.x-f.x/d*150);r.S.wy=Math.round(f.y-f.y/d*150);return true;}"""
-# The round's sheet: the Lago played to 74,6 % on time in about a minute.
+# Playing a round for `ms`: a pulse (runtime.sonar, the Space key's) each time the music, as heard, passes a step the
+# place counts (runtime.journeyRhythmTarget, the round's own judge), stamped with the moment it was heard, as a touch
+# carries its own time: a slow frame on a large screen does not move it. It ends just after a hit, while its mark is fresh on the Line, once ten hits in a row light the cube's trail.
+PLAY="""async(ms)=>{const r=__r,J=await import('/src/journey-pulse.js'),end=performance.now()+ms,give=performance.now()+ms+12000;let done=-1,hitAt=0;
+ return await new Promise(res=>{const tick=()=>{const now=performance.now(),heard=J.audibleTime(r.ac),t=r.journeyRhythmTarget(heard)?.hit;
+  if(t&&t.time<=heard&&heard-t.time<.4&&t.time>done+.01){done=t.time;r.sonar('player',now-(heard-t.time)*1000);hitAt=now;}
+  if(now<give&&(now<end||!hitAt||now-hitAt>90||(r.ritmoState?.().combo|0)<10))requestAnimationFrame(tick);else res(r.journeyPulseState());};tick();});}"""
+# Whether the Voz covers a text the Refugio drew (its rooms' names), from the house's own layout.
+COVERS="""()=>{const v=document.getElementById('voice').getBoundingClientRect();return __r.houseLayout().texts.some(t=>t.x<v.right&&v.left<t.x+t.w&&t.y<v.bottom&&v.top<t.y+t.h);}"""
+# The round's sheet: the Lago played to about three pulses in four on time in about a minute.
 RESULT="""()=>{const r=__r;for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}"""
 def page_for(b,w,h,dpr,lang,sound=False):
  ctx=b.new_context(viewport={'width':w,'height':h},device_scale_factor=dpr,**({'record_video_dir':str(OUT/'_video'),'record_video_size':{'width':w,'height':h}} if sound else {}))
@@ -59,7 +71,7 @@ def scenes(p,prefix):
   path=OUT/'capturas'/f'{prefix}-{name}.png';p.screenshot(path=str(path));shots.append(path.name)
  # 1 · The first minute: the guide and the line to the first place.
  p.wait_for_function("!document.getElementById('ringRoute').hidden",timeout=8000);p.wait_for_timeout(1200);snap('1-inicio')
- p.add_style_tag(content=GUIDE);p.evaluate(LIVED);p.wait_for_timeout(300)
+ p.add_style_tag(content=GUIDE);p.evaluate(LIVED);p.wait_for_timeout(300);home=p.evaluate("[__r.S.wx,__r.S.wy]")
  # 2 · The scanner: a held finger, and what is near becomes marks on the edge of the screen.
  p.evaluate(PLACE);p.wait_for_timeout(1500);clean(p)
  w,h=p.viewport_size['width'],p.viewport_size['height'];p.mouse.move(w/2+70,h/2-90);p.mouse.down();p.wait_for_timeout(1800)
@@ -70,7 +82,12 @@ def scenes(p,prefix):
  # 3 · A place's portal.
  assert p.evaluate(PORTAL);p.wait_for_timeout(2200);snap('3-portal')
  # 4 · A round: the place sings its bar, then the cube plays it.
- assert p.evaluate("__r.startPlace('lago')"),'the Lago opens';p.wait_for_function('!__r.rhythmDemo()',timeout=20000);p.wait_for_timeout(2500);snap('4-ronda')
+ # The music runs for this scene only (the clips record it); the stills elsewhere stay silent.
+ p.evaluate("()=>{__r.S.sound=true;__r.audio();}");p.wait_for_function("__r.ac?.state==='running'",timeout=10000)
+ # The round is played back where the save starts, a calm spot with the counters clear.
+ p.evaluate("([x,y])=>{__r.S.wx=x;__r.S.wy=y;}",home);p.wait_for_timeout(600);assert p.evaluate("__r.startPlace('lago')"),'the Lago opens';p.wait_for_timeout(300);p.wait_for_function('!__r.rhythmDemo()',timeout=20000)
+ clean(p);played=p.evaluate(PLAY,6000);assert played and played['hits']>=10,('the round was played',played);print(prefix,'round',played['hits'],'on time',played['misses'],'off',flush=True);p.screenshot(path=str(OUT/'capturas'/f'{prefix}-4-ronda.png'));shots.append(f'{prefix}-4-ronda.png')
+ p.evaluate("()=>{__r.S.sound=false;}")
  # 5 · Its sheet of ★.
  p.evaluate(RESULT);p.wait_for_function("!document.getElementById('mPlace').hidden",timeout=20000);p.wait_for_timeout(900);snap('5-resultado',hide=False)
  p.evaluate(HIDE);p.wait_for_timeout(600)
@@ -79,7 +96,13 @@ def scenes(p,prefix):
  # 7 · The Bitácora.
  p.evaluate("()=>{"+HIDE+";__r.openJournal('achievements');}");p.wait_for_timeout(600);snap('7-bitacora',hide=False)
  # 8 · The Refugio.
- p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000);p.wait_for_timeout(400);snap('8-refugio')
+ p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000)
+ # Its first line («Tu Refugio viaja contigo. Se abre donde estés.»), written whole before the still.
+ p.wait_for_function("document.getElementById('voice').classList.contains('on')&&document.getElementById('vX').textContent.length>40",timeout=15000);p.wait_for_timeout(900)
+ assert p.evaluate("(x=>x.scrollHeight<=x.clientHeight+1)(document.getElementById('vX'))"),'the Refugio line fits'
+ # Where the line has no free band and covers a room's name (phones), the still waits until it has been read.
+ if p.evaluate(COVERS):p.wait_for_function("!document.getElementById('voice').classList.contains('on')",timeout=15000);p.wait_for_timeout(700)
+ snap('8-refugio')
  assert not p.__errors,p.__errors
  return shots
 # The icon keeps the approved mark: a white cube inside a gold ring on black.
@@ -113,6 +136,8 @@ def clip(b,name,w,h,dpr,seconds,steps,lang):
 # The World clip: the first seconds with the guide, then a walk through a lively spot.
 WORLD=[('wait',3500),('css',GUIDE),('js',LIVED),('js',PLACE),('js','__r.startAutopilot?.()'),('wait',10000)]
 HOUSE=[('css',GUIDE),('js',LIVED),('js',"()=>{"+HIDE+";__r.landHouse();}"),('wait',3000),('js',"__r.houseWalkTo('jardin',.5)"),('wait',4000),('js','__r.housePulse()'),('wait',4000)]
+# A round: the place sings its bar, then the cube answers it on time.
+ROUND=[('css',GUIDE),('js',LIVED),('wait',800),('js',"__r.startPlace('lago')"),('wait',300),('js',"()=>new Promise(res=>{const t=()=>__r.rhythmDemo()?requestAnimationFrame(t):res();t();})"),('js',"()=>("+PLAY+")(8000)")]
 report={}
 try:
  with sync_playwright() as pw:
@@ -134,6 +159,7 @@ try:
    for lang in LANGS:
     report['clips'].append(clip(b,f'clip-mundo-vertical-{lang}',540,960,1,14,WORLD,lang))
     report['clips'].append(clip(b,f'clip-mundo-horizontal-{lang}',960,540,1,14,WORLD,lang))
+    report['clips'].append(clip(b,f'clip-ronda-vertical-{lang}',540,960,1,14,ROUND,lang))
    report['clips'].append(clip(b,'clip-refugio-vertical',540,960,1,12,HOUSE,LANGS[0]))
   b.close()
 finally:server.shutdown()
