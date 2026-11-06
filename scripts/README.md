@@ -19,6 +19,8 @@ El juego no ejecuta estos scripts. [Arquitectura](../docs/ARQUITECTURA.md) · [v
 | `desktop-package.mjs` | Builds de escritorio (Electron) en `dist/desktop/`; requiere `cd desktop && npm ci` ([itch.io](../docs/ITCH.md)) |
 | `serve-recovery.py` | Página local de recuperación; no es backend del juego |
 | `store-media.py` | Material de tienda en outputs; requiere autorización de ese trabajo |
+| `trailer.py` | Tráiler ES/EN desde el material de tienda, en outputs ([Material de tienda](../docs/TIENDAS.md#tráiler)) |
+| `site-build.mjs` | Páginas de `site/` (landing, privacidad, prensa); `--check` |
 
 Otros scripts de análisis/censo/economía permanecen como herramientas de diagnóstico. Sus resultados son modelos o muestras, no escucha humana ni conteos de todo el universo.
 
