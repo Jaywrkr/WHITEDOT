@@ -106,7 +106,7 @@ Entrega 1 (Jay, 3 de noviembre de 2026, alpha.243). Ajuste **«Escenas: más var
 
 ## Sonido pro
 
-Lote 1 (Jay, 5 de noviembre de 2026, alpha.266). Plan aprobado: la composición se queda y cambia la producción. Un solo motor de sonido compartido (`sound-pro.js`) y catorce perfiles de familia (`sound-profiles.js`). Cada género pertenece a una familia y conserva su tempo, swing, patrones, armonía y región. Este lote convierte la primera familia, **tech house y minimal** (`techhouse`, `minimal`, `rominimal`, `microhouse`), en la dirección del render 08 que Jay eligió («bien marcado»). El lote 2 convierte house clásico; el lote 3, techno; el lote 4, melodic y orgánico y afro y latino (abajo). Las otras nueve familias suenan como siempre hasta su lote.
+Lote 1 (Jay, 5 de noviembre de 2026, alpha.266). Plan aprobado: la composición se queda y cambia la producción. Un solo motor de sonido compartido (`sound-pro.js`) y catorce perfiles de familia (`sound-profiles.js`). Cada género pertenece a una familia y conserva su tempo, swing, patrones, armonía y región. Este lote convierte la primera familia, **tech house y minimal** (`techhouse`, `minimal`, `rominimal`, `microhouse`), en la dirección del render 08 que Jay eligió («bien marcado»). El lote 2 convierte house clásico; el lote 3, techno; el lote 4, melodic y orgánico y afro y latino; el lote 5, las nueve restantes (abajo). Con el lote 5, los 52 géneros suenan con el motor.
 
 - **Familias.** House clásico · Tech house y minimal · Techno · Melodic y orgánico · Afro y latino · Disco y funk · UK y breaks · Club de bajos · DnB y dubstep · Hip-hop · Electro · Ambient · Jazz · Experimental. Los 52 géneros, cada uno en una sola familia. Son familias de sonido; las familias de composición de `music-families.js` no cambian.
 - **Cómo entra.** `audio.js` sigue decidiendo cada golpe y cada nota. Antes de sonar, pregunta al motor (`runtime.proDrum` en cada golpe de la batería, `runtime.proVoice` en el bajo y la melodía). Para un género convertido suena el motor; para los demás responde que no y suena lo de siempre. Las líneas de `audio.js` son pocas y van en un commit aparte para que Jay las revise una a una.
@@ -145,6 +145,22 @@ Lote 4 (alpha.271): **melodic y orgánico** (`melodic`, `organic`) y **afro y la
 - **Tu interacción.** Las dos familias tienen su parte `front` (0,7) y su respuesta al groove (`answer`): una conga, un tom en tribal, la madera en la andina. Tus bajos en amapiano suenan como log drum.
 - **Sin `audio.js` nuevo.** Todo entra por los ganchos aprobados. Los toms y congas de cada kit tienen su propia duración (`tomDecay`, `congaDecay`); los demás kits suenan igual.
 - **Medidas y límites.** Ver [CAMBIOS](../CAMBIOS.md) (alpha.271). Nadie lo ha escuchado todavía.
+
+Lote 5 (alpha.276): **las nueve familias restantes**, 30 géneros. Mismo motor y mismos ganchos; tempo, swing, patrones, armonía, regiones y relevos no cambian.
+
+- **Capa del pulso.** En estas familias el bombo no cae en cada pulso (breaks, 2-step, electro, hip-hop). Los hats fantasma, las cajas fantasma, el vinilo y la respuesta al jugador cuelgan del primer golpe de cada pulso (`beats`), no del bombo.
+- **Disco y funk.** Bajo tipo slap (pulso y sierra con filtro que se cierra, golpe una octava arriba, sub), cuerdas por un phaser con flanger suave, stabs de metales, clavinet, Rhodes, hats abiertos y acordes en un bucle de filtro de 8 compases. Saturación cálida en el deck. Cosmic: más phaser y sala. Boogie: slap con más brillo, metales. Electro-funk: bajo de máquina sin golpe, talkbox (formantes que pasan de una vocal a otra; ninguna voz grabada), cencerro.
+- **UK y breaks.** Breakbeat sintetizado: caja afinada con palma encima, cajas y hats fantasma con el swing de la composición. Breaks: bajo reese (dos sierras desafinadas) y stabs. Garage: el shuffle del 2-step en los hats, stabs de órgano, sub hondo. Broken beat: Rhodes y un slap suave.
+- **Club de bajos.** Bombos duros, palmas brillantes, chops vocales sintéticos y el boom del 808 (seno con golpe, saturado, largo). Footwork y Miami: el boom más largo; Ghetto: el bajo de máquina.
+- **DnB y dubstep.** Breaks rápidos con caja afinada, reese y sub, pads anchos y Rhodes. Liquid: más suave, sub y pads. Dubstep: wobble, un LFO en el filtro del bajo a corchea, tresillo o semicorchea.
+- **Hip-hop.** Batería con polvo y saturación cálida. Boom bap: caja gorda, Rhodes. Lo-fi: vinilo de fondo (siseo y polvo, un compás en bucle) y vaivén de cinta en las teclas. Trap: el 808 se desliza entre notas cercanas. G-funk: lead agudo con portamento y vibrato, bajo funk.
+- **Electro.** La caja de ritmos 808: bombo largo, palma, cencerro, golpes tipo vocoder (cuatro bandas fijas), bajo de máquina secuenciado. Detroit: cuerdas y campanas FM frías. EBM: caja con puerta (gated).
+- **Ambient.** Pads largos en la sala, nubes de granos sintetizados, bombo suave donde lo hay. Heart: stabs de dub al eco de cinta. Berlin School: plucks resonantes al eco. Ambient y heart no tienen batería: el motor se crea con su primera nota.
+- **Jazz.** Escobillas y ride, contrabajo (cuerda pulsada oscura, bajo 700 Hz, y cuerpo de seno), Rhodes y lead tipo saxo (formantes, aliento, vibrato).
+- **Experimental.** Batería precisa con stutters (repeticiones a fusa o semifusa elegidas por el paso, sin azar), campanas FM, granos. Algorave: más stutter, bombo de clic.
+- **Tu interacción.** Cada familia tiene su parte `front` (0,68–0,8) y su respuesta al groove (`answer`): conga en disco, caja en UK y DnB, palma en club de bajos, rim en hip-hop, jazz y experimental, cencerro en electro, madera en ambient.
+- **Sin `audio.js` nuevo.** Las otras cinco familias suenan igual: la caja compartida, los kits y sus buffers no cambian.
+- **Medidas y límites.** Ver [CAMBIOS](../CAMBIOS.md) (alpha.276). Nadie lo ha escuchado todavía.
 
 El modelo de rareza y el censo no garantizan una probabilidad individual de encuentro en una hora. Depende de recorrido, mundo, región y condiciones. Las muestras forzadas de laboratorio no acreditan encuentros naturales.
 
