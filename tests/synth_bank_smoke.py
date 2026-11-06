@@ -2,7 +2,7 @@
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright,TimeoutError as PlaywrightTimeout
 import threading,shutil,os
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
@@ -27,6 +27,9 @@ try:
     assert page.evaluate('(id)=>__testRuntime.S.journal.music.instruments[id]===1',find['instrument'])
    else:
     page.wait_for_function('(id)=>{const r=__testRuntime,o=r.livingNear()[0];return __notes.length>0&&r.getInstrumentPatch("living:"+o.kind,r.regionOfPos(o.homeX,o.homeY),r.getVoice("living:"+o.kind,r.regionOfPos(o.homeX,o.homeY),o),o).program.id===id}',arg=find['program'],timeout=6000)
+    # The first note may come from another creature of the place: wait for the nearest one's own filter motion.
+    try:page.wait_for_function('()=>!!__testRuntime.livingNear()[0]?.filterMotion',polling=100,timeout=6000)
+    except PlaywrightTimeout:pass
     state=page.evaluate('()=>__testRuntime.livingNear()[0].filterMotion');assert state and state['start']!=state['end'],state
     if state['slope']:slopes.add(state['slope'])
     programs.add(find['program'])
