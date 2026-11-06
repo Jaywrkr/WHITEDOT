@@ -1,6 +1,7 @@
 """Listo 3 (alpha.275): the Bitácora's tabs never break inside a word, in Spanish and English, at 320, 360 and 390 px and
 on a wide screen; the Refugio's first line is read whole, also in a narrow landscape band; the goal's line steps
-aside while the scanner is held."""
+aside while the scanner is held. Listo 4 (alpha.277): the Voz covers no text the Refugio draws (its rooms' names) nor
+the house panel, in Spanish and English, at 320, 360 and 390 px portrait, in short landscapes and on a wide screen."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -12,6 +13,9 @@ class Handler(SimpleHTTPRequestHandler):
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 URL=f'http://127.0.0.1:{server.server_port}/?abierto=1'
 TABS="""()=>{const t=document.querySelector('.journal-tabs');return {over:t.scrollWidth>t.clientWidth,tabs:[...t.querySelectorAll('button')].map(b=>{const r=document.createRange();r.selectNodeContents(b);return {text:b.textContent,lines:r.getClientRects().length,cut:b.scrollWidth>b.clientWidth};})};}"""
+# What the Voz covers: a text the Refugio drew, or the house panel.
+COVERS="""()=>{const v=document.getElementById('voice').getBoundingClientRect(),x=(a,b)=>a.x<b.right&&b.left<a.x+a.w&&a.y<b.bottom&&b.top<a.y+a.h,p=document.getElementById('housePanel').getBoundingClientRect();
+ return [...__r.houseLayout().texts.filter(t=>x(t,v)).map(t=>t.text),...(x({x:p.left,y:p.top,w:p.width,h:p.height},v)?['(panel)']:[])];}"""
 def page(b,w,h,lang):
  p=b.new_page(viewport={'width':w,'height':h});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  p.add_init_script(f"try{{localStorage.setItem('kubono:lang','{lang}')}}catch(_){{}}")
@@ -28,11 +32,12 @@ try:
     assert not r['over'] and all(t['lines']==1 and not t['cut'] for t in r['tabs']),(lang,w,r)
     assert not p.errors,p.errors;p.close()
    # The Refugio's first line, whole: at 640×360 the side band is narrow and the English line takes three lines.
-   for w,h in [(640,360),(1280,720),(320,568)]:
+   for w,h in [(640,360),(1280,720),(320,568),(360,640),(390,844),(568,320)]:
     p=page(b,w,h,lang);p.evaluate("()=>{__r.S.firstJourney.skipped=true;__r.landHouse();}")
     p.wait_for_function("document.getElementById('voice').classList.contains('on')&&document.getElementById('vX').textContent.length>40",timeout=15000);p.wait_for_timeout(700)
     v=p.evaluate("(x=>({text:x.textContent,sh:x.scrollHeight,ch:x.clientHeight}))(document.getElementById('vX'))")
     assert v['text'].endswith('.') and v['sh']<=v['ch']+1,(lang,w,v)
+    p.wait_for_timeout(300);hit=p.evaluate(COVERS);assert not hit,(lang,w,h,'the Voz covers',hit)
     assert not p.errors,p.errors;p.close()
   # While the finger is held the goal's line steps aside, as the notices do; it comes back when the finger lifts.
   p=page(b,360,640,'en');p.wait_for_function("!document.getElementById('ringRoute').hidden",timeout=8000)
@@ -40,5 +45,5 @@ try:
   p.evaluate("__r.stopScanner()");assert p.evaluate("getComputedStyle(document.getElementById('ringRoute')).opacity")=='1'
   assert not p.errors,p.errors;p.close()
   b.close()
-  print('PASS Bitácora tabs whole in ES/EN at 320, 360, 390 and 1280 px; the Refugio line read whole at 640×360, 1280×720 and 320×568; the goal line steps aside while scanning',flush=True)
+  print('PASS Bitácora tabs whole in ES/EN at 320, 360, 390 and 1280 px; the Refugio line read whole at 640×360, 1280×720, 320×568, 360×640, 390×844 and 568×320, over no label nor the panel; the goal line steps aside while scanning',flush=True)
 finally:server.shutdown()

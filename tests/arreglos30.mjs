@@ -80,6 +80,12 @@ function achGame(seconds){const toasts=[],r={S:{mode:'world',todayKey:'2026-11-0
  r.S.ach.evento1='d';r.achievementEarned(['evento1']);r.achievementsTick(2);assert.equal(r.toasts.length,1);assert.match(r.toasts[0],/Testigo/);
  r.S.ach.hito1='d';r.achievementEarned(['hito1']);r.achievementsTick(2);assert.equal(r.toasts.length,1,'the next waits its gap');
  for(let i=0;i<ACH_GAP*4+40;i++)r.achievementsTick(.25);assert.equal(r.toasts.length,2,'then it comes');assert.match(r.toasts[1],/Lo oíste primero/);assert(r.achievementsFirstWorld().seconds>=ACH_GAP);}
+// Listo 4: the Refugio says nothing of the World; a notice waiting when it opens goes back and comes on the way out.
+{const valids=[],r=achGame(FIRST_WORLD);let house=false;r.houseActive=()=>house;r.toast=(t,o)=>{r.toasts.push(t);valids.push(o.valid);assert.equal(o.strict,true);return true;};
+ house=true;r.S.ach.evento1='d';r.achievementEarned(['evento1']);r.achievementsTick(2);assert.equal(r.toasts.length,0,'no achievement notice inside the Refugio');
+ house=false;r.achievementsTick(2);assert.equal(r.toasts.length,1,'it comes on the way out');assert(valids[0]());
+ house=true;assert.equal(valids[0](),false,'a notice still in the line leaves when the Refugio opens');assert.deepEqual(r.achievementsFirstWorld().pending,['evento1'],'and waits again');
+ house=false;r.achievementsTick(2);assert.equal(r.toasts.length,2,'then it comes again');}
 {const r=achGame(FIRST_WORLD);const v2=r.ACH.find(a=>a[0].startsWith('v2:'))[0];r.S.ach[v2]='d';r.achievementEarned([v2]);r.achievementsTick(2);assert.equal(r.toasts.length,1,'after the first half hour, as before');}
 {const r=achGame();r.S.journey={finished:false};assert.equal(r.achievementsFirstWorld().first,false);}
 // A save from before alpha.242 with many achievements is past its first half hour.

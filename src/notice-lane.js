@@ -44,7 +44,7 @@ export function installNoticeLane(runtime){
   let slot=timed.get(id);if(!slot){slot={panel,queue:[],current:null,left:0};timed.set(id,slot);}
   if(key&&(slot.current?.key===key||slot.queue.some(e=>e.key===key)))return false;
   if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category||e.level>level);
-  slot.queue.push({render,earned:options.earned??category==='ganado',onShown:options.onShown,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
+  slot.queue.push({render,strict:!!options.strict,earned:options.earned??category==='ganado',onShown:options.onShown,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
   slot.queue.sort((a,b)=>b.level-a.level);while(slot.queue.length>(slot.queue.every(e=>e.level===1)?1:8))slot.queue.pop();
   recent.set(duplicate,now);if(recent.size>120)recent.delete(recent.keys().next().value);
   request(id,{level:Math.max(...slot.queue.map(e=>e.level),slot.current?.level||1)});return true;
@@ -60,6 +60,8 @@ export function installNoticeLane(runtime){
    if(['zone','phrase','toast'].includes(id)&&document.body.classList.contains('first-journey')&&slot.current?.seconds!==Infinity&&!slot.queue.some(e=>e.seconds===Infinity)){slot.panel.hidden=true;slot.queue.length=0;slot.current=null;model.cancel(id);continue;}
    if(paused){slot.panel.hidden=true;continue;}
    slot.queue=slot.queue.filter(e=>e.expires>now&&e.valid());
+   // A strict notice leaves the moment it stops being valid, even while it shows (an achievement once the Refugio opens).
+   if(slot.current?.strict&&!slot.current.valid()){hide(slot.panel);slot.current=null;release(id);}
    if(slot.current&&model.owner!==id){slot.current=null;slot.panel.hidden=true;}
    if(!slot.current){
     while(slot.queue[0]?.level===1&&now-(started.get(1)??-Infinity)<NOTICE_STYLES[1].cooldown)slot.queue.shift();

@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.276** en `main` `968d596` (PR #415); la rama `jay/main-verde-2` repara su CI. Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.277** en la rama `jay/listo-4`, desde `main` (alpha.276, PR #415). Esta rama no toca el sonido del juego. Las entradas describen su revisión, no certifican producción.
+
+## Listo 4: la Voz del Refugio sin tapar rótulos y clips sin saturar · 2.3.0-alpha.277
+
+Rama `jay/listo-4`, desde `main` `4e2fe11`. Dos detalles que Jay aprobó. Guías: [Casa viva](docs/CASA_VIVA.md), [Material de tienda](docs/TIENDAS.md).
+
+- **La Voz del Refugio no tapa rótulos.** En teléfono (320 y 360 px) no cabía bajo la casa y subía: tapaba «Cielo» unos segundos. Ahora, si taparía un texto, la casa sube y le deja la franja de abajo. En horizontal corto (568×320) tapaba la primera línea del panel: allí la casa se corre a la izquierda y la Voz ocupa la columna entre ambos, con hasta seis líneas. Un ajuste por visita y tamaño, sin ir y venir. Donde no tapaba nada (390 px, 640×360 y mayores, escritorio), nada cambia. La casa y el cubo se achican un poco; nunca crecen (`house.js`, `estilo-j.css`).
+- **Clips sin saturar.** Los clips llegaban a 0 dBTP o más (hasta +0,8; uno con un pico suelto de +8,6 dB). `scripts/store-media.py` les aplica una ganancia fija hasta unos −16,5 LUFS, sin compresión ni bombeo. Un limitador rápido, sobremuestreado, actúa solo sobre un pico suelto. Pico verdadero de −2 a −8 dBTP, comprobado tras codificar. La imagen se copia sin recodificar. `--only master` lo hace sobre los clips ya grabados.
+- **Sin avisos de logro en el Refugio.** Un «Logro · …» ganado fuera esperaba en la cola de avisos y salía dentro, en dorado y sobre los rótulos. Pasaba en el CI, con la CPU lenta (`tests/rules_in_sight_smoke.py`, 390 px); también en `main` con la CPU a ¼. Ahora el Refugio no anuncia logros. Uno en cola o en pantalla al entrar se retira y vuelve a esperar a la salida, como si no se hubiera enviado. El aviso es «estricto»: la cola lo quita en cuanto deja de valer, también mientras se ve (`achievements.js`, `notice-lane.js`; `tests/arreglos30.mjs`).
+- **Medios.** La captura del Refugio ya no espera a que la Voz se vaya: la incluye y falla si tapa un rótulo. `--scenes 8-refugio` rehace solo esa captura. Las diez del Refugio (cinco tamaños, ES/EN) y el sonido de los siete clips, regenerados fuera de Git.
+- **Pruebas.** `tests/listo3_layout_smoke.py`: la Voz no tapa ningún texto del Refugio ni su panel, ES/EN, a 320×568, 360×640, 390×844, 568×320, 640×360 y 1280×720. Falla con el código anterior.
+- **Preservación.** Capa `approvedLISTO4` (`4d42901`) en `verify-e-preservation.mjs` para `achievements.js` y `notice-lane.js`; sin archivos de música.
+- **Límites.** No probado en teléfono ni con personas; los clips no se escucharon en altavoces.
+
 
 
 

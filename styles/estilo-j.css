@@ -776,8 +776,10 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* Panel 11 (Q4): in the Refugio the Voz takes the free band under the last room label (house.js voiceSlot). */
 body:has(#housePanel:not([hidden])) .voice:not(.expanded){top:var(--house-voice-top,calc(var(--safe-top,0px) + 128px))}
 /* Listo 3: its short lines are read whole, up to three lines, also in a narrow landscape band. */
-body:has(#housePanel:not([hidden])) .voice:not(.expanded) span{-webkit-line-clamp:3}
-@media(max-height:440px){body:has(#housePanel:not([hidden])) .voice:not(.expanded){left:calc(100vw - 8px - min(150px,25vw - 55px));width:min(300px,calc(50vw - 110px));max-width:min(300px,calc(50vw - 110px))}}
+body:has(#housePanel:not([hidden])) .voice:not(.expanded) span{-webkit-line-clamp:var(--house-voice-lines,3)}
+@media(max-height:440px){body:has(#housePanel:not([hidden])) .voice:not(.expanded){left:var(--house-voice-left,calc(100vw - 8px - min(150px,25vw - 55px)));width:var(--house-voice-width,min(300px,calc(50vw - 110px)));max-width:var(--house-voice-width,min(300px,calc(50vw - 110px)))}}
+/* Listo 4: in a short landscape the Voz may take the narrow column beside the house (house.js voiceSlot), up to six lines. */
+body:has(#housePanel:not([hidden])) #voice[data-notice-level="2"]:not(.expanded){max-height:var(--house-voice-height,24dvh)}
 
 /* Panel 10 · P2 (Hodent; Nesbitt #5–#8, #11, #17, #32, #33): menus reordered, nothing added.
    Jugar: the next step, then Lugares, Tu cubo, Refugio and Bitácora. A row closes its gaps when a button hides. */
