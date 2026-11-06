@@ -1,4 +1,5 @@
 import {studyOf,JAY_STORY} from './living-studies.js';
+import {caminoPast} from './journey-mode.js';
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function bridgeContact(progress,index){return index===progress?Math.min(3,progress+1):index===0?1:0;}
 export function initialize(runtime){
@@ -16,9 +17,9 @@ export function initialize(runtime){
   else if(o.dwell>6)open(o);
   if(m.open&&d<90){const study=studyOf(o);for(const peer of runtime.livingNear(180))if(peer.kind===study.flora||peer.kind===study.fauna){peer.energy=Math.max(.26,peer.energy);peer.hue=(o.hue+12)%360;}}
   const found=Object.keys(runtime.S.livingSeen||{}).length,story=runtime.S.jayStory||={};
-  for(const fragment of JAY_STORY)if(found>=fragment.need&&!story[fragment.id]){story[fragment.id]=runtime.dayKey();runtime.say(fragment.text,'El Camino · '+fragment.id);break;}
+  for(const fragment of JAY_STORY)if(found>=fragment.need&&!story[fragment.id]){story[fragment.id]=runtime.dayKey();runtime.say(fragment.text,(caminoPast(runtime.S)?'El Camino · ':'Recuerdo · ')+fragment.id);break;}
  }
- function card(){const ids=Object.keys(runtime.S.jayStory||{});return '<article class="journal-card"><h3>Recuerdos del Camino</h3>'+ids.map(id=>'<p>'+safe(JAY_STORY.find(f=>f.id===id)?.text||'')+'</p>').join('')+'<p>Escuchar, crear, volver y compartir. No hay una obligación diaria para seguir explorando.</p></article>';
+ function card(){const ids=Object.keys(runtime.S.jayStory||{});return '<article class="journal-card"><h3>'+(caminoPast(runtime.S)?'Recuerdos del Camino':'Recuerdos del viaje')+'</h3>'+ids.map(id=>'<p>'+safe(JAY_STORY.find(f=>f.id===id)?.text||'')+'</p>').join('')+'<p>Escuchar, crear, volver y compartir. No hay una obligación diaria para seguir explorando.</p></article>';
  }
  runtime.ACH.push(['umbralVivo','Un recuerdo despierta','Escuchaste y activaste una construcción del universo vivo.']);
  Object.defineProperties(runtime,{livingBuildingTick:{get:()=>tick},livingStoryCard:{get:()=>card}});

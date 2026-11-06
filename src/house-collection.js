@@ -1,6 +1,7 @@
 import {rarePortrait} from './rare-card-art.js';
 import {TIER_INK} from './rare-card-model.js';
 import {ACH_CATEGORIES} from './achievement-metadata.js';
+import {categoryLabel,hiddenAchievement} from './journey-mode.js';
 import {CUBE_SHOP} from './cube-shop-model.js';
 import {pieceImage} from './cube-shop-preview.js';
 import {livingGlyph} from './living-art.js';
@@ -52,13 +53,13 @@ export function initialize(runtime){
    if(card){const pic=portraitImage(card);if(pic.ready)c.drawImage(pic.img,p.x+3*k,p.y+3*k,w-6*k,h-6*k);hits.push({x:p.x,y:p.y,w,h,text:card.name+' · '+({raro:'Raro',singular:'Singular',legendario:'Legendario',mitico:'Mítico'}[card.odds?.tier]||'Tarjeta')});}
    else{hits.push({x:p.x,y:p.y,w,h,text:'Un panel vacío: encuentra tarjetas raras para encenderlo.'});}}
    // A constellation of achievements: one star per category, gold and brighter as you earn more.
-   const rows=trophyShelf(runtime.S.ach,runtime.ACH,a=>runtime.achievementMeta?.(a)||{category:'Camino'}),stars=rows.map((row,i)=>({row,p:toScreen(sala.x+SHELF.x+14+i*27,sala.y+SHELF.y-6+((i*37)%3-1)*8)}));
+   const S=runtime.S,rows=trophyShelf(S.ach,runtime.ACH,a=>hiddenAchievement(a[0],S)?null:runtime.achievementMeta?.(a)||{category:'Camino'}),stars=rows.map((row,i)=>({row,p:toScreen(sala.x+SHELF.x+14+i*27,sala.y+SHELF.y-6+((i*37)%3-1)*8)}));
    c.strokeStyle='#f0d27a55';c.beginPath();stars.forEach(({p},i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.stroke();
-   for(const {row,p}of stars){const share=row.total?row.earned/row.total:0,size=Math.max(2,(2+share*3)*k*1.4);c.fillStyle=row.earned?'#f0d27a':'#ffffff55';c.globalAlpha=row.earned?.55+.45*share:1;c.fillRect(Math.round(p.x-size/2),Math.round(p.y-size/2),Math.round(size),Math.round(size));c.globalAlpha=1;hits.push({x:p.x-8,y:p.y-8,w:16,h:16,text:row.category.replace('Casa','Refugio')+' · '+row.earned+' de '+row.total+' logros'});}}
+   for(const {row,p}of stars){const share=row.total?row.earned/row.total:0,size=Math.max(2,(2+share*3)*k*1.4);c.fillStyle=row.earned?'#f0d27a':'#ffffff55';c.globalAlpha=row.earned?.55+.45*share:1;c.fillRect(Math.round(p.x-size/2),Math.round(p.y-size/2),Math.round(size),Math.round(size));c.globalAlpha=1;hits.push({x:p.x-8,y:p.y-8,w:16,h:16,text:categoryLabel(row.category,S)+' · '+row.earned+' de '+row.total+' logros'});}}
   // Glass columns in the Raíz: what you bought in the shop.
   if(unlocked.includes('sotano')){const b=roomBox('sotano'),list=showcasePieces(runtime.sparkEconomy),color=runtime.cubeColor?.()||'#fff';for(const [i,v]of SHOWCASES.entries()){const p=toScreen(b.x+v.x,b.y+b.h-v.h-6),w=v.w*k,h=v.h*k,id=list[i];c.strokeStyle='#cfe6ff59';c.strokeRect(Math.round(p.x)+.5,Math.round(p.y)+.5,Math.round(w),Math.round(h));c.strokeStyle='#9fd7ff22';c.beginPath();c.moveTo(p.x+w*.2,p.y+4);c.lineTo(p.x+w*.05,p.y+h*.4);c.stroke();c.fillStyle='#ffffff22';c.fillRect(p.x-2*k,p.y+h,w+4*k,4*k);
-   if(id){const pic=pieceImg(id,color);if(pic.ready){const iw=w-4*k,ih=iw*68/102;c.save();c.globalCompositeOperation='lighten';c.drawImage(pic.img,p.x+2*k,p.y+h*.38-ih/2,iw,ih);c.restore();}const piece=CUBE_SHOP.find(q=>q.id===id);hits.push({x:p.x,y:p.y,w,h,text:(piece?.name||'Pieza')+' · comprada en la tienda'});}
-   else hits.push({x:p.x,y:p.y,w,h,text:'Columna vacía: lo que compres en la tienda aparece aquí.'});}}
+   if(id){const pic=pieceImg(id,color);if(pic.ready){const iw=w-4*k,ih=iw*68/102;c.save();c.globalCompositeOperation='lighten';c.drawImage(pic.img,p.x+2*k,p.y+h*.38-ih/2,iw,ih);c.restore();}const piece=CUBE_SHOP.find(q=>q.id===id);hits.push({x:p.x,y:p.y,w,h,text:(piece?.name||'Pieza')+' · conseguida con chispas'});}
+   else hits.push({x:p.x,y:p.y,w,h,text:'Columna vacía: lo que consigas con chispas aparece aquí.'});}}
   // Garden voices: each one a stem of light rising from the floor to where it sounds.
   for(const o of (runtime.gardenObjects?.(house)||[]).filter(o=>o.gardenCard&&unlocked.includes(o.room))){const b=roomBox(o.room),top=toScreen(b.x+18+o.x*(b.w-36),b.y+26+o.y*(b.h-52)),base=toScreen(b.x+18+o.x*(b.w-36),b.y+b.h),card=runtime.rareCards?.find(q=>q.id===o.cardId),ink=TIER_INK[card?.odds?.tier]||'#9fd7c7';
    c.strokeStyle=ink;c.globalAlpha=.45;c.beginPath();c.moveTo(base.x,base.y);c.quadraticCurveTo(base.x+6*k,(base.y+top.y)/2,top.x,top.y+6*k);c.stroke();c.globalAlpha=1;

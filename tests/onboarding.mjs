@@ -20,3 +20,23 @@ assert(FIRST_JOURNEY_STEPS[1][1].includes('diez cristales'));assert(FIRST_JOURNE
 const learnedOnPath=normalizeFirstJourney(null);advanceFirstJourney(learnedOnPath,'pulse');advanceFirstJourney(learnedOnPath,'world');advanceFirstJourney(learnedOnPath,'voice');assert.equal(firstJourneyNext(normalizeFirstJourney(learnedOnPath))[0],'save','a pulse learned on Camino is not taught again after reload');
 
 const {lessonAvailable}=await import('../src/onboarding-model.js');assert(lessonAvailable({finished:false}));assert(!lessonAvailable({finished:true}));assert(lessonAvailable({finished:true},true));
+
+// Listo 1 (alpha.273): the open World's guide. Six short steps, from 1, each a real event; a later event proves the
+// earlier ones; the Journey's steps and facts are untouched; a finished Camino guide counts as finished; reload keeps it.
+{const {OPEN_WORLD_STEPS}=await import('../src/onboarding-model.js');
+ assert.deepEqual(OPEN_WORLD_STEPS.map(([id])=>id),['move','find','portal','round','result','explore']);
+ assert(OPEN_WORLD_STEPS.every(([,text])=>text.split(/\s+/).length<=12));assert(!OPEN_WORLD_STEPS.some(([,text])=>/cristal|Camino/i.test(text)),'no Camino in the open guide');
+ const o=normalizeFirstJourney(null);assert.equal(firstJourneyNext(o,OPEN_WORLD_STEPS)[0],'move','the open guide starts at its first step');
+ assert(advanceFirstJourney(o,'portal',OPEN_WORLD_STEPS));assert(o.facts.move&&o.facts.find,'entering the portal proves the walk');assert.equal(firstJourneyNext(o,OPEN_WORLD_STEPS)[0],'round');
+ assert(!advanceFirstJourney(o,'light',OPEN_WORLD_STEPS),'a Journey step is not an open step');assert.equal(firstJourneyNext(o)[0],'light','the Journey keeps its own next step');
+ const back=normalizeFirstJourney(JSON.parse(JSON.stringify(o)));assert.equal(firstJourneyNext(back,OPEN_WORLD_STEPS)[0],'round','kept on reload');
+ const done=normalizeFirstJourney({version:1,facts:Object.fromEntries(FIRST_JOURNEY_STEPS.map(([id])=>[id,true]))});assert.equal(firstJourneyNext(done,OPEN_WORLD_STEPS),null,'a finished Camino guide is not repeated');
+ for(const id of ['result','explore'])advanceFirstJourney(back,id,OPEN_WORLD_STEPS);assert.equal(firstJourneyNext(back,OPEN_WORLD_STEPS),null);
+ const {normalizeJourney,caminoPast,categoryLabel,hiddenAchievement}=await import('../src/journey-mode.js');
+ const fresh={pathCrystals:[],ach:{}};fresh.journey=normalizeJourney(null,fresh,false,{open:true});assert(!caminoPast(fresh),'a new player of the open World never had the Camino');
+ assert.equal(categoryLabel('Camino',fresh),'Días');assert.equal(categoryLabel('Casa',fresh),'Refugio');assert(hiddenAchievement('tope',fresh));assert(!hiddenAchievement('dia1',fresh));
+ const mid={pathCrystals:[],ach:{}};mid.journey=normalizeJourney({version:1,mode:'viaje',done:{llanura:true}},mid,false,{open:true});assert(caminoPast(mid),'a save from the middle of the Journey had the Camino');
+ const reached={pathCrystals:[1,2],lastWorldDay:'x',ach:{mundo:'x'}};reached.journey=normalizeJourney(null,reached,false,{open:true});assert(caminoPast(reached),'a save that reached the World by the Camino keeps it');
+ const journey={pathCrystals:[],ach:{}};journey.journey=normalizeJourney(null,journey,false);assert(caminoPast(journey)&&categoryLabel('Camino',journey)==='Camino'&&!hiddenAchievement('tope',journey),'the Journey is untouched');
+ const won={...fresh,ach:{tope:'x'}};assert(!hiddenAchievement('tope',won),'an earned «tope» stays listed');
+ console.log('PASS open World guide: six real steps from 1, Journey facts untouched, finished guides kept, Camino named only where it was played');}

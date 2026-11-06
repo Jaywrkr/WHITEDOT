@@ -967,3 +967,5 @@ button.sound-chip[aria-pressed="true"]{background:#fff;color:#000;border-color:#
 .viajed-cells button{aspect-ratio:1;min-height:44px;border:1px solid #ffffff55;background:#000;border-radius:0}.viajed-cells button.on{background:#fff}
 .viajed-count{color:#ffffffa0}
 .cria-row{border:1px solid #ffffff22;padding:8px 10px;margin:8px 0}.cria-row p{margin:0 0 4px;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.cria-row .rumor-now{color:#ffffffb0}.cria-swatch{font-size:12px}
+/* Listo 1 (alpha.273): in the open World the first goal («Llanura · más lejos · 0,5 km») stays in view with the guide. */
+body.first-journey.first-journey-open .ring-route{visibility:visible}body.first-journey.first-journey-open:has(.modal:not([hidden])) .ring-route{visibility:hidden}
