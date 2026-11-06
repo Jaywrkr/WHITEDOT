@@ -15,6 +15,16 @@ Rama `jay/listo-4`, desde `main` `4e2fe11`. Dos detalles que Jay aprobó. Guías
 
 
 
+## Main en verde tras el sonido pro 5 · 2.3.0-alpha.276
+
+Rama `jay/main-verde-2`, desde `main` `968d596` (PR #415, fusionado sin CI). El CI de `main` (run 42264652501) falló en los navegadores 5, 6, 8 y 9. Solo cambian pruebas; ni código del juego ni versión.
+
+- **`victory_live_smoke.py`** («close leaves the output alone»). El Jardín es IDM, ahora familia convertida: en su segundo compás, al conocerse la región, el motor pro baja el último recorte un 12 % (de 0,92 a 0,81). La prueba medía antes. Ahora mide desde el compás 2; la aserción sigue: el cierre no toca la salida.
+- **`blobs_smoke.py`** («blob has no audible voice»). Con el motor pro, tus notas de un mismo golpe esperan a una microtarea para sonar juntas (acordes, alpha.270). La prueba contaba osciladores al momento; ahora cuenta tras esa espera.
+- **`universe_layers_smoke.py`** (polvo ámbar 63 de más de 80) y **`synth_bank_smoke.py`** (`filterMotion` vacío). No se reprodujeron en `968d596`. El ámbar ya fallaba en `4e2fe11` con la CPU limitada ×4 (43 y 57 píxeles). Esperan el fotograma con polvo (hasta 6 s) y el movimiento de filtro de la criatura más cercana. Mismos umbrales.
+- **Pruebas.** Antes de #415 (`4e2fe11`) pasan las dos primeras sin cambios; en `968d596`, fallan. Con la rama pasan las cuatro y los diez recorridos de sonido de esos shards. `npm test`, `node scripts/release-audit.mjs`, `node scripts/verify-e-preservation.mjs` y `node scripts/stale-text-check.mjs`.
+- **Límites.** CI de la rama sin correr. Sin PR: la rama espera a Jay.
+
 ## Sonido pro 5: las nueve familias restantes · 2.3.0-alpha.276
 
 Rama `jay/sonido-pro-5`, desde `main` `4e2fe11` (alpha.275). Último lote del plan aprobado («termina la última tanda de música»). Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
