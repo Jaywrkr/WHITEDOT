@@ -1,7 +1,7 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {wonderPortrait} from './musical-wonders-art.js';
 import {normalizeCube} from './cube-model.js';
-import {CUBE_DEFAULTS,wardrobeByType,cubeStyleUnlocked} from './wardrobe-model.js';
+import {CUBE_DEFAULTS,wardrobeByType,cubeStyleUnlocked,wardrobeHint} from './wardrobe-model.js';
 import {cubeSurface,cubeAura,cubeHalo,cubeTrailPreview} from './cube-art.js';
 import {PULSE_FAMILIES,PULSE_FORMS,ownedPulses,pulseForm,pulseHint,drawPulse} from './pulse-forms.js';
 import {CUBE_SHOP,shopPiece,wearing} from './cube-shop-model.js';
@@ -16,7 +16,7 @@ export function initialize(runtime){
  // Everything changes at once and is saved; a failed save puts the cube back as it was.
  function choose(type,value){const p=type==='pulse'?{value}:type==='wonder'?{value}:wardrobeByType(type).find(p=>p.value===value);if(!p)return false;
   if(settings().version!==2)return false;
-  if(type!=='pulse'&&type!=='wonder'&&!unlocked(p)){hint=p.hint;drawPanel();return false;}hint='';const previous={...settings()},color=S().color;settings()[type]=value;if(type==='color')S().color=value;
+  if(type!=='pulse'&&type!=='wonder'&&!unlocked(p)){hint=wardrobeHint(p,S());drawPanel();return false;}hint='';const previous={...settings()},color=S().color;settings()[type]=value;if(type==='color')S().color=value;
   if(!runtime.save()){S().cube=previous;S().color=color;hint='No se guardó. Intenta otra vez.';drawPanel();return false;}
   // One trail at a time: an earned trail takes off a bought one.
   if(type==='trail'&&value!=='none'&&shopTrail())runtime.unequipSparkStyle?.(shopTrail());
@@ -48,7 +48,7 @@ export function initialize(runtime){
   const gifts=runtime.wonderGifts||[],gift=gifts.find(d=>d.id===s.wonder);$('cubeWonder').innerHTML='<option value="">Sin regalo</option>'+gifts.map(d=>'<option value="'+d.id+'" '+(s.wonder===d.id?'selected':'')+'>'+d.gift+'</option>').join('');$('cubeWonder').disabled=current.version!==2||!gifts.length;
   $('cubeGiftPortrait').innerHTML=gift?wonderPortrait(gift.id):'<span aria-hidden="true">◇</span>';$('cubeGiftName').textContent=gift?gift.name:'Regalos del universo';$('cubeGiftStatus').textContent=!gifts.length?'Encuentra un hallazgo para desbloquear su regalo.':gift?'Lo llevas':'Elige un regalo o no lleves ninguno.';$('cubeGiftCount').textContent=gifts.length?gifts.length+' de 20 encontrados':'';
   drawPulses(s,current);
-  $('cubeCount').textContent='Ganado jugando '+owned+' de 50'+(bought?' · Comprado '+bought:'')+'. Toca para ponértelo; tócalo otra vez para quitarlo.';if($('cubePulseCount'))$('cubePulseCount').textContent='Ondas '+ownedPulses(S()).size+'/50';$('cubeHint').textContent=current.version!==2?'Actualiza para cambiar este cubo.':hint;
+  $('cubeCount').textContent='Ganado jugando '+owned+' de 50'+(bought?' · Con chispas '+bought:'')+'. Toca para ponértelo; tócalo otra vez para quitarlo.';if($('cubePulseCount'))$('cubePulseCount').textContent='Ondas '+ownedPulses(S()).size+'/50';$('cubeHint').textContent=current.version!==2?'Actualiza para cambiar este cubo.':hint;
   $('cubeRestore').disabled=current.version!==2;
   for(const b of $('cubeTabs').querySelectorAll('[role="tab"]')){const selected=b.dataset.cubeTab===tab;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;}
   for(const p of $('mCube').querySelectorAll('[data-cube-panel]'))p.hidden=p.dataset.cubePanel!==tab;

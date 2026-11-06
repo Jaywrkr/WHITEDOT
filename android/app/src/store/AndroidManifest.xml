@@ -1,0 +1,6 @@
+<!-- Sale edition (KUBONO_EDITION=store, Listo 2): no account, no cloud and no request outside its own files. The game is
+     served from the APK by WebViewAssetLoader, which answers in shouldInterceptRequest without the network, and links
+     open in other apps, so the INTERNET permission of the main manifest (kept for the account edition) is removed. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+</manifest>

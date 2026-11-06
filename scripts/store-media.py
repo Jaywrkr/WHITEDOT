@@ -1,46 +1,86 @@
-"""Store media from the real game (D08/D09): screenshots at store sizes, icon and graphic exports, and short clips with the game's own music.
+"""Store media from the real game (D08/D09): screenshots at store sizes in Spanish and English, icon and graphic exports,
+and short clips with the game's own music.
 
-Usage: python3 scripts/store-media.py [--out outputs/tienda] [--only capturas,iconos,clips]
-Everything is rendered by the game itself in Chromium; nothing is painted over it. Output stays out of Git (outputs/)."""
+Usage: python3 scripts/store-media.py [--out outputs/tienda] [--only capturas,iconos,clips] [--sizes movil,escritorio] [--langs es,en]
+Everything is rendered by the game itself in Chromium; nothing is painted over it. Output stays out of Git (outputs/).
+Listo 2 (alpha.274): every scene starts from a new save of the open World («?abierto=1»: no Journey, no Camino), as a
+player meets it: the first minute with the guide and «Llanura · más lejos · 0,5 km», then the scanner's marks on the
+edge, a place's portal, a round, its sheet of ★, Tu cubo (Piezas), the Bitácora and the Refugio."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
 import threading,os,shutil,argparse,base64,subprocess,json
 ROOT=Path(__file__).resolve().parents[1]
-ap=argparse.ArgumentParser();ap.add_argument('--out',default=str(ROOT/'outputs'/'tienda'));ap.add_argument('--only',default='capturas,iconos,clips');args=ap.parse_args()
-OUT=Path(args.out);ONLY=set(args.only.split(','))
+SIZES=[('movil',360,640,3),('tablet',800,1280,2),('iphone-6-9',440,956,3),('ipad-13',1032,1376,2),('escritorio',1280,720,1.5)]
+ap=argparse.ArgumentParser();ap.add_argument('--out',default=str(ROOT/'outputs'/'tienda'));ap.add_argument('--only',default='capturas,iconos,clips')
+ap.add_argument('--sizes',default=','.join(s[0] for s in SIZES));ap.add_argument('--langs',default='es,en');args=ap.parse_args()
+OUT=Path(args.out);ONLY=set(args.only.split(','));WANT=set(args.sizes.split(','));LANGS=args.langs.split(',')
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
-URL=f'http://127.0.0.1:{server.server_port}/'
+# A player's new save of the open World: automated browsers keep their old start unless «?abierto=1» asks for this one.
+URL=f'http://127.0.0.1:{server.server_port}/?abierto=1'
+READY="!!window.__r?.ringState&&__r.inWorld()&&__r.ringState().active"
 HIDE="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
-# Passing notices are part of play but cover the scene in a still; they are hidden for captures only.
-QUIET="#toast,#phrase,#celebration,#rareNotice,#firstJourney,#sparkGain{visibility:hidden!important}"
-# A lived-in save: past the Camino, a few days, sparks spent on a hat and a pet, the whole house open and dressed.
-SETUP="""async()=>{"""+HIDE+""";const r=__r,s=r.S;s.sound=%s;s.totalDays=21;s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);s.playerProfile={...(s.playerProfile||{}),name:''};
- r.enterWorld({automatic:true});s.sparks=2000;s.sparkEconomy.earned=s.sparkEconomy.spent+2000;for(const id of ['acc:hat','pet:cloud'])r.buySparkStyle?.(id);
+# Passing notices are part of play but cover the scene in a still; they are hidden for captures only. The guide is
+# shown in the first scene and hidden after it (GUIDE).
+QUIET="#toast,#phrase,#celebration,#rareNotice,#sparkGain{visibility:hidden!important}"
+GUIDE="#firstJourney{visibility:hidden!important}"
+# After the first minute: three weeks of play, three places complete (Llanura, Lago, Bosque: the radar at level 4 and
+# Ámbar earned), sparks spent on a hat and a pet, the Refugio dressed. Still the open World: no Journey, no Camino.
+LIVED="""async()=>{"""+HIDE+""";const r=__r,s=r.S;s.totalDays=21;s.firstJourney.skipped=true;s.playerProfile={...(s.playerProfile||{}),name:''};
+ const d=r.placesData();for(const id of ['llanura','lago','bosque'])d.stars[id]=[true,true,id==='llanura'];d.seen={...(d.seen||{}),llanura:true,lago:true,bosque:true};const P=await import('/src/places.js'),sea=(x,y)=>!!r.regionOfPos?.(x,y)?.sea;for(const id of ['llanura','lago','bosque'])d.found[id]||=P.legacySpot(id,sea);
+ s.sparks=2000;s.sparkEconomy.earned=s.sparkEconomy.spent+2000;for(const id of ['acc:hat','pet:cloud'])r.buySparkStyle?.(id);
  s.livingSeen={...(s.livingSeen||{}),moth:true,deer:true};const m=await import('/src/house-capsules.js');s.house={...s.house,decor:m.CAPSULE_PIECES.map(p=>({id:p.id,room:p.room,x:p.x,y:p.y}))};
- s.sparks=480;s.sparkEconomy.earned=s.sparkEconomy.spent+480;r.save();}"""
+ s.sparks=480;s.sparkEconomy.earned=s.sparkEconomy.spent+480;r.save();r.liveEncounterRest?.();}"""
+# A lively spot of the World, away from the sea.
 PLACE="""()=>{const r=__r,ids=r.BIOMES.map(b=>b.id);for(const want of ['cristales','bosque','jardin','faros'])for(let d=1;d<40;d++)for(let a=0;a<16;a++){const x=Math.round(Math.cos(a/16*6.283)*d*300),y=Math.round(Math.sin(a/16*6.283)*d*300);if(ids[r.biomeOfPos(x,y)]===want&&!r.regionOfPos(x,y)?.sea){r.S.wx=x;r.S.wy=y;return want;}}return null;}"""
-def page_for(b,w,h,dpr,sound=False):
+# The Llanura's portal on screen: the cube a few steps from it, on the side of the origin.
+PORTAL="""()=>{const r=__r,f=r.S.lugares.found.llanura;if(!f)return false;const d=Math.hypot(f.x,f.y)||1;r.S.wx=Math.round(f.x-f.x/d*150);r.S.wy=Math.round(f.y-f.y/d*150);return true;}"""
+# The round's sheet: the Lago played to 74,6 % on time in about a minute.
+RESULT="""()=>{const r=__r;for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}"""
+def page_for(b,w,h,dpr,lang,sound=False):
  ctx=b.new_context(viewport={'width':w,'height':h},device_scale_factor=dpr,**({'record_video_dir':str(OUT/'_video'),'record_video_size':{'width':w,'height':h}} if sound else {}))
- p=ctx.new_page()
+ p=ctx.new_page();errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
+ p.add_init_script(f"try{{localStorage.setItem('kubono:lang','{lang}')}}catch(_){{}}")
  # Whatever reaches the speakers also feeds a stream we can record.
  if sound:p.add_init_script("(()=>{const connect=AudioNode.prototype.connect;AudioNode.prototype.connect=function(t,...a){const r=connect.call(this,t,...a);if(t instanceof AudioDestinationNode){const c=this.context;c.__tap||=c.createMediaStreamDestination();window.__tap=c.__tap;connect.call(this,c.__tap);}return r;};})()")
  p.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
- p.goto(URL);p.wait_for_function('!!window.__r?.enterHouse');p.add_style_tag(content=QUIET);p.evaluate(SETUP%('true' if sound else 'false'));p.wait_for_timeout(600);return ctx,p
+ p.goto(URL);p.wait_for_function(READY,timeout=30000);p.add_style_tag(content=QUIET);p.evaluate(f"()=>{{{HIDE};__r.S.sound={'true' if sound else 'false'};__r.stopAutopilot?.();}}")
+ assert p.evaluate('__r.S.journey.open===true&&!__r.S.pathCrystals?.length'),'a new save of the open World'
+ assert p.evaluate('__r.lang')==lang,('language',lang)
+ p.wait_for_timeout(600);p.__errors=errors;return ctx,p
 def clean(p):p.evaluate(HIDE);p.wait_for_timeout(200)
 def scenes(p,prefix):
  shots=[]
- def snap(name):clean(p);path=OUT/'capturas'/f'{prefix}-{name}.png';p.screenshot(path=str(path));shots.append(path.name)
- p.evaluate(PLACE);p.evaluate('__r.startAutopilot?.()');p.wait_for_timeout(6000);snap('1-mundo')
- p.evaluate('__r.stopAutopilot?.()');p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000);p.wait_for_timeout(400);snap("2-refugio")
- p.evaluate(HIDE);p.locator('#houseOverview').click();p.wait_for_function('__r.houseSettled()');p.wait_for_timeout(400);snap("3-refugio-entero");p.locator('#houseOverview').click()
- p.evaluate("()=>{const r=__r;for(const [k,v] of Object.entries({'0,0':'luz','0,4':'cristal','0,8':'luz','0,12':'cristal','1,2':'pilar','1,6':'loto','1,10':'pilar','1,14':'arbol','2,0':'flor','2,5':'luciernaga','2,11':'faro'}))r.S.studio.slots[k]=v;r.houseOpenWorkshop();}");p.wait_for_timeout(1200);snap('4-taller')
- p.evaluate("()=>{__r.houseBack();__r.exitHouse();}");p.wait_for_timeout(800)
- p.evaluate("()=>{"+HIDE+";document.getElementById('bCube').click();}");p.wait_for_timeout(300);p.evaluate("document.getElementById('cubeTabShop').click()");p.wait_for_timeout(600);p.screenshot(path=str(OUT/'capturas'/f'{prefix}-5-tienda.png'));shots.append(f'{prefix}-5-tienda.png')
- p.evaluate("()=>{"+HIDE+";__r.openJournal('achievements');}");p.wait_for_timeout(600);p.screenshot(path=str(OUT/'capturas'/f'{prefix}-6-bitacora.png'));shots.append(f'{prefix}-6-bitacora.png')
+ def snap(name,hide=True):
+  if hide:clean(p)
+  path=OUT/'capturas'/f'{prefix}-{name}.png';p.screenshot(path=str(path));shots.append(path.name)
+ # 1 · The first minute: the guide and the line to the first place.
+ p.wait_for_function("!document.getElementById('ringRoute').hidden",timeout=8000);p.wait_for_timeout(1200);snap('1-inicio')
+ p.add_style_tag(content=GUIDE);p.evaluate(LIVED);p.wait_for_timeout(300)
+ # 2 · The scanner: a held finger, and what is near becomes marks on the edge of the screen.
+ p.evaluate(PLACE);p.wait_for_timeout(1500);clean(p)
+ w,h=p.viewport_size['width'],p.viewport_size['height'];p.mouse.move(w/2+70,h/2-90);p.mouse.down();p.wait_for_timeout(1800)
+ marks=p.evaluate("__r.scanState().marks.length");snap('2-escaner',hide=False);p.mouse.up()
+ # The marks fade by themselves; the next scene starts with a clean view.
+ p.wait_for_function('__r.scanState().marks.length===0',timeout=20000);p.wait_for_timeout(300)
+ assert marks>0,'the scanner found nothing to show'
+ # 3 · A place's portal.
+ assert p.evaluate(PORTAL);p.wait_for_timeout(2200);snap('3-portal')
+ # 4 · A round: the place sings its bar, then the cube plays it.
+ assert p.evaluate("__r.startPlace('lago')"),'the Lago opens';p.wait_for_function('!__r.rhythmDemo()',timeout=20000);p.wait_for_timeout(2500);snap('4-ronda')
+ # 5 · Its sheet of ★.
+ p.evaluate(RESULT);p.wait_for_function("!document.getElementById('mPlace').hidden",timeout=20000);p.wait_for_timeout(900);snap('5-resultado',hide=False)
+ p.evaluate(HIDE);p.wait_for_timeout(600)
+ # 6 · Tu cubo, Piezas: looks traded for sparks earned by playing.
+ p.evaluate("()=>{"+HIDE+";document.getElementById('bCube').click();}");p.wait_for_timeout(300);p.evaluate("document.getElementById('cubeTabShop').click()");p.wait_for_timeout(600);snap('6-cubo',hide=False)
+ # 7 · The Bitácora.
+ p.evaluate("()=>{"+HIDE+";__r.openJournal('achievements');}");p.wait_for_timeout(600);snap('7-bitacora',hide=False)
+ # 8 · The Refugio.
+ p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000);p.wait_for_timeout(400);snap('8-refugio')
+ assert not p.__errors,p.__errors
  return shots
 # The icon keeps the approved mark: a white cube inside a gold ring on black.
 MARK="""([size,pad,alpha])=>{const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d');if(!alpha){x.fillStyle='#000';x.fillRect(0,0,size,size);}const s=size*(1-pad*2)/512,o=size*pad;x.translate(o,o);x.scale(s,s);x.strokeStyle='#f0d27a';x.lineWidth=5;x.beginPath();x.arc(256,256,161,0,6.283);x.stroke();x.fillStyle='#fff';x.fillRect(206,206,100,100);return c.toDataURL('image/png');}"""
@@ -54,21 +94,25 @@ def save(data,path):
  # Stores reject icons and graphics with an alpha channel: flatten to RGB.
  tmp=path.with_suffix('.rgb.png');subprocess.run(['ffmpeg','-y','-loglevel','error','-i',str(path),'-pix_fmt','rgb24',str(tmp)],check=True);tmp.replace(path)
 # A clip (recorded at half size, doubled with sharp pixels to 1080×1920 or 1920×1080): the game's own audio taken from its master bus while the screen is recorded, then joined with ffmpeg.
-def clip(b,name,w,h,dpr,seconds,steps):
- ctx,p=page_for(b,w,h,dpr,sound=True);p.evaluate("()=>{const r=__r;r.audio();}");p.wait_for_function("__r.ac?.state==='running'&&!!window.__tap")
+def clip(b,name,w,h,dpr,seconds,steps,lang):
+ ctx,p=page_for(b,w,h,dpr,lang,sound=True);p.evaluate("()=>{const r=__r;r.audio();}");p.wait_for_function("__r.ac?.state==='running'&&!!window.__tap")
  p.evaluate("""()=>{window.__chunks=[];const m=new MediaRecorder(window.__tap.stream,{mimeType:'audio/webm'});m.ondataavailable=e=>__chunks.push(e.data);m.start();window.__rec=m;}""")
  started=p.evaluate('performance.now()')
  for kind,arg in steps:
   if kind=='js':p.evaluate(arg)
   elif kind=='wait':p.wait_for_timeout(arg)
+  elif kind=='css':p.add_style_tag(content=arg)
   clean(p)
  p.wait_for_timeout(max(0,int(seconds*1000-(p.evaluate('performance.now()')-started))))
  audio=p.evaluate("""()=>new Promise(res=>{__rec.onstop=async()=>{const b=new Blob(__chunks,{type:'audio/webm'}),buf=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<buf.length;i+=32768)s+=String.fromCharCode(...buf.subarray(i,i+32768));res(btoa(s));};__rec.stop();})""")
  video=p.video.path();ctx.close();a=OUT/'_video'/f'{name}.webm';a.write_bytes(base64.b64decode(audio))
  # The recording starts when the page opens; keep only the last `seconds`.
  total=float(subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','csv=p=0',video],capture_output=True,text=True).stdout.strip() or seconds)
- subprocess.run(['ffmpeg','-y','-loglevel','error','-ss',str(max(0,total-seconds)),'-i',video,'-i',str(a),'-map','0:v','-map','1:a','-shortest','-vf','scale=iw*2:ih*2:flags=neighbor','-c:v','libx264','-crf','18','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',str(OUT/'clips'/f'{name}.mp4')],check=True)
+ subprocess.run(['ffmpeg','-y','-loglevel','error','-ss',str(max(0,total-seconds)),'-i',video,'-i',str(a),'-map','0:v','-map','1:a','-shortest','-vf','scale=iw*2:ih*2:flags=neighbor','-c:v','libx264','-crf','20','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',str(OUT/'clips'/f'{name}.mp4')],check=True)
  return f'{name}.mp4'
+# The World clip: the first seconds with the guide, then a walk through a lively spot.
+WORLD=[('wait',3500),('css',GUIDE),('js',LIVED),('js',PLACE),('js','__r.startAutopilot?.()'),('wait',10000)]
+HOUSE=[('css',GUIDE),('js',LIVED),('js',"()=>{"+HIDE+";__r.landHouse();}"),('wait',3000),('js',"__r.houseWalkTo('jardin',.5)"),('wait',4000),('js','__r.housePulse()'),('wait',4000)]
 report={}
 try:
  with sync_playwright() as pw:
@@ -76,8 +120,10 @@ try:
   if 'capturas' in ONLY:
    (OUT/'capturas').mkdir(parents=True,exist_ok=True);report['capturas']=[]
    # Play phone 9:16 at 1080×1920 and tablet 1600×2560; Apple iPhone 6.9" 1320×2868 and iPad 13" 2064×2752; desktop/Steam 1920×1080.
-   for prefix,w,h,dpr in [('movil',360,640,3),('tablet',800,1280,2),('iphone-6-9',440,956,3),('ipad-13',1032,1376,2),('escritorio',1280,720,1.5)]:
-    ctx,p=page_for(b,w,h,dpr);report['capturas']+=scenes(p,prefix);ctx.close()
+   for prefix,w,h,dpr in SIZES:
+    if prefix not in WANT:continue
+    for lang in LANGS:
+     ctx,p=page_for(b,w,h,dpr,lang);report['capturas']+=scenes(p,f'{prefix}-{lang}');ctx.close()
   if 'iconos' in ONLY:
    ctx=b.new_context();p=ctx.new_page();p.goto(URL);p.wait_for_load_state()
    for name,size,pad,alpha in [('icono-1024-apple',1024,0,False),('icono-512-play',512,0,False),('icono-256-steam',256,0,False),('icono-adaptativo-432',432,.17,False)]:save(p.evaluate(MARK,[size,pad,alpha]),OUT/'iconos'/f'{name}.png')
@@ -85,9 +131,10 @@ try:
    report['iconos']=sorted(x.name for x in (OUT/'iconos').glob('*.png'));report['graficos']=sorted(x.name for x in (OUT/'graficos').glob('*.png'));ctx.close()
   if 'clips' in ONLY:
    (OUT/'clips').mkdir(parents=True,exist_ok=True);(OUT/'_video').mkdir(parents=True,exist_ok=True);report['clips']=[]
-   report['clips'].append(clip(b,'clip-mundo-vertical',540,960,1,14,[('js',PLACE),('js','__r.startAutopilot?.()'),('wait',13000)]))
-   report['clips'].append(clip(b,'clip-refugio-vertical',540,960,1,12,[('js',"()=>{"+HIDE+";__r.landHouse();}"),('wait',3000),('js',"__r.houseWalkTo('jardin',.5)"),('wait',4000),('js','__r.housePulse()'),('wait',4000)]))
-   report['clips'].append(clip(b,'clip-mundo-horizontal',960,540,1,14,[('js',PLACE),('js','__r.startAutopilot?.()'),('wait',13000)]))
+   for lang in LANGS:
+    report['clips'].append(clip(b,f'clip-mundo-vertical-{lang}',540,960,1,14,WORLD,lang))
+    report['clips'].append(clip(b,f'clip-mundo-horizontal-{lang}',960,540,1,14,WORLD,lang))
+   report['clips'].append(clip(b,'clip-refugio-vertical',540,960,1,12,HOUSE,LANGS[0]))
   b.close()
 finally:server.shutdown()
 shutil.rmtree(OUT/'_video',ignore_errors=True)

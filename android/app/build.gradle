@@ -15,6 +15,11 @@ android {
     if (project.hasProperty('accountPreview') && System.getenv('KUBONO_ACCOUNT_KEYSTORE')) {
         signingConfigs.debug.storeFile = file(System.getenv('KUBONO_ACCOUNT_KEYSTORE'))
     }
+    // The sale edition drops INTERNET (src/store/AndroidManifest.xml); the account edition keeps it for its cloud.
+    if (System.getenv('KUBONO_EDITION') == 'store') {
+        sourceSets.debug.manifest.srcFile 'src/store/AndroidManifest.xml'
+        sourceSets.release.manifest.srcFile 'src/store/AndroidManifest.xml'
+    }
     sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/gameAssets')
     sourceSets.main.res.srcDir layout.buildDirectory.dir('generated/gameRes')
 }

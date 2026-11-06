@@ -1,4 +1,5 @@
 // Fifty earned styles; the original thirteen IDs remain stable.
+import {noJourney} from './journey-mode.js';
 const group=(type,entries)=>entries.map(([value,name,ach])=>({id:'cube:'+type+':'+(type==='color'?value.slice(1):value),type,value,name,ach:ach||null}));
 const colors=[['#ffffff','Blanco'],['#f0d27a','Ámbar','tope'],['#7fe0b0','Menta','estrella1'],['#6fd3ff','Cian','mundo'],['#ff8a7a','Coral','r3'],['#b9a2ff','Lila','oculto'],['#e3e8ee','Perla'],['#72bca5','Jade'],['#b48bce','Amatista'],['#6c99d4','Cobalto'],['#d9a47c','Cobre'],['#eaedfa','Aurora']];
 const trails=[['none','Nada'],['dots','Puntos','mundo'],['line','Línea','poder_cometa'],['notes','Notas','bandada1'],['grains','Granos'],['steps','Pasos'],['orbit','Órbita'],['weave','Trama']];
@@ -20,6 +21,15 @@ export const CUBE_WARDROBE=Object.freeze(all.map(p=>{
  let days=0,need=0;if(!p.ach&&!free.has(p.id)){if(rarity==='poco_comun'){days=[3,7,14,21][Math.floor(uncommon++/4)];need=1;}else if(rarity==='rara'){days=[30,45,60,75,90][Math.floor(rare++/2)];need=3+Math.floor(rare/2);}else if(rarity==='epica'){days=90+epic++*10;need=8;}else if(rarity==='mitica'){days=180+mythic++*30;need=16;}}
  return Object.freeze({...p,rarity,free:free.has(p.id),days,need,hint:p.ach?legacyHints[p.ach]:free.has(p.id)?'Conserva tu forma original.':'Juega '+days+' días y encuentra '+need+' linajes.'});
 }));
+// Listo 2 (alpha.274): Ámbar asks for «tope», which only the Camino's tenth crystal gives. A save of the open World has
+// no Camino, so it earns Ámbar by completing three places (rewards-model.js gives it); «tope» still gives it to any save.
+// The place ids are those of PLACES (places.js), checked by tests/wardrobe.mjs.
+export const AMBER_ID='cube:color:f0d27a',AMBER_PLACES=3;
+export const AMBER_PLACE_IDS=Object.freeze(['llanura','lago','bosque','tormenta','vacio','jardin','dunas','cristales','faros','ruinas','cueva']);
+export const placesComplete=s=>AMBER_PLACE_IDS.filter(id=>Array.isArray(s?.lugares?.stars?.[id])&&s.lugares.stars[id][0]===true).length;
+export const amberOpenWorld=s=>noJourney(s?.journey)&&placesComplete(s)>=AMBER_PLACES;
+// What a locked piece asks for, for this save: Ámbar names the places in the open World.
+export const wardrobeHint=(p,s)=>p?.id===AMBER_ID&&noJourney(s?.journey)?'Completa tres lugares.':p?.hint;
 export const wardrobePiece=(type,value)=>CUBE_WARDROBE.find(p=>p.type===type&&p.value===value);
 export function wardrobeEligible(piece,state,hidden=[]){if(piece.free)return true;if(piece.ach)return piece.ach==='oculto'?hidden.some(id=>state.ach?.[id]):!!state.ach?.[piece.ach];return (state.totalDays||0)>=piece.days&&Object.keys(state.livingSeen||{}).length>=piece.need;}
 export const wardrobeByType=type=>CUBE_WARDROBE.filter(p=>p.type===type);

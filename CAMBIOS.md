@@ -1,8 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.273** en la rama `jay/listo-1`, desde `main` `2760513` (alpha.271). Alpha.272 (sonido pro 5) vive en `jay/sonido-pro-5`, sin integrar; esta rama no toca el sonido. Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.274** en la rama `jay/listo-2`, desde `main` `496eb6d` (alpha.273, PR #411). Alpha.272 (sonido pro 5) vive en `jay/sonido-pro-5`, sin integrar; esta rama no toca el sonido. Las entradas describen su revisión, no certifican producción.
 
 
+
+## Listo 2: sin verbos de compra, Ámbar sin Camino, Android sin red y medios de tienda · 2.3.0-alpha.274
+
+Rama `jay/listo-2`, desde `main` `496eb6d`. Preparación de venta que Jay aprobó. Guías: [Tienda del cubo](docs/TIENDA_DEL_CUBO.md), [Mundo](docs/MUNDO.md), [Privacidad](docs/PRIVACIDAD.md), [Material de tienda](docs/TIENDAS.md), [Android](android/README.md).
+
+- **Piezas sin verbos de compra.** En Tu cubo, «Comprar» pasa a «Cambiar ✦» («Trade ✦»); «Compraste …», a «Conseguiste …» («You got …»); «Comprado N», a «Con chispas N» («With sparks N»); «Compra permanente», a «Para siempre» («Yours to keep»); «Voz comprada», a «Voz de chispas» («Spark voice»). «Cómo jugar»: las chispas «se cambian por apariencias y saltos» y «cada apariencia se consigue una sola vez». Mismos ID. Las fichas dicen «a cambio de chispas» («traded for sparks»).
+- **Ámbar sin Camino.** Un guardado del mundo abierto gana Ámbar al completar tres lugares (★ en tres de los once). Lo da `migrateRewards` al guardar; la pista dice «Completa tres lugares.». `tope` sigue dándolo a cualquier guardado, con su fecha; un guardado del Viaje solo tiene esa ruta. Sin RNG.
+- **Android sin `INTERNET` en la edición de venta.** Con `KUBONO_EDITION=store`, `android/app/src/store/AndroidManifest.xml` quita el permiso al fusionar el manifiesto. El juego se sirve desde el APK (`WebViewAssetLoader`) y los enlaces se abren fuera. La vista previa con cuenta lo conserva para su nube.
+- **Medios de tienda.** `scripts/store-media.py` parte de un guardado nuevo del mundo abierto (`?abierto=1`): ocho escenas (inicio con la guía, escáner, portal, ronda, hoja de ★, Tu cubo, Bitácora, Refugio) en cinco tamaños, en español e inglés; clips del Mundo en los dos idiomas. Siguen fuera de Git.
+- **Preservación.** Capa `approvedLISTO2` en `verify-e-preservation.mjs` para los archivos protegidos que cambian.
+- **Pruebas.** `tests/wardrobe.mjs` (Ámbar: tres lugares sí, dos no, Viaje solo con `tope`, fecha de `tope`, pista) y `tests/sale-edition.mjs` (manifiesto de venta sin `INTERNET`).
+- **Límites.** El APK de venta sin `INTERNET` no se ha compilado ni abierto en un emulador: aquí no hay SDK de Android. No probado en teléfono ni con personas.
 
 ## Listo 1: primer minuto del mundo abierto y fichas · 2.3.0-alpha.273
 

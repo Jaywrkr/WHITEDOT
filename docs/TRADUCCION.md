@@ -35,6 +35,7 @@ Vigente desde **alpha.224** (fase L2 de la [salida web y Android](PLAN_LANZAMIEN
 | Bitácora | Logbook | |
 | Tu cubo | Your Cube | La hoja de personalización |
 | Llevar / Piezas / Chispas (pestañas) | Wear / Pieces / Sparks | «Piezas» era «Tienda» hasta alpha.273: se paga solo con chispas ganadas |
+| Cambiar ✦ / Conseguiste / Con chispas | Trade ✦ / You got / With sparks | Piezas de Tu cubo, desde alpha.274: sin «Comprar» ni «Buy» |
 | chispas ✦ | sparks ✦ | |
 | estrellas ★ | stars ★ | |
 | Maestro / Libre / Jugar | Master / Free / Play | Modos de un lugar |

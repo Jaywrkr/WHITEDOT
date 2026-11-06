@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {CUBE_WARDROBE,wardrobeByType,wardrobeEligible,CUBE_DEFAULTS} from '../src/wardrobe-model.js';
+import {CUBE_WARDROBE,wardrobeByType,wardrobeEligible,CUBE_DEFAULTS,AMBER_ID,AMBER_PLACE_IDS,placesComplete,wardrobeHint,cubeStyleUnlocked} from '../src/wardrobe-model.js';
+import {PLACE_IDS} from '../src/places.js';
 import {migrateRewards,createRewardsCatalog} from '../src/rewards-model.js';
 import {cubePulseVoice} from '../src/cube-voice.js';
 import {normalizeCube} from '../src/cube-model.js';
@@ -19,3 +20,21 @@ assert.equal(styles[0],base);assert(new Set(styles.map(v=>v.instrument)).size===
 console.log('PASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments');
 const future={version:7,color:'#102030',future:{detail:1}};assert.equal(normalizeCube(future,player.ach,player.rewards),future);
 const unknown=normalizeCube({version:2,material:'future-surface',extra:{keep:1}},player.ach,player.rewards);assert.equal(unknown.material,'plain');assert.equal(unknown.unrecognizedStyles.material,'future-surface');assert.deepEqual(unknown.extra,{keep:1});assert.deepEqual(normalizeCube(unknown,player.ach,player.rewards),unknown);
+// Listo 2 (alpha.274): Ámbar in the open World. Three complete places give it to a save with no Journey (no Camino to
+// give «tope»); two do not; a Journey save still needs «tope»; «tope» still gives it to everyone, with its date.
+assert.deepEqual([...AMBER_PLACE_IDS],[...PLACE_IDS]);
+const done=ids=>Object.fromEntries(PLACE_IDS.map(id=>[id,[ids.includes(id),false,false]]));
+const open={version:1,mode:'libre',free:true,open:true,freeGiven:true},journey={version:1,mode:'libre',free:true,finished:true};
+const amber=(s,at='2026-11-06')=>migrateRewards(s,catalogue,{at,legacy:false}).items[AMBER_ID];
+assert.equal(placesComplete({lugares:{stars:done(['llanura','lago','bosque'])}}),3);
+assert(amber({journey:open,lugares:{stars:done(['llanura','lago','bosque'])}}),'three places in the open World');
+assert.equal(amber({journey:open,lugares:{stars:done(['llanura','lago','bosque'])}}).source,'places:3');
+assert(!amber({journey:open,lugares:{stars:done(['llanura','lago'])}}),'two are not enough');
+assert(!amber({journey,lugares:{stars:done(['llanura','lago','bosque','tormenta'])}}),'a Journey save keeps its old route');
+assert.equal(amber({journey,ach:{tope:'2026-10-01'},lugares:{stars:done([])}}).obtainedAt,'2026-10-01');
+assert.equal(amber({journey:open,ach:{tope:'2026-10-01'},lugares:{stars:done(['llanura','lago','bosque'])}}).obtainedAt,'2026-10-01','«tope» first keeps its date');
+const won=migrateRewards({journey:open,lugares:{stars:done(['llanura','lago','bosque'])}},catalogue,{at:'2026-11-06',legacy:false});
+assert(cubeStyleUnlocked('color','#f0d27a',{},won),'and it can be worn');
+const piece=CUBE_WARDROBE.find(p=>p.id===AMBER_ID);
+assert.equal(wardrobeHint(piece,{journey:open}),'Completa tres lugares.');assert.equal(wardrobeHint(piece,{journey}),'Completa el Camino de hoy.');
+console.log('PASS Ámbar in the open World: three complete places, old route kept');

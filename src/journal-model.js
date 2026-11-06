@@ -1,9 +1,9 @@
-import {CUBE_WARDROBE} from './wardrobe-model.js';
+import {CUBE_WARDROBE,AMBER_ID,wardrobeHint} from './wardrobe-model.js';
 import {DISCOVERY_ELEMENTS} from './element-book-model.js';
 import {LIVING_CATALOG} from './living-catalog.js';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function albumEntries(state,rewards=[]){
- const rows=[...rewards.filter(p=>p.id!=='achievement:dj'||p.owned).map(p=>({id:p.id,name:p.name,group:p.id.startsWith('cube:')?'cubo':p.type==='achievement'?'logros':'casa',owned:p.owned,earned:p.source?.kind!=='default',value:p.value,date:p.obtainedAt,hint:p.hint,rarity:p.rarity,shape:p.type})),
+ const rows=[...rewards.filter(p=>p.id!=='achievement:dj'||p.owned).map(p=>({id:p.id,name:p.name,group:p.id.startsWith('cube:')?'cubo':p.type==='achievement'?'logros':'casa',owned:p.owned,earned:p.source?.kind!=='default',value:p.value,date:p.obtainedAt,hint:p.id===AMBER_ID?wardrobeHint(p,state):p.hint,rarity:p.rarity,shape:p.type})),
  ...DISCOVERY_ELEMENTS.map(p=>({id:p.id,name:p.name,group:'elementos',owned:!!state.elementBook?.found?.[p.id],date:state.elementBook?.found?.[p.id]?.day,hint:'Acércate y escucha su respuesta.',shape:p.group})),
  ...LIVING_CATALOG.map(p=>({id:'living:'+p.id,name:p.name,group:'linajes',owned:!!state.livingSeen?.[p.id],date:state.livingSeen?.[p.id]?.day,hint:({quietud:'Permanece cerca y escucha.',orbita:'Rodéalo despacio con el cubo.',presion:'Acércate y mantén el contacto.',seguir:'Acompaña su recorrido.',respuesta:'Toca una frase y escucha.',contacto:'Tócalo con el cubo.',cruce:'Cruza su camino.'})[p.gesture],shape:p.shape}))];
  return rows;
