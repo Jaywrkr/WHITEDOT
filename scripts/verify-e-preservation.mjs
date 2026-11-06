@@ -185,9 +185,9 @@ const rebasedFIX2=new Set(['src/refugio-lugares.js','src/return-entrance.js']);
 // Listo 1 (Jay, 6 Nov 2026, alpha.273, after the release audit): the open World's own first-minute guide (onboarding),
 // no Camino named to players who never had it (the Refugio's shelf, the memories card), no BPM or dB on screen (the zone
 // line, the screen piece of Tu cubo, two genre notes) and «Piezas» for the shop tab's texts, with their English strings.
-// Held to the code commit of jay/listo-1 (from main 2760513); the music's contracts are untouched (rhythms.js changes
+// Held to the last code commit of jay/listo-1 (from main 2760513, with the CI fixes of PR #411); the music's contracts are untouched (rhythms.js changes
 // two guide texts only, no pattern or tempo).
-const approvedLISTO1='52000d4c0d7455ecbb18f6099a7eb03c8b4f7fea';
+const approvedLISTO1='fa98bf5d2735cf30e99a0c16bdc1d2e1d0458211';
 const rebasedLISTO1=new Set(['src/cube-shop-model.js','src/cube-shop-wild.js','src/discovery.js','src/house-collection.js','src/i18n-en.js','src/living-buildings.js','src/onboarding-model.js','src/onboarding.js','src/rhythms.js','src/sparks.js']);
 // Arreglos de main (alpha.269, after PR #406): the open start hides the return greeting and «Continuar» starts the sound
 // (main.js, return-entrance.js); pet.js keeps `state.heard` from PR #404, which landed after the OPEN layer was cut.
