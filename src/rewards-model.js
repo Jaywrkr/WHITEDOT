@@ -1,5 +1,5 @@
 import {HOUSE_OBJECTS} from './house-model.js';
-import {CUBE_WARDROBE,wardrobeEligible} from './wardrobe-model.js';
+import {CUBE_WARDROBE,wardrobeEligible,AMBER_ID,AMBER_PLACES,amberOpenWorld} from './wardrobe-model.js';
 import {LIVING_CATALOG} from './living-catalog.js';
 import {LIVING_STUDIES} from './living-studies.js';
 import {POWER_IDS,POWERS} from './expansion-music.js';
@@ -75,6 +75,8 @@ export function migrateRewards(state,catalog=REWARDS_CATALOG,{at=null,legacy=tru
   const p=catalog.find(p=>p.type===type&&p.value===value);if(p)awardReward(book,p.id,catalog,{source:'legacy:selection',legacy:true});
  }
  for(const p of CUBE_WARDROBE)if(!p.ach&&!p.free&&wardrobeEligible(p,state,hiddenAchievements))give('wardrobe',p.id);
+ // Listo 2: Ámbar in the open World, from three complete places (wardrobe-model.js).
+ if(amberOpenWorld(state))awardReward(book,AMBER_ID,catalog,{at,source:'places:'+AMBER_PLACES,legacy});
  for(const d of HOUSE_OBJECTS)if(d.achievement&&state.ach?.[d.achievement])awardReward(book,d.id,catalog,{at:rewardDate(state.ach[d.achievement]),source:'achievement:'+d.achievement,legacy});
  // Source records permit a future catalogue to add pieces without replaying events.
  for(const [id,v]of Object.entries(book.sources)){const split=id.indexOf(':');rewardSource(book,id.slice(0,split),id.slice(split+1),catalog,{at:v.at,legacy:v.legacy});}

@@ -39,5 +39,10 @@ const main=read('src/main.js');assert.match(main,/!ownSave\|\|!cloudEnabled\(\)\
 const account=read('src/cloud-account.js');assert.match(account,/if\(!cloudEnabled\(\)\)\{[^\n]*\$\('bConnection'\)\.hidden=true[^\n]*\$\('bSaveTools'\)\.hidden=false/);
 assert.equal(read('sw.js').split('"./src/edition.js"').length-1,1);
 assert.match(read('scripts/android-assets.mjs'),/if\(process\.env\.KUBONO_EDITION\)setEdition\(\{directory:out,edition:process\.env\.KUBONO_EDITION\}\)/);
+// Listo 2: the Android sale edition asks for no INTERNET (it never uses it); the account edition keeps it for its cloud.
+assert.match(read('android/app/src/main/AndroidManifest.xml'),/android\.permission\.INTERNET/);
+assert.match(read('android/app/src/store/AndroidManifest.xml'),/<uses-permission android:name="android\.permission\.INTERNET" tools:node="remove" \/>/);
+const gradle=read('android/app/build.gradle');assert.match(gradle,/if \(System\.getenv\('KUBONO_EDITION'\) == 'store'\) \{\s*sourceSets\.debug\.manifest\.srcFile 'src\/store\/AndroidManifest\.xml'\s*sourceSets\.release\.manifest\.srcFile 'src\/store\/AndroidManifest\.xml'/);
+assert.doesNotMatch(read('android/app/src/main/java/com/jaywrkr/whitedot/MainActivity.java'),/HttpURLConnection|OkHttp|Socket\(/,'the host makes no request of its own');
 assert.match(read('recovery.html'),/cloudEnabled\(\)\)\{status\.textContent='Esta edición no usa cuenta/);
 console.log('PASS sale edition: one flag, web in the source, store stamped only into a staged copy, unknown editions without cloud, saved session read locally as save owner');

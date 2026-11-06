@@ -46,7 +46,7 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 | D05 | Instalación/actualización y comportamiento Android físico | Emulador aceptado; distribución y dispositivos físicos pendientes, sin repetir pruebas emuladas sin cambio |
 | D06 | Privacidad, edades, clasificación y formularios | Borradores y decisiones aprobadas; datos legales/correo, controles pendientes y formularios de tiendas por completar |
 | D07 | Fichas ES/EN y requisitos reales | Borradores ES/EN en [Material de tienda](TIENDAS.md); la ficha EN dice que el juego está en español. Pendiente aprobación y requisitos de cada tienda |
-| D08 | Icono y recursos de tienda/capturas reales | `scripts/store-media.py` genera capturas reales (Play, App Store, Steam), iconos y gráficos; falta rehacer gráficos con la identidad violeta (fuera de Git) y aprobarlos |
+| D08 | Icono y recursos de tienda/capturas reales | `scripts/store-media.py` genera capturas reales (Play, App Store, Steam) del mundo abierto en español e inglés (alpha.274), iconos y gráficos; falta rehacer gráficos con la identidad violeta (fuera de Git) y aprobarlos |
 | D09 | Tráiler y clips con música original del juego | Clips con audio real del juego y guion en [Material de tienda](TIENDAS.md); montaje final pendiente |
 | D10 | Landing y enlaces/soporte/privacidad | Maqueta/plan local existen; landing pública no publicada ni dominio comprado |
 | D11 | Press kit pequeño con medios/contacto/enlaces | Borrador en [Material de tienda](TIENDAS.md); faltan editor, contacto y enlaces |

@@ -50,8 +50,8 @@ Questions: [CORREO].
 
 ## Notas para Jay (no publicar)
 
-- **Comprobado en el código** (alpha.271–273): la auditoría de venta no vio peticiones fuera del propio origen; la edición de venta (`scripts/itch-package.mjs`, `sale_edition_smoke.py`) no tiene botón de cuenta ni nube. No hay SDK de terceros en el árbol.
-- **Android.** La edición de venta pide el permiso `INTERNET` sin usarlo. Quitarlo antes de subir refuerza esta política. En el formulario de seguridad de datos de Play: «No se recogen datos» y «No se comparten datos».
+- **Comprobado en el código** (alpha.271–274): la auditoría de venta no vio peticiones fuera del propio origen; la edición de venta (`scripts/itch-package.mjs`, `sale_edition_smoke.py`) no tiene botón de cuenta ni nube. No hay SDK de terceros en el árbol.
+- **Android.** Desde alpha.274 la edición de venta (`KUBONO_EDITION=store`) no pide el permiso `INTERNET`: `android/app/src/store/AndroidManifest.xml` lo quita al fusionar el manifiesto. No lo necesita: el juego se sirve desde el APK con `WebViewAssetLoader`, que responde sin red, y los enlaces se abren en otras apps. La vista previa con cuenta lo conserva para su nube. Falta compilar ese APK y abrirlo en un emulador para confirmarlo. En el formulario de seguridad de datos de Play: «No se recogen datos» y «No se comparten datos».
 - **Web.** Si se publica una versión web, el alojamiento (hoy Vercel) guarda registros técnicos de las visitas (IP, hora). Entonces hay que nombrarlo aquí.
 - **Cuenta.** Si vuelve la cuenta opcional, la política anterior (correo, sesiones, Supabase, eliminación) está en el historial de Git de este archivo y en [Eliminación de datos](ELIMINACION_DATOS.md).
 - Público objetivo aprobado: 16 años o más. La clasificación la da el cuestionario de cada tienda.
