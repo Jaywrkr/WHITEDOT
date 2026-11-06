@@ -4,6 +4,7 @@
 // engine's contract with audio.js: off or for a classic family it plays nothing and draws no extra random number.
 // Alpha.270: the player's own voices through the engine and the arrangement's answer to the player.
 // Alpha.271: «Melodic y orgánico» and «Afro y latino» (andean moves into it): plucks, flutes, strings, piano, chants, log drum.
+// Alpha.276: the nine remaining families (disco, UK, club bass, DnB, hip-hop, electro, ambient, jazz, experimental).
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {SOUND_FAMILIES,soundFamily,soundProfile,convertedGenre,convertedFamilies,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,SOUND_PRO_VERSION,guestFilter,GUEST_HIGHPASS,createTransitionTracker} from '../src/sound-profiles.js';
@@ -24,9 +25,10 @@ const TECHNO=['dub','acid','minimaltechno','detroit','melodictechno'];
 assert.deepEqual(soundFamily('dub').genres,TECHNO,'techno, melodic techno included');assert.equal(soundFamily('melodictechno').id,'techno');
 const MELODIC=['melodic','organic'],AFRO=['afro','tribal','amapiano','andean'];
 assert.deepEqual(soundFamily('melodic').genres,MELODIC);assert.deepEqual(soundFamily('afro').genres,AFRO,'afro y latino, andean included');assert.equal(soundFamily('andean').id,'afro');
-assert.deepEqual(convertedFamilies(),['house','tech','techno','melodic','afro'],'five families converted');
-for(const g of genres)assert.equal(convertedGenre(g),['techhouse','minimal','rominimal','microhouse',...HOUSE,...TECHNO,...MELODIC,...AFRO].includes(g),g);
-assert.equal(soundProfile('electro').ready,false);assert.equal(soundProfile('electro').family,'electro');assert.equal(soundProfile('nada').family,null);
+// Alpha.276: all fourteen families converted, so every one of the 52 genres has a pro profile.
+assert.deepEqual(convertedFamilies(),SOUND_FAMILIES.map(f=>f.id),'all fourteen families converted');
+for(const g of genres){const p=soundProfile(g);assert.equal(convertedGenre(g),true,g);assert.equal(p.family,soundFamily(g).id,g);assert.ok(p.ready&&p.kit&&p.bass&&p.lead&&p.chords&&p.levels&&p.sidechain,g+' a full profile');}
+assert.equal(soundProfile('electro').ready,true);assert.equal(soundProfile('electro').family,'electro');assert.equal(soundProfile('nada').family,null);assert.equal(soundProfile('nada').ready,false,'an unknown genre keeps the classic sound');
 assert.equal(soundProfile('minimal'),soundProfile('minimal'),'profiles are shared, not rebuilt per hit');
 const tech=soundProfile('rominimal');assert.equal(tech.family,'tech');assert.ok(Object.isFrozen(tech)&&Object.isFrozen(tech.levels));
 for(const id of Object.keys(CLASSIC_LEVEL))assert.ok(tech.levels[id]>0,id);
@@ -103,25 +105,25 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  for(const id of ['kick','hat','clap','rim','shaker'])assert.equal(r.proDrum({gid:'minimal',DO:false},id,1.1,.2),false,'classic: '+id);
  assert.equal(r.proVoice('bajo','roll',45,1.1,.14,{key:'1,1',genre:'minimal'}),false);assert.equal(draws(),0);assert.equal(audio.made(),0,'classic builds nothing');assert.equal(r.proCeiling(),0);}
 {const {r,audio,draws,headroom}=fakeRuntime();
- assert.equal(r.proDrum({gid:'dnb',DO:false},'kick',1.1,.26),false,'a classic family keeps audio.js');assert.equal(audio.made(),0);
+ assert.equal(r.proDrum({gid:'nada',DO:false},'kick',1.1,.26),false,'a genre without a profile keeps audio.js');assert.equal(audio.made(),0);
  assert.equal(r.proDrum({gid:'minimal',DO:false},'kick',1.1,.26),true);assert.ok(audio.made()>0);
  for(const id of ['hat','hatO','clap','rim','shaker','wood','snare']){const before=draws();assert.equal(r.proDrum({gid:'minimal',DO:false},id,1.2,.03),true,id);assert.equal(draws()-before,CLASSIC_DRAWS[id],'same random draws as the classic '+id);}
  assert.equal(r.proDrum(null,'wood',1.3,.04),true,'a track accent without a drum context belongs to the region');
  r.currentVoiceOrigin='ambient';assert.equal(r.proDrum(null,'wood',1.3,.04),false,'other voices keep their sound');r.currentVoiceOrigin='track';
  assert.equal(r.proVoice('bajo','roll',45,1.2,.14,{key:'1,1',genre:'minimal'}),true);
- assert.equal(r.proVoice('bajo','roll',45,1.2,.14,{key:'2,2',genre:'electro'}),false);
+ assert.equal(r.proVoice('bajo','roll',45,1.2,.14,{key:'2,2',genre:'nada'}),false);
  const kept=[0,1,2,3].map(i=>r.proVoice('lead','pluck',69+i,1.3+i*.1,.07,{key:'1,1',genre:'minimal'}));assert.deepEqual(kept,[true,true,true,true],'melody notes are taken (half of them silently)');
  assert.ok(r.soundProStats().voices===3,'two of four melody notes sound, plus the bass: '+JSON.stringify(r.soundProStats()));
  assert.equal(r.proCeiling(),16000);r.MU.step=16;r.proDrum({gid:'minimal',DO:false},'kick',3,.26);assert.ok(headroom.gain.target<.92&&headroom.gain.target>.75,'trim under a converted family');
  // Half-bar drop before a swap: the cue predicts it; kicks of every family are held, the rest plays.
  const frames=[];r.territoryJourneyCue=f=>frames.push(f);
  const cue=(bar,o)=>{r.MU.step=bar*16;r.territoryJourneyCue({time:bar*2,bar,primary:'1,1',secondary:'2,2',from:o.from,to:o.to,swap:!!o.swap});};
- r.MU.neighborRadio={key:'2,2',genre:'electro'};
+ r.MU.neighborRadio={key:'2,2',genre:'nada'};
  for(let b=0;b<16;b++)cue(b,{from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05)});
  assert.equal(frames.length,16,'a listener set later still hears every cue');
- r.MU.step=15*16+8;assert.equal(r.proDrum({gid:'electro',DO:true},'kick',30,.2),true,'the guest kick drops out');assert.equal(r.proDrum({gid:'minimal',DO:false},'kick',30,.2),true);
- assert.equal(r.proDrum({gid:'electro',DO:true},'hat',30,.02),false,'the guest hats keep playing classic');
- r.MU.step=15*16+2;assert.equal(r.proDrum({gid:'electro',DO:true},'kick',29,.2),false,'the first half of the bar plays');
+ r.MU.step=15*16+8;assert.equal(r.proDrum({gid:'nada',DO:true},'kick',30,.2),true,'the guest kick drops out');assert.equal(r.proDrum({gid:'minimal',DO:false},'kick',30,.2),true);
+ assert.equal(r.proDrum({gid:'nada',DO:true},'hat',30,.02),false,'the guest hats keep playing classic');
+ r.MU.step=15*16+2;assert.equal(r.proDrum({gid:'nada',DO:true},'kick',29,.2),false,'the first half of the bar plays');
  r.S.soundPro.classic=true;r.MU.step=16*16;r.proDrum({gid:'minimal',DO:false},'kick',31,.26);assert.equal(headroom.gain.target,.92,'«Sonido clásico» gives the trim back');}
 // House clásico through the engine: every kit hit, the acid line, each chord and melody kind, the organ chord hook.
 {const {r,audio,draws}=fakeRuntime({genre:'acidhouse'});r.MU.radio={hookI:'organ',identity:{swing:.12}};
@@ -144,7 +146,7 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  // The organ chord (deep and progressive call it from audio.js) asks the engine as «acorde».
  const heard=[];r.recordInstrument=x=>heard.push(x);const pr={key:'6,6',genre:'progressive'};r.MU.dnaA=pr;
  assert.equal(r.proVoice('acorde','organ',62,5,.05,pr),true);assert.deepEqual(heard,['organ'],'the organ chord is still counted');
- assert.equal(r.proVoice('acorde','organ',62,5,.05,{key:'1,1',genre:'dnb'}),false,'a classic family plays its own organ');
+ assert.equal(r.proVoice('acorde','organ',62,5,.05,{key:'1,1',genre:'nada'}),false,'a genre without a profile plays its own organ');
  // Progressive build: the pad opens over the 32-bar phrase.
  const cut=st=>{r.MU.step=st;const n=audio.filters.length;r.proVoice('acorde','organ',62,6,.05,pr);return audio.filters.slice(n).find(f=>f.frequency.at>0).frequency.at;};
  const early=cut(0),late=cut(16*22);assert.ok(late>early*4,'the build opens: '+early+' → '+late);assert.ok(cut(16*32)<late,'and closes for the next phrase');
@@ -180,7 +182,7 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  // The dub chord: «stab» as acorde, into the tape, not counted as an instrument; the classic family keeps its stab.
  const heard=[];r.recordInstrument=x=>heard.push(x);const dub={key:'12,12',genre:'dub'};r.MU.dnaA=dub;const g0=audio.made();
  for(const m of [57,60,64])assert.equal(r.proVoice('acorde','stab',m,4,.045,dub),true);assert.deepEqual(heard,[],'the stab is not an instrument');assert.ok(audio.made()-g0>=3*8,'three stab notes with their sends');
- assert.equal(r.proVoice('acorde','stab',57,4,.045,{key:'1,1',genre:'heart'}),false,'heart keeps the classic dub chord');
+ assert.equal(r.proVoice('acorde','stab',57,4,.045,{key:'1,1',genre:'heart'}),true,'heart (ambient, alpha.276) plays the dub chord in the engine');
  // Harder acid: resonance above the acid house line.
  const ac={key:'13,13',genre:'acid'};r.MU.dnaA=ac;let before=audio.filters.length;for(let i=0;i<16;i++){r.MU.step=i;r.proVoice('bajo','acid',45+(i%2)*7,5+i*.12,.17,ac);}
  assert.ok(audio.filters.slice(before).filter(f=>f.Q.value>=20).length>=16,'a resonant 303 on every note');
@@ -256,6 +258,53 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  r.MU.step=16*16;r.territoryJourneyCue({time:32,bar:16,primary:'2,2',secondary:'3,3',from:.5,to:.4,swap:true});r.MU.dnaA={key:'2,2',genre:'melodic'};r.MU.neighborRadio={key:'3,3',genre:'dub'};
  r.MU.step=16*16+1;assert.equal(r.proVoice('bajo','sub',45,32.2,.17,{key:'2,2',genre:'melodic'}),true,'melodic takes the bass after the swap');assert.equal(r.soundProStats().voices,1);
  r.S.soundPro.classic=true;assert.equal(r.proDrum({gid:'melodic',DO:false},'kick',33,.26),false);assert.equal(r.proDrum({gid:'amapiano',DO:false},'kick',33,.26),false,'«Sonido clásico» turns these families off too');}
+// Alpha.276: the nine remaining families. Every genre its own kit, each hit with the classic draws, each new bass and voice kind.
+{const NINE=['disco','uk','bass','dnb','hiphop','electro','ambient','jazz','experimental'],G=NINE.flatMap(id=>SOUND_FAMILIES.find(f=>f.id===id).genres),P=Object.fromEntries(G.map(g=>[g,soundProfile(g)]));
+ assert.equal(G.length,30,'thirty genres in the nine families');
+ for(const [g,p] of Object.entries(P)){assert.equal(p.ready,true,g);assert.equal(p.beats,true,g+' the beat layer');assert.ok(p.front>0&&p.front<1,g+' front');assert.ok(p.answer?.id,g+' answer');assert.ok(p.output>0&&p.output<2,g+' output');
+  for(const id of Object.keys(CLASSIC_LEVEL))assert.ok(p.levels[id]>0,g+' '+id);assert.ok(Object.isFrozen(p.kit)&&Object.isFrozen(p.lead.map),g+' frozen');}
+ assert.equal(new Set(G.map(g=>P[g].kit.id)).size,G.length,'each genre its own kit');
+ assert.equal(P.nudisco.bass.kind,'slap');assert.ok(P.nudisco.chords.phase>0&&P.nudisco.loop?.bars===8&&P.nudisco.warm>1,'disco: phased strings, a filtered loop, warm glue');assert.equal(P.electrofunk.bass.pop,0);assert.equal(P.electrofunk.lead.kind,'talkbox');
+ assert.equal(P.breaks.bass.kind,'reese');assert.ok(P.breaks.kit.snareClap>0&&P.garage.ghostHats>P.breaks.ghostHats,'a layered break, the 2-step shuffle');
+ assert.equal(P.trap.bass.kind,'boom');assert.ok(P.trap.bass.glide>0&&P.miamibass.kit.kick.length>=.9,'808 glide, the long Miami kick');assert.equal(P.ghetto.bass.kind,'split');
+ assert.equal(P.dnb.bass.kind,'reese');assert.equal(P.dubstep.bass.kind,'wobble');assert.equal(P.liquid.bass.kind,'split');
+ assert.ok(P.lofi.vinyl>0&&P.lofi.lead.wobble>0,'lo-fi vinyl and tape wobble');assert.equal(P.gfunk.lead.kind,'whine');
+ assert.equal(P.electro.lead.kind,'vocoder');assert.ok(P.ebm.kit.snare.gate>0,'a gated EBM snare');
+ assert.equal(P.ambient.lead.kind,'grain');assert.equal(P.berlin.lead.kind,'pluck');assert.ok(P.ambient.build?.bars===32);
+ assert.equal(P.jazztronica.bass.kind,'upright');assert.ok(P.jazztronica.kit.brush&&P.jazztronica.kit.ride>0&&P.jazztronica.lead.kind==='sax','brushes, ride, sax');
+ assert.ok(P.idm.stutter.p>0&&P.algorave.stutter.p>P.idm.stutter.p,'glitch stutters');
+ // One-shots: the new ones are finite, peak-normalized and end at silence; the shared snare without a kit does not move.
+ {const sr=8000;for(const d of [ONE_SHOTS.ride(sr),ONE_SHOTS.brush(sr),ONE_SHOTS.vinyl(sr,1),ONE_SHOTS.upright(sr,55),ONE_SHOTS.snare(sr,P.ebm.kit.snare)]){let pk=0;for(const x of d){assert.ok(Number.isFinite(x));pk=Math.max(pk,Math.abs(x));}assert.ok(Math.abs(pk-1)<1e-6&&Math.abs(d.at(-1))<.01);}
+  assert.deepEqual(Array.from(ONE_SHOTS.snare(sr)),Array.from(ONE_SHOTS.snare(sr,undefined)),'the same snare without a kit');assert.ok(ONE_SHOTS.snare(sr,P.ebm.kit.snare).length<ONE_SHOTS.snare(sr).length,'the gate cuts the tail');}
+ const {r,audio,draws}=fakeRuntime({genre:'nudisco'});r.MU.radio={hookI:'clav',identity:{swing:.1}};
+ for(const g of G){r.MU.dnaA={key:'31,'+g,genre:g};
+  for(const id of ['kick','hat','hatO','clap','rim','shaker','wood','snare','tom','conga','cowbell']){const before=draws();assert.equal(r.proDrum({gid:g,DO:false},id,1.2,id==='kick'?.26:.03,id==='tom'?90:id==='conga'?200:undefined),true,g+' '+id);assert.equal(draws()-before,CLASSIC_DRAWS[id]||0,g+' '+id+' draws');}}
+ // Each bass kind: its own oscillators.
+ for(const [g,ty,check] of [['nudisco','rubber',os=>os.some(o=>o.type==='square')&&os.some(o=>o.type==='triangle')],['electrofunk','machine',os=>!os.some(o=>o.type==='triangle')],
+  ['breaks','reese',os=>os.filter(o=>o.type==='sawtooth').map(o=>o.detune.value).sort().join()==='-16,16'],['dubstep','reese',os=>os.some(o=>o.type==='triangle'&&o.frequency.value>0&&o.frequency.value<20)],
+  ['trap','sub',os=>os.some(o=>o.type==='triangle')],['jazztronica','rubber',os=>os.length===1],['boombap','sub',os=>os.filter(o=>o.type==='sawtooth').length===2]]){
+  const rg={key:'32,'+g,genre:g};r.MU.dnaA=rg;const o0=audio.oscs.length;assert.equal(r.proVoice('bajo',ty,45,3,.14,rg),true,g);assert.ok(check(audio.oscs.slice(o0)),g+' bass '+P[g].bass.kind);}
+ {const rg={key:'33,33',genre:'trap'};r.MU.dnaA=rg;r.MU.step=0;let glides=0;for(let i=0;i<24;i++){r.MU.step=i*2;const o0=audio.oscs.length;r.proVoice('bajo','sub',40+(i%3)*3,4+i*.24,.14,rg);const o=audio.oscs.slice(o0).find(x=>x.type!=='triangle');if(o.frequency.at<440*Math.pow(2,(40+(i%3)*3-69)/12)*2)glides++;}assert.ok(glides>0,'some 808 notes glide');}
+ // Each voice kind: the melody instrument of the composition through its family.
+ const kinds=[['nudisco','clav',(os,fs)=>os.some(o=>o.type==='square')&&os.some(o=>o.type==='sawtooth')&&fs.some(f=>f.type==='peaking')],['boogie','brass',os=>os.filter(o=>o.type==='sawtooth').length===3],
+  ['electrofunk','vocalform',(os,fs)=>fs.filter(f=>f.type==='bandpass'&&f.Q.value===6).length===3],['electro','vocalform',(os,fs)=>fs.filter(f=>f.type==='bandpass'&&f.Q.value===10).length===4],
+  ['jazztronica','reed',(os,fs)=>fs.filter(f=>f.type==='bandpass'&&f.Q.value===4).length===3],['gfunk','saw',os=>os.some(o=>o.type==='sawtooth')&&os.some(o=>o.type==='sine')],
+  ['detroitelectro','metalkeys',os=>os.length===2&&os.every(o=>o.type!=='sawtooth')],['ambient','x',os=>os.length===6],['idm','metalkeys',os=>os.length===2],['ghetto','vocalform',os=>os.length>0]];
+ for(const [g,ty,check] of kinds){const rg={key:'34,'+g+ty,genre:g};r.MU.dnaA=rg;r.MU.radio={hookI:ty};const o0=audio.oscs.length,f0=audio.filters.length;
+  assert.equal(r.proVoice('lead',ty,64,6,.07,rg),true,g+' '+ty);assert.ok(check(audio.oscs.slice(o0),audio.filters.slice(f0)),g+' '+ty+' voice');}
+ assert.equal(r.proCeiling(),16000,'the ceiling opens under these families');
+ r.S.soundPro.classic=true;for(const g of G)assert.equal(r.proDrum({gid:g,DO:false},'kick',40,.26),false,'«Sonido clásico» '+g);}
+// A family without drums builds the engine from its first note (ambient, heart); the beat layer hangs ghosts on the beat; stutters.
+{const {r,audio}=fakeRuntime({genre:'ambient'}),rg={key:'1,1',genre:'ambient'};r.MU.radio={hookI:'glass'};assert.equal(r.proVoice('lead','glass',64,1,.07,rg),true,'ambient sounds without a drum');assert.ok(audio.made()>0);
+ assert.equal(r.proVoice('acorde','stab',57,1.5,.045,{key:'1,1',genre:'heart'}),true,'heart too');}
+for(const [g,more] of [['garage',1.3],['idm',1.1],['lofi',1]]){const {r}=fakeRuntime({genre:g});r.MU.dnaA={key:'1,1',genre:g};const h0=r.soundProStats().hits;let n=0;
+ for(let s=0;s<64;s+=2){r.MU.step=s;r.proDrum({gid:g,DO:false},'hat',1+s*.12,.03);n++;}assert.ok(r.soundProStats().hits-h0>n*more,g+' plays more than its hats: '+(r.soundProStats().hits-h0)+' for '+n);}
+// The player in these families: touches through their instruments, at their front share.
+{const settle=()=>new Promise(res=>queueMicrotask(res));
+ for(const g of ['boogie','garage','footwork','liquid','lofi','robotic','downtempo','jazztronica','algorave']){const {r,audio}=fakeRuntime({genre:g}),reg={key:'1,1',genre:g},bus={id:'bus '+g};r.MU.dnaA=reg;r.bus=bus;r.MU.radio={hookI:'x'};
+  r.proDrum({gid:g,DO:false},'hat',1.9,.02);r.currentVoiceOrigin='player';assert.equal(r.proVoice('lead','pluck',67,2,.07,reg),true,g);await settle();
+  const p=soundProfile(g),lv=.3*(p.output??1)*p.front;assert.ok(audio.all.some(n=>n.to?.includes(bus)&&Math.abs(n.gain.value-lv)<1e-9),g+' into the touch bus at its front level');
+  r.S.soundPro.classic=true;assert.equal(r.proVoice('lead','pluck',67,4,.07,reg),false,'«Sonido clásico» '+g);}}
 // The setting saves, and a failed save restores it.
 {const {r}=fakeRuntime({save:false});assert.equal(r.setSoundProClassic(true),false);assert.equal(r.S.soundPro.classic,false);
  const ok=fakeRuntime();assert.equal(ok.r.setSoundProClassic(true),true);assert.equal(ok.r.soundProClassic(),true);
@@ -277,8 +326,8 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  r.currentVoiceOrigin='field';assert.equal(r.proVoice('lead','pluck',67,3.4,.07,reg),true,'a power calls the same way');await settle();
  // Other voices and other families keep their sound; «Sonido clásico» turns the player's voices back too.
  r.currentVoiceOrigin='ambient';assert.equal(r.proVoice('lead','pluck',67,4,.07,reg),false,'the ambient voices stay as they were');
- r.currentVoiceOrigin='player';assert.equal(r.proVoice('lead','pluck',67,4,.07,{key:'5,5',genre:'electro'}),false,'a classic family plays its own voices');
- r.MU.dnaA={key:'5,5',genre:'electro'};assert.equal(r.proDrum(null,'rim',4,.04),false);r.MU.dnaA=reg;
+ r.currentVoiceOrigin='player';assert.equal(r.proVoice('lead','pluck',67,4,.07,{key:'5,5',genre:'nada'}),false,'a genre without a profile plays its own voices');
+ r.MU.dnaA={key:'5,5',genre:'nada'};assert.equal(r.proDrum(null,'rim',4,.04),false);r.MU.dnaA=reg;
  r.S.soundPro.classic=true;assert.equal(r.proVoice('lead','pluck',67,4,.07,reg),false);assert.equal(r.proDrum(null,'rim',4,.04),false);r.S.soundPro.classic=false;
  // A pulse on the beat: the theme's three notes come as ambient right after a new hit of the journey's pulse.
  const js={hits:0,misses:0};r.journeyPulseState=()=>({...js});r.currentVoiceOrigin='track';r.MU.step=1;r.proDrum({gid:'techhouse',DO:false},'hat',4.5,.02);
@@ -314,4 +363,4 @@ const html=read('index.html'),adv=html.slice(html.indexOf('<details id="musicAdv
 assert.ok(adv.includes('id="classicSound"')&&adv.includes('Sonido clásico'),'the setting lives in Sonido › Avanzado');
 const en=read('src/i18n-en.js');assert.ok(en.includes('"Sonido clásico":"Classic sound"'));
 assert.ok(read('src/main.js').includes("import {initialize as soundPro} from './sound-pro.js';"));
-console.log('PASS sound families (52 genres, 14 families, tech, house, techno, melodic y orgánico and afro y latino ready, per-genre touches, acid lines, rumble, tape echo, dub stab, chord kinds, builds, plucks, flutes, strings, piano, chants, log drum, bombo), «Sonido clásico» save, DJ transitions from the journey, one-shots, the player inside the music (front voices, theme throws, influence, groove layer, streak riser) and the engine contract');
+console.log('PASS sound families (52 genres, 14 families, tech, house, techno, melodic y orgánico and afro y latino and the nine others ready, per-genre touches, slap, reese, wobble, 808 boom, upright, talkbox, vocoder, sax, whine, FM bells, grains, the beat layer, stutters, acid lines, rumble, tape echo, dub stab, chord kinds, builds, plucks, flutes, strings, piano, chants, log drum, bombo), «Sonido clásico» save, DJ transitions from the journey, one-shots, the player inside the music (front voices, theme throws, influence, groove layer, streak riser) and the engine contract');
