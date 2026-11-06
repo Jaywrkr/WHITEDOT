@@ -47,9 +47,9 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 | D06 | Privacidad, edades, clasificación y formularios | Borradores y decisiones aprobadas; datos legales/correo, controles pendientes y formularios de tiendas por completar |
 | D07 | Fichas ES/EN y requisitos reales | Borradores ES/EN en [Material de tienda](TIENDAS.md); la ficha EN dice que el juego está en español. Pendiente aprobación y requisitos de cada tienda |
 | D08 | Icono y recursos de tienda/capturas reales | `scripts/store-media.py` genera capturas reales (Play, App Store, Steam) del mundo abierto en español e inglés (alpha.274), iconos y gráficos; falta rehacer gráficos con la identidad violeta (fuera de Git) y aprobarlos |
-| D09 | Tráiler y clips con música original del juego | Clips con audio real del juego y guion en [Material de tienda](TIENDAS.md); montaje final pendiente |
-| D10 | Landing y enlaces/soporte/privacidad | Maqueta/plan local existen; landing pública no publicada ni dominio comprado |
-| D11 | Press kit pequeño con medios/contacto/enlaces | Borrador en [Material de tienda](TIENDAS.md); faltan editor, contacto y enlaces |
+| D09 | Tráiler y clips con música original del juego | Montaje de 37 s con `scripts/trailer.py` (ES/EN, 1920×1080 y 1080×1920, −16 LUFS, pico ≤ −1,8 dBTP), fuera de Git ([Material de tienda](TIENDAS.md#tráiler)). Pendiente: que Jay lo vea y lo apruebe, y alojarlo |
+| D10 | Landing y enlaces/soporte/privacidad | Landing y privacidad ES/EN estáticas en `site/` (`scripts/site-build.mjs`). Sin publicar ni dominio comprado; faltan [NOMBRE LEGAL], [CORREO], [FECHA] y enlaces de tiendas |
+| D11 | Press kit pequeño con medios/contacto/enlaces | Página ES/EN en `site/prensa.html` y `site/press.html`: datos, descripción, icono y gráficos. Faltan editor, contacto, precio, fecha y enlace del tráiler |
 | D12 | Creadores/comunidades y borradores personalizados | Pendiente; foco exploración y música electrónica/cultura musical. No enviar mensajes ni comprar listas |
 | D13 | Prueba cerrada y acceso a producción Play si aplica | Pendiente de cuenta/reglas aplicables; emulador/sideload no sustituyen distribución exigida |
 | D14 | Candidato y autorización de salida por canal | Pendiente; cerrar checks/correcciones necesarias y precio/enlaces reales antes de publicar |

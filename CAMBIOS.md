@@ -4,6 +4,17 @@ Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.276** en la rama `jay/soni
 
 
 
+## Listo 5: landing, privacidad, prensa y tráiler · sitio y documentos
+
+Rama `jay/listo-5`, desde `main` `968d596` (alpha.276). Sin cambios en el juego ni en la versión. Guía: [Material de tienda](docs/TIENDAS.md#sitio-landing-privacidad-y-prensa).
+
+- **Sitio estático en `site/`** (D10, D11), en español e inglés: landing, privacidad y prensa. Negro puro, esquinas rectas y Geist Mono local. Sin scripts, cookies ni peticiones externas. Unos 650 KB.
+- **Privacidad** generada desde la parte pública de [Privacidad](docs/PRIVACIDAD.md) con `scripts/site-build.mjs`. Los huecos [NOMBRE LEGAL], [CORREO] y [FECHA] se ven recuadrados.
+- **Fuera del juego.** No entra en `sw.js`, itch.io, Android ni escritorio. Vercel lo sirve en `/site/`; `playkubono.com` irá en un proyecto aparte.
+- **Tráiler** (D09): `scripts/trailer.py`, 37 s, ES/EN, horizontal y vertical, con el sonido de los clips. −15,9 LUFS; pico real −1,8 dBTP o menos. Los vídeos quedan fuera de Git.
+- **Pruebas.** `tests/site.mjs`. `npm test`, `node scripts/release-audit.mjs`, `node scripts/stale-text-check.mjs --base 968d596`. Capturas sin cabeza a 390 y 1280 px.
+- **Límites.** Nada publicado. Nadie ha visto el tráiler entero ni lo ha oído. Faltan dominio, editor, correo, fecha, precio y enlaces.
+
 ## Sonido pro 5: las nueve familias restantes · 2.3.0-alpha.276
 
 Rama `jay/sonido-pro-5`, desde `main` `4e2fe11` (alpha.275). Último lote del plan aprobado («termina la última tanda de música»). Guía: [Sonido pro](docs/UNIVERSO.md#sonido-pro).
