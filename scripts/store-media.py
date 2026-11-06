@@ -1,14 +1,18 @@
 """Store media from the real game (D08/D09): screenshots at store sizes in Spanish and English, icon and graphic exports,
 and short clips with the game's own music.
 
-Usage: python3 scripts/store-media.py [--out outputs/tienda] [--only capturas,iconos,clips] [--sizes movil,escritorio] [--langs es,en]
+Usage: python3 scripts/store-media.py [--out outputs/tienda] [--only capturas,iconos,clips,master] [--sizes movil,escritorio] [--langs es,en] [--scenes 8-refugio]
 Everything is rendered by the game itself in Chromium; nothing is painted over it. Output stays out of Git (outputs/).
 Listo 2 (alpha.274): every scene starts from a new save of the open World («?abierto=1»: no Journey, no Camino), as a
 player meets it: the first minute with the guide and «Llanura · más lejos · 0,5 km», then the scanner's marks on the
 edge, a place's portal, a round, its sheet of ★, Tu cubo (Piezas), the Bitácora and the Refugio.
 Listo 3 (alpha.275): the round is played, as a player does: the music runs, the place sings its bar, and then the cube
 pulses on the steps it asks for through the game's own pulse (the Space key's), so the Line and the cube show the hits.
-The Refugio waits for its first line to be written whole. A third clip shows a round."""
+The Refugio waits for its first line to be written whole. A third clip shows a round.
+Listo 4 (alpha.277): the clips' audio is mastered (one fixed gain, no pumping; a fast limiter only for a lone spike) to about
+−16 LUFS with its true peak at −1 dBTP or lower; «--only master» does it again on the clips already in --out without recording.
+On a phone the Refugio's Voz no longer covers a room's name, so its still keeps the Voz. «--scenes 8-refugio» takes
+only that still."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -17,8 +21,8 @@ import threading,os,shutil,argparse,base64,subprocess,json
 ROOT=Path(__file__).resolve().parents[1]
 SIZES=[('movil',360,640,3),('tablet',800,1280,2),('iphone-6-9',440,956,3),('ipad-13',1032,1376,2),('escritorio',1280,720,1.5)]
 ap=argparse.ArgumentParser();ap.add_argument('--out',default=str(ROOT/'outputs'/'tienda'));ap.add_argument('--only',default='capturas,iconos,clips')
-ap.add_argument('--sizes',default=','.join(s[0] for s in SIZES));ap.add_argument('--langs',default='es,en');args=ap.parse_args()
-OUT=Path(args.out);ONLY=set(args.only.split(','));WANT=set(args.sizes.split(','));LANGS=args.langs.split(',')
+ap.add_argument('--sizes',default=','.join(s[0] for s in SIZES));ap.add_argument('--langs',default='es,en');ap.add_argument('--scenes',default='');args=ap.parse_args()
+OUT=Path(args.out);ONLY=set(args.only.split(','));WANT=set(args.sizes.split(','));LANGS=args.langs.split(',');SCENES=set(filter(None,args.scenes.split(',')))
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
@@ -48,7 +52,7 @@ PLAY="""async(ms)=>{const r=__r,J=await import('/src/journey-pulse.js'),end=perf
  return await new Promise(res=>{const tick=()=>{const now=performance.now(),heard=J.audibleTime(r.ac),t=r.journeyRhythmTarget(heard)?.hit;
   if(t&&t.time<=heard&&heard-t.time<.4&&t.time>done+.01){done=t.time;r.sonar('player',now-(heard-t.time)*1000);hitAt=now;}
   if(now<give&&(now<end||!hitAt||now-hitAt>90||(r.ritmoState?.().combo|0)<10))requestAnimationFrame(tick);else res(r.journeyPulseState());};tick();});}"""
-# Whether the Voz covers a text the Refugio drew (its rooms' names), from the house's own layout.
+# Whether the Voz covers a text the Refugio drew (its rooms' names), from the house's own layout: it must not.
 COVERS="""()=>{const v=document.getElementById('voice').getBoundingClientRect();return __r.houseLayout().texts.some(t=>t.x<v.right&&v.left<t.x+t.w&&t.y<v.bottom&&v.top<t.y+t.h);}"""
 # The round's sheet: the Lago played to about three pulses in four on time in about a minute.
 RESULT="""()=>{const r=__r;for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}"""
@@ -69,6 +73,9 @@ def scenes(p,prefix):
  def snap(name,hide=True):
   if hide:clean(p)
   path=OUT/'capturas'/f'{prefix}-{name}.png';p.screenshot(path=str(path));shots.append(path.name)
+ if SCENES=={'8-refugio'}:
+  p.add_style_tag(content=GUIDE);p.evaluate(LIVED);p.wait_for_timeout(300);refugio(p,snap);return shots
+ assert not SCENES,('--scenes takes only 8-refugio',SCENES)
  # 1 · The first minute: the guide and the line to the first place.
  p.wait_for_function("!document.getElementById('ringRoute').hidden",timeout=8000);p.wait_for_timeout(1200);snap('1-inicio')
  p.add_style_tag(content=GUIDE);p.evaluate(LIVED);p.wait_for_timeout(300);home=p.evaluate("[__r.S.wx,__r.S.wy]")
@@ -96,15 +103,17 @@ def scenes(p,prefix):
  # 7 · The Bitácora.
  p.evaluate("()=>{"+HIDE+";__r.openJournal('achievements');}");p.wait_for_timeout(600);snap('7-bitacora',hide=False)
  # 8 · The Refugio.
+ refugio(p,snap)
+ return shots
+def refugio(p,snap):
  p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000)
- # Its first line («Tu Refugio viaja contigo. Se abre donde estés.»), written whole before the still.
+ # Its first line («Tu Refugio viaja contigo. Se abre donde estés.»), written whole before the still, beside the rooms'
+ # names and never over them (a phone's house steps up and leaves it a band, house.js voiceSlot).
  p.wait_for_function("document.getElementById('voice').classList.contains('on')&&document.getElementById('vX').textContent.length>40",timeout=15000);p.wait_for_timeout(900)
  assert p.evaluate("(x=>x.scrollHeight<=x.clientHeight+1)(document.getElementById('vX'))"),'the Refugio line fits'
- # Where the line has no free band and covers a room's name (phones), the still waits until it has been read.
- if p.evaluate(COVERS):p.wait_for_function("!document.getElementById('voice').classList.contains('on')",timeout=15000);p.wait_for_timeout(700)
+ assert not p.evaluate(COVERS),'the Voz covers a room name'
  snap('8-refugio')
  assert not p.__errors,p.__errors
- return shots
 # The icon keeps the approved mark: a white cube inside a gold ring on black.
 MARK="""([size,pad,alpha])=>{const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d');if(!alpha){x.fillStyle='#000';x.fillRect(0,0,size,size);}const s=size*(1-pad*2)/512,o=size*pad;x.translate(o,o);x.scale(s,s);x.strokeStyle='#f0d27a';x.lineWidth=5;x.beginPath();x.arc(256,256,161,0,6.283);x.stroke();x.fillStyle='#fff';x.fillRect(206,206,100,100);return c.toDataURL('image/png');}"""
 GRAPHIC="""async([w,h,title,line])=>{await document.fonts.ready;const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,w,h);
@@ -132,36 +141,58 @@ def clip(b,name,w,h,dpr,seconds,steps,lang):
  # The recording starts when the page opens; keep only the last `seconds`.
  total=float(subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','csv=p=0',video],capture_output=True,text=True).stdout.strip() or seconds)
  subprocess.run(['ffmpeg','-y','-loglevel','error','-ss',str(max(0,total-seconds)),'-i',video,'-i',str(a),'-map','0:v','-map','1:a','-shortest','-vf','scale=iw*2:ih*2:flags=neighbor','-c:v','libx264','-crf','20','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',str(OUT/'clips'/f'{name}.mp4')],check=True)
- return f'{name}.mp4'
+ master(OUT/'clips'/f'{name}.mp4');return f'{name}.mp4'
+# The clip's audio: about −16 LUFS, true peak −1 dBTP or lower. One fixed gain for the whole clip (no pumping); a fast
+# limiter, oversampled, only where a lone transient would still pass −2 dBTP. The picture is copied as it is. A clip
+# already there is left alone.
+def loudness(path):
+ out=subprocess.run(['ffmpeg','-hide_banner','-nostats','-i',str(path),'-map','0:a','-af','ebur128=peak=true','-f','null','-'],capture_output=True,text=True).stderr.split('Summary:')[-1]
+ i=float(out.split('I:')[1].split()[0]);tp=float(out.split('True peak:')[1].split('Peak:')[1].split()[0]);return {'lufs':i,'true_peak_db':tp}
+def master(path):
+ m=loudness(path)
+ if -17.5<=m['lufs']<=-15.5 and m['true_peak_db']<=-1:return m
+ gain=-16.5-m['lufs'];chain=f'volume={gain:.2f}dB'
+ if m['true_peak_db']+gain>-2:chain+=',aresample=192000,alimiter=limit=0.7499:attack=1:release=60:level=0,aresample=48000'
+ tmp=path.with_suffix('.master.mp4')
+ subprocess.run(['ffmpeg','-y','-loglevel','error','-i',str(path),'-map','0:v','-map','0:a','-c:v','copy','-af',chain,'-ar','48000','-c:a','aac','-b:a','192k','-movflags','+faststart',str(tmp)],check=True)
+ m=loudness(tmp);assert m['true_peak_db']<=-1 and -17.5<=m['lufs']<=-15.5,(path.name,m);tmp.replace(path);return m
 # The World clip: the first seconds with the guide, then a walk through a lively spot.
 WORLD=[('wait',3500),('css',GUIDE),('js',LIVED),('js',PLACE),('js','__r.startAutopilot?.()'),('wait',10000)]
 HOUSE=[('css',GUIDE),('js',LIVED),('js',"()=>{"+HIDE+";__r.landHouse();}"),('wait',3000),('js',"__r.houseWalkTo('jardin',.5)"),('wait',4000),('js','__r.housePulse()'),('wait',4000)]
 # A round: the place sings its bar, then the cube answers it on time.
 ROUND=[('css',GUIDE),('js',LIVED),('wait',800),('js',"__r.startPlace('lago')"),('wait',300),('js',"()=>new Promise(res=>{const t=()=>__r.rhythmDemo()?requestAnimationFrame(t):res();t();})"),('js',"()=>("+PLAY+")(8000)")]
-report={}
+# A partial run (some sizes, scenes or only the audio) keeps what the report already lists.
+try:report=json.loads((OUT/'informe.json').read_text())
+except Exception:report={}
+def note(key,names):report[key]=sorted(set(report.get(key,[]))|set(names))
 try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   if 'capturas' in ONLY:
-   (OUT/'capturas').mkdir(parents=True,exist_ok=True);report['capturas']=[]
+   (OUT/'capturas').mkdir(parents=True,exist_ok=True);shots=[]
    # Play phone 9:16 at 1080×1920 and tablet 1600×2560; Apple iPhone 6.9" 1320×2868 and iPad 13" 2064×2752; desktop/Steam 1920×1080.
    for prefix,w,h,dpr in SIZES:
     if prefix not in WANT:continue
     for lang in LANGS:
-     ctx,p=page_for(b,w,h,dpr,lang);report['capturas']+=scenes(p,f'{prefix}-{lang}');ctx.close()
+     ctx,p=page_for(b,w,h,dpr,lang);shots+=scenes(p,f'{prefix}-{lang}');ctx.close()
+   note('capturas',shots)
   if 'iconos' in ONLY:
    ctx=b.new_context();p=ctx.new_page();p.goto(URL);p.wait_for_load_state()
    for name,size,pad,alpha in [('icono-1024-apple',1024,0,False),('icono-512-play',512,0,False),('icono-256-steam',256,0,False),('icono-adaptativo-432',432,.17,False)]:save(p.evaluate(MARK,[size,pad,alpha]),OUT/'iconos'/f'{name}.png')
    for name,w,h,line in [('grafico-play-1024x500',1024,500,'Un cubo. Un universo que suena.'),('steam-capsula-principal-1232x706',1232,706,'Un cubo. Un universo que suena.'),('steam-capsula-cabecera-920x430',920,430,'Un cubo. Un universo que suena.'),('steam-capsula-pequena-462x174',462,174,''),('steam-biblioteca-600x900',600,900,'Un cubo. Un universo que suena.'),('og-1200x630',1200,630,'Un cubo. Un universo que suena.')]:save(p.evaluate(GRAPHIC,[w,h,'KUBONO',line]),OUT/'graficos'/f'{name}.png')
-   report['iconos']=sorted(x.name for x in (OUT/'iconos').glob('*.png'));report['graficos']=sorted(x.name for x in (OUT/'graficos').glob('*.png'));ctx.close()
+   note('iconos',[x.name for x in (OUT/'iconos').glob('*.png')]);note('graficos',[x.name for x in (OUT/'graficos').glob('*.png')]);ctx.close()
   if 'clips' in ONLY:
-   (OUT/'clips').mkdir(parents=True,exist_ok=True);(OUT/'_video').mkdir(parents=True,exist_ok=True);report['clips']=[]
+   (OUT/'clips').mkdir(parents=True,exist_ok=True);(OUT/'_video').mkdir(parents=True,exist_ok=True);clips=[]
    for lang in LANGS:
-    report['clips'].append(clip(b,f'clip-mundo-vertical-{lang}',540,960,1,14,WORLD,lang))
-    report['clips'].append(clip(b,f'clip-mundo-horizontal-{lang}',960,540,1,14,WORLD,lang))
-    report['clips'].append(clip(b,f'clip-ronda-vertical-{lang}',540,960,1,14,ROUND,lang))
-   report['clips'].append(clip(b,'clip-refugio-vertical',540,960,1,12,HOUSE,LANGS[0]))
+    clips.append(clip(b,f'clip-mundo-vertical-{lang}',540,960,1,14,WORLD,lang))
+    clips.append(clip(b,f'clip-mundo-horizontal-{lang}',960,540,1,14,WORLD,lang))
+    clips.append(clip(b,f'clip-ronda-vertical-{lang}',540,960,1,14,ROUND,lang))
+   clips.append(clip(b,'clip-refugio-vertical',540,960,1,12,HOUSE,LANGS[0]));note('clips',clips)
   b.close()
+ # The clips' audio, measured as a store hears it.
+ if 'master' in ONLY or 'clips' in ONLY:
+  report['audio']={x.name:master(x) for x in sorted((OUT/'clips').glob('*.mp4'))}
+  for name,m in report['audio'].items():print(name,f"{m['lufs']:.1f} LUFS",f"{m['true_peak_db']:.1f} dBTP",flush=True)
 finally:server.shutdown()
 shutil.rmtree(OUT/'_video',ignore_errors=True)
 (OUT/'informe.json').write_text(json.dumps(report,indent=1,ensure_ascii=False))
