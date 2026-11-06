@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {SCENES,sceneById,scenesFor,sceneWorldKey,normalizeScenes,scenesOn,scenesWritable,stageProximity,stageInZone,stagesNear,handFor,arcAt,filterAt,acidLine,metalSteps,congaPattern,bongoSteps,bassSteps,chopSteps,
- SCENES_VERSION,STAGE_HEAR,STAGE_FULL,NEAR_SHARE,FAR_SHARE,UNITS_PER_KM,ZONE_REGIONS,HAT_PATTERNS,VOWELS,SECTION_LEVEL} from '../src/scenes-model.js';
+ SCENES_VERSION,STAGE_HEAR,STAGE_FULL,NEAR_SHARE,FAR_SHARE,UNITS_PER_KM,ZONE_REGIONS,HAT_PATTERNS,VOWELS,SECTION_LEVEL,SCENE_BUILDS,sceneBuild} from '../src/scenes-model.js';
 import {initialize} from '../src/scenes.js';
 const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 // ---------- the scenes ----------
@@ -51,7 +51,7 @@ for(const len of [32,64]){const h={...hands[0],arc:len};const seen=[];
  for(let b=0;b<len;b++){const a=arcAt(h,b);if(seen.at(-1)!==a.section)seen.push(a.section);assert.ok(a.level>0&&a.level<=1);}
  assert.deepEqual(seen,['intro','build','drop','breakdown','return'],'intro → build → drop → breakdown → return');
  const drop=Array.from({length:len},(_,b)=>arcAt(h,b)).filter(a=>a.drop);assert.equal(drop.length,2,'two drops: the drop and the return');
- const risers=Array.from({length:len},(_,b)=>arcAt(h,b)).filter(a=>a.riserStart);assert.equal(risers.length,2,'a riser before each drop');
+ const risers=Array.from({length:len},(_,b)=>arcAt(h,b)).filter(a=>a.riserStart);assert.equal(risers.length,2,'a build before each drop (the arc keeps its riser flag; no noise riser sounds)');
  for(const a of risers)assert.ok(['build','breakdown'].includes(a.section));
  assert.equal(arcAt(h,len).cycle,1);assert.equal(arcAt(h,len).section,'intro');
  const build=Array.from({length:len},(_,b)=>arcAt(h,b)).filter(a=>a.section==='build');assert.ok(build.at(-1).level>build[0].level+.25,'the build climbs');
@@ -105,6 +105,11 @@ for(const value of [undefined,false]){const t=runtime(value,stage);t.play(70);as
 {const t=runtime(true,stage);t.r.S.journey={free:false};t.play(4);assert.equal(t.A.made.length,0);
  const u=runtime(true,stage);u.r.placeRun=()=>({id:'x'});u.play(4);assert.equal(u.A.made.length,0);
  const v=runtime(true,stage);v.r.S.universeTexts=false;v.play(4);assert.equal(v.toasts.length,0);assert.ok(v.A.made.length>0);}
+// Sonido limpio (Jay, 6 Nov 2026): no noise riser in either stage; the build before a drop is a roll or a run on the
+// stage's own drums, or nothing, and it varies by stage, cycle and drop.
+{const voices=read('src/scenes-audio.js'),stage=read('src/scenes.js');assert.ok(!/riser\(/.test(voices)&&!/voices\.riser/.test(stage),'no riser voice');
+ for(const [scene,list] of Object.entries(SCENE_BUILDS)){assert.ok(list.includes('none')&&list.length>=3,scene);const seen=new Set();for(let i=0;i<60;i++){const k=sceneBuild('scene:v1:t:'+i,scene,i%3,i%2?'build':'breakdown');assert.ok(list.includes(k));seen.add(k);}assert.equal(seen.size,list.length,scene+' plays every build');}
+ assert.equal(sceneBuild('a','almacen',2,'build'),sceneBuild('a','almacen',2,'build'),'the same drop builds the same way');}
 // Wiring: one hook in the music's step after its own voices, the module in main, each file once in the offline shell, the
 // switch in Sonido, its English.
 {const audio=read('src/audio.js');assert.equal(audio.split('runtime.sceneStep?.(s,bar,t);').length,2);assert.ok(audio.indexOf('runtime.sceneStep?.')>audio.indexOf('runtime.phenomenaStep?.(s,bar,t);'));
@@ -113,4 +118,4 @@ for(const value of [undefined,false]){const t=runtime(value,stage);t.play(70);as
  const sw=read('sw.js');for(const m of ['scenes-model.js','scenes-audio.js','scenes.js'])assert.equal(sw.split('"./src/'+m+'"').length,2,m);
  const html=read('index.html');assert.match(html,/id="mMusic"[\s\S]*id="scenesSetting" type="checkbox"[^>]*>Escenas: más variedad/);assert.ok(!/id="scenesSetting"[^>]*checked/.test(html),'off by default');
  const {EN}=await import('../src/i18n-en.js');for(const k of ['Escenas: más variedad','Escena · Almacén','Escena · Patio latino'])assert.ok(EN[k],k);}
-console.log('PASS scenes: stages by hashKey (near '+nearShare.toFixed(3)+', far '+farShare.toFixed(3)+'), hands, arcs, patterns on the chord, the setting and its save, off builds nothing');
+console.log('PASS scenes: stages by hashKey (near '+nearShare.toFixed(3)+', far '+farShare.toFixed(3)+'), hands, arcs, builds without a riser, patterns on the chord, the setting and its save, off builds nothing');

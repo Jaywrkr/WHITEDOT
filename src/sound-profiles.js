@@ -386,8 +386,10 @@ export const soundProClassic=q=>soundProWritable(q)&&q.classic===true;
 
 // ---------- region transitions, DJ style ----------
 // Mirrors territory-journey.js from the cues it already sends each bar (it is not changed): the guest region comes in
-// filtered and without bass, a riser announces the swap two bars ahead, the kick drops out for the last half bar and
-// an impact marks the swap, where the bass changes hands.
+// filtered and without bass, a build announces the swap (one or two bars ahead) and the drop lands on it, where the bass
+// changes hands. Sonido limpio (Jay, 6 Nov 2026): no noise riser any more, before a drop or anywhere («como un viento
+// que va de menos a más», the same every time). Each family has its own builds, chosen per drop by a hash of the two
+// regions and the bar (no random draw), and a drop can come with no build at all.
 export const GUEST_HIGHPASS=170;
 export function guestFilter(w){const k=Math.max(0,Math.min(1,(Number.isFinite(w)?w:0)/.45));return {highpass:GUEST_HIGHPASS,lowpass:Math.round(700*Math.pow(20000/700,k))};}
 export function createTransitionTracker(){
@@ -399,14 +401,64 @@ export function createTransitionTracker(){
   if(primary===null||f.primary!==primary&&!f.swap){primarySince=bar;guestSince=bar;}
   else if(f.swap)primarySince=bar;
   else if((f.secondary||null)!==secondary)guestSince=bar;
-  primary=f.primary;secondary=f.secondary||null;last=bar;
+  const secondaryBefore=primary;primary=f.primary;secondary=f.secondary||null;last=bar;
   // The journey swaps on a bar that is a multiple of 8, with the guest at half or more, the primary there for 8 bars
-  // and the guest for 4, once you are in the guest's ground: only then does the guest pass one half.
-  const swapIn=k=>{const b=bar+k;return !!secondary&&b%8===0&&b-primarySince>=8&&b-guestSince>=4&&(f.to??0)>.5+1e-9;};
-  const phrase=bar-primarySince;
-  return {bar,primary,secondary,impact:f.swap===true,drop:swapIn(1),riser:swapIn(2)?2:0,
-   crash:!f.swap&&phrase>0&&phrase%16===0,sweep:phrase%32===31,phrase,
+  // and the guest for 4, once you are in the guest's ground: only then does the guest reach one half. Sonido limpio:
+  // the guest at exactly half swaps too (territory-journey.js asks from >= .5; a walk climbs .125 a bar to .5), so the
+  // bar before it is known when the guest is at half, and two bars before when it climbs and is one step from half.
+  const to=Number.isFinite(f.to)?f.to:0,from=Number.isFinite(f.from)?f.from:0;
+  const swapIn=k=>{const b=bar+k;return !!secondary&&b%8===0&&b-primarySince>=8&&b-guestSince>=4&&(k===1?to>=.5-1e-9:to>=.5-1e-9||to-from>=.125-1e-9&&to+.125>=.5-1e-9);};
+  const phrase=bar-primarySince,left=swapIn(1)?1:swapIn(2)?2:0,swapBar=left?bar+left:f.swap===true?bar:null;
+  // seed: the same for every bar of one build and its drop (the two regions and the bar of the swap); phraseEnd: the
+  // last bar of each 32 from the bar a region took over, where a phrase build may come (phraseSeed).
+  return {bar,primary,secondary,impact:f.swap===true,drop:left===1,build:left,seed:swapBar===null?null:buildSeed(f.swap===true?secondaryBefore:primary,f.swap===true?primary:secondary,swapBar),
+   crash:!f.swap&&phrase>0&&phrase%16===0,phraseEnd:phrase%32===31,phraseSeed:buildSeed(primary,'phrase',bar),phrase,
    from:Number.isFinite(f.from)?f.from:0,to:Number.isFinite(f.to)?f.to:0};
  }
  return {advance,reset};
 }
+
+// ---------- builds into a drop (Sonido limpio) ----------
+// A seed for one build: a hash of the region we leave, the one we drop into and the bar (FNV-1a, like hashKey; no
+// random sequence is read). Both bars of a build and its drop share it.
+export function buildSeed(from,to,bar){let h=2166136261;for(const c of String(from)+'>'+String(to)+':'+String(bar))h=Math.imul(h^c.charCodeAt(0),16777619);h^=h>>>13;h=Math.imul(h,0x5bd1e995);h^=h>>>15;return h>>>0;}
+// The builds a family plays before a drop, as a weighted list (a kind listed twice comes twice as often):
+// fill: a drum fill in the last bar (the family's own drum, one of four figures, louder to the drop); dropout: no kick
+// and no bass for the whole last bar; filter: the music thins (its high-pass climbs) over the last bars and opens on
+// the drop; lift: chord tones climbing in the family's lead over the last bar; reverse: a reversed cymbal over the last
+// half bar (rare); none: no build, the kick plays straight into the drop. No family has a noise riser.
+export const BUILD_KINDS=Object.freeze(['fill','dropout','filter','lift','reverse','none']);
+const builds=(fill,list)=>Object.freeze({fill,list:Object.freeze(list.split(' '))});
+export const FAMILY_BUILDS=Object.freeze({
+ tech:builds('rim','fill dropout filter none fill dropout lift filter'),
+ house:builds('snare','fill filter lift none fill dropout lift filter reverse'),
+ techno:builds('tom','dropout filter fill none dropout filter fill none'),
+ melodic:builds('tom','filter lift none fill lift filter reverse none'),
+ afro:builds('conga','fill fill none dropout fill filter none'),
+ disco:builds('tom','fill lift filter fill none reverse dropout'),
+ uk:builds('snare','fill dropout none fill filter reverse none'),
+ bass:builds('snare','fill dropout fill none dropout'),
+ dnb:builds('snare','fill dropout fill filter none'),
+ hiphop:builds('snare','dropout none fill dropout none'),
+ electro:builds('snare','fill dropout lift none filter'),
+ ambient:builds(null,'none filter none lift'),
+ jazz:builds('snare','fill none filter fill none'),
+ experimental:builds('snare','fill dropout none filter fill')
+});
+// The fill's figures, in sixteenths of the last bar: the last beat, the last two beats with gaps, a two-beat roll, a
+// syncopated run.
+export const FILL_FIGURES=Object.freeze([[12,13,14,15],[8,10,12,13,14,15],[8,9,10,11,12,13,14,15],[6,9,12,14,15]].map(Object.freeze));
+// What lands on the drop: the sub and a crash (impact), a crash alone, the sub alone or nothing but the music.
+export const LANDINGS=Object.freeze(['impact','crash','sub','none']);
+// One drop's build for a genre (its family) from its seed: the kind, the fill's drum and figure, how many bars it
+// takes, which half-bar the kick rests from (8 for half a bar, 0 for the whole bar, null for none) and what lands.
+export function dropBuild(genre,seed){
+ const fam=FAMILY_BUILDS[soundFamily(genre)?.id]||FAMILY_BUILDS.tech,h=(seed>>>0)||1,list=fam.list;
+ let kind=list[h%list.length];if(kind==='fill'&&!fam.fill)kind='none';if(kind==='reverse'&&(h>>>16)%3)kind='filter';   // the reversed cymbal only one time in three it is drawn
+ const figure=(h>>>8)%FILL_FIGURES.length,alt=(h>>>12)%4;
+ const land=kind==='dropout'?'impact':kind==='fill'||kind==='lift'||kind==='reverse'?(alt===3?'impact':'crash'):kind==='filter'?(alt<2?'crash':'none'):(alt===0?'sub':'none');
+ return Object.freeze({kind,fill:kind==='fill'?fam.fill:null,figure,bars:kind==='filter'?2:1,kickFrom:kind==='none'?null:kind==='dropout'?0:8,land});
+}
+// At the end of a 32-bar phrase (no swap): most often nothing, sometimes a fill or the old filter sweep. Never a riser.
+export function phraseBuild(genre,seed){const fam=FAMILY_BUILDS[soundFamily(genre)?.id]||FAMILY_BUILDS.tech,h=(seed>>>0)||1,r=h%6;
+ const kind=r<3?'none':r<5?(fam.fill?'fill':'none'):'filter';return Object.freeze({kind,fill:kind==='fill'?fam.fill:null,figure:(h>>>8)%FILL_FIGURES.length,bars:1,kickFrom:null,land:'none'});}

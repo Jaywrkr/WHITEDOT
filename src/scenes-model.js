@@ -83,6 +83,11 @@ export function arcAt(hand,bar){const len=hand.arc,scale=len/64,b=((bar%len)+len
   const level=name==='build'?SECTION_LEVEL.build+.3*progress:SECTION_LEVEL[name];
   return {section:name,i,size,progress,riser,riserStart:riser&&i===size-2,drop,fill,level,cycle,bar:b};}start+=size;}
  return {section:'intro',i:0,size:1,progress:0,riser:false,riserStart:false,drop:false,fill:false,level:SECTION_LEVEL.intro,cycle,bar:b};}
+// Sonido limpio (Jay, 6 Nov 2026): no noise riser before a drop. The last bar before each drop plays a build of the
+// stage's own drums, chosen by hashKey from the stage, the cycle and the drop (no random sequence is read), or nothing
+// but the breath: the Almacén a hat roll or metal strikes climbing the chord; the Patio a timbal roll or a conga run.
+export const SCENE_BUILDS=Object.freeze({almacen:Object.freeze(['roll','climb','none']),patio:Object.freeze(['timbal','conga','none'])});
+export function sceneBuild(key,scene,cycle,section){const list=SCENE_BUILDS[scene]||SCENE_BUILDS.almacen;return list[Math.floor(hashKey(key+':build:'+cycle+':'+section)*list.length)%list.length];}
 // The section's filter value at a point of the arc (the build sweeps from its start to its end).
 export function filterAt(hand,a){const [intro,b0,b1,drop,breakdown]=hand.filter;
  switch(a.section){case 'intro':return intro;case 'build':return b0*Math.pow(b1/b0,a.progress);case 'breakdown':return breakdown;default:return drop;}}

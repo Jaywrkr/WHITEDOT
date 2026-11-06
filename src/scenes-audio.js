@@ -61,9 +61,6 @@ export function sceneVoices(ac,bus,noise,hz){
   metal(t,v,note){const c=osc('sine',hz(note)),m=osc('sine',hz(note)*3.51),mg=g(),a=g(),hf=filt('highpass',900),e=g(.35);
    mg.gain.setValueAtTime(hz(note)*4,t);mg.gain.setTargetAtTime(hz(note)*.4,t,.04);m.connect(mg).connect(c.frequency);hit(a.gain,t,v,.32,.003);c.connect(a).connect(hf);hf.connect(syn);hf.connect(e).connect(bus.echoIn);
    c.start(t);m.start(t);m.stop(t+.5);end(c,t+.5);},
-  // The riser: noise through a band that climbs, louder up to the drop.
-  riser(t,len,v,offset=0){const n=noiseAt(t,len+.05,offset,1),bp=filt('bandpass',300,3.5),a=g();bp.frequency.setValueAtTime(300,t);bp.frequency.exponentialRampToValueAtTime(9000,t+len);
-   a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(v,t+len*.97);a.gain.linearRampToValueAtTime(0,t+len+.02);n.connect(bp).connect(a).connect(out);voices++;},
   // The drop: a crash of noise and a deep boom on the chord's root.
   impact(t,v,note,offset=0){const n=noiseAt(t,2,offset,.9),hf=filt('highpass',3800,.6),a=g();hit(a.gain,t,v*.7,1.6,.006);n.connect(hf).connect(a).connect(out);
    const o=osc('sine',hz(note)*2),b=g();o.frequency.setValueAtTime(hz(note)*2,t);o.frequency.exponentialRampToValueAtTime(hz(note),t+.25);hit(b.gain,t,v,1.1,.004);o.connect(b).connect(out);o.start(t);end(o,t+1.4);},

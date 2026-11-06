@@ -100,7 +100,7 @@ export function initialize(runtime) {
       if(runtime.S.mode==="camino"&&!runtime.isFree()&&runtime.MU.still>25&&!runtime.idleSaid&&runtime.S.help.camino){runtime.idleSaid=true;runtime.say(runtime.VOZ.idle);}
     }
     runtime.ambienceTick?.();   // the ambience breathes with the beat (ambience.js)
-    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?windLevel(runtime.MU.speed,runtime.MU.E)*AMBIENCE_LEVEL:0,runtime.ac.currentTime,.8);
+    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?windLevel(runtime.MU.speed,runtime.MU.E)*(runtime.ambienceLevel?.()??AMBIENCE_LEVEL):0,runtime.ac.currentTime,.8);
     if(runtime.windF)runtime.windF.frequency.setTargetAtTime(180+runtime.MU.speed*220,runtime.ac.currentTime,.8);
 
     runtime.surpriseTick?.(dt,modal);
@@ -351,7 +351,7 @@ export function initialize(runtime) {
     // tormenta solar: descargas en el beat, vistas desde arriba
     if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;const mine=!!runtime.MU.boltMine;runtime.MU.boltMine=false;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=mine?30+runtime.rnd()*50:60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
       // Seen from above: a discharge that branches out from where it falls, not a bolt from the sky.
-      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1,mine});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
+      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1,mine});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>(runtime.weatherThunder||runtime.thunder)(q,{x,y}));}}
     runtime.bolts=runtime.bolts.filter(bo=>(bo.l-=dt*3)>0);
     // Your bolts in the Journey's Tormenta fall gold, close to the cube; the storm's are white.
     for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle=bo.mine?runtime.GOLD||"#f0d27a":"#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}

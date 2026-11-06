@@ -7,9 +7,11 @@
 // Alpha.276: the nine remaining families (disco, UK, club bass, DnB, hip-hop, electro, ambient, jazz, experimental).
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {SOUND_FAMILIES,soundFamily,soundProfile,convertedGenre,convertedFamilies,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,SOUND_PRO_VERSION,guestFilter,GUEST_HIGHPASS,createTransitionTracker} from '../src/sound-profiles.js';
+import {SOUND_FAMILIES,soundFamily,soundProfile,convertedGenre,convertedFamilies,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,SOUND_PRO_VERSION,guestFilter,GUEST_HIGHPASS,createTransitionTracker,dropBuild,phraseBuild,buildSeed,FAMILY_BUILDS,BUILD_KINDS,FILL_FIGURES,LANDINGS} from '../src/sound-profiles.js';
 import {ONE_SHOTS,roomImpulse,kickPitch,biquad,initialize} from '../src/sound-pro.js';
 import {createTerritoryJourney} from '../src/territory-journey.js';
+// A region key whose drop into '2,2' at bar 16 rests the kick for the last half bar in this genre (dropBuild; Sonido limpio).
+const halfDrop=(genre,to='2,2',bar=16)=>{for(let i=1;i<200;i++){const k='1,'+i;if(dropBuild(genre,buildSeed(k,to,bar)).kickFrom===8)return k;}throw Error('no half-bar drop for '+genre);};
 import {initialize as data} from '../src/data.js';
 const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 // ---------- families and mapping ----------
@@ -66,19 +68,35 @@ function walk(fields){const j=createTerritoryJourney(),t=createTransitionTracker
 {const A={key:'A'},B={key:'B'},C={key:'C'};
  // Stand in A; walk toward B (the field gives B half), cross into B, then on into C.
  const fields=[];for(let b=0;b<12;b++)fields.push({primary:A,secondary:null,mix:0,core:1});
- for(let b=12;b<30;b++)fields.push({primary:A,secondary:B,mix:Math.min(.5,(b-11)*.06),core:.5});
+ // A field stays under half until you cross (territoryField reaches .5 only on the line between two nuclei).
+ for(let b=12;b<30;b++)fields.push({primary:A,secondary:B,mix:Math.min(.48,(b-11)*.06),core:.5});
  for(let b=30;b<52;b++)fields.push({primary:B,secondary:b<40?A:C,mix:b<40?.2:.45,core:.5});
  for(let b=52;b<110;b++)fields.push({primary:C,secondary:null,mix:0,core:1});
  const rows=walk(fields),swaps=rows.filter(r=>r.f.swap).map(r=>r.f.bar||rows.indexOf(r));
  assert.ok(swaps.length>=2,'the walk swaps at least twice');
- for(const s of swaps){assert.equal(rows[s].plan.impact,true,'impact on the swap');assert.equal(rows[s-1].plan.drop,true,'the kick drops in the half bar before the swap');assert.equal(rows[s-2].plan.riser,2,'a two-bar riser before the swap');}
- rows.forEach((r,i)=>{if(r.plan.drop)assert.ok(rows[i+1]?.f.swap,'no drop without a swap next bar: '+i);if(r.plan.riser)assert.ok(rows[i+2]?.f.swap,'no riser without a swap two bars on: '+i);});
+ // Sonido limpio: no riser in the plan; a build is announced one and two bars ahead, with one seed for the build and its drop.
+ for(const s of swaps){assert.equal(rows[s].plan.impact,true,'the drop lands on the swap');assert.equal(rows[s-1].plan.drop,true,'the drop bar before the swap');assert.equal(rows[s-1].plan.build,1);assert.equal(rows[s-2].plan.build,2,'the build is known two bars ahead');
+  assert.ok(rows[s].plan.seed!==null&&rows[s].plan.seed===rows[s-1].plan.seed&&rows[s-1].plan.seed===rows[s-2].plan.seed,'one seed for the build and its drop');}
+ rows.forEach((r,i)=>{assert.equal('riser' in r.plan,false,'no riser in any plan: '+i);assert.equal('sweep' in r.plan,false);if(r.plan.drop)assert.ok(rows[i+1]?.f.swap,'no drop without a swap next bar: '+i);if(r.plan.build===2&&!rows[i+2]?.f.swap)assert.equal(rows[i+1].plan.drop,false,'a guest that stops short of half gives no drop: '+i);if(!r.plan.build&&!r.plan.impact)assert.equal(r.plan.seed,null);});
  // Phrases of 16 and 32 bars from the bar a region took over.
  const own=rows.filter(r=>!r.f.secondary&&r.f.primary.key==='C');assert.ok(own.length);
  for(const r of rows)if(r.plan.crash)assert.equal(r.plan.phrase%16,0);
- const s0=rows.findIndex(r=>r.f.swap&&r.f.primary.key==='C');assert.ok(s0>0);assert.equal(rows[s0+16].plan.crash,true);assert.equal(rows[s0+31].plan.sweep,true);
+ const s0=rows.findIndex(r=>r.f.swap&&r.f.primary.key==='C');assert.ok(s0>0);assert.equal(rows[s0+16].plan.crash,true);assert.equal(rows[s0+31].plan.phraseEnd,true);assert.equal(rows[s0+30].plan.phraseEnd,false);
  // Going back in time (a new journey) starts over.
  const t=createTransitionTracker();t.advance({bar:40,primary:'A',secondary:null,from:0,to:0});assert.equal(t.advance({bar:3,primary:'A',secondary:null,from:0,to:0}).phrase,0);}
+// ---------- builds into a drop (Sonido limpio) ----------
+{assert.ok(!BUILD_KINDS.includes('riser'),'no riser among the builds');
+ for(const f of SOUND_FAMILIES){const fb=FAMILY_BUILDS[f.id];assert.ok(fb&&fb.list.length>=4,f.id);for(const k of fb.list)assert.ok(BUILD_KINDS.includes(k),f.id+' '+k);
+  assert.ok(new Set(fb.list).size>=3,f.id+': at least three different builds');assert.ok(fb.list.includes('none')||f.id==='house'||f.id==='disco'||f.id==='bass'||f.id==='dnb'||f.id==='electro'||f.id==='experimental'?true:false);
+  assert.ok(fb.list.filter(k=>k==='reverse').length<=1,f.id+': a reversed cymbal is rare');}
+ for(const f of SOUND_FAMILIES){const g=f.genres[0],seen=new Set(),lands=new Set(),figs=new Set();for(let i=0;i<400;i++){const b=dropBuild(g,buildSeed('a'+i,'b',i*8));assert.ok(BUILD_KINDS.includes(b.kind));assert.ok(LANDINGS.includes(b.land));seen.add(b.kind);lands.add(b.land);if(b.fill)figs.add(b.figure);
+   assert.equal(b.fill!==null,b.kind==='fill');assert.equal(b.kickFrom,b.kind==='none'?null:b.kind==='dropout'?0:8);assert.equal(b.bars,b.kind==='filter'?2:1);}
+  assert.ok(seen.size>=3,f.id+' varies its builds: '+[...seen]);assert.ok(lands.size>=2,f.id+' varies what lands');if(figs.size)assert.equal(figs.size,FILL_FIGURES.length,f.id+' plays every fill figure');}
+ assert.ok(!Array.from({length:300},(_,i)=>dropBuild('ambient',buildSeed('x',i,i)).kind).includes('fill'),'ambient has no drums to fill with');
+ const fams=new Set(Array.from({length:200},(_,i)=>dropBuild('techno',buildSeed('p','q',i*8)).kind));assert.ok(fams.has('none'),'some drops have no build at all');
+ assert.deepEqual(dropBuild('dub',buildSeed('1,1','2,2',16)),dropBuild('dub',buildSeed('1,1','2,2',16)),'the same drop builds the same way');
+ const consecutive=Array.from({length:12},(_,i)=>dropBuild('techhouse',buildSeed('1,'+i,'1,'+(i+1),8*(i+2))).kind);assert.ok(new Set(consecutive).size>=3,'a walk of drops does not repeat one build: '+consecutive);
+ const ph=Array.from({length:120},(_,i)=>phraseBuild('deep',buildSeed('k','phrase',i)));assert.ok(ph.filter(b=>b.kind==='none').length>=40,'most phrase ends play no build');assert.ok(ph.every(b=>['none','fill','filter'].includes(b.kind)&&b.kickFrom===null&&b.land==='none'));}
 // ---------- one-shots ----------
 {const sr=44100,k=tech.kit.kick;
  const shots={kick:ONE_SHOTS.kick(sr,52,k),hat:ONE_SHOTS.hat(sr,false,1.47),hatO:ONE_SHOTS.hat(sr,true,1.47),clap:ONE_SHOTS.clap(sr),snare:ONE_SHOTS.snare(sr),rim:ONE_SHOTS.rim(sr),shaker:ONE_SHOTS.shaker(sr),perc:ONE_SHOTS.perc(sr,300,.07),cowbell:ONE_SHOTS.cowbell(sr),crash:ONE_SHOTS.crash(sr)};
@@ -116,8 +134,10 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  assert.ok(r.soundProStats().voices===3,'two of four melody notes sound, plus the bass: '+JSON.stringify(r.soundProStats()));
  assert.equal(r.proCeiling(),16000);r.MU.step=16;r.proDrum({gid:'minimal',DO:false},'kick',3,.26);assert.ok(headroom.gain.target<.92&&headroom.gain.target>.75,'trim under a converted family');
  // Half-bar drop before a swap: the cue predicts it; kicks of every family are held, the rest plays.
+ const K=halfDrop('minimal');   // a drop whose build rests the kick for the last half bar (dropBuild)
+ r.MU.dnaA={key:K,genre:'minimal'};
  const frames=[];r.territoryJourneyCue=f=>frames.push(f);
- const cue=(bar,o)=>{r.MU.step=bar*16;r.territoryJourneyCue({time:bar*2,bar,primary:'1,1',secondary:'2,2',from:o.from,to:o.to,swap:!!o.swap});};
+ const cue=(bar,o)=>{r.MU.step=bar*16;r.territoryJourneyCue({time:bar*2,bar,primary:K,secondary:'2,2',from:o.from,to:o.to,swap:!!o.swap});};
  r.MU.neighborRadio={key:'2,2',genre:'nada'};
  for(let b=0;b<16;b++)cue(b,{from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05)});
  assert.equal(frames.length,16,'a listener set later still hears every cue');
@@ -154,14 +174,14 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  r.ac.createPeriodicWave=(re,im)=>({im:Array.from(im)});r.MU.dnaA=deepReg;r.MU.radio={hookI:'organ'};before=audio.oscs.length;r.proVoice('lead','organ',64,7,.07,deepReg);assert.ok(audio.oscs.slice(before).some(o=>o.wave?.im?.length>4),'an organ drawbar wave');
  assert.equal(r.proCeiling(),16000,'the ceiling opens under house too');}
 // DJ mix in and out of the family: a tech guest under house drops its kick before the swap, house as guest too.
-{const {r}=fakeRuntime({genre:'deep'});r.MU.dnaA={key:'1,1',genre:'deep'};r.MU.neighborRadio={key:'2,2',genre:'techhouse'};
+{const K=halfDrop('deep');const {r}=fakeRuntime({genre:'deep'});r.MU.dnaA={key:K,genre:'deep'};r.MU.neighborRadio={key:'2,2',genre:'techhouse'};
  r.proDrum({gid:'deep',DO:false},'kick',1,.26);r.proDrum({gid:'techhouse',DO:true},'kick',1,.2);
- for(let b=0;b<16;b++){r.MU.step=b*16;r.territoryJourneyCue({time:b*2,bar:b,primary:'1,1',secondary:'2,2',from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05),swap:false});}
+ for(let b=0;b<16;b++){r.MU.step=b*16;r.territoryJourneyCue({time:b*2,bar:b,primary:K,secondary:'2,2',from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05),swap:false});}
  r.MU.step=15*16+8;assert.equal(r.proDrum({gid:'techhouse',DO:true},'kick',30,.2),true);assert.equal(r.proDrum({gid:'deep',DO:false},'kick',30,.26),true,'the house kick drops out too');
- assert.equal(r.proVoice('bajo','pluck',45,30,.17,{key:'1,1',genre:'deep'}),true,'the bass rests in the drop');assert.equal(r.soundProStats().voices,0);
- r.MU.step=16*16;r.territoryJourneyCue({time:32,bar:16,primary:'2,2',secondary:'1,1',from:.5,to:.4,swap:true});
- r.MU.step=16*16+1;assert.equal(r.proVoice('bajo','pluck',45,32.2,.17,{key:'1,1',genre:'deep'}),true,'after the swap house plays on as the guest');assert.equal(r.soundProStats().voices,1);
- r.S.soundPro.classic=true;assert.equal(r.proDrum({gid:'deep',DO:false},'kick',33,.26),false,'«Sonido clásico» turns house off too');assert.equal(r.proVoice('bajo','pluck',45,33,.17,{key:'1,1',genre:'deep'}),false);}
+ assert.equal(r.proVoice('bajo','pluck',45,30,.17,{key:K,genre:'deep'}),true,'the bass rests in the drop');assert.equal(r.soundProStats().voices,0);
+ r.MU.step=16*16;r.territoryJourneyCue({time:32,bar:16,primary:'2,2',secondary:K,from:.5,to:.4,swap:true});
+ r.MU.step=16*16+1;assert.equal(r.proVoice('bajo','pluck',45,32.2,.17,{key:K,genre:'deep'}),true,'after the swap house plays on as the guest');assert.equal(r.soundProStats().voices,1);
+ r.S.soundPro.classic=true;assert.equal(r.proDrum({gid:'deep',DO:false},'kick',33,.26),false,'«Sonido clásico» turns house off too');assert.equal(r.proVoice('bajo','pluck',45,33,.17,{key:K,genre:'deep'}),false);}
 // Techno: one family, a touch per genre; its own kick with rumble, the tape echo, the dub stab, a harder 303, strings and arps.
 {const P=Object.fromEntries(TECHNO.map(g=>[g,soundProfile(g)]));
  for(const [g,p] of Object.entries(P)){assert.equal(p.family,'techno',g);assert.equal(p.ready,true,g);assert.ok(Object.isFrozen(p.rumble)&&Object.isFrozen(p.chords),g+' frozen');assert.equal(p.lead.keep,1,g);
@@ -193,12 +213,12 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
  assert.ok(cut(16*22)>cut(0)*4,'melodic techno pads open over the phrase');
  assert.equal(r.proCeiling(),16000,'the ceiling opens under techno');}
 // DJ mix out of techno into house and back: the techno kick drops before the swap.
-{const {r}=fakeRuntime({genre:'dub'});r.MU.dnaA={key:'1,1',genre:'dub'};r.MU.neighborRadio={key:'2,2',genre:'deep'};
+{const K=halfDrop('dub');const {r}=fakeRuntime({genre:'dub'});r.MU.dnaA={key:K,genre:'dub'};r.MU.neighborRadio={key:'2,2',genre:'deep'};
  r.proDrum({gid:'dub',DO:false},'kick',1,.26);r.proDrum({gid:'deep',DO:true},'kick',1,.2);
- for(let b=0;b<16;b++){r.MU.step=b*16;r.territoryJourneyCue({time:b*2,bar:b,primary:'1,1',secondary:'2,2',from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05),swap:false});}
+ for(let b=0;b<16;b++){r.MU.step=b*16;r.territoryJourneyCue({time:b*2,bar:b,primary:K,secondary:'2,2',from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05),swap:false});}
  r.MU.step=15*16+8;const h0=r.soundProStats().hits;assert.equal(r.proDrum({gid:'dub',DO:false},'kick',30,.26),true,'the techno kick drops out');assert.equal(r.soundProStats().hits,h0,'nothing sounds for it, rumble included');
- assert.equal(r.proVoice('bajo','sub',45,30,.17,{key:'1,1',genre:'dub'}),true,'the bass rests in the drop');assert.equal(r.soundProStats().voices,0);
- r.S.soundPro.classic=true;assert.equal(r.proDrum({gid:'dub',DO:false},'kick',33,.26),false,'«Sonido clásico» turns techno off too');assert.equal(r.proVoice('acorde','stab',57,33,.045,{key:'1,1',genre:'dub'}),false);}
+ assert.equal(r.proVoice('bajo','sub',45,30,.17,{key:K,genre:'dub'}),true,'the bass rests in the drop');assert.equal(r.soundProStats().voices,0);
+ r.S.soundPro.classic=true;assert.equal(r.proDrum({gid:'dub',DO:false},'kick',33,.26),false,'«Sonido clásico» turns techno off too');assert.equal(r.proVoice('acorde','stab',57,33,.045,{key:K,genre:'dub'}),false);}
 // Melodic y orgánico and afro y latino: two families, a touch per genre, each new instrument through the engine.
 {const G=[...MELODIC,...AFRO],P=Object.fromEntries(G.map(g=>[g,soundProfile(g)]));
  for(const [g,p] of Object.entries(P)){assert.equal(p.family,MELODIC.includes(g)?'melodic':'afro',g);assert.equal(p.ready,true,g);assert.ok(Object.isFrozen(p.kit.kick)&&Object.isFrozen(p.lead.map),g+' frozen');assert.equal(p.lead.keep,1,g);
@@ -250,11 +270,11 @@ function fakeRuntime({classic=false,genre='minimal',save=true}={}){let draws=0;c
   if(g==='amapiano'){const o0=audio.oscs.length;r.proVoice('bajo','logdrum',40,3,.15,reg);await settle();assert.ok(audio.oscs.slice(o0).some(o=>o.type==='triangle'),'a log drum for the player\'s bass');}
   r.S.soundPro.classic=true;assert.equal(r.proVoice('lead','pluck',67,4,.07,reg),false,'«Sonido clásico» '+g);}}
 // DJ mix out of afro y latino into melodic and on into techno: the kick drops before each swap, «Sonido clásico» turns both off.
-{const {r}=fakeRuntime({genre:'andean'});r.MU.dnaA={key:'1,1',genre:'andean'};r.MU.neighborRadio={key:'2,2',genre:'melodic'};
+{const K=halfDrop('andean');const {r}=fakeRuntime({genre:'andean'});r.MU.dnaA={key:K,genre:'andean'};r.MU.neighborRadio={key:'2,2',genre:'melodic'};
  r.proDrum({gid:'andean',DO:false},'kick',1,.26);r.proDrum({gid:'melodic',DO:true},'kick',1,.2);
- for(let b=0;b<16;b++){r.MU.step=b*16;r.territoryJourneyCue({time:b*2,bar:b,primary:'1,1',secondary:'2,2',from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05),swap:false});}
+ for(let b=0;b<16;b++){r.MU.step=b*16;r.territoryJourneyCue({time:b*2,bar:b,primary:K,secondary:'2,2',from:Math.min(.5,b*.05),to:Math.min(.55,(b+1)*.05),swap:false});}
  r.MU.step=15*16+8;const h0=r.soundProStats().hits;assert.equal(r.proDrum({gid:'andean',DO:false},'kick',30,.26),true);assert.equal(r.proDrum({gid:'melodic',DO:true},'kick',30,.2),true);assert.equal(r.soundProStats().hits,h0,'both kicks drop out');
- assert.equal(r.proVoice('bajo','sub',45,30,.17,{key:'1,1',genre:'andean'}),true,'the bass rests in the drop');assert.equal(r.soundProStats().voices,0);
+ assert.equal(r.proVoice('bajo','sub',45,30,.17,{key:K,genre:'andean'}),true,'the bass rests in the drop');assert.equal(r.soundProStats().voices,0);
  r.MU.step=16*16;r.territoryJourneyCue({time:32,bar:16,primary:'2,2',secondary:'3,3',from:.5,to:.4,swap:true});r.MU.dnaA={key:'2,2',genre:'melodic'};r.MU.neighborRadio={key:'3,3',genre:'dub'};
  r.MU.step=16*16+1;assert.equal(r.proVoice('bajo','sub',45,32.2,.17,{key:'2,2',genre:'melodic'}),true,'melodic takes the bass after the swap');assert.equal(r.soundProStats().voices,1);
  r.S.soundPro.classic=true;assert.equal(r.proDrum({gid:'melodic',DO:false},'kick',33,.26),false);assert.equal(r.proDrum({gid:'amapiano',DO:false},'kick',33,.26),false,'«Sonido clásico» turns these families off too');}
@@ -332,7 +352,7 @@ for(const [g,more] of [['garage',1.3],['idm',1.1],['lofi',1]]){const {r}=fakeRun
  // A pulse on the beat: the theme's three notes come as ambient right after a new hit of the journey's pulse.
  const js={hits:0,misses:0};r.journeyPulseState=()=>({...js});r.currentVoiceOrigin='track';r.MU.step=1;r.proDrum({gid:'techhouse',DO:false},'hat',4.5,.02);
  r.currentVoiceOrigin='ambient';js.hits=1;assert.deepEqual([60,64,67,72].map((m,i)=>r.proVoice('lead','pluck',m,5+i*.24,.1,reg)),[true,true,true,false],'the theme note, its third and fifth');await settle();
- assert.ok(audio.all.filter(n=>n.gain.value===.55).length>=3,'each theme note throws into the echo');
+ assert.ok(audio.all.filter(n=>n.gain.value===.28).length>=3,'each theme note throws a little into the echo');
  assert.equal(r.proVoice('lead','pluck',60,6,.1,reg),false,'no new hit, no theme');}
 assert.equal(soundProfile('techhouse').front,undefined);assert.equal(soundProfile('deep').front,.75);assert.equal(soundProfile('melodictechno').front,.6,'the player\'s share of each family, by measurement');assert.equal(soundProfile('organic').front,.7);assert.equal(soundProfile('andean').front,.7);
 // The arrangement answers the player's influence; idle, every factor is neutral.
@@ -344,12 +364,36 @@ assert.equal(soundProfile('techhouse').front,undefined);assert.equal(soundProfil
  const beat=values=>{const {r}=fakeRuntime({genre:'techhouse'});r.MU.dnaA={key:'1,1',genre:'techhouse'};if(values)Object.defineProperty(r,'influenceState',{get:()=>({values})});
   let n=0;for(let s=0;s<64;s+=4){r.MU.step=s;const h0=r.soundProStats().hits;r.proDrum({gid:'techhouse',DO:false},'kick',1+s*.12,.26);n+=r.soundProStats().hits-h0;}return n;};
  const still=beat(null);assert.equal(beat({melody:0,groove:0,space:0,bass:0}),still,'idle: the same hits');assert.ok(beat({melody:0,groove:1,space:0,bass:0})>=still+16,'groove adds a percussion layer on the beats');}
-// A streak of pulses on the beat: a riser over the bar, a clap fill and a crash; a miss breaks it.
-{const {r,audio}=fakeRuntime({genre:'techhouse'}),js={hits:0,misses:0};r.MU.dnaA={key:'1,1',genre:'techhouse'};r.journeyPulseState=()=>({...js});
- const kick=s=>{r.MU.step=s;r.proDrum({gid:'techhouse',DO:false},'kick',1+s*.12,.26);};kick(0);
- for(let s=4;s<=12;s+=4){js.hits++;kick(s);}assert.equal(r.soundProStats().streak,3);const h0=r.soundProStats().hits,f0=audio.filters.length;js.hits++;kick(16);
- assert.ok(r.soundProStats().streak>=4);assert.ok(audio.filters.slice(f0).some(f=>f.Q.value===2.2),'a riser');assert.ok(r.soundProStats().hits-h0>=4+1+2,'a fill of claps and a crash');
- js.misses++;kick(36);assert.equal(r.soundProStats().streak,0,'a miss breaks the streak');}
+// A streak of pulses on the beat (Sonido limpio, Jay: «sonidos espantosos»): no riser, no clap fill, no crash. The kicks
+// sound exactly as without the streak; it still counts, and a miss breaks it.
+{const run=withStreak=>{const {r,audio}=fakeRuntime({genre:'techhouse'}),js={hits:0,misses:0};r.MU.dnaA={key:'1,1',genre:'techhouse'};r.journeyPulseState=()=>({...js});
+  const kick=s=>{r.MU.step=s;r.proDrum({gid:'techhouse',DO:false},'kick',1+s*.12,.26);};kick(0);const h0=r.soundProStats().hits,f0=audio.filters.length,n0=audio.all.length;
+  for(let s=4;s<=64;s+=4){if(withStreak)js.hits++;kick(s);}
+  return {r,js,kick,hits:r.soundProStats().hits-h0,filters:audio.filters.slice(f0),nodes:audio.all.slice(n0)};};
+ const plain=run(false),streak=run(true);
+ assert.ok(streak.r.soundProStats().streak>=12,'the streak counts');
+ assert.ok(!streak.filters.some(f=>f.Q.value===2.2),'no riser');assert.ok(!streak.nodes.some(n=>n.buffer===streak.r.noiseBuffer),'no noise');
+ assert.equal(streak.hits,plain.hits,'no fill, no crash: the same hits as without the streak');
+ streak.js.misses++;streak.kick(72);assert.equal(streak.r.soundProStats().streak,0,'a miss breaks the streak');}
+// Builds in the engine: across many drops of each family, no noise source and no riser filter; each kind sounds as it says.
+{const kinds=new Map();
+ for(const g of ['techhouse','deep','dub','melodic','afro','nudisco','garage','ghetto','dnb','boombap','electro','ambient','jazztronica','idm'])for(let i=1;i<=24;i++){
+  const {r,audio}=fakeRuntime({genre:g}),K='3,'+i,to='4,'+i,b=dropBuild(g,buildSeed(K,to,16));r.MU.dnaA={key:K,genre:g};r.MU.neighborRadio={key:to,genre:'nada'};r.chordTones=()=>[57,60,64,67];
+  r.proDrum({gid:g,DO:false},'kick',1,.26);if(g==='ambient')r.proVoice('acorde','pad',60,1,.05,r.MU.dnaA);
+  const f0=audio.filters.length,n0=audio.all.length,h0=r.soundProStats().hits,v0=r.soundProStats().voices;
+  for(let bar=0;bar<16;bar++){r.MU.step=bar*16;r.territoryJourneyCue({time:bar*2,bar,primary:K,secondary:to,from:Math.min(.5,bar*.05),to:Math.min(.55,(bar+1)*.05),swap:false});}
+  const built=r.soundProStats().build,hits=r.soundProStats().hits-h0,voices=r.soundProStats().voices-v0;
+  const sounded=st=>{r.MU.step=st;const h=r.soundProStats().hits;r.proDrum({gid:g,DO:false},'kick',30+st/100,.26);return r.soundProStats().hits-h;},early=sounded(15*16+2),late=sounded(15*16+10),hl=r.soundProStats().hits;
+  r.MU.step=16*16;r.territoryJourneyCue({time:32,bar:16,primary:to,secondary:K,from:.5,to:.4,swap:true});const landed=r.soundProStats().hits-hl;
+  assert.ok(!audio.filters.slice(f0).some(f=>f.Q.value===2.2),g+' '+b.kind+': no riser filter');assert.ok(!audio.all.slice(n0).some(n=>n.buffer===r.noiseBuffer),g+': no noise');
+  if(b.kickFrom===null)assert.ok(late>0,g+': no build, the kick plays into the drop');else assert.equal(late,0,g+': the kick rests in the last half bar');
+  assert.equal(early===0,b.kickFrom===0,g+' '+b.kind+': only a dropout rests the whole bar');
+  if(b.kind==='fill'){assert.equal(built?.kind,'fill');assert.ok(hits>=FILL_FIGURES[b.figure].length,g+': a fill of '+FILL_FIGURES[b.figure].length+' hits, '+hits);}
+  if(b.kind==='lift')assert.ok(voices>=8,g+': eight climbing notes');
+  if(b.kind==='reverse')assert.ok(hits>=1,g+': a reversed cymbal');
+  if(b.land==='crash'||b.land==='impact')assert.ok(landed>=1,g+': a crash lands');if(b.land==='none'||b.land==='sub')assert.equal(landed,0,g+': no crash lands');
+  kinds.set(b.kind,(kinds.get(b.kind)||0)+1);}
+ for(const k of ['fill','dropout','filter','lift','none'])assert.ok(kinds.get(k)>0,'the walk heard '+k);}
 // ---------- wiring ----------
 const audioSource=read('src/audio.js');
 assert.equal(audioSource.split("proHit('").length-1,11,'one hook in each kit primitive');assert.ok(audioSource.includes("proHit(dec>=.1?'hatO':'hat',t,v)||noise("));
@@ -363,4 +407,4 @@ const html=read('index.html'),adv=html.slice(html.indexOf('<details id="musicAdv
 assert.ok(adv.includes('id="classicSound"')&&adv.includes('Sonido clásico'),'the setting lives in Sonido › Avanzado');
 const en=read('src/i18n-en.js');assert.ok(en.includes('"Sonido clásico":"Classic sound"'));
 assert.ok(read('src/main.js').includes("import {initialize as soundPro} from './sound-pro.js';"));
-console.log('PASS sound families (52 genres, 14 families, tech, house, techno, melodic y orgánico and afro y latino and the nine others ready, per-genre touches, slap, reese, wobble, 808 boom, upright, talkbox, vocoder, sax, whine, FM bells, grains, the beat layer, stutters, acid lines, rumble, tape echo, dub stab, chord kinds, builds, plucks, flutes, strings, piano, chants, log drum, bombo), «Sonido clásico» save, DJ transitions from the journey, one-shots, the player inside the music (front voices, theme throws, influence, groove layer, streak riser) and the engine contract');
+console.log('PASS sound families (52 genres, 14 families, tech, house, techno, melodic y orgánico and afro y latino and the nine others ready, per-genre touches, slap, reese, wobble, 808 boom, upright, talkbox, vocoder, sax, whine, FM bells, grains, the beat layer, stutters, acid lines, rumble, tape echo, dub stab, chord kinds, builds, plucks, flutes, strings, piano, chants, log drum, bombo), «Sonido clásico» save, DJ transitions from the journey with varied builds and no noise riser, one-shots, the player inside the music (front voices, theme throws, influence, groove layer, a streak with no riser) and the engine contract');
