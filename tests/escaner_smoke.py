@@ -51,7 +51,8 @@ try:
    # --- 1 · Level 1: the Journey not done. A short wave and shapes, no names.
    was=page.evaluate("()=>{const j=__r.S.journey;const o={free:j.free,finished:j.finished};j.free=false;j.finished=false;return o;}")
    page.evaluate("()=>{window.__prueba={x:__r.S.wx+250,y:__r.S.wy};return true;}")   # 25 m: inside the short wave
-   hold(page,650);assert page.evaluate("__r.scanning") and not page.locator('#scanner').is_visible(),'a held finger scans, no panel'
+   # A busy runner can stretch the game's hold timer past 650 ms of wall clock: keep holding until it scans (≤3 s).
+   hold(page,650);page.wait_for_function("__r.scanning",timeout=3000);assert page.evaluate("__r.scanning") and not page.locator('#scanner').is_visible(),'a held finger scans, no panel'
    s=st(page);assert s['scanning'] and s['level']=='1' and not s['names'] and s['reach']==400,s
    page.wait_for_function("__r.scanState().drawn.ring&&__r.scanState().drawn.radius>20",timeout=3000)
    assert any(i['id']=='prueba' for i in s['items']),s['items'];assert all(i['name'] is None for i in s['items']),'level 1 says no names'
