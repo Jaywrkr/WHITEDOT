@@ -58,6 +58,7 @@ export function initialize(runtime){
  // A touch on the shelf: the trophy's place and stars, or the wall opening Lugares.
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
   const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0]){layer(p.id,h.index);runtime.narrate?.('trophy');}
+  if(d?.readOnly||d?.version>4)return `${p.name} · Estos lugares necesitan una versión más reciente.`;
   if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
   // «Los lugares te encuentran» (alpha.264): a place whose portal is not found yet says how far it is.
   if(!stars(p.id)[0]&&!placeFound(d,p.id))return `${p.name} · más lejos · ${kmText(placeKm(p.id))} km`;
@@ -104,7 +105,7 @@ export function initialize(runtime){
  function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
- function door(){runtime.ringGuide?.();}
+ function door(){runtime.ringGuide?.(null,{say:true});}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':'Lugares';}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};

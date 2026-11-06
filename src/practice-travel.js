@@ -70,6 +70,8 @@ export function initialize(runtime){
   // «Viajar a otra tierra» leaves this world: not from inside a round either.
   const worlds=$('bWorlds'),away=level||!(ring||!!runtime.S.previewSeed||!!document.body?.classList?.contains('dev'));if(worlds&&worlds.hidden!==away)worlds.hidden=away;}
  function move(point,state,prepare=null,updateAddress=true){
+  // «Niveles en orden» (frontier.js): a jump never lands past the distance of the next place without ★.
+  {const q=runtime.frontierClampPoint?.(point);if(q)point={...point,x:q.x,y:q.y};}
   const old={wx:runtime.S.wx,wy:runtime.S.wy,layer:runtime.S.layer,destination:runtime.S.destination,practiceTravel:runtime.S.practiceTravel};
   state.sights=[...(state.sights||[]),explorationContext(runtime.regionOfPos(point.x,point.y),point.x,point.y,runtime.seedOf).signature].slice(-8);
   runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;runtime.S.practiceTravel=state;runtime.S.destination=null;
