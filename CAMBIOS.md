@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.277** en la rama `jay/listo-4`, desde `main` (alpha.276, PR #415). Esta rama no toca el sonido del juego. Las entradas describen su revisión, no certifican producción.
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.277** en la rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Esta rama no toca el sonido del juego. Las entradas describen su revisión, no certifican producción.
+
+## Niveles en orden: frontera
+
+Rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Jay lo aprobó: ya no se saltan niveles. Sin cambio de versión. Guía: [Mundo](docs/MUNDO.md#niveles-en-orden-frontera).
+
+- **Te llama.** Al llegar a pie a la distancia del siguiente lugar sin ★, «La Llanura te llama.» y, 2 s después, su ronda empieza sola.
+- **Frontera.** Hasta su primera ★ no pasas de su distancia y 200 m. El borde frena con suavidad, te desliza por el círculo y se ve como una línea tenue. Ningún salto cae más allá. Volver hacia dentro, el Refugio, los menús y lo ganado siguen libres.
+- **Sin ★.** Salir de su ronda abre «Otra vez» / «Salir». Tras tres intentos (uno con Modo niños), «Más fácil»: la ronda tranquila con meta al 60 %. Su ★ cuenta igual; ★★ y ★★★ esperan al modo normal. Maestro sigue opcional.
+- **Siguiente.** Flecha, «Siguiente» y «Seguir hacia» solo al lugar de la frontera; sin portal, «Camina recto. Llanura está a 0,5 km.». Un formato futuro lo dice en el portal y en el estante.
+- **Guardados.** `S.frontera` (versión 1, intentos por lugar). Un guardado más allá del lugar pendiente vuelve 20 m por dentro al cargar; no pierde estrellas ni portales.
+- **Pruebas.** `tests/frontera.mjs`; `tests/mundo_abierto_smoke.py` camina hasta 0,5 km y ve la ronda empezar sola. Los navegadores automatizados sin `?abierto=1` o `?frontera=1` no tienen frontera.
+- **Límites.** No probado en teléfono ni con personas; Jay no lo ha jugado.
 
 ## Listo 4: la Voz del Refugio sin tapar rótulos y clips sin saturar · 2.3.0-alpha.277
 

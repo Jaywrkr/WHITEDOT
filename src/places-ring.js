@@ -6,6 +6,7 @@ import {formatDistance} from './player-profile-model.js';
 import {initialize as ritmo} from './ritmo.js';
 import {initialize as tranquilo} from './tranquilo.js';
 import {initialize as duos} from './duos.js';
+import {initialize as frontier} from './frontier.js';
 // The eleven portals (plan F5, docs/MUNDO.md). Each portal sounds on the bar's «1», louder as you come near. Panel 10
 // (P7, D4): an open portal is white; a complete one takes the colour of its place; gold is only for its stars.
 // «Los lugares te encuentran» (Jay, 5 Nov 2026, alpha.264) and «Directo mundo abierto» (alpha.269): there is no ring.
@@ -15,7 +16,8 @@ import {initialize as duos} from './duos.js';
 // crossing. The places an old save had on the ring were moved to their distance by the save's migration (places.js,
 // version 4). The edge-arrow layer points to the next place not complete whose portal exists, with the «lugar» icon;
 // before that, the line under the HUD says it is farther, at N km. The runtime names (ringState, ringGuide…) stay for
-// the tests and the readers that call them.
+// the tests and the readers that call them. «Niveles en orden» (Jay, 6 Nov 2026, frontier.js): the next place without ★
+// calls you at its distance and its round starts by itself; you cannot walk past it until its ★.
 export const PORTAL_REACH=40,PORTAL_HEAR=1800;
 // Plan H6: the next portal is heard from far, softly, on the bar's «3», from its side.
 export const NEXT_HEAR=9600,NEXT_STEP=8;
@@ -58,9 +60,9 @@ export function edgeColumn(x,y,W,H,m=12,band=70){const dx=x-W/2,dy=y-H/2,t=Math.
  return {x:Math.max(m,Math.min(W-m,x)),y:Math.max(band,Math.min(H-band,H/2+dy*k))};}
 // The portal the column shows: the next place on the path; once the eleven are complete (panel 10, P4, D1), the place
 // without ★★ with the best share on time (then ★★★); none with the 33 ★.
-// Since alpha.264, a place not found yet has no portal: then the first place still without its ★ whose portal exists.
-export function nextPortal(spots,places,journey,from){const path=nextGoal(places,journey);if(!path)return null;const at=spots.find(q=>q.id===path.id);if(at)return at;
- for(const p of PLACES)if(!complete(places,p.id)){const s=spots.find(q=>q.id===p.id);if(s)return s;}return null;}
+// Since alpha.264, a place not found yet has no portal. «Niveles en orden» (frontier.js): then none, not a later place
+// past the frontier; the line under the HUD says how far the next one is.
+export function nextPortal(spots,places,journey,from){const path=nextGoal(places,journey);if(!path)return null;return spots.find(q=>q.id===path.id)||null;}
 // Where you stand when you come back from a round: a step from the portal, toward the origin, outside its reach.
 export function besidePortal(spot,toward={x:0,y:0}){let dx=toward.x-spot.x,dy=toward.y-spot.y,d=Math.hypot(dx,dy);if(!(d>0)){dx=0;dy=1;d=1;}return {x:Math.round(spot.x+dx/d*PORTAL_REACH*3),y:Math.round(spot.y+dy/d*PORTAL_REACH*3)};}
 export function initialize(runtime){
@@ -76,7 +78,9 @@ export function initialize(runtime){
  function route(){if(owner!==runtime.S){owner=runtime.S;target=null;}if(!active()||runtime.S.destination||runtime.placeCardDue?.())return null;
   // Mapa del universo (alpha.235): while there is a mark, the compass and the line under the HUD lead to it.
   const mark=runtime.mapMarkRoute?.();if(mark)return {...mark,mark:true};const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
- function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));if(!aim)return false;if(runtime.S.destination)runtime.cancelDestination?.();runtime.clearMapMark?.();owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
+ function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));
+  // «Niveles en orden»: with no portal yet, the way is to walk out; with nothing left on the path, explore. Never silent.
+  if(!aim){const h=placeHint(spots(),data(),runtime.S.journey);runtime.toast?.(h?`Camina recto. ${h.name} está a ${kmText(h.km)} km.`:'Explora a tu ritmo.',{force:true});return false;}if(runtime.S.destination)runtime.cancelDestination?.();runtime.clearMapMark?.();owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
 
  const sea=(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea;
  let testFilled=null;
@@ -86,10 +90,10 @@ export function initialize(runtime){
  // A step on foot: the places whose distance it crosses get their portal, ahead of you, kept in the save.
  function discover(){const S=runtime.S,d=data(),to={x:S.wx,y:S.wy},from=walked;walked=to;if(!d||d.readOnly||!from)return;const ids=crossings(from,to,d);if(!ids.length)return;
   const before=JSON.stringify(d.found||{}),heading={x:to.x-from.x,y:to.y-from.y};d.found||={};for(const id of ids)d.found[id]=foundSpot(to,heading,sea);
-  if(runtime.save?.()===false){d.found=JSON.parse(before);return;}cache=null;runtime.toast?.(`Una señal: ${name(ids[0])}.`);}
+  if(runtime.save?.()===false){d.found=JSON.parse(before);return;}cache=null;if(!runtime.frontierCalls?.(ids[0]))runtime.toast?.(`Una señal: ${name(ids[0])}.`);}
  const stars=id=>data()?.stars?.[id]||[false,false,false];
  // Into a portal: a round; with its ★★, first the choice of the Maestro one.
- function enter(spot){const d=data(),from=besidePortal(spot);if(!placeOpen(d,spot.id,runtime.S.journey)){const p=PLACES.find(x=>x.id===spot.id),prev=PLACES.find(x=>x.id===previousPlace(spot.id));if(said!==spot.id){said=spot.id;runtime.toast?.(p.game&&prev?`${p.name} se abre al completar ${prev.name}.`:`${p.name}: pronto.`,{force:true});}runtime.narrate?.('locked');return;}
+ function enter(spot){const d=data(),from=besidePortal(spot);if(!placeOpen(d,spot.id,runtime.S.journey)){if(d?.readOnly||d?.version>4){if(said!==spot.id){said=spot.id;runtime.toast?.('Estos lugares necesitan una versión más reciente.',{force:true});}return;}const p=PLACES.find(x=>x.id===spot.id),prev=PLACES.find(x=>x.id===previousPlace(spot.id));if(said!==spot.id){said=spot.id;runtime.toast?.(p.game&&prev?`${p.name} se abre al completar ${prev.name}.`:`${p.name}: pronto.`,{force:true});}runtime.narrate?.('locked');return;}
   d.seen[spot.id]=true;runtime.narrate?.('portal');if(stars(spot.id)[0]){choose(spot.id,from);return;}runtime.startPlace?.(spot.id,{from});}
  function choose(id,from){const box=$('mPortal');if(!box){runtime.startPlace?.(id,{from});return;}$('portalTitle').textContent=name(id);$('portalStars').innerHTML=stars(id).map(x=>`<span class="${x?'got':''}">★</span>`).join('');
   // A place already complete offers its round, the Maestro one once it has ★★, and Libre: its music with no bar or stars.
@@ -122,7 +126,7 @@ export function initialize(runtime){
    else{c.globalAlpha=.25;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.arc(x,y,r+7,0,6.283);c.stroke();c.globalAlpha=.6;c.fillStyle='#8a8a8f';star(c,x,y,6);}
    // With «Todo a la vista», its name and what it asks are written too.
    c.globalAlpha=1;c.textAlign='center';c.textBaseline='top';c.font='12px "Geist Mono", monospace';c.fillStyle=open?'#ffffff':'#8a8a8f';c.fillText(p.name,x,y+r+(open?24:14));}
-  runtime.drawRitmoRing?.(c,W,H,t);
+  runtime.drawRitmoRing?.(c,W,H,t);runtime.drawFrontier?.(c,W,H,t);
   const next=!S.destination&&nextPortal(spots(),d,S.journey,{x:S.wx,y:S.wy});if(next){const x=W/2+next.x-cx,y=H/2+next.y-cy;
    // The next place on the path: a column of white light over its portal (a state, not something earned). Plan I2: seen from anywhere; off screen the
    // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
@@ -152,7 +156,9 @@ export function initialize(runtime){
  function originHome(){if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});const o=originPoint();if(!o)return false;if(runtime.S.destination)runtime.cancelDestination?.();const p={x:o.x,y:o.y+160,layer:'superficie'};
   const moved=runtime.travelPracticePoint?runtime.travelPracticePoint(p):(()=>{const was={wx:runtime.S.wx,wy:runtime.S.wy};runtime.S.wx=p.x;runtime.S.wy=p.y;if(runtime.save?.()===false){Object.assign(runtime.S,was);return false;}return true;})();
   if(!moved)return false;owner=runtime.S;target=null;inside=null;runtime.enterFx=1;runtime.narrate?.('travel');return true;}
- const canTravel=id=>!!(active()&&placeOpen(data(),id,runtime.S.journey)&&(data().seen[id]||stars(id)[0]||far(id)));
+ // «Niveles en orden» (frontier.js): never to a portal past the frontier.
+ const within=id=>{const s=spots().find(q=>q.id===id);return !s||Math.hypot(s.x,s.y)<=(runtime.frontierRadius?.()??Infinity);};
+ const canTravel=id=>!!(active()&&placeOpen(data(),id,runtime.S.journey)&&(data().seen[id]||stars(id)[0]||far(id))&&within(id));
  function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!canTravel(id))return false;const p=besidePortal(s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
  function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),placed=spots(),seen=active()?PLACES.filter(p=>(d.seen[p.id]||stars(p.id)[0])&&placed.some(s=>s.id===p.id)):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
   const row=box.querySelector('.row');for(const p of seen){const b=document.createElement('button');b.textContent=`${p.name} ${'★'.repeat(stars(p.id).filter(Boolean).length)}`.trim();b.onclick=()=>travel(p.id);row.appendChild(b);}}
@@ -160,8 +166,8 @@ export function initialize(runtime){
  const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);if(runtime.ritmoDuelActive?.())runtime.ritmoDuelQuit?.();else runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.()&&!runtime.ritmoDuelActive?.();});}
  // The portals for the map: where each is, and whether it is open, with its stars.
  function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>{const open=placeOpen(d,s.id,runtime.S.journey);return {...s,name:name(s.id),open,complete:complete(d,s.id),ink:portalInk(s.id,open,d),stars:stars(s.id).filter(Boolean).length};});}
- ritmo(runtime);tranquilo(runtime);duos(runtime);
+ ritmo(runtime);tranquilo(runtime);duos(runtime);frontier(runtime);
  Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringCanTravel:{get:()=>canTravel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},renderRingTravel:{get:()=>travelList},
-  originSpot:{get:()=>originPoint},originHome:{get:()=>originHome},
+  originSpot:{get:()=>originPoint},ringActive:{get:()=>active},originHome:{get:()=>originHome},
   ringState:{get:()=>()=>({anchor:runtime.ringTestFound?testAnchor():null,spots:spots().map(s=>({...s,ink:portalInk(s.id,placeOpen(data(),s.id,runtime.S.journey))})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,hint:active()?placeHint(spots(),data(),runtime.S.journey):null,found:{...(data()?.found||{})},moved:Object.keys(data()?.moved||{}),active:active()})},ringHint:{get:()=>()=>active()?placeHint(spots(),data(),runtime.S.journey):null},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }

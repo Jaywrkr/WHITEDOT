@@ -58,6 +58,7 @@ export function initialize(runtime){
  // A touch on the shelf: the trophy's place and stars, or the wall opening Lugares.
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
   const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0]){layer(p.id,h.index);runtime.narrate?.('trophy');}
+  if(d?.readOnly||d?.version>4)return `${p.name} · Estos lugares necesitan una versión más reciente.`;
   if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
   // «Los lugares te encuentran» (alpha.264): a place whose portal is not found yet says how far it is.
   if(!stars(p.id)[0]&&!placeFound(d,p.id))return `${p.name} · más lejos · ${kmText(placeKm(p.id))} km`;
