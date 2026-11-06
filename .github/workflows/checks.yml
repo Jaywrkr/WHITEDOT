@@ -72,13 +72,17 @@ jobs:
   # (4 Nov 2026); ten, balanced by the seconds measured on CI (tests/flow-durations.json), plan about 15 each.
   browser:
     needs: select
-    if: false # TEMPORARY diagnostic commit
+    if: needs.select.outputs.browser_total != '0'
     runs-on: ubuntu-latest
     # The official Playwright image of the pinned version (requirements-dev.txt) already has Chromium and its system
     # libraries in /ms-playwright: no browser install on each run (up to 10 minutes on 27 Oct 2026). It runs as root;
     # Playwright launches Chromium without its sandbox by default. --ipc=host gives Chromium a large /dev/shm.
+    # Until 6 Nov 2026 the flows ran the runner's own /usr/bin/chromium (156.0.8078.0, found first by
+    # scripts/run-browser-tests.py), not the pinned Playwright browser. Playwright 1.64.1 ships Chromium 156.0.8078.4
+    # and the resolute image is the runner's Ubuntu 26.04: with 1.62.0 (Chromium 151) «Bitácora» wrapped and the
+    # 844×390 menu scrolled 13 px.
     container:
-      image: mcr.microsoft.com/playwright/python:v1.62.0-noble
+      image: mcr.microsoft.com/playwright/python:v1.64.1-resolute
       options: --ipc=host
     # Forty minutes of room, like the audio shards.
     timeout-minutes: 40
@@ -94,8 +98,8 @@ jobs:
       PIP_BREAK_SYSTEM_PACKAGES: '1'
     steps:
       # The image has no git: checkout needs it for history, and some flows run git archive and git fetch.
-      # Nor DejaVu, the ubuntu-latest runner's fallback for glyphs Geist Mono lacks (★ ✦ ☰): without it fontconfig picks
-      # WenQuanYi Zen Hei, whose taller lines pushed the 844×390 menu 8 px past the screen.
+      # Nor, perhaps, DejaVu: the runner's fallback for glyphs Geist Mono lacks (★ ✦ ☰); without it fontconfig picks
+      # WenQuanYi Zen Hei. The runner has it, so the image gets it too.
       - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates fonts-dejavu-core fonts-dejavu-mono
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       # pwa_updates_smoke.py archives the real pre-closure release from history.
@@ -105,7 +109,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      # The image's Python 3.12 already has playwright==1.62.0: pip only confirms the pin.
+      # pip installs the pinned playwright for the image's Python; its browsers are those in /ms-playwright.
       - run: python3 -m pip install -r requirements-dev.txt
       - run: npm run test:browser
   # Keep every render: the 59-flow catalogue exceeded 40 minutes in three shards. Eight isolated runners, balanced by
@@ -113,11 +117,11 @@ jobs:
   # job that is 19 jobs at once, inside the free plan's limit of 20 concurrent jobs.
   audio:
     needs: select
-    if: false # TEMPORARY diagnostic commit
+    if: needs.select.outputs.audio_total != '0'
     runs-on: ubuntu-latest
     # The same Playwright image as the browser shards.
     container:
-      image: mcr.microsoft.com/playwright/python:v1.62.0-noble
+      image: mcr.microsoft.com/playwright/python:v1.64.1-resolute
       options: --ipc=host
     timeout-minutes: 40
     strategy:
@@ -131,8 +135,8 @@ jobs:
       PIP_BREAK_SYSTEM_PACKAGES: '1'
     steps:
       # The image has no git: checkout needs it for history, and some flows run git archive and git fetch.
-      # Nor DejaVu, the ubuntu-latest runner's fallback for glyphs Geist Mono lacks (★ ✦ ☰): without it fontconfig picks
-      # WenQuanYi Zen Hei, whose taller lines pushed the 844×390 menu 8 px past the screen.
+      # Nor, perhaps, DejaVu: the runner's fallback for glyphs Geist Mono lacks (★ ✦ ☰); without it fontconfig picks
+      # WenQuanYi Zen Hei. The runner has it, so the image gets it too.
       - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates fonts-dejavu-core fonts-dejavu-mono
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/checkout@v4
@@ -141,32 +145,6 @@ jobs:
           node-version: '22'
       - run: python3 -m pip install -r requirements-dev.txt
       - run: npm run test:audio
-  # TEMPORARY: compare the menu at 844x390 in the Playwright image and on the runner. Removed before merge.
-  diag-container:
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright/python:v1.62.0-noble
-      options: --ipc=host
-    env:
-      PIP_BREAK_SYSTEM_PACKAGES: '1'
-    steps:
-      - run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates fonts-dejavu-core fonts-dejavu-mono
-      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - uses: actions/checkout@v4
-      - run: python3 -m pip install -r requirements-dev.txt
-      - run: cat /etc/os-release | head -3; ls /ms-playwright; python3 scripts/diag-menu.py
-      - run: python3 tests/menus_size844_smoke.py || true
-  diag-host:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: python3 -m pip install -r requirements-dev.txt
-      - run: python3 -m playwright install --with-deps chromium
-      - run: cat /etc/os-release | head -3; ls -la /usr/bin/chromium* || true; python3 scripts/diag-menu.py
-      - run: python3 tests/menus_size844_smoke.py || true
   # Preserve the required check name: every selected browser flow and audio shard must pass. A kind with no selected
   # flow is skipped on purpose (total 0) and counts as passed; any other skip, cancel or failure is red.
   browser-audio:
