@@ -4,7 +4,7 @@ Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 
 
 ## Cómo se genera
 
-`python3 scripts/store-media.py` abre el juego real en Chromium y guarda todo en `outputs/tienda/`, fuera de Git. Con `--only capturas,iconos,clips` se elige qué generar; `--sizes movil,escritorio` y `--langs es,en` acotan tamaños e idiomas. Tarda unos diez minutos entero.
+`python3 scripts/store-media.py` abre el juego real en Chromium y guarda todo en `outputs/tienda/`, fuera de Git. Con `--only capturas,iconos,clips` se elige qué generar; `--sizes movil,escritorio` y `--langs es,en` acotan tamaños e idiomas. `--scenes 8-refugio` toma solo la captura del Refugio. `--only master` vuelve a ajustar el sonido de los clips que ya están en `--out`, sin grabarlos. Una pasada parcial conserva lo que `informe.json` ya listaba. Tarda unos diez minutos entero.
 
 - **Capturas** (rehechas en alpha.275, Listo 3): ocho escenas por tamaño y por idioma (español e inglés), `TAMAÑO-IDIOMA-N-escena.png`:
   1. `inicio`: guardado nuevo del mundo abierto (`?abierto=1`, sin Viaje ni Camino), la guía en 1/6 y «Llanura · más lejos · 0,5 km».
@@ -14,11 +14,12 @@ Borradores de D07 (fichas), D08 (icono, gráficos y capturas), D09 (clips), D10 
   5. `resultado`: la hoja de ★ de esa ronda.
   6. `cubo`: Tu cubo, pestaña Piezas («Cambiar ✦»).
   7. `bitacora`: Bitácora, Logros.
-  8. `refugio`: el Refugio, con su primera frase escrita entera.
+  8. `refugio`: el Refugio, con su primera frase escrita entera. Desde alpha.277 la Voz no tapa ningún rótulo, tampoco en teléfono: la captura la incluye y el script falla si tapa uno.
   - Desde la escena 2, la partida tiene 21 días, tres lugares completos (Llanura, Lago, Bosque), sombrero y mascota y el Refugio con todos los ornamentos. Sigue siendo del mundo abierto.
   - Los avisos pasajeros se ocultan, y la guía desde la escena 2; el resto es el juego tal cual.
 - **Iconos y gráficos:** se dibujan con la marca actual (cubo blanco en aro dorado sobre negro), sin canal alfa.
 - **Clips:** la pantalla se graba a la mitad y se duplica con píxeles nítidos; el sonido es el del juego, tomado de su salida. El del Mundo empieza con la guía del guardado nuevo y luego camina por una región viva. El de la ronda (`clip-ronda-vertical-*`): el Lago canta su compás y el cubo lo responde a tiempo.
+- **Sonido de los clips** (alpha.277): una ganancia fija por clip hasta unos −16,5 LUFS integrados, sin compresión ni bombeo. Un limitador rápido, sobremuestreado, actúa solo si un pico suelto pasaría de −2 dBTP. Pico verdadero de −1 dBTP o menos, comprobado con `ebur128` tras codificar en AAC; si no, el script falla. La imagen se copia sin recodificar. `informe.json` guarda LUFS y pico de cada clip (`audio`).
 
 | Archivo | Tamaño | Para |
 |---|---|---|

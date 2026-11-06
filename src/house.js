@@ -56,16 +56,30 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   const v=view(),X0=0,X1=v.right,Y0=v.top,Y1=v.bottom+8;return out.map(l=>({x0:Math.max(X0,Math.min(l.x0,l.x1)),x1:Math.min(X1,Math.max(l.x0,l.x1)),y0:Math.max(Y0,Math.min(l.y0,l.y1)),y1:Math.min(Y1,Math.max(l.y0,l.y1))})).filter(l=>l.x0<=l.x1&&l.y0<=l.y1);}
  // The Voz under the last room label, in the free band before the panel; null keeps its usual place (the side column in
  // landscape, the top otherwise) when the band is too short.
- function voiceSlot(h,labels){const v=view();if(!v.panel||v.side||!labels.length)return null;
-  const el=$('voice'),need=Math.max(64,el&&!el.hidden?el.getBoundingClientRect().height:0);let top=Math.max(...labels.map(l=>l.y+l.h))+10;
+ // Listo 4: on a short phone that band is missing and the Voz, at the top, covered «Cielo». While it speaks over a drawn
+ // text, the house steps up and leaves the band below (voiceRoom.px). In a short landscape the Voz, above the side panel,
+ // covered the panel's first line: then the house steps left and the Voz takes the column between them (voiceRoom.side).
+ // Both are kept for the visit and the screen size: one step, no back and forth. Where the Voz covers nothing, nothing moves.
+ let voiceRoom={key:'',px:0,side:0};
+ function voiceSlot(h,labels){const v=view();if(!v.panel||!labels.length)return null;
+  const el=$('voice'),vr=el&&!el.hidden&&el.classList.contains('on')?el.getBoundingClientRect():null;
+  if(v.side){const p=$('housePanel').getBoundingClientRect();
+   if(!voiceRoom.side&&!(vr&&vr.bottom>p.top-4&&vr.left<p.right&&p.left<vr.right))return null;
+   const x0=Math.max(...HOUSE_ROOMS.map(r=>{const b=roomBox(r.id);return toScreen(b.x+b.w,b.y).x;}))+12,x1=p.left-8,want=160;
+   if(x1-x0<want){voiceRoom.side=Math.min(Math.max(0,p.left-208),voiceRoom.side+2*Math.ceil(want-(x1-x0)));return null;}
+   return {top:Math.round(v.top),left:Math.round((x0+x1)/2),width:Math.floor(x1-x0),height:Math.floor(v.free-v.top),lines:6};}
+  const need=Math.max(64,el&&!el.hidden?el.getBoundingClientRect().height:0);let top=Math.max(...labels.map(l=>l.y+l.h))+10;
   // Refugio simple: a closed room also holds text (what opens it), so the Voz clears every room.
   for(const r of HOUSE_ROOMS){const b=roomBox(r.id),a=toScreen(b.x,b.y).y,z=toScreen(b.x,b.y+b.h).y;if(a<top+need&&z+6>top)top=z+10;}
-  return top+need<=v.bottom?Math.round(top):null;}
- let voiceTop=null;function placeVoice(y){if(y===voiceTop)return;voiceTop=y;const st=document.documentElement.style;if(y==null)st.removeProperty('--house-voice-top');else st.setProperty('--house-voice-top',y+'px');}
+  if(top+need<=v.free)return {top:Math.round(top)};
+  if(vr&&layout.texts.some(t=>t.x<vr.right&&vr.left<t.x+t.w&&t.y<vr.bottom&&vr.top<t.y+t.h))voiceRoom.px=Math.min(Math.max(0,v.free-v.top-200),voiceRoom.px+Math.ceil(top+need-v.free));
+  return null;}
+ let voiceTop=null,voiceAt='';function placeVoice(slot){const key=slot?[slot.top,slot.left,slot.width,slot.height,slot.lines].join():'';if(key===voiceAt)return;voiceAt=key;voiceTop=slot?slot.top:null;const st=document.documentElement.style;
+  for(const [name,value] of [['top',slot?.top],['left',slot?.left],['width',slot?.width],['height',slot?.height],['lines',slot?.lines]])if(value==null)st.removeProperty('--house-voice-'+name);else st.setProperty('--house-voice-'+name,name==='lines'?String(value):value+'px');}
  // Free screen between the top counters and the house panel. In landscape the panel stands at the side:
  // the house then fits in the band to its left, from the counters to the bottom (panel 10, Nesbitt #1).
- const view=()=>frameMemo('house:view',()=>{const panel=$('housePanel').hidden?null:$('housePanel').getBoundingClientRect(),side=!!panel&&panel.width>0&&panel.left>runtime.W*.5,right=side?Math.max(240,panel.left-8):runtime.W,
-  bottom=!panel?runtime.H:side?runtime.H-8:panel.top-8,hud=Math.max(0,...[...document.querySelectorAll('.hud,#goal')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().bottom)),top=Math.min(Math.max(0,hud+8),bottom-160);return {top,bottom:Math.max(top+160,Math.min(runtime.H,bottom)),left:0,right,side,panel:!!panel};});
+ const view=()=>frameMemo('house:view',()=>{const panel=$('housePanel').hidden?null:$('housePanel').getBoundingClientRect(),side=!!panel&&panel.width>0&&panel.left>runtime.W*.5,right=side?Math.max(200,Math.max(240,panel.left-8)-voiceRoom.side):runtime.W,
+  free=!panel?runtime.H:side?runtime.H-8:panel.top-8,key=runtime.W+'x'+runtime.H;if(voiceRoom.key!==key)voiceRoom={key,px:0,side:0};const bottom=free-(panel&&!side?voiceRoom.px:0),hud=Math.max(0,...[...document.querySelectorAll('.hud,#goal')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().bottom)),top=Math.min(Math.max(0,hud+8),free-160);return {top,bottom:Math.max(top+160,Math.min(runtime.H,bottom)),free:Math.min(runtime.H,free),left:0,right,side,panel:!!panel};});
  const viewH=()=>{const v=view();return v.bottom-v.top;},viewW=()=>{const v=view();return v.right-v.left;},midX=()=>{const v=view();return (v.left+v.right)/2;};
  const geometry=()=>{const k=viewScale(viewW(),viewH(),overview);return {k,overview,W:viewW(),H:viewH(),cam:cam||{x:HOUSE_W/2,y:HOUSE_H/2}};};
  // While it opens, the Refugio unfolds out of the cube: 0 folded, 1 open.
@@ -111,7 +125,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  function enter(){visit=null;action='walk';overview=true;cam=null;listen=null;runtime.enterStudio({house:true});active=true;standFromSave(own());news={count:0,parts:[]};if(!own().readOnly){own().visited=true;news=newsNow();newUntil=news.count?performance.now()+8000:0;markSeen();}runtime.save();$('studioPanel').hidden=true;$('housePanel').hidden=false;$('houseMore').open=false;palette();runtime.houseMenuNote?.();}
  // What arrived while you were inside (a trophy unlocked a moment later) counts as seen too.
  // What arrived while you were inside (a trophy unlocked a moment later) counts as seen too; the fresh marks go.
- function exit(){placeVoice(null);if(active&&!visit&&!own().readOnly){decorate();markSeen();for(const o of own().objects)if(o?.fresh)delete o.fresh;}if(active)saveStand(current(),true);drag=null;active=false;visit=null;listen=null;news={count:0,parts:[]};$('housePanel').hidden=true;runtime.exitStudio();}
+ function exit(){placeVoice(null);voiceRoom={key:'',px:0,side:0};if(active&&!visit&&!own().readOnly){decorate();markSeen();for(const o of own().objects)if(o?.fresh)delete o.fresh;}if(active)saveStand(current(),true);drag=null;active=false;visit=null;listen=null;news={count:0,parts:[]};$('housePanel').hidden=true;runtime.exitStudio();}
  function workshop(){drag=null;active=false;visit=null;listen=null;$('housePanel').hidden=true;runtime.renderBag();$('studioPanel').hidden=false;}
  // From «Más»: the Taller (it also counts as the disc for its achievement) and the Prisma, which asks before it spends.
  function openWorkshop(){const h=own();if(visit||h.readOnly)return;if(h.workbench!==true){h.workbench=true;runtime.save();}workshop();}
@@ -186,7 +200,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h,note:noteText});runtime.drawHouseBrood?.(c,{toScreen,k,t,calm:calm(),cube:{floor,x:cubeAt().x}});
   // Capsule decorations, the capsule machine and the Taller label.
   runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night,note:noteText,simple:true});drawSky(c,h,k,t,calm());runtime.drawRefugioSky?.(c,{toScreen,k,t,calm:calm(),note:noteText,view:v,visit:!!visit});runtime.houseGuideTick?.();
-  placeVoice(open<1?voiceTop:voiceSlot(h,roomTexts));layout.voice=voiceTop;
+  const slot=voiceSlot(h,roomTexts);if(open>=1)placeVoice(slot);layout.voice=voiceTop;
   c.restore();
   const here=roomAt(floor,fx)==='jardin'&&!visit&&!h.readOnly;if(here!==gardenRoom){gardenRoom=here;$('houseGardenTools').hidden=!here;}
   // The cube, dressed with everything it wears, standing on its floor.
