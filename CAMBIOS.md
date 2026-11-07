@@ -2,6 +2,13 @@
 
 Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.277** en la rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Esta rama no toca el sonido del juego. Las entradas describen su revisión, no certifican producción.
 
+## Main en verde: pruebas sin fecha
+
+Rama `jay/main-verde-3`, desde `main` `cd9a83d`. Solo pruebas; el juego no cambia. Sin cambio de versión.
+
+- **Descubrimientos.** `tests/discoveries_smoke.py` quita el evento del día a la región del fósil: la «Lluvia de notas» dejaba una `luz` hallada durante la espera.
+- **Compañera.** `tests/pet_smoke.py` elige un sitio quieto sin tormenta (`stormAt`, reloj real) y sin evento del día, y vacía la lluvia: una gota atrapada en la misma corchea que su respuesta parecía su propia frase. El 7 de noviembre, el sitio de la golondrina tenía «Lluvia de notas».
+
 ## Niveles en orden: frontera
 
 Rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Jay lo aprobó: ya no se saltan niveles. Sin cambio de versión. Guía: [Mundo](docs/MUNDO.md#niveles-en-orden-frontera).

@@ -16,10 +16,12 @@ try:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=laboratorio&layout=wide&generation=2');page.wait_for_function('__testRuntime?.labMode')
   page.evaluate('()=>{document.querySelectorAll(".modal").forEach(m=>m.hidden=true);__testRuntime.labGo("rhythm:fossil");}');page.wait_for_timeout(350)
-  page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}')
+  # The fossil's region keeps no event of the day: a «Lluvia de notas» (world.js eventOf, by date) drops notes on the
+  # still cube, and a drop that lands is a light you caught ('luz', a real find): on some days that came in the window.
+  page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;const rg=r.regionOfPos(o.x,o.y);window.__dayEvent=r.eventOf(rg)?.[0]||null;rg.evDay=r.S.todayKey;rg.ev=null;r.rain=[];}')
   page.wait_for_function('__testRuntime.S.elementBook.found["rhythm:fossil"]!==undefined')
   n=page.evaluate('__testRuntime.elementFamilyCount');assert n>=1
-  page.wait_for_timeout(1900);assert page.evaluate('__testRuntime.elementFamilyCount')==n,'held phrase must not inflate count'
+  page.wait_for_timeout(1900);assert page.evaluate('__testRuntime.elementFamilyCount')==n,('held phrase must not inflate count',page.evaluate('Object.keys(__testRuntime.S.elementBook.found)'),page.evaluate('__dayEvent'))
   page.evaluate('__testRuntime.labGo("rhythm:roots")');page.wait_for_timeout(350);page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}');page.wait_for_function('__testRuntime.S.elementBook.found["rhythm:roots"]!==undefined')
   assert '/190' in page.locator('#elementCount').inner_text()
   # Journal access is pure UI; no percussion while a sheet is open.

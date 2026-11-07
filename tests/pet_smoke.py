@@ -43,12 +43,14 @@ try:
    if species=='grulla':assert page.evaluate('__petNotes[0].note>=36&&__petNotes[0].note<=52')
    # Only the cube touching it queues its phrase, without teaching that phrase back to itself.
    # The pet comes to a still cube. Moving the cube, a following flock or a travelling pulse would play player notes that may teach it legitimately.
-   page.evaluate('()=>{const r=__testRuntime,p=r.petState;r.waves.length=0;const x=r.S.wx;for(let i=1;i<40&&(r.nearbyFlocks(900).length||r.currentPocket()?.kind==="quiet"||r.regionOfPos(r.S.wx,r.S.wy).sea);i++)r.S.wx=x+i*1500;if(r.nearbyFlocks(900).length)throw Error("no quiet test spot");window.__phrase=JSON.stringify(r.S.pet.phrase);window.__count=__petNotes.length;p.x=r.S.wx;p.y=r.S.wy;}')
+   # Nor rain: a «Lluvia de notas» (world.js eventOf, by date) or a storm (alive.js stormAt, by the real clock) drops notes
+   # the still cube catches, real player notes that teach it; one on the same eighth as its reply looked like its own.
+   page.evaluate('async()=>{const r=__testRuntime,p=r.petState,{stormAt}=await import("/src/alive.js"),storm=()=>stormAt(r.S.wx/(r.REG*r.WCH),r.S.wy/(r.REG*r.WCH),Date.now()).i>0;r.waves.length=0;const x=r.S.wx;for(let i=1;i<40&&(r.nearbyFlocks(900).length||r.currentPocket()?.kind==="quiet"||r.regionOfPos(r.S.wx,r.S.wy).sea||storm());i++)r.S.wx=x+i*1500;if(r.nearbyFlocks(900).length||storm())throw Error("no quiet test spot");const rg=r.regionOfPos(r.S.wx,r.S.wy);window.__dayEvent=r.eventOf(rg)?.[0]||null;rg.evDay=r.S.todayKey;rg.ev=null;r.rain=[];window.__phrase=JSON.stringify(r.S.pet.phrase);window.__count=__petNotes.length;p.x=r.S.wx;p.y=r.S.wy;}')
    page.wait_for_function('__petNotes.length>__count',timeout=12000)
    # The phrase may change only by hearing someone else's note (another sound nearby on a slow runner), never its own:
    # what it last heard must not be one of the notes it just played (same time).
    if page.evaluate('JSON.stringify(__testRuntime.S.pet.phrase)')!=page.evaluate('__phrase'):
-    assert page.evaluate("(()=>{const h=__testRuntime.petState.heard;return !!h&&!__petNotes.slice(__count).some(n=>Math.abs(n.time-h.time)<.05)})()"),'the pet never learns its own phrase back'
+    assert page.evaluate("(()=>{const h=__testRuntime.petState.heard;return !!h&&!__petNotes.slice(__count).some(n=>Math.abs(n.time-h.time)<.05)})()"),('the pet never learns its own phrase back',page.evaluate('({heard:__testRuntime.petState.heard,notes:__petNotes.slice(__count).map(n=>n.time),dayEvent:__dayEvent})'))
    page.evaluate('()=>{__testRuntime.S.sound=false;window.__silentCount=__petNotes.length;}');page.wait_for_timeout(300);assert page.evaluate('__petNotes.length')==page.evaluate('__silentCount');page.evaluate('__testRuntime.S.sound=true')
    page.locator('#bMenu').click();page.locator('#bCube').click();assert page.locator('#mCube').is_visible()
    page.evaluate('()=>{const r=__testRuntime;r.S.ach.poder_cometa=r.S.ach.tiempo=r.S.ach.bandada1=r.S.todayKey;r.S.ach.tope=r.S.todayKey;}')
