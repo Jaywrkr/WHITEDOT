@@ -18,6 +18,21 @@ Rama `jay/sonido-limpio`, desde `main` `1a9ac62`. Tres quejas de Jay: el drop si
 - **Pruebas.** `tests/sound-pro.mjs` (sin riser en ningún plan, subida anunciada con una semilla, figuras y tambores por familia, variedad, sin ruido ni filtro de riser en el motor en 14 familias, el bombo que descansa según la subida, la racha sin relleno ni platillo), `tests/scenes.mjs` (sin voz de riser, subidas por escenario), `tests/ambience.mjs` (niveles, paso bajo, agache bajo la música, trueno con las mismas llamadas). `tests/audio_mix.mjs` acepta `weather`. En local: `npm test`, `node scripts/release-audit.mjs`, `node scripts/stale-text-check.mjs --base 1a9ac62`, `node scripts/verify-e-preservation.mjs` y, uno a uno: `alive_smoke`, `rain_mix` (−82 y −73 dBFS solas), `world_weather_smoke`, `scenes_mix`, `scenes_smoke`, `arreglos30_escenas_smoke`, `journey_mix`, `victory_live_smoke`, `spark_rhythm_smoke` y `house_ambience_mix`. Todo en verde.
 - **Límites.** Nadie lo ha escuchado: medido con bandas, LUFS y true peak. Las camas, medidas como diferencia entre dos renders: dos segundos de 30 no sirven (la música cambió entre ellos). Un invitado que se queda justo antes de la mitad puede subir el paso alto un compás sin relevo. El drop del oasis (`dropHit`, en `audio.js`) no cambia. El aire del Refugio no cambia. CI de la rama sin correr. Sin PR: la rama espera a Jay.
 
+Estado: 6 de noviembre de 2026. Código **2.3.0-alpha.277** en la rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Esta rama no toca el sonido del juego. Las entradas describen su revisión, no certifican producción.
+
+## Niveles en orden: frontera
+
+Rama `jay/niveles-frontera`, desde `main` `1a9ac62`. Jay lo aprobó: ya no se saltan niveles. Sin cambio de versión. Guía: [Mundo](docs/MUNDO.md#niveles-en-orden-frontera).
+
+- **Te llama.** Al llegar a pie a la distancia del siguiente lugar sin ★, «La Llanura te llama.» y, 2 s después, su ronda empieza sola.
+- **Frontera.** Hasta su primera ★ no pasas de su distancia y 200 m. El borde frena con suavidad, te desliza por el círculo y se ve como una línea tenue. Ningún salto cae más allá. Volver hacia dentro, el Refugio, los menús y lo ganado siguen libres.
+- **Sin ★.** Salir de su ronda abre «Otra vez» / «Salir». Tras tres intentos (uno con Modo niños), «Más fácil»: la ronda tranquila con meta al 60 %. Su ★ cuenta igual; ★★ y ★★★ esperan al modo normal. Maestro sigue opcional.
+- **Siguiente.** Flecha, «Siguiente» y «Seguir hacia» solo al lugar de la frontera; sin portal, «Camina recto. Llanura está a 0,5 km.». Un formato futuro lo dice en el portal y en el estante.
+- **Guardados.** `S.frontera` (versión 1, intentos por lugar). Un guardado más allá del lugar pendiente vuelve 20 m por dentro al cargar; no pierde estrellas ni portales.
+- **Pruebas.** `tests/frontera.mjs`; `tests/mundo_abierto_smoke.py` camina hasta 0,5 km y ve la ronda empezar sola. Los navegadores automatizados sin `?abierto=1` o `?frontera=1` no tienen frontera; las herramientas de prueba (`?testSeed=`, `?lab=1`, `?lugar=`, `?anillo=1`…) tampoco, salvo `?frontera=1`.
+- **Preservación.** Capa `approvedFRONTERA` (`cc25fa7`, el último commit de código) en `verify-e-preservation.mjs` para `controls.js`, `i18n-en.js`, `places-ring.js`, `practice-travel.js`, `render.js`, `tranquilo.js` y la lista del modo sin conexión (dos módulos nuevos); sin archivos de música.
+- **Límites.** No probado en teléfono ni con personas; Jay no lo ha jugado.
+
 ## Listo 4: la Voz del Refugio sin tapar rótulos y clips sin saturar · 2.3.0-alpha.277
 
 Rama `jay/listo-4`, desde `main` `4e2fe11`. Dos detalles que Jay aprobó. Guías: [Casa viva](docs/CASA_VIVA.md), [Material de tienda](docs/TIENDAS.md).

@@ -3,7 +3,9 @@ Camino, no Journey, no ring of portals, the radar at level 1, Lugares with the e
 from the start, the Llanura's portal appears ahead at 0,5 km and is saved; the edge layer points at it. A save in the
 middle of the Journey lands in the open World with its chapter kept. An advanced save (version 3, six places won on the
 old ring) keeps every star, record and note, and its won places stand at their distance on their old ring angle.
-Automated browsers keep their old start, so this test asks for the player's one with «?abierto=1»."""
+Niveles en orden (Jay, 6 Nov 2026): reaching 0,5 km the Llanura calls and its round starts by itself; leaving it offers «Otra
+vez» and «Salir»; the edge holds; after three tries, the easier round. Automated browsers keep their old start, so this
+test asks for the player's one with «?abierto=1»."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -56,14 +58,44 @@ try:
    page.evaluate("()=>{__r.S.wx=4700;__r.S.wy=0;}");page.wait_for_timeout(200)
    page.locator('#w').focus();page.keyboard.down('ArrowRight')
    page.wait_for_function("!!__r.S.lugares.found.llanura",timeout=20000);page.keyboard.up('ArrowRight')
+   # Niveles en orden: the Llanura calls at once and its round starts 2 s later, so the guide is read first.
+   assert page.evaluate('__r.firstJourneyState.next')=='portal','the walk and the portal found are real steps of the guide'
    f=page.evaluate('__r.S.lugares.found.llanura');x,y=page.evaluate('[__r.S.wx,__r.S.wy]')
    assert f['x']-x>1000,('ahead of the cube, on the heading',f,x,y);r=math.hypot(f['x'],f['y']);assert 5000<=r<=5000+1500+1900,('at 0,5 km',r)
    saved=json.loads(page.evaluate(f"localStorage.getItem('{KEY}')"));assert saved['lugares']['found']['llanura']==f,'saved'
-   page.wait_for_function("__r.edgeState().shown.some(e=>e.kind==='lugar')||Math.hypot(__r.S.lugares.found.llanura.x-__r.S.wx,__r.S.lugares.found.llanura.y-__r.S.wy)<600",timeout=5000)
+   page.wait_for_function("__r.edgeState().shown.some(e=>e.kind==='lugar')||Math.hypot(__r.S.lugares.found.llanura.x-__r.S.wx,__r.S.lugares.found.llanura.y-__r.S.wy)<600||!!__r.places().run",timeout=5000)
    assert page.evaluate('__r.ringState().next')=='llanura'
-   assert page.evaluate('__r.firstJourneyState.next')=='portal','the walk and the portal found are real steps of the guide'
+   # --- Niveles en orden: the call, then its round by itself, from just inside 0,5 km.
+   assert page.evaluate("__r.frontierState().call?.id==='llanura'||__r.places().run?.id==='llanura'"),'the Llanura calls'
+   page.wait_for_function("document.getElementById('toast').textContent.includes('La Llanura te llama.')||!!__r.places().run",timeout=3000)
+   page.wait_for_function("__r.places().run?.id==='llanura'",timeout=8000)
+   fr=page.evaluate("__r.S.lugares.run.from");assert abs(math.hypot(fr['x'],fr['y'])-4800)<=2,fr
+   # Leaving it without ★: the sheet, «Otra vez» and «Salir»; «Salir» leaves you inside.
+   page.evaluate("__r.abandonPlace()");page.wait_for_function("!document.getElementById('mFrontier').hidden",timeout=3000)
+   assert page.locator('#frontierAgain').is_visible() and page.locator('#frontierLeave').is_visible() and page.locator('#frontierEasy').is_hidden()
+   assert page.evaluate("__r.S.frontera.fails.llanura")==1
+   page.click('#frontierLeave');assert page.locator('#mFrontier').is_hidden();assert math.hypot(*page.evaluate('[__r.S.wx,__r.S.wy]'))<=5000
+   # Walking on: never past the edge (0,5 km + 200 m); the Llanura calls again and its round starts.
+   page.locator('#w').focus();page.keyboard.down('ArrowRight')
+   far=0
+   for _ in range(40):
+    page.wait_for_timeout(100);far=max(far,page.evaluate("Math.hypot(__r.S.wx,__r.S.wy)"))
+    if page.evaluate("!!__r.places().run"):break
+   page.keyboard.up('ArrowRight');assert far<=7000+1,far
+   page.wait_for_function("__r.places().run?.id==='llanura'",timeout=8000)
+   # Two more tries without ★: the easier round, which is calm and asks for less.
+   for n in (2,3):
+    page.evaluate("__r.abandonPlace()");page.wait_for_function("!document.getElementById('mFrontier').hidden",timeout=3000)
+    assert page.evaluate("__r.S.frontera.fails.llanura")==n
+    if n==2:page.click('#frontierAgain');page.wait_for_function("__r.places().run?.id==='llanura'",timeout=3000)
+   assert page.locator('#frontierEasy').is_visible();page.click('#frontierEasy')
+   page.wait_for_function("__r.places().run?.assist===true&&__r.tranquiloApplies()",timeout=3000)
+   assert page.evaluate("__r.placeGoalScale()")<1
+   # A reload in the middle of the round: no round, just inside 0,5 km, the portal kept.
    page.reload();page.wait_for_function(READY,timeout=20000)
    assert page.evaluate('__r.S.lugares.found.llanura')==f and page.evaluate('__r.S.mode')=='world','kept on reload, still in the World'
+   assert page.evaluate("__r.places().run") is None and math.hypot(*page.evaluate('[__r.S.wx,__r.S.wy]'))<=5000
+   assert page.evaluate("__r.S.frontera.fails.llanura")==3
    assert not errors,errors;page.close()
    # --- 2 · A save in the middle of the Journey (never in the World): into the open World, its chapter kept.
    page,errors=page_for(browser,width,height,base)
@@ -105,5 +137,5 @@ try:
    page.screenshot(path=str(Path('/tmp')/f'kubono-abierto-avanzado-{width}.png'))
    assert not errors,errors;page.close()
   browser.close()
- print('PASS directo mundo abierto on phone and desktop: a new save starts in the open World with no ring and the radar at level 1, the Llanura appears ahead at 0,5 km and is saved; a mid-Journey save lands in the World with its chapter; an advanced version-3 save keeps every star, record and note with its won places at their distance on their old angle, revisitable',flush=True)
+ print('PASS directo mundo abierto on phone and desktop: a new save starts in the open World with no ring and the radar at level 1, the Llanura appears ahead at 0,5 km and is saved, calls and starts its round by itself, holds the edge, offers «Otra vez»/«Salir» and the easier round after three tries; a mid-Journey save lands in the World with its chapter; an advanced version-3 save keeps every star, record and note with its won places at their distance on their old angle, revisitable',flush=True)
 finally:server.shutdown()

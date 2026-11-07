@@ -23,7 +23,7 @@ export function initialize(runtime) {
    for(const el of box.children){if(el.matches('.menu-section-label')){close();label=el;seen=false;}else if(el.matches('button')&&!el.hidden&&getComputedStyle(el).display!=='none')seen=true;}close();}
   runtime.$("bMenu").onclick=()=>{volumeUI();menuSummary();runtime.houseMenuNote?.();const more=runtime.$("menuMore");if(more)more.open=false;tidyMenu();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
-  runtime.$('bContinue').onclick=()=>{runtime.$('mMenu').hidden=true;const goal=gameObjective(runtime.S,runtime.placesData?.());if(runtime.placeRun?.())return;if(goal.kind==='place')runtime.ringGuide?.(goal.id);else if(goal.kind==='create')runtime.replaySong?.();};
+  runtime.$('bContinue').onclick=()=>{runtime.$('mMenu').hidden=true;const goal=gameObjective(runtime.S,runtime.placesData?.());if(runtime.placeRun?.())return;if(goal.kind==='place')runtime.ringGuide?.(goal.id,{say:true});else if(goal.kind==='create')runtime.replaySong?.();};
   runtime.$("bPrimary").onclick=()=>{runtime.$("mMenu").hidden=true;if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};
   runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=()=>runtime.houseBack();
   runtime.$("oDeploy").onclick=()=>{runtime.$("mOut").hidden=true;runtime.deployStudio();};
