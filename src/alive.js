@@ -56,7 +56,8 @@ export function initialize(runtime){
  // Truenos lejanos cuando una tormenta está cerca; más cerca, más fuertes.
  function stormBar(t){
   if(!runtime.S.sound||!weather.near)return;const near=Math.max(0,1-Math.max(0,weather.near.d-weather.near.r)/2.5);
-  if(Math.random()<.18+near*.3){runtime.thunder(t+runtime.SIX*Math.floor(Math.random()*8));weather.flash=near;}
+  // Sonido limpio: a distant thunder, far under the music (world-weather.js).
+  if(Math.random()<.18+near*.3){const at=t+runtime.SIX*Math.floor(Math.random()*8);if(runtime.weatherThunder)runtime.weatherThunder(at,null,true);else runtime.thunder(at);weather.flash=near;}
  }
  function draw(t,dt,ox,oy,layer){
   const cx=runtime.cx,W=runtime.W,H=runtime.H,s=S();

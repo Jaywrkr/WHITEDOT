@@ -1,7 +1,7 @@
 // Escenas musicales, entrega 1 (Jay, 3 Nov 2026, alpha.241; docs/UNIVERSO.md#escenas-musicales). With «Escenas: más
 // variedad» on (Sonido; off by default, kept in S.scenes), a few places of the free World are stages. Coming near one,
 // its club rises over a few bars on top of the place's music: the Almacén (long kick and rumble, sixteenth hats and an
-// airy ride, a resonant acid line whose envelope climbs, metal strikes; breakdown, riser and drop) or the Patio latino
+// airy ride, a resonant acid line whose envelope climbs, metal strikes; breakdown, build and drop) or the Patio latino
 // (congas, bongós, timbal, a cowbell in clave, a swung shaker, a rolling bass, synthetic vocal chops of formants only and
 // a high-pass that opens). A short line says where you are («Escena · Almacén»). Leaving, it fades and its bus is let go:
 // the music is exactly as before. With the setting off nothing here plays, builds a node or draws a random number.
@@ -10,7 +10,7 @@
 import {openSurface} from './frame-state.js';
 import {freeOpen} from './journey-mode.js';
 import {fitRegister} from './musical-conductor.js';
-import {SCENES,sceneById,normalizeScenes,scenesWritable,scenesOn,stageProximity,stagesNear,arcAt,filterAt,acidLine,metalSteps,congaPattern,bongoSteps,bassSteps,chopSteps,
+import {SCENES,sceneById,normalizeScenes,scenesWritable,scenesOn,stageProximity,stagesNear,arcAt,filterAt,sceneBuild,acidLine,metalSteps,congaPattern,bongoSteps,bassSteps,chopSteps,
  HAT_PATTERNS,CLAVES,VOWELS,STAGE_HEAR,humanize,sceneWorldKey} from './scenes-model.js';
 import {createSceneBus,sceneVoices,SCENE_TRIM} from './scenes-audio.js';
 // The cáscara on the timbal's shell.
@@ -90,7 +90,10 @@ export function initialize(r){
   if(a.fill&&(s===12||s===14))voices.metal(tt,.07,fitRegister(ct[4],84,96));
   // The breakdown's stab: three chord tones, every second bar.
   if(sec==='breakdown'&&s===0&&a.i%2===0)voices.stab(t,.16,ct.slice(0,3).map(n=>fitRegister(n,57,69)));
-  if(a.riserStart&&s===0)voices.riser(t,32*six,.22,hum);
+  // The last bar before a drop (Sonido limpio): a hat roll, metal strikes climbing the chord, or only the breath.
+  if(a.riser&&a.i===a.size-1){const k=sceneBuild(active.stage.key,'almacen',a.cycle,sec);
+   if(k==='roll'&&s>=8){voices.hat(tt,.22+.05*(s-8),kit.tone,.03,hum);if(s>=12)voices.hat(tt+six/2,.18+.05*(s-12),kit.tone*1.05,.025,hum+.5);}
+   else if(k==='climb'&&s>=8&&s%2===0)voices.metal(tt,.05+.006*(s-8),fitRegister(ct[((s-8)/2)%5],72+(s-8),96));}
   if(a.drop&&s===0)voices.impact(t,.4,fitRegister(R,33,45),hum);
  }
  function patio(s,b,t,a,P,ct,R,six,hum){const h=active.stage.hand,kit=h.kit,sw=Math.min(.33,swingOf()+h.swing),tt=t+(s%2?sw*six:0),sec=a.section,full=sec==='drop'||sec==='return',late=sec==='build'&&a.progress>=.5;
@@ -110,7 +113,10 @@ export function initialize(r){
   if(full||late){for(const [st,tone]of P.bass)if(st===s)voices.bass(tt,.36*(.9+.2*hum),fitRegister(ct[tone],36,47),six*.85,kit.bass);}
   // Vocal chops (formants, no voices): every other bar in the drops and the breakdown (there with more echo).
   if((full&&b%2===1)||(sec==='breakdown'&&b%2===0)||(late&&b%4===3)){for(const c of P.chop)if(c.step===s)voices.chop(tt,.15*(sec==='breakdown'?.8:1),fitRegister(ct[c.tone],60,72),c.from,c.to,c.len*six*.9,VOWELS);}
-  if(a.riserStart&&s===0)voices.riser(t,32*six,.24,hum);
+  // The last bar before a drop (Sonido limpio): a timbal roll or a conga run up the chord, or nothing.
+  if(a.riser&&a.i===a.size-1&&s>=8){const k=sceneBuild(active.stage.key,'patio',a.cycle,sec);
+   if(k==='timbal')voices.timbal(tt,.06+.012*(s-8),fitRegister(ct[(s-8)%3*2],62,74));
+   else if(k==='conga'&&s%2===0)voices.conga(tt,.16+.02*(s-8),fitRegister(ct[((s-8)/2)%5],55,70),'open');}
   if(a.drop&&s===0)voices.impact(t,.36,fitRegister(R,33,45),hum);
  }
  // Called by the music on every sixteenth it schedules (audio.js), after the music's own voices.

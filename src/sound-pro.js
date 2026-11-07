@@ -1,4 +1,4 @@
-import {soundProfile,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,createTransitionTracker,guestFilter,GUEST_HIGHPASS} from './sound-profiles.js';
+import {soundProfile,CLASSIC_LEVEL,CLASSIC_DRAWS,normalizeSoundPro,soundProWritable,soundProClassic,createTransitionTracker,guestFilter,GUEST_HIGHPASS,dropBuild,phraseBuild,FILL_FIGURES} from './sound-profiles.js';
 // Sonido pro (alpha.266; house clásico alpha.267; techno alpha.268; melodic y orgánico, afro y latino alpha.271): one shared production engine under the composition. audio.js keeps deciding every hit and
 // note; for a genre whose family profile is ready, the hit or note sounds here instead (runtime.proDrum and
 // runtime.proVoice), on one bus per region («deck»): a layered kit synthesized once into buffers, the bass split in sub
@@ -167,29 +167,50 @@ export function initialize(runtime){
  const ready=genre=>soundProfile(genre).ready===true;
 
  // ---------- transitions ----------
- const tracker=createTransitionTracker();let dropBar=null,mixKeys=null;
- const inDrop=()=>{const st=runtime.MU?.step;return dropBar!==null&&Number.isFinite(st)&&(st>>4)===dropBar&&st%16>=8;};
- function riser(t,len){const e=E,ac=e.ac,src=count(ac.createBufferSource()),bp=count(ac.createBiquadFilter()),g=count(ac.createGain()),s=count(ac.createGain());src.buffer=runtime.noiseBuffer;src.loop=true;
-  bp.type='bandpass';bp.Q.value=2.2;bp.frequency.setValueAtTime(300,t);bp.frequency.exponentialRampToValueAtTime(7000,t+len);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+len);g.gain.linearRampToValueAtTime(0,t+len+.03);
-  s.gain.value=.5;src.connect(bp).connect(g).connect(e.sum);g.connect(s).connect(e.verbIn);src.onended=()=>{for(const n of [src,bp,g,s])n.disconnect();};src.start(t);src.stop(t+len+.1);}
- function impact(t){const e=E,ac=e.ac,o=count(ac.createOscillator()),a=count(ac.createGain()),f=kickPitch(runtime.hz?.(runtime.root?.()??45)??55);o.frequency.setValueAtTime(f*2,t);o.frequency.exponentialRampToValueAtTime(f*.8,t+.9);
+ // Sonido limpio (Jay, 6 Nov 2026): no noise riser. A drop's build is the music's own (sound-profiles.js dropBuild): a
+ // fill on the family's drum, the kick and bass out for the last bar, the music thinning through its high-pass, chord
+ // tones climbing in its lead, rarely a reversed cymbal, or nothing; and what lands varies too.
+ const tracker=createTransitionTracker();let dropBar=null,dropFrom=8,mixKeys=null,lastBuild=null,planned=null;
+ const inDrop=()=>{const st=runtime.MU?.step;return dropBar!==null&&Number.isFinite(st)&&(st>>4)===dropBar&&st%16>=dropFrom;};
+ // A reversed cymbal (the crash played backwards, half a bar long, swelling into the drop): a cymbal, not noise.
+ const reverseCrash=(sr,len)=>{const c=ONE_SHOTS.crash(sr),n=Math.min(c.length,Math.max(1,Math.round(len*sr))),d=new Float32Array(n);for(let i=0;i<n;i++)d[i]=c[n-1-i]*Math.min(1,i/(n*.15));return d;};
+ // A build into a drop (or the end of a phrase) on a deck of its family, from the bar T it starts, a bar of `bar` seconds.
+ function build(b,d,p,T,bar,left){const six=bar/16,e=E,last=left===1;lastBuild={kind:b.kind,fill:b.fill,figure:b.figure,land:b.land,at:T};
+  if(b.kind==='fill'&&last){const fig=FILL_FIGURES[b.figure]||FILL_FIGURES[0],ct=runtime.chordTones?.()||[57,60,64],hz=m=>runtime.hz?.(m)??440*Math.pow(2,(m-69)/12);
+   fig.forEach((st,i)=>{const at=T+st*six,x=(i+1)/fig.length,lv=.5*(.35+.6*x),pan=((i%2)?.2:-.2);
+    if(b.fill==='tom'||b.fill==='conga'){const m=ct[(fig.length-1-i)%ct.length]-(b.fill==='tom'?24:12),f=Math.round(Math.max(40,Math.min(900,hz(m)))),dec=skinOf(p,b.fill);
+     play(buffer(b.fill+':'+f+':'+dec,sr=>ONE_SHOTS.perc(sr,f,dec)),at,lv*(p.levels[b.fill]??.6),{dest:d.dry,pan,room:p.room[b.fill]||.25});}
+    else if(b.fill==='rim')play(buffer('rim',sr=>ONE_SHOTS.rim(sr)),at,lv*(p.levels.rim??.6),{dest:d.dry,pan,room:p.room.rim||.2});
+    else play(snareBuf(p),at,lv*(p.levels.snare??.65),{dest:d.dry,pan:pan*.5,room:p.room.snare||.2});});}
+  else if(b.kind==='filter'){const [f0,f1]=left===2?[10,120]:b.bars>1?[120,320]:[10,320];d.hp.frequency.setValueAtTime(f0,T);d.hp.frequency.exponentialRampToValueAtTime(f1,T+bar);}   // two bars: 10 → 120 → 320 Hz
+  else if(b.kind==='lift'&&last){const ct=(runtime.chordTones?.()||[57,60,64]).slice(0,3),style=p.lead,kind=style.kind;
+   for(let i=0;i<8;i++){let n=ct[i%3]+12*Math.floor(i/3);while(n<60)n+=12;while(n>84)n-=12;synth(p,style,kind,n,T+i*2*six,.35+.06*i,unit(mix(i,811)),.6,d.duck,{room:style.room||.15,echo:(style.echo||.2)*.6},1);voices++;}}
+  else if(b.kind==='reverse'&&last){const len=8*six;play(buffer('crash:reverse:'+Math.round(len*100),sr=>reverseCrash(sr,len)),T+bar-len,.1,{dest:e.sum,room:.3,pan:-.15});}
+ }
+ // What lands on the drop.
+ function land(kind,t){if(kind==='impact')impact(t);else if(kind==='sub')impact(t,false);else if(kind==='crash')play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),t,.18,{dest:E.sum,room:.45,pan:.15});}
+ function impact(t,crash=true){const e=E,ac=e.ac,o=count(ac.createOscillator()),a=count(ac.createGain()),f=kickPitch(runtime.hz?.(runtime.root?.()??45)??55);o.frequency.setValueAtTime(f*2,t);o.frequency.exponentialRampToValueAtTime(f*.8,t+.9);
   a.gain.setValueAtTime(.3,t);a.gain.setTargetAtTime(0,t+.02,.35);o.connect(a).connect(e.sum);o.onended=()=>{o.disconnect();a.disconnect();};o.start(t);o.stop(t+2.5);
-  play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),t,.22,{dest:e.sum,room:.5});}
+  if(crash)play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),t,.22,{dest:e.sum,room:.5});}
  function cue(f){
   const plan=tracker.advance(f);phraseAt={bar:plan.bar,phrase:plan.phrase};if(!live()){dropBar=null;mixKeys=null;return;}const e=engine();if(!e)return;
   const MU=runtime.MU;if(MU?.dnaA)learn(MU.dnaA.key,MU.dnaA.genre);if(MU?.neighborRadio)learn(MU.neighborRadio.key,MU.neighborRadio.genre);
   const six=runtime.SIX||.12,T=f.time,bar=16*six,active=live()&&(ready(keyGenre.get(plan.primary))||ready(keyGenre.get(plan.secondary)));
   for(const x of [e.dl,e.dr,e.tl,e.tr])x.delayTime.setTargetAtTime(Math.min(1.9,six*3),T,.1);
-  dropBar=active&&plan.drop?plan.bar:null;mixKeys=active?plan:null;
+  // The build belongs to the music we leave (the primary), or to the guest when only the guest is converted.
+  const owner=ready(keyGenre.get(plan.primary))?plan.primary:plan.secondary,genre=keyGenre.get(owner),drop=active&&plan.seed!==null?dropBuild(genre,plan.seed):null;
+  if(drop&&plan.build)planned={seed:plan.seed,drop};   // the drop lands as its build planned it, in the family we leave
+  dropBar=active&&plan.drop&&drop.kickFrom!==null?plan.bar:null;dropFrom=drop?.kickFrom??8;mixKeys=active?plan:null;
   for(const d of e.decks.values()){
    if(active&&d.key===plan.secondary){const a=guestFilter(plan.from),b=guestFilter(plan.to);d.hp.frequency.setValueAtTime(GUEST_HIGHPASS,T);d.lp.frequency.setValueAtTime(a.lowpass,T);d.lp.frequency.exponentialRampToValueAtTime(b.lowpass,T+bar);d.out.gain.setTargetAtTime(d.level,T,.05);}
-   else if(!active||d.key===plan.primary){d.hp.frequency.setValueAtTime(10,T);d.lp.frequency.setValueAtTime(20000,T);d.out.gain.setTargetAtTime(d.level,T,.05);
-    if(active&&plan.sweep&&ready(keyGenre.get(d.key)))d.hp.frequency.exponentialRampToValueAtTime(320,T+bar);}
+   else if(!active||d.key===plan.primary){d.hp.frequency.setValueAtTime(10,T);d.lp.frequency.setValueAtTime(20000,T);d.out.gain.setTargetAtTime(d.level,T,.05);}
    else d.out.gain.setTargetAtTime(0,T,bar/3);
   }
   if(!active)return;
-  if(plan.impact)impact(T);
-  if(plan.riser)riser(T,plan.riser*bar);
+  const od=e.decks.get(owner),op=genre&&ready(genre)?soundProfile(genre):null;
+  if(plan.impact&&drop)land(planned?.seed===plan.seed?planned.drop.land:drop.land,T);
+  else if(plan.build&&drop&&od&&op&&(plan.build<=drop.bars))build(drop,od,op,T,bar,plan.build);
+  else if(!plan.build&&!plan.impact&&plan.phraseEnd&&od&&op&&od.key===plan.primary){const pb=phraseBuild(genre,plan.phraseSeed);if(pb.kind!=='none')build(pb,od,op,T,bar,1);}
   if(plan.crash&&ready(keyGenre.get(plan.primary)))play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),T,.14,{dest:e.sum,room:.4,pan:.2});
  }
  // The journey's cue is a plain optional callback in audio.js: keep any listener a test or module sets beside this one.
@@ -211,10 +232,13 @@ export function initialize(runtime){
  // decks' sidechain or the accompaniment's gesture duck, at FRONT_LEVEL times the family's deck level and its front share: as loud against the
  // pro mix as it was against the classic one, a little more. A pulse on the beat (the theme note) throws into the echo.
  const FRONT=new Set(['player','field']),FRONT_LEVEL=.3,FRONT_KIT=.26;
+ // A pulse on the beat (the theme note) throws a little into the echo (THEME_ECHO): one short answer, not a wash that
+ // piles up over a streak of pulses (Sonido limpio; it was .55, plus the long hall and the tape from the fourth pulse).
+ const THEME_ECHO=.28;
  // And the arrangement answers: the player's influence on the place (influence.js), how much they have played lately,
  // a streak of pulses on the beat and walking. Idle, every factor is neutral and the composition sounds as composed.
  const NEUTRAL=Object.freeze({cut:1,lead:1,wet:1,hats:1,groove:0,bass:0,open:0,streak:0});
- let burst=0,activity=0,activityAt=0,streak=0,streakAt=-Infinity,seenHits=null,seenMisses=null,milestone=0,riseAt=null,themeHits=null,themeLeft=0,themeBurst=-1,moveX=null,moveY=null,moveAt=0,move=0,shapeStep=null,shaped=NEUTRAL;
+ let burst=0,activity=0,activityAt=0,streak=0,streakAt=-Infinity,seenHits=null,seenMisses=null,themeHits=null,themeLeft=0,themeBurst=-1,moveX=null,moveY=null,moveAt=0,move=0,shapeStep=null,shaped=NEUTRAL;
  const clamp01=x=>Math.max(0,Math.min(1,x));
  function now(){return runtime.ac?.currentTime??0;}
  const later=(n,ms)=>{const h=globalThis.setTimeout?.(()=>{try{n.disconnect();}catch(err){}},ms);h?.unref?.();};
@@ -223,19 +247,18 @@ export function initialize(runtime){
  function pulses(t){const js=runtime.journeyPulseState?.();if(!js)return;if(themeHits===null)themeHits=js.hits|0;
   if(seenHits===null){seenHits=js.hits|0;seenMisses=js.misses|0;return;}
   if((js.misses|0)>seenMisses)streak=0;if((js.hits|0)>seenHits){streak+=(js.hits|0)-seenHits;streakAt=t;}seenHits=js.hits|0;seenMisses=js.misses|0;
-  if(t-streakAt>8*(runtime.SIX||.12)*4)streak=0;if(streak<milestone)milestone=0;}
+  if(t-streakAt>8*(runtime.SIX||.12)*4)streak=0;}
  function shape(){
   const st=runtime.MU?.step??0;if(st===shapeStep)return shaped;shapeStep=st;const t=now(),S=runtime.S;pulses(t);
   if(S&&Number.isFinite(S.wx)){if(moveX!==null&&t>moveAt){const sp=Math.hypot(S.wx-moveX,S.wy-moveY)/(t-moveAt);move+=((sp<2000?clamp01(sp/180):0)-move)*Math.min(1,(t-moveAt)/1.5);}moveX=S.wx;moveY=S.wy;moveAt=t;}
   const iv=runtime.influenceState?.values||{},mel=iv.melody||0,gr=iv.groove||0,sp=iv.space||0,bs=iv.bass||0,a=clamp01(activity*Math.exp(-Math.max(0,t-activityAt)/4)/6),k=clamp01(streak/8);
-  const open=Math.max(-.5,Math.min(1,.7*Math.max(0,mel)+.45*a+.3*k+.15*move-.5*Math.max(0,-mel))),groove=clamp01(.8*Math.max(0,gr)+.5*a+.4*k+.2*move);
+  const open=Math.max(-.5,Math.min(1,.7*Math.max(0,mel)+.45*a+.3*k+.15*move-.5*Math.max(0,-mel))),groove=clamp01(.8*Math.max(0,gr)+.5*a+.2*move);
   if(!open&&!groove&&!sp&&!bs&&!k)return shaped=NEUTRAL;
   return shaped={open,groove,streak,cut:open>=0?1+1.4*open:1+.8*open,lead:1+.2*Math.max(0,open),wet:1+.9*Math.max(0,sp)+.3*k,hats:1+.35*groove-.3*Math.max(0,-gr),bass:clamp01(.8*Math.max(0,bs)+.25*a)};
  }
- // On each beat the composition's kick plays: the groove adds an off-beat shaker and, higher, a light percussion answer;
- // a streak of four pulses on the beat (and each four more) brings a riser over that bar, a clap fill and a crash.
+ // On each beat the composition's kick plays: the groove adds an off-beat shaker and, higher, a light percussion answer.
  function respond(d,p,gid,t,step,M){
-  const six=runtime.SIX||.12,bar=16*six;
+  const six=runtime.SIX||.12;
   if(M.groove>.35){const x=(M.groove-.35)/.65,lv=p.levels.shaker??.6;play(buffer('shaker',sr=>ONE_SHOTS.shaker(sr)),t+2*six,.5*lv*.7*x,{dest:d.dry,pan:(p.pan.shaker||.4)*((step>>2)%2?-1:1)});
    // The answer is the family's own (a hand drum by default; tribal a tom, Andean the bombo's wood).
    if(x>.4&&unit(mix(step,555))<.5){const a=p.answer||{id:'conga',mult:4},at=t+3*six+swingOf(gid)*six,lv=.5*(p.levels[a.id]??.55)*.8*x,pan=p.pan[a.id]||-.3,room=p.room[a.id]||.25;
@@ -243,9 +266,8 @@ export function initialize(runtime){
     else if(a.id==='snare')play(snareBuf(p),at,lv,{dest:d.dry,pan,room});
     else if(a.id==='rim'||a.id==='cowbell'||a.id==='clap')play(buffer(a.id,sr=>ONE_SHOTS[a.id](sr)),at,lv,{dest:d.dry,pan,room});
     else{const f=Math.round(Math.max(40,Math.min(900,(runtime.hz?.(runtime.root?.()??45)??110)*(a.mult||4)))),dec=a.id==='tom'||a.id==='conga'?skinOf(p,a.id):.07;play(buffer(a.id+':'+f+':'+dec,sr=>ONE_SHOTS.perc(sr,f,dec)),at,lv,{dest:d.dry,pan,room});}}}
-  if(M.streak>=4&&M.streak>=milestone+4&&!mixKeys&&step%16===0){milestone=M.streak-M.streak%4;const at=t;if(riseAt===null||at>riseAt+bar){riseAt=at;riser(at,bar);
-   for(let i=0;i<4;i++)play(buffer('clap',sr=>ONE_SHOTS.clap(sr)),at+(12+i)*six,.5*(p.levels.clap??.85)*(.35+.2*i),{dest:d.dry,room:p.kit.clapRoom});
-   play(buffer('crash',sr=>ONE_SHOTS.crash(sr)),at+bar,.16,{dest:E.sum,room:.4,pan:-.2});}}
+  // Sonido limpio (Jay, 6 Nov 2026): a streak of pulses on the beat no longer brings a riser, a clap fill and a crash
+  // («sonidos espantosos»). The streak only opens the filters a little (shape); the theme answers each pulse in key.
  }
  // A hit the player causes (a percussion element, a power): the kit's sample, same random draws as the classic hit.
  function playerHit(id,t,v,x){
@@ -278,7 +300,7 @@ export function initialize(runtime){
   if(o.role==='bajo'){let n=o.m;while(n>52)n-=12;while(n<38)n+=12;const level=Math.min(3,v/.14);bassVoice({},g,p,o.ty,n,t,level,0);voices++;played++;return;}
   const style=chord?p.chords:p.lead,kind=style.map?.[o.ty]||style.kind,level=Math.min(3,v/(chord?.05:.07))*style.level,h=unit(mix(Math.round(t*1000),o.m)),M=shaped;
   let n=o.m;const [lo,hi]=chord?style.range||(kind==='pad'||kind==='strings'?[48,69]:[52,72]):[55,84];while(n>hi)n-=12;while(n<lo)n+=12;
-  const k=M.streak>=4,sends=theme?{room:.2,echo:.55,hall:k?.3:0,tape:k&&e.tapeIn&&p.kit.id==='techno'?.25:0}:{room:(style.room||.15)*M.wet,hall:(style.hall||0)*M.wet,echo:Math.max(.18,(style.echo||0)*1.2)*M.wet,tape:(style.tape||0)*M.wet,phase:(style.phase||0)*M.wet};
+  const sends=theme?{room:.18,echo:THEME_ECHO,hall:0,tape:0}:{room:(style.room||.15)*M.wet,hall:(style.hall||0)*M.wet,echo:Math.max(.18,(style.echo||0)*1.2)*M.wet,tape:(style.tape||0)*M.wet,phase:(style.phase||0)*M.wet};
   synth(p,style,kind,n,t,level,h,chord?.9:.5,g,sends,Math.max(1,M.cut));voices++;played++;
  }
  function playerVoice(role,ty,m,t,v,region,origin){
@@ -552,6 +574,6 @@ export function initialize(runtime){
  Object.defineProperties(runtime,{
   proDrum:{get:()=>proDrum},proVoice:{get:()=>proVoice},proCeiling:{get:()=>()=>live()&&ready(runtime.MU?.dnaA?.genre)?CEILING:0},
   soundProClassic:{get:()=>classic},setSoundProClassic:{get:()=>setClassic},
-  soundProStats:{get:()=>()=>({nodes,hits,voices,front:played,decks:E?E.decks.size:0,buffers:E?E.buffers.size:0,shape:{...shaped},streak})}
+  soundProStats:{get:()=>()=>({nodes,hits,voices,front:played,decks:E?E.decks.size:0,buffers:E?E.buffers.size:0,shape:{...shaped},streak,build:lastBuild?{...lastBuild}:null})}
  });
 }

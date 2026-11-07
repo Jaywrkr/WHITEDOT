@@ -4,6 +4,12 @@ import {prefersReducedMotion} from './frame-state.js';
 // Jay (27 Oct 2026, alpha.226): the rain was too loud; it is a light texture under the music. Its bed is 12 dB under
 // the level it had (.012 + .02 in a storm), the same filter and the same fade.
 export const RAIN_BED=Object.freeze({calm:.003,storm:.005});
+// Sonido limpio (Jay, 6 Nov 2026): thunder far under the music. The World's thunder (a storm nearby, and the bolts of the
+// Tormenta) is the music engine's thunder at THUNDER.storm of its level (about −30 dB), a distant one at THUNDER.far
+// (about −38 dB): the same rumble, the same tom and the same random draws, so the music's sequence does not move. In a
+// render of the game, a distant thunder was 5 dB under the music; now its loudest half second is about 30 dB under. The
+// Tormenta round (journey-dance.js) keeps its own strike.
+export const THUNDER=Object.freeze({storm:.03,far:.012});
 const hash=s=>{let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 export function initialize(runtime){
  let dirKey='',dx=1,dy=0,splashes=[],rain=null,insectsAt=0,bedsReady=false;
@@ -33,5 +39,9 @@ export function initialize(runtime){
   if(on&&!raining()&&night>.6&&!['mar','cueva','vacio','dunas'].includes(biome)&&(!runtime.S.layer||runtime.S.layer==='superficie')&&ac.currentTime>insectsAt){insectsAt=ac.currentTime+1.4+Math.random()*2.2;chirp(ac,runtime.ambienceBus||bus,ac.currentTime+.05,night);}
  }
  function chirp(ac,bus,t,night){const pan=ac.createStereoPanner?.();const f=runtime.ambienceInKey?.(4200+Math.random()*900)??4200,v=.0045*night;for(let i=0;i<3;i++){const o=ac.createOscillator(),g=ac.createGain(),at=t+i*.07;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(v,at+.008);g.gain.exponentialRampToValueAtTime(.0001,at+.05);o.connect(g);if(pan){pan.pan.value=Math.random()*1.6-.8;g.connect(pan);}else g.connect(bus);o.start(at);o.stop(at+.06);}if(pan)pan.connect(bus);}
- Object.defineProperties(runtime,{windSway:{get:()=>sway},drawWeather:{get:()=>draw},weatherBeds:{get:()=>beds},weatherSplashes:{get:()=>()=>splashes.length}});
+ // The engine's thunder (audio.js), quieter: the same variation of the region and bar, the same calls and draws.
+ function thunder(t,source=null,far=false){const k=far?THUNDER.far:THUNDER.storm,MU=runtime.MU||{},d=MU.dnaA||MU.dnaT,variation=runtime.seedOf(`storm:articulation:v1:${d?.key}:${(MU.step|0)>>4}`)%8;
+  runtime.noiseHit(t,'lowpass',420+variation*55,.6,.16*k,.45+variation*.04,variation%3===0);runtime.tom(t,48+variation*5,.085*k);if(variation%2)runtime.noiseHit(t,'bandpass',900+variation*100,.7,.025*k,.07);
+  if(source){runtime.soundCue?.(source,'perc',t);runtime.stormStrikeCue?.({variation,time:t});}}
+ Object.defineProperties(runtime,{weatherThunder:{get:()=>thunder},windSway:{get:()=>sway},drawWeather:{get:()=>draw},weatherBeds:{get:()=>beds},weatherSplashes:{get:()=>()=>splashes.length}});
 }
