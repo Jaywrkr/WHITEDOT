@@ -788,7 +788,7 @@ body:has(#housePanel:not([hidden])) #voice[data-notice-level="2"]:not(.expanded)
 #mMenu .menu-group.primary .tiles>:is(#bContinue,#bLeavePlace){flex:1 1 100%}
 #mMenu .menu-group.primary .tiles>#bContinue{min-height:52px;padding:12px}
 #mMenu .menu-group.primary .tiles>#bLeavePlace{min-height:44px}
-#mMenu .menu-group.primary .tiles button span{font-size:12px;overflow-wrap:normal;hyphens:auto}
+#mMenu .menu-group.primary .tiles button span{font-size:12px;overflow-wrap:normal;hyphens:manual}
 /* Ajustes and Cómo jugar: always two equal cells. */
 #mMenu .menu-utilities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
 #mMenu .menu-utilities #bGuide{grid-column:auto}

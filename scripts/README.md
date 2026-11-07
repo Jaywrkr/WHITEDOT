@@ -12,7 +12,7 @@ El juego no ejecuta estos scripts. [Arquitectura](../docs/ARQUITECTURA.md) · [v
 | `acceptance-gate.mjs` | Registro humano declarado; no certifica una nota |
 | `i18n-scan.mjs` | Lista el texto español del juego que aún no tiene inglés ([Traducción](../docs/TRADUCCION.md)) |
 | `panel-capture.py` |21 estados de teléfono con manifiesto SHA/digest; `CAPTURES` limita la selección |
-| `bump-version.mjs` | Sincroniza versión de ejecución; no usar por documentos |
+| `bump-version.mjs` | Sincroniza versión de ejecución; solo al preparar una publicación |
 | `vercel-build.mjs` / `stamp-deploy.mjs` | Sella el artefacto de publicación |
 | `android-assets.mjs` | Copia el cliente al build Android |
 | `itch-package.mjs` | Zip de la edición de venta en `dist/`; entrada del envoltorio de escritorio ([itch.io](../docs/ITCH.md)) |
