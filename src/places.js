@@ -3,6 +3,8 @@ import {findBiome,WORLD_CHAPTERS,CHAPTERS,shortNext} from './journey-chapters.js
 import {freeOpen} from './journey-mode.js';
 import {LEVEL_SPARKS} from './spark-rules.js';
 import {placeTier,layerGrew} from './song.js';
+// «Niveles en orden» (frontier-model.js): the easier round of the frontier's place asks for less.
+export const ASSIST_GOAL=.6;
 // The eleven places (plan F4, docs/MUNDO.md). After the Journey each chapter is a place you can play again: a round is
 // the chapter's game from an empty bar, closed by its gold thing. Stars are for going forward and winning: ★ complete,
 // ★★ with 75 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
@@ -210,7 +212,7 @@ export function initialize(runtime){
   const echo=runtime.$('placeEcho');if(echo){echo.hidden=!runtime.ritmoEchoOffered?.(r.id);echo.onclick=()=>{box.hidden=true;runtime.ritmoStartEcho?.(r.id,{from:r.from});};}
   // The next track on the path, straight from the card (plan H3); after the eleven, the place nearest its next star.
   // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
-  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}
+  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id,{say:true});};}}
   // Clean screens (P4): near ★★, only «Otra vez» stands beside «Seguir hacia»; Eco waits in Lugares and at the portal.
   if(echo&&near&&nb&&!nb.hidden)echo.hidden=true;
   // Jay (alpha.232, G1): one white button, the one that follows; with no next place on the path, «Otra vez».
@@ -218,5 +220,5 @@ export function initialize(runtime){
   // Con Luca (alpha.239): after a challenge, the other player's turn is the one white button («Le toca a …»).
   const turn=runtime.$('placeDuo');if(turn){turn.hidden=!duo?.turn;turn.classList?.toggle('gold',!!duo?.turn);nb?.classList?.toggle('gold',!duo?.turn);if(duo?.turn){runtime.$('placeAgain')?.classList?.remove('gold');turn.replaceChildren(duo.turn.node());turn.onclick=()=>{box.hidden=true;if(!duo.turn.go(r.from))runtime.toast?.('Ahora no se puede. Inténtalo en el Mundo.',{force:true});};}}}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
-  placesAllComplete:{get:()=>()=>allComplete(own())},placeGoalScale:{get:()=>()=>(run()?.maestro?MAESTRO_GOAL:1)*(runtime.rapidScale||1)},placeNext:{get:()=>()=>nextGoal(own(),runtime.S.journey)?.id||null},placeCardDue:{get:()=>()=>!!cardDue&&cardDue===shown&&!run()},placeFinaleClosed:{get:()=>finaleClosed},roundTick:{get:()=>()=>roundTick(run(),runtime.S.sound!==false)},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
+  placesAllComplete:{get:()=>()=>allComplete(own())},placeGoalScale:{get:()=>()=>(run()?.maestro?MAESTRO_GOAL:1)*(run()?.assist?ASSIST_GOAL:1)*(runtime.rapidScale||1)},placeNext:{get:()=>()=>nextGoal(own(),runtime.S.journey)?.id||null},placeCardDue:{get:()=>()=>!!cardDue&&cardDue===shown&&!run()},placeFinaleClosed:{get:()=>finaleClosed},roundTick:{get:()=>()=>roundTick(run(),runtime.S.sound!==false)},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),...(s.run.assist?{assist:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }

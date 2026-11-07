@@ -218,6 +218,8 @@ export function initialize(runtime) {
     const ruled=!paused&&runtime.motionRule?.(dx,dy,dt,movementSpeed);
     if(ruled){runtime.S.wx+=ruled.x;runtime.S.wy+=ruled.y;runtime.recordWalk?.(Math.hypot(ruled.x,ruled.y));}
     else if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*movementSpeed*dt);}
+    // Niveles en orden (frontier.js): the next place without ★ calls you at its distance and holds you back past it.
+    runtime.frontierStep?.(dt);
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);

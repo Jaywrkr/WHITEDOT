@@ -15,7 +15,9 @@ export function initialize(runtime){
  const run=()=>runtime.placeRun?.()||null;
  // The Journey: the Camino, then each of its five chapters until it is finished; never on a save with no Journey (alpha.269).
  const inJourney=()=>{const S=runtime.S;if(S.journey?.open===true)return false;if(S.mode==='camino')return true;if(S.journey?.finished===true)return false;const ch=runtime.journeyChapter?.();return !!ch&&WORLD_CHAPTERS.includes(ch.id);};
- const applies=()=>!!runtime.S&&calmApplies({on:on(),run:run(),journey:inJourney()});
+ // «Niveles en orden» (frontier.js): the easier round of the frontier's place is a calm one, with the switch off too.
+ const assisted=()=>run()?.assist===true;
+ const applies=()=>!!runtime.S&&calmApplies({on:on()||assisted(),run:run(),journey:inJourney()});
  // The switch: on and off at any moment; a failed save puts it back as it was.
  function set(value){if(!runtime.S||!tranquiloWritable(own()))return false;const before=state.on;state.on=!!value;if(runtime.save?.()===false){state.on=before;sync();return false;}tick();sync();return true;}
  function sync(){const box=$('calmKids');if(!box)return;box.checked=on();box.disabled=!tranquiloWritable(own());}
@@ -28,14 +30,14 @@ export function initialize(runtime){
   // The window: wider while calm applies; given back when it stops (only if it is still ours).
   if(MU){if(now){if(!(MU.onTimeWindow>=CALM_WINDOW))MU.onTimeWindow=CALM_WINDOW;applied=true;}else if(applied){if(MU.onTimeWindow===CALM_WINDOW)MU.onTimeWindow=null;applied=false;}}
   // A round played calm counts as one without sound: ★, not ★★ or ★★★ (places.js, roundStars).
-  if(r&&now&&!r.free){r.silent=true;if(calmRun?.run!==r)calmRun={id:r.id,run:r};}
-  if(calmRun&&calmRun.run!==r){ended={id:calmRun.id,ms:Date.now()-calmRun.run.startedAt};calmRun=null;}
+  if(r&&now&&!r.free){r.silent=true;if(calmRun?.run!==r)calmRun={id:r.id,run:r,assist:r.assist===true};}
+  if(calmRun&&calmRun.run!==r){ended={id:calmRun.id,ms:Date.now()-calmRun.run.startedAt,assist:calmRun.assist};calmRun=null;}
   // A chapter of the Journey played calm: its ★ when it is kept, its ★★ later in its place (places.js, chapterKept).
   if(!r&&now){const ch=runtime.journeyChapter?.(),d=runtime.placesData?.();if(ch&&WORLD_CHAPTERS.includes(ch.id)&&!ch.done?.[ch.id]&&d&&!d.readOnly&&d.journeyShare){const j=d.journeyShare[ch.id]||(d.journeyShare[ch.id]={hits:0,total:0,silent:false});j.silent=true;}}}
  setInterval(()=>{try{tick();}catch(_){}},60)?.unref?.();
  // ---------- the card and the sheets ----------
  // The round's card: a calm round says what it gave and where ★★ and ★★★ wait.
- function card(r){if(!r||!ended||ended.id!==r.id||Math.abs(ended.ms-r.ms)>800)return null;return {rows:['Modo niños: ★ ganada.','★★ y ★★★, en el modo normal.']};}
+ function card(r){if(!r||!ended||ended.id!==r.id||Math.abs(ended.ms-r.ms)>800)return null;return {rows:[ended.assist&&!on()?'Más fácil: ★ ganada.':'Modo niños: ★ ganada.','★★ y ★★★, en el modo normal.']};}
  // ---------- drawing ----------
  // The thing to reach next, in white (white = next): a soft ring around it and, off screen, a small arrow at the edge.
  let drawn=null;
